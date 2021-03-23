@@ -1,9 +1,13 @@
 package it.polimi.ingsw.model.gameitems;
 
+import it.polimi.ingsw.model.storage.ResourceStorage;
+
+import java.util.List;
+
 public interface LeaderStorage {
 
-	public abstract List<ResourceStorage> getLeaderStorage();
+	List<ResourceStorage> getLeaderStorage();
 
-	public abstract boolean isLeaderStorageActive();
+	boolean isLeaderStorageActive();
 
 }

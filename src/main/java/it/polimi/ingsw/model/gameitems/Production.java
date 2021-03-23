@@ -1,19 +1,20 @@
 package it.polimi.ingsw.model.gameitems;
 
-import it.polimi.ingsw.model.gameitems.leadercard.Map_ResourceType, Integer_;
+
+import java.util.Map;
 
 public interface Production {
 
-	public abstract Map_ResourceType, Integer_ getProductionCost();
+	Map<ResourceType, Integer> getProductionCost();
 
-	public abstract int getProductionStarResourceCost();
+	int getProductionStarResourceCost();
 
-	public abstract Map_ResourceType, Integer_ getProductionResourceReward();
+	Map<ResourceType, Integer> getProductionResourceReward();
 
-	public abstract int getProductionStarResourceReward();
+	int getProductionStarResourceReward();
 
-	public abstract int getProductionFaithReward();
+	int getProductionFaithReward();
 
-	public abstract boolean isProductionActive();
+	boolean isProductionActive();
 
 }

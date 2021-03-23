@@ -1,18 +1,20 @@
 package it.polimi.ingsw.model.storage;
 
-import it.polimi.ingsw.model.gamecontext.playercontext.Map_ResourceType,Integer_;
+import it.polimi.ingsw.model.gameitems.ResourceType;
+
+import java.util.Map;
 
 public class ResourceStorage {
 
-	public void addResources(Map_ResourceType,Integer_ resources) {
+	public void addResources(Map<ResourceType,Integer> resources) {
 
 	}
 
-	public Map_ResourceType,Integer_ removeResources(Map<ResourceType,int> resources) {
+	public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> resources) {
 		return null;
 	}
 
-	public Map_ResourceType,Integer_ peekResources() {
+	public Map<ResourceType, Integer> peekResources() {
 		return null;
 	}
 

@@ -2,14 +2,13 @@ package it.polimi.ingsw.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.model.gamecontext.GameContext;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Map_Player,ServerMessageLeaderAction_;
 import it.polimi.ingsw.network.clientrequest.ClientRequestLeaderAction;
-import it.polimi.ingsw.model.Map_Player,ServerMessageMarketAction_;
 import it.polimi.ingsw.network.clientrequest.ClientRequestMarketAction;
-import it.polimi.ingsw.model.Map_Player,ServerMessageDevelopmentAction_;
 import it.polimi.ingsw.network.clientrequest.ClientRequestDevelopmentAction;
-import it.polimi.ingsw.model.Map_Player,ServerMessageProductionAction_;
 import it.polimi.ingsw.network.clientrequest.ClientRequestProductionAction;
+import it.polimi.ingsw.network.servermessage.*;
+
+import java.util.Map;
 
 public class GameTurnMainActionState extends GameState {
 
@@ -17,7 +16,7 @@ public class GameTurnMainActionState extends GameState {
 
 	}
 
-	public Map<Player,ServerMessage> getInitialServerMessage() {
+	public Map<Player, ServerMessage> getInitialServerMessage() {
 		return null;
 	}
 
@@ -33,19 +32,19 @@ public class GameTurnMainActionState extends GameState {
 		return null;
 	}
 
-	public Map_Player,ServerMessageLeaderAction_ handleRequestLeaderAction(ClientRequestLeaderAction request) {
+	public Map<Player, ServerMessageLeaderAction> handleRequestLeaderAction(ClientRequestLeaderAction request) {
 		return null;
 	}
 
-	public Map_Player,ServerMessageMarketAction_ handleRequestMarketAction(ClientRequestMarketAction request) {
+	public Map<Player, ServerMessageMarketAction> handleRequestMarketAction(ClientRequestMarketAction request) {
 		return null;
 	}
 
-	public Map_Player,ServerMessageDevelopmentAction_ handleRequestDevelopmentAction(ClientRequestDevelopmentAction request) {
+	public Map<Player, ServerMessageDevelopmentAction> handleRequestDevelopmentAction(ClientRequestDevelopmentAction request) {
 		return null;
 	}
 
-	public Map_Player,ServerMessageProductionAction_ handleRequestProductionAction(ClientRequestProductionAction request) {
+	public Map<Player, ServerMessageProductionAction> handleRequestProductionAction(ClientRequestProductionAction request) {
 		return null;
 	}
 

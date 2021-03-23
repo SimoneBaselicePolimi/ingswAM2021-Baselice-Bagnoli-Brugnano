@@ -1,8 +1,13 @@
 package it.polimi.ingsw.model.gameitems.developmentcard;
 
+import it.polimi.ingsw.model.gameitems.cardstack.ShuffledCardStack;
+
+import java.util.List;
+import java.util.Map;
+
 public class DevelopmentCardsTable {
 
-	private Map<DevelopmentCardLevel,Map<DevelopmentCardColour,ShuffledCardStack<DevelopmentCard>>> cards;
+	private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardStack<DevelopmentCard>>> cards;
 
 	public DevelopmentCardsTable(List<DevelopmentCard> cards) {
 

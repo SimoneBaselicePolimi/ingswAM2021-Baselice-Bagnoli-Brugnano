@@ -2,8 +2,11 @@ package it.polimi.ingsw.model.notifier;
 
 import it.polimi.ingsw.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.notifier.gameupdate.PlayerContextUpdate;
 
-public class PlayerContextNotifier extends PlayerContext implements Notifier {
+import java.util.Optional;
+
+public class PlayerContextNotifier extends PlayerContext implements Notifier<PlayerContextUpdate> {
 
 	public Optional<PlayerContextUpdate> getUpdate() {
 		return null;
@@ -15,14 +18,6 @@ public class PlayerContextNotifier extends PlayerContext implements Notifier {
 
 	public void discardLeaderCard(DevelopmentCard card) {
 
-	}
-
-
-	/**
-	 * @see Notifier#getUpdate()
-	 */
-	public Optional<GameUpdate> getUpdate() {
-		return null;
 	}
 
 }

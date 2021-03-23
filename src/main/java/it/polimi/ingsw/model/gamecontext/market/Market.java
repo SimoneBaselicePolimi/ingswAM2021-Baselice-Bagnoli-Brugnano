@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model.gamecontext.market;
 
-import it.polimi.ingsw.model.MarbleColour[ ][ ];
 import it.polimi.ingsw.model.gameitems.MarbleColour;
-import it.polimi.ingsw.model.MarbleColour[ ];
+
+import java.util.Map;
 
 public class Market {
 
-	public Market(int nRows, int nColumns, Map_MarbleColour,Integer_ marbles) {
+	public Market(int nRows, int nColumns, Map<MarbleColour, Integer> marbles) {
 
 	}
 

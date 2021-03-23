@@ -1,8 +1,14 @@
 package it.polimi.ingsw.model.gamecontext.playercontext;
 
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.gameitems.MarbleColour;
+import it.polimi.ingsw.model.gameitems.ResourceType;
 import it.polimi.ingsw.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.model.storage.ResourceStorage;
+
+import java.util.List;
+import java.util.Map;
 
 public class PlayerContext {
 
@@ -24,7 +30,7 @@ public class PlayerContext {
 
 	}
 
-	public Map_ResourceType,Integer_ getDiscounts() {
+	public Map<ResourceType, Integer> getDiscounts() {
 		return null;
 	}
 
@@ -52,11 +58,11 @@ public class PlayerContext {
 		return null;
 	}
 
-	public void setTemporaryStorageResources(Map_ResourceType,Integer_ resources) {
+	public void setTemporaryStorageResources(Map<ResourceType, Integer> resources) {
 
 	}
 
-	public Map_ResourceType,Integer_ clearTemporaryStorageResources() {
+	public Map<ResourceType, Integer> clearTemporaryStorageResources() {
 		return null;
 	}
 

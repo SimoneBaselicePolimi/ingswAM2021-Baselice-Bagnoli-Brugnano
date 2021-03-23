@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.gameitems;
 
+import java.util.List;
+
 public interface WhiteMarbleSubstitution {
 
-	public abstract List<MarbleColour> getWhileMarbleSubstitution();
+	List<MarbleColour> getWhileMarbleSubstitution();
 
-	public abstract boolean isWhiteMarbleSubstitutionActive();
+	boolean isWhiteMarbleSubstitutionActive();
 
 }

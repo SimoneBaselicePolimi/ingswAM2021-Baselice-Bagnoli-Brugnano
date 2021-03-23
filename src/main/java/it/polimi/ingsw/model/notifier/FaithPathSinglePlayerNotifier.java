@@ -3,10 +3,18 @@ package it.polimi.ingsw.model.notifier;
 import it.polimi.ingsw.model.gamecontext.faith.FaithPathSinglePlayer;
 import it.polimi.ingsw.model.gamecontext.faith.FaithPathEvent;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.notifier.gameupdate.FaithSinglePlayerUpdate;
 
-public class FaithPathSinglePlayerNotifier extends FaithPathSinglePlayer implements Notifier {
+import java.util.Map;
+import java.util.Optional;
 
-	public Option<FaithSinglePlayerUpdate> getUpdate() {
+public class FaithPathSinglePlayerNotifier extends FaithPathSinglePlayer implements Notifier<FaithSinglePlayerUpdate> {
+
+	public FaithPathSinglePlayerNotifier(Map<Player, Integer> initialFaithPosition) {
+		super(initialFaithPosition);
+	}
+
+	public Optional<FaithSinglePlayerUpdate> getUpdate() {
 		return null;
 	}
 
@@ -15,14 +23,6 @@ public class FaithPathSinglePlayerNotifier extends FaithPathSinglePlayer impleme
 	}
 
 	public FaithPathEvent move(Player player, int steps) {
-		return null;
-	}
-
-
-	/**
-	 * @see Notifier#getUpdate()
-	 */
-	public Optional<GameUpdate> getUpdate() {
 		return null;
 	}
 

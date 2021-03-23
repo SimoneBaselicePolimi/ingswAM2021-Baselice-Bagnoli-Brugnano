@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model.gamecontext.faith;
 
-import it.polimi.ingsw.model.notifier.gameupdate.Map_Player,Integer_;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.List_PopeFavorCardState_;
-import it.polimi.ingsw.model.Map_Player,List_PopeFavorCardState__;
+
+import java.util.List;
+import java.util.Map;
 
 public class FaithPath {
 
-	public FaithPath(Map_Player,Integer_ initialFaithPosition) {
+	public FaithPath(Map<Player, Integer> initialFaithPosition) {
 
 	}
 
@@ -15,15 +15,15 @@ public class FaithPath {
 		return 0;
 	}
 
-	public Map_Player,Integer_ getFaithPosition() {
+	public Map<Player, Integer> getFaithPosition() {
 		return null;
 	}
 
-	public List_PopeFavorCardState_ getPlayerPopeFavorCardsState(Player player) {
+	public List<PopeFavorCardState> getPlayerPopeFavorCardsState(Player player) {
 		return null;
 	}
 
-	public Map_Player,List_PopeFavorCardState__ getPopeFavorCardsState() {
+	public Map<Player, List<PopeFavorCardState>> getPopeFavorCardsState() {
 		return null;
 	}
 

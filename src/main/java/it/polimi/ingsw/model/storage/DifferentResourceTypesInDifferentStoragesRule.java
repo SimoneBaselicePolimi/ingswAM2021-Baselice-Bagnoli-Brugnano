@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.storage;
 
-import it.polimi.ingsw.model.gamecontext.playercontext.Map_ResourceType,Integer_;
+import it.polimi.ingsw.model.gameitems.ResourceType;
+
+import java.util.Map;
 
 public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStorageRule {
 
@@ -8,7 +10,8 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 
 	}
 
-	public boolean checkRule(ResourceStorage storage, Map_ResourceType,Integer_ newResources) {
+	@Override
+	public boolean checkRule(ResourceStorage storage, Map<ResourceType,Integer> newResources) {
 		return false;
 	}
 

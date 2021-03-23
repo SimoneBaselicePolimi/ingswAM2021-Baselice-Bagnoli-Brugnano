@@ -1,28 +1,29 @@
 package it.polimi.ingsw.model.notifier;
 
+import it.polimi.ingsw.model.gameitems.ResourceType;
+import it.polimi.ingsw.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.model.notifier.gameupdate.ResourceStorageUpdate;
 import it.polimi.ingsw.model.storage.ResourceStorage;
-import it.polimi.ingsw.model.gamecontext.playercontext.Map_ResourceType,Integer_;
+import jdk.nashorn.internal.runtime.options.Option;
 
-public class ResourceStorageNotifier extends ResourceStorage implements Notifier {
+import java.util.Map;
+import java.util.Optional;
 
-	public Option<ResourceStorageUpdate> getUpdate() {
+public class ResourceStorageNotifier extends ResourceStorage implements Notifier<ResourceStorageUpdate> {
+
+	@Override
+	public Optional<ResourceStorageUpdate> getUpdate() {
 		return null;
 	}
 
-	public void addResources(Map_ResourceType,Integer_ resources) {
+	public void addResources(Map<ResourceType,Integer> resources) {
 
 	}
 
-	public Map_ResourceType,Integer_ removeResources(Map<ResourceType,int> resources) {
+	@Override
+	public Map<ResourceType,Integer> removeResources(Map<ResourceType, Integer> resources) {
 		return null;
 	}
 
-
-	/**
-	 * @see Notifier#getUpdate()
-	 */
-	public Optional<GameUpdate> getUpdate() {
-		return null;
-	}
 
 }

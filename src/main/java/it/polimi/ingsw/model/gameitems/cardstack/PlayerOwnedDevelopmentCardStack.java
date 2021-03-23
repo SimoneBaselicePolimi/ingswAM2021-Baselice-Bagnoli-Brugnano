@@ -1,6 +1,10 @@
 package it.polimi.ingsw.model.gameitems.cardstack;
 
-public class PlayerOwnedDevelopmentCardStack<DevelopmentCard> extends CardStack {
+import it.polimi.ingsw.model.gameitems.developmentcard.DevelopmentCard;
+
+import java.util.List;
+
+public class PlayerOwnedDevelopmentCardStack extends CardStack<DevelopmentCard> {
 
 	public PlayerOwnedDevelopmentCardStack(List<DevelopmentCard> objects) {
 

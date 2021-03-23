@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model.gameitems;
 
-import it.polimi.ingsw.model.gameitems.leadercard.Map_ResourceType, Integer_;
+
+import java.util.Map;
 
 public class BaseProduction implements Production {
 
-	public Map_ResourceType, Integer_ getProductionCost() {
+	public Map<ResourceType, Integer> getProductionCost() {
 		return null;
 	}
 
@@ -12,7 +13,7 @@ public class BaseProduction implements Production {
 		return 0;
 	}
 
-	public Map_ResourceType, Integer_ getProductionResourceReward() {
+	public Map<ResourceType, Integer> getProductionResourceReward() {
 		return null;
 	}
 

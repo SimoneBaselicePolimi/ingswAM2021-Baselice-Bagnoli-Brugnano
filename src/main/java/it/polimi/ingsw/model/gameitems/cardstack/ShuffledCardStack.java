@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model.gameitems.cardstack;
 
-public class ShuffledCardStack<C> extends CardStack {
+import java.util.List;
+
+public class ShuffledCardStack<C> extends CardStack<C> {
 
 	public ShuffledCardStack(List<C> objects) {
 

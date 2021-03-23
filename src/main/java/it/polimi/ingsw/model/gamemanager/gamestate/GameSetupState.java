@@ -1,17 +1,22 @@
 package it.polimi.ingsw.model.gamemanager.gamestate;
 
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.gamecontext.GameContext;
-import it.polimi.ingsw.model.Map_Player,GameSetupSM_;
 import it.polimi.ingsw.network.clientrequest.InitialChoiceCR;
-import it.polimi.ingsw.model.Map_Player,PostGameSetupSM_;
+import it.polimi.ingsw.network.servermessage.GameSetupSM;
+import it.polimi.ingsw.network.servermessage.PostGameSetupSM;
+import it.polimi.ingsw.network.servermessage.ServerMessage;
 
-public class GameSetupState extends GameState {
+import java.util.Map;
+
+public class GameSetupState extends GameState<GameSetupSM, PostGameSetupSM> {
 
 	public GameSetupState(GameContext gameContext) {
 
 	}
 
-	public Map_Player,GameSetupSM_ getInitialServerMessage() {
+	@Override
+	public Map<Player, GameSetupSM> getInitialServerMessage() {
 		return null;
 	}
 
@@ -19,11 +24,11 @@ public class GameSetupState extends GameState {
 		return false;
 	}
 
-	public Map<Player,ServerMessage> handleInitialChoiceCR(InitialChoiceCR request) {
+	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoiceCR request) {
 		return null;
 	}
 
-	public Map_Player,PostGameSetupSM_ getFinalServerMessage() {
+	public Map<Player, PostGameSetupSM> getFinalServerMessage() {
 		return null;
 	}
 

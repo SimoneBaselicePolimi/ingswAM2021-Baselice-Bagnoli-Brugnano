@@ -1,14 +1,14 @@
 package it.polimi.ingsw.model.gameitems.leadercard;
 
-import it.polimi.ingsw.model.gameitems.WhiteMarbleSubstitution;
-import it.polimi.ingsw.model.gameitems.LeaderStorage;
-import it.polimi.ingsw.model.gameitems.ProductionDiscount;
-import it.polimi.ingsw.model.gameitems.Production;
-import it.polimi.ingsw.model.gamecontext.playercontext.Map_ResourceType,Integer_;
+import it.polimi.ingsw.model.gameitems.*;
+import it.polimi.ingsw.model.storage.ResourceStorage;
+
+import java.util.List;
+import java.util.Map;
 
 public class LeaderCard implements WhiteMarbleSubstitution, LeaderStorage, ProductionDiscount, Production {
 
-	public Map_ResourceType, Integer_ getProductionCost() {
+	public Map<ResourceType, Integer> getProductionCost() {
 		return null;
 	}
 
@@ -16,7 +16,7 @@ public class LeaderCard implements WhiteMarbleSubstitution, LeaderStorage, Produ
 		return 0;
 	}
 
-	public Map_ResourceType, Integer_ getProductionResourceReward() {
+	public Map<ResourceType, Integer> getProductionResourceReward() {
 		return null;
 	}
 
@@ -40,7 +40,7 @@ public class LeaderCard implements WhiteMarbleSubstitution, LeaderStorage, Produ
 		return null;
 	}
 
-	public Map_ResourceType,Integer_ getProductionDiscount() {
+	public Map<ResourceType, Integer> getProductionDiscount() {
 		return null;
 	}
 
@@ -62,14 +62,6 @@ public class LeaderCard implements WhiteMarbleSubstitution, LeaderStorage, Produ
 
 	public boolean isLeaderStorageActive() {
 		return false;
-	}
-
-
-	/**
-	 * @see ProductionDiscount#getProductionDiscount()
-	 */
-	public Map<ResourceType,int> getProductionDiscount() {
-		return null;
 	}
 
 }

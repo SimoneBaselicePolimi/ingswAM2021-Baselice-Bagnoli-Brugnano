@@ -1,7 +1,11 @@
 package it.polimi.ingsw.model.notifier;
 
-public interface Notifier {
+import it.polimi.ingsw.model.notifier.gameupdate.GameUpdate;
 
-	public abstract Optional<GameUpdate> getUpdate();
+import java.util.Optional;
+
+public interface Notifier<U extends GameUpdate> {
+
+	public abstract Optional<U> getUpdate();
 
 }
