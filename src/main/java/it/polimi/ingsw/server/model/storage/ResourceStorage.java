@@ -2,15 +2,20 @@ package it.polimi.ingsw.server.model.storage;
 
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
+import java.util.List;
 import java.util.Map;
 
 public class ResourceStorage {
 
-	public void addResources(Map<ResourceType,Integer> resources) {
+	protected ResourceStorage(List<ResourceStorageRule> rules) {
+	}
+
+	public void addResources(Map<ResourceType,Integer> resources) throws ResourceStorageRuleViolationException {
 
 	}
 
-	public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> resources) {
+	public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> resources)
+			throws NotEnoughResourcesException {
 		return null;
 	}
 

@@ -6,8 +6,6 @@ import java.util.Map;
 
 public abstract class ResourceStorageRule {
 
-	public boolean checkRule(ResourceStorage storage, Map<ResourceType, Integer> newResources) {
-		return false;
-	}
+	public abstract boolean checkRule(ResourceStorage storage, Map<ResourceType, Integer> newResources);
 
 }
