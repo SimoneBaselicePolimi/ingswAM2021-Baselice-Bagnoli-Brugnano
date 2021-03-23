@@ -1,0 +1,83 @@
+package it.polimi.ingsw.model.gamecontext.playercontext;
+
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.storage.ResourceStorage;
+
+public class PlayerContext {
+
+	private Player player;
+
+	public void setLeaderCards(List<LeaderCard> cards) {
+
+	}
+
+	public List<LeaderCard> getLeaderCards() {
+		return null;
+	}
+
+	public void activeLeaderCard(DevelopmentCard card) {
+
+	}
+
+	public void discardLeaderCard(DevelopmentCard card) {
+
+	}
+
+	public Map_ResourceType,Integer_ getDiscounts() {
+		return null;
+	}
+
+	public List<MarbleColour> getWhiteMarblesMarketSubstitutions() {
+		return null;
+	}
+
+	public List<ResourceStorage> getLeaderStorage() {
+		return null;
+	}
+
+	public List<ResourceStorage> getShelves() {
+		return null;
+	}
+
+	public List<ResourceStorage> getStoragesForResourcesFromMarket() {
+		return null;
+	}
+
+	public ResourceStorage getInfiniteChest() {
+		return null;
+	}
+
+	public ResourceStorage getTemporaryStorage() {
+		return null;
+	}
+
+	public void setTemporaryStorageResources(Map_ResourceType,Integer_ resources) {
+
+	}
+
+	public Map_ResourceType,Integer_ clearTemporaryStorageResources() {
+		return null;
+	}
+
+	public List<ResourceStorage> getAllResourceStorages() {
+		return null;
+	}
+
+	public List<ResourceType> getAllResources() {
+		return null;
+	}
+
+	public void addDevelopmentCard(DevelopmentCard card, int stackNumber) {
+
+	}
+
+	public List<DevelopmentCard> getAllDevelopmentCards() {
+		return null;
+	}
+
+	public List<DevelopmentCard> getDevelopmentCardsOnTop() {
+		return null;
+	}
+
+}
