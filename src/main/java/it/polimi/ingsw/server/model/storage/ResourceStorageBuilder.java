@@ -1,17 +1,22 @@
 package it.polimi.ingsw.server.model.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ResourceStorageBuilder {
+	private List<ResourceStorageRule> rules = new ArrayList<>();;
 
 	public static ResourceStorageBuilder initResourceStorageBuilder() {
-		return null;
+		return new ResourceStorageBuilder();
 	}
 
 	public ResourceStorage createResourceStorage() {
-		return null;
+		return new ResourceStorage(rules);
 	}
 
 	public ResourceStorageBuilder addRule(ResourceStorageRule rule) {
-		return null;
+		rules.add(rule);
+		return this;
 	}
 
 }

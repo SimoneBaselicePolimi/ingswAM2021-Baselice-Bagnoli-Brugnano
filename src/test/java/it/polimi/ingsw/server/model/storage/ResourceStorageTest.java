@@ -101,7 +101,7 @@ class ResourceStorageTest {
             storage.peekResources()
         );
 
-        storage.removeResources(Map.of(ResourceType.COINS, 1));
+        storage.removeResources(Map.of(ResourceType.STONES, 2));
         assertEquals(new HashMap<>(), storage.peekResources());
 
     }

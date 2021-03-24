@@ -20,7 +20,7 @@ public class ResourceStorageNotifier extends ResourceStorage implements Notifier
 		return null;
 	}
 
-	public void addResources(Map<ResourceType,Integer> resources) {
+	public void addResources(Map<ResourceType,Integer> newResources) {
 
 	}
 
