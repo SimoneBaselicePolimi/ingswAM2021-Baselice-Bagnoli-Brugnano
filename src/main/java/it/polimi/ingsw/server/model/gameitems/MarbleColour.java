@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.gameitems;
 
 import java.util.Optional;
 
-public abstract class MarbleColour {
+public class MarbleColour {
 
 	public MarbleColour(Optional<ResourceType> resourceType, int faithPoints, boolean isSpecialMarble, String marbleID) {
 
