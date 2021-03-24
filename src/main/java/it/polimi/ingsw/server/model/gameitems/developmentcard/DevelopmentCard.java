@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
+import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -7,19 +8,19 @@ import java.util.Map;
 
 public class DevelopmentCard implements Production {
 
-	public int getLevel() {
-		return 0;
+	public DevelopmentCardLevel getLevel() {
+		return null;
 	}
 
-	public int getColour() {
-		return 0;
+	public MarbleColour getColour() {
+		return null;
 	}
 
 	public Map<ResourceType, Integer> getPrice() {
 		return null;
 	}
 
-	public Map<ResourceType, Integer> getProductionCost() {
+	public Map<ResourceType, Integer> getProductionResourceCost() {
 		return null;
 	}
 

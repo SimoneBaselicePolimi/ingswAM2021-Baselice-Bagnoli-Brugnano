@@ -70,7 +70,7 @@ public class PlayerContext {
 		return null;
 	}
 
-	public List<ResourceType> getAllResources() {
+	public Map<ResourceType, Integer> getAllResources() {
 		return null;
 	}
 

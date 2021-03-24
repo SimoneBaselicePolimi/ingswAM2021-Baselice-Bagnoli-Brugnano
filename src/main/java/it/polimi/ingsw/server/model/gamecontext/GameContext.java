@@ -22,7 +22,7 @@ public class GameContext {
 
 	}
 
-	public List<DevelopmentCard> getDevelopmentCardsPlayerCanBuy() {
+	public List<DevelopmentCard> getDevelopmentCardsPlayerCanBuy(Player player) {
 		return null;
 	}
 
