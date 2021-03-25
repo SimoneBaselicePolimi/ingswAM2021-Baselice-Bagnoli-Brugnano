@@ -4,32 +4,17 @@ import it.polimi.ingsw.server.model.Player;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FaithPath {
 
 	public FaithPath(
-		int faithPathLength,
-		List<VaticanReportSection> vaticanSections,
-		int[] victoryPointsByPosition,
-		Map<Player, Integer> initialFaithPosition
-	) {
-
-	}
-
-	public FaithPath(
 			int faithPathLength,
 			List<VaticanReportSection> vaticanSections,
 			int[] victoryPointsByPosition,
-            List<Player> players
-	) {
-		this(
-			faithPathLength,
-			vaticanSections,
-			victoryPointsByPosition,
-			players.stream().collect(Collectors.toMap(p -> p, p -> 0))  //set position of every player to 0
-		);
-	}
+            Set<Player> players
+	) { }
 
 	public int getPlayerFaithPosition(Player player) {
 		return 0;
@@ -45,6 +30,14 @@ public class FaithPath {
 
 	public Map<Player, List<PopeFavorCardState>> getPopeFavorCardsState() {
 		return null;
+	}
+
+	public boolean lastPositionHasBeenReached() {
+		return false;
+	}
+
+	public int getPlayerVictoryPoints(Player player) {
+		return 0;
 	}
 
 	public FaithPathEvent move(Player player, int steps) {
