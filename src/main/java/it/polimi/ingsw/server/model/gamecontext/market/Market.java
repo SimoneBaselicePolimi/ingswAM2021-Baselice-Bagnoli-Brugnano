@@ -7,38 +7,81 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * This class represents the Market structure, containing a specific number of coloured Marbles
+ * a Player can select taking Resources from them.
+ */
 public class Market {
-
+	/**
+	 * A random number generator used to place Marbles in the Market
+	 */
 	Random randGenerator;
-
+	/**
+	 * Matrix representing the Market, filled with Marbles
+	 */
 	MarbleColour[][] matrix;
+	/**
+	 * Single Marble on the slide, outside the Market
+	 */
 	MarbleColour outMarble;
+	/**
+	 * Number of rows of the Market
+	 */
 	private int nRows;
+	/**
+	 * Number of columns of the Market
+	 */
 	private int nColumns;
 
+	/**
+	 *  Market constructor.
+	 * @param nRows number of rows in the matrix
+	 * @param nColumns number of columns in the matrix
+	 * @param marbles colour and number of the marbles inside the Market
+	 * @throws WrongNumberOfMarblesException if a wrong number of marbles is passed as parameter
+	 */
 	public Market(int nRows, int nColumns, Map<MarbleColour,Integer> marbles) throws WrongNumberOfMarblesException {
 		randGenerator = new Random();
 		initializeMatrixAndOutMarble(nRows, nColumns, marbles);
 		}
 
-	public Market(Random randGenerator, int nRows, int nColumns, Map<MarbleColour,Integer> marbles) throws WrongNumberOfMarblesException {
+	/**
+	 * Market constructor specifying a type of random number generator.
+	 * @param randGenerator random number generator
+	 * @param nRows number of rows in the matrix
+	 * @param nColumns number of columns in the matrix
+	 * @param marbles colour and number of the marbles inside the Market
+	 * @throws WrongNumberOfMarblesException if a wrong number of marbles is passed as parameter
+	 */
+	public Market(Random randGenerator, int nRows, int nColumns, Map<MarbleColour,Integer> marbles)
+			throws WrongNumberOfMarblesException {
 		this.randGenerator = randGenerator;
 		initializeMatrixAndOutMarble(nRows, nColumns, marbles);
 	}
 
-	private void initializeMatrixAndOutMarble(int nRows, int nColumns, Map<MarbleColour,Integer> marbles) throws WrongNumberOfMarblesException{
+	/**
+	 * Initializes the Market matrix filled with Marbles and the single Marble on the slide.
+	 * @param nRows number of rows in the matrix
+	 * @param nColumns number of columns in the matrix
+	 * @param marbles colour and number of the marbles inside the Market
+	 * @throws WrongNumberOfMarblesException if a wrong number of marbles is passed as parameter
+	 */
+	private void initializeMatrixAndOutMarble(int nRows, int nColumns, Map<MarbleColour,Integer> marbles)
+			throws WrongNumberOfMarblesException{
 		this.nRows = nRows;
 		this. nColumns = nColumns;
 
 		matrix = new MarbleColour[nRows][nColumns];
-		if (marbles.values().stream().mapToInt(i -> i).sum() != nRows*nColumns + 1) //marbles in matrix + 1 marble out
+		if (marbles.values().stream().mapToInt(i -> i).sum() != nRows*nColumns + 1) //Marbles in matrix + 1 Marble out
 			throw new WrongNumberOfMarblesException();
 
+		// Marbles Map in a List
 		List<MarbleColour> marblesList = new ArrayList<>();
 		for(MarbleColour m : marbles.keySet() )
 			for (int v = 0; v < marbles.get(m); v++)
 				marblesList.add(m);
 
+		// Every cell of the Market matrix is filled with a Marble randomly chosen from the List
 		for(int r=0; r<nRows; r++)
 			for(int c=0; c<nColumns; c++) {
 				int randNum = randGenerator.nextInt(marblesList.size());
@@ -48,10 +91,19 @@ public class Market {
 		outMarble = marblesList.get(0);
 	}
 
-	public MarbleColour[ ][ ] getMarbleMatrix() {
+	/**
+	 * Returns the Market structure.
+	 * @return matrix of Marbles inside the Market
+	 */
+	public MarbleColour[][] getMarbleMatrix() {
 		return cloneMatrix(matrix);
 	}
 
+	/**
+	 * Returns a shallow copy of the Market structure.
+	 * @param matrix matrix of the Marbles inside the Market
+	 * @return matrix representing a copy of the Market
+	 */
 	static MarbleColour[][] cloneMatrix(MarbleColour[][] matrix) {
 		MarbleColour[][] newMatrix = new MarbleColour[matrix.length][];
 		for (int i = 0; i < matrix.length; i++) {
@@ -60,10 +112,20 @@ public class Market {
 		return newMatrix;
 	}
 
+	/**
+	 * Returns the single Marble on the slide, outside the Market.
+	 * @return Marble outside the Market
+	 */
 	public MarbleColour getOutMarble() {
 		return outMarble;
 	}
 
+	/**
+	 * Returns the chosen row of Marbles. Inserts the Marble on the slide in the chosen row, so as to push the Marbles
+	 * in the correct direction and to locate a different Marble on the slide.
+	 * @param row chosen row of Marbles to get Resources from the Market
+	 * @return array of selected Marbles
+	 */
 	public MarbleColour[ ] fetchMarbleRow(int row) {
 		MarbleColour[] marbleRow = new MarbleColour[nColumns];
 
@@ -80,6 +142,12 @@ public class Market {
 		return marbleRow;
 	}
 
+	/**
+	 * Returns the chosen column of Marbles. Inserts the Marble on the slide in the chosen column, so as to push
+	 * the Marbles in the correct direction and to locate a different Marble on the slide.
+	 * @param column chosen column of Marbles to get Resources from the Market
+	 * @return array of selected Marbles
+	 */
 	public MarbleColour[ ] fetchMarbleColumn(int column) {
 		MarbleColour[] marbleColumn = new MarbleColour[nRows];
 
