@@ -49,7 +49,15 @@ public class Market {
 	}
 
 	public MarbleColour[ ][ ] getMarbleMatrix() {
-		return matrix;
+		return cloneMatrix(matrix);
+	}
+
+	static MarbleColour[][] cloneMatrix(MarbleColour[][] matrix) {
+		MarbleColour[][] newMatrix = new MarbleColour[matrix.length][];
+		for (int i = 0; i < matrix.length; i++) {
+			newMatrix[i] = matrix[i].clone();
+		}
+		return newMatrix;
 	}
 
 	public MarbleColour getOutMarble() {
