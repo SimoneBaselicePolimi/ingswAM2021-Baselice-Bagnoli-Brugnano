@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.network.clientrequest.ClientRequestManageResourcesFromMarket;
+import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 
 import java.util.Map;
@@ -24,7 +24,7 @@ public class ManageResourcesFromMarketState extends GameState {
 		return null;
 	}
 
-	public Map<Player,ServerMessage> handleRequestManageResourcesFromMarket(ClientRequestManageResourcesFromMarket request) {
+	public Map<Player,ServerMessage> handleRequestManageResourcesFromMarket(ManageResourcesFromMarketClientRequest request) {
 		return null;
 	}
 

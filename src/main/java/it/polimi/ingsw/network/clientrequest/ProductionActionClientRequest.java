@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 
 import java.util.Map;
 
-public class ClientRequestDevelopmentAction extends ClientRequest {
+public class ProductionActionClientRequest extends ClientRequest {
 
 	public Map<Player, ServerMessage> callHandler(GameState state) {
 		return null;
