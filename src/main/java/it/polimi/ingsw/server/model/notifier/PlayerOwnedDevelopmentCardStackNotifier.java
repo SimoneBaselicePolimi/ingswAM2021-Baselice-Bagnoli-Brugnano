@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.notifier.gameupdate.PlayerOwnedDevelopmentCardStackUpdate;
 
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class PlayerOwnedDevelopmentCardStackNotifier extends PlayerOwnedDevelopm
 		return null;
 	}
 
-	public DevelopmentCard pop() {
+	public DevelopmentCard pop() throws EmptyStackException {
 		return null;
 	}
 
