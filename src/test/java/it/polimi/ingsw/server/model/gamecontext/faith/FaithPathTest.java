@@ -30,13 +30,14 @@ class FaithPathTest {
                 List.of(
                         new VaticanReportSection(2, 3, 100),
                         new VaticanReportSection(10, 13, 200),
-                        new VaticanReportSection(15, 18, 300)
+                        new VaticanReportSection(15, 20, 300)
                 ),
-                new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19},
+                new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19, 20},
                 players
         );
     }
 
+    @Test
     void testWrongConstructorParams() {
         assertThrows(
                 IllegalArgumentException.class,
@@ -48,11 +49,14 @@ class FaithPathTest {
                 () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2,3,4}, null),
                 "Initializing a FaithPath with 0 players should not be allowed"
         );
+
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2,3,4}, new HashSet<>()),
                 "Initializing a FaithPath with 0 players should not be allowed"
         );
+
+
         assertDoesNotThrow(
                 () -> new FaithPath(4, null, new int[]{1,2,3,4}, players)
         );
@@ -81,7 +85,7 @@ class FaithPathTest {
         assertEquals(8, basicFaithPath.getPlayerFaithPosition(player2));
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(player3));
 
-        basicFaithPath.move(player2, 3000);
+        basicFaithPath.move(player2, 1);
         assertEquals(5, basicFaithPath.getPlayerFaithPosition(player1));
         assertEquals(9, basicFaithPath.getPlayerFaithPosition(player2));
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(player3));
@@ -116,11 +120,11 @@ class FaithPathTest {
         assertFalse(e2.hasVaticanMeetingHappened());
         assertFalse(e2.isEndReached());
 
-        FaithPathEvent e3 = faithPath.move(player3, 3); //First pope space reached by Player 3 (position 3)
+        FaithPathEvent e3 = faithPath.move(player3, 13); //Pope space reached by Player 3
         assertTrue(e3.hasVaticanMeetingHappened());
         assertFalse(e3.isEndReached());
 
-        FaithPathEvent e4 = faithPath.move(player1, 19); //Last position reached (1 + 19)
+        FaithPathEvent e4 = faithPath.move(player3, 7); //Last position reached (13+7)
         assertTrue(e4.hasVaticanMeetingHappened());
         assertTrue(e4.isEndReached());
 
@@ -171,7 +175,7 @@ class FaithPathTest {
                 faithPath.getPlayerPopeFavorCardsState(player3)
         );
 
-        faithPath.move(player1, 17); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 18)
+        faithPath.move(player1, 19); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 20)
         assertEquals(
                 List.of(PopeFavorCardState.DISCARDED, PopeFavorCardState.ACTIVE, PopeFavorCardState.ACTIVE),
                 faithPath.getPlayerPopeFavorCardsState(player1)
@@ -200,19 +204,18 @@ class FaithPathTest {
         assertEquals(2, faithPath.getPlayerVictoryPoints(player2));
         assertEquals(0, faithPath.getPlayerVictoryPoints(player3));
 
-
         faithPath.move(player3, 3); //First pope space reached by Player 3 (position 3)
         assertEquals(1, faithPath.getPlayerVictoryPoints(player1));
         assertEquals(2 + 100, faithPath.getPlayerVictoryPoints(player2));
-        assertEquals(3 + 300, faithPath.getPlayerVictoryPoints(player3));
+        assertEquals(3 + 100, faithPath.getPlayerVictoryPoints(player3));
 
         faithPath.move(player2, 8);
         assertEquals(1, faithPath.getPlayerVictoryPoints(player1));
         assertEquals(2 + 8 + 100, faithPath.getPlayerVictoryPoints(player2));
         assertEquals(3 + 100, faithPath.getPlayerVictoryPoints(player3));
 
-        faithPath.move(player1, 17); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 18)
-        assertEquals(1 + 17 + 200 + 300, faithPath.getPlayerVictoryPoints(player1));
+        faithPath.move(player1, 19); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 20)
+        assertEquals(1 + 19 + 200 + 300, faithPath.getPlayerVictoryPoints(player1));
         assertEquals(2 + 8 + 100 + 200, faithPath.getPlayerVictoryPoints(player2));
         assertEquals(3 + 100, faithPath.getPlayerVictoryPoints(player3));
 
