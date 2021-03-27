@@ -40,7 +40,7 @@ class ResourceStorageTest {
     }
 
     @Test
-    void testAddResources() throws ResourceStorageRuleViolationException {
+    void testCanAddResources() throws ResourceStorageRuleViolationException {
 
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
         assertNotNull(storage);
@@ -50,6 +50,7 @@ class ResourceStorageTest {
             ResourceType.STONES, 2,
             ResourceType.COINS, 1
         );
+        assertTrue(storage.canAddResources(resources1));
         storage.addResources(resources1);
         assertEquals(resources1, storage.peekResources());
 
@@ -57,6 +58,7 @@ class ResourceStorageTest {
                 ResourceType.SERVANTS, 2,
                 ResourceType.COINS, 1
         );
+        assertTrue(storage.canAddResources(resources2));
         storage.addResources(resources2);
         assertEquals(
             Map.of(
@@ -70,17 +72,55 @@ class ResourceStorageTest {
     }
 
     @Test
+    void testAddResources() throws ResourceStorageRuleViolationException {
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+        assertNotNull(storage);
+        assertEquals(new HashMap<>(), storage.peekResources(), "The storage should be empty");
+
+        Map<ResourceType, Integer> resources1 = Map.of(
+                ResourceType.STONES, 2,
+                ResourceType.COINS, 1
+        );
+        storage.addResources(resources1);
+        assertEquals(resources1, storage.peekResources());
+
+        Map<ResourceType, Integer> resources2 = Map.of(
+                ResourceType.SERVANTS, 2,
+                ResourceType.COINS, 1
+        );
+        storage.addResources(resources2);
+        assertEquals(
+                Map.of(
+                        ResourceType.STONES, 2,
+                        ResourceType.COINS, 2,
+                        ResourceType.SERVANTS, 2
+                ),
+                storage.peekResources()
+        );
+
+    }
+
+    @Test
     void testAddAndRemoveResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
-        storage.addResources(Map.of(
+        assertTrue(storage.canAddResources(Map.of(
             ResourceType.STONES, 2,
             ResourceType.COINS, 1,
             ResourceType.SERVANTS, 3
+        )));
+        storage.addResources(Map.of(
+                ResourceType.STONES, 2,
+                ResourceType.COINS, 1,
+                ResourceType.SERVANTS, 3
         ));
+        assertTrue(storage.canRemoveResources(Map.of(
+                ResourceType.SERVANTS, 1
+        )));
         storage.removeResources(Map.of(
                 ResourceType.SERVANTS, 1
         ));
+
         assertEquals(
             Map.of(
                 ResourceType.STONES, 2,
@@ -89,7 +129,10 @@ class ResourceStorageTest {
             ),
             storage.peekResources()
         );
-
+        assertTrue(storage.canRemoveResources(Map.of(
+                ResourceType.SERVANTS, 2,
+                ResourceType.COINS, 1
+        )));
         storage.removeResources(Map.of(
             ResourceType.SERVANTS, 2,
             ResourceType.COINS, 1
@@ -100,7 +143,7 @@ class ResourceStorageTest {
             ),
             storage.peekResources()
         );
-
+        assertTrue(storage.canRemoveResources(Map.of(ResourceType.STONES, 2)));
         storage.removeResources(Map.of(ResourceType.STONES, 2));
         assertEquals(new HashMap<>(), storage.peekResources());
 
@@ -109,11 +152,20 @@ class ResourceStorageTest {
     @Test
     void testTryToRemoveTooManyResources() throws ResourceStorageRuleViolationException {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+        assertTrue(storage.canAddResources(Map.of(
+                ResourceType.STONES, 2,
+                ResourceType.COINS, 1,
+                ResourceType.SERVANTS, 3
+        )));
         storage.addResources(Map.of(
                 ResourceType.STONES, 2,
                 ResourceType.COINS, 1,
                 ResourceType.SERVANTS, 3
         ));
+        assertFalse(storage.canRemoveResources(Map.of(
+                ResourceType.COINS, 1,
+                ResourceType.SERVANTS, 4)));
+
         assertThrows(
             NotEnoughResourcesException.class,
             () -> storage.removeResources(Map.of(
