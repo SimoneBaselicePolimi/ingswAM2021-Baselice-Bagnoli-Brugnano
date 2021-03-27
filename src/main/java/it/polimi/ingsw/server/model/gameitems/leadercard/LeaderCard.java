@@ -6,30 +6,22 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import java.util.List;
 import java.util.Map;
 
-public class LeaderCard implements WhiteMarbleSubstitution, LeaderStorage, ProductionDiscount, Production {
+public class LeaderCard {
 
-	public Map<ResourceType, Integer> getProductionResourceCost() {
+	public List<Production> getProductions() {
 		return null;
 	}
 
-	public int getProductionStarResourceCost() {
-		return 0;
-	}
-
-	public Map<ResourceType, Integer> getProductionResourceReward() {
+	public List<ResourceStorage> getResourceStorages() {
 		return null;
 	}
 
-	public int getProductionStarResourceReward() {
-		return 0;
+	public List<ProductionDiscount> getProductionDiscounts() {
+		return null;
 	}
 
-	public int getProductionFaithReward() {
-		return 0;
-	}
-
-	public boolean isProductionActive() {
-		return false;
+	public List<WhiteMarbleSubstitution> getWhiteMarbleSubstitutions() {
+		return null;
 	}
 
 	public int getVictoryPoints() {
@@ -38,30 +30,6 @@ public class LeaderCard implements WhiteMarbleSubstitution, LeaderStorage, Produ
 
 	public LeaderCardState getState() {
 		return null;
-	}
-
-	public Map<ResourceType, Integer> getProductionDiscount() {
-		return null;
-	}
-
-	public boolean isProductionDiscountActive() {
-		return false;
-	}
-
-	public List<MarbleColour> getWhileMarbleSubstitution() {
-		return null;
-	}
-
-	public boolean isWhiteMarbleSubstitutionActive() {
-		return false;
-	}
-
-	public List<ResourceStorage> getLeaderStorage() {
-		return null;
-	}
-
-	public boolean isLeaderStorageActive() {
-		return false;
 	}
 
 }

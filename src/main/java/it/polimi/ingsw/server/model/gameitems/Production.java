@@ -3,18 +3,26 @@ package it.polimi.ingsw.server.model.gameitems;
 
 import java.util.Map;
 
-public interface Production {
+public class Production {
 
-	Map<ResourceType, Integer> getProductionResourceCost();
+	Map<ResourceType, Integer> getProductionResourceCost() {
+		return null;
+	}
 
-	int getProductionStarResourceCost();
+	int getProductionStarResourceCost() {
+		return 0;
+	}
 
-	Map<ResourceType, Integer> getProductionResourceReward();
+	Map<ResourceType, Integer> getProductionResourceReward() {
+		return null;
+	}
 
-	int getProductionStarResourceReward();
+	int getProductionStarResourceReward() {
+		return 0;
+	}
 
-	int getProductionFaithReward();
-
-	boolean isProductionActive();
+	int getProductionFaithReward() {
+		return 0;
+	}
 
 }
