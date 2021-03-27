@@ -69,7 +69,9 @@ class MarketTest {
         Market market1Copy = new Market(new Random(1), nRow, nCol, test21marbles);
         Market market2 = new Market(new Random(2), nRow, nCol, test21marbles);
         assertTrue(marbleMatricesEquals(market1.getMarbleMatrix(), market1Copy.getMarbleMatrix()));
+        assertEquals(market1.getOutMarble(), market1Copy.getOutMarble());
         assertFalse(marbleMatricesEquals(market1.getMarbleMatrix(), market2.getMarbleMatrix()));
+        assertNotEquals(market1.getOutMarble(), market2.getOutMarble());
     }
 
     @Test
