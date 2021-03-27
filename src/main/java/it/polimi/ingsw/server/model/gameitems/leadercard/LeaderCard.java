@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.gameitems.leadercard;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
@@ -7,6 +9,22 @@ import java.util.List;
 import java.util.Map;
 
 public class LeaderCard {
+
+	public boolean areRequirementsSatisfied(PlayerContext playerContext) {
+		return false;
+	}
+
+	public void activateLeaderCard() throws LeaderCardRequirementsNotSatisfied {
+
+	}
+
+	public void discardLeaderCard() {
+
+	}
+
+	public LeaderCardState getState() {
+		return null;
+	}
 
 	public List<Production> getProductions() {
 		return null;
@@ -26,10 +44,6 @@ public class LeaderCard {
 
 	public int getVictoryPoints() {
 		return 0;
-	}
-
-	public LeaderCardState getState() {
-		return null;
 	}
 
 }
