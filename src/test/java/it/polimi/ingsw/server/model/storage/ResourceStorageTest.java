@@ -146,7 +146,7 @@ class ResourceStorageTest {
         assertTrue(storage.canRemoveResources(Map.of(ResourceType.STONES, 2)));
         storage.removeResources(Map.of(ResourceType.STONES, 2));
         assertEquals(new HashMap<>(), storage.peekResources());
-
+        assertTrue(storage.canRemoveResources(Map.of()));
     }
 
     @Test

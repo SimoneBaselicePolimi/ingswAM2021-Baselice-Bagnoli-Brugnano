@@ -39,12 +39,12 @@ public class ResourceStorage {
 	}
 
 	/**
-	 * @param newResources
+	 * @param resources
 	 * @return true if it is possible to remove new resources from the storage
 	 */
-	public boolean canRemoveResources (Map<ResourceType,Integer> newResources){
-		for (ResourceType resource : newResources.keySet()) {
-			if (!this.resources.containsKey(resource) || this.resources.get(resource) < newResources.get(resource))
+	public boolean canRemoveResources (Map<ResourceType,Integer> resources){
+		for (ResourceType resource : resources.keySet()) {
+			if (!this.resources.containsKey(resource) || this.resources.get(resource) < resources.get(resource))
 				return false;
 		}
 		return true;
@@ -68,21 +68,21 @@ public class ResourceStorage {
 
 	/**
 	 * Remove some resources (type and number) from the storage
-	 * @param newResources Map of resources that the method removes from the storage
+	 * @param resources Map of resources that the method removes from the storage
 	 * @return newResources Map of resources that the method removes from the storage
 	 * @throws NotEnoughResourcesException if there aren't enough resources to remove
 	 */
-	public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> newResources)
+	public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> resources)
 			throws NotEnoughResourcesException {
-		if(!canRemoveResources(newResources))
+		if(!canRemoveResources(resources))
 			throw new NotEnoughResourcesException();
-		for (ResourceType resource : newResources.keySet()) {
-			if (this.resources.get(resource) == newResources.get(resource))
+		for (ResourceType resource : resources.keySet()) {
+			if (this.resources.get(resource) == resources.get(resource))
 				this.resources.remove(resource);
 			else
-				this.resources.put(resource, this.resources.get(resource) - newResources.get(resource));
+				this.resources.put(resource, this.resources.get(resource) - resources.get(resource));
 		}
-		return newResources;
+		return resources;
 	}
 
 
