@@ -4,16 +4,52 @@ import it.polimi.ingsw.server.model.Player;
 
 import java.util.*;
 
+/**
+ * This class represents the Faith Track, in which every Player moves a Faith Marker.
+ * When a Player reaches a Pope space, a Vatican Report occurs and all the Players change the state of their
+ * Pope’s Favor cards. At the end of the Game, victory points due to Pope’s Favor cards and position in the Track
+ * are added together.
+ */
 public class FaithPath {
-
+	/**
+	 * Length of the Faith Track
+	 */
 	protected int faithPathLength;
+	/**
+	 * List of spaces in which a Vatican Report occurs
+	 */
 	protected final List<VaticanReportSection> vaticanReportSections;
+	/**
+	 * Array of victory points given at the end of the Game to the Player based on his position in the Faith Track
+	 */
 	protected int[] victoryPointsByPosition;
+	/**
+	 * Players in the Game
+	 */
 	protected Set<Player> players;
+	/**
+	 * Position of each Player in the Faith Track
+	 */
 	protected Map<Player,Integer> faithPositions = new HashMap<>();
+	/**
+	 * State of the Pope's Favor cards of each Player
+	 */
 	protected Map<Player, List<PopeFavorCardState>> popeFavorCards = new HashMap<>();
+	/**
+	 * Victory points scored by each Player
+	 */
 	protected Map<Player,Integer> victoryPoints = new HashMap<>();
 
+	/**
+	 * Faith Path constructor.
+	 * Initialize each Player's position in the Faith Track and the state of the Pope's Favor cards.
+	 * @param faithPathLength length of the Faith Track
+	 * @param vaticanSections spaces in which a Vatican Report can occur
+	 * @param victoryPointsByPosition victory points given by each space in the Faith Track
+	 * @param players players in the Game
+	 * @throws IllegalArgumentException if there are no Players or if the victory points passed as parameter
+	 * are not as many as the spaces in the Faith Track
+	 */
 	public FaithPath(int faithPathLength, List<VaticanReportSection> vaticanSections,
 					 int[] victoryPointsByPosition, Set<Player> players) throws IllegalArgumentException {
 		if (faithPathLength != victoryPointsByPosition.length || players == null || players.isEmpty())
@@ -32,28 +68,46 @@ public class FaithPath {
 		}
 	}
 
+	/**
+	 * Returns the position of a specific Player in the Faith Track.
+	 * @param player player to get the position of
+	 * @return position of the Player in the Faith Track
+	 */
 	public int getPlayerFaithPosition(Player player) {
 		return faithPositions.get(player);
 	}
 
+	/**
+	 * Returns the position of each Player in the Faith Track.
+	 * @return positions of each Player in the Faith Track
+	 */
 	public Map<Player, Integer> getFaithPosition() {
 		return faithPositions;
 	}
 
+	/**
+	 * Returns the states of the Pope's Favor cards of a specific Player.
+	 * @param player player to get the Pope's Favor cards of
+	 * @return states of the Pope's Favor cards of the Player
+	 */
 	public List<PopeFavorCardState> getPlayerPopeFavorCardsState(Player player) {
 		return popeFavorCards.get(player);
 	}
 
+	/**
+	 * Returns the states of the Pope's Favor cards of each Player.
+	 * @return states of the Pope's Favor cards of each Player
+	 */
 	public Map<Player, List<PopeFavorCardState>> getPopeFavorCardsState() {
 		return popeFavorCards;
 	}
 
-	public Map<Player,Integer> getVictoryPoints () {
-		for(Player player : players)
-			victoryPoints.put(player,getPlayerVictoryPoints(player));
-		return victoryPoints;
-	}
-
+	/**
+	 * Returns the victory points of a specific Player based on his active Pope's Favor cards and
+	 * his position in the Faith Track.
+	 * @param player player to get the victory points of
+	 * @return number of victory points scored by the Player
+	 */
 	public int getPlayerVictoryPoints(Player player) {
 		int victoryPoints = 0;
 		for(int numSection = 0; numSection < vaticanReportSections.size(); numSection++ ) {
@@ -64,31 +118,48 @@ public class FaithPath {
 		return victoryPoints;
 	}
 
+	/**
+	 * Returns the victory points scored by each Player.
+	 * @return number of victory points scored by each Player
+	 */
+	public Map<Player,Integer> getVictoryPoints () {
+		for(Player player : players)
+			victoryPoints.put(player,getPlayerVictoryPoints(player));
+		return victoryPoints;
+	}
+
+	/**
+	 * Returns true if the last position of the Faith Track has been reached, triggering the end of the Game.
+	 * @return true if at least one Player has reached the end of the Faith Track, false if no Player has reached it
+	 */
 	public boolean lastPositionHasBeenReached() {
 		return faithPositions.values().stream().anyMatch(x -> (x >= faithPathLength - 1));
 	}
 
+	/**
+	 * This method represent the action of a Player moving in the Faith Track for a specific number of steps forward.
+	 * This action can trigger a Vatican Report if a Pope space is reached by the Player. In this case, each Player
+	 * has to change the state of his Pope's Favor cards based on their positions in the Track.
+	 * @param player Player moving in the Faith Track
+	 * @param steps number of steps a Player has to move forward in the Track
+	 * @return a Faith Path Event, which states if a Vatican Report happened or if the end of the Faith Track
+	 * is reached by the Player after moving
+	 */
 	public FaithPathEvent move(Player player, int steps) {
 		FaithPathEvent faithPathEvent;
 		faithPositions.put(player, Math.min(faithPositions.get(player) + steps, faithPathLength - 1));
-		boolean vaticanMeeting = false;
+		boolean vaticanReport = false;
 		int numSection = 0;
 		for (VaticanReportSection section : vaticanReportSections) {
 			if (getPlayerFaithPosition(player) >= section.getPopeSpacePos() &&
 					popeFavorCards.get(player).get(numSection) == PopeFavorCardState.HIDDEN) {
-				vaticanMeeting = true;
-				popeFavorCards.get(player).set(numSection, PopeFavorCardState.ACTIVE);
+				vaticanReport = true;
 				for(Player p : players)
-					if (p != player) {
-						if (getPlayerFaithPosition(p) >= section.getSectionInitialPos())
-							popeFavorCards.get(p).set(numSection, PopeFavorCardState.ACTIVE);
-						else
-							popeFavorCards.get(p).set(numSection, PopeFavorCardState.DISCARDED);
-					}
+					turnPopeFavorCard(p, section, numSection);
 			}
 			numSection++;
 		}
-		if(vaticanMeeting) {
+		if(vaticanReport) {
 			if (lastPositionHasBeenReached())
 				return new FaithPathEvent(true, true);
 			return new FaithPathEvent(false, true);
@@ -98,5 +169,20 @@ public class FaithPath {
 		else
 			faithPathEvent = new FaithPathEvent(false, false);
 		return faithPathEvent;
+	}
+
+	/**
+	 * Applies the changes of state to the Pope's Favor cards of a specific Player when a Vatican Report occurred.
+	 * The Pope's Favor card is activated if the Player's position is within (or beyond) the Vatican Report section
+	 * where this Vatican Report occurred, otherwise it is discarded.
+	 * @param player player who owns the Pope's Favor card to change state of
+	 * @param section characteristics of the Vatican Report section in which this Vatican Report occurred
+	 * @param numSection number of this Vatican Report section
+	 */
+	public void turnPopeFavorCard(Player player, VaticanReportSection section, int numSection) {
+		if (getPlayerFaithPosition(player) >= section.getSectionInitialPos())
+			popeFavorCards.get(player).set(numSection, PopeFavorCardState.ACTIVE);
+		else
+			popeFavorCards.get(player).set(numSection, PopeFavorCardState.DISCARDED);
 	}
 }
