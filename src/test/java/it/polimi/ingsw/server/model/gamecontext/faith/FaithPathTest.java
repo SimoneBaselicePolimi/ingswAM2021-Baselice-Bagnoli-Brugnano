@@ -30,9 +30,9 @@ class FaithPathTest {
                 List.of(
                         new VaticanReportSection(2, 3, 100),
                         new VaticanReportSection(10, 13, 200),
-                        new VaticanReportSection(15, 20, 300)
+                        new VaticanReportSection(15, 19, 300)
                 ),
-                new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19, 20},
+                new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19},
                 players
         );
     }
@@ -85,7 +85,7 @@ class FaithPathTest {
         assertEquals(8, basicFaithPath.getPlayerFaithPosition(player2));
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(player3));
 
-        basicFaithPath.move(player2, 1);
+        basicFaithPath.move(player2, 3000);
         assertEquals(5, basicFaithPath.getPlayerFaithPosition(player1));
         assertEquals(9, basicFaithPath.getPlayerFaithPosition(player2));
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(player3));
@@ -124,7 +124,7 @@ class FaithPathTest {
         assertTrue(e3.hasVaticanMeetingHappened());
         assertFalse(e3.isEndReached());
 
-        FaithPathEvent e4 = faithPath.move(player3, 7); //Last position reached (13+7)
+        FaithPathEvent e4 = faithPath.move(player3, 6); //Last position reached (13+6)
         assertTrue(e4.hasVaticanMeetingHappened());
         assertTrue(e4.isEndReached());
 
@@ -175,7 +175,7 @@ class FaithPathTest {
                 faithPath.getPlayerPopeFavorCardsState(player3)
         );
 
-        faithPath.move(player1, 19); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 20)
+        faithPath.move(player1, 18); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 19)
         assertEquals(
                 List.of(PopeFavorCardState.DISCARDED, PopeFavorCardState.ACTIVE, PopeFavorCardState.ACTIVE),
                 faithPath.getPlayerPopeFavorCardsState(player1)
@@ -214,8 +214,8 @@ class FaithPathTest {
         assertEquals(2 + 8 + 100, faithPath.getPlayerVictoryPoints(player2));
         assertEquals(3 + 100, faithPath.getPlayerVictoryPoints(player3));
 
-        faithPath.move(player1, 19); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 20)
-        assertEquals(1 + 19 + 200 + 300, faithPath.getPlayerVictoryPoints(player1));
+        faithPath.move(player1, 18); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 19)
+        assertEquals(1 + 18 + 200 + 300, faithPath.getPlayerVictoryPoints(player1));
         assertEquals(2 + 8 + 100 + 200, faithPath.getPlayerVictoryPoints(player2));
         assertEquals(3 + 100, faithPath.getPlayerVictoryPoints(player3));
 

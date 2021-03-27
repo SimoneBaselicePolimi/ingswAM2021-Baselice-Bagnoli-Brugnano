@@ -3,17 +3,16 @@ package it.polimi.ingsw.server.model.gamecontext.faith;
 import it.polimi.ingsw.server.model.Player;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class FaithPath {
 
-	private int faithPathLength;
-	private final List<VaticanReportSection> vaticanReportSections;
-	private int[] victoryPointsByPosition;
-	private Set<Player> players;
-	private Map<Player,Integer> faithPositions = new HashMap<>();
-	private Map<Player, List<PopeFavorCardState>> popeFavorCards = new HashMap<>();
-	private Map<Player,Integer> victoryPoints = new HashMap<>();
+	protected int faithPathLength;
+	protected final List<VaticanReportSection> vaticanReportSections;
+	protected int[] victoryPointsByPosition;
+	protected Set<Player> players;
+	protected Map<Player,Integer> faithPositions = new HashMap<>();
+	protected Map<Player, List<PopeFavorCardState>> popeFavorCards = new HashMap<>();
+	protected Map<Player,Integer> victoryPoints = new HashMap<>();
 
 	public FaithPath(int faithPathLength, List<VaticanReportSection> vaticanSections,
 					 int[] victoryPointsByPosition, Set<Player> players) throws IllegalArgumentException {
@@ -49,8 +48,10 @@ public class FaithPath {
 		return popeFavorCards;
 	}
 
-	public boolean lastPositionHasBeenReached() {
-		 return faithPositions.values().stream().anyMatch(x -> (x>=faithPathLength));
+	public Map<Player,Integer> getVictoryPoints () {
+		for(Player player : players)
+			victoryPoints.put(player,getPlayerVictoryPoints(player));
+		return victoryPoints;
 	}
 
 	public int getPlayerVictoryPoints(Player player) {
@@ -59,14 +60,17 @@ public class FaithPath {
 			if (popeFavorCards.get(player).get(numSection) == PopeFavorCardState.ACTIVE)
 				victoryPoints += vaticanReportSections.get(numSection).getSectionVictoryPoints();
 		}
-		if (getPlayerFaithPosition(player)>0)
-			victoryPoints += victoryPointsByPosition[getPlayerFaithPosition(player)-1];
+		victoryPoints += victoryPointsByPosition[getPlayerFaithPosition(player)];
 		return victoryPoints;
+	}
+
+	public boolean lastPositionHasBeenReached() {
+		return faithPositions.values().stream().anyMatch(x -> (x >= faithPathLength - 1));
 	}
 
 	public FaithPathEvent move(Player player, int steps) {
 		FaithPathEvent faithPathEvent;
-		faithPositions.put(player, faithPositions.get(player) + steps);
+		faithPositions.put(player, Math.min(faithPositions.get(player) + steps, faithPathLength - 1));
 		boolean vaticanMeeting = false;
 		int numSection = 0;
 		for (VaticanReportSection section : vaticanReportSections) {
