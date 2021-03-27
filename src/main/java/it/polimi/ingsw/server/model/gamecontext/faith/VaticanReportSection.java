@@ -8,10 +8,12 @@ public class VaticanReportSection {
      * Position in which this Vatican Report section start
      */
     public final int sectionInitialPos;
+
     /**
      * Position of the Pope space related to this Vatican Report section
      */
     public final int popeSpacePos;
+
     /**
      * Number of victory points scored by a Player for the related Pope's Favor card turned face-up (active)
      */

@@ -9,6 +9,7 @@ public class FaithPathEvent {
 	 * States if the final space of the Faith Track is reached
 	 */
 	private boolean endReached;
+
 	/**
 	 * States if at least one Vatican Report has occurred
 	 */

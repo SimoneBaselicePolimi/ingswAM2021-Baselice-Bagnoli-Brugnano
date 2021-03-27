@@ -55,7 +55,7 @@ public class FaithPathSinglePlayer extends FaithPath {
 		for (VaticanReportSection section : vaticanReportSections) {
 			if (blackCrossFaithPosition >= section.getPopeSpacePos()) {
 				vaticanMeeting = true;
-				Player singlePlayer =  players.iterator().next();
+				Player singlePlayer =  popeFavorCards.keySet().iterator().next();
 				turnPopeFavorCard(singlePlayer, section, numSection);
 			}
 			numSection++;

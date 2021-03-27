@@ -15,26 +15,27 @@ public class FaithPath {
 	 * Length of the Faith Track
 	 */
 	protected int faithPathLength;
+
 	/**
 	 * List of spaces in which a Vatican Report occurs
 	 */
 	protected final List<VaticanReportSection> vaticanReportSections;
+
 	/**
 	 * Array of victory points given at the end of the Game to the Player based on his position in the Faith Track
 	 */
 	protected int[] victoryPointsByPosition;
-	/**
-	 * Players in the Game
-	 */
-	protected Set<Player> players;
+
 	/**
 	 * Position of each Player in the Faith Track
 	 */
 	protected Map<Player,Integer> faithPositions = new HashMap<>();
+
 	/**
 	 * State of the Pope's Favor cards of each Player
 	 */
 	protected Map<Player, List<PopeFavorCardState>> popeFavorCards = new HashMap<>();
+
 	/**
 	 * Victory points scored by each Player
 	 */
@@ -57,7 +58,6 @@ public class FaithPath {
 		this.faithPathLength = faithPathLength;
 		this.vaticanReportSections = vaticanSections;
 		this.victoryPointsByPosition = victoryPointsByPosition;
-		this.players = players;
 		for (Player player : players) {
 			faithPositions.put(player, 0);
 			List<PopeFavorCardState> cardList = new ArrayList<>();
@@ -123,7 +123,7 @@ public class FaithPath {
 	 * @return number of victory points scored by each Player
 	 */
 	public Map<Player,Integer> getVictoryPoints () {
-		for(Player player : players)
+		for(Player player : victoryPoints.keySet())
 			victoryPoints.put(player,getPlayerVictoryPoints(player));
 		return victoryPoints;
 	}
@@ -133,7 +133,7 @@ public class FaithPath {
 	 * @return true if at least one Player has reached the end of the Faith Track, false if no Player has reached it
 	 */
 	public boolean lastPositionHasBeenReached() {
-		return faithPositions.values().stream().anyMatch(x -> (x >= faithPathLength - 1));
+		return faithPositions.values().stream().anyMatch(x -> (x == faithPathLength - 1));
 	}
 
 	/**
@@ -154,21 +154,12 @@ public class FaithPath {
 			if (getPlayerFaithPosition(player) >= section.getPopeSpacePos() &&
 					popeFavorCards.get(player).get(numSection) == PopeFavorCardState.HIDDEN) {
 				vaticanReport = true;
-				for(Player p : players)
+				for(Player p : popeFavorCards.keySet())
 					turnPopeFavorCard(p, section, numSection);
 			}
 			numSection++;
 		}
-		if(vaticanReport) {
-			if (lastPositionHasBeenReached())
-				return new FaithPathEvent(true, true);
-			return new FaithPathEvent(false, true);
-		}
-		if (lastPositionHasBeenReached())
-			faithPathEvent = new FaithPathEvent(true, false);
-		else
-			faithPathEvent = new FaithPathEvent(false, false);
-		return faithPathEvent;
+		return new FaithPathEvent(vaticanReport, lastPositionHasBeenReached());
 	}
 
 	/**
@@ -179,7 +170,7 @@ public class FaithPath {
 	 * @param section characteristics of the Vatican Report section in which this Vatican Report occurred
 	 * @param numSection number of this Vatican Report section
 	 */
-	public void turnPopeFavorCard(Player player, VaticanReportSection section, int numSection) {
+	protected void turnPopeFavorCard(Player player, VaticanReportSection section, int numSection) {
 		if (getPlayerFaithPosition(player) >= section.getSectionInitialPos())
 			popeFavorCards.get(player).set(numSection, PopeFavorCardState.ACTIVE);
 		else
