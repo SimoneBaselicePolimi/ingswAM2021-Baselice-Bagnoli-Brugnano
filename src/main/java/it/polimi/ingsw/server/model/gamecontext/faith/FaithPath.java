@@ -146,8 +146,8 @@ public class FaithPath {
 	 * is reached by the Player after moving
 	 */
 	public FaithPathEvent move(Player player, int steps) {
-		FaithPathEvent faithPathEvent;
 		faithPositions.put(player, Math.min(faithPositions.get(player) + steps, faithPathLength - 1));
+
 		boolean vaticanReport = false;
 		int numSection = 0;
 		for (VaticanReportSection section : vaticanReportSections) {

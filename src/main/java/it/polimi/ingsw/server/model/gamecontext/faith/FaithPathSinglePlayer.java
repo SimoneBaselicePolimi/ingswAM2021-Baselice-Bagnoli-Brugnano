@@ -46,22 +46,23 @@ public class FaithPathSinglePlayer extends FaithPath {
 	 * is reached by the Black Cross token after moving, triggering the immediate end of the Game
 	 */
 	public FaithPathEvent moveBlackCross(int steps) {
-        FaithPathEvent faithPathEvent;
         blackCrossFaithPosition = Math.min(blackCrossFaithPosition + steps, faithPathLength - 1);
-        if(blackCrossFaithPosition >= faithPathLength - 1)
-        	return new FaithPathEvent(true, false);
-		boolean vaticanMeeting = false;
+
+        boolean endReached = false;
+		boolean vaticanReport = false;
+
+        if(blackCrossFaithPosition == faithPathLength - 1)
+        	endReached = true;
+
 		int numSection = 0;
 		for (VaticanReportSection section : vaticanReportSections) {
 			if (blackCrossFaithPosition >= section.getPopeSpacePos()) {
-				vaticanMeeting = true;
+				vaticanReport = true;
 				Player singlePlayer =  popeFavorCards.keySet().iterator().next();
 				turnPopeFavorCard(singlePlayer, section, numSection);
 			}
 			numSection++;
 		}
-		if(vaticanMeeting)
-			return new FaithPathEvent(false, true);
-		return new FaithPathEvent(false, false);
+		return new FaithPathEvent(endReached, vaticanReport);
 	}
 }
