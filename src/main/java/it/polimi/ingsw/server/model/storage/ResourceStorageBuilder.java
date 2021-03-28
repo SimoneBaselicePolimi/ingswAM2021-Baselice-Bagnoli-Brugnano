@@ -8,13 +8,21 @@ public class ResourceStorageBuilder {
 	 * List of rules that the storage implements when the storage is created
 	 */
 	private List<ResourceStorageRule> rules = new ArrayList<>();;
+	private String storageID;
+
+	/**
+	 * ResourceStorageBuilder constructor
+	 */
+	public ResourceStorageBuilder(String storageID){
+		this.storageID = storageID;
+	}
 
 	/**
 	 * Create new ResourceStorageBuilder
 	 * @return ResourceStorageBuilder
 	 */
-	public static ResourceStorageBuilder initResourceStorageBuilder() {
-		return new ResourceStorageBuilder();
+	public static ResourceStorageBuilder initResourceStorageBuilder(String storageID) {
+		return new ResourceStorageBuilder(storageID);
 	}
 
 	/**
@@ -22,7 +30,7 @@ public class ResourceStorageBuilder {
 	 * @return ResourceStorage
 	 */
 	public ResourceStorage createResourceStorage() {
-		return new ResourceStorage(rules);
+		return new ResourceStorage(rules, storageID);
 	}
 
 	/**

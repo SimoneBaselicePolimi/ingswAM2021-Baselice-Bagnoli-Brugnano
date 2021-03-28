@@ -11,8 +11,8 @@ import java.util.Optional;
 
 public class ResourceStorageNotifier extends ResourceStorage implements Notifier<ResourceStorageUpdate> {
 
-	public ResourceStorageNotifier(List<ResourceStorageRule> rules) {
-		super(rules);
+	public ResourceStorageNotifier(List<ResourceStorageRule> rules, String resourceID) {
+		super(rules, resourceID);
 	}
 
 	@Override

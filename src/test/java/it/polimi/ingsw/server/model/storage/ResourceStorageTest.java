@@ -14,7 +14,7 @@ class ResourceStorageTest {
 
     @Test
     void testResourceStorageWith2TrueRules() {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
             .addRule(new TrueRule1())
             .addRule(new TrueRule2())
             .createResourceStorage();
@@ -27,7 +27,7 @@ class ResourceStorageTest {
 
     @Test
     void testResourceStorageWith2TrueRulesAnd1False() {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
             .addRule(new TrueRule1())
             .addRule(new FalseRule1())
             .addRule(new TrueRule2())
@@ -42,7 +42,7 @@ class ResourceStorageTest {
     @Test
     void testCanAddResources() throws ResourceStorageRuleViolationException {
 
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
         assertNotNull(storage);
         assertEquals(new HashMap<>(), storage.peekResources(), "The storage should be empty");
 
@@ -73,7 +73,7 @@ class ResourceStorageTest {
 
     @Test
     void testAddResources() throws ResourceStorageRuleViolationException {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
         assertNotNull(storage);
         assertEquals(new HashMap<>(), storage.peekResources(), "The storage should be empty");
 
@@ -103,7 +103,7 @@ class ResourceStorageTest {
     @Test
     void testAddAndRemoveResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
         assertTrue(storage.canAddResources(Map.of(
             ResourceType.STONES, 2,
             ResourceType.COINS, 1,
@@ -151,7 +151,7 @@ class ResourceStorageTest {
 
     @Test
     void testTryToRemoveTooManyResources() throws ResourceStorageRuleViolationException {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
         assertTrue(storage.canAddResources(Map.of(
                 ResourceType.STONES, 2,
                 ResourceType.COINS, 1,
@@ -174,6 +174,28 @@ class ResourceStorageTest {
             )),
             "It should not be possible to remove 4 SERVANTS from the storage because it has only 3 SERVANTS"
         );
+    }
+
+    @Test
+    void testEqualsID () {
+        ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder("s1")
+                .createResourceStorage();
+        ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder("s2")
+                .createResourceStorage();
+        ResourceStorage storage3 = ResourceStorageBuilder.initResourceStorageBuilder("s3")
+                .createResourceStorage();
+        ResourceStorage storage4 = ResourceStorageBuilder.initResourceStorageBuilder("s1")
+                .createResourceStorage();
+        ResourceStorage storage5 = ResourceStorageBuilder.initResourceStorageBuilder("s1")
+                .createResourceStorage();
+        ResourceStorage storage6 = ResourceStorageBuilder.initResourceStorageBuilder("s6")
+                .createResourceStorage();
+
+        assertEquals(storage1, storage4);
+        assertEquals(storage1, storage5);
+        assertNotEquals(storage1, storage6);
+        assertNotEquals(storage6, storage5);
+        assertNotEquals(storage4, storage2);
     }
 
     class TrueRule1 extends ResourceStorageRule {

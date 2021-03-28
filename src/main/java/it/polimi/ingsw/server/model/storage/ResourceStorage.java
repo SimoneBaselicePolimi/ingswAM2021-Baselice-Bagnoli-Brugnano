@@ -2,12 +2,15 @@ package it.polimi.ingsw.server.model.storage;
 
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ResourceStorage {
+	/**
+	 * ID storage identificator
+	 */
+	private String storageID;
 	/**
 	 * List of rules that the storage implements
 	 */
@@ -21,8 +24,17 @@ public class ResourceStorage {
 	 * ResourceStorage Constructor
 	 * @param rules
 	 */
-	protected ResourceStorage(List<ResourceStorageRule> rules){
+	protected ResourceStorage(List<ResourceStorageRule> rules, String storageID){
 		this.rules = rules;
+		this.storageID = storageID;
+	}
+
+
+	/**
+	 * @return storage identificator
+	 */
+	public String getStorageID(){
+		return storageID;
 	}
 
 	/**
@@ -93,4 +105,15 @@ public class ResourceStorage {
 		return this.resources;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof ResourceStorage))
+			return false;
+		ResourceStorage m = (ResourceStorage) o;
+			return (storageID.equals(m.storageID));
+	}
+	@Override
+	public int hashCode() {
+		return storageID.hashCode();
+	}
 }

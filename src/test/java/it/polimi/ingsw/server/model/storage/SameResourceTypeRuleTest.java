@@ -11,7 +11,7 @@ class SameResourceTypeRuleTest {
 
     @Test
     void testCheckRule() throws NotEnoughResourcesException {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
                 .addRule(new SameResourceTypeRule())
                 .createResourceStorage();
         assertThrows(

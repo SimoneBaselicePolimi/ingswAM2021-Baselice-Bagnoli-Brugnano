@@ -13,9 +13,9 @@ class DifferentResourceTypesInDifferentStoragesRuleTest {
     void testCheckRule() throws NotEnoughResourcesException {
         DifferentResourceTypesInDifferentStoragesRule rule = new DifferentResourceTypesInDifferentStoragesRule();
         ResourceStorage storage1 =
-                ResourceStorageBuilder.initResourceStorageBuilder().addRule(rule).createResourceStorage();
+                ResourceStorageBuilder.initResourceStorageBuilder("s1").addRule(rule).createResourceStorage();
         ResourceStorage storage2 =
-                ResourceStorageBuilder.initResourceStorageBuilder().addRule(rule).createResourceStorage();
+                ResourceStorageBuilder.initResourceStorageBuilder("s2").addRule(rule).createResourceStorage();
         assertDoesNotThrow(() -> storage1.addResources(Map.of(ResourceType.COINS, 3)));
         assertDoesNotThrow(() -> storage1.addResources(Map.of(ResourceType.SERVANTS, 2)));
         assertThrows(
@@ -34,12 +34,12 @@ class DifferentResourceTypesInDifferentStoragesRuleTest {
                 () -> storage1.addResources(Map.of(ResourceType.SERVANTS, 1))
         );
         ResourceStorage storage3 =
-                ResourceStorageBuilder.initResourceStorageBuilder().addRule(rule).createResourceStorage();
+                ResourceStorageBuilder.initResourceStorageBuilder("s3").addRule(rule).createResourceStorage();
         assertThrows(
                 ResourceStorageRuleViolationException.class,
                 () -> storage3.addResources(Map.of(ResourceType.COINS, 4))
         );
-        ResourceStorage storage4 = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage4 = ResourceStorageBuilder.initResourceStorageBuilder("s4")
                 .addRule(new DifferentResourceTypesInDifferentStoragesRule())
                 .createResourceStorage();
         assertDoesNotThrow(() -> storage4.addResources(Map.of(ResourceType.COINS, 4)));

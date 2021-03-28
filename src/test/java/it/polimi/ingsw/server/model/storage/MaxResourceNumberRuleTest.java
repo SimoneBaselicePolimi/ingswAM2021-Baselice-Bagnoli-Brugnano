@@ -11,7 +11,7 @@ class MaxResourceNumberRuleTest {
 
     @Test
     void testCheckRuleLimit0() {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
                 .addRule(new MaxResourceNumberRule(0))
                 .createResourceStorage();
         assertThrows(
@@ -22,7 +22,7 @@ class MaxResourceNumberRuleTest {
 
     @Test
     void testCheckRuleLimit3() throws NotEnoughResourcesException {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
                 .addRule(new MaxResourceNumberRule(3))
                 .createResourceStorage();
         assertThrows(
