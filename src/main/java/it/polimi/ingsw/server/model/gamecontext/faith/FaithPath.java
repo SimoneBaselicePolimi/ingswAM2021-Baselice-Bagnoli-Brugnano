@@ -159,7 +159,7 @@ public class FaithPath {
 			}
 			numSection++;
 		}
-		return new FaithPathEvent(vaticanReport, lastPositionHasBeenReached());
+		return new FaithPathEvent(lastPositionHasBeenReached(), vaticanReport);
 	}
 
 	/**
