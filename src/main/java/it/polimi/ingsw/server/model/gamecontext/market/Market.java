@@ -136,7 +136,7 @@ public class Market {
 	 * number of rows of the Market matrix
 	 */
 	public MarbleColour[ ] fetchMarbleRow(int row) throws IllegalArgumentException{
-		if(row<=0 || row>=nRows - 1)
+		if(row<0 || row>=nRows)
 			throw new IllegalArgumentException();
 
 		MarbleColour[] marbleRow = new MarbleColour[nColumns];
@@ -163,7 +163,7 @@ public class Market {
 	 * number of columns of the Market matrix
 	 */
 	public MarbleColour[ ] fetchMarbleColumn(int column) throws IllegalArgumentException{
-		if(column<=0 || column>=nColumns - 1)
+		if(column<0 || column>=nColumns)
 			throw new IllegalArgumentException();
 
 		MarbleColour[] marbleColumn = new MarbleColour[nRows];
