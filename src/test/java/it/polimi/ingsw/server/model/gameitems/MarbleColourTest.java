@@ -1,13 +1,12 @@
 package it.polimi.ingsw.server.model.gameitems;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MarbleColourTest {
 
+    // Marbles Initialization
     MarbleColour red1 = new MarbleColour(
             Optional.of(ResourceType.SERVANTS), 1, false, "RedMarble");
     MarbleColour red2 = new MarbleColour(
@@ -19,7 +18,9 @@ class MarbleColourTest {
     MarbleColour green1 = new MarbleColour(
             Optional.of(ResourceType.COINS), 0, false, "GreenMarble");
 
-
+    /**
+     * Tests the class constructor and the methods to get different attributes of a Marble.
+     */
     @Test
     void MarbleColourConstructorTest() {
         assertEquals(Optional.of(ResourceType.SERVANTS), red1.getResourceType());
@@ -29,6 +30,9 @@ class MarbleColourTest {
         assertTrue(red3.isSpecialMarble());
     }
 
+    /**
+     * Tests the equality between two Marbles only checking the equality of their ID.
+     */
     @Test
     void testEquals() {
         assertEquals(red1, red2);
