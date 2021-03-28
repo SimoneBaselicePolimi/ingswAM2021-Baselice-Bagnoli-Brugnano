@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface Production {
 
-	Map<ResourceType, Integer> getProductionCost();
+	Map<ResourceType, Integer> getProductionResourceCost();
 
 	int getProductionStarResourceCost();
 

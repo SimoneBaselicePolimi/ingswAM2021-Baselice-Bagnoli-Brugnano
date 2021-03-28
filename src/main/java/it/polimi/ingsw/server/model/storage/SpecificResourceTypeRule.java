@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class SpecificResourceTypeRule extends ResourceStorageRule {
 
-	public SpecificResourceTypeRule(int resourceType) {
+	public SpecificResourceTypeRule(ResourceType resourceType) {
 
 	}
 

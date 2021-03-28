@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class LeaderCard implements WhiteMarbleSubstitution, LeaderStorage, ProductionDiscount, Production {
 
-	public Map<ResourceType, Integer> getProductionCost() {
+	public Map<ResourceType, Integer> getProductionResourceCost() {
 		return null;
 	}
 

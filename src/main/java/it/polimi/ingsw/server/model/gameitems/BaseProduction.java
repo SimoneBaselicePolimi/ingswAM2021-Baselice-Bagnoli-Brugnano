@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class BaseProduction implements Production {
 
-	public Map<ResourceType, Integer> getProductionCost() {
+	public Map<ResourceType, Integer> getProductionResourceCost() {
 		return null;
 	}
 

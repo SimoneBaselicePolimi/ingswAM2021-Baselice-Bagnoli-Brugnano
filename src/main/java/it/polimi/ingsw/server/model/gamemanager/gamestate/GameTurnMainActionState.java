@@ -2,10 +2,10 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.network.clientrequest.ClientRequestLeaderAction;
-import it.polimi.ingsw.network.clientrequest.ClientRequestMarketAction;
-import it.polimi.ingsw.network.clientrequest.ClientRequestDevelopmentAction;
-import it.polimi.ingsw.network.clientrequest.ClientRequestProductionAction;
+import it.polimi.ingsw.network.clientrequest.LeaderActionClientRequest;
+import it.polimi.ingsw.network.clientrequest.MarketActionClientRequest;
+import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
+import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.network.servermessage.*;
 
 import java.util.Map;
@@ -32,19 +32,19 @@ public class GameTurnMainActionState extends GameState {
 		return null;
 	}
 
-	public Map<Player, ServerMessageLeaderAction> handleRequestLeaderAction(ClientRequestLeaderAction request) {
+	public Map<Player, LeaderActionServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessageMarketAction> handleRequestMarketAction(ClientRequestMarketAction request) {
+	public Map<Player, MarketActionServerMessage> handleRequestMarketAction(MarketActionClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessageDevelopmentAction> handleRequestDevelopmentAction(ClientRequestDevelopmentAction request) {
+	public Map<Player, DevelopmentActionServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessageProductionAction> handleRequestProductionAction(ClientRequestProductionAction request) {
+	public Map<Player, ProductionActionServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) {
 		return null;
 	}
 

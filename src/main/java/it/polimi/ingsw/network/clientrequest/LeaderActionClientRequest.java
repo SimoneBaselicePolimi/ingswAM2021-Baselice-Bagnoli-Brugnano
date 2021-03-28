@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 
 import java.util.Map;
 
-public class InitialChoiceCR extends ClientRequest {
+public class LeaderActionClientRequest extends ClientRequest {
 
 	public Map<Player, ServerMessage> callHandler(GameState state) {
 		return null;
