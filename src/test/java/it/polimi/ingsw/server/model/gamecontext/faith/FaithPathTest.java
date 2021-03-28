@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FaithPathTest {
 
+    // Players Initialization
     Player player1 = new Player("player1");
     Player player2 = new Player("player2");
     Player player3 = new Player("player3");
@@ -23,6 +24,9 @@ class FaithPathTest {
     );
     FaithPath faithPath;
 
+    /**
+     * Faith Path initialization.
+     */
     @BeforeEach
     void setUp() {
         faithPath = new FaithPath(
@@ -37,6 +41,12 @@ class FaithPathTest {
         );
     }
 
+    /**
+     * Tests the constructor of Faith Path if illegal arguments are passed as parameters:
+     * size of victory points array not equals to the length of Faith Path,
+     * null pointer to Players,
+     * empy set of Players.
+     */
     @Test
     void testWrongConstructorParams() {
         assertThrows(
@@ -49,19 +59,21 @@ class FaithPathTest {
                 () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2,3,4}, null),
                 "Initializing a FaithPath with 0 players should not be allowed"
         );
-
         assertThrows(
                 IllegalArgumentException.class,
                 () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2,3,4}, new HashSet<>()),
                 "Initializing a FaithPath with 0 players should not be allowed"
         );
 
-
         assertDoesNotThrow(
                 () -> new FaithPath(4, null, new int[]{1,2,3,4}, players)
         );
     }
 
+    /**
+     * Tests the move method, checking if the final Player position equals the position before moving + number of steps.
+     * If this sum exceed the Faith Path length, the Player position equals the Faith Path length.
+     */
         @Test
     void testMove() {
 
@@ -91,6 +103,9 @@ class FaithPathTest {
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(player3));
     }
 
+    /**
+     * Tests the method which states if the last position of the Faith Path is reached by a Player after moving.
+     */
     @Test
     void testLastPositionReached() {
         FaithPath basicFaithPath = new FaithPath(10, new ArrayList<>(), new int[]{0,0,0,0,0,0,0,0,0,0}, players);
@@ -109,6 +124,10 @@ class FaithPathTest {
         assertTrue(basicFaithPath.lastPositionHasBeenReached());
     }
 
+    /**
+     * Test the Faith Path Event returned by the move method: it checks if at least one Vatican Report happened and
+     * if the final position of Faith Path is reached by a Player after moving.
+     */
     @Test
     void testMoveReturnEvent() {
 
@@ -130,6 +149,9 @@ class FaithPathTest {
 
     }
 
+    /**
+     * Tests the method to get the updated state of Players' Pope's Favor cards before and after a Vatican Report.
+     */
     @Test
     void testGetPlayerPopeFavorCardsState() {
 
@@ -175,7 +197,7 @@ class FaithPathTest {
                 faithPath.getPlayerPopeFavorCardsState(player3)
         );
 
-        faithPath.move(player1, 18); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 19)
+        faithPath.move(player1, 18); //2nd and 3rd Vatican Reports triggered by Player 1 (1 -> 19)
         assertEquals(
                 List.of(PopeFavorCardState.DISCARDED, PopeFavorCardState.ACTIVE, PopeFavorCardState.ACTIVE),
                 faithPath.getPlayerPopeFavorCardsState(player1)
@@ -191,6 +213,10 @@ class FaithPathTest {
 
     }
 
+    /**
+     * Tests the Victory Points count, based on the position of Players in the Faith Path and the state of their
+     * Pope's Favor cards.
+     */
     @Test
     void testGetPlayerVictoryPoints() {
 
@@ -214,7 +240,7 @@ class FaithPathTest {
         assertEquals(2 + 8 + 100, faithPath.getPlayerVictoryPoints(player2));
         assertEquals(3 + 100, faithPath.getPlayerVictoryPoints(player3));
 
-        faithPath.move(player1, 18); //2nd and 3rd vatican reports triggered by Player 1 (1 -> 19)
+        faithPath.move(player1, 18); //2nd and 3rd Vatican Reports triggered by Player 1 (1 -> 19)
         assertEquals(1 + 18 + 200 + 300, faithPath.getPlayerVictoryPoints(player1));
         assertEquals(2 + 8 + 100 + 200, faithPath.getPlayerVictoryPoints(player2));
         assertEquals(3 + 100, faithPath.getPlayerVictoryPoints(player3));
