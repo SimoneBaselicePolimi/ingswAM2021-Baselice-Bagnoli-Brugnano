@@ -44,7 +44,7 @@ public class ResourceStorage {
 	 */
 	public boolean canAddResources (Map<ResourceType,Integer> newResources){
 		for(ResourceStorageRule rule : rules) {
-			if (!rule.checkRule(this, resources))
+			if (!rule.checkRule(this, newResources))
 				return false;
 		}
 		return true;

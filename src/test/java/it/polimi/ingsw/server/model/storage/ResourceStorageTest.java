@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ResourceStorageTest {
 
+    /**
+     * Test the construction of a storage with 2 true rules
+     */
     @Test
     void testResourceStorageWith2TrueRules() {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
@@ -25,6 +28,9 @@ class ResourceStorageTest {
         )));
     }
 
+    /**
+     * test the construction of a storage with 2 true rules and 1 false rule
+     */
     @Test
     void testResourceStorageWith2TrueRulesAnd1False() {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
@@ -39,6 +45,11 @@ class ResourceStorageTest {
         )));
     }
 
+    /**
+     * Test canAddResources method and addResourcesMethod
+     * If canAddResources return true, you can add that resources.
+     * If canAddResources return false and you try to add resources, ResourceStorageRuleViolationException is thrown.
+     */
     @Test
     void testCanAddResources() throws ResourceStorageRuleViolationException {
 
@@ -71,6 +82,9 @@ class ResourceStorageTest {
 
     }
 
+    /**
+     * Test addResources method
+     */
     @Test
     void testAddResources() throws ResourceStorageRuleViolationException {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
@@ -100,6 +114,9 @@ class ResourceStorageTest {
 
     }
 
+    /**
+     * Test addResources and removeResources methods
+     */
     @Test
     void testAddAndRemoveResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
@@ -149,6 +166,9 @@ class ResourceStorageTest {
         assertTrue(storage.canRemoveResources(Map.of()));
     }
 
+    /**
+     * Test removeResources method and if there aren't enough resources it throws exception
+     */
     @Test
     void testTryToRemoveTooManyResources() throws ResourceStorageRuleViolationException {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
@@ -176,6 +196,9 @@ class ResourceStorageTest {
         );
     }
 
+    /**
+     * Tests the equality between two storages only checking the equality of their ID.
+     */
     @Test
     void testEqualsID () {
         ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder("s1")

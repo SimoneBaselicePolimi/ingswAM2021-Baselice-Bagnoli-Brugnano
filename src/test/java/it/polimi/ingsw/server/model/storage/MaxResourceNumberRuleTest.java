@@ -7,8 +7,14 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test that verifies that the rule "there must be a maximum number of resources in the storage" is respected.
+ * Throw NotEnoughResourcesException if the resources you want to add don't respect this rule.
+ */
 class MaxResourceNumberRuleTest {
-
+    /**
+     * Test with Max Resource Number = 0
+     */
     @Test
     void testCheckRuleLimit0() {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
@@ -20,6 +26,9 @@ class MaxResourceNumberRuleTest {
         );
     }
 
+    /**
+     * Test with Max Resource Number = 3
+     */
     @Test
     void testCheckRuleLimit3() throws NotEnoughResourcesException {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
