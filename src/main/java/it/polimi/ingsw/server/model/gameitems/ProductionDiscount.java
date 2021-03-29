@@ -9,19 +9,22 @@ public class ProductionDiscount {
 	/**
 	 * Resource type the Player can discount from the cost of a Development Card
 	 */
-	private ResourceType resourceType;
+	private final ResourceType resourceType;
 
 	/**
 	 * Number of resources the Player can discount from the cost of a Development Card
 	 */
-	private int getDiscount;
+	private final int getDiscount;
 
 	/**
 	 * Class constructor.
 	 * @param resourceType resource the Player can discount from the cost
 	 * @param getDiscount number of resources the Player can discount from the cost
+	 * @throws IllegalArgumentException if null Resource type or a negative number are passed as parameters
 	 */
-	public ProductionDiscount(ResourceType resourceType, int getDiscount) {
+	public ProductionDiscount(ResourceType resourceType, int getDiscount) throws IllegalArgumentException {
+		if(resourceType == null || getDiscount<0)
+			throw new IllegalArgumentException();
 		this.resourceType = resourceType;
 		this.getDiscount = getDiscount;
 	}
