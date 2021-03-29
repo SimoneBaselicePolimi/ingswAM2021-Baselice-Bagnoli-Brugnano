@@ -9,21 +9,33 @@ import java.util.List;
 import java.util.Map;
 
 public class LeaderCard {
+	private LeaderCardState state;
+	private LeaderCardRequirement requirement;
 
+	/**
+	 *
+	 * @param playerContext reference to the single player
+	 * @return true if the player has at least one card in his hand: this means that he meets
+	 * the requirements and he can either discard the card or play it
+	 */
 	public boolean areRequirementsSatisfied(PlayerContext playerContext) {
-		return false;
+		if(!requirement.checkRequirement(playerContext))
+			return false;
+		return true;
 	}
 
-	public void activateLeaderCard() throws LeaderCardRequirementsNotSatisfied {
-
+	public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfied {
+		if(!areRequirementsSatisfied(playerContext))
+			throw new LeaderCardRequirementsNotSatisfied();
+		this.state = LeaderCardState.ACTIVE;
 	}
 
 	public void discardLeaderCard() {
-
+		this.state = LeaderCardState.DISCARDED;
 	}
 
 	public LeaderCardState getState() {
-		return null;
+		return state;
 	}
 
 	public List<Production> getProductions() {
