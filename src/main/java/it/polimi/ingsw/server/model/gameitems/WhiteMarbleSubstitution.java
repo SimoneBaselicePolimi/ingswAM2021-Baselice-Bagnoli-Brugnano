@@ -2,10 +2,10 @@ package it.polimi.ingsw.server.model.gameitems;
 
 import java.util.List;
 
-public interface WhiteMarbleSubstitution {
+public class WhiteMarbleSubstitution {
 
-	List<MarbleColour> getWhileMarbleSubstitution();
-
-	boolean isWhiteMarbleSubstitutionActive();
+	MarbleColour getResourceTypeToSubstitute() {
+		return null;
+	}
 
 }

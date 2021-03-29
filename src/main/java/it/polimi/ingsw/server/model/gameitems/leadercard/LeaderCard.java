@@ -1,67 +1,49 @@
 package it.polimi.ingsw.server.model.gameitems.leadercard;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
 import java.util.Map;
 
-public class LeaderCard implements WhiteMarbleSubstitution, LeaderStorage, ProductionDiscount, Production {
+public class LeaderCard {
 
-	public Map<ResourceType, Integer> getProductionResourceCost() {
-		return null;
-	}
-
-	public int getProductionStarResourceCost() {
-		return 0;
-	}
-
-	public Map<ResourceType, Integer> getProductionResourceReward() {
-		return null;
-	}
-
-	public int getProductionStarResourceReward() {
-		return 0;
-	}
-
-	public int getProductionFaithReward() {
-		return 0;
-	}
-
-	public boolean isProductionActive() {
+	public boolean areRequirementsSatisfied(PlayerContext playerContext) {
 		return false;
 	}
 
-	public int getVictoryPoints() {
-		return 0;
+	public void activateLeaderCard() throws LeaderCardRequirementsNotSatisfied {
+
+	}
+
+	public void discardLeaderCard() {
+
 	}
 
 	public LeaderCardState getState() {
 		return null;
 	}
 
-	public Map<ResourceType, Integer> getProductionDiscount() {
+	public List<Production> getProductions() {
 		return null;
 	}
 
-	public boolean isProductionDiscountActive() {
-		return false;
-	}
-
-	public List<MarbleColour> getWhileMarbleSubstitution() {
+	public List<ResourceStorage> getResourceStorages() {
 		return null;
 	}
 
-	public boolean isWhiteMarbleSubstitutionActive() {
-		return false;
-	}
-
-	public List<ResourceStorage> getLeaderStorage() {
+	public List<ProductionDiscount> getProductionDiscounts() {
 		return null;
 	}
 
-	public boolean isLeaderStorageActive() {
-		return false;
+	public List<WhiteMarbleSubstitution> getWhiteMarbleSubstitutions() {
+		return null;
+	}
+
+	public int getVictoryPoints() {
+		return 0;
 	}
 
 }

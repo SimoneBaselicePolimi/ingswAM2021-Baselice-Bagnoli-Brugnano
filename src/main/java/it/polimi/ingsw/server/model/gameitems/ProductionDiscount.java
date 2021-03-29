@@ -2,10 +2,14 @@ package it.polimi.ingsw.server.model.gameitems;
 
 import java.util.Map;
 
-public interface ProductionDiscount {
+public class ProductionDiscount {
 
-	Map<ResourceType, Integer> getProductionDiscount();
+	public ResourceType getResourceTypeToDiscount() {
+		return null;
+	}
 
-	boolean isProductionDiscountActive();
+	public int getDiscount() {
+		return 0;
+	}
 
 }
