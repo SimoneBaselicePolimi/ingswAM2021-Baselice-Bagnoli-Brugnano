@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model.gameitems;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * This class represents the Production power held by different types of Game Items (Leader Cards, Development Cards).
@@ -14,32 +13,32 @@ public class Production {
 	/**
 	 * Production cost made of specific type and number of Resources
 	 */
-	private Map<ResourceType, Integer> resourceCost;
+	private final Map<ResourceType, Integer> resourceCost;
 
 	/**
 	 * Production reward made of specific type and number of Resources
 	 */
-	private Map<ResourceType, Integer> resourceReward;
+	private final Map<ResourceType, Integer> resourceReward;
 
 	/**
 	 * Production cost made of a generic type of Resource (Player can choose), in a fixed quantity
 	 */
-	private int starResourceCost;
+	private final int starResourceCost;
 
 	/**
 	 * Production reward made of a generic type of Resource (Player can choose), in a fixed quantity
 	 */
-	private int starResourceReward;
+	private final int starResourceReward;
 
 	/**
 	 * Production reward made of a fixed number of Faith Points
 	 */
-	private int faithReward;
+	private final int faithReward;
 
 	/**
 	 * ID which identifies this specific Production Item
 	 */
-	private String productionID;
+	private final String productionID;
 
 	/**
 	 * Class constructor.
@@ -49,9 +48,15 @@ public class Production {
 	 * @param starResourceReward reward made of a generic type of Resource, in a fixed quantity
 	 * @param faithReward reward made of a fixed number of Faith Points
 	 * @param productionID ID which identifies this specific Production Item
+	 * @throws IllegalArgumentException if a Map with negative values or negative numbers (cost and reward)
+	 * are passed as parameters
 	 */
 	public Production(Map<ResourceType, Integer> resourceCost, Map<ResourceType, Integer> resourceReward,
-					  int starResourceCost, int starResourceReward, int faithReward, String productionID) {
+					  int starResourceCost, int starResourceReward, int faithReward, String productionID)
+			throws IllegalArgumentException{
+		if(resourceCost.values().stream().anyMatch(v -> v<0) || resourceReward.values().stream().anyMatch(v -> v<0)
+		|| starResourceCost<0 || starResourceReward<0 || faithReward<0 || productionID == null)
+			throw new IllegalArgumentException();
 		this.resourceCost = resourceCost;
 		this.resourceReward = resourceReward;
 		this.starResourceCost = starResourceCost;
@@ -98,6 +103,14 @@ public class Production {
 	 */
 	public int getProductionFaithReward() {
 		return faithReward;
+	}
+
+	/**
+	 * Method to get the ID which identifies this Production Item.
+	 * @return ID of this specific Production Item
+	 */
+	public String getID() {
+		return productionID;
 	}
 
 	/**

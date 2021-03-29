@@ -9,13 +9,16 @@ public class WhiteMarbleSubstitution {
 	/**
 	 * Resource type the Player can substitute to a White Marble taken from the Market
 	 */
-	private ResourceType resourceTypeToSubstitute;
+	private final ResourceType resourceTypeToSubstitute;
 
 	/**
 	 * Class constructor.
 	 * @param resourceTypeToSubstitute resource type to substitute to a White Marble
+	 * @throws IllegalArgumentException if a null Resource type is passed as parameter
 	 */
-	public WhiteMarbleSubstitution(ResourceType resourceTypeToSubstitute) {
+	public WhiteMarbleSubstitution(ResourceType resourceTypeToSubstitute) throws IllegalArgumentException{
+		if(resourceTypeToSubstitute == null)
+			throw new IllegalArgumentException();
 		this.resourceTypeToSubstitute = resourceTypeToSubstitute;
 	}
 
