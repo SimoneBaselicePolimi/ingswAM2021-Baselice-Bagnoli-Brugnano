@@ -33,6 +33,7 @@ public class LeaderCard {
 					   List<ProductionDiscount> productionDiscounts,
 					   List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
 					   int victoryPoints){
+		this.requirement = requirement;
 		this.state = LeaderCardState.IN_HAND;
 		this.production=production;
 		this.resourceStorage=resourceStorage;

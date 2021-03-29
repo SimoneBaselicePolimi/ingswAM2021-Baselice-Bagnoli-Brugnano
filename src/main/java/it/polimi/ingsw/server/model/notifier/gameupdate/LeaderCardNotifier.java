@@ -1,12 +1,23 @@
 package it.polimi.ingsw.server.model.notifier.gameupdate;
 
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.Production;
+import it.polimi.ingsw.server.model.gameitems.ProductionDiscount;
+import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfied;
 import it.polimi.ingsw.server.model.notifier.Notifier;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
+import java.util.List;
 import java.util.Optional;
 
 public class LeaderCardNotifier extends LeaderCard implements Notifier<LeaderCardUpdate> {
+
+    public LeaderCardNotifier(LeaderCardRequirement requirement, List<Production> production, List<ResourceStorage> resourceStorage, List<ProductionDiscount> productionDiscounts, List<WhiteMarbleSubstitution> whiteMarbleSubstitutions, int victoryPoints) {
+        super(requirement, production, resourceStorage, productionDiscounts, whiteMarbleSubstitutions, victoryPoints);
+    }
 
     public Optional<LeaderCardUpdate> getUpdate() {
         //WARNING: may return sensitive data! When the LeaderCard state is 'hidden' the ID of the card should be kept
@@ -19,8 +30,8 @@ public class LeaderCardNotifier extends LeaderCard implements Notifier<LeaderCar
     }
 
     @Override
-    public void activateLeaderCard() throws LeaderCardRequirementsNotSatisfied {
-        super.activateLeaderCard();
+    public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfied {
+        super.activateLeaderCard(playerContext);
     }
 
     @Override
