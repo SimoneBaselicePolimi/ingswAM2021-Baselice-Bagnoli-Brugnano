@@ -1,16 +1,48 @@
 package it.polimi.ingsw.server.model.storage;
 
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
 class ResourceStorageTest {
+
+    @Mock
+    ResourceStorageRule trueRule1;
+
+    @Mock
+    ResourceStorageRule trueRule2;
+
+    @Mock
+    ResourceStorageRule falseRule1;
+
+    @BeforeEach
+    void setUp() {
+        /*
+        Note on lenient():
+        lenient() is needed here because otherwise mockito would throw a UnnecessaryStubbingException. This exception is
+        thrown when mockito thinks that your are stubbing a method without actually ever using it in any test.
+        In the case of the 3 line below the false positive is caused by the fact that checkRule() is never called in any
+        test directly (but it will be called, and thus those stubbing are needed, when calling
+        ResourceStorage.addResources() )
+        See https://github.com/mockito/mockito/blob/release/2.x/src/main/java/org/mockito/exceptions/misusing/UnnecessaryStubbingException.java
+         */
+        lenient().when(trueRule1.checkRule(any(), any())).thenReturn(true);
+        lenient().when(trueRule2.checkRule(any(), any())).thenReturn(true);
+        lenient().when(falseRule1.checkRule(any(), any())).thenReturn(false);
+    }
 
     /**
      * Test the construction of a storage with 2 true rules
@@ -18,14 +50,19 @@ class ResourceStorageTest {
     @Test
     void testResourceStorageWith2TrueRules() {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
-            .addRule(new TrueRule1())
-            .addRule(new TrueRule2())
+            .addRule(trueRule1)
+            .addRule(trueRule2)
             .createResourceStorage();
-        assertDoesNotThrow(() -> storage.addResources(Map.of(
-            ResourceType.STONES, 1,
-            ResourceType.SERVANTS, 4,
-            ResourceType.SHIELDS, 0
-        )));
+        Map<ResourceType, Integer> resourcesToAdd = Map.of(
+                ResourceType.STONES, 1,
+                ResourceType.SERVANTS, 4,
+                ResourceType.SHIELDS, 0
+        );
+        assertDoesNotThrow(() -> storage.addResources(resourcesToAdd));
+        //If ResourceStorage.addResources() succeeds, then the method checkRule() of every rule applied to the storage
+        // should be called
+        verify(trueRule1).checkRule(eq(storage), eq(resourcesToAdd));
+        verify(trueRule2).checkRule(eq(storage), eq(resourcesToAdd));
     }
 
     /**
@@ -34,15 +71,20 @@ class ResourceStorageTest {
     @Test
     void testResourceStorageWith2TrueRulesAnd1False() {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
-            .addRule(new TrueRule1())
-            .addRule(new FalseRule1())
-            .addRule(new TrueRule2())
+            .addRule(trueRule1)
+            .addRule(falseRule1)
+            .addRule(trueRule2)
             .createResourceStorage();
-        assertThrows(ResourceStorageRuleViolationException.class, () -> storage.addResources(Map.of(
-            ResourceType.STONES, 1,
-            ResourceType.SERVANTS, 4,
-            ResourceType.SHIELDS, 0
-        )));
+        Map<ResourceType, Integer> resourcesToAdd = Map.of(
+                ResourceType.STONES, 1,
+                ResourceType.SERVANTS, 4,
+                ResourceType.SHIELDS, 0
+        );
+        assertThrows(ResourceStorageRuleViolationException.class, () -> storage.addResources(resourcesToAdd));
+        //If ResourceStorage.addResources() throws an exception, then falseRule1.checkRule() should have been called.
+        // Note that, depending on the order used to check the rules, trueRule1.checkRule() and trueRule2.checkRule()
+        // may or may not have been called.
+        verify(falseRule1).checkRule(eq(storage), eq(resourcesToAdd));
     }
 
     /**
@@ -219,33 +261,6 @@ class ResourceStorageTest {
         assertNotEquals(storage1, storage6);
         assertNotEquals(storage6, storage5);
         assertNotEquals(storage4, storage2);
-    }
-
-    class TrueRule1 extends ResourceStorageRule {
-
-        @Override
-        public boolean checkRule(ResourceStorage storage, Map<ResourceType, Integer> newResources) {
-            return true;
-        }
-
-    }
-
-    class TrueRule2 extends ResourceStorageRule {
-
-        @Override
-        public boolean checkRule(ResourceStorage storage, Map<ResourceType, Integer> newResources) {
-            return true;
-        }
-
-    }
-
-    class FalseRule1 extends ResourceStorageRule {
-
-        @Override
-        public boolean checkRule(ResourceStorage storage, Map<ResourceType, Integer> newResources) {
-            return false;
-        }
-
     }
 
 }
