@@ -55,7 +55,7 @@ class ProductionTest {
 
     /**
      * Test the methods to get all the attributes of Production Items.
-     * Compares attributes from different Production Items.
+     * Compares attributes of different Production Items.
      */
     @Test
     void testGetProductionAttributes() {
