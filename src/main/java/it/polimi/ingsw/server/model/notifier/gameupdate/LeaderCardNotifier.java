@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.notifier.gameupdate;
 
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.Production;
-import it.polimi.ingsw.server.model.gameitems.ProductionDiscount;
+import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
 import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
@@ -15,8 +15,8 @@ import java.util.Optional;
 
 public class LeaderCardNotifier extends LeaderCard implements Notifier<LeaderCardUpdate> {
 
-    public LeaderCardNotifier(LeaderCardRequirement requirement, List<Production> production, List<ResourceStorage> resourceStorage, List<ProductionDiscount> productionDiscounts, List<WhiteMarbleSubstitution> whiteMarbleSubstitutions, int victoryPoints) {
-        super(requirement, production, resourceStorage, productionDiscounts, whiteMarbleSubstitutions, victoryPoints);
+    public LeaderCardNotifier(LeaderCardRequirement requirement, List<Production> production, List<ResourceStorage> resourceStorage, List<DevelopmentCardCostDiscount> developmentCardCostDiscounts, List<WhiteMarbleSubstitution> whiteMarbleSubstitutions, int victoryPoints) {
+        super(requirement, production, resourceStorage, developmentCardCostDiscounts, whiteMarbleSubstitutions, victoryPoints);
     }
 
     public Optional<LeaderCardUpdate> getUpdate() {

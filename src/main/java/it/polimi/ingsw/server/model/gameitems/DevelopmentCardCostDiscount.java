@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.gameitems;
 
 import java.util.Map;
 
-public class ProductionDiscount {
+public class DevelopmentCardCostDiscount {
 
 	public ResourceType getResourceTypeToDiscount() {
 		return null;

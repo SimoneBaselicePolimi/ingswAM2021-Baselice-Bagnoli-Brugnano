@@ -13,7 +13,7 @@ public class LeaderCard {
 	private LeaderCardRequirement requirement;
 	private List<Production> production;
 	private List<ResourceStorage> resourceStorage;
-	private List<ProductionDiscount> productionDiscounts;
+	private List<DevelopmentCardCostDiscount> cardCostDiscount;
 	private List<WhiteMarbleSubstitution> whiteMarbleSubstitutions;
 	int victoryPoints;
 
@@ -22,7 +22,7 @@ public class LeaderCard {
 	 * @param requirement requirement to activate the leader card
 	 * @param production list of productions (special skill) that the leader card can own (it can be an empty list)
 	 * @param resourceStorage list of resource storage (special skill) that the leader card can own (it can be an empty list)
-	 * @param productionDiscounts list of discounts (special skill) that the leader card can own (it can be an empty list)
+	 * @param cardCostDiscount list of discounts (special skill) that the leader card can own (it can be an empty list)
 	 * @param whiteMarbleSubstitutions list of substitution with white marble (special skill) that the leader card can own
 	 *                                  (it can be an empty list)
 	 * @param victoryPoints number of victory points that the card gives
@@ -30,14 +30,14 @@ public class LeaderCard {
 	public LeaderCard (LeaderCardRequirement requirement,
 					   List<Production> production,
 					   List<ResourceStorage> resourceStorage,
-					   List<ProductionDiscount> productionDiscounts,
+					   List<DevelopmentCardCostDiscount> cardCostDiscount,
 					   List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
 					   int victoryPoints){
 		this.requirement = requirement;
 		this.state = LeaderCardState.IN_HAND;
 		this.production=production;
 		this.resourceStorage=resourceStorage;
-		this.productionDiscounts=productionDiscounts;
+		this.cardCostDiscount=cardCostDiscount;
 		this.whiteMarbleSubstitutions=whiteMarbleSubstitutions;
 		this.victoryPoints=victoryPoints;
 	}
@@ -95,8 +95,8 @@ public class LeaderCard {
 	/**
 	 * @return list of discounts (special skill) that the leader card can own (it can be an empty list)
 	 */
-	public List<ProductionDiscount> getProductionDiscounts() {
-		return productionDiscounts;
+	public List<DevelopmentCardCostDiscount> getDevelopmentCardCostDiscount() {
+		return cardCostDiscount;
 	}
 
 	/**
