@@ -1,13 +1,18 @@
 package it.polimi.ingsw.server.model.gamecontext.playercontext;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.MarbleColour;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.*;
+import it.polimi.ingsw.server.model.gameitems.cardstack.CannotPushCardOnTopException;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageBuilder;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The player context aggregates all the information relative to a specific Player.
@@ -17,7 +22,9 @@ import java.util.*;
  *     <li> Development cards the player bought. Those cards are organized in card stacks with special rules (see
  *     {@link it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack}).</li>
  *     <li> Special shelves the player can use to store resources taken from the market </li>
- *     <li> An infinite chest that does not have a limit on the number of resources it can contain </li>
+ *     <li> An infinite chest is a storage that does not have a limit on the number of resources it can contain </li>
+ *     <li> A temporary storage used only to hold resources obtained from the market before the player repositions them
+ *     in the shelves and/or in the leader card storages </li>
  * </ul>
  * <p>
  * The player context also offers some utility methods that aggregate together information obtained by multiple
@@ -28,15 +35,29 @@ import java.util.*;
 public class PlayerContext {
 
 	private final Player player;
+	private Set<ResourceStorage> shelves;
+	private ResourceStorage infiniteChest;
+	private ResourceStorage tempStorage;
 	private Set<LeaderCard> leaderCardsPlayerOwns = new HashSet<>();
+	private List<PlayerOwnedDevelopmentCardStack> developmentCardDecks = new ArrayList<>();
 
 	/**
 	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
 	 * should be one and only one instance of this class for each player.
+	 * <p>
+	 * Note: this constructor is marked as protected because this class should only ever be initialized by the
+	 *  {@link it.polimi.ingsw.server.model.gamecontext.GameContextBuilder} and thus the constructor should never be
+	 *  called from outside this package
 	 * @param player the player associated with this player context
+	 * @param numberOfDevelopmentCardDecks number of decks of development cards the player bought
 	 */
-	protected PlayerContext(Player player) {
+	protected PlayerContext(Player player, int numberOfDevelopmentCardDecks) {
 		this.player = player;
+		infiniteChest = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+		infiniteChest = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+		for (int i = 0; i < numberOfDevelopmentCardDecks; i++) {
+			developmentCardDecks.add(new PlayerOwnedDevelopmentCardStack(new ArrayList<>()));
+		}
 	}
 
 	/**
@@ -44,75 +65,209 @@ public class PlayerContext {
 	 * The method should be called only once at the beginning of the game when the player chooses which cards to keep.
 	 *
 	 * Note: there can not be multiple copies of a card with the same ID. This is enforced by using a Set for the
-	 * parameter cards instead of a list (@see LeaderCard.equals())
+	 * parameter `cards` instead of a list (@see LeaderCard.equals())
 	 * @param cards a set of cards to keep.
 	 */
 	public void setLeaderCards(Set<LeaderCard> cards) {
 		leaderCardsPlayerOwns = new HashSet<>(cards);
 	}
 
+	/**
+	 * @return the leader cards owned by the player
+	 */
 	public Set<LeaderCard> getLeaderCards() {
 		return new HashSet<>(leaderCardsPlayerOwns);
 	}
 
-	public List<LeaderCard> getActiveLeaderCards() {
-		return null;
+	/**
+	 * @return the leader cards owned by the player that have been activated
+	 */
+	public Set<LeaderCard> getActiveLeaderCards() {
+		return leaderCardsPlayerOwns.stream()
+				.filter(leaderCard -> leaderCard.getState() == LeaderCardState.ACTIVE)
+				.collect(Collectors.toSet());
 	}
 
-	public Map<ResourceType, Integer> getDiscounts() {
-		return null;
+	/**
+     * After it has been activated, a leader card may award the player with one (or more, in games with custom rules)
+	 *  discounts. This method returns the sum of all the discounts specified in active leader cards.
+	 * Note: only active leader card will be considered
+	 * @return the sum of all the discounts that will be applied when the player buys a new development card.
+	 */
+	public Map<ResourceType, Integer> getActiveLeaderCardsDiscounts() {
+		return getActiveLeaderCards().stream()
+				.flatMap(leaderCard -> leaderCard.getProductionDiscounts().stream())
+				.collect(Collectors.groupingBy(
+						ProductionDiscount::getResourceTypeToDiscount,
+						Collectors.summingInt(ProductionDiscount::getDiscount)
+				));
 	}
 
-	public List<MarbleColour> getWhiteMarblesMarketSubstitutions() {
-		return null;
+	/**
+	 * After it has been activated, a leader card may award the player with the ability to exchange a "special marble"
+	 * for a resource of the type specified by the leader card (in games with custom rules a leader card may give the
+	 * player the possibility to choose from multiple possible substitutions).
+	 * <p>
+	 * Note1: only active leader card will be considered
+	 * Note2: white marbles are one example of "special marbles" (when playing with the standard rules)."
+	 * @return this methods returns a set of all the possible resource types the player can choose from when
+	 * substituting a "special marble".
+	 */
+	public Set<MarbleColour> getActiveLeaderCardsWhiteMarblesMarketSubstitutions() {
+		return getActiveLeaderCards().stream()
+				.flatMap(leaderCard -> leaderCard.getWhiteMarbleSubstitutions().stream())
+				.map(WhiteMarbleSubstitution::getResourceTypeToSubstitute)
+				.collect(Collectors.toSet());
 	}
 
-	public List<ResourceStorage> getLeaderStorage() {
-		return null;
+	/**
+	 * After it has been activated, a leader card may award the player with one (or more, in games with custom rules)
+	 * special resource storages. Those special resource storages can be used (like the shelves) to store resources
+	 * obtained from the market.
+	 * <p>
+	 * Note: only active leader card will be considered
+	 * @return a set of all the resource storages from leader cards
+	 */
+	public Set<ResourceStorage> getActiveLeaderCardsResourceStorages() {
+		return getActiveLeaderCards().stream()
+				.flatMap(leaderCard -> leaderCard.getResourceStorages().stream())
+				.collect(Collectors.toSet());
 	}
 
-	public List<ResourceStorage> getShelves() {
-		return null;
+	/**
+	 * After it has been activated, a leader card may award the player with one (or more, in games with custom rules)
+	 * productions that can be activated when executing an "Activate production" game action.
+	 * <p>
+	 * Note1: only active leader card will be considered
+	 * Note2: the player may not be able to use some of the productions returned by this method because he
+	 * may not have all the resources needed.
+	 * @return a set of all the productions from leader cards. Some of the production returned may not act
+	 */
+	public Set<Production> getActiveLeaderCardsProductions() {
+		return getActiveLeaderCards().stream()
+				.flatMap(leaderCard -> leaderCard.getProductions().stream())
+				.collect(Collectors.toSet());
 	}
 
-	public List<ResourceStorage> getStoragesForResourcesFromMarket() {
-		return null;
+	/**
+	 * The shelves are resource storages that can always be used to store resource from the market. When playing with
+	 * the standard rule every shelve will have a different limit on the number of resources it can contain.
+	 * @return the shelves
+	 */
+	public Set<ResourceStorage> getShelves() {
+		return new HashSet<>(shelves);
 	}
 
+	/**
+	 * Shelves and special leader card storages can store resources obtained from the market.
+     * <p>
+	 * Note: will only return the leader card resource storages defined in `ACTIVE` leader cards.
+	 * @return returns the active resource storages that can hold resources obtained from the market
+	 */
+	public Set<ResourceStorage> getResourceStoragesForResourcesFromMarket() {
+		return Stream.concat(shelves.stream(), getActiveLeaderCardsResourceStorages().stream()).collect(Collectors.toSet());
+	}
+
+	/**
+	 * The infinite chest is a chest that does not have a limit on the number of resources it can contain. This special
+	 * storage can NOT be used to store resources from the market.
+	 * @return the infinite chest
+	 */
 	public ResourceStorage getInfiniteChest() {
-		return null;
+		return infiniteChest;
 	}
 
+	/**
+	 * @return a temporary storage used only to hold resources obtained from the market before the player repositions
+	 * them in the shelves and/or in the leader card storages
+	 */
 	public ResourceStorage getTemporaryStorage() {
-		return null;
+		return tempStorage;
 	}
 
+
+	/**
+	 * This method should be used to put the resources taken from the market into the temporary storage.
+	 * <p>
+	 * Note: this method is a setter, if there were resources into this temporary storage when this methods gets called
+	 * they will be overwritten.
+	 * @param resources resources to put into the temporary storage
+	 */
 	public void setTemporaryStorageResources(Map<ResourceType, Integer> resources) {
 
 	}
 
+	/**
+	 * This method will empty the temporary storage. It should be called when the player moves the resource to
+	 * the shelves/leader card storages.
+     * @return resources that were in the temporary storage
+	 */
 	public Map<ResourceType, Integer> clearTemporaryStorageResources() {
 		return null;
 	}
 
-	public List<ResourceStorage> getAllResourceStorages() {
-		return null;
+	/**
+     * All resource storages means shelves + leader card storages + infinite chest
+	 * <p>
+	 * Note: will only return the leader card resource storages defined in `ACTIVE` leader cards.
+	 * @return returns all the active resource storages
+	 */
+	public Set<ResourceStorage> getAllResourceStorages() {
+	    return Stream.concat(
+	    		getResourceStoragesForResourcesFromMarket().stream(),
+				Stream.of(infiniteChest)
+		).collect(Collectors.toSet());
 	}
 
+	/**
+	 * Get all resources contained in any active resource storage
+	 * @return returns all resources a player owns.
+	 * @see PlayerContext#getAllResourceStorages()
+	 */
 	public Map<ResourceType, Integer> getAllResources() {
-		return null;
+		return getAllResourceStorages().stream()
+				.flatMap(resourceStorage -> resourceStorage.peekResources().entrySet().stream())
+				.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
 	}
 
-	public void addDevelopmentCard(DevelopmentCard card, int stackNumber) {
-
+	/**
+	 * This method allow to add a new development card on top of one of the decks of development cards owned by the
+	 * player. This method should be called when a player buys a development card
+	 * <p>
+	 * Note1: you can only add a card with level N on top of a card on level N - 1.
+	 * Note2: when playing with the standard rules there will be 3 decks of development cards for every player. (Those
+	 * deck will be empty when the game starts)
+	 * @param card development card to add.
+	 * @param deckNumber the number of the deck to add the development card on top
+	 * @throws IllegalArgumentException if there is no deck with that deckNumber. (if deckNumber >= numberOfDecks)
+	 * @throws CannotPushCardOnTopException if you try to add a development card of level N on top of a card of level
+	 * that is not N - 1. (You can add card of level 1 only on empty decks)
+	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack
+	 * @see it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel
+	 */
+	public void addDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException, CannotPushCardOnTopException {
+		if(deckNumber >= developmentCardDecks.size() || deckNumber < 0)
+			throw new IllegalArgumentException(String.format(
+					"deckNumber %d is not valid. The range of valid deck numbers for this game is 0 to %d",
+					deckNumber,
+					developmentCardDecks.size()
+			));
+		developmentCardDecks.get(deckNumber).pushOnTop(card);
 	}
 
-	public List<DevelopmentCard> getAllDevelopmentCards() {
-		return null;
+	/**
+	 * @return returns all the development cards owned by the player
+	 */
+	public Set<DevelopmentCard> getAllDevelopmentCards() {
+		return developmentCardDecks.stream().flatMap(deck -> deck.peekAll().stream()).collect(Collectors.toSet());
 	}
 
-	public List<DevelopmentCard> getDevelopmentCardsOnTop() {
-		return null;
+	/**
+	 * Only the productions of development card that are currently on top of their deck can be activated
+	 * @return returns all the development cards owned by the player that are on top of the relative deck
+	 */
+	public Set<DevelopmentCard> getDevelopmentCardsOnTop() {
+		return developmentCardDecks.stream().map(PlayerOwnedDevelopmentCardStack::peek).collect(Collectors.toSet());
 	}
 
 }

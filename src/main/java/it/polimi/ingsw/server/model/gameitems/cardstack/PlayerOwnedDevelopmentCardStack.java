@@ -14,11 +14,13 @@ public class PlayerOwnedDevelopmentCardStack extends CardStack<DevelopmentCard> 
 		return null;
 	}
 
+	public List<DevelopmentCard> peekAll() {return null; }
+
 	public DevelopmentCard pop() {
 		return null;
 	}
 
-	public void pushOnTop(DevelopmentCard card) {
+	public void pushOnTop(DevelopmentCard card) throws CannotPushCardOnTopException{
 
 	}
 

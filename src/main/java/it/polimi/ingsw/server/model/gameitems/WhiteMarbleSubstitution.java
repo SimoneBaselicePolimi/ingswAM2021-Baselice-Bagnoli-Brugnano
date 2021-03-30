@@ -4,7 +4,7 @@ import java.util.List;
 
 public class WhiteMarbleSubstitution {
 
-	MarbleColour getResourceTypeToSubstitute() {
+	public MarbleColour getResourceTypeToSubstitute() {
 		return null;
 	}
 

@@ -10,7 +10,7 @@ public abstract class CardStack<C> {
 		return null;
 	}
 
-	public void pushOnTop(C card) {
+	public void pushOnTop(C card) throws CannotPushCardOnTopException {
 
 	}
 
