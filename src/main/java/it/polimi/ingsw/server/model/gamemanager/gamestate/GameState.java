@@ -3,14 +3,14 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
-import it.polimi.ingsw.network.clientrequest.InitialChoiceCR;
-import it.polimi.ingsw.network.clientrequest.ClientRequestLeaderAction;
-import it.polimi.ingsw.network.clientrequest.ClientRequestMarketAction;
-import it.polimi.ingsw.network.clientrequest.ClientRequestManageResourcesFromMarket;
-import it.polimi.ingsw.network.clientrequest.ClientRequestCustom;
-import it.polimi.ingsw.network.clientrequest.ClientRequestDevelopmentAction;
-import it.polimi.ingsw.network.clientrequest.ClientRequestProductionAction;
-import it.polimi.ingsw.network.clientrequest.ClientRequestEndTurn;
+import it.polimi.ingsw.network.clientrequest.InitialChoiceClientRequest;
+import it.polimi.ingsw.network.clientrequest.LeaderActionClientRequest;
+import it.polimi.ingsw.network.clientrequest.MarketActionClientRequest;
+import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
+import it.polimi.ingsw.network.clientrequest.CustomClientRequest;
+import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
+import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
+import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.*;
 
 import java.util.HashMap;
@@ -42,35 +42,35 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 
 	public abstract GameState getNextState();
 
-	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoiceCR request) {
+	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoiceClientRequest request) {
 		return null;
 	}
 
-	public Map<Player,ServerMessageLeaderAction> handleRequestLeaderAction(ClientRequestLeaderAction request) {
+	public Map<Player, LeaderActionServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessageMarketAction> handleRequestMarketAction(ClientRequestMarketAction request) {
+	public Map<Player, MarketActionServerMessage> handleRequestMarketAction(MarketActionClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestManageResourcesFromMarket(ClientRequestManageResourcesFromMarket request) {
+	public Map<Player, ServerMessage> handleRequestManageResourcesFromMarket(ManageResourcesFromMarketClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestCustom(ClientRequestCustom request) {
+	public Map<Player, ServerMessage> handleRequestCustom(CustomClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessageDevelopmentAction> handleRequestDevelopmentAction(ClientRequestDevelopmentAction request) {
+	public Map<Player, DevelopmentActionServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessageProductionAction> handleRequestProductionAction(ClientRequestProductionAction request) {
+	public Map<Player, ProductionActionServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessageEndTurn> handleRequestEndTurn(ClientRequestEndTurn request) {
+	public Map<Player, EndTurnServerMessage> handleRequestEndTurn(EndTurnClientRequest request) {
 		return null;
 	}
 

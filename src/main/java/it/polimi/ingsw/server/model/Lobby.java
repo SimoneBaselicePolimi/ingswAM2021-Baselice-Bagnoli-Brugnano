@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import java.util.List;
+
 public class Lobby {
 
 	public Lobby(int numPlayers) {
@@ -10,8 +12,8 @@ public class Lobby {
 		return null;
 	}
 
-	public int getPlayers() {
-		return 0;
+	public List<Player> getPlayers() {
+		return null;
 	}
 
 	public int getNumberOfPlayers() {
