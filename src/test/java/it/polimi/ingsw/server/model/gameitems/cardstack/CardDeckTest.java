@@ -5,19 +5,18 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-abstract class CardStackTest<C> {
+abstract class CardDeckTest<C> {
 
-    abstract CardStack<C> buildCardStack(List<C> cards);
+    abstract CardDeck<C> buildCardStack(List<C> cards);
     abstract List<C> getTestCards();
     abstract C getAnotherTestCard();
 
     @Test
-    void testPushOnTop() {
-        CardStack<C> deck = buildCardStack(new ArrayList<>());
+    void testPushOnTop() throws ForbiddenPushOnTopException{
+        CardDeck<C> deck = buildCardStack(new ArrayList<>());
         assertThrows(EmptyStackException.class, deck::peek);
 
         C newCard = getAnotherTestCard();
@@ -26,8 +25,8 @@ abstract class CardStackTest<C> {
     }
 
     @Test
-    void testPop() {
-        CardStack<C> deck = buildCardStack(getTestCards());
+    void testPop() throws ForbiddenPushOnTopException{
+        CardDeck<C> deck = buildCardStack(getTestCards());
 
         C newCard = getAnotherTestCard();
         deck.pushOnTop(newCard);
