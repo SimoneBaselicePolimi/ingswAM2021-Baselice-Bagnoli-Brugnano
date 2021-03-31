@@ -8,7 +8,7 @@ public abstract class CardDeck<C> {
 
 	public boolean isEmpty() {
 		return cardDeck.empty();
-	};
+	}
 
 	public C peek() throws EmptyStackException {
 		return cardDeck.peek();
