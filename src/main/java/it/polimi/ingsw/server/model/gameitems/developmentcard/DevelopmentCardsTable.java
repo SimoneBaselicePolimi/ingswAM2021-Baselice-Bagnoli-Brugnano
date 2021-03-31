@@ -17,6 +17,7 @@ public class DevelopmentCardsTable {
 		return null;
 	}
 
+//toglie primo elemento e lo restituisce
 	public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) {
 		return null;
 	}
