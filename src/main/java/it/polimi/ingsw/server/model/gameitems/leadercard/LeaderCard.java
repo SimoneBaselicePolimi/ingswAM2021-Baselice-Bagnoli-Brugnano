@@ -1,12 +1,10 @@
 package it.polimi.ingsw.server.model.gameitems.leadercard;
 
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
-import java.util.Map;
 
 public class LeaderCard {
 
@@ -34,7 +32,7 @@ public class LeaderCard {
 		return null;
 	}
 
-	public List<ProductionDiscount> getProductionDiscounts() {
+	public List<DevelopmentCardCostDiscount> getProductionDiscounts() {
 		return null;
 	}
 
