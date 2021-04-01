@@ -7,5 +7,5 @@ package it.polimi.ingsw.server.model.gameitems.leadercard;
  * 3. IN_HAND when the player has the cards in his hand (he can't use special abilities of the card)
  */
 public enum LeaderCardState {
-	ACTIVE, DISCARDED, IN_HAND;
+	ACTIVE, DISCARDED, HIDDEN;
 }

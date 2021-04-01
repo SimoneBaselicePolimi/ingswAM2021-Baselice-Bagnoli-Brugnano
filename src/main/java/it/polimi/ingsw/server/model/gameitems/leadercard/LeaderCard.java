@@ -1,12 +1,10 @@
 package it.polimi.ingsw.server.model.gameitems.leadercard;
 
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
-import java.util.Map;
 
 public class LeaderCard {
 	private LeaderCardState state;
@@ -34,7 +32,7 @@ public class LeaderCard {
 					   List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
 					   int victoryPoints){
 		this.requirement = requirement;
-		this.state = LeaderCardState.IN_HAND;
+		this.state = LeaderCardState.HIDDEN;
 		this.production=production;
 		this.resourceStorage=resourceStorage;
 		this.cardCostDiscount=cardCostDiscount;
