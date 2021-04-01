@@ -161,7 +161,8 @@ public class PlayerContext {
 	/**
 	 * Shelves and special leader card storages can store resources obtained from the market.
      * <p>
-	 * Note: will only return the leader card resource storages defined in `ACTIVE` leader cards.
+	 * Note1: will only return the leader card resource storages defined in `ACTIVE` leader cards.
+	 * Note2: the temporary resource storage is NOT included
 	 * @return returns the active resource storages that can hold resources obtained from the market
 	 */
 	public Set<ResourceStorage> getResourceStoragesForResourcesFromMarket() {
@@ -209,7 +210,8 @@ public class PlayerContext {
 	/**
      * All resource storages means shelves + leader card storages + infinite chest
 	 * <p>
-	 * Note: will only return the leader card resource storages defined in `ACTIVE` leader cards.
+	 * Note1: will only return the leader card resource storages defined in `ACTIVE` leader cards.
+	 * Note2: the temporary resource storage is NOT included
 	 * @return returns all the active resource storages
 	 */
 	public Set<ResourceStorage> getAllResourceStorages() {
