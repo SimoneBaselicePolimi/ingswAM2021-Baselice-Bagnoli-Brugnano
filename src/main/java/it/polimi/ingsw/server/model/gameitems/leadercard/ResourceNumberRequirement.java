@@ -26,9 +26,9 @@ public class ResourceNumberRequirement extends LeaderCardRequirement {
      */
     @Override
     public boolean checkRequirement(PlayerContext playerContext) {
-        if (playerContext.getAllResources().containsKey(resourceType)){
-            if (playerContext.getAllResources().get(resourceType) == resourceNumber)
-                return true;
+        if (playerContext.getAllResources().containsKey(resourceType)) {
+                if (playerContext.getAllResources().get(resourceType) >= resourceNumber)
+                    return true;
         }
         return false;
     }
