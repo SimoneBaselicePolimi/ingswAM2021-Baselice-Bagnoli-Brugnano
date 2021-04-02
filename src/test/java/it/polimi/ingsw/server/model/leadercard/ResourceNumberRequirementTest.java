@@ -42,7 +42,7 @@ public class ResourceNumberRequirementTest {
         Map<ResourceType, Integer> map1 = new HashMap<ResourceType, Integer>();
         Map<ResourceType, Integer> map2 = new HashMap<ResourceType, Integer>();
         Map<ResourceType, Integer> map3 = new HashMap<ResourceType, Integer>();
-        Map<ResourceType, Integer> mapNull = new HashMap<ResourceType, Integer>();
+        Map<ResourceType, Integer> emptyMap = new HashMap<ResourceType, Integer>();
 
         map1.put(ResourceType.COINS, 3);
         map1.put(ResourceType.SERVANTS, 3);
@@ -58,7 +58,7 @@ public class ResourceNumberRequirementTest {
         lenient().when(playerContext1.getAllResources()).thenReturn(map1);
         lenient().when(playerContext2.getAllResources()).thenReturn(map2);
         lenient().when(playerContext3.getAllResources()).thenReturn(map3);
-        lenient().when(playerContext4.getAllResources()).thenReturn(mapNull);
+        lenient().when(playerContext4.getAllResources()).thenReturn(emptyMap);
     }
 
     ResourceNumberRequirement requirement1 = new ResourceNumberRequirement(ResourceType.COINS, 2);
@@ -81,7 +81,7 @@ public class ResourceNumberRequirementTest {
     }
 
     @Test
-    void checkRequirementTestWithNullMap (){
+    void checkRequirementTestWithEmptyMap (){
         assertFalse(requirement1.checkRequirement(playerContext4));
         assertFalse(requirement2.checkRequirement(playerContext4));
         assertFalse(requirement3.checkRequirement(playerContext4));
