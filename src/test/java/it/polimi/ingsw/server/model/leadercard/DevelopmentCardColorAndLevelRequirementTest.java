@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.leadercard;
 
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -20,6 +21,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
+/**
+ * Test to verify "checkRequirement" method: the method returns true if the player has the necessary
+ * development cards (with specific colour and level) to activate the leader card
+ */
 public class DevelopmentCardColorAndLevelRequirementTest {
     @Mock
     PlayerContext playerContext1;
@@ -30,6 +35,9 @@ public class DevelopmentCardColorAndLevelRequirementTest {
     @Mock
     PlayerContext playerContext3;
 
+    @Mock
+    Production production;
+
 
     @BeforeEach
     void setUp() {
@@ -37,22 +45,32 @@ public class DevelopmentCardColorAndLevelRequirementTest {
         List<DevelopmentCard> list2 = new ArrayList<DevelopmentCard>();
         List<DevelopmentCard> emptyList = new ArrayList<DevelopmentCard>();
 
-        DevelopmentCard developmentCard1 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, any(),3);
-        DevelopmentCard developmentCard2 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, any(),2);
-        DevelopmentCard developmentCard3 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, any(),1);
-        DevelopmentCard developmentCard4 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, any(),3);
+        DevelopmentCard developmentCard1 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3);
+        DevelopmentCard developmentCard2 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production,2);
+        DevelopmentCard developmentCard3 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production,1);
+        DevelopmentCard developmentCard4 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3);
 
-        DevelopmentCard developmentCard5 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW, any(),1);
-        DevelopmentCard developmentCard6 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, any(),5);
-        DevelopmentCard developmentCard7 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, any(),2);
+        DevelopmentCard developmentCard5 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW, production,1);
+        DevelopmentCard developmentCard6 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5);
+        DevelopmentCard developmentCard7 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production,2);
 
         list1.add(developmentCard1);
+        list1.add(developmentCard1);
+        list1.add(developmentCard1);
+        list1.add(developmentCard2);
         list1.add(developmentCard2);
         list1.add(developmentCard3);
+        list1.add(developmentCard4);
+        list1.add(developmentCard4);
         list1.add(developmentCard4);
         list1.add(developmentCard5); // 3 BLUE FIRST, 2 GREEN FIRST, 1 BLUE SECOND, 3 PURPLE THIRD, 1 YELLOW THIRD
 
         list2.add(developmentCard6);
+        list2.add(developmentCard6);
+        list2.add(developmentCard6);
+        list2.add(developmentCard6);
+        list2.add(developmentCard6);
+        list2.add(developmentCard7);
         list2.add(developmentCard7); //5 YELLOW FIRST, 2 YELLOW SECOND
 
         lenient().when(playerContext1.getAllDevelopmentCards()).thenReturn(list1);
@@ -77,7 +95,7 @@ public class DevelopmentCardColorAndLevelRequirementTest {
         assertTrue(requirement3.checkRequirement(playerContext1));
         assertFalse(requirement3.checkRequirement(playerContext2));
         assertFalse(requirement4.checkRequirement(playerContext1));
-        assertFalse(requirement4.checkRequirement(playerContext2));
+        assertTrue(requirement4.checkRequirement(playerContext2));
         assertTrue(requirement5.checkRequirement(playerContext1));
         assertFalse(requirement5.checkRequirement(playerContext2));
         assertFalse(requirement6.checkRequirement(playerContext1));
@@ -96,4 +114,4 @@ public class DevelopmentCardColorAndLevelRequirementTest {
     }
 
 }
-}
+

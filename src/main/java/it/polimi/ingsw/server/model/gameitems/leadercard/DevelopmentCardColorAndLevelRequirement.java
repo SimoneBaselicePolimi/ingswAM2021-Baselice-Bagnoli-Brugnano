@@ -17,12 +17,12 @@ public class DevelopmentCardColorAndLevelRequirement extends LeaderCardRequireme
 
     /**
      * DevelopmentCardColorAndLevelRequirement constructor
-     * @param CardColour
+     * @param cardColour
      * @param cardLevel
      * @param numberOfCards
      */
     public DevelopmentCardColorAndLevelRequirement(
-            DevelopmentCardColour CardColour,
+            DevelopmentCardColour cardColour,
             DevelopmentCardLevel cardLevel,
             int numberOfCards
     ) {
@@ -36,12 +36,12 @@ public class DevelopmentCardColorAndLevelRequirement extends LeaderCardRequireme
      */
     @Override
     public boolean checkRequirement(PlayerContext playerContext) {
-        int sumOfRightColourCard = 0;
+        int sumOfRightColourAndLevelCard = 0;
         for (DevelopmentCard developmentCard : playerContext.getAllDevelopmentCards()){
             if (developmentCard.getColour() == cardColour && developmentCard.getLevel() == cardLevel)
-                sumOfRightColourCard ++;
+                sumOfRightColourAndLevelCard ++;
         }
-        if (sumOfRightColourCard >= numberOfCards)
+        if (sumOfRightColourAndLevelCard >= numberOfCards)
             return true;
         return false;
     }

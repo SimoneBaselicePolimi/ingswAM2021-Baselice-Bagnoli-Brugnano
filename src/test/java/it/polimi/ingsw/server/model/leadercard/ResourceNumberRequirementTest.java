@@ -23,6 +23,10 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
+/**
+ * Test to verify "checkRequirement" method: the method returns true if the
+ * player has the necessary resources to activate the leader card
+ */
 public class ResourceNumberRequirementTest {
 
     @Mock

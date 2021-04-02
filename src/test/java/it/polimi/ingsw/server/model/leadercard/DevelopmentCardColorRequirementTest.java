@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server.model.leadercard;
 
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColorRequirement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
+/**
+ * Test to verify "checkRequirement" method: the method returns true if the player has the necessary
+ * development cards (with specific colour) to activate the leader card
+ */
 public class DevelopmentCardColorRequirementTest {
     @Mock
         PlayerContext playerContext1;
@@ -29,6 +35,9 @@ public class DevelopmentCardColorRequirementTest {
     @Mock
         PlayerContext playerContext3;
 
+    @Mock
+        Production production;
+
 
     @BeforeEach
         void setUp() {
@@ -36,14 +45,14 @@ public class DevelopmentCardColorRequirementTest {
         List<DevelopmentCard> list2 = new ArrayList<DevelopmentCard>();
         List<DevelopmentCard> emptyList = new ArrayList<DevelopmentCard>();
 
-        DevelopmentCard developmentCard1 = new DevelopmentCard(any(), DevelopmentCardColour.BLUE, any(),3);
-        DevelopmentCard developmentCard2 = new DevelopmentCard(any(), DevelopmentCardColour.GREEN, any(),2);
-        DevelopmentCard developmentCard3 = new DevelopmentCard(any(), DevelopmentCardColour.BLUE, any(),1);
-        DevelopmentCard developmentCard4 = new DevelopmentCard(any(), DevelopmentCardColour.PURPLE, any(),3);
+        DevelopmentCard developmentCard1 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production,3);
+        DevelopmentCard developmentCard2 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production,2);
+        DevelopmentCard developmentCard3 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production,1);
+        DevelopmentCard developmentCard4 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3);
 
-        DevelopmentCard developmentCard5 = new DevelopmentCard(any(), DevelopmentCardColour.YELLOW, any(),1);
-        DevelopmentCard developmentCard6 = new DevelopmentCard(any(), DevelopmentCardColour.YELLOW, any(),5);
-        DevelopmentCard developmentCard7 = new DevelopmentCard(any(), DevelopmentCardColour.YELLOW, any(),2);
+        DevelopmentCard developmentCard5 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW, production,1);
+        DevelopmentCard developmentCard6 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5);
+        DevelopmentCard developmentCard7 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production,2);
 
         list1.add(developmentCard1);
         list1.add(developmentCard2);
@@ -90,7 +99,7 @@ public class DevelopmentCardColorRequirementTest {
             assertFalse(requirement3.checkRequirement(playerContext3));
             assertFalse(requirement4.checkRequirement(playerContext3));
             assertFalse(requirement5.checkRequirement(playerContext3));
-            assertFalse(requirement6.checkRequirement(playerContext3));
+            assertTrue(requirement6.checkRequirement(playerContext3));
         }
 
 }
