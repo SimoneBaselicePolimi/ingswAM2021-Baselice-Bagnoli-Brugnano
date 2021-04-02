@@ -1,31 +1,22 @@
 package it.polimi.ingsw.server.model.leadercard;
+
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColorRequirement;
-
-
-import org.junit.jupiter.api.Test;
-
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
 public class DevelopmentCardColorRequirementTest {
