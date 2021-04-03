@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;

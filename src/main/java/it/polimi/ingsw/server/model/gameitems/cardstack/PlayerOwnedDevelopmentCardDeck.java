@@ -8,19 +8,24 @@ import java.util.List;
 public class PlayerOwnedDevelopmentCardDeck extends CardDeck<DevelopmentCard> {
 
 	public PlayerOwnedDevelopmentCardDeck(List<DevelopmentCard> cards) {
-		for(DevelopmentCard card : cards)
-			cardDeck.push(card);
+		if(cards.size() > 0) {
+			for (DevelopmentCard card : cards)
+				cardDeck.push(card);
+		}
 	}
 
-	public void pushOnTop(DevelopmentCard card) throws ForbiddenPushOnTopException{
-		if(isPushOnTopValid(card))
+	public void pushOnTop(DevelopmentCard card) throws ForbiddenPushOnTopException {
+		if(isPushOnTopValid(card) && cardDeck.size()<3)
 			cardDeck.push(card);
 		else throw new ForbiddenPushOnTopException();
 	}
 
 	public boolean isPushOnTopValid(DevelopmentCard card) {
-		if(card.getLevel() == DevelopmentCardLevel.FIRST_LEVEL && cardDeck.isEmpty())
-			return true;
+		if(cardDeck.isEmpty()) {
+			if (card.getLevel() == DevelopmentCardLevel.FIRST_LEVEL)
+				return true;
+			return false;
+		}
 		if(card.getLevel() == DevelopmentCardLevel.SECOND_LEVEL && cardDeck.peek().getLevel() == DevelopmentCardLevel.FIRST_LEVEL)
 			return true;
 		return card.getLevel() == DevelopmentCardLevel.THIRD_LEVEL && cardDeck.peek().getLevel() == DevelopmentCardLevel.SECOND_LEVEL;
