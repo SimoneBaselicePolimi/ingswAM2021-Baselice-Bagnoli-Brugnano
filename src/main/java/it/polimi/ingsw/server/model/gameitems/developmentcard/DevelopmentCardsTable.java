@@ -70,5 +70,4 @@ public class DevelopmentCardsTable {
 		}
 		return cardsToReturn;
 	}
-
 }
