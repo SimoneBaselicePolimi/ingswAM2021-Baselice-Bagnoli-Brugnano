@@ -6,19 +6,22 @@ import java.util.Random;
 
 public class ShuffledCardDeck<C> extends CardDeck<C> {
 
+	Random randGenerator;
+
 	public ShuffledCardDeck(List<C> objects) {
-		Random randGenerator = new Random();
-		List<C> cardList = new ArrayList<>(objects);
-		while(cardList.size() > 0) {
-			int randNum = randGenerator.nextInt(cardList.size());
-			cardDeck.push(cardList.remove(randNum));
-		}
+		randGenerator = new Random();
+		initializeShuffledCardDeck(objects);
 	}
 
 	public ShuffledCardDeck(Random randomGenerator, List<C> objects) {
+		this.randGenerator = randomGenerator;
+		initializeShuffledCardDeck(objects);
+	}
+
+	private void initializeShuffledCardDeck(List<C> objects) {
 		List<C> cardList = new ArrayList<>(objects);
-		while(cardList.size() > 0) {
-			int randNum = randomGenerator.nextInt(cardList.size());
+		while (cardList.size() > 0) {
+			int randNum = randGenerator.nextInt(cardList.size());
 			cardDeck.push(cardList.remove(randNum));
 		}
 	}
