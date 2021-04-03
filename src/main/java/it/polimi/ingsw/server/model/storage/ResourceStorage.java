@@ -102,7 +102,7 @@ public class ResourceStorage {
 	 * @return Type and number of resources in the storage
 	 */
 	public Map<ResourceType, Integer> peekResources() {
-		return this.resources;
+		return new HashMap<>(this.resources);
 	}
 
 	@Override
@@ -112,6 +112,7 @@ public class ResourceStorage {
 		ResourceStorage m = (ResourceStorage) o;
 			return (storageID.equals(m.storageID));
 	}
+
 	@Override
 	public int hashCode() {
 		return storageID.hashCode();

@@ -4,6 +4,10 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
+/**
+ * If the storage implements this rule, only a certain type of resources can be added to the storage
+ * (e.g. if resourceType = COINS, only COINS can be added to the storage)
+ */
 public class SpecificResourceTypeRule extends ResourceStorageRule {
 	/**
 	 * Specific type of resource that the storage can contain

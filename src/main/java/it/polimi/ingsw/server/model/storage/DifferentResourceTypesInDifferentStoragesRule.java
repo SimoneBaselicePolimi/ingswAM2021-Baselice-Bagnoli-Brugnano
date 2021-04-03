@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This is a rule that "checks" multiple storages.
+ * Storages that implement this rule cannot contain the same type of resources.
+ * (example: Storages A and B implement this rule. If a type of resource is contained in storage A,
+ * the same type of resource cannot be contained in storage B).
+ */
 public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStorageRule {
 	/**
 	 * list of storages that implement this specific rule
@@ -22,11 +28,11 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 	public boolean checkRule(ResourceStorage storage, Map<ResourceType,Integer> newResources) {
 			if (!storages.contains(storage))
 				storages.add(storage);
-			for (int i = 0; i < storages.size(); i++){
-				for (ResourceType resourcePresentInStorage: storages.get(i).peekResources().keySet()) {
-					if (storages.get(i) != storage){
+			for (ResourceStorage s :  storages){
+				for (ResourceType resourceInStorage: s.peekResources().keySet()) {
+					if (!s.equals(storage)){
 						for (ResourceType resourceType : newResources.keySet()) {
-							if (resourceType == resourcePresentInStorage)
+							if (resourceType.equals(resourceInStorage))
 									return false;
 						}
 					}
