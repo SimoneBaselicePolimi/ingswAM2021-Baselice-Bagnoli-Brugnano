@@ -21,11 +21,8 @@ public class PlayerOwnedDevelopmentCardDeck extends CardDeck<DevelopmentCard> {
 	}
 
 	public boolean isPushOnTopValid(DevelopmentCard card) {
-		if(cardDeck.isEmpty()) {
-			if (card.getLevel() == DevelopmentCardLevel.FIRST_LEVEL)
-				return true;
-			return false;
-		}
+		if(cardDeck.isEmpty())
+			return card.getLevel() == DevelopmentCardLevel.FIRST_LEVEL;
 		if(card.getLevel() == DevelopmentCardLevel.SECOND_LEVEL && cardDeck.peek().getLevel() == DevelopmentCardLevel.FIRST_LEVEL)
 			return true;
 		return card.getLevel() == DevelopmentCardLevel.THIRD_LEVEL && cardDeck.peek().getLevel() == DevelopmentCardLevel.SECOND_LEVEL;
