@@ -32,7 +32,7 @@ public class LeaderCard {
 		return null;
 	}
 
-	public List<DevelopmentCardCostDiscount> getProductionDiscounts() {
+	public List<DevelopmentCardCostDiscount> getDevelopmentCardCostDiscount() {
 		return null;
 	}
 

@@ -21,7 +21,7 @@ import java.util.stream.Stream;
  *     <li> Leader cards the player chose at the begging of the game</li>
  *     <li> Development cards the player bought. Those cards are organized in card stacks with special rules (see
  *     {@link it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack}).</li>
- *     <li> Special shelves the player can use to store resources taken from the market </li>
+ *     <li> Shelves, special storages the player can use to store resources taken from the market </li>
  *     <li> An infinite chest is a storage that does not have a limit on the number of resources it can contain </li>
  *     <li> A temporary storage used only to hold resources obtained from the market before the player repositions them
  *     in the shelves and/or in the leader card storages </li>
@@ -50,15 +50,42 @@ public class PlayerContext {
 	 *  called from outside this package
 	 * @param player the player associated with this player context
 	 * @param numberOfDevelopmentCardDecks number of decks of development cards the player bought
+	 * @param shelves shelves the player can use to store resources taken from the market
 	 */
-	protected PlayerContext(Player player, int numberOfDevelopmentCardDecks) {
+	protected PlayerContext(Player player, int numberOfDevelopmentCardDecks, Set<ResourceStorage> shelves) {
 		this.player = player;
+		this.shelves = new HashSet<>(shelves);
 		infiniteChest = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
-		infiniteChest = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
+		tempStorage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
 		for (int i = 0; i < numberOfDevelopmentCardDecks; i++) {
 			developmentCardDecks.add(new PlayerOwnedDevelopmentCardStack(new ArrayList<>()));
 		}
 	}
+
+	/**
+	 * This constructor should be used only for testing.
+	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
+	 * should be one and only one instance of this class for each player.
+	 * @param player the player associated with this player context
+	 * @param shelves shelves the player can use to store resources taken from the market
+	 * @param decks decks (dependency injection)
+	 * @param infiniteChest infinite chest (dependency injection)
+	 * @param temporaryStorage temporaryStorage (dependency injection)
+	 */
+	protected PlayerContext(
+			Player player,
+			Set<ResourceStorage> shelves,
+			List<PlayerOwnedDevelopmentCardStack> decks,
+			ResourceStorage infiniteChest,
+			ResourceStorage temporaryStorage
+	) {
+		this.player = player;
+		this.shelves = new HashSet<>(shelves);
+		this.infiniteChest = infiniteChest;
+		this.tempStorage = temporaryStorage;
+		this.developmentCardDecks = new ArrayList<>(decks);
+	}
+
 
 	/**
 	 * This method will set the leader cards that a certain player owns.
@@ -90,16 +117,16 @@ public class PlayerContext {
 
 	/**
      * After it has been activated, a leader card may award the player with one (or more, in games with custom rules)
-	 *  discounts. This method returns the sum of all the discounts specified in active leader cards.
+	 * development card discounts. This method returns the sum of all the discounts specified in active leader cards.
 	 * Note: only active leader card will be considered
 	 * @return the sum of all the discounts that will be applied when the player buys a new development card.
 	 */
 	public Map<ResourceType, Integer> getActiveLeaderCardsDiscounts() {
 		return getActiveLeaderCards().stream()
-				.flatMap(leaderCard -> leaderCard.getProductionDiscounts().stream())
+				.flatMap(leaderCard -> leaderCard.getDevelopmentCardCostDiscount().stream())
 				.collect(Collectors.groupingBy(
-						ProductionDiscount::getResourceTypeToDiscount,
-						Collectors.summingInt(ProductionDiscount::getDiscount)
+						DevelopmentCardCostDiscount::getResourceTypeToDiscount,
+						Collectors.summingInt(DevelopmentCardCostDiscount::getAmountToDiscount)
 				));
 	}
 
@@ -113,7 +140,7 @@ public class PlayerContext {
 	 * @return this methods returns a set of all the possible resource types the player can choose from when
 	 * substituting a "special marble".
 	 */
-	public Set<MarbleColour> getActiveLeaderCardsWhiteMarblesMarketSubstitutions() {
+	public Set<ResourceType> getActiveLeaderCardsWhiteMarblesMarketSubstitutions() {
 		return getActiveLeaderCards().stream()
 				.flatMap(leaderCard -> leaderCard.getWhiteMarbleSubstitutions().stream())
 				.map(WhiteMarbleSubstitution::getResourceTypeToSubstitute)
@@ -199,6 +226,14 @@ public class PlayerContext {
 	}
 
 	/**
+	 * Utility method, same as PlayerContext.getTemporaryStorage().peekResources()
+	 * @return returns the resources in the temporary storage
+	 */
+	public Map<ResourceType, Integer> getTemporaryStorageResources() {
+		return tempStorage.peekResources();
+	}
+
+	/**
 	 * This method will empty the temporary storage. It should be called when the player moves the resource to
 	 * the shelves/leader card storages.
      * @return resources that were in the temporary storage
@@ -233,6 +268,26 @@ public class PlayerContext {
 	}
 
 	/**
+	 * This method allows to get one of the decks of development cards owned by the player.
+	 * <p>
+	 * Note2: when playing with the standard rules there will be 3 decks of development cards for every player. (Those
+	 * deck will be empty when the game starts)
+	 * @param deckNumber the number of the deck that will be returned
+	 * @return returns the deck with the specified deckNumber
+	 * @throws IllegalArgumentException if there is no deck with that deckNumber. (if deckNumber >= numberOfDecks)
+	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack
+	 */
+	public PlayerOwnedDevelopmentCardStack getDeck(int deckNumber) throws IllegalArgumentException {
+		if(deckNumber >= developmentCardDecks.size() || deckNumber < 0)
+			throw new IllegalArgumentException(String.format(
+					"deckNumber %d is not valid. The range of valid deck numbers for this game is 0 to %d",
+					deckNumber,
+					developmentCardDecks.size()
+			));
+		return developmentCardDecks.get(deckNumber);
+	}
+
+	/**
 	 * This method allow to add a new development card on top of one of the decks of development cards owned by the
 	 * player. This method should be called when a player buys a development card
 	 * <p>
@@ -248,13 +303,7 @@ public class PlayerContext {
 	 * @see it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel
 	 */
 	public void addDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException, CannotPushCardOnTopException {
-		if(deckNumber >= developmentCardDecks.size() || deckNumber < 0)
-			throw new IllegalArgumentException(String.format(
-					"deckNumber %d is not valid. The range of valid deck numbers for this game is 0 to %d",
-					deckNumber,
-					developmentCardDecks.size()
-			));
-		developmentCardDecks.get(deckNumber).pushOnTop(card);
+		getDeck(deckNumber).pushOnTop(card);
 	}
 
 	/**
