@@ -40,7 +40,7 @@ public class DevelopmentCardsTable {
 		return availableCards;
 	}
 
-	public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) {
+	public DevelopmentCard popCard (DevelopmentCardLevel level, DevelopmentCardColour colour) {
 		DevelopmentCard cardToRemove = new DevelopmentCard(null, null, null, 0);
 		for (DevelopmentCardLevel cardlevel : cards.keySet()) {
 			for (Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>> value : cards.values()) {
