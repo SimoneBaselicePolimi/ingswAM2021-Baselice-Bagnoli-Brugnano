@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStorageRule {
 	/**
-	 * list of storage that implement this specific rule
+	 * list of storages that implement this specific rule
 	 */
 	private List<ResourceStorage> storages = new ArrayList<>();
 
