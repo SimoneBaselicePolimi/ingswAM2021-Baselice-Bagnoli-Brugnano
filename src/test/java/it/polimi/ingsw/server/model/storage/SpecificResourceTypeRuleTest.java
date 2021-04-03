@@ -14,9 +14,9 @@ class SpecificResourceTypeRuleTest {
      */
     @Test
     void testCheckRule() {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
                 .addRule(new SpecificResourceTypeRule(ResourceType.COINS))
-                .createResourceStorage();
+                .createResourceStorage("s");
         assertThrows(
                 ResourceStorageRuleViolationException.class,
                 () -> storage.addResources(Map.of(

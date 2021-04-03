@@ -49,10 +49,10 @@ class ResourceStorageTest {
      */
     @Test
     void testResourceStorageWith2TrueRules() {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
             .addRule(trueRule1)
             .addRule(trueRule2)
-            .createResourceStorage();
+            .createResourceStorage("s");
         Map<ResourceType, Integer> resourcesToAdd = Map.of(
                 ResourceType.STONES, 1,
                 ResourceType.SERVANTS, 4,
@@ -70,11 +70,11 @@ class ResourceStorageTest {
      */
     @Test
     void testResourceStorageWith2TrueRulesAnd1False() {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s")
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
             .addRule(trueRule1)
             .addRule(falseRule1)
             .addRule(trueRule2)
-            .createResourceStorage();
+            .createResourceStorage("s");
         Map<ResourceType, Integer> resourcesToAdd = Map.of(
                 ResourceType.STONES, 1,
                 ResourceType.SERVANTS, 4,
@@ -95,7 +95,7 @@ class ResourceStorageTest {
     @Test
     void testCanAddResources() throws ResourceStorageRuleViolationException {
 
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage("s");
         assertNotNull(storage);
         assertEquals(new HashMap<>(), storage.peekResources(), "The storage should be empty");
 
@@ -129,7 +129,7 @@ class ResourceStorageTest {
      */
     @Test
     void testAddResources() throws ResourceStorageRuleViolationException {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage("s");
         assertNotNull(storage);
         assertEquals(new HashMap<>(), storage.peekResources(), "The storage should be empty");
 
@@ -162,7 +162,7 @@ class ResourceStorageTest {
     @Test
     void testAddAndRemoveResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage("s");
         assertTrue(storage.canAddResources(Map.of(
             ResourceType.STONES, 2,
             ResourceType.COINS, 1,
@@ -213,7 +213,7 @@ class ResourceStorageTest {
      */
     @Test
     void testTryToRemoveTooManyResources() throws ResourceStorageRuleViolationException {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder("s").createResourceStorage();
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage("s");
         assertTrue(storage.canAddResources(Map.of(
                 ResourceType.STONES, 2,
                 ResourceType.COINS, 1,
@@ -243,18 +243,18 @@ class ResourceStorageTest {
      */
     @Test
     void testEqualsID () {
-        ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder("s1")
-                .createResourceStorage();
-        ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder("s2")
-                .createResourceStorage();
-        ResourceStorage storage3 = ResourceStorageBuilder.initResourceStorageBuilder("s3")
-                .createResourceStorage();
-        ResourceStorage storage4 = ResourceStorageBuilder.initResourceStorageBuilder("s1")
-                .createResourceStorage();
-        ResourceStorage storage5 = ResourceStorageBuilder.initResourceStorageBuilder("s1")
-                .createResourceStorage();
-        ResourceStorage storage6 = ResourceStorageBuilder.initResourceStorageBuilder("s6")
-                .createResourceStorage();
+        ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder()
+                .createResourceStorage("s1");
+        ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder()
+                .createResourceStorage("s2");
+        ResourceStorage storage3 = ResourceStorageBuilder.initResourceStorageBuilder()
+                .createResourceStorage("s3");
+        ResourceStorage storage4 = ResourceStorageBuilder.initResourceStorageBuilder()
+                .createResourceStorage("s1");
+        ResourceStorage storage5 = ResourceStorageBuilder.initResourceStorageBuilder()
+                .createResourceStorage("s1");
+        ResourceStorage storage6 = ResourceStorageBuilder.initResourceStorageBuilder()
+                .createResourceStorage("s6");
 
         assertEquals(storage1, storage4);
         assertEquals(storage1, storage5);
