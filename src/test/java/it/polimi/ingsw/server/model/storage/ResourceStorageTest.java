@@ -45,6 +45,20 @@ class ResourceStorageTest {
     }
 
     /**
+     * Test that builds a ResourceStorage calling the builder and tests that ID is correct
+     */
+    @Test
+    void testBuilder(){
+        ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder().
+                createResourceStorage("firstStorage");
+        ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder().
+                createResourceStorage("secondStorage");
+
+        assertEquals(storage1.getStorageID(), "firstStorage");
+        assertEquals(storage2.getStorageID(), "secondStorage");
+    }
+
+    /**
      * Test the construction of a storage with 2 true rules
      */
     @Test
