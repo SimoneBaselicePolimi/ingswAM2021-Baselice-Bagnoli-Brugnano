@@ -307,6 +307,25 @@ public class PlayerContext {
 	}
 
 	/**
+	 * This method allow to check if it is possible to add a new development card on top of one of the decks of
+	 * development cards owned by the player.
+	 * <p>
+	 * Note1: you can only add a card with level N on top of a card on level N - 1.
+	 * Note2: when playing with the standard rules there will be 3 decks of development cards for every player. (Those
+	 * deck will be empty when the game starts)
+	 * @param card development card to add.
+	 * @param deckNumber the number of the deck to add the development card on top
+	 * @throws IllegalArgumentException if there is no deck with that deckNumber. (if deckNumber >= numberOfDecks)
+	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack
+	 * @see it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel
+	 */
+	public boolean canAddDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException {
+		return getDeck(deckNumber).isPushOnTopValid(card);
+	}
+
+
+
+	/**
 	 * @return returns all the development cards owned by the player
 	 */
 	public Set<DevelopmentCard> getAllDevelopmentCards() {
