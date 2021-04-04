@@ -5,11 +5,13 @@ import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
+import it.polimi.ingsw.server.model.gameitems.cardstack.CannotPushCardOnTopException;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -18,8 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerContextTest {
@@ -27,10 +28,27 @@ class PlayerContextTest {
     @Mock
     Player player;
 
+    @Mock
+    ResourceStorage infiniteChest;
+
+    @Mock
+    ResourceStorage temporaryStorage;
+
+    PlayerContext playerContext;
+
+    @BeforeEach
+    void setUp() {
+        playerContext = new PlayerContext(
+                player,
+                new HashSet<>(),
+                new ArrayList<>(),
+                infiniteChest,
+                temporaryStorage
+        );
+    }
+
     @Test
     void testSetLeaderCards() {
-
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
 
         assertEquals(new HashSet<>(), playerContext.getLeaderCards());
 
@@ -55,18 +73,17 @@ class PlayerContextTest {
         when(activeCard2.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard hiddenCard1 = mock(LeaderCard.class);
-        when(activeCard1.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(hiddenCard1.getState()).thenReturn(LeaderCardState.IN_HAND);
 
         LeaderCard hiddenCard2 = mock(LeaderCard.class);
-        when(activeCard1.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(hiddenCard2.getState()).thenReturn(LeaderCardState.IN_HAND);
 
         LeaderCard discardedCard1 = mock(LeaderCard.class);
-        when(activeCard1.getState()).thenReturn(LeaderCardState.DISCARDED);
+        when(discardedCard1.getState()).thenReturn(LeaderCardState.DISCARDED);
 
         Set<LeaderCard> cards = Set.of(activeCard1, hiddenCard1, discardedCard1, activeCard2, hiddenCard2);
         Set<LeaderCard> activeCards = Set.of(activeCard1, activeCard2);
 
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
         playerContext.setLeaderCards(cards);
         assertEquals(activeCards, playerContext.getActiveLeaderCards());
 
@@ -82,13 +99,13 @@ class PlayerContextTest {
         when(cardWithCoinsDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardHiddenWithShieldsDiscount = mock(LeaderCard.class);
-        when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
+        lenient().when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
                 new DevelopmentCardCostDiscount(ResourceType.STONES, 1)
         ));
         when(cardHiddenWithShieldsDiscount.getState()).thenReturn(LeaderCardState.IN_HAND);
 
         LeaderCard cardDiscardedWithShieldsDiscount = mock(LeaderCard.class);
-        when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
+        lenient().when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
                 new DevelopmentCardCostDiscount(ResourceType.STONES, 1)
         ));
         when(cardDiscardedWithShieldsDiscount.getState()).thenReturn(LeaderCardState.DISCARDED);
@@ -104,7 +121,6 @@ class PlayerContextTest {
         when(cardWithNoDiscount.getDevelopmentCardCostDiscount()).thenReturn(new ArrayList<>());
         when(cardWithNoDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
         playerContext.setLeaderCards(Set.of(
                 cardWithNoDiscount,
                 cardWithCoinsAndStonesDiscount,
@@ -145,18 +161,17 @@ class PlayerContextTest {
         when(cardWithServantsSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardHiddenWithCoinsSub = mock(LeaderCard.class);
-        when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
+        lenient().when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
                 new WhiteMarbleSubstitution(ResourceType.COINS)
         ));
         when(cardHiddenWithCoinsSub.getState()).thenReturn(LeaderCardState.IN_HAND);
 
         LeaderCard cardDiscardedWithCoinsSub = mock(LeaderCard.class);
-        when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
+        lenient().when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
                 new WhiteMarbleSubstitution(ResourceType.COINS)
         ));
         when(cardDiscardedWithCoinsSub.getState()).thenReturn(LeaderCardState.DISCARDED);
 
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
         playerContext.setLeaderCards(Set.of(
                 cardWithShieldsSub,
                 cardWithShieldStoneSub,
@@ -188,10 +203,9 @@ class PlayerContextTest {
         when(cardWithStorage2.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardHiddenWithStorage = mock(LeaderCard.class);
-        when(cardHiddenWithStorage.getResourceStorages()).thenReturn(List.of(storage4));
+        lenient().when(cardHiddenWithStorage.getResourceStorages()).thenReturn(List.of(storage4));
         when(cardHiddenWithStorage.getState()).thenReturn(LeaderCardState.IN_HAND);
 
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
         playerContext.setLeaderCards(Set.of(cardWithStorage1, cardWithStorage2, cardHiddenWithStorage));
         assertEquals(
                 Set.of(storage1, storage2, storage3),
@@ -217,10 +231,9 @@ class PlayerContextTest {
         when(cardWithProd2.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardHiddenWithProd = mock(LeaderCard.class);
-        when(cardHiddenWithProd.getProductions()).thenReturn(List.of(production4));
+        lenient().when(cardHiddenWithProd.getProductions()).thenReturn(List.of(production4));
         when(cardHiddenWithProd.getState()).thenReturn(LeaderCardState.IN_HAND);
 
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
         playerContext.setLeaderCards(Set.of(cardWithProd1, cardWithProd2, cardHiddenWithProd));
         assertEquals(
                 Set.of(production1, production2, production3),
@@ -236,7 +249,13 @@ class PlayerContextTest {
                 mock(ResourceStorage.class),
                 mock(ResourceStorage.class)
         );
-        PlayerContext playerContext = new PlayerContext(player, 2, shelves);
+        playerContext = new PlayerContext(
+                player,
+                shelves,
+                new ArrayList<>(),
+                infiniteChest,
+                temporaryStorage
+        );
         assertEquals(shelves, playerContext.getShelves());
     }
 
@@ -254,10 +273,16 @@ class PlayerContextTest {
         when(leaderCard1.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard leaderCardDiscarded = mock(LeaderCard.class);
-        when(leaderCardDiscarded.getResourceStorages()).thenReturn(List.of(leaderCardStorage2));
+        lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(List.of(leaderCardStorage2)); //Should not be called
         when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.DISCARDED);
 
-        PlayerContext playerContext = new PlayerContext(player, 2, shelves);
+        playerContext = new PlayerContext(
+                player,
+                shelves,
+                new ArrayList<>(),
+                infiniteChest,
+                temporaryStorage
+        );
         playerContext.setLeaderCards(Set.of(leaderCard1, leaderCardDiscarded));
         assertEquals(
             Set.of(
@@ -272,33 +297,33 @@ class PlayerContextTest {
 
     @Test
     void testGetInfiniteChest() {
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
-        assertNotNull(playerContext.getInfiniteChest());
+        assertEquals(infiniteChest, playerContext.getInfiniteChest());
     }
 
     @Test
     void testGetTemporaryStorage() {
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
-        assertNotNull(playerContext.getTemporaryStorage());
-        assertEquals(new HashSet<>(), playerContext.getTemporaryStorage().peekResources());
+        assertEquals(temporaryStorage, playerContext.getTemporaryStorage());
     }
 
     @Test
     void testSetTemporaryStorageResources() {
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
 
         Map<ResourceType, Integer> resources1 = Map.of(
                 ResourceType.COINS, 2,
                 ResourceType.SHIELDS, 4
         );
         playerContext.setTemporaryStorageResources(resources1);
+        verify(temporaryStorage).addResources(eq(resources1));
+        when(temporaryStorage.peekResources()).thenReturn(resources1);
         assertEquals(resources1, playerContext.getTemporaryStorageResources());
-        assertEquals(resources1, playerContext.getTemporaryStorage().peekResources());
 
         Map<ResourceType, Integer> resources2 = Map.of(
                 ResourceType.STONES, 2
         );
         playerContext.setTemporaryStorageResources(resources2);
+        verify(temporaryStorage).removeResources(eq(resources1));
+        verify(temporaryStorage).addResources(eq(resources2));
+        when(temporaryStorage.peekResources()).thenReturn(resources2);
         assertEquals(resources2, playerContext.getTemporaryStorageResources());
         assertEquals(resources2, playerContext.getTemporaryStorage().peekResources());
 
@@ -307,7 +332,6 @@ class PlayerContextTest {
 
     @Test
     void testClearTemporaryStorageResources() {
-        PlayerContext playerContext = new PlayerContext(player, 2, new HashSet<>());
         playerContext.setTemporaryStorageResources(Map.of(
                 ResourceType.COINS, 2,
                 ResourceType.SHIELDS, 4
@@ -341,28 +365,30 @@ class PlayerContextTest {
         when(leaderCard1.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         ResourceStorage leaderCardStorage2 = mock(ResourceStorage.class);
-        when(leaderCardStorage2.peekResources()).thenReturn(Map.of(
+        lenient().when(leaderCardStorage2.peekResources()).thenReturn(Map.of(
                 ResourceType.SERVANTS, 100
         ));
         LeaderCard leaderCardDiscarded = mock(LeaderCard.class);
-        when(leaderCardDiscarded.getResourceStorages()).thenReturn(List.of(leaderCardStorage2));
+        lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(List.of(leaderCardStorage2));
         when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.IN_HAND);
 
-        ResourceStorage infiniteChest = mock(ResourceStorage.class);
         when(infiniteChest.peekResources()).thenReturn(Map.of(
                 ResourceType.STONES, 3,
                 ResourceType.COINS, 1
         ));
 
-        ResourceStorage tempStorage = mock(ResourceStorage.class);
-        when(infiniteChest.peekResources()).thenReturn(Map.of(
+        lenient().when(temporaryStorage.peekResources()).thenReturn(Map.of(
                 ResourceType.SERVANTS, 1000
         ));
 
-        PlayerContext playerContext = new PlayerContext(player, shelves, new ArrayList<>(), infiniteChest, tempStorage);
+        PlayerContext playerContext = new PlayerContext(
+                player,
+                shelves,
+                new ArrayList<>(),
+                infiniteChest,
+                temporaryStorage
+        );
         playerContext.setLeaderCards(Set.of(leaderCard1, leaderCardDiscarded));
-        assertEquals(infiniteChest, playerContext.getInfiniteChest());
-        assertEquals(tempStorage, playerContext.getTemporaryStorage());
 
         assertEquals(
                 Set.of(
@@ -385,7 +411,7 @@ class PlayerContextTest {
     }
 
     @Test
-    void testAddDevelopmentCard() {
+    void testAddAndFetchDevelopmentCards() throws CannotPushCardOnTopException {
         DevelopmentCard devCard1Deck1 = mock(DevelopmentCard.class);
         DevelopmentCard devCard2Deck1 = mock(DevelopmentCard.class);
         DevelopmentCard devCard1Deck2 = mock(DevelopmentCard.class);
@@ -398,10 +424,48 @@ class PlayerContextTest {
                 player,
                 new HashSet<>(),
                 List.of(deck1, deck2),
-                mock(ResourceStorage.class),
-                mock(ResourceStorage.class)
+                infiniteChest,
+                temporaryStorage
         );
         assertEquals(deck1, playerContext.getDeck(0));
+        assertEquals(deck2, playerContext.getDeck(1));
+
+        assertThrows(IllegalArgumentException.class, () -> playerContext.getDeck(-1));
+        assertThrows(IllegalArgumentException.class, () -> playerContext.getDeck(2));
+
+        when(deck1.isPushOnTopValid(eq(devCard1Deck1))).thenReturn(true);
+        assertTrue(playerContext.canAddDevelopmentCard(devCard1Deck1, 0));
+
+        playerContext.addDevelopmentCard(devCard1Deck1, 0);
+        verify(deck1).pushOnTop(eq(devCard1Deck1));
+
+        when(deck2.isPushOnTopValid(eq(devCard2Deck2))).thenReturn(false);
+        assertFalse(playerContext.canAddDevelopmentCard(devCard2Deck2, 1));
+
+        doThrow(CannotPushCardOnTopException.class).when(deck2).pushOnTop(eq(devCard2Deck2));
+        assertThrows(
+                CannotPushCardOnTopException.class,
+                () -> playerContext.addDevelopmentCard(devCard2Deck2, 1),
+                "The player context does not propagate the exception generated when trying to add an invalid " +
+                        "card to a deck"
+        );
+
+        when(deck1.peek()).thenReturn(devCard1Deck1);
+        when(deck2.peek()).thenReturn(devCard2Deck2);
+        assertEquals(
+                Set.of(devCard1Deck1, devCard2Deck2),
+                playerContext.getDevelopmentCardsOnTop(),
+                "The player context does not return the card on top from every deck"
+        );
+
+
+        when(deck1.peekAll()).thenReturn(List.of(devCard1Deck1, devCard2Deck1));
+        when(deck2.peekAll()).thenReturn(List.of(devCard1Deck2, devCard2Deck2, devCard3Deck2));
+        assertEquals(
+                Set.of(devCard1Deck1, devCard2Deck1, devCard1Deck2, devCard2Deck2, devCard3Deck2),
+                playerContext.getAllDevelopmentCards(),
+                "The player context does not return all the cards from all the decks"
+        );
 
     }
 
