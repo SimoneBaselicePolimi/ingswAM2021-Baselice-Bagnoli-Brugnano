@@ -222,7 +222,8 @@ public class PlayerContext {
 	 * @param resources resources to put into the temporary storage
 	 */
 	public void setTemporaryStorageResources(Map<ResourceType, Integer> resources) {
-
+		clearTemporaryStorageResources();
+		tempStorage.addResources(resources);
 	}
 
 	/**
@@ -239,7 +240,9 @@ public class PlayerContext {
      * @return resources that were in the temporary storage
 	 */
 	public Map<ResourceType, Integer> clearTemporaryStorageResources() {
-		return null;
+		Map<ResourceType, Integer> oldResources = tempStorage.peekResources();
+		tempStorage.removeResources(oldResources);
+		return oldResources;
 	}
 
 	/**
