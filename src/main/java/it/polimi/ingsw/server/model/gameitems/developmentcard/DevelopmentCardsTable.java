@@ -70,4 +70,20 @@ public class DevelopmentCardsTable {
 		}
 		return cardsToReturn;
 	}
+
+
+	public List<ShuffledCardDeck<DevelopmentCard>> getDeckByLevelAndColour (DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour){
+		List<ShuffledCardDeck<DevelopmentCard>> deckByLevelAndColour = new ArrayList<ShuffledCardDeck<DevelopmentCard>>();
+		for (DevelopmentCardLevel level : cards.keySet()) {
+			for (Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>> value : cards.values()) {
+				for (DevelopmentCardColour colour : value.keySet()) {
+					for (ShuffledCardDeck<DevelopmentCard> deck : value.values()) {
+						if (level.equals(cardLevel) && colour.equals(cardColour))
+							deckByLevelAndColour.add(deck);
+					}
+				}
+			}
+		}
+		return deckByLevelAndColour;
+	}
 }
