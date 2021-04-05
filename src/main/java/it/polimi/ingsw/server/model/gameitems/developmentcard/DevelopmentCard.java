@@ -11,16 +11,19 @@ public class DevelopmentCard {
 	private DevelopmentCardColour colour;
 	private Production production;
 	private int victoryPoints;
+	private Map<ResourceType, Integer> purchaseCost;
 
 	public DevelopmentCard (
 			DevelopmentCardLevel level,
 			DevelopmentCardColour colour,
 			Production production,
-			int victoryPoints){
+			int victoryPoints,
+			Map <ResourceType, Integer> purchaseCost){
 		this.level=level;
 		this.colour=colour;
 		this.production=production;
 		this.victoryPoints=victoryPoints;
+		this.purchaseCost=purchaseCost;
 	}
 
 	public DevelopmentCardLevel getLevel() {
@@ -37,6 +40,10 @@ public class DevelopmentCard {
 
 	public int getVictoryPoints() {
 		return victoryPoints;
+	}
+
+	public  Map<ResourceType, Integer> getPurchaseCost(){
+		return purchaseCost;
 	}
 
 }
