@@ -18,7 +18,7 @@ public class DevelopmentCard {
 			DevelopmentCardColour colour,
 			Production production,
 			int victoryPoints,
-			Map <ResourceType, Integer> purchaseCost){
+			Map<ResourceType, Integer> purchaseCost){
 		this.level=level;
 		this.colour=colour;
 		this.production=production;
