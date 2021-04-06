@@ -9,10 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -67,27 +64,33 @@ public class DevelopmentCardsTableTest {
 
         DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard1));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard2));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard3));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).peekAll().contains(developmentCard4));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard5));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll().contains(developmentCard6));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll().contains(developmentCard7));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard8));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard9));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard10));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard11));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard12));
-        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard2));
-        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard1));
-        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).peekAll().contains(developmentCard3));
-        //assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW).isEmpty());
+
+        assertEquals(
+                Set.of(developmentCard1, developmentCard2, developmentCard3),
+                new HashSet<>(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll())
+        );
+        assertEquals(
+                Set.of(developmentCard4),
+                new HashSet<>(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).peekAll())
+        );
+        assertEquals(
+                Set.of(developmentCard5),
+                new HashSet<>(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).peekAll())
+        );
+        assertEquals(
+                Set.of(developmentCard7, developmentCard6),
+                new HashSet<>(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll())
+        );
+        assertEquals(
+                Set.of(developmentCard8, developmentCard9, developmentCard10, developmentCard11, developmentCard12),
+                new HashSet<>(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll())
+        );
+        assertThrows(IllegalArgumentException.class,
+                () -> table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW));
         }
 
         @Test
         void testGetAvailableCards(){
-
             List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
             developmentCards.add(developmentCard1);
             developmentCards.add(developmentCard2);
@@ -103,11 +106,9 @@ public class DevelopmentCardsTableTest {
             developmentCards.add(developmentCard12);
             DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
-
             assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.BLUE).peek()));
             assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.GREEN).peek()));
             assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL,DevelopmentCardColour.PURPLE).peek()));
-            //assertFalse(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.YELLOW).peek()));
             assertEquals(table.getAvailableCards().size(), 5);
             assertNotEquals(table.getAvailableCards().size(), 4);
         }
@@ -129,8 +130,18 @@ public class DevelopmentCardsTableTest {
             developmentCards.add(developmentCard12);
             DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
-            assertEquals(table.popCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE), table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).pop());
-
+            List<DevelopmentCard> list1 = table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll();
+            DevelopmentCard card1 = table.popCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW);
+            DevelopmentCard card2 = table.popCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW);
+            assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).isEmpty());
+            assertEquals(
+                    Set.of(card1, card2),
+                    new HashSet<>(list1)
+            );
+            table.popCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE);
+            table.popCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE);
+            table.popCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE);
+            assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).isEmpty());
         }
 
         @Test
@@ -150,10 +161,10 @@ public class DevelopmentCardsTableTest {
             developmentCards.add(developmentCard12);
             DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
-            assertTrue(table.getAvailableCards().contains(table.getAvailableCardsAsMap().get(DevelopmentCardLevel.FIRST_LEVEL).get(DevelopmentCardColour.BLUE)));
-            assertTrue(table.getAvailableCards().contains(table.getAvailableCardsAsMap().get(DevelopmentCardLevel.FIRST_LEVEL).get(DevelopmentCardColour.GREEN)));
-            assertTrue(table.getAvailableCards().contains(table.getAvailableCardsAsMap().get(DevelopmentCardLevel.THIRD_LEVEL).get(DevelopmentCardColour.PURPLE)));
-            assertEquals(table.getAvailableCards().size(), table.getAvailableCardsAsMap().size());
+            for (DevelopmentCard card : table.getAvailableCards()) {
+                assertEquals(card, table.getAvailableCardsAsMap().get(card.getLevel()).get(card.getColour()));
+            }
+
         }
 
 }

@@ -2,12 +2,7 @@ package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
 import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Collection;
-import java.util.Arrays;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -35,23 +30,28 @@ public class DevelopmentCardsTable {
 	}
 
 
-	public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) {
+	public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) throws EmptyStackException{
 		return (this.getDeckByLevelAndColour(level, colour).pop());
 	}
 
 
-	public Map<DevelopmentCardLevel, Map<DevelopmentCardColour, DevelopmentCard>> getAvailableCardsAsMap() {
-		Map<DevelopmentCardLevel, Map<DevelopmentCardColour, DevelopmentCard> map =
-				getAvailableCards().stream().collect(Collectors.toMap(
-						DevelopmentCard::getLevel,
-						Collectors.toMap(
-								DevelopmentCard::getColour,
-								Function.identity()
+	public Map<DevelopmentCardLevel,Map<DevelopmentCardColour,DevelopmentCard>> getAvailableCardsAsMap() {
+		Map<DevelopmentCardLevel, Map<DevelopmentCardColour, DevelopmentCard>> map =
+				getAvailableCards().stream().collect(
+						Collectors.groupingBy(
+								DevelopmentCard::getLevel,
+								Collectors.toMap(
+										DevelopmentCard::getColour,
+										Function.identity()
+								)
 						)
 				);
+		return map;
 	}
 
-	public ShuffledCardDeck<DevelopmentCard> getDeckByLevelAndColour (DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour) {
+	public ShuffledCardDeck<DevelopmentCard> getDeckByLevelAndColour (DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour) throws IllegalArgumentException{
+		if (!cards.containsKey(cardLevel) || !cards.get(cardLevel).containsKey(cardColour))
+			throw new IllegalArgumentException();
 		return(cards.get(cardLevel).get(cardColour));
 	}
 }
