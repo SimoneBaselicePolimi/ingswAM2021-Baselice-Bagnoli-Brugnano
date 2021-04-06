@@ -34,8 +34,6 @@ public class DevelopmentCardsTableTest {
     @Mock
     Map<ResourceType, Integer> purchaseCost;
 
-    @Test
-    void testDevelopmentCardsTable (){
         DevelopmentCard developmentCard1 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production1, 3, purchaseCost);
         DevelopmentCard developmentCard2 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production1, 2, purchaseCost);
         DevelopmentCard developmentCard3 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production2, 5, purchaseCost);
@@ -48,6 +46,10 @@ public class DevelopmentCardsTableTest {
         DevelopmentCard developmentCard10 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production2, 3, purchaseCost);
         DevelopmentCard developmentCard11 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
         DevelopmentCard developmentCard12 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
+
+
+    @Test
+    void testDevelopmentCardsTableConstructor (){
 
         List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
         developmentCards.add(developmentCard1);
@@ -62,30 +64,96 @@ public class DevelopmentCardsTableTest {
         developmentCards.add(developmentCard10);
         developmentCards.add(developmentCard11);
         developmentCards.add(developmentCard12);
+
         DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
-        //List<DevelopmentCard> availableCards = table.getAvailableCards();
-        //for (DevelopmentCard card : availableCards) {
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).contains(developmentCard1));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).contains(developmentCard2));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).contains(developmentCard3));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).contains(developmentCard4));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).contains(developmentCard5));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).contains(developmentCard6));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).contains(developmentCard7));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).contains(developmentCard8));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).contains(developmentCard9));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).contains(developmentCard10));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).contains(developmentCard11));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).contains(developmentCard12));
-        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).contains(developmentCard2));
-        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).contains(developmentCard1));
-        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).contains(developmentCard3));
-        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW).isEmpty());
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard1));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard2));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard3));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).peekAll().contains(developmentCard4));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard5));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll().contains(developmentCard6));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll().contains(developmentCard7));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard8));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard9));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard10));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard11));
+        assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard12));
+        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE).peekAll().contains(developmentCard2));
+        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).peekAll().contains(developmentCard1));
+        assertFalse(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).peekAll().contains(developmentCard3));
+        //assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW).isEmpty());
+        }
+
+        @Test
+        void testGetAvailableCards(){
+
+            List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+            developmentCards.add(developmentCard1);
+            developmentCards.add(developmentCard2);
+            developmentCards.add(developmentCard3);
+            developmentCards.add(developmentCard4);
+            developmentCards.add(developmentCard5);
+            developmentCards.add(developmentCard6);
+            developmentCards.add(developmentCard7);
+            developmentCards.add(developmentCard8);
+            developmentCards.add(developmentCard9);
+            developmentCards.add(developmentCard10);
+            developmentCards.add(developmentCard11);
+            developmentCards.add(developmentCard12);
+            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
+
+
+            assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.BLUE).peek()));
+            assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.GREEN).peek()));
+            assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL,DevelopmentCardColour.PURPLE).peek()));
+            //assertFalse(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.YELLOW).peek()));
+            assertEquals(table.getAvailableCards().size(), 5);
+            assertNotEquals(table.getAvailableCards().size(), 4);
+        }
+
+        @Test
+        void testPopCard (){
+            List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+            developmentCards.add(developmentCard1);
+            developmentCards.add(developmentCard2);
+            developmentCards.add(developmentCard3);
+            developmentCards.add(developmentCard4);
+            developmentCards.add(developmentCard5);
+            developmentCards.add(developmentCard6);
+            developmentCards.add(developmentCard7);
+            developmentCards.add(developmentCard8);
+            developmentCards.add(developmentCard9);
+            developmentCards.add(developmentCard10);
+            developmentCards.add(developmentCard11);
+            developmentCards.add(developmentCard12);
+            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
+
+            assertEquals(table.popCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE), table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).pop());
 
         }
 
+        @Test
+        void testGetAvailableCardsAsMap(){
+            List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+            developmentCards.add(developmentCard1);
+            developmentCards.add(developmentCard2);
+            developmentCards.add(developmentCard3);
+            developmentCards.add(developmentCard4);
+            developmentCards.add(developmentCard5);
+            developmentCards.add(developmentCard6);
+            developmentCards.add(developmentCard7);
+            developmentCards.add(developmentCard8);
+            developmentCards.add(developmentCard9);
+            developmentCards.add(developmentCard10);
+            developmentCards.add(developmentCard11);
+            developmentCards.add(developmentCard12);
+            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
-
+            assertTrue(table.getAvailableCards().contains(table.getAvailableCardsAsMap().get(DevelopmentCardLevel.FIRST_LEVEL).get(DevelopmentCardColour.BLUE)));
+            assertTrue(table.getAvailableCards().contains(table.getAvailableCardsAsMap().get(DevelopmentCardLevel.FIRST_LEVEL).get(DevelopmentCardColour.GREEN)));
+            assertTrue(table.getAvailableCards().contains(table.getAvailableCardsAsMap().get(DevelopmentCardLevel.THIRD_LEVEL).get(DevelopmentCardColour.PURPLE)));
+            assertEquals(table.getAvailableCards().size(), table.getAvailableCardsAsMap().size());
+        }
 
 }
