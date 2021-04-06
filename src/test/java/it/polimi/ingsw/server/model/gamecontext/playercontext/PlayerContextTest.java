@@ -458,7 +458,6 @@ class PlayerContextTest {
                 "The player context does not return the card on top from every deck"
         );
 
-
         when(deck1.peekAll()).thenReturn(List.of(devCard1Deck1, devCard2Deck1));
         when(deck2.peekAll()).thenReturn(List.of(devCard1Deck2, devCard2Deck2, devCard3Deck2));
         assertEquals(

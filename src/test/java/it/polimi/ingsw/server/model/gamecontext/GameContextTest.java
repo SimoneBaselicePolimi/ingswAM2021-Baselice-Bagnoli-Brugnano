@@ -9,7 +9,9 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class GameContextTest {
 
     @Mock
@@ -36,18 +39,22 @@ class GameContextTest {
     @Mock
     PlayerContext player1Context, player2Context, player3Context;
 
-    List<Player> playersOrder = List.of(player1, player2, player3);
+    List<Player> playersOrder;
 
-    Map<Player, PlayerContext> playerContextMap = Map.of(
-            player1, player1Context,
-            player2, player2Context,
-            player3, player3Context
-    );
+    Map<Player, PlayerContext> playerContextMap;
 
     GameContext gameContext;
 
     @BeforeEach
     public void setUp() {
+        playersOrder = List.of(player1, player2, player3);
+
+        playerContextMap = Map.of(
+                player1, player1Context,
+                player2, player2Context,
+                player3, player3Context
+        );
+
         gameContext = new GameContext(market, cardsTable, faithPath, playersOrder, playerContextMap);
     }
 
@@ -87,16 +94,15 @@ class GameContextTest {
         ));
 
         DevelopmentCard card3 = mock(DevelopmentCard.class);
-        when(card2.getPurchaseCost()).thenReturn(Map.of(
+        when(card3.getPurchaseCost()).thenReturn(Map.of(
                 ResourceType.STONES, 8
         ));
 
         DevelopmentCard card4 = mock(DevelopmentCard.class);
-        when(card2.getPurchaseCost()).thenReturn(Map.of(
+        when(card4.getPurchaseCost()).thenReturn(Map.of(
                 ResourceType.SERVANTS, 1
         ));
 
-        DevelopmentCardsTable cardsTable = mock(DevelopmentCardsTable.class);
         when(cardsTable.getAvailableCards()).thenReturn(List.of(card1, card2, card3, card4));
 
         assertEquals(Set.of(card1, card2), gameContext.getDevelopmentCardsPlayerCanBuy(player1));
@@ -104,3 +110,22 @@ class GameContextTest {
 
     }
 }
+
+/*
+Player player1;
+
+    @Mock
+    Player player2;
+
+    @Mock
+    Player player3;
+
+    @Mock
+    PlayerContext player1Context;
+
+    @Mock
+    PlayerContext player2Context;
+
+    @Mock
+    PlayerContext player3Context;
+ */
