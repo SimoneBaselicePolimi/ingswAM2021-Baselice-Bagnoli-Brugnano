@@ -19,9 +19,9 @@ public class LeaderCard {
 	 * LeaderCard constructor
 	 * @param requirement requirement to activate the leader card
 	 * @param production list of productions (special skill) that the leader card can own (it can be an empty list)
-	 * @param resourceStorage list of resource storage (special skill) that the leader card can own (it can be an empty list)
+	 * @param resourceStorage list of resource storages (special skill) that the leader card can own (it can be an empty list)
 	 * @param cardCostDiscount list of discounts (special skill) that the leader card can own (it can be an empty list)
-	 * @param whiteMarbleSubstitutions list of substitution with white marble (special skill) that the leader card can own
+	 * @param whiteMarbleSubstitutions list of substitutions with white marbles (special skill) that the leader card can own
 	 *                                  (it can be an empty list)
 	 * @param victoryPoints number of victory points that the card gives
 	 */
@@ -39,25 +39,24 @@ public class LeaderCard {
 		this.whiteMarbleSubstitutions=whiteMarbleSubstitutions;
 		this.victoryPoints=victoryPoints;
 	}
+
 	/**
-	 * the method verifies that the player has the necessary requisites to activate the card
+	 * the method verifies that the player has the necessary requirements to activate the card
 	 * @param playerContext reference to the single player
-	 * @return true if the player satisfies requirments of the leader card
+	 * @return true if the player satisfies requirements of the leader card
 	 */
 	public boolean areRequirementsSatisfied(PlayerContext playerContext) {
-		if(!requirement.checkRequirement(playerContext))
-			return false;
-		return true;
+		return (requirement.checkRequirement(playerContext));
 	}
 
 	/**
 	 * the method changes the state of the leader card by activating it (the player can use it)
 	 * @param playerContext
-	 * @throws LeaderCardRequirementsNotSatisfied if the player doesn't satisfy requirments of the leader card
+	 * @throws LeaderCardRequirementsNotSatisfiedException if the player doesn't satisfy requirements of the leader card
 	 */
-	public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfied {
+	public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfiedException {
 		if(!areRequirementsSatisfied(playerContext))
-			throw new LeaderCardRequirementsNotSatisfied();
+			throw new LeaderCardRequirementsNotSatisfiedException();
 		this.state = LeaderCardState.ACTIVE;
 	}
 
@@ -70,7 +69,7 @@ public class LeaderCard {
 	}
 
 	/**
-	 * @return the state of the leader card
+	 * @return the state of the leader card: ACTIVE, DISCARDED or HIDDEN
 	 */
 	public LeaderCardState getState() {
 		return state;
@@ -84,7 +83,7 @@ public class LeaderCard {
 	}
 
 	/**
-	 * @return list of resource storage (special skill) that the leader card can own (it can be an empty list)
+	 * @return list of resource storages (special skill) that the leader card can own (it can be an empty list)
 	 */
 	public List<ResourceStorage> getResourceStorages() {
 		return resourceStorage;
@@ -98,7 +97,7 @@ public class LeaderCard {
 	}
 
 	/**
-	 * @return list of substitution with white marble (special skill) that the leader card can own (it can be an empty list)
+	 * @return list of substitutions with white marbles (special skill) that the leader card can own (it can be an empty list)
 	 */
 	public List<WhiteMarbleSubstitution> getWhiteMarbleSubstitutions() {
 		return whiteMarbleSubstitutions;

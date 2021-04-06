@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
+
 /**
  * Test to verify "checkRequirement" method: the method returns true if the player has the necessary
  * development cards (with specific colour) to activate the leader card

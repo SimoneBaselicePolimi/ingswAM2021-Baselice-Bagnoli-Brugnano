@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
+
 /**
  * Test to verify "checkRequirement" method: the method returns true if the
  * player has the necessary resources to activate the leader card
@@ -72,16 +73,16 @@ public class ResourceNumberRequirementTest {
 
     @Test
     void checkRequirementTest (){
-        assertTrue(requirement1.checkRequirement(playerContext1)); //OK
-        assertTrue(requirement2.checkRequirement(playerContext1)); //OK
-        assertFalse(requirement3.checkRequirement(playerContext1)); //NO
-        assertFalse(requirement1.checkRequirement(playerContext2)); //OK
-        assertFalse(requirement2.checkRequirement(playerContext2));//NO
+        assertTrue(requirement1.checkRequirement(playerContext1));
+        assertTrue(requirement2.checkRequirement(playerContext1));
+        assertFalse(requirement3.checkRequirement(playerContext1));
+        assertFalse(requirement1.checkRequirement(playerContext2));
+        assertFalse(requirement2.checkRequirement(playerContext2));
         assertTrue(requirement4.checkRequirement(playerContext2));
-        assertFalse(requirement3.checkRequirement(playerContext2)); //NO
-        assertTrue(requirement2.checkRequirement(playerContext3)); //ok
-        assertFalse(requirement3.checkRequirement(playerContext3)); //no
-        assertFalse(requirement4.checkRequirement(playerContext3)); //no
+        assertFalse(requirement3.checkRequirement(playerContext2));
+        assertTrue(requirement2.checkRequirement(playerContext3));
+        assertFalse(requirement3.checkRequirement(playerContext3));
+        assertFalse(requirement4.checkRequirement(playerContext3));
     }
 
     @Test

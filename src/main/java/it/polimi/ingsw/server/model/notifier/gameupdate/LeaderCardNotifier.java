@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
 import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfied;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.notifier.Notifier;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
@@ -30,7 +30,7 @@ public class LeaderCardNotifier extends LeaderCard implements Notifier<LeaderCar
     }
 
     @Override
-    public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfied {
+    public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfiedException {
         super.activateLeaderCard(playerContext);
     }
 
