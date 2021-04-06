@@ -27,9 +27,9 @@ public class MaxResourceNumberRule extends ResourceStorageRule {
 		Integer sumResourcesStorage = 0;
 		Integer sumNewResources = 0;
 		for (Integer number : storage.peekResources().values())
-			sumResourcesStorage = sumResourcesStorage + number;
-		for (Integer number : newResources.values())
 			sumResourcesStorage += number;
+		for (Integer number : newResources.values())
+			sumNewResources += number;
 		if (sumResourcesStorage + sumNewResources > maxResources)
 			return false;
 		return true;

@@ -80,21 +80,21 @@ public class ResourceStorage {
 
 	/**
 	 * Remove some resources (type and number) from the storage
-	 * @param resources Map of resources that the method removes from the storage
+	 * @param resourcesToRemove Map of resources that the method removes from the storage
 	 * @return newResources Map of resources that the method removes from the storage
 	 * @throws NotEnoughResourcesException if there aren't enough resources to remove
 	 */
-	public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> resources)
+	public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> resourcesToRemove)
 			throws NotEnoughResourcesException {
-		if(!canRemoveResources(resources))
+		if(!canRemoveResources(resourcesToRemove))
 			throw new NotEnoughResourcesException();
-		for (ResourceType resource : resources.keySet()) {
-			if (this.resources.get(resource) == resources.get(resource))
+		for (ResourceType resource : resourcesToRemove.keySet()) {
+			if (this.resources.get(resource) == resourcesToRemove.get(resource))
 				this.resources.remove(resource);
 			else
-				this.resources.put(resource, this.resources.get(resource) - resources.get(resource));
+				this.resources.put(resource, this.resources.get(resource) - resourcesToRemove.get(resource));
 		}
-		return resources;
+		return resourcesToRemove;
 	}
 
 

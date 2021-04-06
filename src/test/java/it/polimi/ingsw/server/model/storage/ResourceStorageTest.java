@@ -103,7 +103,7 @@ class ResourceStorageTest {
 
     /**
      * Test canAddResources method and addResourcesMethod
-     * If canAddResources return true, you can add that resources.
+     * If canAddResources return true, you can add these resources.
      * If canAddResources return false and you try to add resources, ResourceStorageRuleViolationException is thrown.
      */
     @Test
