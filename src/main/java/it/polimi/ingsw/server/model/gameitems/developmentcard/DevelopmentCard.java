@@ -20,6 +20,8 @@ public class DevelopmentCard {
 		return null;
 	}
 
+	public Map<ResourceType, Integer> getPurchaseCost() { return null; }
+
 	public int getVictoryPoints() {
 		return 0;
 	}

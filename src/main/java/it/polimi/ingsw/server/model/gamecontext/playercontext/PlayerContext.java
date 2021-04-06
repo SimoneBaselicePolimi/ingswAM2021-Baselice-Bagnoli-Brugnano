@@ -63,9 +63,12 @@ public class PlayerContext {
 	}
 
 	/**
-	 * This constructor should be used only for testing.
 	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
 	 * should be one and only one instance of this class for each player.
+	 * <p>
+	 * Note: this constructor is marked as protected because this class should only ever be initialized by the
+	 *  {@link it.polimi.ingsw.server.model.gamecontext.GameContextBuilder} and thus the constructor should never be
+	 * 	called from outside this package
 	 * @param player the player associated with this player context
 	 * @param shelves shelves the player can use to store resources taken from the market
 	 * @param decks decks (dependency injection)
