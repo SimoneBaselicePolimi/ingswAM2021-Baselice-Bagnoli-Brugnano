@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStorageRule {
 	/**
-	 * list of storages that implement this specific rule
+	 * List of storages that implement this specific rule
 	 */
 	private List<ResourceStorage> storages = new ArrayList<>();
 
@@ -24,6 +24,12 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 	public DifferentResourceTypesInDifferentStoragesRule() {
 	}
 
+	/**
+	 * Method to verify if new resources can be added to the storage
+	 * @param storage on which to verify that the rules are respected
+	 * @param newResources resources to add
+	 * @return true if the storage can contain the new resources
+	 */
 	@Override
 	public boolean checkRule(ResourceStorage storage, Map<ResourceType,Integer> newResources) {
 			if (!storages.contains(storage))

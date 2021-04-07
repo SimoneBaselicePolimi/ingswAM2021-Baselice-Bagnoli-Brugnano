@@ -10,7 +10,7 @@ public class ResourceStorageBuilder {
 	private List<ResourceStorageRule> rules = new ArrayList<>();;
 
 	/**
-	 * Create new ResourceStorageBuilder
+	 * Method to create new ResourceStorageBuilder
 	 * @return ResourceStorageBuilder
 	 */
 	public static ResourceStorageBuilder initResourceStorageBuilder() {
@@ -18,16 +18,17 @@ public class ResourceStorageBuilder {
 	}
 
 	/**
-	 * Create new ResourceStorage with its respective rules
-	 * @return ResourceStorage
+	 * Method to new ResourceStorage with its respective rules
+	 * @param storageID storage identifier
+	 * @return ResourceStorage new storage
 	 */
 	public ResourceStorage createResourceStorage(String storageID) {
 		return new ResourceStorage(rules, storageID);
 	}
 
 	/**
-	 * Add one new rule to the list that contains all the rules of the storage
-	 * @param rule
+	 * Method to one new rule to the list that contains all the rules of the storage
+	 * @param rule new rule to add to the list that contains all the rules of the storage
 	 * @return ResourceStorageBuilder
 	 */
 	public ResourceStorageBuilder addRule(ResourceStorageRule rule) {

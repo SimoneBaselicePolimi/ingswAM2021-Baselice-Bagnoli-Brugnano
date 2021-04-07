@@ -22,6 +22,12 @@ public class MaxResourceNumberRule extends ResourceStorageRule {
 		this.maxResources = maxResources;
 	}
 
+	/**
+	 * Method to verify if new resources can be added to the storage
+	 * @param storage on which to verify that the rules are respected
+	 * @param newResources resources to add
+	 * @return true if the storage can contain the new resources
+	 */
 	@Override
 	public boolean checkRule(ResourceStorage storage, Map<ResourceType,Integer> newResources) {
 		Integer sumResourcesStorage = 0;

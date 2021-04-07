@@ -68,7 +68,7 @@ public class ResourceStorage {
 	}
 
 	/**
-	 * Add new resources (type and number) in the storage
+	 * Method to add new resources (type and number) in the storage
 	 * @param newResources Map of resources that the method adds to the storage
 	 * @throws ResourceStorageRuleViolationException if new resources don't respect rules of the storage
 	 */
@@ -84,7 +84,7 @@ public class ResourceStorage {
 	}
 
 	/**
-	 * Remove some resources (type and number) from the storage
+	 * Method to remove some resources (type and number) from the storage
 	 * @param resourcesToRemove Map of resources that the method removes from the storage
 	 * @return resourcesToRemove Map of resources that the method removes from the storage
 	 * @throws NotEnoughResourcesException if there aren't enough resources to remove
@@ -102,8 +102,8 @@ public class ResourceStorage {
 		return resourcesToRemove;
 	}
 
-
 	/**
+	 * Method to  Method to peek resources present in the storage
 	 * @return Type and number of resources in the storage
 	 */
 	public Map<ResourceType, Integer> peekResources() {

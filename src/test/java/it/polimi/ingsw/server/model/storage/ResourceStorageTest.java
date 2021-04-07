@@ -45,7 +45,7 @@ class ResourceStorageTest {
     }
 
     /**
-     * Test that builds a ResourceStorage calling the builder and tests that ID is correct
+     * Tests the construction of a ResourceStorage calling the builder and tests that ID is correct.
      */
     @Test
     void testBuilder(){
@@ -59,7 +59,7 @@ class ResourceStorageTest {
     }
 
     /**
-     * Test the construction of a storage with 2 true rules
+     * Tests the construction of a storage with 2 true rules
      */
     @Test
     void testResourceStorageWith2TrueRules() {
@@ -80,7 +80,7 @@ class ResourceStorageTest {
     }
 
     /**
-     * test the construction of a storage with 2 true rules and 1 false rule
+     * Tests the construction of a storage with 2 true rules and 1 false rule
      */
     @Test
     void testResourceStorageWith2TrueRulesAnd1False() {
@@ -102,8 +102,8 @@ class ResourceStorageTest {
     }
 
     /**
-     * Test canAddResources method and addResourcesMethod
-     * If canAddResources return true, you can add these resources.
+     * Tests canAddResources and addResources methods.
+     * If canAddResources return true, you can add these resources to the storage.
      * If canAddResources return false and you try to add resources, ResourceStorageRuleViolationException is thrown.
      */
     @Test
@@ -139,7 +139,7 @@ class ResourceStorageTest {
     }
 
     /**
-     * Test addResources method
+     * Tests to add new resources to a storage calling addResources method
      */
     @Test
     void testAddResources() throws ResourceStorageRuleViolationException {
@@ -171,7 +171,8 @@ class ResourceStorageTest {
     }
 
     /**
-     * Test addResources and removeResources methods
+     * Tests to add new resources to a storage calling addResources method
+     * Tests to remove resources from a storage calling removeResources method
      */
     @Test
     void testAddAndRemoveResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
@@ -223,7 +224,8 @@ class ResourceStorageTest {
     }
 
     /**
-     * Test removeResources method and if there aren't enough resources it throws exception
+     * Tests to remove resources from a storage calling removeResources method
+     * and if there aren't enough resources it throws a ResourceStorageRuleViolationException.
      */
     @Test
     void testTryToRemoveTooManyResources() throws ResourceStorageRuleViolationException {

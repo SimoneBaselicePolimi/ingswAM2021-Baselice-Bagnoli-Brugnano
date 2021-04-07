@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DifferentResourceTypesInDifferentStoragesRuleTest {
     /**
-     * Test that verifies that the rule "there must be different resources in different storages" is respected.
+     * Tests the compliance with the rule "there must be different resources in different storages".
      * Throw NotEnoughResourcesException if the resources you want to add don't respect this rule.
      */
     @Test

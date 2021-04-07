@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-/**
- * Test that verifies that the rule "there must be same type of resources in the storage" is respected.
- * Throw NotEnoughResourcesException if the resources you want to add don't respect this rule.
- */
-class SameResourceTypeRuleTest {
 
+class SameResourceTypeRuleTest {
+    /**
+     * Tests the compliance with the rule "there must be same type of resources in the storage".
+     * Throw NotEnoughResourcesException if the resources you want to add don't respect this rule.
+     */
     @Test
     void testCheckRule() throws NotEnoughResourcesException {
         ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()

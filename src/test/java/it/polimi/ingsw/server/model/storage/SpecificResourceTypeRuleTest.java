@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SpecificResourceTypeRuleTest {
     /**
-     * Test that verifies that the rule "there must be only one specific type of resource in the storage" is respected.
+     * Tests the compliance with the rule "there must be only one specific type of resource in the storage".
      * Throw NotEnoughResourcesException if the resources you want to add don't respect this rule.
      */
     @Test
