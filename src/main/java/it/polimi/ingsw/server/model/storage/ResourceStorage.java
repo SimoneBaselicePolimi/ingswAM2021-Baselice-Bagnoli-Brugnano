@@ -6,9 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represent a storage that contains resources
+ */
 public class ResourceStorage {
 	/**
-	 * ID storage identificator
+	 * ID storage identifier
 	 */
 	private String storageID;
 	/**
@@ -22,24 +25,25 @@ public class ResourceStorage {
 
 	/**
 	 * ResourceStorage Constructor
-	 * @param rules
+	 * @param rules that the storage implements
+	 * @param storageID storage identifier
 	 */
 	protected ResourceStorage(List<ResourceStorageRule> rules, String storageID){
 		this.rules = rules;
 		this.storageID = storageID;
 	}
 
-
 	/**
-	 * @return storage identificator
+	 * Method to get the storage identifier
+	 * @return storage identifier
 	 */
 	public String getStorageID(){
 		return storageID;
 	}
 
 	/**
-	 *
-	 * @param newResources
+	 * Method to add new resources to the storage
+	 * @param newResources resources to add
 	 * @return true if it is possible to add new resources to the storage
 	 */
 	public boolean canAddResources (Map<ResourceType,Integer> newResources){
@@ -51,12 +55,13 @@ public class ResourceStorage {
 	}
 
 	/**
-	 * @param resources
-	 * @return true if it is possible to remove new resources from the storage
+	 * Method to remove resources from the storage
+	 * @param resourcesToRemove resources to remove
+	 * @return true if it is possible to remove resources from the storage
 	 */
-	public boolean canRemoveResources (Map<ResourceType,Integer> resources){
-		for (ResourceType resource : resources.keySet()) {
-			if (!this.resources.containsKey(resource) || this.resources.get(resource) < resources.get(resource))
+	public boolean canRemoveResources (Map<ResourceType,Integer> resourcesToRemove){
+		for (ResourceType resource : resourcesToRemove.keySet()) {
+			if (!this.resources.containsKey(resource) || this.resources.get(resource) < resourcesToRemove.get(resource))
 				return false;
 		}
 		return true;
