@@ -43,7 +43,7 @@ public class DevelopmentCardsTable {
 	}
 
 	/**
-	 * Method to remove the Card on the top of the Deck and get this Card.
+	 * Method to remove the Card from the top of the Deck and get this Card.
 	 * @param level level of card to remove
 	 * @param colour colour of card to remove
 	 * @return DevelopmentCard the Development Card to remove
