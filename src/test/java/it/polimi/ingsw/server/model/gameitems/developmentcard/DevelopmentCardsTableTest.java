@@ -44,7 +44,12 @@ public class DevelopmentCardsTableTest {
         DevelopmentCard developmentCard11 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
         DevelopmentCard developmentCard12 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
 
-
+    /**
+     * Tests DevelopmentCardsTable initialization passing to the constructor a list of development cards and,
+     * on the other hand, tests if getDeckByLevelAndColour method return the right deck.
+     * Checks if the cards are placed in the right deck on the table using getDeckByLevelAndColour and peekAll methods.
+     * If the Card Deck doesn't exist, getDeckByLevelAndColour method must return a IllegalArgumentException.
+     */
     @Test
     void testDevelopmentCardsTableConstructor (){
 
@@ -89,6 +94,11 @@ public class DevelopmentCardsTableTest {
                 () -> table.getDeckByLevelAndColour(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW));
         }
 
+    /**
+     * Tests the method to get all the Cards which are available (on the top of card decks)
+     * Checks if the cards on the top of card decks are the same of the ones returned
+     * in getAvailableCards method. Also checks that the size of the list which contains available cards is correct.
+     */
         @Test
         void testGetAvailableCards(){
             List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
@@ -113,6 +123,11 @@ public class DevelopmentCardsTableTest {
             assertNotEquals(table.getAvailableCards().size(), 4);
         }
 
+    /**
+     * Tests the removal of a Card from the top of the Card Deck
+     * and checks if the pop method returns the same card which has just been removed.
+     * If the Card Deck is empty and the pop method is invoked, it must return a EmptyStackException.
+     */
         @Test
         void testPopCard (){
             List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
@@ -134,6 +149,9 @@ public class DevelopmentCardsTableTest {
             DevelopmentCard card1 = table.popCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW);
             DevelopmentCard card2 = table.popCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW);
             assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).isEmpty());
+            assertThrows(EmptyStackException.class,
+                    () -> table.popCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW));
+
             assertEquals(
                     Set.of(card1, card2),
                     new HashSet<>(list1)
@@ -144,8 +162,14 @@ public class DevelopmentCardsTableTest {
             assertTrue(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).isEmpty());
         }
 
+        /**
+         * Tests the method to get all the Cards which are available (on the top of card decks)
+         * Checks if the cards returned by getAvailableCards method are the same of the ones returned
+         * in getAvailableCardsAsMap method, even if they are in a list in the first case and in a map in the second.
+         */
         @Test
         void testGetAvailableCardsAsMap(){
+
             List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
             developmentCards.add(developmentCard1);
             developmentCards.add(developmentCard2);
@@ -164,7 +188,7 @@ public class DevelopmentCardsTableTest {
             for (DevelopmentCard card : table.getAvailableCards()) {
                 assertEquals(card, table.getAvailableCardsAsMap().get(card.getLevel()).get(card.getColour()));
             }
-
         }
+
 
 }

@@ -20,6 +20,13 @@ public class DevelopmentCardTest {
     @Mock
     Map<ResourceType, Integer> purchaseCost;
 
+    @Mock
+    Map<ResourceType, Integer> purchaseCost1;
+
+    /**
+     * Tests the initialization of a Development Card.
+     * Checks the equality between elements passed to the constructor and elements returned by getter methods.
+     */
     @Test
     void testConstructor(){
         DevelopmentCard developmentCard1 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production, 3, purchaseCost);
@@ -35,5 +42,8 @@ public class DevelopmentCardTest {
         assertEquals(developmentCard2.getVictoryPoints(),0);
         assertNotEquals(developmentCard2.getLevel(), DevelopmentCardLevel.SECOND_LEVEL);
         assertNotEquals(developmentCard1.getColour(), DevelopmentCardColour.PURPLE);
+        assertEquals(developmentCard1.getProduction(), production);
+        assertEquals(developmentCard1.getPurchaseCost(), purchaseCost);
+        assertNotEquals(developmentCard1.getPurchaseCost(), purchaseCost1);
     }
 }

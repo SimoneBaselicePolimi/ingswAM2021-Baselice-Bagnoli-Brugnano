@@ -49,7 +49,7 @@ public class DevelopmentCardsTable {
 	 * @return DevelopmentCard the Development Card to remove
 	 * @throws EmptyStackException if the deck is empty
 	 */
-	public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) throws EmptyStackException{
+	public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour){
 		return (this.getDeckByLevelAndColour(level, colour).pop());
 	}
 
@@ -78,7 +78,8 @@ public class DevelopmentCardsTable {
 	 * @return the Deck that contains list of development cards that are randomly organized
 	 * @throws IllegalArgumentException if the deck does not exist
 	 */
-	public ShuffledCardDeck<DevelopmentCard> getDeckByLevelAndColour (DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour) throws IllegalArgumentException{
+	public ShuffledCardDeck<DevelopmentCard> getDeckByLevelAndColour (DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour)
+			throws IllegalArgumentException{
 		if (!cards.containsKey(cardLevel) || !cards.get(cardLevel).containsKey(cardColour))
 			throw new IllegalArgumentException();
 		return(cards.get(cardLevel).get(cardColour));
