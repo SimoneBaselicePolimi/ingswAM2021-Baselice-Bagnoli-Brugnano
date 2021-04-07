@@ -16,12 +16,18 @@ public class SpecificResourceTypeRule extends ResourceStorageRule {
 
 	/**
 	 * SpecificResourceTypeRule Constructor
-	 * @param resourceType
+	 * @param resourceType Specific type of resource that the storage can contain
 	 */
 	public SpecificResourceTypeRule(ResourceType resourceType) {
 		this.resourceType=resourceType;
 	}
 
+	/**
+	 *
+	 * @param storage
+	 * @param newResources
+	 * @return
+	 */
 	@Override
 	public boolean checkRule(ResourceStorage storage, Map<ResourceType,Integer> newResources) {
 		if (newResources.isEmpty())

@@ -16,7 +16,7 @@ public class MaxResourceNumberRule extends ResourceStorageRule {
 
 	/**
 	 * MaxResourceNumberRule Constructor
-	 * @param maxResources
+	 * @param maxResources Max number of resources that the storage can contain
 	 */
 	public MaxResourceNumberRule(int maxResources) {
 		this.maxResources = maxResources;

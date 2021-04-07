@@ -57,7 +57,7 @@ public class ResourceStorage {
 	/**
 	 * Method to remove resources from the storage
 	 * @param resourcesToRemove resources to remove
-	 * @return true if it is possible to remove resources from the storage
+	 * @return true if it is possible to remove resources from the storage (there are enough resources to remove)
 	 */
 	public boolean canRemoveResources (Map<ResourceType,Integer> resourcesToRemove){
 		for (ResourceType resource : resourcesToRemove.keySet()) {
@@ -86,7 +86,7 @@ public class ResourceStorage {
 	/**
 	 * Remove some resources (type and number) from the storage
 	 * @param resourcesToRemove Map of resources that the method removes from the storage
-	 * @return newResources Map of resources that the method removes from the storage
+	 * @return resourcesToRemove Map of resources that the method removes from the storage
 	 * @throws NotEnoughResourcesException if there aren't enough resources to remove
 	 */
 	public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> resourcesToRemove)
