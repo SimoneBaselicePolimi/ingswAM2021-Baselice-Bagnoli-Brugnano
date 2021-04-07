@@ -5,23 +5,25 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 
 /**
- * request for a specific number of development cards of a certain color
+ * This class represent the request for a specific number of development cards of a certain color
  */
-public class DevelopmentCardColorRequirement extends LeaderCardRequirement{
+public class DevelopmentCardColorRequirement extends LeaderCardRequirement {
     DevelopmentCardColour cardColour;
     int numberOfCards;
 
     /**
      * DevelopmentCardColorRequirement constructor
-     * @param cardColour
-     * @param numberOfCards
+     * @param cardColour colour of development cards required
+     * @param numberOfCards number of development cards required
      */
     public DevelopmentCardColorRequirement(DevelopmentCardColour cardColour, int numberOfCards) {
         this.cardColour = cardColour;
         this.numberOfCards = numberOfCards;
     }
+
     /**
-     * @param playerContext
+     * Method to verify that the player has the necessary cards (with a specific colour) to activate a leader card
+     * @param playerContext reference to the single player
      * @return true if the player has a specific number of development cards of a certain color
      */
     @Override

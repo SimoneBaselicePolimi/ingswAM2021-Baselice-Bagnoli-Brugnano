@@ -6,18 +6,18 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardCol
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
 /**
- * request for a specific number of development cards of a certain color and level
+ * This class represent the request for a specific number of development cards of a certain color and level
  */
-public class DevelopmentCardColorAndLevelRequirement extends LeaderCardRequirement{
+public class DevelopmentCardColorAndLevelRequirement extends LeaderCardRequirement {
     DevelopmentCardColour cardColour;
     DevelopmentCardLevel cardLevel;
     int numberOfCards;
 
     /**
      * DevelopmentCardColorAndLevelRequirement constructor
-     * @param cardColour
-     * @param cardLevel
-     * @param numberOfCards
+     * @param cardColour colour of development cards required
+     * @param cardLevel level of development cards required
+     * @param numberOfCards number of development cards required
      */
     public DevelopmentCardColorAndLevelRequirement(
             DevelopmentCardColour cardColour,
@@ -30,7 +30,9 @@ public class DevelopmentCardColorAndLevelRequirement extends LeaderCardRequireme
     }
 
     /**
-     * @param playerContext
+     * Method to verify that the player has the necessary development cards (with a specific colour and level)
+     * to activate a leader card
+     * @param playerContext reference to the single player
      * @return true if the player has a specific number of development cards of a certain color and level
      */
     @Override

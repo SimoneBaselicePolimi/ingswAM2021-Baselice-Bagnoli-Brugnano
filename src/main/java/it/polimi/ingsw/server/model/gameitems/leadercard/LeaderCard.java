@@ -6,53 +6,62 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
 
+/**
+ * This class represent a specific type of cards used in the game: the leader cards
+ */
 public class LeaderCard {
 	private LeaderCardState state;
-	private LeaderCardRequirement requirement;
-	private List<Production> production;
-	private List<ResourceStorage> resourceStorage;
-	private List<DevelopmentCardCostDiscount> cardCostDiscount;
+	private List<LeaderCardRequirement> requirements;
+	private List<Production> productions;
+	private List<ResourceStorage> resourceStorages;
+	private List<DevelopmentCardCostDiscount> cardCostDiscounts;
 	private List<WhiteMarbleSubstitution> whiteMarbleSubstitutions;
 	int victoryPoints;
 
+
 	/**
 	 * LeaderCard constructor
-	 * @param requirement requirement to activate the leader card
-	 * @param production list of productions (special skill) that the leader card can own (it can be an empty list)
-	 * @param resourceStorage list of resource storages (special skill) that the leader card can own (it can be an empty list)
-	 * @param cardCostDiscount list of discounts (special skill) that the leader card can own (it can be an empty list)
+	 * @param requirements requirements to activate the leader card
+	 * @param productions list of productions (special skill) that the leader card can own (it can be an empty list)
+	 * @param resourceStorages list of resource storages (special skill) that the leader card can own (it can be an empty list)
+	 * @param cardCostDiscounts list of discounts (special skill) that the leader card can own (it can be an empty list)
 	 * @param whiteMarbleSubstitutions list of substitutions with white marbles (special skill) that the leader card can own
-	 *                                  (it can be an empty list)
+	 * (it can be an empty list)
 	 * @param victoryPoints number of victory points that the card gives
 	 */
-	public LeaderCard (LeaderCardRequirement requirement,
-					   List<Production> production,
-					   List<ResourceStorage> resourceStorage,
-					   List<DevelopmentCardCostDiscount> cardCostDiscount,
+	public LeaderCard (List<LeaderCardRequirement> requirements,
+					   List<Production> productions,
+					   List<ResourceStorage> resourceStorages,
+					   List<DevelopmentCardCostDiscount> cardCostDiscounts,
 					   List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
 					   int victoryPoints){
-		this.requirement = requirement;
+		this.requirements = requirements;
 		this.state = LeaderCardState.HIDDEN;
-		this.production=production;
-		this.resourceStorage=resourceStorage;
-		this.cardCostDiscount=cardCostDiscount;
+		this.productions = productions;
+		this.resourceStorages = resourceStorages;
+		this.cardCostDiscounts = cardCostDiscounts;
 		this.whiteMarbleSubstitutions=whiteMarbleSubstitutions;
 		this.victoryPoints=victoryPoints;
 	}
 
 	/**
-	 * the method verifies that the player has the necessary requirements to activate the card
+	 * Method to verify that the player has the necessary requirements to activate the leader card
 	 * @param playerContext reference to the single player
-	 * @return true if the player satisfies requirements of the leader card
+	 * @return true if the player satisfies all requirements of the leader card
 	 */
 	public boolean areRequirementsSatisfied(PlayerContext playerContext) {
-		return (requirement.checkRequirement(playerContext));
+		for (LeaderCardRequirement requirement : requirements) {
+			if (!requirement.checkRequirement(playerContext))
+				return false;
+		}
+		return true;
 	}
 
 	/**
-	 * the method changes the state of the leader card by activating it (the player can use it)
-	 * @param playerContext
-	 * @throws LeaderCardRequirementsNotSatisfiedException if the player doesn't satisfy requirements of the leader card
+	 * Method to change the state of the leader card by activating it (the player can use it)
+	 * @param playerContext reference to the single player
+	 * @throws LeaderCardRequirementsNotSatisfiedException if the leader card of the player
+	 * doesn't satisfy some requirements
 	 */
 	public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfiedException {
 		if(!areRequirementsSatisfied(playerContext))
@@ -61,7 +70,7 @@ public class LeaderCard {
 	}
 
 	/**
-	 * the method changes the state of the leader card by discarding it
+	 * Method to change the state of the leader card by discarding it
 	 * (the player no longer has that leader card in his hand)
 	 */
 	public void discardLeaderCard() {
@@ -69,6 +78,7 @@ public class LeaderCard {
 	}
 
 	/**
+	 * Method to get the state of the leader card
 	 * @return the state of the leader card: ACTIVE, DISCARDED or HIDDEN
 	 */
 	public LeaderCardState getState() {
@@ -76,35 +86,40 @@ public class LeaderCard {
 	}
 
 	/**
-	 * @return list of productions (special skill) that the leader card can own (it can be an empty list)
+	 * Method to get the list of productions of the leader card
+	 * @return list of productions (special skills) that the leader card can own (it can be an empty list)
 	 */
 	public List<Production> getProductions() {
-		return production;
+		return productions;
 	}
 
 	/**
-	 * @return list of resource storages (special skill) that the leader card can own (it can be an empty list)
+	 * Method to get the list of resource storages of the leader card
+	 * @return list of resource storages (special skills) that the leader card can own (it can be an empty list)
 	 */
 	public List<ResourceStorage> getResourceStorages() {
-		return resourceStorage;
+		return resourceStorages;
 	}
 
 	/**
-	 * @return list of discounts (special skill) that the leader card can own (it can be an empty list)
+	 * Method to get the list of discounts of the leader card
+	 * @return list of discounts (special skills) that the leader card can own (it can be an empty list)
 	 */
 	public List<DevelopmentCardCostDiscount> getDevelopmentCardCostDiscount() {
-		return cardCostDiscount;
+		return cardCostDiscounts;
 	}
 
 	/**
-	 * @return list of substitutions with white marbles (special skill) that the leader card can own (it can be an empty list)
+	 * Method to get the list of substitutions of the leader card
+	 * @return list of substitutions with white marbles (special skills) that the leader card can own (it can be an empty list)
 	 */
 	public List<WhiteMarbleSubstitution> getWhiteMarbleSubstitutions() {
 		return whiteMarbleSubstitutions;
 	}
 
 	/**
-	 * @return number of victory points that the card gives
+	 * Method to get the number of victory points of the leader card
+	 * @return number of victory points that the card gives at the end of the game
 	 */
 	public int getVictoryPoints() {
 		return victoryPoints;

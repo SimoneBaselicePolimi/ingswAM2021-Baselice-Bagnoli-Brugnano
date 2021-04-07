@@ -24,10 +24,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
 
-/**
- * Test to verify "checkRequirement" method: the method returns true if the
- * player has the necessary resources to activate the leader card
- */
 public class ResourceNumberRequirementTest {
 
     @Mock
@@ -71,6 +67,10 @@ public class ResourceNumberRequirementTest {
     ResourceNumberRequirement requirement3 = new ResourceNumberRequirement(ResourceType.SERVANTS, 5);
     ResourceNumberRequirement requirement4 = new ResourceNumberRequirement(ResourceType.SHIELDS, 1);
 
+    /**
+     * Tests the method to verify if a player has the necessary requirements to activate a leader card:
+     * the method returns true if the player has the necessary type and number of resources.
+     */
     @Test
     void checkRequirementTest (){
         assertTrue(requirement1.checkRequirement(playerContext1));
@@ -85,6 +85,11 @@ public class ResourceNumberRequirementTest {
         assertFalse(requirement4.checkRequirement(playerContext3));
     }
 
+    /**
+     * Tests the method to verify if a player has the necessary requirements to activate a leader card
+     * passing to the method a player who doesn't have any resources.
+     * The method must always return false.
+     */
     @Test
     void checkRequirementTestWithEmptyMap (){
         assertFalse(requirement1.checkRequirement(playerContext4));

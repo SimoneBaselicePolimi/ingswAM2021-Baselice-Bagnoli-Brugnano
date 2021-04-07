@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 /**
- * request for a specific number of resources in the player's storages
+ * This class represent the request for a specific number of resources in the player's storages
  */
 public class ResourceNumberRequirement extends LeaderCardRequirement {
     ResourceType resourceType;
@@ -12,8 +12,8 @@ public class ResourceNumberRequirement extends LeaderCardRequirement {
 
     /**
      * ResourceNumberRequirement constructor
-     * @param resourceType
-     * @param resourceNumber
+     * @param resourceType type of resource required
+     * @param resourceNumber number of resource required
      */
     public ResourceNumberRequirement(ResourceType resourceType, int resourceNumber) {
         this.resourceType = resourceType;
@@ -21,7 +21,8 @@ public class ResourceNumberRequirement extends LeaderCardRequirement {
     }
 
     /**
-     * @param playerContext
+     * Method to verify that the player has the necessary resources (type and number) to activate a leader card
+     * @param playerContext reference to the single player
      * @return true if the player has the type and number of resources to activate the card
      */
     @Override

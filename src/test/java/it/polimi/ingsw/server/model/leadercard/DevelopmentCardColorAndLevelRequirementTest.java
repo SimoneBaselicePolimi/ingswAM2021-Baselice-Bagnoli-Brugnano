@@ -22,10 +22,6 @@ import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
 
-/**
- * Test to verify "checkRequirement" method: the method returns true if the player has the necessary
- * development cards (with specific colour and level) to activate the leader card
- */
 public class DevelopmentCardColorAndLevelRequirementTest {
     @Mock
     PlayerContext playerContext1;
@@ -86,6 +82,10 @@ public class DevelopmentCardColorAndLevelRequirementTest {
     DevelopmentCardColorAndLevelRequirement requirement5 = new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.PURPLE, DevelopmentCardLevel.THIRD_LEVEL,2);
     DevelopmentCardColorAndLevelRequirement requirement6 = new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.GREEN, DevelopmentCardLevel.FIRST_LEVEL,3);
 
+    /**
+     * Tests the method to verify if a player has the necessary requirements to activate a leader card:
+     * the method returns true if the player has the necessary development cards (with specific colour and level).
+     */
     @Test
     void checkRequirementTest(){
         assertTrue(requirement1.checkRequirement(playerContext1));
@@ -103,6 +103,11 @@ public class DevelopmentCardColorAndLevelRequirementTest {
 
     }
 
+    /**
+     * Tests the method to verify if a player has the necessary requirements to activate a leader card
+     * passing to the method a player who doesn't have any development card.
+     * The method must always return false.
+     */
     @Test
     void checkRequirementTestWithEmptyList (){
         assertFalse(requirement1.checkRequirement(playerContext3));
