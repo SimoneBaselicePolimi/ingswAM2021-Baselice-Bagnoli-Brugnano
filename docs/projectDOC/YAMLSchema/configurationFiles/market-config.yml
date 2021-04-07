@@ -1,0 +1,8 @@
+market:
+  matrix:
+    numberOfRows: 3
+    numberOfColumns: 4
+  marblesNumber:
+    MARBLE_RED: 6
+    MARBLE_BLUE: 2
+    MARBLE_YELLOW: 5

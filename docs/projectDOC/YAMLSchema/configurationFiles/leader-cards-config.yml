@@ -1,0 +1,31 @@
+leaderCards:
+  - leaderCardID: LEADER_1
+    productions:
+      - PRODUCTION_1
+  - leaderCardID: LEADER_2
+  - leaderCardID: LEADER_3
+    requirements:
+      - requirementType: COLOUR_AND_LEVEL
+        cardColour: GREEN
+        cardLevel: 1
+        numberOfCards: 2
+      - requirementType: RESOURCE
+        resourceType: COINS
+        numberOfResources: 3
+      - requirementType: COLOUR
+        cardColour: BLUE
+        numberOfCards: 1
+      - requirementType: COLOUR
+        cardColour: RED
+        numberOfCards: 4
+    productions:
+      - PRODUCTION_1
+      - PRODUCTION_2
+    resourceStorages:
+      - STORAGE_1
+      - STORAGE_2
+    developmentCardCostDiscounts:
+      - DISCOUNT_1
+    specialMarbleSubstitutions:
+      - SUBSTITUTION_COINS
+    victoryPoints: 100

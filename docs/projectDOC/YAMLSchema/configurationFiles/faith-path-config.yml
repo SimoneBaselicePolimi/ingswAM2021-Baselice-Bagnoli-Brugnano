@@ -1,0 +1,25 @@
+faithPath:
+  lenght: 20
+  vaticanReportSections:
+    - initialPosition: 2
+      popeSpacePosition: 3
+      victoryPoints: 10
+    - initialPosition: 10
+      popeSpacePosition: 13
+      victoryPoints: 20
+    - initialPosition: 15
+      popeSpacePosition: 19
+      victoryPoints: 30
+  victoryPointsByPosition:
+    - startPosition: 0
+      endPosition: 2
+      victoryPoints: 0
+    - startPosition: 3
+      endPosition: 4
+      victoryPoints: 2
+    - startPosition: 5
+      endPosition: 14
+      victoryPoints: 4
+    - startPosition: 15
+      endPositition: 19
+      victoryPoints: 6
