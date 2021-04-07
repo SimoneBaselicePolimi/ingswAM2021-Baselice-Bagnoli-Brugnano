@@ -26,7 +26,7 @@ public class WhiteMarbleSubstitution {
 	 * Method to get the specific Resource type which can be substituted to a White Marble.
 	 * @return resource type to substitute to a White Marble
 	 */
-	ResourceType getResourceTypeToSubstitute() {
+	public ResourceType getResourceTypeToSubstitute() {
 		return resourceTypeToSubstitute;
 	}
 
