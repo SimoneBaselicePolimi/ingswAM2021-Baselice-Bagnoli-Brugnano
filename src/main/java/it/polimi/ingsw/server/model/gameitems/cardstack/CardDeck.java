@@ -8,7 +8,8 @@ import java.util.Stack;
 /**
  * This class represents a generic Deck made of Cards and provides the methods to peek, push or pop one of
  * its elements and to show all the elements stored in it.
- * @param <C> generic parameter used to indicate the type of Card which form the Deck (Leader Card, Development Card)
+ * @param <C> generic parameter used to indicate the type of Cards which compose the Deck (e.g. Leader Card
+ *           or Development Card)
  */
 public abstract class CardDeck<C> {
 	/**
@@ -47,7 +48,7 @@ public abstract class CardDeck<C> {
 	}
 
 	/**
-	 * Method to remove the Card on the top of the Deck and get this Card.
+	 * Method to remove the Card from the top of the Deck and get this Card.
 	 * @return Card which has just been removed from this Deck
 	 * @throws EmptyStackException if this Deck is empty
 	 */
