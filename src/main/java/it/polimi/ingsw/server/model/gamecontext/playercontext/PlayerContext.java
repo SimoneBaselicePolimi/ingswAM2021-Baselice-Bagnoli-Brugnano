@@ -7,8 +7,9 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
-import it.polimi.ingsw.server.model.storage.ResourceStorageBuilder;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,28 +40,7 @@ public class PlayerContext {
 	private ResourceStorage infiniteChest;
 	private ResourceStorage tempStorage;
 	private Set<LeaderCard> leaderCardsPlayerOwns = new HashSet<>();
-	private List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks = new ArrayList<>();
-
-	/**
-	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
-	 * should be one and only one instance of this class for each player.
-	 * <p>
-	 * Note: this constructor is marked as protected because this class should only ever be initialized by the
-	 *  {@link it.polimi.ingsw.server.model.gamecontext.GameContextBuilder} and thus the constructor should never be
-	 *  called from outside this package
-	 * @param player the player associated with this player context
-	 * @param numberOfDevelopmentCardDecks number of decks of development cards the player bought
-	 * @param shelves shelves the player can use to store resources taken from the market
-	 */
-	protected PlayerContext(Player player, int numberOfDevelopmentCardDecks, Set<ResourceStorage> shelves) {
-		this.player = player;
-		this.shelves = new HashSet<>(shelves);
-		infiniteChest = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
-		tempStorage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
-		for (int i = 0; i < numberOfDevelopmentCardDecks; i++) {
-			developmentCardDecks.add(new PlayerOwnedDevelopmentCardDeck());
-		}
-	}
+	private List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks;
 
 	/**
 	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
@@ -224,7 +204,8 @@ public class PlayerContext {
 	 * they will be overwritten.
 	 * @param resources resources to put into the temporary storage
 	 */
-	public void setTemporaryStorageResources(Map<ResourceType, Integer> resources) {
+	public void setTemporaryStorageResources(Map<ResourceType, Integer> resources)
+		throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		clearTemporaryStorageResources();
 		tempStorage.addResources(resources);
 	}
@@ -242,7 +223,7 @@ public class PlayerContext {
 	 * the shelves/leader card storages.
      * @return resources that were in the temporary storage
 	 */
-	public Map<ResourceType, Integer> clearTemporaryStorageResources() {
+	public Map<ResourceType, Integer> clearTemporaryStorageResources() throws NotEnoughResourcesException {
 		return tempStorage.removeResources(tempStorage.peekResources());
 	}
 

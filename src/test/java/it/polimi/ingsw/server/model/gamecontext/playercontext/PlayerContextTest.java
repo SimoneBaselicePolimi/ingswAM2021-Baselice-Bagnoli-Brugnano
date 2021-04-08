@@ -10,7 +10,9 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,10 +75,10 @@ class PlayerContextTest {
         when(activeCard2.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard hiddenCard1 = mock(LeaderCard.class);
-        when(hiddenCard1.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(hiddenCard1.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard hiddenCard2 = mock(LeaderCard.class);
-        when(hiddenCard2.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(hiddenCard2.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard discardedCard1 = mock(LeaderCard.class);
         when(discardedCard1.getState()).thenReturn(LeaderCardState.DISCARDED);
@@ -102,7 +104,7 @@ class PlayerContextTest {
         lenient().when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
                 new DevelopmentCardCostDiscount(ResourceType.STONES, 1)
         ));
-        when(cardHiddenWithShieldsDiscount.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(cardHiddenWithShieldsDiscount.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard cardDiscardedWithShieldsDiscount = mock(LeaderCard.class);
         lenient().when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
@@ -164,7 +166,7 @@ class PlayerContextTest {
         lenient().when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
                 new WhiteMarbleSubstitution(ResourceType.COINS)
         ));
-        when(cardHiddenWithCoinsSub.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(cardHiddenWithCoinsSub.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard cardDiscardedWithCoinsSub = mock(LeaderCard.class);
         lenient().when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
@@ -204,7 +206,7 @@ class PlayerContextTest {
 
         LeaderCard cardHiddenWithStorage = mock(LeaderCard.class);
         lenient().when(cardHiddenWithStorage.getResourceStorages()).thenReturn(List.of(storage4));
-        when(cardHiddenWithStorage.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(cardHiddenWithStorage.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         playerContext.setLeaderCards(Set.of(cardWithStorage1, cardWithStorage2, cardHiddenWithStorage));
         assertEquals(
@@ -232,7 +234,7 @@ class PlayerContextTest {
 
         LeaderCard cardHiddenWithProd = mock(LeaderCard.class);
         lenient().when(cardHiddenWithProd.getProductions()).thenReturn(List.of(production4));
-        when(cardHiddenWithProd.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(cardHiddenWithProd.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         playerContext.setLeaderCards(Set.of(cardWithProd1, cardWithProd2, cardHiddenWithProd));
         assertEquals(
@@ -306,7 +308,7 @@ class PlayerContextTest {
     }
 
     @Test
-    void testSetTemporaryStorageResources() {
+    void testSetTemporaryStorageResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
         Map<ResourceType, Integer> resources1 = Map.of(
                 ResourceType.COINS, 2,
@@ -331,7 +333,7 @@ class PlayerContextTest {
     }
 
     @Test
-    void testClearTemporaryStorageResources() {
+    void testClearTemporaryStorageResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
         Map<ResourceType, Integer> resources = Map.of(
             ResourceType.COINS, 2,
             ResourceType.SHIELDS, 4
@@ -375,7 +377,7 @@ class PlayerContextTest {
         ));
         LeaderCard leaderCardDiscarded = mock(LeaderCard.class);
         lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(List.of(leaderCardStorage2));
-        when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         when(infiniteChest.peekResources()).thenReturn(Map.of(
                 ResourceType.STONES, 3,
