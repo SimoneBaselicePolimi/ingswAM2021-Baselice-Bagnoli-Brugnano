@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public class PlayerOwnedDevelopmentCardDeckNotifier extends PlayerOwnedDevelopmentCardDeck implements Notifier {
 
-	public PlayerOwnedDevelopmentCardDeckNotifier(List objects) {
-		super(objects);
+	public PlayerOwnedDevelopmentCardDeckNotifier() {
+		super();
 	}
 
 	public Optional<PlayerOwnedDevelopmentCardStackUpdate> getUpdate() {

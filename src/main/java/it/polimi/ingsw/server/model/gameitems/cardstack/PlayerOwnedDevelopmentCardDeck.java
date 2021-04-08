@@ -3,28 +3,16 @@ package it.polimi.ingsw.server.model.gameitems.cardstack;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
-import java.util.List;
-
 /**
  * This class represents a generic Card Deck, owned by a Player, consisting of Developments Cards.
  * It provides the methods to push a Card on the top of this Deck if the insertion is tested as valid:
- * the first Card to be pushed has to be a First Level Card, then only a Second Level Card can be pushed on the previous one
- * and finally a Third Level Card can be on the top of the Card Deck. Each Card Deck must consists of up to three Cards.
- * This class also inherits attributes and methods from the parent class CardDeck to peek, push or pop one of its elements
- * and to show all the elements stored in it.
+ * the first Card to be added to an empty Deck has to be a First Level Card, then only a Second Level Card
+ * can be pushed on top of it; finally a Third Level Card could be placed on top of the latter.
+ * Thus, a Card Deck can only have up to three Cards.
+ * This class also inherits attributes and methods from the parent class CardDeck to peek, push or pop
+ * one of its elements and to show all the elements stored in it.
  */
 public class PlayerOwnedDevelopmentCardDeck extends CardDeck<DevelopmentCard> {
-
-	/**
-	 * Class constructor.
-	 * @param cards list of Development Cards that will be organized in this Deck
-	 */
-	public PlayerOwnedDevelopmentCardDeck(List<DevelopmentCard> cards) {
-		if(cards.size() > 0) {
-			for (DevelopmentCard card : cards)
-				cardDeck.push(card);
-		}
-	}
 
 	/**
 	 * Method to push a Development Card on the top of the Deck if the Level of the Card is suitable for this Deck and
@@ -34,7 +22,7 @@ public class PlayerOwnedDevelopmentCardDeck extends CardDeck<DevelopmentCard> {
 	 * one of the rules imposed by the Development Card Deck
 	 */
 	public void pushOnTop(DevelopmentCard card) throws ForbiddenPushOnTopException {
-		if(isPushOnTopValid(card) && cardDeck.size() < 3)
+		if(isPushOnTopValid(card))
 			cardDeck.push(card);
 		else throw new ForbiddenPushOnTopException();
 	}
