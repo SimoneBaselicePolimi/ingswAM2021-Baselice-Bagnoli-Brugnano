@@ -5,8 +5,8 @@ import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
-import it.polimi.ingsw.server.model.gameitems.cardstack.CannotPushCardOnTopException;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
@@ -332,11 +332,16 @@ class PlayerContextTest {
 
     @Test
     void testClearTemporaryStorageResources() {
-        playerContext.setTemporaryStorageResources(Map.of(
-                ResourceType.COINS, 2,
-                ResourceType.SHIELDS, 4
-        ));
-        playerContext.clearTemporaryStorageResources();
+        Map<ResourceType, Integer> resources = Map.of(
+            ResourceType.COINS, 2,
+            ResourceType.SHIELDS, 4
+        );
+        playerContext.setTemporaryStorageResources(resources);
+        when(temporaryStorage.peekResources()).thenReturn(resources);
+        when(temporaryStorage.removeResources(eq(resources))).thenReturn(resources);
+        assertEquals(resources, playerContext.clearTemporaryStorageResources());
+        verify(temporaryStorage).removeResources(eq(resources));
+        when(temporaryStorage.peekResources()).thenReturn(new HashMap<>());
         assertEquals(new HashMap<>(), playerContext.getTemporaryStorageResources());
         assertEquals(new HashMap<>(), playerContext.getTemporaryStorage().peekResources());
     }
@@ -411,14 +416,14 @@ class PlayerContextTest {
     }
 
     @Test
-    void testAddAndFetchDevelopmentCards() throws CannotPushCardOnTopException {
+    void testAddAndFetchDevelopmentCards() throws ForbiddenPushOnTopException {
         DevelopmentCard devCard1Deck1 = mock(DevelopmentCard.class);
         DevelopmentCard devCard2Deck1 = mock(DevelopmentCard.class);
         DevelopmentCard devCard1Deck2 = mock(DevelopmentCard.class);
         DevelopmentCard devCard2Deck2 = mock(DevelopmentCard.class);
         DevelopmentCard devCard3Deck2 = mock(DevelopmentCard.class);
-        PlayerOwnedDevelopmentCardStack deck1 = mock(PlayerOwnedDevelopmentCardStack.class);
-        PlayerOwnedDevelopmentCardStack deck2 = mock(PlayerOwnedDevelopmentCardStack.class);
+        PlayerOwnedDevelopmentCardDeck deck1 = mock(PlayerOwnedDevelopmentCardDeck.class);
+        PlayerOwnedDevelopmentCardDeck deck2 = mock(PlayerOwnedDevelopmentCardDeck.class);
 
         PlayerContext playerContext = new PlayerContext(
                 player,
@@ -442,9 +447,9 @@ class PlayerContextTest {
         when(deck2.isPushOnTopValid(eq(devCard2Deck2))).thenReturn(false);
         assertFalse(playerContext.canAddDevelopmentCard(devCard2Deck2, 1));
 
-        doThrow(CannotPushCardOnTopException.class).when(deck2).pushOnTop(eq(devCard2Deck2));
+        doThrow(ForbiddenPushOnTopException.class).when(deck2).pushOnTop(eq(devCard2Deck2));
         assertThrows(
-                CannotPushCardOnTopException.class,
+                ForbiddenPushOnTopException.class,
                 () -> playerContext.addDevelopmentCard(devCard2Deck2, 1),
                 "The player context does not propagate the exception generated when trying to add an invalid " +
                         "card to a deck"
