@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.model.gameitems.leadercard;
 import java.security.PrivilegedActionException;
 
 /**
- * Exception thrown if a player wants to activate a leader card but the card doesn't satisfy some requirements
+ *  Exception thrown if a player wants to activate a leader card but not all card requirements have been satisfied
  */
 public class LeaderCardRequirementsNotSatisfiedException extends Exception {
 

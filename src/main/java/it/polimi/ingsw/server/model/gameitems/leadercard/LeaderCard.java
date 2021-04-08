@@ -29,12 +29,13 @@ public class LeaderCard {
 	 * (it can be an empty list)
 	 * @param victoryPoints number of victory points that the card gives
 	 */
-	public LeaderCard (List<LeaderCardRequirement> requirements,
-					   List<Production> productions,
-					   List<ResourceStorage> resourceStorages,
-					   List<DevelopmentCardCostDiscount> cardCostDiscounts,
-					   List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
-					   int victoryPoints){
+	public LeaderCard (
+			List<LeaderCardRequirement> requirements,
+			List<Production> productions,
+			List<ResourceStorage> resourceStorages,
+			List<DevelopmentCardCostDiscount> cardCostDiscounts,
+			List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
+			int victoryPoints){
 		this.requirements = requirements;
 		this.state = LeaderCardState.HIDDEN;
 		this.productions = productions;
@@ -58,7 +59,8 @@ public class LeaderCard {
 	}
 
 	/**
-	 * Method to change the state of the leader card by activating it (the player can use it)
+	 * Method to change the state of the leader card from HIDDEN to ACTIVE
+	 * (this method should be called when the player wants to activate the card)
 	 * @param playerContext reference to the single player
 	 * @throws LeaderCardRequirementsNotSatisfiedException if the leader card of the player
 	 * doesn't satisfy some requirements
@@ -70,7 +72,7 @@ public class LeaderCard {
 	}
 
 	/**
-	 * Method to change the state of the leader card by discarding it
+	 * Method to change the state of the leader card from HIDDEN to DISCARDED
 	 * (the player no longer has that leader card in his hand)
 	 */
 	public void discardLeaderCard() {

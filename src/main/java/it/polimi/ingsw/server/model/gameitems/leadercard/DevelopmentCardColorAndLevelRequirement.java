@@ -42,8 +42,6 @@ public class DevelopmentCardColorAndLevelRequirement extends LeaderCardRequireme
             if (developmentCard.getColour() == cardColour && developmentCard.getLevel() == cardLevel)
                 sumOfRightColourAndLevelCard ++;
         }
-        if (sumOfRightColourAndLevelCard >= numberOfCards)
-            return true;
-        return false;
+        return sumOfRightColourAndLevelCard >= numberOfCards;
     }
 }
