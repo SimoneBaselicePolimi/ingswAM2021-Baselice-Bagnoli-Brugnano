@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import java.util.List;
 
 /**
- * This class represent a specific type of cards used in the game: the leader cards
+ * This class represent a specific type of card used in the game: the leader card
  */
 public class LeaderCard {
 	private LeaderCardState state;
@@ -17,7 +17,6 @@ public class LeaderCard {
 	private List<DevelopmentCardCostDiscount> cardCostDiscounts;
 	private List<WhiteMarbleSubstitution> whiteMarbleSubstitutions;
 	int victoryPoints;
-
 
 	/**
 	 * LeaderCard constructor
