@@ -67,7 +67,9 @@ public class LeaderCard {
 	 */
 	public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfiedException {
 		if(!areRequirementsSatisfied(playerContext))
-			throw new LeaderCardRequirementsNotSatisfiedException();
+			throw new LeaderCardRequirementsNotSatisfiedException("Leader card activation denied: the card does not meet the required requirements");
+		if (this.state != LeaderCardState.HIDDEN)
+			throw new LeaderCardRequirementsNotSatisfiedException("Leader card activation denied: the card state must be HIDDEN");
 		this.state = LeaderCardState.ACTIVE;
 	}
 
@@ -75,7 +77,9 @@ public class LeaderCard {
 	 * Method to change the state of the leader card from HIDDEN to DISCARDED
 	 * (the player no longer has that leader card in his hand)
 	 */
-	public void discardLeaderCard() {
+	public void discardLeaderCard() throws LeaderCardRequirementsNotSatisfiedException{
+		if (this.state != LeaderCardState.HIDDEN)
+			throw new LeaderCardRequirementsNotSatisfiedException ("Leader card discard denied: the card state must be HIDDEN");
 		this.state = LeaderCardState.DISCARDED;
 	}
 

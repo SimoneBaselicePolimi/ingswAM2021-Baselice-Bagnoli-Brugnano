@@ -35,7 +35,7 @@ public class LeaderCardNotifier extends LeaderCard implements Notifier<LeaderCar
     }
 
     @Override
-    public void discardLeaderCard() {
+    public void discardLeaderCard () throws LeaderCardRequirementsNotSatisfiedException{
         super.discardLeaderCard();
     }
 }
