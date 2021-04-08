@@ -21,11 +21,11 @@ public class DevelopmentCardsTable {
 	 */
 	public DevelopmentCardsTable(List<DevelopmentCard> cards) {
 		this.cards = cards.stream().collect(Collectors.groupingBy(
-				DevelopmentCard::getLevel,
-				Collectors.groupingBy(
-						DevelopmentCard::getColour,
-						Collectors.collectingAndThen(Collectors.toList(), ShuffledCardDeck::new)
-				)
+			DevelopmentCard::getLevel,
+			Collectors.groupingBy(
+				DevelopmentCard::getColour,
+				Collectors.collectingAndThen(Collectors.toList(), ShuffledCardDeck::new)
+			)
 		));
 	}
 
@@ -59,15 +59,15 @@ public class DevelopmentCardsTable {
 	 */
 	public Map<DevelopmentCardLevel,Map<DevelopmentCardColour,DevelopmentCard>> getAvailableCardsAsMap() {
 		Map<DevelopmentCardLevel, Map<DevelopmentCardColour, DevelopmentCard>> map =
-				getAvailableCards().stream().collect(
-						Collectors.groupingBy(
-								DevelopmentCard::getLevel,
-								Collectors.toMap(
-										DevelopmentCard::getColour,
-										Function.identity()
-								)
-						)
-				);
+			getAvailableCards().stream().collect(
+				Collectors.groupingBy(
+					DevelopmentCard::getLevel,
+					Collectors.toMap(
+						DevelopmentCard::getColour,
+						Function.identity()
+					)
+				)
+			);
 		return map;
 	}
 
