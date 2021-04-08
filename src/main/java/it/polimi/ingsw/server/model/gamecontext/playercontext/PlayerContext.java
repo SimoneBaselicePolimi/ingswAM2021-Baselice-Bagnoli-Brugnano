@@ -22,12 +22,8 @@ public class PlayerContext {
 		return null;
 	}
 
-	public void activeLeaderCard(DevelopmentCard card) {
-
-	}
-
-	public void discardLeaderCard(DevelopmentCard card) {
-
+	public List<LeaderCard> getActiveLeaderCards() {
+		return null;
 	}
 
 	public Map<ResourceType, Integer> getDiscounts() {

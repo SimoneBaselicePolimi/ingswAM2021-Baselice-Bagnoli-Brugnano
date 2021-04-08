@@ -1,51 +1,79 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
-import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
+/**
+ * This class represent a specific type of cards used in the game: the development cards
+ */
 public class DevelopmentCard {
+	private DevelopmentCardLevel level;
+	private DevelopmentCardColour colour;
+	private Production production;
+	private int victoryPoints;
+	private Map<ResourceType, Integer> purchaseCost;
 
+	/**
+	 * DevelopmentCard constructor
+	 * @param level of the development card
+	 * @param colour of the development card
+	 * @param production that the the development card can give to the player
+	 * @param victoryPoints that the development card gives at the end of the game
+	 * @param purchaseCost necessary to buy the development card
+	 */
+	public DevelopmentCard (
+			DevelopmentCardLevel level,
+			DevelopmentCardColour colour,
+			Production production,
+			int victoryPoints,
+			Map<ResourceType, Integer> purchaseCost){
+		this.level=level;
+		this.colour=colour;
+		this.production=production;
+		this.victoryPoints=victoryPoints;
+		this.purchaseCost=purchaseCost;
+	}
+
+	/**
+	 * Method to get the level of the development card
+	 * @return level
+	 */
 	public DevelopmentCardLevel getLevel() {
-		return null;
+		return level;
 	}
 
-	public MarbleColour getColour() {
-		return null;
+	/**
+	 * Method to get the colour of the development card
+	 * @return colour
+	 */
+	public DevelopmentCardColour getColour() {
+		return colour;
 	}
 
-	public Map<ResourceType, Integer> getPrice() {
-		return null;
+	/**
+	 * Method to get the production of the development card
+	 * @return production
+	 */
+	public Production getProduction() {
+		return production;
 	}
 
-	public Map<ResourceType, Integer> getProductionResourceCost() {
-		return null;
-	}
-
-	public int getProductionStarResourceCost() {
-		return 0;
-	}
-
-	public Map<ResourceType, Integer> getProductionResourceReward() {
-		return null;
-	}
-
-	public int getProductionStarResourceReward() {
-		return 0;
-	}
-
-	public int getProductionFaithReward() {
-		return 0;
-	}
-
-	public boolean isProductionActive() {
-		return false;
-	}
-
+	/**
+	 * Method to get points that the development card gives (they are used at the end of the game)
+	 * @return Victory points
+	 */
 	public int getVictoryPoints() {
-		return 0;
+		return victoryPoints;
+	}
+
+	/**
+	 * Method to get the cost (resources) necessary to pay, in order to have the card
+	 * @return Map<ResourceType, Integer> type and number of resources that represent the price to pay
+	 */
+	public  Map<ResourceType, Integer> getPurchaseCost(){
+		return purchaseCost;
 	}
 
 }
