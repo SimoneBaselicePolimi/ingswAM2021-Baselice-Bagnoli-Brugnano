@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
  *     <li> A {@link PlayerContext} object for each player. The PlayerContext aggregates all the information relative to
  *     a specific player </li>
  *     <li> The market, see {@link Market}).</li>
- *     <li> The development card table, see {@link DevelopmentCardsTable} </li>
+ *     <li> The development cards table, see {@link DevelopmentCardsTable} </li>
  *     <li> The faith path, see {@link FaithPath} </li>
  * </ul>
  * <p>
- * The player context also offers some utility methods that aggregate together information obtained by multiple
+ * The game context also offers some utility methods that aggregate together information obtained by multiple
  * subcomponents. For example the method {@link GameContext#getDevelopmentCardsPlayerCanBuy(Player)} will return the
  * development cards from the DevelopmentCardsTable that the player has enough resources to buy (also considering the
  * possible discounts that may apply, see {@link it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount})

@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * The player context aggregates all the information relative to a specific Player.
  * The main components are:
  * <ul>
- *     <li> Leader cards the player chose at the begging of the game</li>
+ *     <li> Leader cards the player chose at the beginning of the game</li>
  *     <li> Development cards the player bought. Those cards are organized in card stacks with special rules (see
  *     {@link it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack}).</li>
  *     <li> Shelves, special storages the player can use to store resources taken from the market </li>
@@ -58,7 +58,7 @@ public class PlayerContext {
 		infiniteChest = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
 		tempStorage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
 		for (int i = 0; i < numberOfDevelopmentCardDecks; i++) {
-			developmentCardDecks.add(new PlayerOwnedDevelopmentCardStack(new ArrayList<>()));
+			developmentCardDecks.add(new PlayerOwnedDevelopmentCardStack());
 		}
 	}
 
