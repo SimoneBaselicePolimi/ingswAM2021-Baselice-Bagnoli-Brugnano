@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
-public class DevelopmentCard implements Production {
+public class DevelopmentCard{
 
 	public DevelopmentCardLevel getLevel() {
 		return null;
