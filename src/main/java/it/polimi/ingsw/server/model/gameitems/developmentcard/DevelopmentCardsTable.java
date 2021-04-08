@@ -13,7 +13,7 @@ public class DevelopmentCardsTable {
 	/**
 	 * Map that contains the cards in each deck, along with their color and level
 	 */
-	private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> cards = new HashMap<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>>();
+	private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> cards;
 
 	/**
 	 * DevelopmentCardsTable constructor
@@ -34,7 +34,7 @@ public class DevelopmentCardsTable {
 	 * @return list of development cards that are available
 	 */
 	public List<DevelopmentCard> getAvailableCards() {
-		List<DevelopmentCard> availableCards = new ArrayList<DevelopmentCard>();
+		List<DevelopmentCard> availableCards = new ArrayList<>();
 		for (Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>> value : cards.values()) {
 			for (ShuffledCardDeck<DevelopmentCard> deck : value.values())
 				availableCards.add(deck.peek());
