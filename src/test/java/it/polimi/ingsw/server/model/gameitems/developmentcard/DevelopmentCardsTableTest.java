@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -39,16 +40,9 @@ public class DevelopmentCardsTableTest {
         DevelopmentCard developmentCard11 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
         DevelopmentCard developmentCard12 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
 
-    /**
-     * Tests DevelopmentCardsTable initialization passing to the constructor a list of development cards and,
-     * on the other hand, tests if getDeckByLevelAndColour method return the right deck.
-     * Checks if the cards are placed in the right deck on the table using getDeckByLevelAndColour and peekAll methods.
-     * If the Card Deck doesn't exist, getDeckByLevelAndColour method must return a IllegalArgumentException.
-     */
-    @Test
-    void testDevelopmentCardsTableConstructor (){
-
-        List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+    List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+    @BeforeEach
+    void setUp() {
         developmentCards.add(developmentCard1);
         developmentCards.add(developmentCard2);
         developmentCards.add(developmentCard3);
@@ -61,10 +55,17 @@ public class DevelopmentCardsTableTest {
         developmentCards.add(developmentCard10);
         developmentCards.add(developmentCard11);
         developmentCards.add(developmentCard12);
+    }
 
+    /**
+     * Tests DevelopmentCardsTable initialization passing to the constructor a list of development cards and,
+     * on the other hand, tests if getDeckByLevelAndColour method return the right deck.
+     * Checks if the cards are placed in the right deck on the table using getDeckByLevelAndColour and peekAll methods.
+     * If the Card Deck doesn't exist, getDeckByLevelAndColour method must return a IllegalArgumentException.
+     */
+    @Test
+    void testDevelopmentCardsTableConstructor (){
         DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
-
-
         assertEquals(
                 Set.of(developmentCard1, developmentCard2, developmentCard3),
                 new HashSet<>(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll())
@@ -96,19 +97,6 @@ public class DevelopmentCardsTableTest {
      */
         @Test
         void testGetAvailableCards(){
-            List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
-            developmentCards.add(developmentCard1);
-            developmentCards.add(developmentCard2);
-            developmentCards.add(developmentCard3);
-            developmentCards.add(developmentCard4);
-            developmentCards.add(developmentCard5);
-            developmentCards.add(developmentCard6);
-            developmentCards.add(developmentCard7);
-            developmentCards.add(developmentCard8);
-            developmentCards.add(developmentCard9);
-            developmentCards.add(developmentCard10);
-            developmentCards.add(developmentCard11);
-            developmentCards.add(developmentCard12);
             DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
             assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.BLUE).peek()));
@@ -125,19 +113,6 @@ public class DevelopmentCardsTableTest {
      */
         @Test
         void testPopCard (){
-            List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
-            developmentCards.add(developmentCard1);
-            developmentCards.add(developmentCard2);
-            developmentCards.add(developmentCard3);
-            developmentCards.add(developmentCard4);
-            developmentCards.add(developmentCard5);
-            developmentCards.add(developmentCard6);
-            developmentCards.add(developmentCard7);
-            developmentCards.add(developmentCard8);
-            developmentCards.add(developmentCard9);
-            developmentCards.add(developmentCard10);
-            developmentCards.add(developmentCard11);
-            developmentCards.add(developmentCard12);
             DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
             List<DevelopmentCard> list1 = table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll();
@@ -164,20 +139,6 @@ public class DevelopmentCardsTableTest {
          */
         @Test
         void testGetAvailableCardsAsMap(){
-
-            List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
-            developmentCards.add(developmentCard1);
-            developmentCards.add(developmentCard2);
-            developmentCards.add(developmentCard3);
-            developmentCards.add(developmentCard4);
-            developmentCards.add(developmentCard5);
-            developmentCards.add(developmentCard6);
-            developmentCards.add(developmentCard7);
-            developmentCards.add(developmentCard8);
-            developmentCards.add(developmentCard9);
-            developmentCards.add(developmentCard10);
-            developmentCards.add(developmentCard11);
-            developmentCards.add(developmentCard12);
             DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
 
             for (DevelopmentCard card : table.getAvailableCards()) {
