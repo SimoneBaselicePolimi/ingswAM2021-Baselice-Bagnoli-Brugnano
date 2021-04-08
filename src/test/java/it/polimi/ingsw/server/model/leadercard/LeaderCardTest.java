@@ -5,13 +5,43 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.lenient;
 
+@ExtendWith(MockitoExtension.class)
 public class LeaderCardTest {
+
+    @Mock
+    PlayerContext player;
+
+    @Mock
+    LeaderCardRequirement trueRequirement1;
+
+    @Mock
+    LeaderCardRequirement trueRequirement2;
+
+    @Mock
+    LeaderCardRequirement falseRequirement1;
+
+    @Mock
+    LeaderCardRequirement falseRequirement2;
+    
+    @BeforeEach
+    void setUp() {
+        lenient().when(trueRequirement1.checkRequirement(eq(player))).thenReturn(true);
+        lenient().when(trueRequirement2.checkRequirement(eq(player))).thenReturn(true);
+        lenient().when(falseRequirement1.checkRequirement(eq(player))).thenReturn(false);
+        lenient().when(falseRequirement2.checkRequirement(eq(player))).thenReturn(false);
+    }
 
     /**
      * Tests the construction of a Leader Card
@@ -22,20 +52,19 @@ public class LeaderCardTest {
      */
     @Test
     void testTrueRequirementsLeaderCard (){
-        PlayerContext player1 = new PlayerContext();
-        List <LeaderCardRequirement> listTrueRequirements = new ArrayList<LeaderCardRequirement>();
-        listTrueRequirements.add(new TrueRequirement1());
-        listTrueRequirements.add(new TrueRequirement2());
+        List <LeaderCardRequirement> listTrueRequirements = new ArrayList<>();
+        listTrueRequirements.add(trueRequirement1);
+        listTrueRequirements.add(trueRequirement2);
 
         LeaderCard leaderCard1 = new LeaderCard(listTrueRequirements, null,
                 null, null,null, 3);
-        assertTrue(() -> leaderCard1.areRequirementsSatisfied(player1));
-        assertDoesNotThrow(() ->leaderCard1.activateLeaderCard(player1));
+        assertTrue(() -> leaderCard1.areRequirementsSatisfied(player));
+        assertDoesNotThrow(() ->leaderCard1.activateLeaderCard(player));
 
         LeaderCard leaderCard2 = new LeaderCard(listTrueRequirements, null,
                 null, null,null, 2);
-        assertTrue(() -> leaderCard2.areRequirementsSatisfied(player1));
-        assertDoesNotThrow(() ->leaderCard2.activateLeaderCard(player1));
+        assertTrue(() -> leaderCard2.areRequirementsSatisfied(player));
+        assertDoesNotThrow(() ->leaderCard2.activateLeaderCard(player));
     }
 
     /**
@@ -46,23 +75,22 @@ public class LeaderCardTest {
      */
     @Test
     void TestFalseRequirementsLeaderCard() {
-        PlayerContext player1 = new PlayerContext();
-        List <LeaderCardRequirement> listFalseRequirements = new ArrayList<LeaderCardRequirement>();
-        List <LeaderCardRequirement> listTrueAndFalseRequirements = new ArrayList<LeaderCardRequirement>();
-        listFalseRequirements.add(new FalseRequirement1());
-        listFalseRequirements.add(new FalseRequirement2());
-        listTrueAndFalseRequirements.add(new TrueRequirement1());
-        listTrueAndFalseRequirements.add(new FalseRequirement2());
+        List <LeaderCardRequirement> listFalseRequirements = new ArrayList<>();
+        List <LeaderCardRequirement> listTrueAndFalseRequirements = new ArrayList<>();
+        listFalseRequirements.add(falseRequirement1);
+        listFalseRequirements.add(falseRequirement2);
+        listTrueAndFalseRequirements.add(trueRequirement1);
+        listTrueAndFalseRequirements.add(falseRequirement2);
 
         LeaderCard leaderCard3 = new LeaderCard(listFalseRequirements, null,
                 null, null, null, 2);
-        assertFalse(() -> leaderCard3.areRequirementsSatisfied(player1));
-        assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard3.activateLeaderCard(player1));
+        assertFalse(() -> leaderCard3.areRequirementsSatisfied(player));
+        assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard3.activateLeaderCard(player));
 
         LeaderCard leaderCard4 = new LeaderCard(listTrueAndFalseRequirements, null,
                 null, null, null, 2);
-        assertFalse(() -> leaderCard3.areRequirementsSatisfied(player1));
-        assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard3.activateLeaderCard(player1));
+        assertFalse(() -> leaderCard4.areRequirementsSatisfied(player));
+        assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard3.activateLeaderCard(player));
     }
 
     /**
@@ -71,17 +99,16 @@ public class LeaderCardTest {
      */
     @Test
     void testActivateLeaderCard(){
-        PlayerContext player1 = new PlayerContext();
-        List <LeaderCardRequirement> listTrueRequirements = new ArrayList<LeaderCardRequirement>();
-        listTrueRequirements.add(new TrueRequirement1());
-        listTrueRequirements.add(new TrueRequirement2());
+        List <LeaderCardRequirement> listTrueRequirements = new ArrayList<>();
+        listTrueRequirements.add(trueRequirement1);
+        listTrueRequirements.add(trueRequirement2);
 
         LeaderCard leaderCard1 = new LeaderCard(listTrueRequirements, null,
                 null, null,null, 3);
         assertEquals(leaderCard1.getState(), LeaderCardState.HIDDEN);
-        assertDoesNotThrow(() ->leaderCard1.activateLeaderCard(player1));
+        assertDoesNotThrow(() ->leaderCard1.activateLeaderCard(player));
         assertEquals(leaderCard1.getState(), LeaderCardState.ACTIVE);
-        assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard1.activateLeaderCard(player1));
+        assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard1.activateLeaderCard(player));
     }
 
     /**
@@ -90,45 +117,16 @@ public class LeaderCardTest {
      */
     @Test
     void testDiscardLeaderCard(){
-        PlayerContext player1 = new PlayerContext();
-        List <LeaderCardRequirement> listTrueRequirements = new ArrayList<LeaderCardRequirement>();
-        listTrueRequirements.add(new TrueRequirement1());
-        listTrueRequirements.add(new TrueRequirement2());
+        List <LeaderCardRequirement> listTrueRequirements = new ArrayList<>();
+        listTrueRequirements.add(trueRequirement1);
+        listTrueRequirements.add(trueRequirement2);
 
         LeaderCard leaderCard1 = new LeaderCard(listTrueRequirements, null,
                 null, null,null, 3);
         assertEquals(leaderCard1.getState(), LeaderCardState.HIDDEN);
-        assertDoesNotThrow(() ->leaderCard1.discardLeaderCard());
+        assertDoesNotThrow(leaderCard1::discardLeaderCard);
         assertEquals(leaderCard1.getState(), LeaderCardState.DISCARDED);
-        assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard1.discardLeaderCard());
+        assertThrows(LeaderCardRequirementsNotSatisfiedException.class, leaderCard1::discardLeaderCard);
     }
-
-
-    class TrueRequirement1 extends LeaderCardRequirement {
-        @Override
-        public boolean checkRequirement(PlayerContext playerContext) {
-            return true;
-        }
-    }
-
-    class TrueRequirement2 extends LeaderCardRequirement {
-        @Override
-        public boolean checkRequirement(PlayerContext playerContext) {
-            return true;
-        }
-    }
-
-    class FalseRequirement1 extends LeaderCardRequirement {
-        @Override
-        public boolean checkRequirement(PlayerContext playerContext) {
-            return false;
-        }
-    }
-
-    class FalseRequirement2 extends LeaderCardRequirement {
-        @Override
-        public boolean checkRequirement(PlayerContext playerContext) {
-            return false;
-        }
-    }
+    
 }
