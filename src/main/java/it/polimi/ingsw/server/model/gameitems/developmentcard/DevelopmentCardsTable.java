@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public class DevelopmentCardsTable {
 	/**
-	 * Map that contains the cards in each deck, along with their color and level
+	 * Map that contains the cards in each deck, along with their colour and level
 	 */
 	private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> cards;
 
