@@ -13,15 +13,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
-@ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
-
+@ExtendWith(MockitoExtension.class)
 public class DevelopmentCardColorAndLevelRequirementTest {
     @Mock
     PlayerContext playerContext1;
@@ -42,14 +41,20 @@ public class DevelopmentCardColorAndLevelRequirementTest {
         List<DevelopmentCard> list2 = new ArrayList<DevelopmentCard>();
         List<DevelopmentCard> emptyList = new ArrayList<DevelopmentCard>();
 
-        DevelopmentCard developmentCard1 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3);
-        DevelopmentCard developmentCard2 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production,2);
-        DevelopmentCard developmentCard3 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production,1);
-        DevelopmentCard developmentCard4 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3);
-
-        DevelopmentCard developmentCard5 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW, production,1);
-        DevelopmentCard developmentCard6 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5);
-        DevelopmentCard developmentCard7 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production,2);
+        DevelopmentCard developmentCard1 =
+            new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3, new HashMap<>());
+        DevelopmentCard developmentCard2 =
+            new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production,2, new HashMap<>());
+        DevelopmentCard developmentCard3 =
+            new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production,1, new HashMap<>());
+        DevelopmentCard developmentCard4 =
+            new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3, new HashMap<>());
+        DevelopmentCard developmentCard5 =
+            new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW, production,1, new HashMap<>());
+        DevelopmentCard developmentCard6 =
+            new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>());
+        DevelopmentCard developmentCard7 =
+            new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production,2, new HashMap<>());
 
         list1.add(developmentCard1);
         list1.add(developmentCard1);
@@ -75,12 +80,18 @@ public class DevelopmentCardColorAndLevelRequirementTest {
         lenient().when(playerContext3.getAllDevelopmentCards()).thenReturn(emptyList);
     }
 
-    DevelopmentCardColorAndLevelRequirement requirement1 = new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.BLUE, DevelopmentCardLevel.FIRST_LEVEL,3);
-    DevelopmentCardColorAndLevelRequirement requirement2 = new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.BLUE, DevelopmentCardLevel.SECOND_LEVEL,2);
-    DevelopmentCardColorAndLevelRequirement requirement3 = new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.YELLOW, DevelopmentCardLevel.THIRD_LEVEL,1);
-    DevelopmentCardColorAndLevelRequirement requirement4 = new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.YELLOW, DevelopmentCardLevel.SECOND_LEVEL,1);
-    DevelopmentCardColorAndLevelRequirement requirement5 = new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.PURPLE, DevelopmentCardLevel.THIRD_LEVEL,2);
-    DevelopmentCardColorAndLevelRequirement requirement6 = new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.GREEN, DevelopmentCardLevel.FIRST_LEVEL,3);
+    DevelopmentCardColorAndLevelRequirement requirement1 =
+        new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.BLUE, DevelopmentCardLevel.FIRST_LEVEL,3);
+    DevelopmentCardColorAndLevelRequirement requirement2 =
+        new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.BLUE, DevelopmentCardLevel.SECOND_LEVEL,2);
+    DevelopmentCardColorAndLevelRequirement requirement3 =
+        new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.YELLOW, DevelopmentCardLevel.THIRD_LEVEL,1);
+    DevelopmentCardColorAndLevelRequirement requirement4 =
+        new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.YELLOW, DevelopmentCardLevel.SECOND_LEVEL,1);
+    DevelopmentCardColorAndLevelRequirement requirement5 =
+        new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.PURPLE, DevelopmentCardLevel.THIRD_LEVEL,2);
+    DevelopmentCardColorAndLevelRequirement requirement6 =
+        new DevelopmentCardColorAndLevelRequirement(DevelopmentCardColour.GREEN, DevelopmentCardLevel.FIRST_LEVEL,3);
 
     /**
      * Tests the method to verify if a player has the necessary requirements to activate a leader card:
