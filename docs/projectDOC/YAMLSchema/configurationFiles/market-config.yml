@@ -1,8 +1,12 @@
+## STANDARD RULES VALUES
 market:
   matrix:
     numberOfRows: 3
     numberOfColumns: 4
   marblesNumber:
-    MARBLE_RED: 6
+    MARBLE_WHITE: 4
     MARBLE_BLUE: 2
-    MARBLE_YELLOW: 5
+    MARBLE_GREY: 2
+    MARBLE_YELLOW: 2
+    MARBLE_PURPLE: 2
+    MARBLE_RED: 1

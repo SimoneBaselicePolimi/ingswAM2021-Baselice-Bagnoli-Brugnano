@@ -1,25 +1,26 @@
+## STANDARD RULES VALUES
 marbleTypes:
+  - marbleID: MARBLE_WHITE
+    resourceType: null
+    numberOfFaithPoints: 0
+    isSpecial: true
+  - marbleID: MARBLE_BLUE
+    resourceType: SHIELDS
+    numberOfFaithPoints: 0
+    isSpecial: false
+  - marbleID: MARBLE_GREY
+    resourceType: STONES
+    numberOfFaithPoints: 0
+    isSpecial: false
+  - marbleID: MARBLE_YELLOW
+    resourceType: COINS
+    numberOfFaithPoints: 0
+    isSpecial: false
+  - marbleID: MARBLE_PURPLE
+    resourceType: SERVANTS
+    numberOfFaithPoints: 0
+    isSpecial: false
   - marbleID: MARBLE_RED
     resourceType: null
     numberOfFaithPoints: 1
     isSpecial: false
-  - marbleID: MARBLE_BLUE
-    resourceType: STONES
-    numberOfFaithPoints: 0
-    isSpecial: false
-  - marbleID: MARBLE_YELLOW
-    resourceType: COINS
-    numberOfFaithPoints: 0
-    isSpecial: true
-
-
-
-marbleTypes:
-  - marbleID: MARBLE_RED
-    numberOfFaithPoints: 1
-  - marbleID: MARBLE_BLUE
-    resourceType: STONES
-  - marbleID: MARBLE_YELLOW
-    resourceType: COINS
-  - marbleID: WHITE
-    isSpecial: true
