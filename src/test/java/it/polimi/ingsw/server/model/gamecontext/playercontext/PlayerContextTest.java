@@ -5,12 +5,14 @@ import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
-import it.polimi.ingsw.server.model.gameitems.cardstack.CannotPushCardOnTopException;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,10 +75,10 @@ class PlayerContextTest {
         when(activeCard2.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard hiddenCard1 = mock(LeaderCard.class);
-        when(hiddenCard1.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(hiddenCard1.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard hiddenCard2 = mock(LeaderCard.class);
-        when(hiddenCard2.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(hiddenCard2.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard discardedCard1 = mock(LeaderCard.class);
         when(discardedCard1.getState()).thenReturn(LeaderCardState.DISCARDED);
@@ -102,7 +104,7 @@ class PlayerContextTest {
         lenient().when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
                 new DevelopmentCardCostDiscount(ResourceType.STONES, 1)
         ));
-        when(cardHiddenWithShieldsDiscount.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(cardHiddenWithShieldsDiscount.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard cardDiscardedWithShieldsDiscount = mock(LeaderCard.class);
         lenient().when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
@@ -164,7 +166,7 @@ class PlayerContextTest {
         lenient().when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
                 new WhiteMarbleSubstitution(ResourceType.COINS)
         ));
-        when(cardHiddenWithCoinsSub.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(cardHiddenWithCoinsSub.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard cardDiscardedWithCoinsSub = mock(LeaderCard.class);
         lenient().when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
@@ -204,7 +206,7 @@ class PlayerContextTest {
 
         LeaderCard cardHiddenWithStorage = mock(LeaderCard.class);
         lenient().when(cardHiddenWithStorage.getResourceStorages()).thenReturn(List.of(storage4));
-        when(cardHiddenWithStorage.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(cardHiddenWithStorage.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         playerContext.setLeaderCards(Set.of(cardWithStorage1, cardWithStorage2, cardHiddenWithStorage));
         assertEquals(
@@ -232,7 +234,7 @@ class PlayerContextTest {
 
         LeaderCard cardHiddenWithProd = mock(LeaderCard.class);
         lenient().when(cardHiddenWithProd.getProductions()).thenReturn(List.of(production4));
-        when(cardHiddenWithProd.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(cardHiddenWithProd.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         playerContext.setLeaderCards(Set.of(cardWithProd1, cardWithProd2, cardHiddenWithProd));
         assertEquals(
@@ -306,7 +308,7 @@ class PlayerContextTest {
     }
 
     @Test
-    void testSetTemporaryStorageResources() {
+    void testSetTemporaryStorageResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
         Map<ResourceType, Integer> resources1 = Map.of(
                 ResourceType.COINS, 2,
@@ -331,12 +333,17 @@ class PlayerContextTest {
     }
 
     @Test
-    void testClearTemporaryStorageResources() {
-        playerContext.setTemporaryStorageResources(Map.of(
-                ResourceType.COINS, 2,
-                ResourceType.SHIELDS, 4
-        ));
-        playerContext.clearTemporaryStorageResources();
+    void testClearTemporaryStorageResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+        Map<ResourceType, Integer> resources = Map.of(
+            ResourceType.COINS, 2,
+            ResourceType.SHIELDS, 4
+        );
+        playerContext.setTemporaryStorageResources(resources);
+        when(temporaryStorage.peekResources()).thenReturn(resources);
+        when(temporaryStorage.removeResources(eq(resources))).thenReturn(resources);
+        assertEquals(resources, playerContext.clearTemporaryStorageResources());
+        verify(temporaryStorage).removeResources(eq(resources));
+        when(temporaryStorage.peekResources()).thenReturn(new HashMap<>());
         assertEquals(new HashMap<>(), playerContext.getTemporaryStorageResources());
         assertEquals(new HashMap<>(), playerContext.getTemporaryStorage().peekResources());
     }
@@ -370,7 +377,7 @@ class PlayerContextTest {
         ));
         LeaderCard leaderCardDiscarded = mock(LeaderCard.class);
         lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(List.of(leaderCardStorage2));
-        when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.IN_HAND);
+        when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         when(infiniteChest.peekResources()).thenReturn(Map.of(
                 ResourceType.STONES, 3,
@@ -411,14 +418,14 @@ class PlayerContextTest {
     }
 
     @Test
-    void testAddAndFetchDevelopmentCards() throws CannotPushCardOnTopException {
+    void testAddAndFetchDevelopmentCards() throws ForbiddenPushOnTopException {
         DevelopmentCard devCard1Deck1 = mock(DevelopmentCard.class);
         DevelopmentCard devCard2Deck1 = mock(DevelopmentCard.class);
         DevelopmentCard devCard1Deck2 = mock(DevelopmentCard.class);
         DevelopmentCard devCard2Deck2 = mock(DevelopmentCard.class);
         DevelopmentCard devCard3Deck2 = mock(DevelopmentCard.class);
-        PlayerOwnedDevelopmentCardStack deck1 = mock(PlayerOwnedDevelopmentCardStack.class);
-        PlayerOwnedDevelopmentCardStack deck2 = mock(PlayerOwnedDevelopmentCardStack.class);
+        PlayerOwnedDevelopmentCardDeck deck1 = mock(PlayerOwnedDevelopmentCardDeck.class);
+        PlayerOwnedDevelopmentCardDeck deck2 = mock(PlayerOwnedDevelopmentCardDeck.class);
 
         PlayerContext playerContext = new PlayerContext(
                 player,
@@ -442,9 +449,9 @@ class PlayerContextTest {
         when(deck2.isPushOnTopValid(eq(devCard2Deck2))).thenReturn(false);
         assertFalse(playerContext.canAddDevelopmentCard(devCard2Deck2, 1));
 
-        doThrow(CannotPushCardOnTopException.class).when(deck2).pushOnTop(eq(devCard2Deck2));
+        doThrow(ForbiddenPushOnTopException.class).when(deck2).pushOnTop(eq(devCard2Deck2));
         assertThrows(
-                CannotPushCardOnTopException.class,
+                ForbiddenPushOnTopException.class,
                 () -> playerContext.addDevelopmentCard(devCard2Deck2, 1),
                 "The player context does not propagate the exception generated when trying to add an invalid " +
                         "card to a deck"

@@ -4,8 +4,8 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 
 import java.util.List;
 
-public class PlayerOwnedDevelopmentCardStackUpdate extends GameUpdate {
+public class PlayerOwnedDevelopmentCardDeckUpdate extends GameUpdate {
 
-	public List<DevelopmentCard> developmentCardsStack;
+	public List<DevelopmentCard> developmentCardsDeck;
 
 }

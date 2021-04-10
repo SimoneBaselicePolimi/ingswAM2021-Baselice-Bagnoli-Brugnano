@@ -1,12 +1,23 @@
 package it.polimi.ingsw.server.model.notifier.gameupdate;
 
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.Production;
+import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
+import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfied;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.notifier.Notifier;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
+import java.util.List;
 import java.util.Optional;
 
 public class LeaderCardNotifier extends LeaderCard implements Notifier<LeaderCardUpdate> {
+
+    public LeaderCardNotifier(List<LeaderCardRequirement> requirements, List<Production> productions, List<ResourceStorage> resourceStorages, List<DevelopmentCardCostDiscount> developmentCardCostDiscounts, List<WhiteMarbleSubstitution> whiteMarbleSubstitutions, int victoryPoints) {
+        super(requirements, productions, resourceStorages, developmentCardCostDiscounts, whiteMarbleSubstitutions, victoryPoints);
+    }
 
     public Optional<LeaderCardUpdate> getUpdate() {
         //WARNING: may return sensitive data! When the LeaderCard state is 'hidden' the ID of the card should be kept
@@ -19,12 +30,12 @@ public class LeaderCardNotifier extends LeaderCard implements Notifier<LeaderCar
     }
 
     @Override
-    public void activateLeaderCard() throws LeaderCardRequirementsNotSatisfied {
-        super.activateLeaderCard();
+    public void activateLeaderCard(PlayerContext playerContext) throws LeaderCardRequirementsNotSatisfiedException {
+        super.activateLeaderCard(playerContext);
     }
 
     @Override
-    public void discardLeaderCard() {
+    public void discardLeaderCard () throws LeaderCardRequirementsNotSatisfiedException{
         super.discardLeaderCard();
     }
 }

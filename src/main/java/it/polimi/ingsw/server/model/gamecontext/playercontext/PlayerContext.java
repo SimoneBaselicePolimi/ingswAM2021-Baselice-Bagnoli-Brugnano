@@ -2,13 +2,14 @@ package it.polimi.ingsw.server.model.gamecontext.playercontext;
 
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.*;
-import it.polimi.ingsw.server.model.gameitems.cardstack.CannotPushCardOnTopException;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
-import it.polimi.ingsw.server.model.storage.ResourceStorageBuilder;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,9 +19,9 @@ import java.util.stream.Stream;
  * The player context aggregates all the information relative to a specific Player.
  * The main components are:
  * <ul>
- *     <li> Leader cards the player chose at the begging of the game</li>
+ *     <li> Leader cards the player chose at the beginning of the game</li>
  *     <li> Development cards the player bought. Those cards are organized in card stacks with special rules (see
- *     {@link it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack}).</li>
+ *     {@link it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck}).</li>
  *     <li> Shelves, special storages the player can use to store resources taken from the market </li>
  *     <li> An infinite chest is a storage that does not have a limit on the number of resources it can contain </li>
  *     <li> A temporary storage used only to hold resources obtained from the market before the player repositions them
@@ -39,28 +40,7 @@ public class PlayerContext {
 	private ResourceStorage infiniteChest;
 	private ResourceStorage tempStorage;
 	private Set<LeaderCard> leaderCardsPlayerOwns = new HashSet<>();
-	private List<PlayerOwnedDevelopmentCardStack> developmentCardDecks = new ArrayList<>();
-
-	/**
-	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
-	 * should be one and only one instance of this class for each player.
-	 * <p>
-	 * Note: this constructor is marked as protected because this class should only ever be initialized by the
-	 *  {@link it.polimi.ingsw.server.model.gamecontext.GameContextBuilder} and thus the constructor should never be
-	 *  called from outside this package
-	 * @param player the player associated with this player context
-	 * @param numberOfDevelopmentCardDecks number of decks of development cards the player bought
-	 * @param shelves shelves the player can use to store resources taken from the market
-	 */
-	protected PlayerContext(Player player, int numberOfDevelopmentCardDecks, Set<ResourceStorage> shelves) {
-		this.player = player;
-		this.shelves = new HashSet<>(shelves);
-		infiniteChest = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
-		tempStorage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage();
-		for (int i = 0; i < numberOfDevelopmentCardDecks; i++) {
-			developmentCardDecks.add(new PlayerOwnedDevelopmentCardStack(new ArrayList<>()));
-		}
-	}
+	private List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks;
 
 	/**
 	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
@@ -78,7 +58,7 @@ public class PlayerContext {
 	protected PlayerContext(
 			Player player,
 			Set<ResourceStorage> shelves,
-			List<PlayerOwnedDevelopmentCardStack> decks,
+			List<PlayerOwnedDevelopmentCardDeck> decks,
 			ResourceStorage infiniteChest,
 			ResourceStorage temporaryStorage
 	) {
@@ -224,7 +204,8 @@ public class PlayerContext {
 	 * they will be overwritten.
 	 * @param resources resources to put into the temporary storage
 	 */
-	public void setTemporaryStorageResources(Map<ResourceType, Integer> resources) {
+	public void setTemporaryStorageResources(Map<ResourceType, Integer> resources)
+		throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		clearTemporaryStorageResources();
 		tempStorage.addResources(resources);
 	}
@@ -242,10 +223,8 @@ public class PlayerContext {
 	 * the shelves/leader card storages.
      * @return resources that were in the temporary storage
 	 */
-	public Map<ResourceType, Integer> clearTemporaryStorageResources() {
-		Map<ResourceType, Integer> oldResources = tempStorage.peekResources();
-		tempStorage.removeResources(oldResources);
-		return oldResources;
+	public Map<ResourceType, Integer> clearTemporaryStorageResources() throws NotEnoughResourcesException {
+		return tempStorage.removeResources(tempStorage.peekResources());
 	}
 
 	/**
@@ -281,9 +260,9 @@ public class PlayerContext {
 	 * @param deckNumber the number of the deck that will be returned
 	 * @return returns the deck with the specified deckNumber
 	 * @throws IllegalArgumentException if there is no deck with that deckNumber. (if deckNumber >= numberOfDecks)
-	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack
+	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck
 	 */
-	public PlayerOwnedDevelopmentCardStack getDeck(int deckNumber) throws IllegalArgumentException {
+	public PlayerOwnedDevelopmentCardDeck getDeck(int deckNumber) throws IllegalArgumentException {
 		if(deckNumber >= developmentCardDecks.size() || deckNumber < 0)
 			throw new IllegalArgumentException(String.format(
 					"deckNumber %d is not valid. The range of valid deck numbers for this game is 0 to %d",
@@ -303,12 +282,12 @@ public class PlayerContext {
 	 * @param card development card to add.
 	 * @param deckNumber the number of the deck to add the development card on top
 	 * @throws IllegalArgumentException if there is no deck with that deckNumber. (if deckNumber >= numberOfDecks)
-	 * @throws CannotPushCardOnTopException if you try to add a development card of level N on top of a card of level
+	 * @throws ForbiddenPushOnTopException if you try to add a development card of level N on top of a card of level
 	 * that is not N - 1. (You can add card of level 1 only on empty decks)
-	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack
+	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck
 	 * @see it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel
 	 */
-	public void addDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException, CannotPushCardOnTopException {
+	public void addDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException, ForbiddenPushOnTopException {
 		getDeck(deckNumber).pushOnTop(card);
 	}
 
@@ -322,7 +301,7 @@ public class PlayerContext {
 	 * @param card development card to add.
 	 * @param deckNumber the number of the deck to add the development card on top
 	 * @throws IllegalArgumentException if there is no deck with that deckNumber. (if deckNumber >= numberOfDecks)
-	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardStack
+	 * @see it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck
 	 * @see it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel
 	 */
 	public boolean canAddDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException {
@@ -343,7 +322,7 @@ public class PlayerContext {
 	 * @return returns all the development cards owned by the player that are on top of the relative deck
 	 */
 	public Set<DevelopmentCard> getDevelopmentCardsOnTop() {
-		return developmentCardDecks.stream().map(PlayerOwnedDevelopmentCardStack::peek).collect(Collectors.toSet());
+		return developmentCardDecks.stream().map(PlayerOwnedDevelopmentCardDeck::peek).collect(Collectors.toSet());
 	}
 
 }
