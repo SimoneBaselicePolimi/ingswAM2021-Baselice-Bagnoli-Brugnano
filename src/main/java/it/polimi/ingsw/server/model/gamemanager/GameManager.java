@@ -13,6 +13,7 @@ public class GameManager {
 
 	private GameState currentState;
 
+
 	private ServerController controller;
 
 	private Lobby lobby;
