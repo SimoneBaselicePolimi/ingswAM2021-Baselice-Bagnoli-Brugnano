@@ -1,0 +1,54 @@
+## STANDARD RULES VALUES
+maxNumberOfPlayers: 4
+singlePlayerEnabled: true
+
+gameSetup:
+  # Leader Cards SetUp
+  numberOfLeadersCardsGivenToThePlayer: 4
+  numberOfLeadersCardsThePlayerKeeps: 2
+
+  # First player: 1, Second player: 2, ...
+  initialPlayerResourcesBasedOnPlayOrder:
+    1:
+      starResources: 0
+      faithPoints: 0
+    2:
+      starResources: 1
+      faithPoints: 0
+    3:
+      starResources: 1
+      faithPoints: 1
+    4:
+      starResources: 2
+      faithPoints: 1
+
+numberOfPlayerOwnedDevelopmentCardDecks: 3
+
+basicProductionPower:
+  - costs:
+      resources: {}
+      starResources: 2
+    rewards:
+      resources: {}
+      starResources: 1
+      faithPoints: 0
+
+resourceShelves:
+  - storage:
+      rules:
+        - ruleType: MAX_RESOURCE_NUMBER
+          maxNumber: 1
+        - ruleType: SAME_RESOURCE_TYPE
+  - storage:
+      rules:
+        - ruleType: MAX_RESOURCE_NUMBER
+          maxNumber: 1
+        - ruleType: SAME_RESOURCE_TYPE
+  - storage:
+      rules:
+        - ruleType: MAX_RESOURCE_NUMBER
+          maxNumber: 1
+        - ruleType: SAME_RESOURCE_TYPE
+  differentResourcesInDifferentStorages: true
+
+numberOfResourcesRewardingOneVictoryPoint: 5
