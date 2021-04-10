@@ -1,25 +1,41 @@
+## STANDARD RULES VALUES
 faithPath:
-  lenght: 20
+  lenght: 25
   vaticanReportSections:
-    - initialPosition: 2
-      popeSpacePosition: 3
-      victoryPoints: 10
-    - initialPosition: 10
-      popeSpacePosition: 13
-      victoryPoints: 20
-    - initialPosition: 15
-      popeSpacePosition: 19
-      victoryPoints: 30
+    - initialPosition: 5
+      popeSpacePosition: 8
+      victoryPoints: 2
+    - initialPosition: 12
+      popeSpacePosition: 16
+      victoryPoints: 3
+    - initialPosition: 19
+      popeSpacePosition: 24
+      victoryPoints: 4
   victoryPointsByPosition:
     - startPosition: 0
       endPosition: 2
       victoryPoints: 0
     - startPosition: 3
-      endPosition: 4
+      endPosition: 5
+      victoryPoints: 1
+    - startPosition: 6
+      endPosition: 8
       victoryPoints: 2
-    - startPosition: 5
-      endPosition: 14
+    - startPosition: 9
+      endPosition: 11
       victoryPoints: 4
-    - startPosition: 15
-      endPositition: 19
+    - startPosition: 12
+      endPosition: 14
       victoryPoints: 6
+    - startPosition: 15
+      endPosition: 17
+      victoryPoints: 9
+    - startPosition: 18
+      endPosition: 20
+      victoryPoints: 12
+    - startPosition: 21
+      endPosition: 23
+      victoryPoints: 16
+    - startPosition: 24
+      endPosition: 24
+      victoryPoints: 20
