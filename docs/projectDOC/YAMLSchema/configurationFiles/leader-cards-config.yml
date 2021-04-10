@@ -9,7 +9,8 @@ leaderCards:
         cardColour: PURPLE
         numberOfCards: 1
     developmentCardCostDiscounts:
-      - DISCOUNT_1      #  1 COINS
+      - resourceType: COINS
+        amountToDiscount: 1
     victoryPoints: 2
   - leaderCardID: LEADER_DISC_2
     requirements:
@@ -20,7 +21,8 @@ leaderCards:
         cardColour: BLUE
         numberOfCards: 1
     developmentCardCostDiscounts:
-      - DISCOUNT_2      #  1 STONES
+      - resourceType: STONES
+        amountToDiscount: 1
     victoryPoints: 2
   - leaderCardID: LEADER_DISC_3
     requirements:
@@ -31,7 +33,8 @@ leaderCards:
         cardColour: PURPLE
         numberOfCards: 1
     developmentCardCostDiscounts:
-      - DISCOUNT_3      #  1 SHIELDS
+      - resourceType: SHIELDS
+        amountToDiscount: 1
     victoryPoints: 2
   - leaderCardID: LEADER_DISC_4
     requirements:
@@ -42,7 +45,8 @@ leaderCards:
         cardColour: GREEN
         numberOfCards: 1
     developmentCardCostDiscounts:
-      - DISCOUNT_4      #  1 SERVANTS
+      - resourceType: SERVANTS
+        amountToDiscount: 1
     victoryPoints: 2
   - leaderCardID: LEADER_STOR_1
     requirements:
@@ -50,8 +54,12 @@ leaderCards:
         resourceType: SHIELDS
         numberOfResources: 5
     resourceStorages:
-      - STORAGE_1       # 1 COINS
-      - STORAGE_2       # 1 COINS
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: COINS
     victoryPoints: 3
   - leaderCardID: LEADER_STOR_2
     requirements:
@@ -59,8 +67,12 @@ leaderCards:
         resourceType: SERVANTS
         numberOfResources: 5
     resourceStorages:
-      - STORAGE_3       # 1 SHIELDS
-      - STORAGE_4       # 1 SHIELDS
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: SHIELDS
     victoryPoints: 3
   - leaderCardID: LEADER_STOR_3
     requirements:
@@ -68,8 +80,12 @@ leaderCards:
         resourceType: STONES
         numberOfResources: 5
     resourceStorages:
-      - STORAGE_5       # 1 SERVANTS
-      - STORAGE_6       # 1 SERVANTS
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: SERVANTS
     victoryPoints: 3
   - leaderCardID: LEADER_STOR_4
     requirements:
@@ -77,8 +93,12 @@ leaderCards:
         resourceType: COINS
         numberOfResources: 5
     resourceStorages:
-      - STORAGE_7       # 1 STONES
-      - STORAGE_8       # 1 STONES
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: STONES
     victoryPoints: 3
   - leaderCardID: LEADER_PROD_1
     requirements:
@@ -87,7 +107,14 @@ leaderCards:
         cardLevel: 2
         numberOfCards: 1
     productions:
-      - PROD_LEAD_1      # 1 SHIELDS --> 1 STAR, 1 FAITH POINT
+      - costs:
+          resources:
+            SHIELDS: 1
+          starResources: 0
+        rewards:
+          resources: {}
+          starResources: 1
+          faithPoints: 1
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_2
     requirements:
@@ -96,7 +123,14 @@ leaderCards:
         cardLevel: 2
         numberOfCards: 1
     productions:
-      - PROD_LEAD_2      # 1 COINS --> 1 STAR, 1 FAITH POINT
+      - costs:
+          resources:
+            COINS: 1
+          starResources: 0
+        rewards:
+          resources: {}
+          starResources: 1
+          faithPoints: 1
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_3
     requirements:
@@ -105,7 +139,14 @@ leaderCards:
         cardLevel: 2
         numberOfCards: 1
     productions:
-      - PROD_LEAD_3      # 1 STONES --> 1 STAR, 1 FAITH POINT
+      - costs:
+          resources:
+            STONES: 1
+          starResources: 0
+        rewards:
+          resources: { }
+          starResources: 1
+          faithPoints: 1
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_4
     requirements:
@@ -114,7 +155,14 @@ leaderCards:
         cardLevel: 2
         numberOfCards: 1
     productions:
-      - PROD_LEAD_4      # 1 SERVANTS --> 1 STAR, 1 FAITH POINT
+      - costs:
+          resources:
+            SERVANTS: 1
+          starResources: 0
+        rewards:
+          resources: { }
+          starResources: 1
+          faithPoints: 1
     victoryPoints: 4
   - leaderCardID: LEADER_SUB_1
     requirements:
@@ -125,7 +173,7 @@ leaderCards:
         cardColour: BLUE
         numberOfCards: 1
     specialMarbleSubstitutions:
-      - SUB_SERVANT       # 1 SERVANTS
+      - resourceType: SERVANTS
     victoryPoints: 5
   - leaderCardID: LEADER_SUB_2
     requirements:
@@ -136,7 +184,7 @@ leaderCards:
         cardColour: GREEN
         numberOfCards: 1
     specialMarbleSubstitutions:
-      - SUB_COIN       # 1 COINS
+      - resourceType: COINS
     victoryPoints: 5
   - leaderCardID: LEADER_SUB_3
     requirements:
@@ -147,7 +195,7 @@ leaderCards:
         cardColour: YELLOW
         numberOfCards: 1
     specialMarbleSubstitutions:
-      - SUB_STONE       # 1 STONES
+      - resourceType: STONES
     victoryPoints: 5
   - leaderCardID: LEADER_SUB_4
     requirements:
@@ -158,5 +206,5 @@ leaderCards:
         cardColour: PURPLE
         numberOfCards: 1
     specialMarbleSubstitutions:
-      - SUB_SHIELD       # 1 SHIELDS
+      - resourceType: SHIELDS
     victoryPoints: 5
