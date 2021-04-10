@@ -50,3 +50,5 @@ resourceShelves:
           maxNumber: 1
         - ruleType: SAME_RESOURCE_TYPE
   differentResourcesInDifferentStorages: true
+
+numberOfResourcesRewardingOneVictoryPoint: 5
