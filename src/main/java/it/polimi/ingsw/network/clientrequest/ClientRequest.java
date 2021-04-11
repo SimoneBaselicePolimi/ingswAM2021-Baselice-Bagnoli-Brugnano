@@ -7,9 +7,8 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 import java.util.Map;
 
 public class ClientRequest {
+	private Player player;
 
-	public Map<Player, ServerMessage> callHandler(GameState state) {
-		return null;
-	}
+	public Map<Player, ServerMessage> callHandler(GameState state) { return null;}
 
 }

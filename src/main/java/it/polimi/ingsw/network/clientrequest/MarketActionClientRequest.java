@@ -9,7 +9,7 @@ import java.util.Map;
 public class MarketActionClientRequest extends ClientRequest {
 
 	public Map<Player, ServerMessage> callHandler(GameState state) {
-		return null;
+		return(state.handleRequestMarketAction(this));
 	}
 
 }

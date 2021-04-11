@@ -9,7 +9,7 @@ import java.util.Map;
 public class CustomClientRequest extends ClientRequest {
 
 	public Map<Player, ServerMessage> callHandler(GameState state) {
-		return null;
+		return(state.handleRequestCustom(this));
 	}
 
 }

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.gamemanager;
 
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamecontext.GameContext;
+import it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.Lobby;
@@ -17,20 +19,30 @@ public class GameManager {
 
 	private Lobby lobby;
 
-	public GameManager(Lobby lobby) {
+	private GameContext gameContext;
 
+	public GameManager(Lobby lobby, ServerController controller, GameContext gameContext) {
+		this.lobby = lobby;
+		this.controller = controller;
+		this.gameContext = gameContext;
 	}
 
 	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) {
-		return null;
+		request.callHandler(currentState);
 	}
 
 	private void changeState() {
-
+		if (currentState == null)
+			currentState = getInitialGameState();
+		else {
+			controller.sendMessagesToClients(currentState.getFinalServerMessage());
+			currentState = currentState.getNextState();
+		}
+		controller.sendMessagesToClients(currentState.getInitialServerMessage());
 	}
 
 	private GameState getInitialGameState() {
-		return null;
+		return new GameSetupState(gameContext);
 	}
 
 }
