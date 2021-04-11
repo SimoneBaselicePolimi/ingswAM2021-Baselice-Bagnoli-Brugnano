@@ -1,4 +1,11 @@
-## STANDARD RULES VALUES
+# STANDARD RULES VALUES #
+
+## MARKET CONFIGURATION FILE ##
+# This file sets all the parameters regarding the Market structure.
+
+# The Market is represented by a matrix of a fixed number of rows and columns, filled with specific coloured Marbles
+# in different quantities.
+
 market:
   matrix:
     numberOfRows: 3

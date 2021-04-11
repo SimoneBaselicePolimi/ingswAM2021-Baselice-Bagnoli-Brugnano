@@ -1,4 +1,33 @@
-## STANDARD RULES VALUES
+# STANDARD RULES VALUES #
+
+## LEADER CARDS CONFIGURATION FILE ##
+# This file sets all the parameters regarding the Leader Cards in the Game (16 Cards in the standard Game).
+
+# Each Leader Card is identified by:
+#  - unique ID
+#  - specific type of requirements (the Player who owns this Leader Card must satisfy these requirements to activate
+#    this Card and obtain its special abilities):
+#    - COLOUR: request for a specific number of Development Cards (even the covered ones) of a certain colour
+#    - COLOUR_AND_LEVEL: request for a specific number of Development Cards (even the covered ones) of a certain colour and level
+#    - RESOURCE: request for a specific number of Resources to be present in the Player's Storages
+#  - special abilities, which can be used by the Player only after activating this Card
+#    (according to the standard Game rules, each Leader Card has only one of the following abilities):
+#    - Development Card Cost Discount: the Player who owns this Leader Card, when buying a Development Card,
+#      can pay its cost with the specified discount of the indicated Resource
+#    - Special Leader Storages: extra special depots used only to store the indicated Resources within a certain amount
+#    - Special Marble Substitution (White Marble Substitution, according the standard Game rules):
+#      when taking Resources from the Market, the Player can choose which Resource to take from those given by this
+#      special ability for each of the special Marbles
+#    - Production Power (the Player can pay the following costs to obtain the specified rewards), characterized by:
+#      - costs:
+#        - cost made of specific type and number of Resources
+#        - cost made of a generic type of Resource (Player can choose), in a fixed quantity
+#      - rewards:
+#        - reward made of specific type and number of Resources
+#        - reward made of a generic type of Resource (Player can choose), in a fixed quantity
+#        - reward made of a fixed number of Faith Points
+#      (according to the standard Game rules, Production's rewards are 1 generic Resource (Player can choose) and 1 Faith Point)
+#  - number of Victory Points given at the end of the Game to the Player who owns this Leader Card
 leaderCards:
   - leaderCardID: LEADER_DISC_1
     requirements:
@@ -144,7 +173,7 @@ leaderCards:
             STONES: 1
           starResources: 0
         rewards:
-          resources: { }
+          resources: {}
           starResources: 1
           faithPoints: 1
     victoryPoints: 4
@@ -160,7 +189,7 @@ leaderCards:
             SERVANTS: 1
           starResources: 0
         rewards:
-          resources: { }
+          resources: {}
           starResources: 1
           faithPoints: 1
     victoryPoints: 4
