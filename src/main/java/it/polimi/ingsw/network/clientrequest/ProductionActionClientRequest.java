@@ -9,7 +9,7 @@ import java.util.Map;
 public class ProductionActionClientRequest extends ClientRequest {
 
 	public Map<Player, ServerMessage> callHandler(GameState state) {
-		state.handleRequestProductionAction();
+		return(state.handleRequestProductionAction(this));
 	}
 
 }

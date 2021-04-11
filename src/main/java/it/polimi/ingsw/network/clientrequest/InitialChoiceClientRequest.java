@@ -9,7 +9,7 @@ import java.util.Map;
 public class InitialChoiceClientRequest extends ClientRequest {
 
 	public Map<Player, ServerMessage> callHandler(GameState state) {
-		state.handleInitialChoiceCR(this);
+		return(state.handleInitialChoiceCR(this));
 	}
 
 }

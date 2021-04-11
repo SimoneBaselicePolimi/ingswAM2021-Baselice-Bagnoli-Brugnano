@@ -9,7 +9,7 @@ import java.util.Map;
 public class LeaderActionClientRequest extends ClientRequest {
 
 	public Map<Player, ServerMessage> callHandler(GameState state) {
-		state.handleRequestLeaderAction(this);
+		return(state.handleRequestLeaderAction(this));
 	}
 
 }

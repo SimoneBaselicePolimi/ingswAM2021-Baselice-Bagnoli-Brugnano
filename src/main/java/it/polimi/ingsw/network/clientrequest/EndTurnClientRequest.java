@@ -9,7 +9,7 @@ import java.util.Map;
 public class EndTurnClientRequest extends ClientRequest {
 
 	public Map<Player, ServerMessage> callHandler(GameState state) {
-		state.handleRequestEndTurn(this);
+		return(state.handleRequestEndTurn(this));
 	}
 
 }
