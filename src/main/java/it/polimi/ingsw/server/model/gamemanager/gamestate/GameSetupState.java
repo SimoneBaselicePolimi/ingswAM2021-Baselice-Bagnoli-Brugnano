@@ -32,11 +32,12 @@ public class GameSetupState extends GameState<GameSetupServerMessage, PostGameSe
 	 * The leader cards will be given randomly to each player.
 	 * @param gameContext reference to the game context (it contains all the information relative to the current game state)
 	 * @param leaderCards all leader cards initialized
-	 * @param numOfLeaderCard number of leader cards to give to each player
+	 * @param numberOfLeadersCardsGivenToThePlayer number of leader cards to give to each player
+	 * @param numberOfLeadersCardsThePlayerKeeps number of leader card the player keeps in his hand
 	 */
-	public GameSetupState(GameContext gameContext, Set<LeaderCard> leaderCards, int numOfLeaderCard) {
+	public GameSetupState(GameContext gameContext, Set<LeaderCard> leaderCards, int numberOfLeadersCardsGivenToThePlayer, int numberOfLeadersCardsThePlayerKeeps) {
 		randGenerator = new Random();
-		initializeGameSetupState(gameContext, leaderCards, numOfLeaderCard);
+		initializeGameSetupState(gameContext, leaderCards, numberOfLeadersCardsGivenToThePlayer, numberOfLeadersCardsThePlayerKeeps);
 	}
 
 	/**
@@ -44,11 +45,13 @@ public class GameSetupState extends GameState<GameSetupServerMessage, PostGameSe
 	 * @param randGenerator random number generator
 	 * @param gameContext reference to the game context (it contains all the information relative to the current game state)
 	 * @param leaderCards all leader cards initialized
-	 * @param numOfLeaderCard number of leader cards to give to each player
+	 * @param numberOfLeadersCardsGivenToThePlayer number of leader cards to give to each player
+	 * @param numberOfLeadersCardsThePlayerKeeps
 	 */
-	public GameSetupState (Random randGenerator, GameContext gameContext, Set<LeaderCard> leaderCards, int numOfLeaderCard){
+
+	public GameSetupState (Random randGenerator, GameContext gameContext, Set<LeaderCard> leaderCards, int numberOfLeadersCardsGivenToThePlayer, int numberOfLeadersCardsThePlayerKeeps){
 		this.randGenerator = randGenerator;
-		initializeGameSetupState(gameContext, leaderCards, numOfLeaderCard);
+		initializeGameSetupState(gameContext, leaderCards, numberOfLeadersCardsGivenToThePlayer, numberOfLeadersCardsThePlayerKeeps );
 	}
 
 	/**
@@ -57,8 +60,9 @@ public class GameSetupState extends GameState<GameSetupServerMessage, PostGameSe
 	 * @param gameContext reference to the game context (it contains all the information relative to the current game state)
 	 * @param leaderCards all leader cards initialized
 	 * @param numOfLeaderCard number of leader cards to give to each player
+	 * @param numberOfLeadersCardsThePlayerKeeps
 	 */
-	private void initializeGameSetupState (GameContext gameContext, Set<LeaderCard> leaderCards, int numOfLeaderCard){
+	private void initializeGameSetupState (GameContext gameContext, Set<LeaderCard> leaderCards, int numOfLeaderCard, int numberOfLeadersCardsThePlayerKeeps){
 		List<LeaderCard> listOfLeaderCards = new ArrayList<>(leaderCards);
 		for (Player player : gameContext.getPlayersTurnOrder()){
 			Set<LeaderCard> leaderCardsGivenToThePlayer = new HashSet<>();

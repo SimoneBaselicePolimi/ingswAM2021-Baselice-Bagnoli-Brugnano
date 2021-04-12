@@ -25,6 +25,7 @@ public class GameManager {
 		this.lobby = lobby;
 		this.controller = controller;
 		this.gameContext = gameContext;
+		changeState();
 	}
 
 	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) {
@@ -42,7 +43,7 @@ public class GameManager {
 	}
 
 	private GameState getInitialGameState() {
-		return new GameSetupState(gameContext);
+		return new GameSetupState(gameContext, );
 	}
 
 }
