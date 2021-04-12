@@ -12,7 +12,11 @@ import java.util.Map;
 
 public class GameTurnPostActionState extends GameState {
 
-	public void GameTurnPostActionState(GameContext gameContext, Player player) {
+    public GameTurnPostActionState() {
+        super(gameManager);
+    }
+
+    public void GameTurnPostActionState(GameContext gameContext, Player player) {
 
 	}
 

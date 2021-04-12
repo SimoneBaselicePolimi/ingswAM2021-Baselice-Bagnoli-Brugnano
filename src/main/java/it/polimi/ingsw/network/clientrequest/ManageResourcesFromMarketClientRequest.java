@@ -8,7 +8,11 @@ import java.util.Map;
 
 public class ManageResourcesFromMarketClientRequest extends ClientRequest {
 
-	public Map<Player, ServerMessage> callHandler(GameState state) {
+    public ManageResourcesFromMarketClientRequest(Player player) {
+        super(player);
+    }
+
+    public Map<Player, ServerMessage> callHandler(GameState state) {
 		return(state.handleRequestManageResourcesFromMarket(this));
 	}
 

@@ -1,90 +1,151 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
+import it.polimi.ingsw.configfile.GameInfoConfig;
+import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.network.clientrequest.InitialChoiceClientRequest;
-import it.polimi.ingsw.network.servermessage.GameSetupServerMessage;
+import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
+import it.polimi.ingsw.network.servermessage.InitialChoicesServerMessage;
 import it.polimi.ingsw.network.servermessage.PostGameSetupServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
 import java.util.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
-public class GameSetupState extends GameState<GameSetupServerMessage, PostGameSetupServerMessage> {
+public class GameSetupState extends GameState<InitialChoicesServerMessage, PostGameSetupServerMessage> {
 
 	/**
 	 * A random number generator used to randomly give leader cards to each player at the start of the game.
 	 */
 	Random randGenerator;
 
+	final int numberOfLeadersCardsGivenToThePlayer;
+
+	final int numberOfLeadersCardsThePlayerKeeps;
+
+	final Set<LeaderCard> allLeaderCards;
+
 	/**
 	 * map containing the leader cards given to each player at the start of the game.
 	 */
 	Map <Player, Set<LeaderCard>> leaderCardsGivenToThePlayers = new HashMap<>();
 
+	Map<Player, Integer> numOfStarResourcesGivenToThePlayers = new HashMap<>();
+
+	Map<Player, Integer> numOfFaithPointsGivenToThePlayers = new HashMap<>();
+
+	Map<Player, Boolean> hasPlayerAlreadyAnswered = new HashMap<>();
+
 	/**
 	 * GameSetupState constructor
 	 * The leader cards will be given randomly to each player.
-	 * @param gameContext reference to the game context (it contains all the information relative to the current game state)
-	 * @param leaderCards all leader cards initialized
-	 * @param numberOfLeadersCardsGivenToThePlayer number of leader cards to give to each player
-	 * @param numberOfLeadersCardsThePlayerKeeps number of leader card the player keeps in his hand
 	 */
-	public GameSetupState(GameContext gameContext, Set<LeaderCard> leaderCards, int numberOfLeadersCardsGivenToThePlayer, int numberOfLeadersCardsThePlayerKeeps) {
+	public GameSetupState(GameManager gameManager) {
+		super(gameManager);
+		GameInfoConfig gameInfo = gameManager.getGameRules().gameInfoConfig;
+		numberOfLeadersCardsGivenToThePlayer = gameInfo.gameSetup.numberOfLeadersCardsGivenToThePlayer;
+		numberOfLeadersCardsThePlayerKeeps = gameInfo.gameSetup.numberOfLeadersCardsThePlayerKeeps;
+		allLeaderCards = gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class);
 		randGenerator = new Random();
-		initializeGameSetupState(gameContext, leaderCards, numberOfLeadersCardsGivenToThePlayer, numberOfLeadersCardsThePlayerKeeps);
+		initializeGameSetupState();
 	}
 
 	/**
 	 * GameSetupState constructor specifying a type of random number generator.
 	 * @param randGenerator random number generator
-	 * @param gameContext reference to the game context (it contains all the information relative to the current game state)
-	 * @param leaderCards all leader cards initialized
-	 * @param numberOfLeadersCardsGivenToThePlayer number of leader cards to give to each player
-	 * @param numberOfLeadersCardsThePlayerKeeps
 	 */
-
-	public GameSetupState (Random randGenerator, GameContext gameContext, Set<LeaderCard> leaderCards, int numberOfLeadersCardsGivenToThePlayer, int numberOfLeadersCardsThePlayerKeeps){
-		this.randGenerator = randGenerator;
-		initializeGameSetupState(gameContext, leaderCards, numberOfLeadersCardsGivenToThePlayer, numberOfLeadersCardsThePlayerKeeps );
+	public GameSetupState (Random randGenerator, GameManager gameManager){
+        super(gameManager);
+		GameInfoConfig gameInfo = gameManager.getGameRules().gameInfoConfig;
+		numberOfLeadersCardsGivenToThePlayer = gameInfo.gameSetup.numberOfLeadersCardsGivenToThePlayer;
+		numberOfLeadersCardsThePlayerKeeps = gameInfo.gameSetup.numberOfLeadersCardsThePlayerKeeps;
+		allLeaderCards = gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class);
+        this.randGenerator = randGenerator;
+		initializeGameSetupState();
 	}
 
 	/**
 	 * Initializes GameSetupState.
 	 * Leader cards are randomly assigned to each player.
-	 * @param gameContext reference to the game context (it contains all the information relative to the current game state)
-	 * @param leaderCards all leader cards initialized
-	 * @param numOfLeaderCard number of leader cards to give to each player
-	 * @param numberOfLeadersCardsThePlayerKeeps
 	 */
-	private void initializeGameSetupState (GameContext gameContext, Set<LeaderCard> leaderCards, int numOfLeaderCard, int numberOfLeadersCardsThePlayerKeeps){
-		List<LeaderCard> listOfLeaderCards = new ArrayList<>(leaderCards);
-		for (Player player : gameContext.getPlayersTurnOrder()){
+	private void initializeGameSetupState (){
+
+		List<LeaderCard> listOfLeaderCards = new ArrayList<>(allLeaderCards);
+
+		for (Player player : gameManager.getPlayers()){
+
 			Set<LeaderCard> leaderCardsGivenToThePlayer = new HashSet<>();
-			for (int i = 0; i <numOfLeaderCard; i++) {
+			for (int i = 0; i <numberOfLeadersCardsGivenToThePlayer; i++) {
 				int randNum = randGenerator.nextInt(listOfLeaderCards.size());
 				leaderCardsGivenToThePlayer.add(listOfLeaderCards.remove(randNum));
 			}
 			leaderCardsGivenToThePlayers.put(player, leaderCardsGivenToThePlayer);
+
+			int playerTurnOrder = gameManager.getGameContext().getPlayersTurnOrder().indexOf(player) + 1;
+
+			numOfStarResourcesGivenToThePlayers.put(
+				player,
+				gameManager.getGameRules().gameInfoConfig.gameSetup.
+					initialPlayerResourcesBasedOnPlayOrder.get(playerTurnOrder).starResources
+			);
+
+			numOfFaithPointsGivenToThePlayers.put(
+				player,
+				gameManager.getGameRules().gameInfoConfig.gameSetup.
+					initialPlayerResourcesBasedOnPlayOrder.get(playerTurnOrder).faithPoints
+			);
+
 		}
+
+		hasPlayerAlreadyAnswered = gameManager.getPlayers().stream().collect(Collectors.toMap(
+			Function.identity(),
+			player -> false
+		));
+
 	}
 
 	@Override
-	public Map<Player, GameSetupServerMessage> getInitialServerMessage() {
-		return null;
+	public Map<Player, InitialChoicesServerMessage> getInitialServerMessage() {
+		return gameManager.getPlayers().stream()
+			.collect(
+				Collectors.toMap(Function.identity(),
+				player ->  new InitialChoicesServerMessage(
+					leaderCardsGivenToThePlayers.get(player),
+					numOfStarResourcesGivenToThePlayers.get(player)
+				)
+			));
+
+//	    Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
+//		return gameManager.getPlayers().stream()
+//			.collect(
+//				Collectors.toMap(Function.identity(),
+//				player ->  new GameSetupServerMessage(
+//					gameUpdates,
+//					leaderCardsGivenToThePlayers.get(player)
+//				)
+//			));
 	}
 
 	public boolean isStateDone() {
 		return false;
 	}
 
-	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoiceClientRequest request) {
-		return null;
+	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) {
+
+		if(hasPlayerAlreadyAnswered.get(request.player)) {
+			InvalidRequestServerMessage errorMessage = new InvalidRequestServerMessage(
+				"The player has already sent a request"
+			);
+			return Map.of(request.player, errorMessage);
+		}
+
+		// TODO
 	}
 
 	public Map<Player, PostGameSetupServerMessage> getFinalServerMessage() {

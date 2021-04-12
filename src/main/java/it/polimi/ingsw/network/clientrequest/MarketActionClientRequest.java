@@ -8,7 +8,11 @@ import java.util.Map;
 
 public class MarketActionClientRequest extends ClientRequest {
 
-	public Map<Player, ServerMessage> callHandler(GameState state) {
+    public MarketActionClientRequest(Player player) {
+        super(player);
+    }
+
+    public Map<Player, ServerMessage> callHandler(GameState state) {
 		return(state.handleRequestMarketAction(this));
 	}
 

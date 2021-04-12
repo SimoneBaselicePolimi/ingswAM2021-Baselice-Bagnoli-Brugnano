@@ -8,7 +8,11 @@ import java.util.Map;
 
 public class DevelopmentActionClientRequest extends ClientRequest {
 
-	public Map<Player, ServerMessage> callHandler(GameState state) {
+    public DevelopmentActionClientRequest(Player player) {
+        super(player);
+    }
+
+    public Map<Player, ServerMessage> callHandler(GameState state) {
 		return(state.handleRequestDevelopmentAction(this));
 	}
 

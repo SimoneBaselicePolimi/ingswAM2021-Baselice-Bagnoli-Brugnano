@@ -8,7 +8,11 @@ import java.util.Map;
 
 public class ManageResourcesFromMarketState extends GameState {
 
-	public Map<Player, ServerMessage> getInitialServerMessage() {
+    public ManageResourcesFromMarketState() {
+        super(gameManager);
+    }
+
+    public Map<Player, ServerMessage> getInitialServerMessage() {
 		return null;
 	}
 

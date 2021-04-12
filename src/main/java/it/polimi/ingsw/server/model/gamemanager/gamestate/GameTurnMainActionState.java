@@ -14,7 +14,8 @@ public class GameTurnMainActionState extends GameState {
 
 	public GameTurnMainActionState(GameContext gameContext, Player player) {
 
-	}
+        super(gameManager);
+    }
 
 	public Map<Player, ServerMessage> getInitialServerMessage() {
 		return null;

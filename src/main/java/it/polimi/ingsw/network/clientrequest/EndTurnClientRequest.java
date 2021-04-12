@@ -8,7 +8,11 @@ import java.util.Map;
 
 public class EndTurnClientRequest extends ClientRequest {
 
-	public Map<Player, ServerMessage> callHandler(GameState state) {
+    public EndTurnClientRequest(Player player) {
+        super(player);
+    }
+
+    public Map<Player, ServerMessage> callHandler(GameState state) {
 		return(state.handleRequestEndTurn(this));
 	}
 

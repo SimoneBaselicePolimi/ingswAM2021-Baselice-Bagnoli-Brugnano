@@ -1,9 +1,7 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamehistory.GameHistory;
-import it.polimi.ingsw.network.clientrequest.InitialChoiceClientRequest;
+import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
 import it.polimi.ingsw.network.clientrequest.LeaderActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.MarketActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
@@ -12,15 +10,18 @@ import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.*;
+import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class GameState<I extends ServerMessage, F extends ServerMessage> {
 
-	private GameContext gameContext;
+	protected final GameManager gameManager;
 
-	private GameHistory gameHistory;
+	protected GameState(GameManager gameManager) {
+		this.gameManager = gameManager;
+	}
 
 	/**
 	 * The initial messages that should be sent to the clients when this GameState becomes the currentGameState
@@ -42,7 +43,7 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 
 	public abstract GameState getNextState();
 
-	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoiceClientRequest request) {
+	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) {
 		return null;
 	}
 

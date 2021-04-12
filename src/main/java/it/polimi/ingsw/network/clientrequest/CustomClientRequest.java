@@ -8,7 +8,11 @@ import java.util.Map;
 
 public class CustomClientRequest extends ClientRequest {
 
-	public Map<Player, ServerMessage> callHandler(GameState state) {
+    public CustomClientRequest(Player player) {
+        super(player);
+    }
+
+    public Map<Player, ServerMessage> callHandler(GameState state) {
 		return(state.handleRequestCustom(this));
 	}
 
