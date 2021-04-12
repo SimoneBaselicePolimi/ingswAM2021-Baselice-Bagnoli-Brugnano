@@ -10,8 +10,14 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.Lobby;
 import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.model.notifier.Notifier;
+import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GameManager {
 
@@ -27,6 +33,8 @@ public class GameManager {
 
 	private GameRules gameRules;
 
+	private Set<Notifier> notifiers =  new HashSet<>();
+
 	public GameManager(
 		ServerController controller,
 		Lobby lobby,
@@ -40,6 +48,22 @@ public class GameManager {
 		this.gameItemsManager = gameItemsManager;
 		this.gameRules = gameRules;
 		changeState();
+	}
+
+	public void registerNotifier(Notifier notifier) {
+		notifiers.add(notifier);
+	}
+
+	/**
+	 * Side effects!!!
+	 * @return
+	 */
+	public Set<GameUpdate> getAllGameUpdates() {
+		return notifiers.stream()
+			.map(Notifier::getUpdate)
+			.filter(Optional::isPresent)
+			.map(optionalGameUpdate -> (GameUpdate) optionalGameUpdate.get())
+			.collect(Collectors.toSet());
 	}
 
 	public GameContext getGameContext() {
