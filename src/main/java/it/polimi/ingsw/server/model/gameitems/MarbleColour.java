@@ -7,7 +7,7 @@ import java.util.Optional;
  * Each Marble can be used by a Player to obtain certain types of resources or faith points. There are also some
  * special Marbles which can be used to gain a generic type of resources if activated by a special Leader card power.
  */
-public class MarbleColour {
+public class MarbleColour implements IdentifiableItem {
 	/**
 	 * Optional type of resource obtainable with this Marble
 	 */
@@ -72,7 +72,8 @@ public class MarbleColour {
 	 * Method to get the unique ID which identifies this specific Marble.
 	 * @return ID of this Marble
 	 */
-	public String getMarbleID() {
+	@Override
+	public String getItemId() {
 		return marbleID;
 	}
 

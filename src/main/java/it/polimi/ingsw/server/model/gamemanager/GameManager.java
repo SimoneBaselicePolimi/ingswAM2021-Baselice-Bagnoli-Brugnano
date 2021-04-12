@@ -1,7 +1,9 @@
 package it.polimi.ingsw.server.model.gamemanager;
 
+import it.polimi.ingsw.configfile.GameRules;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -21,11 +23,35 @@ public class GameManager {
 
 	private GameContext gameContext;
 
-	public GameManager(Lobby lobby, ServerController controller, GameContext gameContext) {
-		this.lobby = lobby;
+	private GameItemsManager gameItemsManager;
+
+	private GameRules gameRules;
+
+	public GameManager(
+		ServerController controller,
+		Lobby lobby,
+		GameContext gameContext,
+		GameItemsManager gameItemsManager,
+		GameRules gameRules
+	) {
 		this.controller = controller;
+		this.lobby = lobby;
 		this.gameContext = gameContext;
+		this.gameItemsManager = gameItemsManager;
+		this.gameRules = gameRules;
 		changeState();
+	}
+
+	public GameContext getGameContext() {
+		return gameContext;
+	}
+
+	public GameRules getGameRules() {
+		return gameRules;
+	}
+
+	public GameItemsManager getGameItemsManager() {
+		return gameItemsManager;
 	}
 
 	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) {
@@ -43,7 +69,7 @@ public class GameManager {
 	}
 
 	private GameState getInitialGameState() {
-		return new GameSetupState(gameContext, );
+		return new GameSetupState(this);
 	}
 
 }

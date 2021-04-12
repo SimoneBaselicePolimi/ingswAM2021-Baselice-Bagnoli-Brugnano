@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
+import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -8,7 +9,9 @@ import java.util.Map;
 /**
  * This class represent a specific type of cards used in the game: the development cards
  */
-public class DevelopmentCard {
+public class DevelopmentCard implements IdentifiableItem {
+
+	private String developmentCardID;
 	private DevelopmentCardLevel level;
 	private DevelopmentCardColour colour;
 	private Production production;
@@ -17,18 +20,22 @@ public class DevelopmentCard {
 
 	/**
 	 * DevelopmentCard constructor
+	 * @param developmentCardID ID of the development card, see {@link IdentifiableItem}
 	 * @param level of the development card
 	 * @param colour of the development card
 	 * @param production that the the development card can give to the player
 	 * @param victoryPoints that the development card gives at the end of the game
 	 * @param purchaseCost necessary to buy the development card
 	 */
-	public DevelopmentCard (
-			DevelopmentCardLevel level,
-			DevelopmentCardColour colour,
-			Production production,
-			int victoryPoints,
-			Map<ResourceType, Integer> purchaseCost){
+	public DevelopmentCard(
+		String developmentCardID,
+		DevelopmentCardLevel level,
+		DevelopmentCardColour colour,
+		Production production,
+		int victoryPoints,
+		Map<ResourceType, Integer> purchaseCost
+	){
+		this.developmentCardID = developmentCardID;
 		this.level=level;
 		this.colour=colour;
 		this.production=production;
@@ -76,4 +83,8 @@ public class DevelopmentCard {
 		return purchaseCost;
 	}
 
+	@Override
+	public String getItemId() {
+		return developmentCardID;
+	}
 }
