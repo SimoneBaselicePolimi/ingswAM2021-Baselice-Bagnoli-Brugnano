@@ -21,7 +21,7 @@ public class ResourceStorage {
 	/**
 	 * Type and number of resources that are present in the storage
 	 */
-	private Map<ResourceType,Integer> resources = new HashMap<>();;
+	private Map<ResourceType,Integer> resources = new HashMap<>();
 
 	/**
 	 * ResourceStorage Constructor

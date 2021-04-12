@@ -1,0 +1,37 @@
+# STANDARD RULES VALUES #
+
+## MARBLES CONFIGURATION FILE ##
+# This file sets all the parameters regarding the coloured Marbles.
+
+# Each Marble is characterized by the following aspects:
+#  - unique ID
+#  - optional type of Resource obtainable with this Marble
+#  - number of Faith Points given to the Player who owns this Marble (according to the standard Game rules,
+#    only Red Marbles can give Faith Points)
+#  - possibility to be transformed into a generic type of Resource by activating the Special Marble Substitution power
+#    of a Leader Card (according to the standard Game rules, only White Marbles have this special ability)
+marbleTypes:
+  - marbleID: MARBLE_WHITE
+    resourceType: null
+    numberOfFaithPoints: 0
+    isSpecial: true
+  - marbleID: MARBLE_BLUE
+    resourceType: SHIELDS
+    numberOfFaithPoints: 0
+    isSpecial: false
+  - marbleID: MARBLE_GREY
+    resourceType: STONES
+    numberOfFaithPoints: 0
+    isSpecial: false
+  - marbleID: MARBLE_YELLOW
+    resourceType: COINS
+    numberOfFaithPoints: 0
+    isSpecial: false
+  - marbleID: MARBLE_PURPLE
+    resourceType: SERVANTS
+    numberOfFaithPoints: 0
+    isSpecial: false
+  - marbleID: MARBLE_RED
+    resourceType: null
+    numberOfFaithPoints: 1
+    isSpecial: false

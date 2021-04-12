@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 
 /**
- * This class represent the request for a specific number of development cards of a certain color
+ * This class represent the request for a specific number of development cards of a certain colour
  */
 public class DevelopmentCardColourRequirement extends LeaderCardRequirement {
     DevelopmentCardColour cardColour;

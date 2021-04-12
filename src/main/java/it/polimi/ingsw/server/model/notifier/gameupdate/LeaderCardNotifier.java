@@ -15,8 +15,24 @@ import java.util.Optional;
 
 public class LeaderCardNotifier extends LeaderCard implements Notifier<LeaderCardUpdate> {
 
-    public LeaderCardNotifier(List<LeaderCardRequirement> requirements, List<Production> productions, List<ResourceStorage> resourceStorages, List<DevelopmentCardCostDiscount> developmentCardCostDiscounts, List<WhiteMarbleSubstitution> whiteMarbleSubstitutions, int victoryPoints) {
-        super(requirements, productions, resourceStorages, developmentCardCostDiscounts, whiteMarbleSubstitutions, victoryPoints);
+    public LeaderCardNotifier(
+        String leaderCardID,
+        List<LeaderCardRequirement> requirements,
+        List<Production> productions,
+        List<ResourceStorage> resourceStorages,
+        List<DevelopmentCardCostDiscount> developmentCardCostDiscounts,
+        List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
+        int victoryPoints
+    ) {
+        super(
+            leaderCardID,
+            requirements,
+            productions,
+            resourceStorages,
+            developmentCardCostDiscounts,
+            whiteMarbleSubstitutions,
+            victoryPoints
+        );
     }
 
     public Optional<LeaderCardUpdate> getUpdate() {

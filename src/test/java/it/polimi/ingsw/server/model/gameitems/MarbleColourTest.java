@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MarbleColourTest {
+class MarbleColourTest implements IdentifiableItemTest<MarbleColour> {
 
     // Marbles Initialization
     MarbleColour red1 = new MarbleColour(
@@ -25,7 +25,7 @@ class MarbleColourTest {
     void MarbleColourConstructorTest() {
         assertEquals(Optional.of(ResourceType.SERVANTS), red1.getResourceType());
         assertEquals(Optional.of(ResourceType.SHIELDS), red3.getResourceType());
-        assertEquals("RedMarble", red1.getMarbleID());
+        assertEquals("RedMarble", red1.getItemId());
         assertEquals(2, red3.getFaithPoints());
         assertTrue(red3.isSpecialMarble());
     }
@@ -42,4 +42,10 @@ class MarbleColourTest {
         assertNotEquals(red3, blue1);
         assertNotEquals(blue1,green1);
     }
+
+    @Override
+    public MarbleColour initializeItemWithId(String id) {
+        return new MarbleColour(Optional.empty(), 0, false, id);
+    }
+
 }

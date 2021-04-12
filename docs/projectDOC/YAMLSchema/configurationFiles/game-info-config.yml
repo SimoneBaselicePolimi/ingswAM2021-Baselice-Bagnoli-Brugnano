@@ -1,0 +1,76 @@
+# STANDARD RULES VALUES #
+
+## GAME INFO CONFIGURATION FILE ##
+# This file sets all the parameters regarding the Setup and general information about the Game.
+
+# Maximum number of Players allowed in a Game
+maxNumberOfPlayers: 4
+
+# Enables the Single Player mode
+singlePlayerEnabled: true
+
+# Additional Setup Rules
+gameSetup:
+
+  # Distribution of Leader Cards to each Player.
+  # At the start of the Game each Player randomly receives {numberOfLeadersCardsGivenToThePlayer} cards.
+  # From those he must choose {numberOfLeadersCardsThePlayerKeeps} cards to keep in hand and discard all the others.
+  numberOfLeadersCardsGivenToThePlayer: 4
+  numberOfLeadersCardsThePlayerKeeps: 2
+
+  # Distribution of initial Star Resources (the Player has to choose which type of Resource he wants)
+  # and a specific number of Faith Points based on Play Order.
+  # First Player: 1, Second Player: 2, ...
+  initialPlayerResourcesBasedOnPlayOrder:
+    1:
+      starResources: 0
+      faithPoints: 0
+    2:
+      starResources: 1
+      faithPoints: 0
+    3:
+      starResources: 1
+      faithPoints: 1
+    4:
+      starResources: 2
+      faithPoints: 1
+
+# Number of Slots for Development Cards assigned to each Player's Personal Board
+numberOfPlayerOwnedDevelopmentCardDecks: 3
+
+# Basic production power given to each Player by his Personal Board.
+# Star Resources indicates a generic type of Resources the Player can choose as a cost/reward
+basicProductionPower:
+  - costs:
+      resources: {}
+      starResources: 2
+    rewards:
+      resources: {}
+      starResources: 1
+      faithPoints: 0
+
+# Shelves used as a Resources Storage in which Players can keep Resources bought at the Market.
+# According to the standard Game rules:
+#  - all the Shelves must contain a fixed maximum number of Resources (in particular: 1, 2 and 3 Resources),
+#  - there must be a unique Resource Type for Storage at the same time,
+#  - different Resources must be located in different Storages.
+resourceShelves:
+  - storage:
+      rules:
+        - ruleType: MAX_RESOURCE_NUMBER
+          maxNumber: 1
+        - ruleType: SAME_RESOURCE_TYPE
+  - storage:
+      rules:
+        - ruleType: MAX_RESOURCE_NUMBER
+          maxNumber: 2
+        - ruleType: SAME_RESOURCE_TYPE
+  - storage:
+      rules:
+        - ruleType: MAX_RESOURCE_NUMBER
+          maxNumber: 3
+        - ruleType: SAME_RESOURCE_TYPE
+  differentResourcesInDifferentStorages: true
+
+# Number of Resources that at the end of the Game rewards the Player with one Victory Point
+numberOfResourcesRewardingOneVictoryPoint: 5
