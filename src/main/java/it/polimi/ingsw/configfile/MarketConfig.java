@@ -1,6 +1,9 @@
 package it.polimi.ingsw.configfile;
 
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
+import it.polimi.ingsw.utils.serialization.SerializeAsMapWithIdKey;
+import it.polimi.ingsw.utils.serialization.SerializeAsSetOfIds;
+import it.polimi.ingsw.utils.serialization.SerializeIdOnly;
 
 import java.util.Map;
 import java.util.Set;

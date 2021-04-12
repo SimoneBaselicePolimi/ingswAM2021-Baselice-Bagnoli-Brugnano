@@ -1,4 +1,4 @@
-package it.polimi.ingsw.configfile;
+package it.polimi.ingsw.utils.serialization;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;

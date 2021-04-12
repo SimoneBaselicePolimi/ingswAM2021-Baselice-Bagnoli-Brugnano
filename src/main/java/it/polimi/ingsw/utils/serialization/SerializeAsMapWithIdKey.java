@@ -1,4 +1,4 @@
-package it.polimi.ingsw.configfile;
+package it.polimi.ingsw.utils.serialization;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,12 +9,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Allows to serialize a set of type {@code Set<I extends IdentifiableItem>} as set of IDs instead of as whole objects
- * of type I
+ * Allows to serialize a map of type {@code Map<I extends IdentifiableItem, V>} using only the ID as key instead of the
+ * whole object of type I
  */
 @Retention(RetentionPolicy.RUNTIME)
 @JacksonAnnotationsInside
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonSerialize(using = SetOfIdsSerializer.class)
-@JsonDeserialize(using = SetOfIdsDeserializer.class)
-public @interface SerializeAsSetOfIds {}
+@JsonSerialize(using = MapWithIdKeySerializer.class)
+@JsonDeserialize(using = MapWithIdKeyDeserializer.class)
+public @interface SerializeAsMapWithIdKey {}

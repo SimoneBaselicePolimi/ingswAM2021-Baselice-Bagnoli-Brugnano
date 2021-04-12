@@ -1,17 +1,13 @@
-package it.polimi.ingsw.configfile;
+package it.polimi.ingsw.utils.serialization;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class MapWithIdKeyDeserializer<K extends IdentifiableItem, V>  extends JsonDeserializer<Map<K, V>>

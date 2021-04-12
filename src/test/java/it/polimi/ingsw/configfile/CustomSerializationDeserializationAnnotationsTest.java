@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
+import it.polimi.ingsw.utils.serialization.SerializeAsMapWithIdKey;
+import it.polimi.ingsw.utils.serialization.SerializeAsSetOfIds;
+import it.polimi.ingsw.utils.serialization.SerializeIdOnly;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
