@@ -23,6 +23,8 @@ public class GameManager {
 
 	private GameState currentState;
 
+	private Set<Player> players;
+
 	private ServerController controller;
 
 	private Lobby lobby;
@@ -36,12 +38,14 @@ public class GameManager {
 	private Set<Notifier> notifiers =  new HashSet<>();
 
 	public GameManager(
+	    Set<Player> players,
 		ServerController controller,
 		Lobby lobby,
 		GameContext gameContext,
 		GameItemsManager gameItemsManager,
 		GameRules gameRules
 	) {
+		this.players = players;
 		this.controller = controller;
 		this.lobby = lobby;
 		this.gameContext = gameContext;
@@ -65,6 +69,10 @@ public class GameManager {
 			.collect(Collectors.toSet());
 	}
 
+	public Set<Player> getPlayers() {
+		return new HashSet<>(players);
+	}
+
 	public GameContext getGameContext() {
 		return gameContext;
 	}
@@ -78,7 +86,7 @@ public class GameManager {
 	}
 
 	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) {
-		request.callHandler(currentState);
+		return request.callHandler(currentState);
 	}
 
 	private void changeState() {
