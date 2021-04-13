@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.gameitems;
 
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ResourceUtils {
 
@@ -24,6 +26,20 @@ public class ResourceUtils {
         return resourcesA.entrySet().stream().allMatch(entryA ->
                 resourcesB.containsKey(entryA.getKey()) && entryA.getValue() <= resourcesB.get(entryA.getKey())
         );
+    }
+
+    public static Map<ResourceType, Integer> sumResources(
+        Map<ResourceType, Integer> resourcesA,
+        Map<ResourceType, Integer> resourcesB
+    ) {
+        return Stream.concat(resourcesA.entrySet().stream(), resourcesB.entrySet().stream())
+            .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
+    }
+
+    public static Map<ResourceType, Integer> sumResources(
+        Collection<Map<ResourceType, Integer>> resourcesToSum
+    ) {
+        return resourcesToSum.stream().reduce(new HashMap<>(), ResourceUtils::sumResources);
     }
 
 }

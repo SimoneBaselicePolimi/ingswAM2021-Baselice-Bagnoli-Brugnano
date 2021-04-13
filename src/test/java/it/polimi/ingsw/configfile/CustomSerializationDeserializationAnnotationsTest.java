@@ -21,16 +21,16 @@ import java.util.Set;
 class TestConfig {
 
     @SerializeIdOnly
-    public IdentifiableItemMock item;
+    public final IdentifiableItemMock item;
 
     @SerializeAsSetOfIds
-    Set<IdentifiableItemMock> itemsSet;
+    public final Set<IdentifiableItemMock> itemsSet;
 
     @SerializeAsMapWithIdKey
-    Map<IdentifiableItemMock, Integer> itemsToIntegerMap;
+    public final Map<IdentifiableItemMock, Integer> itemsToIntegerMap;
 
     @SerializeAsMapWithIdKey
-    Map<IdentifiableItemMock, String> itemsToStringMap;
+    public final Map<IdentifiableItemMock, String> itemsToStringMap;
 
     public TestConfig(
         @JsonProperty("item") IdentifiableItemMock item,

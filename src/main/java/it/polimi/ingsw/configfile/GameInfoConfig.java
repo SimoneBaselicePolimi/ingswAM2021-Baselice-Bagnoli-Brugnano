@@ -4,9 +4,12 @@ import java.util.Map;
 
 public class GameInfoConfig {
 
+    public final int maxNumberOfPlayers;
+
     public final GameSetup gameSetup;
 
-    public GameInfoConfig(GameSetup gameSetup) {
+    public GameInfoConfig(int maxNumberOfPlayers, GameSetup gameSetup) {
+        this.maxNumberOfPlayers = maxNumberOfPlayers;
         this.gameSetup = gameSetup;
     }
 
