@@ -10,7 +10,9 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
 import java.util.ArrayList;
@@ -138,7 +140,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 		return false;
 	}
 
-	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) {
+	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) throws ResourceStorageRuleViolationException {
 
 		// check if the player has already sent the request
 		if(hasPlayerAlreadyAnswered.get(request.player))
@@ -203,12 +205,26 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				"Invalid request: the player must chose from the group of leader cards assigned to him"
 			);
 
-		//TODO
+		// give to the player the leader cards he wants to keep
+		gameManager.getGameContext().getPlayerContext(request.player)
+			.setLeaderCards(request.leaderCardsChosenByThePlayer);
 
 
+		// store resources in the shelves chosen by the player
+		List <ResourceStorage> shelves = new ArrayList<>(validResourceStorages);
+		for(ResourceStorage storage : request.chosenResourcesToAdd.keySet()) {
+			for (int i = 0; i < shelves.size(); i++) {
+				if (storage.equals(shelves.get(i)))
+					shelves.get(i).addResources(request.chosenResourcesToAdd.get(storage));
+			}
+		}
 
-
+		// the player moves in the Faith Track for a specific number of steps forward
+		// (initial faith points assigned to him)
+		gameManager.getGameContext().getFaithPath()
+			.move(request.player, numOfFaithPointsGivenToThePlayers.get(request.player));
 	}
+
 
 	private static Map<Player, ServerMessage> createInvalidRequestServerMessage(
 		Player requestSender,
