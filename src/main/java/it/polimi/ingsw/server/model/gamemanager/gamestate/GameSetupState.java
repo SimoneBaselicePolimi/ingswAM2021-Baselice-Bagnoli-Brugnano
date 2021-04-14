@@ -210,12 +210,13 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 			.setLeaderCards(request.leaderCardsChosenByThePlayer);
 
 
+		//TODO
 		// store resources in the shelves chosen by the player
 		List <ResourceStorage> shelves = new ArrayList<>(validResourceStorages);
 		for(ResourceStorage storage : request.chosenResourcesToAdd.keySet()) {
 			for (int i = 0; i < shelves.size(); i++) {
 				if (storage.equals(shelves.get(i)))
-					shelves.get(i).addResources(request.chosenResourcesToAdd.get(storage));
+					storage.addResources(request.chosenResourcesToAdd.get(storage));
 			}
 		}
 
