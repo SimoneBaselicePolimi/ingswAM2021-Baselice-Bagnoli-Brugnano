@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.model.notifier.gameupdate;
+package it.polimi.ingsw.server.model.notifier;
 
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.Production;
@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.notifier.Notifier;
+import it.polimi.ingsw.server.model.notifier.gameupdate.LeaderCardUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;

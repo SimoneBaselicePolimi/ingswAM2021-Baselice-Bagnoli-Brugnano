@@ -1,15 +1,14 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.configfile.GameInfoConfig;
-import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
+import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
-import it.polimi.ingsw.network.servermessage.InitialChoicesServerMessage;
-import it.polimi.ingsw.network.servermessage.PostGameSetupServerMessage;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.PlayerContextUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.*;
@@ -123,19 +122,10 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				)
 			));
 
-//	    Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
-//		return gameManager.getPlayers().stream()
-//			.collect(
-//				Collectors.toMap(Function.identity(),
-//				player ->  new GameSetupServerMessage(
-//					gameUpdates,
-//					leaderCardsGivenToThePlayers.get(player)
-//				)
-//			));
 	}
 
 	public boolean isStateDone() {
-		return false;
+		return hasPlayerAlreadyAnswered.values().stream().allMatch(f -> f);
 	}
 
 	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) {
@@ -203,11 +193,18 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				"Invalid request: the player must chose from the group of leader cards assigned to him"
 			);
 
-		//TODO
-
-
-
-
+		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
+		Map<Player, ServerMessage> serverMessages = new HashMap<>();
+		for (Player player : gameManager.getPlayers()){
+			// Filter out private info on leader cards HIDDEN
+			Set <GameUpdate> gameUpdatesForPlayer = gameUpdates.stream()
+				.filter(gameUpdate -> !(
+					gameUpdate instanceof PlayerContextUpdate &&
+					!((PlayerContextUpdate)gameUpdate).player.equals(player)
+				)).collect(Collectors.toSet());
+			serverMessages.put(player, new GameUpdateServerMessage(gameUpdatesForPlayer));
+		}
+		return serverMessages;
 	}
 
 	private static Map<Player, ServerMessage> createInvalidRequestServerMessage(
