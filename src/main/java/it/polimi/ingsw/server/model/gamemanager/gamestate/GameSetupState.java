@@ -9,7 +9,9 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.PlayerContextUpdate;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
 import java.util.ArrayList;
@@ -128,7 +130,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 		return hasPlayerAlreadyAnswered.values().stream().allMatch(f -> f);
 	}
 
-	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) {
+	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) throws ResourceStorageRuleViolationException {
 
 		// check if the player has already sent the request
 		if(hasPlayerAlreadyAnswered.get(request.player))
@@ -192,6 +194,24 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				request.player,
 				"Invalid request: the player must chose from the group of leader cards assigned to him"
 			);
+
+		// give to the player the leader cards he wants to keep
+		gameManager.getGameContext().getPlayerContext(request.player)
+			.setLeaderCards(request.leaderCardsChosenByThePlayer);
+
+		// store resources in the shelves chosen by the player
+		for(ResourceStorage validStorage : validResourceStorages){
+			for (ResourceStorage storageChosen : request.chosenResourcesToAdd.keySet()) {
+				if (validStorage.equals(storageChosen))
+					validStorage.addResources(request.chosenResourcesToAdd.get(storageChosen));
+			}
+		}
+
+		// the player moves in the Faith Track for a specific number of steps forward
+		// (initial faith points assigned to him)
+		gameManager.getGameContext().getFaithPath()
+			.move(request.player, numOfFaithPointsGivenToThePlayers.get(request.player));
+
 
 		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
 		Map<Player, ServerMessage> serverMessages = new HashMap<>();

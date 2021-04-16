@@ -11,6 +11,8 @@ import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +45,7 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 
 	public abstract GameState getNextState();
 
-	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) {
+	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) throws ResourceStorageRuleViolationException {
 		return null;
 	}
 
