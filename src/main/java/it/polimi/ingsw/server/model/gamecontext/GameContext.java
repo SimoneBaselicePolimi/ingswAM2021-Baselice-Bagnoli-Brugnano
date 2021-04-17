@@ -36,6 +36,7 @@ public class GameContext {
 	private FaithPath faithPath;
 	private List<Player> playersOrder;
 	private Map<Player, PlayerContext> playerContexts;
+	private Player activePlayer;
 
 	/**
 	 * Creates the game context associated with this game.
@@ -69,6 +70,7 @@ public class GameContext {
 	    this.faithPath = faithPath;
 	    this.playersOrder = new ArrayList<>(playersOrder);
 	    this.playerContexts = new HashMap<>(playerContexts);
+	    this.activePlayer = playersOrder.get(0);
 	}
 
 	/**
@@ -125,5 +127,17 @@ public class GameContext {
 	public FaithPath getFaithPath() {
 		return faithPath;
 	}
+
+	public Player getActivePlayer() {
+		return activePlayer;
+	}
+
+	public Player startNextPlayerTurn (){
+		activePlayer = getPlayersTurnOrder().get(
+			(getPlayersTurnOrder().indexOf(activePlayer) + 1) % getPlayersTurnOrder().size()
+		);
+		return activePlayer;
+	}
+	//TODO add JavaDoc e Test
 
 }
