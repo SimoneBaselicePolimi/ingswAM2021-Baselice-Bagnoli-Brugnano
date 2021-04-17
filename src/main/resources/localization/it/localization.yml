@@ -1,0 +1,16 @@
+setup:
+  initialMessage: La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali.
+  choiceMessage: "Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono:\n%s."
+resources:
+  coins:
+    singular: moneta
+    plural: monete
+  servants:
+    singular: servitore
+    plural: servitori
+  shields:
+    singular: scudo
+    plural: scudi
+  stones:
+    singular: pietra
+    plural: pietre

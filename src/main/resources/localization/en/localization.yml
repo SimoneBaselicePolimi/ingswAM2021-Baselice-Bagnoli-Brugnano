@@ -1,0 +1,3 @@
+setup:
+  initialMessage: The game setup has started. The players will now choose the leader cards and the initial resources.
+  choiceMessage: The player %s has chosen the leader cards. The initial resources are %s
