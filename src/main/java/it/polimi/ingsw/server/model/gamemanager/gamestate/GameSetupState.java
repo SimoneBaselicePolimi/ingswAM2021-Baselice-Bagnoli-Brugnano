@@ -4,12 +4,13 @@ import it.polimi.ingsw.configfile.GameInfoConfig;
 import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
+import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
+import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.PlayerContextUpdate;
-import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
+import it.polimi.ingsw.server.model.notifier.gameupdate.LeaderCardsThePlayerOwnsUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
@@ -20,7 +21,10 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
+/**
+ * This class represents the initial phase of the game.
+ * Everything that is needed to start the game is initialised in the setup state.
+ */
 public class GameSetupState extends GameState<InitialChoicesServerMessage, PostGameSetupServerMessage> {
 
 	/**
@@ -48,6 +52,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	/**
 	 * GameSetupState constructor
 	 * The leader cards will be given randomly to each player.
+	 * @param gameManager GameManager, see {@link GameManager}
 	 */
 	public GameSetupState(GameManager gameManager) {
 		super(gameManager);
@@ -61,6 +66,9 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 
 	/**
 	 * GameSetupState constructor specifying a type of random number generator.
+	 * From the configuration file are taken the number of cards to give to each player,
+	 * the number of cards that each player must hold in his hand and all the leader cards
+	 * that are then randomly assigned to each player with the initializeGameSetupState() function
 	 * @param randGenerator random number generator
 	 */
 	public GameSetupState (Random randGenerator, GameManager gameManager){
@@ -76,6 +84,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	/**
 	 * Initializes GameSetupState.
 	 * Leader cards are randomly assigned to each player.
+	 * The number of resources to choose from and the number of faith points are also assigned to each player.
 	 */
 	private void initializeGameSetupState (){
 
@@ -113,19 +122,29 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	@Override
 	public Map<Player, InitialChoicesServerMessage> getInitialServerMessage() {
+		gameManager.getGameHistory().addAction(new SetupStartedAction());
 		return gameManager.getPlayers().stream()
 			.collect(
 				Collectors.toMap(Function.identity(),
 				player ->  new InitialChoicesServerMessage(
+					gameManager.getAllGameUpdates(),
 					leaderCardsGivenToThePlayers.get(player),
 					numOfStarResourcesGivenToThePlayers.get(player)
 				)
 			));
-
 	}
 
+	/**
+	 * Method that verifies that the current status is closed by checking that all players have sent a request message.
+	 * @return true if all players have sent the request
+	 */
+	@Override
 	public boolean isStateDone() {
 		return hasPlayerAlreadyAnswered.values().stream().allMatch(f -> f);
 	}
@@ -200,18 +219,18 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 			.setLeaderCards(request.leaderCardsChosenByThePlayer);
 
 		// store resources in the shelves chosen by the player
-		for(ResourceStorage validStorage : validResourceStorages){
-			for (ResourceStorage storageChosen : request.chosenResourcesToAdd.keySet()) {
-				if (validStorage.equals(storageChosen))
-					validStorage.addResources(request.chosenResourcesToAdd.get(storageChosen));
-			}
-		}
+		for(ResourceStorage storage : request.chosenResourcesToAdd.keySet())
+			storage.addResources(request.chosenResourcesToAdd.get(storage));
 
 		// the player moves in the Faith Track for a specific number of steps forward
 		// (initial faith points assigned to him)
 		gameManager.getGameContext().getFaithPath()
 			.move(request.player, numOfFaithPointsGivenToThePlayers.get(request.player));
 
+		gameManager.getGameHistory().addAction(new SetupChoiceAction(
+			request.player,
+			ResourceUtils.sumResources(request.chosenResourcesToAdd.values())
+		));
 
 		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
 		Map<Player, ServerMessage> serverMessages = new HashMap<>();
@@ -219,31 +238,28 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 			// Filter out private info on leader cards HIDDEN
 			Set <GameUpdate> gameUpdatesForPlayer = gameUpdates.stream()
 				.filter(gameUpdate -> !(
-					gameUpdate instanceof PlayerContextUpdate &&
-					!((PlayerContextUpdate)gameUpdate).player.equals(player)
+					gameUpdate instanceof LeaderCardsThePlayerOwnsUpdate &&
+					!((LeaderCardsThePlayerOwnsUpdate)gameUpdate).player.equals(player)
 				)).collect(Collectors.toSet());
 			serverMessages.put(player, new GameUpdateServerMessage(gameUpdatesForPlayer));
 		}
 		return serverMessages;
 	}
 
-	private static Map<Player, ServerMessage> createInvalidRequestServerMessage(
-		Player requestSender,
-		String errorMessage,
-		Object... messageArgs
-	) {
-		InvalidRequestServerMessage serverMessage = new InvalidRequestServerMessage(
-			String.format(errorMessage, messageArgs)
-		);
-		return Map.of(requestSender, serverMessage);
-	}
-
 	public Map<Player, PostGameSetupServerMessage> getFinalServerMessage() {
-		return null;
+		return gameManager.getPlayers().stream()
+				.collect(
+					Collectors.toMap(Function.identity(),
+					player ->  new PostGameSetupServerMessage()
+				));
 	}
 
+	/**
+	 *
+	 * @return GameTurnMainActionState
+	 */
 	public GameTurnMainActionState getNextState() {
-		return null;
+		return new GameTurnMainActionState(gameManager);
 	}
 
 }

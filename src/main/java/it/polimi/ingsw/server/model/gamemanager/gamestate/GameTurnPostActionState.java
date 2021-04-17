@@ -6,13 +6,13 @@ import it.polimi.ingsw.network.clientrequest.LeaderActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.network.servermessage.EndTurnServerMessage;
-import it.polimi.ingsw.network.servermessage.LeaderActionServerMessage;
+import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
 import java.util.Map;
 
 public class GameTurnPostActionState extends GameState {
 
-    public GameTurnPostActionState() {
+    public GameTurnPostActionState(GameManager gameManager) {
         super(gameManager);
     }
 
@@ -36,7 +36,7 @@ public class GameTurnPostActionState extends GameState {
 		return null;
 	}
 
-	public Map<Player, LeaderActionServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) {
 		return null;
 	}
 

@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.utils.serialization.SerializeAsMapWithIdKey;
 import it.polimi.ingsw.utils.serialization.SerializeAsSetOfIds;
 
@@ -31,7 +32,7 @@ public class InitialChoicesClientRequest extends ClientRequest {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<Player, ServerMessage> callHandler(GameState state) {
+	public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException {
 		return(state.handleInitialChoiceCR(this));
 	}
 
