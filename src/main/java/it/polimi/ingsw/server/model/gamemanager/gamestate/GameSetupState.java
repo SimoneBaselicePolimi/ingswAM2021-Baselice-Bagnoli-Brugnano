@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
 /**
  * This class represents the initial phase of the game.
  * Everything that is needed to start the game is initialised in the setup state.
+ * Each player is assigned a variable number of leader cards, resources and faith points.
+ * Each player then chooses which leader cards to hold and discard
+ * and which bonus resources to obtain based on the number assigned to him.
  */
 public class GameSetupState extends GameState<InitialChoicesServerMessage, PostGameSetupServerMessage> {
 
@@ -123,8 +126,8 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	}
 
 	/**
-	 *
-	 * @return
+	 * Method that sends to each player the number of leader cards and bonus resources he has at the start of the game.
+	 * @return a map specifying the initial message to be sent to each player
 	 */
 	@Override
 	public Map<Player, InitialChoicesServerMessage> getInitialServerMessage() {
@@ -149,6 +152,25 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 		return hasPlayerAlreadyAnswered.values().stream().allMatch(f -> f);
 	}
 
+	/**
+	 * The method checks that the player's requests are valid. Specifically, it verifies that:
+	 * - The player has not already sent a request.
+	 * - The number of resources chosen by the player is the same as the one assigned to him.
+	 * - The player only wants to add resources in valid storages (only on the shelves).
+	 * - The resources chosen by the player do not violate the rules of the storage they are to be added to.
+	 * - The number of leader cards chosen by the player is what is expected
+	 * (players can only hold a certain number of cards).
+	 * - The leader cards chosen by the player are part of the group of leader cards assigned to him.
+	 * After verifying these requirements, the method assigns the chosen leader cards to each player,
+	 * stores the resources resources in the shelves chosen by the player
+	 * and moves the player in the Faith Track for a specific number of steps forward.
+	 * Finally, the method returns these changes to each player, taking care to filter out private informations:
+	 * each player can only see his own leader cards, which he must keep secret from the other players.
+	 * @param request specifying each player's choices, see {@link InitialChoicesClientRequest}
+	 * @return a map specifying the message to be sent to each player
+	 * @throws ResourceStorageRuleViolationException if at least one of the above requirements is not met:
+	 * if a player's choice is not valid, the method throws an exception.
+	 */
 	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) throws ResourceStorageRuleViolationException {
 
 		// check if the player has already sent the request
@@ -246,6 +268,11 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 		return serverMessages;
 	}
 
+	/**
+	 * Method that sends to each player the final message of the setup state
+	 * @return a map specifying the final message to be sent to each player
+	 */
+	//TODO
 	public Map<Player, PostGameSetupServerMessage> getFinalServerMessage() {
 		return gameManager.getPlayers().stream()
 				.collect(
@@ -255,8 +282,9 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	}
 
 	/**
-	 *
-	 * @return GameTurnMainActionState
+	 * Method that changes the state of the game:
+	 * the setup state ends and the game switches to the main state where the player can choose what action to perform.
+	 * @return GameTurnMainActionState main state of the game, see {@link GameTurnMainActionState}
 	 */
 	public GameTurnMainActionState getNextState() {
 		return new GameTurnMainActionState(gameManager);
