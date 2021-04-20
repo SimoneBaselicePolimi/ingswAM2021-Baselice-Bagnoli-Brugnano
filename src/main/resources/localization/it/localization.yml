@@ -14,3 +14,9 @@ resources:
   stones:
     singular: pietra
     plural: pietre
+  finalMessage: Il gioco è iniziato.
+mainTurn:
+  initialMessage: Inizia il turno del giocatore %s.
+  finalMessage: Il giocatore %s ha compiuto la sua azione.
+  
+
