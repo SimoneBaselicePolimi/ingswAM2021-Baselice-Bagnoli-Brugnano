@@ -13,8 +13,11 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -117,8 +120,12 @@ public class GameTurnMainActionState extends GameState {
 		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToActivate)
 			leaderCard.activateLeaderCard(gameManager.getGameContext().getPlayerContext(activePlayer));
 
-		//TODO
-		return null;
+		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
+		Map<Player, ServerMessage> serverMessages = new HashMap<>();
+		for (Player player : gameManager.getPlayers())
+			serverMessages.put(player, new GameUpdateServerMessage(gameUpdates));
+		mainActionDone = true;
+		return serverMessages;
 	}
 
 
