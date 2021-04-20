@@ -10,6 +10,7 @@ import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.*;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
@@ -48,11 +49,11 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 		return null;
 	}
 
-	public Map<Player, MarketActionServerMessage> handleRequestMarketAction(MarketActionClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionClientRequest request) {
 		return null;
 	}
 
@@ -68,12 +69,12 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
-	public Map<Player, ProductionActionServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) {
 		return null;
 	}
 	//TODO
 
-	public Map<Player, EndTurnServerMessage> handleRequestEndTurn(EndTurnClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestEndTurn(EndTurnClientRequest request) {
 		return null;
 	}
 
