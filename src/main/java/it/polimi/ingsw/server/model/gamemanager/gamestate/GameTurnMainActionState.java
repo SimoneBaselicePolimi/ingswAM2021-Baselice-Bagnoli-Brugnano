@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class GameTurnMainActionState extends GameState {
 
-	//Quando faccio azione leader metto a true
+	//true after LeaderAction
 	private boolean mainActionDone = false;
 	private final Player activePlayer;
 
@@ -36,7 +36,7 @@ public class GameTurnMainActionState extends GameState {
 		gameManager.getGameHistory().addAction(
 			new MainTurnInitialAction(activePlayer)
 		);
-		//Lo lascio? Il server message non ha niente.
+		//empty serverMessage
 		 return gameManager.getPlayers().stream()
 			.collect(
 				Collectors.toMap(Function.identity(),
@@ -48,7 +48,7 @@ public class GameTurnMainActionState extends GameState {
 		gameManager.getGameHistory().addAction(
 			new MainTurnFinalAction(activePlayer)
 		);
-		//Lo lascio? Il server message non ha niente.
+		//empty serverMessage
 		return gameManager.getPlayers().stream()
 			.collect(
 				Collectors.toMap(Function.identity(),

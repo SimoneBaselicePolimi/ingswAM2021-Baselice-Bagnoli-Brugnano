@@ -272,7 +272,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	 * Method that sends to each player the final message of the setup state
 	 * @return a map specifying the final message to be sent to each player
 	 */
-	//PostGameSetupServerMessage è vuoto
+	//empty PostGameSetupServerMessage
 	public Map<Player, PostGameSetupServerMessage> getFinalServerMessage() {
 		return gameManager.getPlayers().stream()
 				.collect(
