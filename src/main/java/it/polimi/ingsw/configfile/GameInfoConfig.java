@@ -30,6 +30,8 @@ public class GameInfoConfig {
             this.initialPlayerResourcesBasedOnPlayOrder = initialPlayerResourcesBasedOnPlayOrder;
         }
 
+
+
         public class InitialPlayerResourcesAndFaithPoints {
            public final int starResources;
            public final int faithPoints;

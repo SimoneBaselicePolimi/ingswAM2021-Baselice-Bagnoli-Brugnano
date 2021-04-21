@@ -17,7 +17,6 @@ public class LeaderActionClientRequest extends ClientRequest {
     @SerializeAsSetOfIds
     public final Set<LeaderCard> leaderCardsThePlayerWantsToActivate;
 
-
     public LeaderActionClientRequest(
         Player player,
         Set<LeaderCard> leaderCardsThePlayerWantsToDiscard,

@@ -1,10 +1,14 @@
 package it.polimi.ingsw.server.model.gamemanager;
 
 import it.polimi.ingsw.configfile.GameRules;
+import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
+import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -94,8 +98,14 @@ public class GameManager {
 		return gameItemsManager;
 	}
 
-	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) throws ResourceStorageRuleViolationException {
-		return request.callHandler(currentState);
+	@SuppressWarnings("unchecked")
+	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) throws ResourceStorageRuleViolationException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException {
+		ClientRequestValidator validator = request.getValidator();
+		Optional<InvalidRequestServerMessage> error = validator.getErrorMessage(request, this);
+		if(error.isPresent())
+			return Map.of(request.player, error.get());
+		else
+			return request.callHandler(currentState);
 	}
 
 	private void changeState() {

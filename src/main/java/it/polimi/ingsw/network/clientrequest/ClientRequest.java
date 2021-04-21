@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
@@ -8,7 +10,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationExceptio
 
 import java.util.Map;
 
-public class ClientRequest {
+public abstract class ClientRequest {
 
 	public final Player player;
 
@@ -16,6 +18,8 @@ public class ClientRequest {
 		this.player = player;
 	}
 
-	public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException, LeaderCardRequirementsNotSatisfiedException { return null;}
+	public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException { return null;}
+
+	public abstract ClientRequestValidator getValidator();
 
 }

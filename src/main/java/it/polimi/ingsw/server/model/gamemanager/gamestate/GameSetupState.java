@@ -180,62 +180,6 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				"A request for this player has already been sent"
 			);
 
-		// check if the player is trying to add a number of resources different from the number of star resources
-		// assigned to him
-		int numOfTotalResourcesInRequest = ResourceUtils.sumResources(request.chosenResourcesToAdd.values()).values()
-			.stream().mapToInt(e -> e).sum();
-		if (numOfTotalResourcesInRequest != numOfStarResourcesGivenToThePlayers.get(request.player))
-			return createInvalidRequestServerMessage(
-				request.player,
-				"The number of resources sent is invalid. The number of resources assigned to this " +
-					"player is: %s",
-				numOfStarResourcesGivenToThePlayers.get(request.player)
-			);
-
-		Set<ResourceStorage> validResourceStorages =
-			gameManager.getGameContext().getPlayerContext(request.player).getShelves();
-		for(ResourceStorage storage : request.chosenResourcesToAdd.keySet()) {
-
-			// check if it is possible to add initial resources to the storages specified by the player (only shelves
-			// are valid)
-			if (!validResourceStorages.contains(storage))
-				return createInvalidRequestServerMessage(
-					request.player,
-					"Invalid request: the player cannot add initial resources to the storage with ID: %s. " +
-						"Valid storages for initial resources are: %s",
-					storage.getStorageID(),
-					validResourceStorages.stream()
-						.map(ResourceStorage::getStorageID)
-						.collect(Collectors.toList())
-				);
-
-			// check if adding the specified resources to this storage would violate a storage rule.
-			if(!storage.canAddResources(request.chosenResourcesToAdd.get(storage)))
-				return createInvalidRequestServerMessage(
-					request.player,
-					"Invalid request: it is not possible to add the specified resources to the storage with " +
-						"ID: %s. Resource storage rules violation.",
-					storage.getStorageID()
-				);
-
-		}
-
-		// check if the number of card chosen by the player is what is expected.
-		if (request.leaderCardsChosenByThePlayer.size() != numberOfLeadersCardsThePlayerKeeps)
-			return createInvalidRequestServerMessage(
-				request.player,
-				"Invalid request: the number of leader cards chosen by the player is different from the " +
-					"number specified in the rules for this game. Number of cards to chose: %s",
-				numberOfLeadersCardsThePlayerKeeps
-			);
-
-		// check if the player choose a leader card that was not from the group of leader cards assigned to him.
-		if (!leaderCardsGivenToThePlayers.get(request.player).containsAll(request.leaderCardsChosenByThePlayer))
-			return createInvalidRequestServerMessage(
-				request.player,
-				"Invalid request: the player must chose from the group of leader cards assigned to him"
-			);
-
 		// give to the player the leader cards he wants to keep
 		gameManager.getGameContext().getPlayerContext(request.player)
 			.setLeaderCards(request.leaderCardsChosenByThePlayer);

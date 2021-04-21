@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
+import it.polimi.ingsw.network.clientrequest.validator.InitialChoicesClientRequestValidator;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
@@ -34,6 +36,11 @@ public class InitialChoicesClientRequest extends ClientRequest {
 	@SuppressWarnings("unchecked")
 	public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException {
 		return(state.handleInitialChoiceCR(this));
+	}
+
+	@Override
+	public ClientRequestValidator getValidator() {
+		return new InitialChoicesClientRequestValidator();
 	}
 
 }

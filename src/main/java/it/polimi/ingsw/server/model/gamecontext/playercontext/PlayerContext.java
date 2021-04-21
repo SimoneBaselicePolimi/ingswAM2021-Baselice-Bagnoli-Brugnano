@@ -308,8 +308,6 @@ public class PlayerContext {
 		return getDeck(deckNumber).isPushOnTopValid(card);
 	}
 
-
-
 	/**
 	 * @return returns all the development cards owned by the player
 	 */
