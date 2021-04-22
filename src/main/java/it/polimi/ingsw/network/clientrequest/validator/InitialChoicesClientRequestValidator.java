@@ -3,14 +3,10 @@ package it.polimi.ingsw.network.clientrequest.validator;
 import it.polimi.ingsw.configfile.GameInfoConfig;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -75,11 +71,6 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
                 numberOfLeadersCardsThePlayerKeeps
             );
 
-        // check if the player choose a leader card that was not from the group of leader cards assigned to him.
-        if (!leaderCardsGivenToThePlayers.get(requestToValidate.player).containsAll(requestToValidate.leaderCardsChosenByThePlayer))
-            return createInvalidRequestServerMessage(
-                "Invalid request: the player must chose from the group of leader cards assigned to him"
-            );
         return Optional.empty();
     }
 }

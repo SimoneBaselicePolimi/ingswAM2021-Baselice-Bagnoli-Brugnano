@@ -2,11 +2,8 @@ package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
-import java.util.Map;
 import java.util.Optional;
 
 public abstract class ClientRequestValidator<T extends ClientRequest> {

@@ -180,6 +180,13 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				"A request for this player has already been sent"
 			);
 
+		// check if the player choose a leader card that was not from the group of leader cards assigned to him.
+		if (!leaderCardsGivenToThePlayers.get(request.player).containsAll(request.leaderCardsChosenByThePlayer))
+			return createInvalidRequestServerMessage(
+				request.player,
+				"Invalid request: the player must chose from the group of leader cards assigned to him"
+			);
+
 		// give to the player the leader cards he wants to keep
 		gameManager.getGameContext().getPlayerContext(request.player)
 			.setLeaderCards(request.leaderCardsChosenByThePlayer);

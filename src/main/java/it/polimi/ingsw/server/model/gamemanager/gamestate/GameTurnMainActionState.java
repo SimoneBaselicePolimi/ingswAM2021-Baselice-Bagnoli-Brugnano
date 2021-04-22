@@ -1,25 +1,17 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
+import it.polimi.ingsw.network.clientrequest.*;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.network.clientrequest.LeaderActionClientRequest;
-import it.polimi.ingsw.network.clientrequest.MarketActionFetchColumnClientRequest;
-import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
-import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamehistory.MainTurnFinalAction;
 import it.polimi.ingsw.server.model.gamehistory.MainTurnInitialAction;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -67,11 +59,17 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	@Override
-	public Map<Player, ServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+	public Map<Player, ServerMessage> handleRequestLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 
 		// discard leader cards
 		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToDiscard)
 			leaderCard.discardLeaderCard();
+
+		return buildGameUpdateServerMessage();
+	}
+
+	@Override
+	public Map<Player, ServerMessage> handleRequestLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 
 		// activate leader cards
 		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToActivate)
@@ -80,9 +78,13 @@ public class GameTurnMainActionState extends GameState {
 		return buildGameUpdateServerMessage();
 	}
 
+		@Override
+	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchColumnClientRequest request) {
+		return null;
+	}
 
 	@Override
-	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchColumnClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchRowClientRequest request) {
 		return null;
 	}
 
@@ -105,9 +107,10 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	@Override
-	public Map<Player, ServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestProductionAction(
+		ProductionActionClientRequest request
+	) {
+		//gameManager.getGameContext().getPlayerContext(request.player).
 		return null;
 	}
-
-
 }

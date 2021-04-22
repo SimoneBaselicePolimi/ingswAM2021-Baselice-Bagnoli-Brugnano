@@ -1,14 +1,7 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
+import it.polimi.ingsw.network.clientrequest.*;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
-import it.polimi.ingsw.network.clientrequest.LeaderActionClientRequest;
-import it.polimi.ingsw.network.clientrequest.MarketActionFetchColumnClientRequest;
-import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
-import it.polimi.ingsw.network.clientrequest.CustomClientRequest;
-import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
-import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
-import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
@@ -52,11 +45,19 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+	public Map<Player, ServerMessage> handleRequestLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+		return null;
+	}
+
+	public Map<Player, ServerMessage> handleRequestLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 		return null;
 	}
 
 	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchColumnClientRequest request) {
+		return null;
+	}
+
+	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchRowClientRequest request) {
 		return null;
 	}
 

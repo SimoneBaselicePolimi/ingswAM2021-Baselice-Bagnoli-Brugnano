@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.network.clientrequest.LeaderActionClientRequest;
+import it.polimi.ingsw.network.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.network.servermessage.EndTurnServerMessage;
@@ -36,7 +36,7 @@ public class GameTurnPostActionState extends GameState {
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestLeaderAction(LeaderActionClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestLeaderAction(DiscardLeaderCardClientRequest request) {
 		return null;
 	}
 
