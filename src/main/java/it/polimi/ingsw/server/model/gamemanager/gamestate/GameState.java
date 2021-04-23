@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.HashMap;
@@ -49,15 +50,15 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+	public Map<Player, GameUpdateServerMessage> handleRequestLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchColumnClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(MarketActionFetchColumnClientRequest request) {
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchRowClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(MarketActionFetchRowClientRequest request) {
 		return null;
 	}
 
@@ -73,7 +74,7 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) throws NotEnoughResourcesException {
 		return null;
 	}
 	//TODO
@@ -82,13 +83,14 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
-	protected Map<Player, ServerMessage> buildGameUpdateServerMessage() {
+	protected Map<Player, GameUpdateServerMessage> buildGameUpdateServerMessage() {
 		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
-		Map<Player, ServerMessage> serverMessages = new HashMap<>();
+		Map<Player, GameUpdateServerMessage> serverMessages = new HashMap<>();
 		for (Player player : gameManager.getPlayers())
 			serverMessages.put(player, new GameUpdateServerMessage(gameUpdates));
 		return serverMessages;
 	}
+
 
 	protected static Map<Player, ServerMessage> createInvalidRequestServerMessage(
 		Player requestSender,

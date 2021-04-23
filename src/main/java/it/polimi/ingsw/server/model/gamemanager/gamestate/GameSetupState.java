@@ -202,7 +202,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 
 		gameManager.getGameHistory().addAction(new SetupChoiceAction(
 			request.player,
-			ResourceUtils.sumResources(request.chosenResourcesToAdd.values())
+			ResourceUtils.sum(request.chosenResourcesToAdd.values())
 		));
 
 		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();

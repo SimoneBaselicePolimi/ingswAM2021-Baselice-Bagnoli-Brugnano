@@ -4,14 +4,21 @@ import it.polimi.ingsw.network.clientrequest.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gamehistory.MainTurnFinalAction;
 import it.polimi.ingsw.server.model.gamehistory.MainTurnInitialAction;
+import it.polimi.ingsw.server.model.gameitems.Production;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -69,7 +76,7 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	@Override
-	public Map<Player, ServerMessage> handleRequestLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+	public Map<Player, GameUpdateServerMessage> handleRequestLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 
 		// activate leader cards
 		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToActivate)
@@ -79,12 +86,11 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 		@Override
-	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchColumnClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(MarketActionFetchColumnClientRequest request) {
 		return null;
 	}
 
-	@Override
-	public Map<Player, ServerMessage> handleRequestMarketAction(MarketActionFetchRowClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(MarketActionFetchRowClientRequest request) {
 		return null;
 	}
 
@@ -102,6 +108,7 @@ public class GameTurnMainActionState extends GameState {
 					),
 					request.deckNumber
 			);
+
 		mainActionDone = true;
 		return buildGameUpdateServerMessage();
 	}
@@ -109,8 +116,34 @@ public class GameTurnMainActionState extends GameState {
 	@Override
 	public Map<Player, ServerMessage> handleRequestProductionAction(
 		ProductionActionClientRequest request
-	) {
-		//gameManager.getGameContext().getPlayerContext(request.player).
-		return null;
+	) throws NotEnoughResourcesException {
+
+		PlayerContext playerContext = gameManager.getGameContext().getPlayerContext(request.player);
+
+		Set<Map<ResourceType, Integer>> productionCosts = request.productions.stream()
+			.map(Production::getProductionResourceCost).collect(Collectors.toSet());
+
+		Map<ResourceType, Integer> resourceCostLeftToRemove = ResourceUtils.sum(
+			ResourceUtils.sum(productionCosts),
+			request.starResourceCost
+		);
+
+		for (ResourceStorage storage : playerContext.getResourceStoragesForResourcesFromMarket()) {
+			Map<ResourceType, Integer> resourcesRemovableFromStorage = ResourceUtils.intersection(
+				storage.peekResources(),
+				resourceCostLeftToRemove
+			);
+			storage.removeResources(resourcesRemovableFromStorage);
+			resourceCostLeftToRemove = ResourceUtils.difference(
+				resourceCostLeftToRemove,
+				resourcesRemovableFromStorage
+			);
+		}
+
+		playerContext.getInfiniteChest().removeResources(resourceCostLeftToRemove);
+
+		mainActionDone = true;
+		return buildGameUpdateServerMessage();
 	}
+
 }

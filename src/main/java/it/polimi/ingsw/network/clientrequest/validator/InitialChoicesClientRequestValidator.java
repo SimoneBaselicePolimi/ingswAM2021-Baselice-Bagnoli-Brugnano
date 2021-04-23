@@ -28,7 +28,7 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
 
         // check if the player is trying to add a number of resources different from the number of star resources
         // assigned to him
-        int numOfTotalResourcesInRequest = ResourceUtils.sumResources(requestToValidate.chosenResourcesToAdd.values()).values()
+        int numOfTotalResourcesInRequest = ResourceUtils.sum(requestToValidate.chosenResourcesToAdd.values()).values()
             .stream().mapToInt(e -> e).sum();
         if (numOfTotalResourcesInRequest != numOfStarResourcesGivenToThePlayer)
             return createInvalidRequestServerMessage(

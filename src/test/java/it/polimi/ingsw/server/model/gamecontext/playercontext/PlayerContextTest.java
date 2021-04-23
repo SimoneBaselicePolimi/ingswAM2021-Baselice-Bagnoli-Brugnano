@@ -45,8 +45,8 @@ class PlayerContextTest {
                 new HashSet<>(),
                 new ArrayList<>(),
                 infiniteChest,
-                temporaryStorage
-        );
+                temporaryStorage,
+            baseProductions);
     }
 
     @Test
@@ -256,8 +256,8 @@ class PlayerContextTest {
                 shelves,
                 new ArrayList<>(),
                 infiniteChest,
-                temporaryStorage
-        );
+                temporaryStorage,
+            baseProductions);
         assertEquals(shelves, playerContext.getShelves());
     }
 
@@ -283,8 +283,8 @@ class PlayerContextTest {
                 shelves,
                 new ArrayList<>(),
                 infiniteChest,
-                temporaryStorage
-        );
+                temporaryStorage,
+            baseProductions);
         playerContext.setLeaderCards(Set.of(leaderCard1, leaderCardDiscarded));
         assertEquals(
             Set.of(
@@ -393,8 +393,8 @@ class PlayerContextTest {
                 shelves,
                 new ArrayList<>(),
                 infiniteChest,
-                temporaryStorage
-        );
+                temporaryStorage,
+            baseProductions);
         playerContext.setLeaderCards(Set.of(leaderCard1, leaderCardDiscarded));
 
         assertEquals(
@@ -432,8 +432,8 @@ class PlayerContextTest {
                 new HashSet<>(),
                 List.of(deck1, deck2),
                 infiniteChest,
-                temporaryStorage
-        );
+                temporaryStorage,
+            baseProductions);
         assertEquals(deck1, playerContext.getDeck(0));
         assertEquals(deck2, playerContext.getDeck(1));
 

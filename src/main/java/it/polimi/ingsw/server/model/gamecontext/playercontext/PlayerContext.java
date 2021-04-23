@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,6 +42,7 @@ public class PlayerContext {
 	private ResourceStorage tempStorage;
 	private Set<LeaderCard> leaderCardsPlayerOwns = new HashSet<>();
 	private List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks;
+	private final Set<Production> baseProductions;
 
 	/**
 	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
@@ -54,19 +56,22 @@ public class PlayerContext {
 	 * @param decks decks (dependency injection)
 	 * @param infiniteChest infinite chest (dependency injection)
 	 * @param temporaryStorage temporaryStorage (dependency injection)
+	 * @param baseProductions
 	 */
 	protected PlayerContext(
-			Player player,
-			Set<ResourceStorage> shelves,
-			List<PlayerOwnedDevelopmentCardDeck> decks,
-			ResourceStorage infiniteChest,
-			ResourceStorage temporaryStorage
+		Player player,
+		Set<ResourceStorage> shelves,
+		List<PlayerOwnedDevelopmentCardDeck> decks,
+		ResourceStorage infiniteChest,
+		ResourceStorage temporaryStorage,
+		Set<Production> baseProductions
 	) {
 		this.player = player;
 		this.shelves = new HashSet<>(shelves);
 		this.infiniteChest = infiniteChest;
 		this.tempStorage = temporaryStorage;
 		this.developmentCardDecks = new ArrayList<>(decks);
+		this.baseProductions = new HashSet<>(baseProductions);
 	}
 
 
@@ -157,6 +162,22 @@ public class PlayerContext {
 		return getActiveLeaderCards().stream()
 				.flatMap(leaderCard -> leaderCard.getProductions().stream())
 				.collect(Collectors.toSet());
+	}
+
+	//TODO JavaDoc and Test
+	public Set<Production> getActiveDevelopmentCardsProductions(){
+		return getDevelopmentCardsOnTop().stream()
+			.map(DevelopmentCard::getProduction)
+			.collect(Collectors.toSet());
+	}
+
+	//TODO JavaDoc and Test
+	public Set<Production> getActiveProductions() {
+		return Stream.concat(Stream.concat(
+			baseProductions.stream(),
+			getActiveLeaderCardsProductions().stream()),
+			getActiveDevelopmentCardsProductions().stream()
+		).collect(Collectors.toSet());
 	}
 
 	/**

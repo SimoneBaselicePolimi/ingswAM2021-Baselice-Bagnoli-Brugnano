@@ -17,7 +17,7 @@ public class MarketActionFetchColumnClientRequest extends ClientRequest {
     }
 
     public Map<Player, ServerMessage> callHandler(GameState state) {
-		return(state.handleRequestMarketAction(this));
+		return(state.handleRequestFetchColumnMarketAction(this));
 	}
 
     @Override

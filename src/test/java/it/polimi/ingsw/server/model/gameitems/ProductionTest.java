@@ -8,6 +8,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductionTest {
+
     // Resource Map initialization
     Map<ResourceType,Integer> singleResource = Map.of(
             ResourceType.COINS, 2
@@ -92,6 +93,22 @@ class ProductionTest {
                         twoResources, singleResource, 1, 0, 3, "IDProd"),
                 new Production(
                         twoResources, singleResource, 1, 0, 3, "DifferentIDProd")
+        );
+    }
+
+    /**
+     * The toString() method of Production should return the production ID
+     */
+    @Test
+    void testToString() {
+        String prodID = "ID_TEST";
+        Production p1 = new Production(
+            singleResource, twoResources, 0, 1, 2, prodID
+        );
+        assertEquals(
+            prodID,
+            prodID.toString(),
+            "The toString() method of Production should return the production ID"
         );
     }
 

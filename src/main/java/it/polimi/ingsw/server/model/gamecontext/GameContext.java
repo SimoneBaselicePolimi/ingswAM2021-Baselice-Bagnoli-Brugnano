@@ -132,7 +132,7 @@ public class GameContext {
 		return activePlayer;
 	}
 
-	public Player startNextPlayerTurn (){
+	public Player startNextPlayerTurn(){
 		activePlayer = getPlayersTurnOrder().get(
 			(getPlayersTurnOrder().indexOf(activePlayer) + 1) % getPlayersTurnOrder().size()
 		);
