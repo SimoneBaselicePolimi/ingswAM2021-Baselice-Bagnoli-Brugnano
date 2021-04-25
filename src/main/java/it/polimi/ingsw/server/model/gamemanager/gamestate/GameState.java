@@ -74,7 +74,7 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) throws NotEnoughResourcesException {
+	public Map<Player, ServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) throws NotEnoughResourcesException, ResourceStorageRuleViolationException {
 		return null;
 	}
 	//TODO

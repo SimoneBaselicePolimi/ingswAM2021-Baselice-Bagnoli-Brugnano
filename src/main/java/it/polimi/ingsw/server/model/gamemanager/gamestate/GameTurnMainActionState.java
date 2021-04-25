@@ -16,23 +16,42 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsN
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents the main phase of the game.
+ * During his turn, the player can perform one of the three possible actions of the game:
+ * - Take resources from the market
+ * - Buy a development card
+ * - Activate productions
+ * In addition, during his turn the player can also perform leader actions to discard or activate his leader cards.
+ * This action can be performed as many times as the player wishes to do so (as long as it is possible to do so)
+ * either before or after performing one of the three main actions mentioned above.
+ */
 public class GameTurnMainActionState extends GameState {
 
 	//true after LeaderAction
 	private boolean mainActionDone = false;
 	private final Player activePlayer;
 
+	/**
+	 * GameTurnMainActionState constructor
+	 * @param gameManager GameManager, see {@link GameManager}
+	 */
 	public GameTurnMainActionState(GameManager gameManager) {
 		super(gameManager);
 		activePlayer = gameManager.getGameContext().getActivePlayer();
     }
 
+	/**
+	 * Method that sends to each player the initial message at the start of each turn.
+	 * @return a map specifying the initial message to be sent to each player
+	 */
 	public Map<Player, ServerMessage> getInitialServerMessage() {
 		gameManager.getGameHistory().addAction(
 			new MainTurnInitialAction(activePlayer)
@@ -45,6 +64,10 @@ public class GameTurnMainActionState extends GameState {
 				));
 	}
 
+	/**
+	 * Method that sends to each player the final message at the end of each turn.
+	 * @return a map specifying the final message to be sent to each player
+	 */
 	public Map<Player,ServerMessage> getFinalServerMessage() {
 		gameManager.getGameHistory().addAction(
 			new MainTurnFinalAction(activePlayer)
@@ -57,13 +80,17 @@ public class GameTurnMainActionState extends GameState {
 				));
 	}
 
+	/**
+	 * Method that verifies that the current status is closed
+	 * @return true if the player's turn is over
+	 */
 	public boolean isStateDone() {
 		return mainActionDone;
 	}
 
-	public GameState getNextState() {
-		return new GameTurnPostActionState(gameManager);
-	}
+	//TODO
+	public GameState getNextState() { return new GameTurnPostActionState(gameManager); }
+
 
 	@Override
 	public Map<Player, ServerMessage> handleRequestLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
@@ -85,7 +112,7 @@ public class GameTurnMainActionState extends GameState {
 		return buildGameUpdateServerMessage();
 	}
 
-		@Override
+	@Override
 	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(MarketActionFetchColumnClientRequest request) {
 		return null;
 	}
@@ -116,10 +143,11 @@ public class GameTurnMainActionState extends GameState {
 	@Override
 	public Map<Player, ServerMessage> handleRequestProductionAction(
 		ProductionActionClientRequest request
-	) throws NotEnoughResourcesException {
+	) throws NotEnoughResourcesException, ResourceStorageRuleViolationException {
 
 		PlayerContext playerContext = gameManager.getGameContext().getPlayerContext(request.player);
 
+		//remove resource costs
 		Set<Map<ResourceType, Integer>> productionCosts = request.productions.stream()
 			.map(Production::getProductionResourceCost).collect(Collectors.toSet());
 
@@ -141,6 +169,17 @@ public class GameTurnMainActionState extends GameState {
 		}
 
 		playerContext.getInfiniteChest().removeResources(resourceCostLeftToRemove);
+
+		//add resource rewards
+		Set<Map<ResourceType, Integer>> productionRewards = request.productions.stream()
+			.map(Production:: getProductionResourceReward).collect(Collectors.toSet());
+
+		Map<ResourceType, Integer> productionRewardsWithStarResources = ResourceUtils.sum(
+			ResourceUtils.sum(productionRewards),
+			request.starResourceReward
+		);
+
+		playerContext.getInfiniteChest().addResources(productionRewardsWithStarResources);
 
 		mainActionDone = true;
 		return buildGameUpdateServerMessage();
