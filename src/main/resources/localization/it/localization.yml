@@ -15,8 +15,13 @@ resources:
     singular: pietra
     plural: pietre
   finalMessage: Il gioco è iniziato.
+
 mainTurn:
   initialMessage: Inizia il turno del giocatore %s.
   finalMessage: Il giocatore %s ha compiuto la sua azione.
-  
+
+postTurn:
+  initialMessage: Il giocatore %s ha eseguito l'azione principale.
+                  Può ora scegliere di compiere azioni leader prima di concludere il suo turno.
+  finalMessage: E' concluso il turno del giocatore %s.
 
