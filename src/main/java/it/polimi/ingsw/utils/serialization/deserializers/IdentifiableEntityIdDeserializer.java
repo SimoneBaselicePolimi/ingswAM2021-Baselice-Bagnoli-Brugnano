@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.serialization;
+package it.polimi.ingsw.utils.serialization.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

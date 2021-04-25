@@ -1,9 +1,11 @@
-package it.polimi.ingsw.utils.serialization;
+package it.polimi.ingsw.utils.serialization.annotations;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.polimi.ingsw.utils.serialization.deserializers.IdentifiableEntityIdDeserializer;
+import it.polimi.ingsw.utils.serialization.serializers.IdentifiableEntityIdSerializer;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
