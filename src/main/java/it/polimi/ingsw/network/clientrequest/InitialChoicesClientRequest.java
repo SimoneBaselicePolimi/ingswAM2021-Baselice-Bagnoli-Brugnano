@@ -21,16 +21,16 @@ public class InitialChoicesClientRequest extends ClientRequest {
 	public final Set<LeaderCard> leaderCardsChosenByThePlayer;
 
 	@SerializeAsMapWithIdKey
-	public final Map<ResourceStorage, Map<ResourceType, Integer>> chosenResourcesToAdd;
+	public final Map<ResourceStorage, Map<ResourceType, Integer>> chosenResourcesToAddByStorage;
 
 	public InitialChoicesClientRequest(
 		Player player,
 		Set<LeaderCard> leaderCardsChosenByThePlayer,
-		Map<ResourceStorage, Map<ResourceType, Integer>> chosenResourcesToAdd
+		Map<ResourceStorage, Map<ResourceType, Integer>> chosenResourcesToAddByStorage
 	) {
 		super(player);
 		this.leaderCardsChosenByThePlayer = leaderCardsChosenByThePlayer;
-		this.chosenResourcesToAdd = chosenResourcesToAdd;
+		this.chosenResourcesToAddByStorage = chosenResourcesToAddByStorage;
 	}
 
 	@SuppressWarnings("unchecked")

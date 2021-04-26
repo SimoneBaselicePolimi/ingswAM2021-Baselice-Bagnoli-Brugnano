@@ -192,8 +192,8 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 			.setLeaderCards(request.leaderCardsChosenByThePlayer);
 
 		// store resources in the shelves chosen by the player
-		for(ResourceStorage storage : request.chosenResourcesToAdd.keySet())
-			storage.addResources(request.chosenResourcesToAdd.get(storage));
+		for(ResourceStorage storage : request.chosenResourcesToAddByStorage.keySet())
+			storage.addResources(request.chosenResourcesToAddByStorage.get(storage));
 
 		// the player moves in the Faith Track for a specific number of steps forward
 		// (initial faith points assigned to him)
@@ -202,7 +202,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 
 		gameManager.getGameHistory().addAction(new SetupChoiceAction(
 			request.player,
-			ResourceUtils.sum(request.chosenResourcesToAdd.values())
+			ResourceUtils.sum(request.chosenResourcesToAddByStorage.values())
 		));
 
 		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();

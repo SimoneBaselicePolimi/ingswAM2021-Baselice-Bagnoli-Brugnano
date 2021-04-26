@@ -28,7 +28,7 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
 
         // check if the player is trying to add a number of resources different from the number of star resources
         // assigned to him
-        int numOfTotalResourcesInRequest = ResourceUtils.sum(requestToValidate.chosenResourcesToAdd.values()).values()
+        int numOfTotalResourcesInRequest = ResourceUtils.sum(requestToValidate.chosenResourcesToAddByStorage.values()).values()
             .stream().mapToInt(e -> e).sum();
         if (numOfTotalResourcesInRequest != numOfStarResourcesGivenToThePlayer)
             return createInvalidRequestServerMessage(
@@ -39,7 +39,7 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
 
         Set<ResourceStorage> validResourceStorages =
             gameManager.getGameContext().getPlayerContext(requestToValidate.player).getShelves();
-        for(ResourceStorage storage : requestToValidate.chosenResourcesToAdd.keySet()) {
+        for(ResourceStorage storage : requestToValidate.chosenResourcesToAddByStorage.keySet()) {
 
             // check if it is possible to add initial resources to the storages specified by the player (only shelves
             // are valid)
@@ -54,7 +54,7 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
                 );
 
             // check if adding the specified resources to this storage would violate a storage rule.
-            if(!storage.canAddResources(requestToValidate.chosenResourcesToAdd.get(storage)))
+            if(!storage.canAddResources(requestToValidate.chosenResourcesToAddByStorage.get(storage)))
                 return createInvalidRequestServerMessage(
                     "Invalid request: it is not possible to add the specified resources to the storage with " +
                         "ID: %s. Resource storage rules violation.",

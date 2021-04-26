@@ -18,7 +18,11 @@ public class PlayerContextNotifier extends PlayerContext implements Notifier {
 
     @Override
     public void setLeaderCards(Set<LeaderCard> cards) {
+    }
 
+    @Override
+    public void setTempStarResources(int tempStarResources) {
+        //super.setTempStarResources(tempStarResources);
     }
 
     @Override

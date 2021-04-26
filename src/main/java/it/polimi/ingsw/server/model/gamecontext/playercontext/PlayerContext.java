@@ -40,6 +40,7 @@ public class PlayerContext {
 	private Set<ResourceStorage> shelves;
 	private ResourceStorage infiniteChest;
 	private ResourceStorage tempStorage;
+	private int tempStarResources;
 	private Set<LeaderCard> leaderCardsPlayerOwns = new HashSet<>();
 	private List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks;
 	private final Set<Production> baseProductions;
@@ -217,7 +218,6 @@ public class PlayerContext {
 		return tempStorage;
 	}
 
-
 	/**
 	 * This method should be used to put the resources taken from the market into the temporary storage.
 	 * <p>
@@ -246,6 +246,25 @@ public class PlayerContext {
 	 */
 	public Map<ResourceType, Integer> clearTemporaryStorageResources() throws NotEnoughResourcesException {
 		return tempStorage.removeResources(tempStorage.peekResources());
+	}
+
+	//TODO test
+	/**
+	 * @return the number of temporary star resources obtained from the market. Will be used before the player chooses
+	 * which resources to get and repositions them in the shelves and/or in the leader card storages
+	 */
+	public int getTempStarResources() {
+		return tempStarResources;
+	}
+
+	//TODO test
+	/**
+	 * This method should be used to set number of the star resources taken from the market before the player
+	 * chooses which type of resources he wants to convert them into
+	 * @param tempStarResources number of temporary star resources
+	 */
+	public void setTempStarResources(int tempStarResources) {
+		this.tempStarResources = tempStarResources;
 	}
 
 	/**

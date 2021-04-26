@@ -54,11 +54,11 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(MarketActionFetchColumnClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(MarketActionFetchColumnClientRequest request) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		return null;
 	}
 
-	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(MarketActionFetchRowClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(MarketActionFetchRowClientRequest request) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		return null;
 	}
 

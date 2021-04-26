@@ -4,9 +4,11 @@ import it.polimi.ingsw.network.clientrequest.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
+import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gamehistory.MainTurnFinalAction;
 import it.polimi.ingsw.server.model.gamehistory.MainTurnInitialAction;
+import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
@@ -14,10 +16,13 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -38,6 +43,9 @@ public class GameTurnMainActionState extends GameState {
 	//true after LeaderAction
 	private boolean mainActionDone = false;
 	private final Player activePlayer;
+	private boolean hasPlayerDoneMarketAction = false;
+	Market market = gameManager.getGameContext().getMarket();
+	private final PlayerContext playerContext;
 
 	/**
 	 * GameTurnMainActionState constructor
@@ -46,6 +54,7 @@ public class GameTurnMainActionState extends GameState {
 	public GameTurnMainActionState(GameManager gameManager) {
 		super(gameManager);
 		activePlayer = gameManager.getGameContext().getActivePlayer();
+		playerContext = gameManager.getGameContext().getPlayerContext(activePlayer);
     }
 
 	/**
@@ -89,8 +98,12 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	//TODO
-	public GameState getNextState() { return new GameTurnPostActionState(gameManager); }
-
+	public GameState getNextState() {
+		if (hasPlayerDoneMarketAction)
+			return new ManageResourcesFromMarketState(gameManager);
+		else
+			return new GameTurnPostActionState(gameManager);
+	}
 
 	@Override
 	public Map<Player, ServerMessage> handleRequestLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
@@ -113,12 +126,59 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	@Override
-	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(MarketActionFetchColumnClientRequest request) {
-		return null;
+	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(
+		MarketActionFetchColumnClientRequest request
+	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+
+		MarbleColour[] marblesThePlayerGets = market.fetchMarbleColumn(request.column);
+		return doMarketAction(marblesThePlayerGets);
+
 	}
 
-	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(MarketActionFetchRowClientRequest request) {
-		return null;
+	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(
+		MarketActionFetchRowClientRequest request
+	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+
+		MarbleColour[] marblesThePlayerGets = market.fetchMarbleRow(request.row);
+		return doMarketAction(marblesThePlayerGets);
+
+	}
+
+	/**
+	 *
+	 * @param marblesThePlayerGets
+	 * @return
+	 * @throws ResourceStorageRuleViolationException
+	 * @throws NotEnoughResourcesException
+	 */
+	private Map<Player, ServerMessage> doMarketAction (
+		MarbleColour[] marblesThePlayerGets
+	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+
+		int numberOfStarResources = 0;
+		Map<ResourceType, Integer> resources = new HashMap<>();
+		int numberOfFaithPoints = 0;
+
+		for (MarbleColour marbleColour : marblesThePlayerGets){
+
+			if(marbleColour.getResourceType().isPresent())
+				resources = ResourceUtils.sum(resources, Map.of(marbleColour.getResourceType().get(), 1));
+
+			if (marbleColour.isSpecialMarble())
+				numberOfStarResources += 1;
+
+			numberOfFaithPoints += marbleColour.getFaithPoints();
+
+		}
+
+		gameManager.getGameContext().getFaithPath().move(activePlayer, numberOfFaithPoints);
+		playerContext.setTemporaryStorageResources(resources);
+		playerContext.setTempStarResources(numberOfStarResources);
+
+		hasPlayerDoneMarketAction = true;
+		mainActionDone = true;
+		return buildGameUpdateServerMessage();
+
 	}
 
 	@Override
