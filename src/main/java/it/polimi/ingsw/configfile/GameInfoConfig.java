@@ -6,14 +6,17 @@ public class GameInfoConfig {
 
     public final int maxNumberOfPlayers;
 
+    public final boolean singlePlayerEnabled;
+
     public final GameSetup gameSetup;
 
-    public GameInfoConfig(int maxNumberOfPlayers, GameSetup gameSetup) {
+    public GameInfoConfig(int maxNumberOfPlayers, boolean singlePlayerEnabled, GameSetup gameSetup) {
         this.maxNumberOfPlayers = maxNumberOfPlayers;
+        this.singlePlayerEnabled = singlePlayerEnabled;
         this.gameSetup = gameSetup;
     }
 
-    public class GameSetup {
+    public static class GameSetup {
 
         public final int numberOfLeadersCardsGivenToThePlayer;
         public final int numberOfLeadersCardsThePlayerKeeps;
@@ -30,7 +33,7 @@ public class GameInfoConfig {
             this.initialPlayerResourcesBasedOnPlayOrder = initialPlayerResourcesBasedOnPlayOrder;
         }
 
-        public class InitialPlayerResourcesAndFaithPoints {
+        public static class InitialPlayerResourcesAndFaithPoints {
            public final int starResources;
            public final int faithPoints;
 
