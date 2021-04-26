@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.clientrequest;
 
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
+import it.polimi.ingsw.network.clientrequest.validator.DiscardLeaderCardClientRequestValidator;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
@@ -34,7 +35,7 @@ public class DiscardLeaderCardClientRequest extends ClientRequest {
 
     @Override
     public ClientRequestValidator getValidator() {
-        return null;
+        return new DiscardLeaderCardClientRequestValidator();
     }
 
 }

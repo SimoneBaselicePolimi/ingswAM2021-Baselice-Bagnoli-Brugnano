@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
+import it.polimi.ingsw.configfile.GameInfoConfig;
+import it.polimi.ingsw.configfile.GameRules;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
@@ -8,14 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import static org.mockito.Mockito.lenient;
-
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.*;
 
 public class GameSetupStateTest {
 
@@ -32,79 +32,75 @@ public class GameSetupStateTest {
     @Mock
     GameContext gameContext;
 
-    @BeforeEach
-    void setUp() {
-        lenient().when(this.gameManager).thenReturn(gameManager);
-        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
-        lenient().when(gameManager.getGameContext().getPlayersTurnOrder()).thenReturn(players);
-    }
+    @Mock
+    LeaderCard leaderCard1;
 
-    LeaderCard card1 = new LeaderCard(
-        "L1",
-        null,
-        null,
-        null,
-        null,
-        null,
-        3
-    );
+    @Mock
+    LeaderCard leaderCard2;
 
-    LeaderCard card2 = new LeaderCard(
-        "L2",
-        null,
-        null,
-        null,
-        null,
-        null,
-        2
-    );
+    @Mock
+    LeaderCard leaderCard3;
 
-    LeaderCard card3 = new LeaderCard(
-        "L3",
-        null,
-        null,
-        null,
-        null,
-        null,
-        7
-    );
+    @Mock
+    LeaderCard leaderCard4;
 
-    LeaderCard card4 = new LeaderCard(
-        "L4",
-        null,
-        null,
-        null,
-        null,
-        null,
-        6
-    );
+    @Mock
+    LeaderCard leaderCard5;
 
-    LeaderCard card5 = new LeaderCard(
-        "L5",
-        null,
-        null,
-        null,
-        null,
-        null,
-        1
-    );
+    @Mock
+    LeaderCard leaderCard6;
+
+    GameRules gameRules;
+
+    @Mock
+    GameInfoConfig gameInfo;
+
+    @Mock
+    GameInfoConfig.GameSetup setup;
 
     Set<LeaderCard> leaderCards = Set.of(
-        card1,
-        card2,
-        card3,
-        card4,
-        card5
+        leaderCard1,
+        leaderCard2,
+        leaderCard3,
+        leaderCard4,
+        leaderCard5,
+        leaderCard6
     );
+
+    @BeforeEach
+    void setUp() {
+        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
+        lenient().when(gameManager.getGameContext().getPlayersTurnOrder()).thenReturn(players);
+
+
+        when(leaderCard1.getItemId()).thenReturn("L1");
+        when(leaderCard1.getItemId()).thenReturn("L2");
+        when(leaderCard1.getItemId()).thenReturn("L3");
+        when(leaderCard1.getItemId()).thenReturn("L4");
+        when(leaderCard1.getItemId()).thenReturn("L5");
+        when(leaderCard1.getItemId()).thenReturn("L6");
+
+        //TODO
+        gameRules = new GameRules(
+            new GameInfoConfig(),
+            null,
+            null
+        )
+
+//        GameInfoConfig gameInfo = gameManager.getGameRules().gameInfoConfig;
+//        numberOfLeadersCardsGivenToThePlayer = gameInfo.gameSetup.numberOfLeadersCardsGivenToThePlayer;
+//        numberOfLeadersCardsThePlayerKeeps = gameInfo.gameSetup.numberOfLeadersCardsThePlayerKeeps;
+
+    }
 
     @Test
     void testRandomShuffle() {
         GameSetupState state1 = new GameSetupState(new Random(1), gameManager);
         GameSetupState state1Copy = new GameSetupState(new Random(1), gameManager);
         GameSetupState state2 = new GameSetupState(new Random(2), gameManager);
-        GameSetupState state3 = new GameSetupState(new Random(2), gameManager);
 
         assertEquals(state1.leaderCardsGivenToThePlayers, state1Copy.leaderCardsGivenToThePlayers);
+        assertNotEquals(state1.leaderCardsGivenToThePlayers, state2.leaderCardsGivenToThePlayers);
     }
 }
 

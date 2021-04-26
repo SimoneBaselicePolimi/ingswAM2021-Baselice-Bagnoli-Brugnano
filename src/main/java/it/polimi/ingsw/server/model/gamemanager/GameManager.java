@@ -17,6 +17,7 @@ import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.notifier.Notifier;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.HashSet;
@@ -99,7 +100,7 @@ public class GameManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) throws ResourceStorageRuleViolationException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException {
+	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) throws ResourceStorageRuleViolationException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException, NotEnoughResourcesException {
 		ClientRequestValidator validator = request.getValidator();
 		Optional<InvalidRequestServerMessage> error = validator.getErrorMessage(request, this);
 		if(error.isPresent())

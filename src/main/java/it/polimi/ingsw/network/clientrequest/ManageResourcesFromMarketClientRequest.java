@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.clientrequest;
 
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
+import it.polimi.ingsw.network.clientrequest.validator.ManageResourcesFromMarketClientRequestValidator;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
@@ -32,7 +33,7 @@ public class ManageResourcesFromMarketClientRequest extends ClientRequest {
 
     @Override
     public ClientRequestValidator getValidator() {
-        return null;
+        return new ManageResourcesFromMarketClientRequestValidator();
     }
 
 }

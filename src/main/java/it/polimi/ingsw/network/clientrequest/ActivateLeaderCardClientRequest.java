@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import it.polimi.ingsw.network.clientrequest.validator.ActivateLeaderCardClientRequestValidator;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
@@ -31,7 +32,7 @@ public class ActivateLeaderCardClientRequest extends ClientRequest {
 
     @Override
     public ClientRequestValidator getValidator() {
-        return null;
+        return new ActivateLeaderCardClientRequestValidator();
     }
 
 }
