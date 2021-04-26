@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,8 +40,10 @@ public class PlayerContext {
 	private Set<ResourceStorage> shelves;
 	private ResourceStorage infiniteChest;
 	private ResourceStorage tempStorage;
+	private int tempStarResources;
 	private Set<LeaderCard> leaderCardsPlayerOwns = new HashSet<>();
 	private List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks;
+	private final Set<Production> baseProductions;
 
 	/**
 	 * Creates the player context associated to a specific player. At any moment after the beginning of the game there
@@ -54,19 +57,22 @@ public class PlayerContext {
 	 * @param decks decks (dependency injection)
 	 * @param infiniteChest infinite chest (dependency injection)
 	 * @param temporaryStorage temporaryStorage (dependency injection)
+	 * @param baseProductions
 	 */
 	protected PlayerContext(
-			Player player,
-			Set<ResourceStorage> shelves,
-			List<PlayerOwnedDevelopmentCardDeck> decks,
-			ResourceStorage infiniteChest,
-			ResourceStorage temporaryStorage
+		Player player,
+		Set<ResourceStorage> shelves,
+		List<PlayerOwnedDevelopmentCardDeck> decks,
+		ResourceStorage infiniteChest,
+		ResourceStorage temporaryStorage,
+		Set<Production> baseProductions
 	) {
 		this.player = player;
 		this.shelves = new HashSet<>(shelves);
 		this.infiniteChest = infiniteChest;
 		this.tempStorage = temporaryStorage;
 		this.developmentCardDecks = new ArrayList<>(decks);
+		this.baseProductions = new HashSet<>(baseProductions);
 	}
 
 
@@ -159,6 +165,22 @@ public class PlayerContext {
 				.collect(Collectors.toSet());
 	}
 
+	//TODO JavaDoc and Test
+	public Set<Production> getActiveDevelopmentCardsProductions(){
+		return getDevelopmentCardsOnTop().stream()
+			.map(DevelopmentCard::getProduction)
+			.collect(Collectors.toSet());
+	}
+
+	//TODO JavaDoc and Test
+	public Set<Production> getActiveProductions() {
+		return Stream.concat(Stream.concat(
+			baseProductions.stream(),
+			getActiveLeaderCardsProductions().stream()),
+			getActiveDevelopmentCardsProductions().stream()
+		).collect(Collectors.toSet());
+	}
+
 	/**
 	 * The shelves are resource storages that can always be used to store resource from the market. When playing with
 	 * the standard rule every shelve will have a different limit on the number of resources it can contain.
@@ -196,7 +218,6 @@ public class PlayerContext {
 		return tempStorage;
 	}
 
-
 	/**
 	 * This method should be used to put the resources taken from the market into the temporary storage.
 	 * <p>
@@ -225,6 +246,25 @@ public class PlayerContext {
 	 */
 	public Map<ResourceType, Integer> clearTemporaryStorageResources() throws NotEnoughResourcesException {
 		return tempStorage.removeResources(tempStorage.peekResources());
+	}
+
+	//TODO test
+	/**
+	 * @return the number of temporary star resources obtained from the market. Will be used before the player chooses
+	 * which resources to get and repositions them in the shelves and/or in the leader card storages
+	 */
+	public int getTempStarResources() {
+		return tempStarResources;
+	}
+
+	//TODO test
+	/**
+	 * This method should be used to set number of the star resources taken from the market before the player
+	 * chooses which type of resources he wants to convert them into
+	 * @param tempStarResources number of temporary star resources
+	 */
+	public void setTempStarResources(int tempStarResources) {
+		this.tempStarResources = tempStarResources;
 	}
 
 	/**
@@ -307,8 +347,6 @@ public class PlayerContext {
 	public boolean canAddDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException {
 		return getDeck(deckNumber).isPushOnTopValid(card);
 	}
-
-
 
 	/**
 	 * @return returns all the development cards owned by the player

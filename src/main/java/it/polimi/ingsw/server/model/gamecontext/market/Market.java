@@ -107,6 +107,22 @@ public class Market {
 	}
 
 	/**
+	 * Returns the number of columns of the matrix
+	 * @return num of columns of the matrix
+	 */
+	public int getNumOfColumns() {
+		return nColumns;
+	}
+
+	/**
+	 * Returns the number of rows of the matrix
+	 * @return num of rows of the matrix
+	 */
+	public int getNumOfRows() {
+		return nRows;
+	}
+
+	/**
 	 * Returns a shallow copy of the Market structure.
 	 * @param matrix matrix of the Marbles inside the Market
 	 * @return matrix representing a copy of the Market

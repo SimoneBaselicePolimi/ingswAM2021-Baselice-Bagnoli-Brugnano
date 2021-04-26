@@ -36,7 +36,11 @@ class PlayerContextTest {
     @Mock
     ResourceStorage temporaryStorage;
 
+    @Mock
+    Production baseProductions;
+
     PlayerContext playerContext;
+
 
     @BeforeEach
     void setUp() {
@@ -45,7 +49,8 @@ class PlayerContextTest {
                 new HashSet<>(),
                 new ArrayList<>(),
                 infiniteChest,
-                temporaryStorage
+                temporaryStorage,
+                Set.of(baseProductions)
         );
     }
 
@@ -252,11 +257,12 @@ class PlayerContextTest {
                 mock(ResourceStorage.class)
         );
         playerContext = new PlayerContext(
-                player,
-                shelves,
-                new ArrayList<>(),
-                infiniteChest,
-                temporaryStorage
+            player,
+            shelves,
+            new ArrayList<>(),
+            infiniteChest,
+            temporaryStorage,
+            Set.of(baseProductions)
         );
         assertEquals(shelves, playerContext.getShelves());
     }
@@ -279,11 +285,12 @@ class PlayerContextTest {
         when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.DISCARDED);
 
         playerContext = new PlayerContext(
-                player,
-                shelves,
-                new ArrayList<>(),
-                infiniteChest,
-                temporaryStorage
+            player,
+            shelves,
+            new ArrayList<>(),
+            infiniteChest,
+            temporaryStorage,
+            Set.of(baseProductions)
         );
         playerContext.setLeaderCards(Set.of(leaderCard1, leaderCardDiscarded));
         assertEquals(
@@ -389,11 +396,12 @@ class PlayerContextTest {
         ));
 
         PlayerContext playerContext = new PlayerContext(
-                player,
-                shelves,
-                new ArrayList<>(),
-                infiniteChest,
-                temporaryStorage
+            player,
+            shelves,
+            new ArrayList<>(),
+            infiniteChest,
+            temporaryStorage,
+            Set.of(baseProductions)
         );
         playerContext.setLeaderCards(Set.of(leaderCard1, leaderCardDiscarded));
 
@@ -428,11 +436,12 @@ class PlayerContextTest {
         PlayerOwnedDevelopmentCardDeck deck2 = mock(PlayerOwnedDevelopmentCardDeck.class);
 
         PlayerContext playerContext = new PlayerContext(
-                player,
-                new HashSet<>(),
-                List.of(deck1, deck2),
-                infiniteChest,
-                temporaryStorage
+            player,
+            new HashSet<>(),
+            List.of(deck1, deck2),
+            infiniteChest,
+            temporaryStorage,
+            Set.of(baseProductions)
         );
         assertEquals(deck1, playerContext.getDeck(0));
         assertEquals(deck2, playerContext.getDeck(1));

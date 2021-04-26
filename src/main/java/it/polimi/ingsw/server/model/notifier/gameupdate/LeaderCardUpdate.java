@@ -19,3 +19,4 @@ public class LeaderCardUpdate extends GameUpdate{
 		this.canBeActivated = canBeActivated;
 	}
 }
+

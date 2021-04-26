@@ -135,4 +135,11 @@ public class Production {
 		return productionID.hashCode();
 	}
 
+	/**
+	 * @return returns the production ID
+	 */
+	@Override
+	public String toString() {
+		return productionID;
+	}
 }

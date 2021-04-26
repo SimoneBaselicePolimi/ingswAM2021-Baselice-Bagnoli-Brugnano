@@ -4,18 +4,18 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
-import it.polimi.ingsw.server.model.notifier.gameupdate.DevelopmentCardsTableUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
-public class DevelopmentCardsTableNotifier extends DevelopmentCardsTable implements Notifier<DevelopmentCardsTableUpdate> {
+public class DevelopmentCardsTableNotifier extends DevelopmentCardsTable implements Notifier {
 
 	public DevelopmentCardsTableNotifier(List<DevelopmentCard> cards) {
 		super(cards);
 	}
 
-	public Optional<DevelopmentCardsTableUpdate> getUpdate() {
+	public Set<GameUpdate> getUpdates() {
 		return null;
 	}
 
