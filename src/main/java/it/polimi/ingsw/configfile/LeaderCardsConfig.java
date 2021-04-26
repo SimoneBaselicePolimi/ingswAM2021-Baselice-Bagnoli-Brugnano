@@ -41,35 +41,35 @@ public class LeaderCardsConfig {
 
     }
 
-    public static class colorRequirementConfig extends RequirementConfig {
+    public static class ColourRequirementConfig extends RequirementConfig {
         public final DevelopmentCardColour cardColour;
 
         public final int numberOfCards;
 
-        public colorRequirementConfig(DevelopmentCardColour cardColour, int numberOfCards) {
+        public ColourRequirementConfig(DevelopmentCardColour cardColour, int numberOfCards) {
             this.cardColour = cardColour;
             this.numberOfCards = numberOfCards;
         }
     }
 
-    public static class colorAndLevelRequirementConfig extends RequirementConfig {
+    public static class ColourAndLevelRequirementConfig extends RequirementConfig {
         public final DevelopmentCardColour cardColour;
         public final DevelopmentCardLevel cardLevel;
         public final int numberOfCards;
 
-        public colorAndLevelRequirementConfig(DevelopmentCardColour cardColour, DevelopmentCardLevel cardLevel, int numberOfCards) {
+        public ColourAndLevelRequirementConfig(DevelopmentCardColour cardColour, DevelopmentCardLevel cardLevel, int numberOfCards) {
             this.cardColour = cardColour;
             this.cardLevel = cardLevel;
             this.numberOfCards = numberOfCards;
         }
     }
 
-    public static class resourceRequirementConfig extends RequirementConfig {
+    public static class ResourceRequirementConfig extends RequirementConfig {
         public final ResourceType resourceType;
 
         public final int numberOfResources;
 
-        public resourceRequirementConfig(ResourceType resourceType, int numberOfResources) {
+        public ResourceRequirementConfig(ResourceType resourceType, int numberOfResources) {
             this.resourceType = resourceType;
             this.numberOfResources = numberOfResources;
         }
@@ -92,36 +92,4 @@ public class LeaderCardsConfig {
             this.resourceType = resourceType;
         }
     }
-
-    public static class ResourceStorageConfig {
-
-        public static class StorageConfig {
-            public final List<RuleConfig> rules;
-
-            public StorageConfig(List<RuleConfig> rules) {
-                this.rules = rules;
-            }
-
-            public abstract static class RuleConfig {
-
-            }
-
-            public static class maxResourceNumberRuleConfig extends RuleConfig {
-                public final int maxNumber;
-
-                public maxResourceNumberRuleConfig(int maxNumber) {
-                    this.maxNumber = maxNumber;
-                }
-            }
-
-            public static class specificResourceTypeRuleConfig extends RuleConfig {
-                public final ResourceType resourceType;
-
-                public specificResourceTypeRuleConfig(ResourceType resourceType) {
-                    this.resourceType = resourceType;
-                }
-            }
-        }
-    }
-
 }

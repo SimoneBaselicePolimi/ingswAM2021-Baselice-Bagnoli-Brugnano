@@ -8,13 +8,13 @@ import java.util.List;
 
 public class MarblesConfig {
 
-    public final List<MarbleTypes> marbleTypes;
+    public final List<MarbleConfig> marbleTypes;
 
-    public MarblesConfig(List<MarbleTypes> marbleTypes) {
+    public MarblesConfig(List<MarbleConfig> marbleTypes) {
         this.marbleTypes = marbleTypes;
     }
 
-    class MarbleTypes {
+    public static class MarbleConfig {
 
         @SerializeIdOnly
         public final MarbleColour marbleID;
@@ -25,7 +25,7 @@ public class MarblesConfig {
 
         public final boolean isSpecial;
 
-        public MarbleTypes(MarbleColour marbleID, ResourceType resourceType, int numberOfFaithPoints, boolean isSpecial) {
+        public MarbleConfig(MarbleColour marbleID, ResourceType resourceType, int numberOfFaithPoints, boolean isSpecial) {
             this.marbleID = marbleID;
             this.resourceType = resourceType;
             this.numberOfFaithPoints = numberOfFaithPoints;

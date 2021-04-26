@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DevelopmentCardsConfig {
+
     @SerializeIdOnly
     public final DevelopmentCard developmentCardID;
 

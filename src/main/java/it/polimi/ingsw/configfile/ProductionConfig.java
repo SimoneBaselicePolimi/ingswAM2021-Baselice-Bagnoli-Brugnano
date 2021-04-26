@@ -1,35 +1,39 @@
 package it.polimi.ingsw.configfile;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
 class ProductionConfig {
 
-    // TODO: wrapper classi
+    public final CostConfig costs;
 
+    public final RewardConfig rewards;
 
-    @JsonProperty("resources")
-    public final Map<ResourceType, Integer> costResources;
+    public ProductionConfig(CostConfig costs, RewardConfig rewards) {
+        this.costs = costs;
+        this.rewards = rewards;
+    }
 
-    @JsonProperty("starResources")
-    public final int costStarResources;
+    public static class CostConfig {
+        public final Map<ResourceType, Integer> resources;
+        public final int starResources;
 
-    @JsonProperty("resources")
-    public final Map<ResourceType, Integer> rewardResources;
+        public CostConfig(Map<ResourceType, Integer> resources, int starResources) {
+            this.resources = resources;
+            this.starResources = starResources;
+        }
+    }
 
-    @JsonProperty("starResources")
-    public final int rewardStarResources;
+    public static class RewardConfig {
+        public final Map<ResourceType, Integer> resources;
+        public final int starResources;
+        public final int faithPoints;
 
-    public final int faithPoints;
-
-    public ProductionConfig(Map<ResourceType, Integer> costResources, int costStarResources,
-                            Map<ResourceType, Integer> rewardResources, int rewardStarResources, int faithPoints) {
-        this.costResources = costResources;
-        this.costStarResources = costStarResources;
-        this.rewardResources = rewardResources;
-        this.rewardStarResources = rewardStarResources;
-        this.faithPoints = faithPoints;
+        public RewardConfig(Map<ResourceType, Integer> resources, int starResources, int faithPoints) {
+            this.resources = resources;
+            this.starResources = starResources;
+            this.faithPoints = faithPoints;
+        }
     }
 }
