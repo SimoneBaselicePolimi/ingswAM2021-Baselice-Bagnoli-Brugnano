@@ -52,8 +52,7 @@ basicProductionPower:
 # Shelves used as a Resources Storage in which Players can keep Resources bought at the Market.
 # According to the standard Game rules:
 #  - all the Shelves must contain a fixed maximum number of Resources (in particular: 1, 2 and 3 Resources),
-#  - there must be a unique Resource Type for Storage at the same time,
-#  - different Resources must be located in different Storages.
+#  - there must be a unique Resource Type for Storage at the same time.
 resourceShelves:
   - storage:
       rules:
@@ -70,7 +69,9 @@ resourceShelves:
         - ruleType: MAX_RESOURCE_NUMBER
           maxNumber: 3
         - ruleType: SAME_RESOURCE_TYPE
-  differentResourcesInDifferentStorages: true
+
+# According to the standard Game rules, different Resources must be located in different Storages.
+differentResourcesInDifferentStorages: true
 
 # Number of Resources that at the end of the Game rewards the Player with one Victory Point
 numberOfResourcesRewardingOneVictoryPoint: 5

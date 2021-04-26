@@ -1,0 +1,42 @@
+package it.polimi.ingsw.configfile;
+
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
+
+import java.util.List;
+
+public class ResourceStorageConfig {
+
+    public StorageConfig storage;
+
+    public static class StorageConfig {
+        public final List<StorageConfig.RuleConfig> rules;
+
+        public StorageConfig(List<StorageConfig.RuleConfig> rules) {
+            this.rules = rules;
+        }
+
+        public abstract static class RuleConfig {
+
+        }
+
+        public static class MaxResourceNumberRuleConfig extends RuleConfig {
+            public final int maxNumber;
+
+            public MaxResourceNumberRuleConfig(int maxNumber) {
+                this.maxNumber = maxNumber;
+            }
+        }
+
+        public static class SpecificResourceTypeRuleConfig extends RuleConfig {
+            public final ResourceType resourceType;
+
+            public SpecificResourceTypeRuleConfig(ResourceType resourceType) {
+                this.resourceType = resourceType;
+            }
+        }
+
+        public static class SameResourceTypeRuleConfig extends RuleConfig {
+
+        }
+    }
+}

@@ -21,7 +21,7 @@ developmentCards:
   - developmentCardID: DEV_G1
     level: 1
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -36,7 +36,7 @@ developmentCards:
   - developmentCardID: DEV_G2
     level: 1
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -54,7 +54,7 @@ developmentCards:
   - developmentCardID: DEV_G3
     level: 1
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 2
@@ -72,7 +72,7 @@ developmentCards:
   - developmentCardID: DEV_G4
     level: 1
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -90,7 +90,7 @@ developmentCards:
   - developmentCardID: DEV_G5
     level: 2
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -105,7 +105,7 @@ developmentCards:
   - developmentCardID: DEV_G6
     level: 2
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 1
@@ -123,7 +123,7 @@ developmentCards:
   - developmentCardID: DEV_G7
     level: 2
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             COINS: 2
@@ -139,7 +139,7 @@ developmentCards:
   - developmentCardID: DEV_G8
     level: 2
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -156,7 +156,7 @@ developmentCards:
   - developmentCardID: DEV_G9
     level: 3
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 2
@@ -172,7 +172,7 @@ developmentCards:
   - developmentCardID: DEV_G10
     level: 3
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -191,7 +191,7 @@ developmentCards:
   - developmentCardID: DEV_G11
     level: 3
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 1
@@ -207,7 +207,7 @@ developmentCards:
   - developmentCardID: DEV_G12
     level: 3
     colour: GREEN
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -225,7 +225,7 @@ developmentCards:
   - developmentCardID: DEV_Y1
     level: 1
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 1
@@ -240,7 +240,7 @@ developmentCards:
   - developmentCardID: DEV_Y2
     level: 1
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 1
@@ -258,7 +258,7 @@ developmentCards:
   - developmentCardID: DEV_Y3
     level: 1
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 2
@@ -276,7 +276,7 @@ developmentCards:
   - developmentCardID: DEV_Y4
     level: 1
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -294,7 +294,7 @@ developmentCards:
   - developmentCardID: DEV_Y5
     level: 2
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 1
@@ -309,7 +309,7 @@ developmentCards:
   - developmentCardID: DEV_Y6
     level: 2
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -327,7 +327,7 @@ developmentCards:
   - developmentCardID: DEV_Y7
     level: 2
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 2
@@ -343,7 +343,7 @@ developmentCards:
   - developmentCardID: DEV_Y8
     level: 2
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 1
@@ -360,7 +360,7 @@ developmentCards:
   - developmentCardID: DEV_Y9
     level: 3
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 2
@@ -376,7 +376,7 @@ developmentCards:
   - developmentCardID: DEV_Y10
     level: 3
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -395,7 +395,7 @@ developmentCards:
   - developmentCardID: DEV_Y11
     level: 3
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 1
@@ -411,7 +411,7 @@ developmentCards:
   - developmentCardID: DEV_Y12
     level: 3
     colour: YELLOW
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 1
@@ -429,7 +429,7 @@ developmentCards:
   - developmentCardID: DEV_B1
     level: 1
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 1
@@ -444,7 +444,7 @@ developmentCards:
   - developmentCardID: DEV_B2
     level: 1
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 1
@@ -462,7 +462,7 @@ developmentCards:
   - developmentCardID: DEV_B3
     level: 1
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             STONES: 2
@@ -480,7 +480,7 @@ developmentCards:
   - developmentCardID: DEV_B4
     level: 1
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             SHIELDS: 1
@@ -498,7 +498,7 @@ developmentCards:
   - developmentCardID: DEV_B5
     level: 2
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 1
@@ -513,7 +513,7 @@ developmentCards:
   - developmentCardID: DEV_B6
     level: 2
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -531,7 +531,7 @@ developmentCards:
   - developmentCardID: DEV_B7
     level: 2
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 2
@@ -547,7 +547,7 @@ developmentCards:
   - developmentCardID: DEV_B8
     level: 2
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 1
@@ -564,7 +564,7 @@ developmentCards:
   - developmentCardID: DEV_B9
     level: 3
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 2
@@ -580,7 +580,7 @@ developmentCards:
   - developmentCardID: DEV_B10
     level: 3
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -599,7 +599,7 @@ developmentCards:
   - developmentCardID: DEV_B11
     level: 3
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -615,7 +615,7 @@ developmentCards:
   - developmentCardID: DEV_B12
     level: 3
     colour: BLUE
-    production:
+    productions:
       - costs:
           resources:
             SERVANTS: 1
@@ -633,7 +633,7 @@ developmentCards:
   - developmentCardID: DEV_P1
     level: 1
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -648,7 +648,7 @@ developmentCards:
   - developmentCardID: DEV_P2
     level: 1
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -666,7 +666,7 @@ developmentCards:
   - developmentCardID: DEV_P3
     level: 1
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 2
@@ -684,7 +684,7 @@ developmentCards:
   - developmentCardID: DEV_P4
     level: 1
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -702,7 +702,7 @@ developmentCards:
   - developmentCardID: DEV_P5
     level: 2
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -717,7 +717,7 @@ developmentCards:
   - developmentCardID: DEV_P6
     level: 2
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -735,7 +735,7 @@ developmentCards:
   - developmentCardID: DEV_P7
     level: 2
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             STONES: 2
@@ -751,7 +751,7 @@ developmentCards:
   - developmentCardID: DEV_P8
     level: 2
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -768,7 +768,7 @@ developmentCards:
   - developmentCardID: DEV_P9
     level: 3
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             STONES: 2
@@ -784,7 +784,7 @@ developmentCards:
   - developmentCardID: DEV_P10
     level: 3
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             STONES: 1
@@ -803,7 +803,7 @@ developmentCards:
   - developmentCardID: DEV_P11
     level: 3
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
@@ -819,7 +819,7 @@ developmentCards:
   - developmentCardID: DEV_P12
     level: 3
     colour: PURPLE
-    production:
+    productions:
       - costs:
           resources:
             COINS: 1
