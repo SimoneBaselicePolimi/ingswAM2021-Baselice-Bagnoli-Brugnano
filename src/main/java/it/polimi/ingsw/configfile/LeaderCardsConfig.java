@@ -4,14 +4,12 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.utils.serialization.SerializeIdOnly;
 
 import java.util.List;
 
 public class LeaderCardsConfig {
 
-    @SerializeIdOnly
-    public final LeaderCard leaderCardID;
+    public final String leaderCardID;
 
     public final List<RequirementConfig> requirements;
 
@@ -22,7 +20,7 @@ public class LeaderCardsConfig {
 
     public final int victoryPoints;
 
-    public LeaderCardsConfig(LeaderCard leaderCardID, List<RequirementConfig> requirements,
+    public LeaderCardsConfig(String leaderCardID, List<RequirementConfig> requirements,
                              List<DevelopmentCardCostDiscountConfig> developmentCardCostDiscounts,
                              List<WhiteMarbleSubstitutionConfig> specialMarbleSubstitutions,
                              List<ResourceStorageConfig> resourceStorages,

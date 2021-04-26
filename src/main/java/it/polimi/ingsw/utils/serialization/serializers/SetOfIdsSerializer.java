@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.serialization;
+package it.polimi.ingsw.utils.serialization.serializers;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

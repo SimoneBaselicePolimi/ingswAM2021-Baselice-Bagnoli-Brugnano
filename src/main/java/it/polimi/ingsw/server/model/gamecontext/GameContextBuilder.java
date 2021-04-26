@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.gamecontext;
 
-import it.polimi.ingsw.server.model.FileManager;
+import it.polimi.ingsw.utils.FileManager;
 
 public class GameContextBuilder {
 

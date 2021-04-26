@@ -10,6 +10,13 @@ market:
   matrix:
     numberOfRows: 3
     numberOfColumns: 4
+  marbles:
+    - marbleConfig:
+        marbleID: MARBLE_WHITE
+        resourceType: null
+        numberOfFaithPoints: 0
+        isSpecial: true
+      numberOfMarbles: 4
   marblesNumber:
     MARBLE_WHITE: 4
     MARBLE_BLUE: 2
