@@ -6,11 +6,17 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.gamehistory.MainTurnInitialAction;
 import it.polimi.ingsw.server.model.gamehistory.ManageResourcesFromMarketFinalAction;
 import it.polimi.ingsw.server.model.gamehistory.ManageResourcesFromMarketInitialAction;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ManageResourcesFromMarketState extends GameState {
 
@@ -57,12 +63,16 @@ public class ManageResourcesFromMarketState extends GameState {
 
 	public Map<Player,ServerMessage> handleRequestManageResourcesFromMarket(
 		ManageResourcesFromMarketClientRequest request
-	) {
-		return null;
-	}
+	) throws ResourceStorageRuleViolationException {
 
-	//public final Map<ResourceStorage, Map<ResourceType, Integer>> resourcesToAddByStorage;
-	//
-	//    public final Map<ResourceStorage, Map<ResourceType, Integer>> starResourcesChosenToAddByStorage;
+		for (ResourceStorage storage : request.resourcesToAddByStorage.keySet())
+			storage.addResources(request.resourcesToAddByStorage.get(storage));
+
+		for (ResourceStorage storage : request.starResourcesChosenToAddByStorage.keySet())
+			storage.addResources(request.starResourcesChosenToAddByStorage.get(storage));
+
+		isMarketActionDone = true;
+		return buildGameUpdateServerMessage();
+	}
 
 }

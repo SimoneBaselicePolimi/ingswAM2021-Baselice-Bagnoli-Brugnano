@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class ManageResourcesFromMarketClientRequest extends ClientRequest {
         this.starResourcesChosenToAddByStorage = starResourcesChosenToAddByStorage;
     }
 
-    public Map<Player, ServerMessage> callHandler(GameState state) {
+    public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException {
 		return(state.handleRequestManageResourcesFromMarket(this));
 	}
 
