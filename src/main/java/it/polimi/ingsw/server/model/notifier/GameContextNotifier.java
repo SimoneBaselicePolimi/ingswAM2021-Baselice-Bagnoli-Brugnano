@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class GameContextNotifier extends GameContext implements Notifier {
 
-    protected GameContextNotifier(
+    public GameContextNotifier(
         Market market,
         DevelopmentCardsTable developmentCardsTable,
         FaithPath faithPath,

@@ -1,8 +1,11 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
 
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,13 +21,28 @@ public class DevelopmentCardsTable {
 	/**
 	 * DevelopmentCardsTable constructor
 	 * @param cards that are placed in decks
+     * @param gameItemsManager a reference to gameItemsManager is needed to register all the decks created
+	 *                         (see {@link it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem})
+     * @param getIdForDeckWithColourAndLevel lambda that specifies the criteria for assigning the IDs of the decks
 	 */
-	public DevelopmentCardsTable(List<DevelopmentCard> cards) {
+	public DevelopmentCardsTable(
+		List<DevelopmentCard> cards,
+		GameItemsManager gameItemsManager,
+		BiFunction<DevelopmentCardColour, DevelopmentCardLevel, String> getIdForDeckWithColourAndLevel
+	) {
 		this.cards = cards.stream().collect(Collectors.groupingBy(
 			DevelopmentCard::getLevel,
 			Collectors.groupingBy(
 				DevelopmentCard::getColour,
-				Collectors.collectingAndThen(Collectors.toList(), ShuffledCardDeck::new)
+				Collectors.collectingAndThen(
+					Collectors.toList(),
+					cardsForDeck -> {
+						DevelopmentCardColour deckColour = cardsForDeck.get(0).getColour();
+						DevelopmentCardLevel deckLevel = cardsForDeck.get(0).getLevel();
+						String deckID = getIdForDeckWithColourAndLevel.apply(deckColour, deckLevel);
+						return new ShuffledCardDeck<>(deckID, gameItemsManager, cardsForDeck);
+					}
+				)
 			)
 		));
 	}

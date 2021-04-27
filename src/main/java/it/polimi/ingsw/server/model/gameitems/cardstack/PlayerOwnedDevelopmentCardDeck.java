@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
@@ -13,6 +14,13 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLev
  * one of its elements and to show all the elements stored in it.
  */
 public class PlayerOwnedDevelopmentCardDeck extends CardDeck<DevelopmentCard> {
+
+	protected PlayerOwnedDevelopmentCardDeck(
+		String deckID,
+		GameItemsManager gameItemsManager
+	) {
+		super(deckID, gameItemsManager);
+	}
 
 	/**
 	 * Method to push a Development Card on the top of the Deck if the Level of the Card is suitable for this Deck and

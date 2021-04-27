@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.servermessage;
 
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.utils.serialization.annotations.SerializeAsSetOfIds;
+import it.polimi.ingsw.utils.serialization.annotations.*;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 
 import java.util.Set;

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
+
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
@@ -11,11 +14,19 @@ import java.util.Stack;
  * @param <C> generic parameter used to indicate the type of Cards which compose the Deck (e.g. Leader Card
  *           or Development Card)
  */
-public abstract class CardDeck<C> {
+public abstract class CardDeck<C> extends RegisteredIdentifiableItem {
+
 	/**
 	 * Stack of generics which represents the Card Deck
 	 */
 	protected Stack<C> cardDeck = new Stack<>();
+
+	protected CardDeck(
+		String deckID,
+		GameItemsManager gameItemsManager
+	) {
+		super(deckID, gameItemsManager);
+	}
 
 	/**
 	 * Method to test if the Card Deck is empty.

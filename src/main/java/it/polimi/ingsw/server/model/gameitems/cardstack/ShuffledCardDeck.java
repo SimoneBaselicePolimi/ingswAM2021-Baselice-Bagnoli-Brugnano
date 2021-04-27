@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +22,12 @@ public class ShuffledCardDeck<C> extends CardDeck<C> {
 	 * Shuffled Card Deck constructor.
 	 * @param objects list of generic Cards that will be randomly organized in this Deck
 	 */
-	public ShuffledCardDeck(List<C> objects) {
+	public ShuffledCardDeck(
+		String deckID,
+		GameItemsManager gameItemsManager,
+		List<C> objects
+	) {
+		super(deckID, gameItemsManager);
 		randGenerator = new Random();
 		initializeShuffledCardDeck(objects);
 	}

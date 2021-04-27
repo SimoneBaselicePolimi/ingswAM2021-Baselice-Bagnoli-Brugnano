@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -10,6 +12,10 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShuffledCardDeckTest {
+
+    @Mock
+    GameItemsManager gameItemsManager;
+
     List<String> testCards = List.of(
             "card1",
             "card2",
@@ -55,7 +61,7 @@ class ShuffledCardDeckTest {
      */
     @Test
     void testPeekAll() throws EmptyStackException {
-        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>(testCards);
+        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>("deckId1", gameItemsManager, testCards);
         List<String> cardsList = deck.peekAll();
         assertTrue(testCards.size() == cardsList.size() &&
                 testCards.containsAll(cardsList) && cardsList.containsAll(testCards));
@@ -70,7 +76,7 @@ class ShuffledCardDeckTest {
      */
     @Test
     void testPushOnTop() throws ForbiddenPushOnTopException{
-        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>(new ArrayList<>());
+        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>("deckId1", gameItemsManager, new ArrayList<>());
         assertThrows(EmptyStackException.class, deck::peek);
 
         deck.pushOnTop(oneMoreTestCard);
@@ -86,7 +92,7 @@ class ShuffledCardDeckTest {
      */
     @Test
     void testPop() throws ForbiddenPushOnTopException{
-        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>(testCards);
+        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>("deckId1", gameItemsManager, testCards);
 
         deck.pushOnTop(oneMoreTestCard);
         assertEquals(oneMoreTestCard, deck.pop());

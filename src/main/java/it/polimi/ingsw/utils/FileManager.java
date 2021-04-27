@@ -12,50 +12,56 @@ import java.util.Map;
 
 public class FileManager {
 
+	protected static FileManager instance;
+
 	public static final String DEFAULT_RULES_PATH =  "GameRulesConfig/StandardGameRules";
 
 	public static final String GAME_INFO_CONFIG_FILE_NAME =  "game-info-config.yml";
 	public static final String MARKET_CONFIG_PATH =  "market-config.yml";
 	//TODO
 
-
-	protected String rulesPath;
-
 	protected Map<String, GameRules> cachedGameRules;
 
 	protected ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 
+	protected FileManager() {}
 
-	public FileManager(String path) {
-		rulesPath = DEFAULT_RULES_PATH;
+	public static FileManager getFileManagerInstance() {
+		if (instance == null)
+			instance = new FileManager();
+		return instance;
 	}
 
-	public GameRules getGameRules() throws IOException {
-		if(cachedGameRules.containsKey(rulesPath))
+	public GameRules getDefaultGameRules() throws IOException {
+		return getGameRules(DEFAULT_RULES_PATH);
+	}
+
+	public GameRules getGameRules(String gameRulesPath) throws IOException {
+		if(cachedGameRules.containsKey(gameRulesPath))
 			return cachedGameRules.get(cachedGameRules);
 		else
-		    return readGameRules();
+		    return readGameRules(gameRulesPath);
 	}
 
-	protected GameRules readGameRules() throws IOException {
+	protected GameRules readGameRules(String gameRulesPath) throws IOException {
 		GameInfoConfig gameInfoConfig = SerializationHelper.deserializeYamlAsObject(
-			getGameRulesFile(GAME_INFO_CONFIG_FILE_NAME),
+			getGameRulesFile(gameRulesPath, GAME_INFO_CONFIG_FILE_NAME),
 			GameInfoConfig.class
 		);
 
 		MarketConfig marketConfig = SerializationHelper.deserializeYamlAsObject(
-			getGameRulesFile(MARKET_CONFIG_PATH),
+			getGameRulesFile(gameRulesPath, MARKET_CONFIG_PATH),
 			MarketConfig.class
 		);
 
-		GameRules gameRules = null;
-			// new GameRules(gameInfoConfig, marketConfig);
+		//TODO
+		GameRules gameRules =  null; //new GameRules(gameInfoConfig, marketConfig, );
 
-		cachedGameRules.put(rulesPath, gameRules);
+		cachedGameRules.put(gameRulesPath, gameRules);
 		return gameRules;
 	}
 
-	protected InputStream getGameRulesFile(String fileName) {
-		return classloader.getResourceAsStream(Path.of(rulesPath, fileName).toString());
+	protected InputStream getGameRulesFile(String gameRulesPath, String fileName) {
+		return classloader.getResourceAsStream(Path.of(gameRulesPath, fileName).toString());
 	}
 }
