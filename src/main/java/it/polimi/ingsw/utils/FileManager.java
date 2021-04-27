@@ -48,7 +48,8 @@ public class FileManager {
 			MarketConfig.class
 		);
 
-		GameRules gameRules = new GameRules(gameInfoConfig, marketConfig);
+		GameRules gameRules = null;
+			// new GameRules(gameInfoConfig, marketConfig);
 
 		cachedGameRules.put(rulesPath, gameRules);
 		return gameRules;

@@ -3,14 +3,14 @@ package it.polimi.ingsw.configfile;
 import java.util.List;
 
 public class FaithPathConfig {
-    public final int length;
+    public final int faithPathLength;
 
     public final List<VaticanReportSectionConfig> vaticanReportSections;
     public final List<VictoryPointsByPositionConfig> victoryPointsByPositions;
 
-    public FaithPathConfig(int length, List<VaticanReportSectionConfig> vaticanReportSections,
+    public FaithPathConfig(int faithPathLength, List<VaticanReportSectionConfig> vaticanReportSections,
                            List<VictoryPointsByPositionConfig> victoryPointsByPositions) {
-        this.length = length;
+        this.faithPathLength = faithPathLength;
         this.vaticanReportSections = vaticanReportSections;
         this.victoryPointsByPositions = victoryPointsByPositions;
     }

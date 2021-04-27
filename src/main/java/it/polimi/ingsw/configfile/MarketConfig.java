@@ -3,24 +3,26 @@ package it.polimi.ingsw.configfile;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.List;
-import java.util.Map;
 
 public class MarketConfig {
 
-    public final int numberOfRows;
-
-    public final int numberOfColumns;
+    public final MatrixConfig marketMatrix;
 
     public final List<MarbleConfigAndNumber> marbles;
 
-    public MarketConfig(
-        int numberOfRows,
-        int numberOfColumns,
-        List<MarbleConfigAndNumber> marbles
-    ) {
-        this.numberOfRows = numberOfRows;
-        this.numberOfColumns = numberOfColumns;
+    public MarketConfig(MatrixConfig marketMatrix, List<MarbleConfigAndNumber> marbles) {
+        this.marketMatrix = marketMatrix;
         this.marbles = marbles;
+    }
+
+    public static class MatrixConfig {
+        public final int numberOfRows;
+        public final int numberOfColumns;
+
+        public MatrixConfig(int numberOfRows, int numberOfColumns) {
+            this.numberOfRows = numberOfRows;
+            this.numberOfColumns = numberOfColumns;
+        }
     }
 
     public static class  MarbleConfigAndNumber {
