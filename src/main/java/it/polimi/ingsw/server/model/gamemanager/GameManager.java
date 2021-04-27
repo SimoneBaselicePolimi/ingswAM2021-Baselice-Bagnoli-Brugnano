@@ -12,6 +12,7 @@ import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.notifier.Notifier;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -86,7 +87,7 @@ public class GameManager {
 		return gameItemsManager;
 	}
 
-	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) {
+	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) throws ResourceStorageRuleViolationException {
 		return request.callHandler(currentState);
 	}
 

@@ -7,12 +7,13 @@ import it.polimi.ingsw.network.clientrequest.MarketActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.network.servermessage.*;
+import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
 import java.util.Map;
 
 public class GameTurnMainActionState extends GameState {
 
-	public GameTurnMainActionState(GameContext gameContext, Player player) {
+	public GameTurnMainActionState(GameManager gameManager) {
 
         super(gameManager);
     }

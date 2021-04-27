@@ -7,12 +7,13 @@ import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.network.servermessage.EndTurnServerMessage;
 import it.polimi.ingsw.network.servermessage.LeaderActionServerMessage;
+import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
 import java.util.Map;
 
 public class GameTurnPostActionState extends GameState {
 
-    public GameTurnPostActionState() {
+    public GameTurnPostActionState(GameManager gameManager) {
         super(gameManager);
     }
 

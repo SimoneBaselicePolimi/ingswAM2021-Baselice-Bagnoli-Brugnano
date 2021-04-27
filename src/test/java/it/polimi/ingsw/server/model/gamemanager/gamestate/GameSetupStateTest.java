@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
 
 public class GameSetupStateTest {
-
+/*
     Player player1 = new Player("first");
     Player player2 = new Player("second");
     Player player3 = new Player("third");
@@ -70,8 +70,8 @@ public class GameSetupStateTest {
 
         //assertEquals(state1.getLeaderCardsGivenToThePlayers(), state1Copy.getLeaderCardsGivenToThePlayers());
     }
+*/
 }
-
 
 //@Test
 //    void testRandomShuffle() {
