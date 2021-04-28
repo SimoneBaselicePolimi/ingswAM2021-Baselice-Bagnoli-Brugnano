@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamehistory.*;
 
 import java.util.*;
 
@@ -42,6 +43,11 @@ public class FaithPath {
 	protected Map<Player,Integer> victoryPoints = new HashMap<>();
 
 	/**
+	 * see {GameHistory}
+	 */
+	protected GameHistory gameHistory;
+
+	/**
 	 * Faith Path constructor.
 	 * Initialize each Player's position in the Faith Track and the state of the Pope's Favor cards.
 	 * @param faithPathLength length of the Faith Track
@@ -51,13 +57,19 @@ public class FaithPath {
 	 * @throws IllegalArgumentException if there are no Players or if the victory points passed as parameter
 	 * are not as many as the spaces in the Faith Track
 	 */
-	public FaithPath(int faithPathLength, List<VaticanReportSection> vaticanSections,
-					 int[] victoryPointsByPosition, Set<Player> players) throws IllegalArgumentException {
+	public FaithPath(
+		int faithPathLength,
+		List<VaticanReportSection> vaticanSections,
+		int[] victoryPointsByPosition,
+		Set<Player> players,
+		GameHistory gameHistory
+	) throws IllegalArgumentException {
 		if (faithPathLength != victoryPointsByPosition.length || players == null || players.isEmpty())
 			throw new IllegalArgumentException();
 		this.faithPathLength = faithPathLength;
 		this.vaticanReportSections = vaticanSections;
 		this.victoryPointsByPosition = victoryPointsByPosition;
+
 		for (Player player : players) {
 			faithPositions.put(player, 0);
 			List<PopeFavorCardState> cardList = new ArrayList<>();
@@ -122,7 +134,7 @@ public class FaithPath {
 	 * Returns the victory points scored by each Player.
 	 * @return number of victory points scored by each Player
 	 */
-	public Map<Player,Integer> getVictoryPoints () {
+	public Map<Player,Integer> getVictoryPoints() {
 		for(Player player : victoryPoints.keySet())
 			victoryPoints.put(player,getPlayerVictoryPoints(player));
 		return victoryPoints;
@@ -148,18 +160,28 @@ public class FaithPath {
 	public FaithPathEvent move(Player player, int steps) {
 		faithPositions.put(player, Math.min(faithPositions.get(player) + steps, faithPathLength - 1));
 
+		gameHistory.addAction(
+			new FaithPathMoveAction(player, steps)
+		);
+
 		boolean vaticanReport = false;
 		int numSection = 0;
 		for (VaticanReportSection section : vaticanReportSections) {
 			if (getPlayerFaithPosition(player) >= section.getPopeSpacePos() &&
 					popeFavorCards.get(player).get(numSection) == PopeFavorCardState.HIDDEN) {
 				vaticanReport = true;
+
+				gameHistory.addAction(new FaithPathVaticanReportAction());
+
 				for(Player p : popeFavorCards.keySet())
 					turnPopeFavorCard(p, section, numSection);
 			}
 			numSection++;
 		}
-		return new FaithPathEvent(lastPositionHasBeenReached(), vaticanReport);
+		boolean lastPositionReached = lastPositionHasBeenReached();
+		if (lastPositionReached)
+			gameHistory.addAction(new FaithPathLastPositionReachedAction(player));
+		return new FaithPathEvent(lastPositionReached, vaticanReport);
 	}
 
 	/**

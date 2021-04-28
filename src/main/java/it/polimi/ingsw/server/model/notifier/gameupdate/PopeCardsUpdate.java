@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
 import java.util.List;
 import java.util.Map;
 
-public class FaithAndPopeCardsUpdate extends FaithUpdate {
+public class PopeCardsUpdate extends GameUpdate {
 
 	public Map<Player, List<PopeFavorCardState>> faithPopeCards;
 

@@ -6,6 +6,6 @@ public class SetupStartedAction extends GameAction{
 
     @Override
     public String getActionMessage() {
-        return Localization.getLocalization().getString("setup.initialMessage");
+        return Localization.getLocalization().getString("gameHistory.gameState.setup.initialMessage");
     }
 }

@@ -7,21 +7,21 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
-public class SetupChoiceAction extends GameAction{
+public class ObtainedResourcesMarketAction extends GameAction {
     private final Player player;
-    private final Map<ResourceType,Integer> initialResources;
+    private final Map<ResourceType, Integer> resourcesObtained;
 
-    public SetupChoiceAction(Player player, Map<ResourceType, Integer> initialResources) {
+    public ObtainedResourcesMarketAction(Player player, Map<ResourceType, Integer> resourcesObtained) {
         this.player = player;
-        this.initialResources = initialResources;
+        this.resourcesObtained = resourcesObtained;
     }
 
     @Override
     public String getActionMessage() {
         return Localization.getLocalization().getString(
-            "gameHistory.gameState.setup.initialMessage",
+            "gameHistory.gameState.manageResourcesFromMarketTurn.initialMessage",
             player.getName(),
-            LocalizationUtils.getResourcesListAsString(initialResources)
+            LocalizationUtils.getResourcesListAsString(resourcesObtained)
         );
     }
 }

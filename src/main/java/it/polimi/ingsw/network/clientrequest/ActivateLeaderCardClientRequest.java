@@ -19,7 +19,6 @@ public class ActivateLeaderCardClientRequest extends ClientRequest {
 
     public ActivateLeaderCardClientRequest(
         Player player,
-        Set<LeaderCard> leaderCardsThePlayerWantsToDiscard,
         Set<LeaderCard> leaderCardsThePlayerWantsToActivate
     ) {
         super(player);
@@ -27,7 +26,7 @@ public class ActivateLeaderCardClientRequest extends ClientRequest {
     }
 
     public Map<Player, ServerMessage> callHandler(GameState state) throws LeaderCardRequirementsNotSatisfiedException {
-		return(state.handleRequestLeaderAction(this));
+		return(state.handleRequestActivateLeaderAction(this));
 	}
 
     @Override

@@ -14,7 +14,7 @@ public class Localization {
     //mainAction:
     //   playerTurnStarted: the turn of player %s has started
     //Localization.getLocalization.getString("startMessage");
-    //Localization.getLocalization.getString("setup.leaderCardMessage");
+    //Localization.getLocalization.getString("gameHistory.gameState.setup.leaderCardMessage");
     //Localization.getLocalization.getString("mainAction.playerTurnStarted", player1);
 
 

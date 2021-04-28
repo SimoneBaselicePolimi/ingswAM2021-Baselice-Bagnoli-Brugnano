@@ -55,8 +55,10 @@ public class ManageResourcesFromMarketClientRequestValidator extends ClientReque
             );
 
         // check if the resources the player wants to add in storages are the same as those assigned to him
-        Map<ResourceType, Integer> sumOfResourcesFromThePlayer =
-            ResourceUtils.sum(requestToValidate.resourcesToAddByStorage.values());
+        Map<ResourceType, Integer> sumOfResourcesFromThePlayer = ResourceUtils.sum(
+            ResourceUtils.sum(requestToValidate.resourcesToAddByStorage.values()),
+            requestToValidate.resourcesLeftInTemporaryStorage
+        );
         if(!sumOfResourcesFromThePlayer.equals(playerContext.getTemporaryStorageResources())){
             return createInvalidRequestServerMessage(
                 "The resources the player wants to add in storage are not present in the group " +
@@ -73,7 +75,6 @@ public class ManageResourcesFromMarketClientRequestValidator extends ClientReque
             Map.Entry::getKey,
             Collectors.reducing(new HashMap<>(), Map.Entry::getValue, ResourceUtils::sum))
         );
-
         for (ResourceStorage storage : totalResourcesByStorage.keySet()){
             if (!storage.canAddResources(totalResourcesByStorage.get(storage))){
                 return createInvalidRequestServerMessage(
@@ -83,6 +84,7 @@ public class ManageResourcesFromMarketClientRequestValidator extends ClientReque
                 );
             }
         }
+
         return Optional.empty();
     }
 }

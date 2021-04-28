@@ -3,20 +3,18 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.gamehistory.MainTurnInitialAction;
-import it.polimi.ingsw.server.model.gamehistory.ManageResourcesFromMarketFinalAction;
-import it.polimi.ingsw.server.model.gamehistory.ManageResourcesFromMarketInitialAction;
+import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathEvent;
+import it.polimi.ingsw.server.model.gamehistory.*;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ManageResourcesFromMarketState extends GameState {
 
@@ -27,31 +25,6 @@ public class ManageResourcesFromMarketState extends GameState {
     	super(gameManager);
 		activePlayer = gameManager.getGameContext().getActivePlayer();
     }
-
-    public Map<Player, ServerMessage> getInitialServerMessage() {
-		gameManager.getGameHistory().addAction(
-			new ManageResourcesFromMarketInitialAction(activePlayer)
-		);
-		//empty serverMessage
-		return gameManager.getPlayers().stream()
-			.collect(
-				Collectors.toMap(Function.identity(),
-					player ->  new ServerMessage()
-				));
-	}
-
-	public Map<Player,ServerMessage> getFinalServerMessage() {
-
-		gameManager.getGameHistory().addAction(
-			new ManageResourcesFromMarketFinalAction(activePlayer)
-		);
-		//empty serverMessage
-		return gameManager.getPlayers().stream()
-			.collect(
-				Collectors.toMap(Function.identity(),
-					player ->  new ServerMessage()
-				));
-	}
 
 	public boolean isStateDone() {
 		return isMarketActionDone;
@@ -70,6 +43,37 @@ public class ManageResourcesFromMarketState extends GameState {
 
 		for (ResourceStorage storage : request.starResourcesChosenToAddByStorage.keySet())
 			storage.addResources(request.starResourcesChosenToAddByStorage.get(storage));
+
+		Map<ResourceType, Integer> totalResourcesObtained = ResourceUtils.sum(
+			ResourceUtils.sum(request.resourcesToAddByStorage.values()),
+			ResourceUtils.sum(request.starResourcesChosenToAddByStorage.values())
+		);
+
+		gameManager.getGameHistory().addAction(
+			new ObtainedResourcesMarketAction(activePlayer, totalResourcesObtained));
+
+		int numberOfResourcesLeftInTemporaryStorage = request.resourcesLeftInTemporaryStorage.values().stream()
+			.mapToInt(i -> i)
+			.sum();
+		if (numberOfResourcesLeftInTemporaryStorage != 0){
+			Set<Player> otherPlayers = gameManager.getPlayers().stream()
+				.filter(p -> !p.equals(activePlayer))
+				.collect(Collectors.toSet());
+
+			for (Player otherPlayer : otherPlayers) {
+				gameManager.getGameContext().getFaithPath().move(
+					otherPlayer,
+					numberOfResourcesLeftInTemporaryStorage
+				);
+			}
+
+			gameManager.getGameHistory().addAction(
+				new DiscardedResourcesMarketAction(
+					activePlayer,
+					numberOfResourcesLeftInTemporaryStorage
+				)
+			);
+		}
 
 		isMarketActionDone = true;
 		return buildGameUpdateServerMessage();

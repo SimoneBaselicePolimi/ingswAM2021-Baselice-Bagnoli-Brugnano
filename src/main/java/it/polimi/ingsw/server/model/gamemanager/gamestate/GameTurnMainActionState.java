@@ -6,7 +6,6 @@ import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gamehistory.MainTurnFinalAction;
 import it.polimi.ingsw.server.model.gamehistory.MainTurnInitialAction;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.Production;
@@ -62,42 +61,30 @@ public class GameTurnMainActionState extends GameState {
 	 * @return a map specifying the initial message to be sent to each player
 	 */
 	public Map<Player, ServerMessage> getInitialServerMessage() {
+
 		gameManager.getGameHistory().addAction(
 			new MainTurnInitialAction(activePlayer)
 		);
-		//empty serverMessage
-		 return gameManager.getPlayers().stream()
-			.collect(
-				Collectors.toMap(Function.identity(),
-					player ->  new ServerMessage()
-				));
+
+		return buildGameUpdateServerMessage();
 	}
 
 	/**
-	 * Method that sends to each player the final message at the end of each turn.
-	 * @return a map specifying the final message to be sent to each player
-	 */
-	public Map<Player,ServerMessage> getFinalServerMessage() {
-		gameManager.getGameHistory().addAction(
-			new MainTurnFinalAction(activePlayer)
-		);
-		//empty serverMessage
-		return gameManager.getPlayers().stream()
-			.collect(
-				Collectors.toMap(Function.identity(),
-					player ->  new ServerMessage()
-				));
-	}
-
-	/**
-	 * Method that verifies that the current status is closed
+	 * Method that verifies that the current state is closed
 	 * @return true if the player's turn is over
 	 */
 	public boolean isStateDone() {
 		return mainActionDone;
 	}
 
-	//TODO
+	/**
+	 * Method that changes the state of the game.
+	 * The main state ends and the next possible game states are:
+	 * - The post state if the player has bought a development card or activated a production
+	 * - The market state if the player has requested to take resources from the market
+	 * @return GameState new game state, it can be a ManageResourcesFromMarketState or a GameTurnPostActionState
+	 * according to the action performed by the player in the current state
+	 */
 	public GameState getNextState() {
 		if (hasPlayerDoneMarketAction)
 			return new ManageResourcesFromMarketState(gameManager);
@@ -105,8 +92,16 @@ public class GameTurnMainActionState extends GameState {
 			return new GameTurnPostActionState(gameManager);
 	}
 
+	/**
+	 * Method that discards the leader card chosen by the player according to his request.
+	 * The leader card state changes from active to discard.
+	 * @param request request of the player to discard the leader card, see {@link DiscardLeaderCardClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to discard some leader cards but not
+	 * all card requirements have been satisfied
+	 */
 	@Override
-	public Map<Player, ServerMessage> handleRequestLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+	public Map<Player, ServerMessage> handleRequestDiscardLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 
 		// discard leader cards
 		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToDiscard)
@@ -115,8 +110,16 @@ public class GameTurnMainActionState extends GameState {
 		return buildGameUpdateServerMessage();
 	}
 
+	/**
+	 * Method that activates the leader card chosen by the player according to his request.
+	 * The leader card state changes from hidden to active.
+	 * @param request request of the player to activate the leader card, see {@link ActivateLeaderCardClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to activate some leader cards but not
+	 * all card requirements have been satisfied
+	 */
 	@Override
-	public Map<Player, GameUpdateServerMessage> handleRequestLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+	public Map<Player, GameUpdateServerMessage> handleRequestActivateLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 
 		// activate leader cards
 		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToActivate)
@@ -125,6 +128,13 @@ public class GameTurnMainActionState extends GameState {
 		return buildGameUpdateServerMessage();
 	}
 
+	/**
+	 *
+	 * @param request
+	 * @return
+	 * @throws ResourceStorageRuleViolationException
+	 * @throws NotEnoughResourcesException
+	 */
 	@Override
 	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(
 		MarketActionFetchColumnClientRequest request
@@ -181,6 +191,14 @@ public class GameTurnMainActionState extends GameState {
 
 	}
 
+	/**
+	 * Method that allows to buy the development card chosen by the player among the available ones.
+	 * The card is paid by the player with the required cost resources.
+	 * @param request request of the player to buy the development card, see {@link DevelopmentActionClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws ForbiddenPushOnTopException if the rules imposed by the deck do not allow the development card
+	 * to be pushed on the top of this Deck
+	 */
 	@Override
 	public Map<Player, ServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) throws ForbiddenPushOnTopException {
 
@@ -200,6 +218,13 @@ public class GameTurnMainActionState extends GameState {
 		return buildGameUpdateServerMessage();
 	}
 
+	/**
+	 *
+	 * @param request
+	 * @return
+	 * @throws NotEnoughResourcesException
+	 * @throws ResourceStorageRuleViolationException
+	 */
 	@Override
 	public Map<Player, ServerMessage> handleRequestProductionAction(
 		ProductionActionClientRequest request
@@ -240,6 +265,12 @@ public class GameTurnMainActionState extends GameState {
 		);
 
 		playerContext.getInfiniteChest().addResources(productionRewardsWithStarResources);
+
+		//add faith points
+		gameManager.getGameContext().getFaithPath().move(
+			activePlayer,
+			request.productions.stream().mapToInt(Production::getProductionFaithReward).sum()
+		);
 
 		mainActionDone = true;
 		return buildGameUpdateServerMessage();
