@@ -54,8 +54,8 @@ class ResourceStorageTest {
         ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder().
                 createResourceStorage("secondStorage");
 
-        assertEquals(storage1.getStorageID(), "firstStorage");
-        assertEquals(storage2.getStorageID(), "secondStorage");
+        assertEquals(storage1.getItemId(), "firstStorage");
+        assertEquals(storage2.getItemId(), "secondStorage");
     }
 
     /**
@@ -274,7 +274,7 @@ class ResourceStorageTest {
 
         assertEquals(storage1, storage4);
         assertEquals(storage1, storage5);
-        assertNotEquals(storage1, storage6);
+        assertNotEquals(storage3, storage6);
         assertNotEquals(storage6, storage5);
         assertNotEquals(storage4, storage2);
     }

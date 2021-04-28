@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.leadercard;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItemTest;
-import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
@@ -18,10 +18,12 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
+
+    @Mock
+    GameItemsManager gameItemsManager;
 
     @Mock
     PlayerContext player;
@@ -59,13 +61,15 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         listTrueRequirements.add(trueRequirement1);
         listTrueRequirements.add(trueRequirement2);
 
-        LeaderCard leaderCard1 = new LeaderCard("1", listTrueRequirements, null,
-                null, null,null, 3);
+        LeaderCard leaderCard1 = new LeaderCard(
+            "1", gameItemsManager, listTrueRequirements, null, null, null,null, 3
+        );
         assertTrue(() -> leaderCard1.areRequirementsSatisfied(player));
         assertDoesNotThrow(() ->leaderCard1.activateLeaderCard(player));
 
-        LeaderCard leaderCard2 = new LeaderCard("2", listTrueRequirements, null,
-                null, null,null, 2);
+        LeaderCard leaderCard2 = new LeaderCard(
+            "2", gameItemsManager, listTrueRequirements, null, null, null,null, 2
+        );
         assertTrue(() -> leaderCard2.areRequirementsSatisfied(player));
         assertDoesNotThrow(() ->leaderCard2.activateLeaderCard(player));
     }
@@ -85,13 +89,15 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         listTrueAndFalseRequirements.add(trueRequirement1);
         listTrueAndFalseRequirements.add(falseRequirement2);
 
-        LeaderCard leaderCard3 = new LeaderCard("3", listFalseRequirements, null,
-                null, null, null, 2);
+        LeaderCard leaderCard3 = new LeaderCard(
+            "3", gameItemsManager, listFalseRequirements, null, null, null, null, 2
+        );
         assertFalse(() -> leaderCard3.areRequirementsSatisfied(player));
         assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard3.activateLeaderCard(player));
 
-        LeaderCard leaderCard4 = new LeaderCard("4", listTrueAndFalseRequirements, null,
-                null, null, null, 2);
+        LeaderCard leaderCard4 = new LeaderCard(
+            "4", gameItemsManager, listTrueAndFalseRequirements, null, null, null, null, 2
+        );
         assertFalse(() -> leaderCard4.areRequirementsSatisfied(player));
         assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard3.activateLeaderCard(player));
     }
@@ -106,8 +112,9 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         listTrueRequirements.add(trueRequirement1);
         listTrueRequirements.add(trueRequirement2);
 
-        LeaderCard leaderCard1 = new LeaderCard("1", listTrueRequirements, null,
-                null, null,null, 3);
+        LeaderCard leaderCard1 = new LeaderCard(
+            "1", gameItemsManager, listTrueRequirements, null,null, null,null, 3
+        );
         assertEquals(leaderCard1.getState(), LeaderCardState.HIDDEN);
         assertDoesNotThrow(() ->leaderCard1.activateLeaderCard(player));
         assertEquals(leaderCard1.getState(), LeaderCardState.ACTIVE);
@@ -124,8 +131,9 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         listTrueRequirements.add(trueRequirement1);
         listTrueRequirements.add(trueRequirement2);
 
-        LeaderCard leaderCard1 = new LeaderCard("1", listTrueRequirements, null,
-                null, null,null, 3);
+        LeaderCard leaderCard1 = new LeaderCard(
+            "1", gameItemsManager, listTrueRequirements,null, null, null,null, 3
+        );
         assertEquals(leaderCard1.getState(), LeaderCardState.HIDDEN);
         assertDoesNotThrow(leaderCard1::discardLeaderCard);
         assertEquals(leaderCard1.getState(), LeaderCardState.DISCARDED);
@@ -135,14 +143,17 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
     @Test
     void testGetLeaderCardId() {
         String id = "1";
-        LeaderCard leaderCard1 = new LeaderCard("1", new ArrayList<>(), null,
-            null, null,null, 3);
+        LeaderCard leaderCard1 = new LeaderCard(
+            "1", gameItemsManager, new ArrayList<>(), null, null, null,null, 3
+        );
         assertEquals(id, leaderCard1.getItemId());
     }
 
     @Override
     public LeaderCard initializeItemWithId(String id) {
-        return new LeaderCard(id, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0);
+        return new LeaderCard(
+            id, gameItemsManager, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0
+        );
     }
 
 }

@@ -34,17 +34,17 @@ class ShuffledCardDeckTest {
      */
     @Test
     void testRandomShuffle() {
-        ShuffledCardDeck<String> deck1 = new ShuffledCardDeck<>(new Random(1), testCards);
+        ShuffledCardDeck<String> deck1 = new ShuffledCardDeck<>("deckId1", gameItemsManager, new Random(1), testCards);
         List<String> listDeck1 = new ArrayList<>();
         while(!deck1.isEmpty())
             listDeck1.add(deck1.pop());
 
-        ShuffledCardDeck<String> deck1_copy = new ShuffledCardDeck<>(new Random(1), testCards);
+        ShuffledCardDeck<String> deck1_copy = new ShuffledCardDeck<>("deckId1Copy", gameItemsManager, new Random(1), testCards);
         List<String> listDeck1_copy = new ArrayList<>();
         while(!deck1_copy.isEmpty())
             listDeck1_copy.add(deck1_copy.pop());
 
-        ShuffledCardDeck<String> deck2 = new ShuffledCardDeck<>(new Random(2), testCards);
+        ShuffledCardDeck<String> deck2 = new ShuffledCardDeck<>("deckId2", gameItemsManager, new Random(2), testCards);
         List<String> listDeck2 = new ArrayList<>();
         while(!deck2.isEmpty())
             listDeck2.add(deck2.pop());

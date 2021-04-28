@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.storage;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.HashMap;
@@ -9,11 +11,8 @@ import java.util.Map;
 /**
  * This class represent a storage that contains resources
  */
-public class ResourceStorage {
-	/**
-	 * ID storage identifier
-	 */
-	private String storageID;
+public class ResourceStorage extends RegisteredIdentifiableItem {
+
 	/**
 	 * List of rules that the storage implements
 	 */
@@ -25,20 +24,14 @@ public class ResourceStorage {
 
 	/**
 	 * ResourceStorage Constructor
+	 * @param resourceStorageID ID which identifies this specific Resource Storage
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new ResourceStorage object
+	 *                          (see {@link RegisteredIdentifiableItem})
 	 * @param rules that the storage implements
-	 * @param storageID storage identifier
 	 */
-	protected ResourceStorage(List<ResourceStorageRule> rules, String storageID){
+	protected ResourceStorage(String resourceStorageID, GameItemsManager gameItemsManager, List<ResourceStorageRule> rules){
+		super(resourceStorageID, gameItemsManager);
 		this.rules = rules;
-		this.storageID = storageID;
-	}
-
-	/**
-	 * Method to get the storage identifier
-	 * @return storage identifier
-	 */
-	public String getStorageID(){
-		return storageID;
 	}
 
 	/**
@@ -115,11 +108,11 @@ public class ResourceStorage {
 		if (!(o instanceof ResourceStorage))
 			return false;
 		ResourceStorage m = (ResourceStorage) o;
-			return (storageID.equals(m.storageID));
+			return (getItemId().equals(m.getItemId()));
 	}
 
 	@Override
 	public int hashCode() {
-		return storageID.hashCode();
+		return getItemId().hashCode();
 	}
 }

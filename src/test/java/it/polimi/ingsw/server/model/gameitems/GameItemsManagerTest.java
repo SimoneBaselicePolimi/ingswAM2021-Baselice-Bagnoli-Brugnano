@@ -30,6 +30,7 @@ class GameItemsManagerTest {
 
         lc1 = new LeaderCard(
             "lc1",
+            itemsManager,
             new ArrayList<>(),
             new ArrayList<>(),
             new ArrayList<>(),
@@ -40,6 +41,7 @@ class GameItemsManagerTest {
 
         lc2 = new LeaderCard(
             "lc2",
+            itemsManager,
             new ArrayList<>(),
             new ArrayList<>(),
             new ArrayList<>(),
@@ -50,6 +52,7 @@ class GameItemsManagerTest {
 
         dc1 = new DevelopmentCard(
             "dc1",
+            itemsManager,
             DevelopmentCardLevel.FIRST_LEVEL,
             DevelopmentCardColour.BLUE,
             mock(Production.class),

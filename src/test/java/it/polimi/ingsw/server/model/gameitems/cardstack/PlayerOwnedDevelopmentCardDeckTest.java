@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerOwnedDevelopmentCardDeckTest {
+    @Mock
+    GameItemsManager gameItemsManager;
 
     // Stubs of Development Cards to be used in Tests
     @Mock
@@ -57,19 +60,19 @@ class PlayerOwnedDevelopmentCardDeckTest {
      */
     @Test
     void testInitializeDevelopmentCardDeck() throws ForbiddenPushOnTopException {
-        PlayerOwnedDevelopmentCardDeck deck1 = new PlayerOwnedDevelopmentCardDeck();
+        PlayerOwnedDevelopmentCardDeck deck1 = new PlayerOwnedDevelopmentCardDeck("ID_1", gameItemsManager);
         fillDeck(deck1, testThreeCards);
         List<DevelopmentCard> listThreeCards = new ArrayList<>();
         while(!deck1.isEmpty())
             listThreeCards.add(deck1.pop());
 
-        PlayerOwnedDevelopmentCardDeck deck1Copy = new PlayerOwnedDevelopmentCardDeck();
+        PlayerOwnedDevelopmentCardDeck deck1Copy = new PlayerOwnedDevelopmentCardDeck("ID_1Copy", gameItemsManager);
         fillDeck(deck1Copy, testThreeCards);
         List<DevelopmentCard> listThreeCardsCopy = new ArrayList<>();
         while(!deck1Copy.isEmpty())
             listThreeCardsCopy.add(deck1Copy.pop());
 
-        PlayerOwnedDevelopmentCardDeck deck2 = new PlayerOwnedDevelopmentCardDeck();
+        PlayerOwnedDevelopmentCardDeck deck2 = new PlayerOwnedDevelopmentCardDeck("ID_2", gameItemsManager);
         fillDeck(deck2, testTwoCards);
         List<DevelopmentCard> listTwoCards = new ArrayList<>();
         while(!deck2.isEmpty())
@@ -85,12 +88,12 @@ class PlayerOwnedDevelopmentCardDeckTest {
      */
     @Test
     void testPeekAll() throws EmptyStackException, ForbiddenPushOnTopException {
-        PlayerOwnedDevelopmentCardDeck deckThreeCards = new PlayerOwnedDevelopmentCardDeck();
+        PlayerOwnedDevelopmentCardDeck deckThreeCards = new PlayerOwnedDevelopmentCardDeck("ID_1", gameItemsManager);
         fillDeck(deckThreeCards, testThreeCards);
         List<DevelopmentCard> listThreeCards = deckThreeCards.peekAll();
         assertEquals(testThreeCards, listThreeCards);
 
-        PlayerOwnedDevelopmentCardDeck deckTwoCards = new PlayerOwnedDevelopmentCardDeck();
+        PlayerOwnedDevelopmentCardDeck deckTwoCards = new PlayerOwnedDevelopmentCardDeck("ID_2", gameItemsManager);
         fillDeck(deckTwoCards, testTwoCards);
         List<DevelopmentCard> listTwoCards = deckTwoCards.peekAll();
         assertEquals(testTwoCards, listTwoCards);
@@ -106,7 +109,7 @@ class PlayerOwnedDevelopmentCardDeckTest {
      */
     @Test
     void testPushOnTop() throws ForbiddenPushOnTopException {
-        PlayerOwnedDevelopmentCardDeck deck = new PlayerOwnedDevelopmentCardDeck();
+        PlayerOwnedDevelopmentCardDeck deck = new PlayerOwnedDevelopmentCardDeck("ID_1", gameItemsManager);
         assertThrows(EmptyStackException.class, deck::peek);
 
         assertThrows(ForbiddenPushOnTopException.class, () -> deck.pushOnTop(card3));
@@ -137,7 +140,7 @@ class PlayerOwnedDevelopmentCardDeckTest {
      */
     @Test
     void testPop() throws ForbiddenPushOnTopException{
-        PlayerOwnedDevelopmentCardDeck deck = new PlayerOwnedDevelopmentCardDeck();
+        PlayerOwnedDevelopmentCardDeck deck = new PlayerOwnedDevelopmentCardDeck("ID_1", gameItemsManager);
         fillDeck(deck, testThreeCards);
 
         while (!deck.isEmpty())

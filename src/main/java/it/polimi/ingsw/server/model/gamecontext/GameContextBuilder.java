@@ -40,11 +40,20 @@ public class GameContextBuilder {
 
 		logger.log(LogLevel.INFO, "GameContext creation started");
 
+		// TODO
 		Market market = buildMarket();
+		DevelopmentCardsTable developmentCardsTable = buildDevelopmentCardsTable();
+		FaithPath faithPath = buildFaithPath();
 
+		return initializeGameContext(market, developmentCardsTable, faithPath, new ArrayList<>(), new HashMap<>());
+	}
 
+	protected FaithPath buildFaithPath() {
+		return null;
+	}
 
-		return initializeGameContext();
+	protected DevelopmentCardsTable buildDevelopmentCardsTable() {
+		return null;
 	}
 
 	protected MarbleColour initializeMarbleColour(
@@ -64,8 +73,6 @@ public class GameContextBuilder {
 
 	protected Market buildMarket() throws GameContextCreationError {
 		MarketConfig marketConfig = gameRules.marketConfig;
-
-		new Market(marketConfig, gameItemsManager)
 
 		Map<MarbleColour,Integer> marbles = new HashMap<>();
 		for(MarketConfig.MarbleConfigAndNumber marbleConf : marketConfig.marbles) {

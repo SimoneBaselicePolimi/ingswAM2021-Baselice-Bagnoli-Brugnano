@@ -81,7 +81,7 @@ public class MarbleColour extends RegisteredIdentifiableItem {
 	public boolean equals(Object o) {
 		if (!(o instanceof MarbleColour)) return false;
 		MarbleColour m = (MarbleColour) o;
-		return (marbleID.equals(m.marbleID));
+		return (getItemId().equals(m.getItemId()));
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class MarbleColour extends RegisteredIdentifiableItem {
 	 */
 	@Override
 	public int hashCode() {
-		return marbleID.hashCode();
+		return getItemId().hashCode();
 	}
 
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.notifier;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -8,11 +9,16 @@ import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 
 public class DevelopmentCardsTableNotifier extends DevelopmentCardsTable implements Notifier {
 
-	public DevelopmentCardsTableNotifier(List<DevelopmentCard> cards) {
-		super(cards);
+	public DevelopmentCardsTableNotifier(
+		List<DevelopmentCard> cards,
+		GameItemsManager gameItemsManager,
+		BiFunction<DevelopmentCardColour, DevelopmentCardLevel, String> getIdForDeckWithColourAndLevel
+	) {
+		super(cards, gameItemsManager, getIdForDeckWithColourAndLevel);
 	}
 
 	public Set<GameUpdate> getUpdates() {

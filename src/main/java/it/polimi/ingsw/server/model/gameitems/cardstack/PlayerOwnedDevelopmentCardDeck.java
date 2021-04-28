@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
@@ -15,6 +16,12 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLev
  */
 public class PlayerOwnedDevelopmentCardDeck extends CardDeck<DevelopmentCard> {
 
+	/**
+	 * Class constructor.
+	 * @param deckID ID which identifies this specific Card Deck
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new PlayerOwnedDevelopmentCardDeck object
+	 *                          (see {@link RegisteredIdentifiableItem})
+	 */
 	protected PlayerOwnedDevelopmentCardDeck(
 		String deckID,
 		GameItemsManager gameItemsManager

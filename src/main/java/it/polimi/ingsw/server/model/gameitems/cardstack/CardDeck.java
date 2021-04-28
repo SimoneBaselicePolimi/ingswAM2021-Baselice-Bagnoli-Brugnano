@@ -21,6 +21,12 @@ public abstract class CardDeck<C> extends RegisteredIdentifiableItem {
 	 */
 	protected Stack<C> cardDeck = new Stack<>();
 
+	/**
+	 * Class constructor.
+	 * @param deckID ID which identifies this specific Card Deck
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new CardDeck object
+	 *                          (see {@link RegisteredIdentifiableItem})
+	 */
 	protected CardDeck(
 		String deckID,
 		GameItemsManager gameItemsManager

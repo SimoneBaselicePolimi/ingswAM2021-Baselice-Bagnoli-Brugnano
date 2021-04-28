@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.model.gameitems.*;
 import java.util.Map;
 
 /**
- * This class represent a specific type of cards used in the game: the development cards
+ * This class represent a specific type of cards used in the game: the development card
  */
 public class DevelopmentCard extends RegisteredIdentifiableItem {
 
@@ -18,7 +18,7 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 	/**
 	 * DevelopmentCard constructor
 	 * @param developmentCardID ID of the development card, see {@link IdentifiableItem}
-     * @param gameItemsManager a reference to gameItemsManager is needed to register the new LeaderCard object
+     * @param gameItemsManager a reference to gameItemsManager is needed to register the new DevelopmentCard object
 	 *                         (see {@link RegisteredIdentifiableItem})
 	 * @param level of the development card
 	 * @param colour of the development card
