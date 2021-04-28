@@ -6,9 +6,19 @@ public class GameRules {
 
     public final MarketConfig marketConfig;
 
-    public GameRules(GameInfoConfig gameInfoConfig, MarketConfig marketConfig) {
+    public final DevelopmentCardsConfig developmentCardsConfig;
+
+    public final FaithPathConfig faithPathConfig;
+
+    public final LeaderCardsConfig leaderCardsConfig;
+
+    public GameRules(GameInfoConfig gameInfoConfig, MarketConfig marketConfig, DevelopmentCardsConfig developmentCardsConfig,
+                     FaithPathConfig faithPathConfig, LeaderCardsConfig leaderCardsConfig) {
         this.gameInfoConfig = gameInfoConfig;
         this.marketConfig = marketConfig;
+        this.developmentCardsConfig = developmentCardsConfig;
+        this.faithPathConfig = faithPathConfig;
+        this.leaderCardsConfig = leaderCardsConfig;
     }
 
 }

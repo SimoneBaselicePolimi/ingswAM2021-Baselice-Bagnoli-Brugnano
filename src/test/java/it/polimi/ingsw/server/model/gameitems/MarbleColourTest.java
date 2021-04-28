@@ -1,22 +1,27 @@
 package it.polimi.ingsw.server.model.gameitems;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MarbleColourTest implements IdentifiableItemTest<MarbleColour> {
 
+    @Mock
+    GameItemsManager gameItemsManager;
+
     // Marbles Initialization
     MarbleColour red1 = new MarbleColour(
-            Optional.of(ResourceType.SERVANTS), 1, false, "RedMarble");
+        "RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false);
     MarbleColour red2 = new MarbleColour(
-            Optional.of(ResourceType.SERVANTS), 1, false, "RedMarble");
+        "RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false);
     MarbleColour red3 = new MarbleColour(
-            Optional.of(ResourceType.SHIELDS), 2, true, "RedMarble");
+        "RedMarble", gameItemsManager,Optional.of(ResourceType.SHIELDS), 2, true);
     MarbleColour blue1 = new MarbleColour(
-            Optional.of(ResourceType.COINS), 0, false, "BlueMarble");
+        "BlueMarble", gameItemsManager, Optional.of(ResourceType.COINS), 0, false);
     MarbleColour green1 = new MarbleColour(
-            Optional.of(ResourceType.COINS), 0, false, "GreenMarble");
+        "GreenMarble", gameItemsManager, Optional.of(ResourceType.COINS), 0, false);
 
     /**
      * Tests the class constructor and the methods to get different attributes of a Marble.
@@ -45,7 +50,7 @@ class MarbleColourTest implements IdentifiableItemTest<MarbleColour> {
 
     @Override
     public MarbleColour initializeItemWithId(String id) {
-        return new MarbleColour(Optional.empty(), 0, false, id);
+        return new MarbleColour(id, gameItemsManager, Optional.empty(), 0, false);
     }
 
 }

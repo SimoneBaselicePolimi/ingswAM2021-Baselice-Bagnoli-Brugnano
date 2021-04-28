@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server.model.gamecontext.market;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,19 +15,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MarketTest {
 
+    @Mock
+    GameItemsManager gameItemsManager;
+
     // Marbles initialization
     Map<MarbleColour,Integer> test21marbles = Map.of(
         new MarbleColour(
-                Optional.of(ResourceType.SERVANTS), 1, false, "RedMarble"
+            "RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false
         ), 8,
         new MarbleColour(
-                Optional.of(ResourceType.COINS), 0, false, "BlueMarble"
+            "BlueMarble", gameItemsManager, Optional.of(ResourceType.COINS), 0, false
         ), 5,
         new MarbleColour(
-                Optional.of(ResourceType.STONES), 0, false, "YellowMarble"
+            "YellowMarble", gameItemsManager, Optional.of(ResourceType.STONES), 0, false
         ), 3,
         new MarbleColour(
-                Optional.empty(), 0, true, "AnotherBoringColorMarble"
+            "AnotherBoringColorMarble", gameItemsManager, Optional.empty(), 0, true
         ), 5
     );
 
@@ -40,8 +45,8 @@ class MarketTest {
         int nRow = 2;
         int nColumn = 3;
         Map<MarbleColour,Integer> marbles = new HashMap<>();
-        marbles.put(new MarbleColour(Optional.of(ResourceType.SERVANTS), 1, false, "RedMarble"),5);
-        marbles.put(new MarbleColour(Optional.of(ResourceType.SHIELDS), 0, false, "GreyMarble"),2);
+        marbles.put(new MarbleColour("RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false),5);
+        marbles.put(new MarbleColour("GreyMarble", gameItemsManager, Optional.of(ResourceType.SHIELDS), 0, false),2);
         Market market = new Market(nRow, nColumn, marbles);
         assertNotNull(market.getMarbleMatrix());
         assertEquals(nRow,market.getMarbleMatrix().length);
@@ -64,8 +69,8 @@ class MarketTest {
         int nRow = 2;
         int nColumn = 3;
         Map<MarbleColour,Integer> marbles = new HashMap<>();
-        marbles.put(new MarbleColour(Optional.of(ResourceType.SERVANTS), 1, false, "RedMarble"), 3);
-        marbles.put(new MarbleColour(Optional.of(ResourceType.SHIELDS), 0, false, "GreyMarble"), 3);
+        marbles.put(new MarbleColour("RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false), 3);
+        marbles.put(new MarbleColour("GreyMarble", gameItemsManager, Optional.of(ResourceType.SHIELDS), 0, false), 3);
         assertThrows(
             WrongNumberOfMarblesException.class,
             () -> new Market(nRow, nColumn, marbles),

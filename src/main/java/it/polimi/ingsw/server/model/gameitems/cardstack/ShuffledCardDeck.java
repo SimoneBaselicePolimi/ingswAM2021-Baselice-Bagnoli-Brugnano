@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +13,7 @@ import java.util.Random;
  * @param <C> generic parameter used to indicate the type of Card which form the Deck (Leader Card, Development Card)
  */
 public class ShuffledCardDeck<C> extends CardDeck<C> {
+
 	/**
 	 * A random number generator used to place Cards in the Deck
 	 */
@@ -18,19 +21,36 @@ public class ShuffledCardDeck<C> extends CardDeck<C> {
 
 	/**
 	 * Shuffled Card Deck constructor.
+	 * @param deckID unique ID that identifies this shuffled card Deck
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register all the decks created
+	 *                         (see {@link it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem})
 	 * @param objects list of generic Cards that will be randomly organized in this Deck
 	 */
-	public ShuffledCardDeck(List<C> objects) {
+	public ShuffledCardDeck(
+		String deckID,
+		GameItemsManager gameItemsManager,
+		List<C> objects
+	) {
+		super(deckID, gameItemsManager);
 		randGenerator = new Random();
 		initializeShuffledCardDeck(objects);
 	}
 
 	/**
 	 * Shuffled Card Deck constructor specifying a type of random number generator.
+	 * @param deckID unique ID that identifies this shuffled card Deck
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register all the decks created
+	 *                         (see {@link it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem})
 	 * @param randomGenerator random number generator
 	 * @param objects list of generic Cards that will be randomly organized in this Deck
 	 */
-	public ShuffledCardDeck(Random randomGenerator, List<C> objects) {
+	public ShuffledCardDeck(
+		String deckID,
+		GameItemsManager gameItemsManager,
+		Random randomGenerator,
+		List<C> objects
+	) {
+		super(deckID, gameItemsManager);
 		this.randGenerator = randomGenerator;
 		initializeShuffledCardDeck(objects);
 	}

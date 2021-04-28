@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
-import it.polimi.ingsw.utils.serialization.SerializeAsSetOfIds;
+import it.polimi.ingsw.utils.serialization.annotations.*;
 
 import java.util.Map;
 import java.util.Set;

@@ -14,7 +14,6 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class GameSetupStateTest {
@@ -81,11 +80,13 @@ public class GameSetupStateTest {
         when(leaderCard1.getItemId()).thenReturn("L6");
 
         //TODO
+        /*
         gameRules = new GameRules(
             new GameInfoConfig(),
             null,
             null
-        )
+        );
+        */
 
 //        GameInfoConfig gameInfo = gameManager.getGameRules().gameInfoConfig;
 //        numberOfLeadersCardsGivenToThePlayer = gameInfo.gameSetup.numberOfLeadersCardsGivenToThePlayer;

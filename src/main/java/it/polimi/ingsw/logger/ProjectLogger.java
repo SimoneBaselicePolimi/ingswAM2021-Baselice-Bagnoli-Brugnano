@@ -14,4 +14,8 @@ public class ProjectLogger {
         System.out.printf("[%s]: %s\n", logLevel, String.format(message, args));
         //TODO
     }
+
+    public void log(Exception exception) {
+        log(LogLevel.ERROR, "An exception has been thrown: \n%s", exception.getMessage());
+    }
 }

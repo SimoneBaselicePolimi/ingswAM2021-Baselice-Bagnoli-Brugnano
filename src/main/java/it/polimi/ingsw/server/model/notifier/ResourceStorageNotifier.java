@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.notifier;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
@@ -11,8 +12,8 @@ import java.util.Set;
 
 public class ResourceStorageNotifier extends ResourceStorage implements Notifier {
 
-	public ResourceStorageNotifier(List<ResourceStorageRule> rules, String resourceID) {
-		super(rules, resourceID);
+	protected ResourceStorageNotifier(String resourceStorageID, GameItemsManager gameItemsManager, List<ResourceStorageRule> rules) {
+		super(resourceStorageID, gameItemsManager, rules);
 	}
 
 	@Override

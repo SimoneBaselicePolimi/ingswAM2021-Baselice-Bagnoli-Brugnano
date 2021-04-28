@@ -1,6 +1,6 @@
 package it.polimi.ingsw.localization;
 
-import it.polimi.ingsw.server.model.FileManager;
+import it.polimi.ingsw.utils.FileManager;
 
 import java.util.Map;
 

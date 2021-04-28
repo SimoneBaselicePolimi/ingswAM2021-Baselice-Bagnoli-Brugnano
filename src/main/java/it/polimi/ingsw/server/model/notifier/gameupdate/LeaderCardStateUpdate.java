@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.notifier.gameupdate;
 
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
-import it.polimi.ingsw.utils.serialization.SerializeIdOnly;
+import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
 public class LeaderCardStateUpdate extends GameUpdate{
 

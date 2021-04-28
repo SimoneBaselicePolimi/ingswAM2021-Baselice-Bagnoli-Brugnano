@@ -7,7 +7,7 @@ import java.util.Optional;
  * Each Marble can be used by a Player to obtain certain types of resources or faith points. There are also some
  * special Marbles which can be used to gain a generic type of resources if activated by a special Leader card power.
  */
-public class MarbleColour implements IdentifiableItem {
+public class MarbleColour extends RegisteredIdentifiableItem {
 	/**
 	 * Optional type of resource obtainable with this Marble
 	 */
@@ -24,23 +24,26 @@ public class MarbleColour implements IdentifiableItem {
 	private boolean isSpecialMarble;
 
 	/**
-	 * ID which identifies this specific Marble
-	 */
-	private String marbleID;
-
-	/**
 	 * Class constructor.
+	 * @param marbleID ID which identifies this specific Marble
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new MarbleColour object
+	 *                          (see {@link RegisteredIdentifiableItem})
 	 * @param resourceType optional type of resource obtainable with this Marble
 	 * @param faithPoints number of faith points obtainable by this Marble
 	 * @param isSpecialMarble boolean which states if this Marble can be transformed into a generic type of resource
 	 *                        by activating a special Leader card power
-	 * @param marbleID ID which identifies this specific Marble
 	 */
-	public MarbleColour(Optional<ResourceType> resourceType, int faithPoints, boolean isSpecialMarble, String marbleID) {
+	public MarbleColour(
+		String marbleID,
+		GameItemsManager gameItemsManager,
+		Optional<ResourceType> resourceType,
+		int faithPoints,
+		boolean isSpecialMarble
+	) {
+		super(marbleID, gameItemsManager);
 		this.resourceType = resourceType;
 		this.faithPoints = faithPoints;
 		this.isSpecialMarble = isSpecialMarble;
-		this.marbleID = marbleID;
 	}
 
 	/**
@@ -69,15 +72,6 @@ public class MarbleColour implements IdentifiableItem {
 	}
 
 	/**
-	 * Method to get the unique ID which identifies this specific Marble.
-	 * @return ID of this Marble
-	 */
-	@Override
-	public String getItemId() {
-		return marbleID;
-	}
-
-	/**
 	 * Override of the equals method used to compare the equality between two Marbles.
 	 * @param o Object to compare to this Marble
 	 * @return true if the Object passed as parameter is identified by the same Marble ID of the Marble
@@ -87,7 +81,7 @@ public class MarbleColour implements IdentifiableItem {
 	public boolean equals(Object o) {
 		if (!(o instanceof MarbleColour)) return false;
 		MarbleColour m = (MarbleColour) o;
-		return (marbleID.equals(m.marbleID));
+		return (getItemId().equals(m.getItemId()));
 	}
 
 	/**
@@ -96,7 +90,7 @@ public class MarbleColour implements IdentifiableItem {
 	 */
 	@Override
 	public int hashCode() {
-		return marbleID.hashCode();
+		return getItemId().hashCode();
 	}
 
 }

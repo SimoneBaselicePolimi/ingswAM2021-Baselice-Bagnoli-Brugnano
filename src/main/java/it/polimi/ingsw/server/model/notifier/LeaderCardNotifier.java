@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.notifier;
 
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
 import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
@@ -11,29 +12,21 @@ import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class LeaderCardNotifier extends LeaderCard implements Notifier {
 
     public LeaderCardNotifier(
         String leaderCardID,
+        GameItemsManager gameItemsManager,
         List<LeaderCardRequirement> requirements,
         List<Production> productions,
         List<ResourceStorage> resourceStorages,
-        List<DevelopmentCardCostDiscount> developmentCardCostDiscounts,
+        List<DevelopmentCardCostDiscount> cardCostDiscounts,
         List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
         int victoryPoints
     ) {
-        super(
-            leaderCardID,
-            requirements,
-            productions,
-            resourceStorages,
-            developmentCardCostDiscounts,
-            whiteMarbleSubstitutions,
-            victoryPoints
-        );
+        super(leaderCardID, gameItemsManager, requirements, productions, resourceStorages, cardCostDiscounts, whiteMarbleSubstitutions, victoryPoints);
     }
 
     public Set<GameUpdate> getUpdates() {

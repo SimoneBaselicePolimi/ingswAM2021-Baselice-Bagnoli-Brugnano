@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -10,6 +12,10 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShuffledCardDeckTest {
+
+    @Mock
+    GameItemsManager gameItemsManager;
+
     List<String> testCards = List.of(
             "card1",
             "card2",
@@ -28,17 +34,17 @@ class ShuffledCardDeckTest {
      */
     @Test
     void testRandomShuffle() {
-        ShuffledCardDeck<String> deck1 = new ShuffledCardDeck<>(new Random(1), testCards);
+        ShuffledCardDeck<String> deck1 = new ShuffledCardDeck<>("deckId1", gameItemsManager, new Random(1), testCards);
         List<String> listDeck1 = new ArrayList<>();
         while(!deck1.isEmpty())
             listDeck1.add(deck1.pop());
 
-        ShuffledCardDeck<String> deck1_copy = new ShuffledCardDeck<>(new Random(1), testCards);
+        ShuffledCardDeck<String> deck1_copy = new ShuffledCardDeck<>("deckId1Copy", gameItemsManager, new Random(1), testCards);
         List<String> listDeck1_copy = new ArrayList<>();
         while(!deck1_copy.isEmpty())
             listDeck1_copy.add(deck1_copy.pop());
 
-        ShuffledCardDeck<String> deck2 = new ShuffledCardDeck<>(new Random(2), testCards);
+        ShuffledCardDeck<String> deck2 = new ShuffledCardDeck<>("deckId2", gameItemsManager, new Random(2), testCards);
         List<String> listDeck2 = new ArrayList<>();
         while(!deck2.isEmpty())
             listDeck2.add(deck2.pop());
@@ -55,7 +61,7 @@ class ShuffledCardDeckTest {
      */
     @Test
     void testPeekAll() throws EmptyStackException {
-        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>(testCards);
+        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>("deckId1", gameItemsManager, testCards);
         List<String> cardsList = deck.peekAll();
         assertTrue(testCards.size() == cardsList.size() &&
                 testCards.containsAll(cardsList) && cardsList.containsAll(testCards));
@@ -70,7 +76,7 @@ class ShuffledCardDeckTest {
      */
     @Test
     void testPushOnTop() throws ForbiddenPushOnTopException{
-        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>(new ArrayList<>());
+        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>("deckId1", gameItemsManager, new ArrayList<>());
         assertThrows(EmptyStackException.class, deck::peek);
 
         deck.pushOnTop(oneMoreTestCard);
@@ -86,7 +92,7 @@ class ShuffledCardDeckTest {
      */
     @Test
     void testPop() throws ForbiddenPushOnTopException{
-        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>(testCards);
+        ShuffledCardDeck<String> deck = new ShuffledCardDeck<>("deckId1", gameItemsManager, testCards);
 
         deck.pushOnTop(oneMoreTestCard);
         assertEquals(oneMoreTestCard, deck.pop());

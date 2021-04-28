@@ -9,9 +9,8 @@ import java.util.List;
 /**
  * This class represent a specific type of card used in the game: the leader card
  */
-public class LeaderCard implements IdentifiableItem{
+public class LeaderCard extends RegisteredIdentifiableItem {
 
-	private String leaderCardID;
 	private LeaderCardState state;
 	private List<LeaderCardRequirement> requirements;
 	private List<Production> productions;
@@ -23,6 +22,8 @@ public class LeaderCard implements IdentifiableItem{
 	/**
 	 * LeaderCard constructor
 	 * @param leaderCardID ID of the leader card, see {@link IdentifiableItem}
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new LeaderCard object
+	 *                         (see {@link RegisteredIdentifiableItem})
 	 * @param requirements requirements to activate the leader card
 	 * @param productions list of productions (special skill) that the leader card can own (it can be an empty list)
 	 * @param resourceStorages list of resource storages (special skill) that the leader card can own (it can be an empty list)
@@ -33,6 +34,7 @@ public class LeaderCard implements IdentifiableItem{
 	 */
 	public LeaderCard (
 		String leaderCardID,
+		GameItemsManager gameItemsManager,
 		List<LeaderCardRequirement> requirements,
 		List<Production> productions,
 		List<ResourceStorage> resourceStorages,
@@ -40,7 +42,7 @@ public class LeaderCard implements IdentifiableItem{
 		List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
 		int victoryPoints
 	){
-		this.leaderCardID = leaderCardID;
+	    super(leaderCardID, gameItemsManager);
 		this.requirements = requirements;
 		this.state = LeaderCardState.HIDDEN;
 		this.productions = productions;
@@ -136,8 +138,4 @@ public class LeaderCard implements IdentifiableItem{
 		return victoryPoints;
 	}
 
-	@Override
-	public String getItemId() {
-		return leaderCardID;
-	}
 }
