@@ -71,26 +71,4 @@ public class MarbleColour extends RegisteredIdentifiableItem {
 		return isSpecialMarble;
 	}
 
-	/**
-	 * Override of the equals method used to compare the equality between two Marbles.
-	 * @param o Object to compare to this Marble
-	 * @return true if the Object passed as parameter is identified by the same Marble ID of the Marble
-	 * which invokes this method, false otherwise
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof MarbleColour)) return false;
-		MarbleColour m = (MarbleColour) o;
-		return (getItemId().equals(m.getItemId()));
-	}
-
-	/**
-	 * Override of the hashCode method used to return the hash code of this Marble.
-	 * @return hash code of this Marble based on its ID
-	 */
-	@Override
-	public int hashCode() {
-		return getItemId().hashCode();
-	}
-
 }

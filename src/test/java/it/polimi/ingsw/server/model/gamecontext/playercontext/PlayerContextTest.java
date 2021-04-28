@@ -1,10 +1,7 @@
 package it.polimi.ingsw.server.model.gamecontext.playercontext;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
-import it.polimi.ingsw.server.model.gameitems.Production;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
+import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
@@ -26,6 +23,9 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerContextTest {
+
+    @Mock
+    GameItemsManager gameItemsManager;
 
     @Mock
     Player player;
@@ -101,26 +101,26 @@ class PlayerContextTest {
 
         LeaderCard cardWithCoinsDiscount = mock(LeaderCard.class);
         when(cardWithCoinsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount(ResourceType.COINS, 2)
+                new DevelopmentCardCostDiscount("id1", gameItemsManager, ResourceType.COINS, 2)
         ));
         when(cardWithCoinsDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardHiddenWithShieldsDiscount = mock(LeaderCard.class);
         lenient().when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount(ResourceType.STONES, 1)
+                new DevelopmentCardCostDiscount("id2", gameItemsManager, ResourceType.STONES, 1)
         ));
         when(cardHiddenWithShieldsDiscount.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard cardDiscardedWithShieldsDiscount = mock(LeaderCard.class);
         lenient().when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount(ResourceType.STONES, 1)
+                new DevelopmentCardCostDiscount("id3", gameItemsManager, ResourceType.STONES, 1)
         ));
         when(cardDiscardedWithShieldsDiscount.getState()).thenReturn(LeaderCardState.DISCARDED);
 
         LeaderCard cardWithCoinsAndStonesDiscount = mock(LeaderCard.class);
         when(cardWithCoinsAndStonesDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount(ResourceType.STONES, 5),
-                new DevelopmentCardCostDiscount(ResourceType.COINS, 1)
+                new DevelopmentCardCostDiscount("id4", gameItemsManager, ResourceType.STONES, 5),
+                new DevelopmentCardCostDiscount("id5", gameItemsManager, ResourceType.COINS, 1)
         ));
         when(cardWithCoinsAndStonesDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
@@ -150,32 +150,32 @@ class PlayerContextTest {
 
         LeaderCard cardWithShieldsSub = mock(LeaderCard.class);
         when(cardWithShieldsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.SHIELDS)
+                new WhiteMarbleSubstitution("ID_1", gameItemsManager, ResourceType.SHIELDS)
         ));
         when(cardWithShieldsSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardWithShieldStoneSub = mock(LeaderCard.class);
         when(cardWithShieldStoneSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.SHIELDS),
-                new WhiteMarbleSubstitution(ResourceType.STONES)
+                new WhiteMarbleSubstitution("ID_2", gameItemsManager, ResourceType.SHIELDS),
+                new WhiteMarbleSubstitution("ID_3", gameItemsManager, ResourceType.STONES)
         ));
         when(cardWithShieldStoneSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardWithServantsSub = mock(LeaderCard.class);
         when(cardWithServantsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.SERVANTS)
+                new WhiteMarbleSubstitution("ID_4", gameItemsManager, ResourceType.SERVANTS)
         ));
         when(cardWithServantsSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardHiddenWithCoinsSub = mock(LeaderCard.class);
         lenient().when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.COINS)
+                new WhiteMarbleSubstitution("ID_5", gameItemsManager, ResourceType.COINS)
         ));
         when(cardHiddenWithCoinsSub.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard cardDiscardedWithCoinsSub = mock(LeaderCard.class);
         lenient().when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.COINS)
+                new WhiteMarbleSubstitution("ID_6", gameItemsManager, ResourceType.COINS)
         ));
         when(cardDiscardedWithCoinsSub.getState()).thenReturn(LeaderCardState.DISCARDED);
 

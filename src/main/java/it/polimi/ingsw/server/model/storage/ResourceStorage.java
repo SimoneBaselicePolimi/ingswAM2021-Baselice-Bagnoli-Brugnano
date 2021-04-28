@@ -87,7 +87,7 @@ public class ResourceStorage extends RegisteredIdentifiableItem {
 		if(!canRemoveResources(resourcesToRemove))
 			throw new NotEnoughResourcesException();
 		for (ResourceType resource : resourcesToRemove.keySet()) {
-			if (this.resources.get(resource) == resourcesToRemove.get(resource))
+			if (this.resources.get(resource).equals(resourcesToRemove.get(resource)))
 				this.resources.remove(resource);
 			else
 				this.resources.put(resource, this.resources.get(resource) - resourcesToRemove.get(resource));
@@ -103,16 +103,4 @@ public class ResourceStorage extends RegisteredIdentifiableItem {
 		return new HashMap<>(this.resources);
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof ResourceStorage))
-			return false;
-		ResourceStorage m = (ResourceStorage) o;
-			return (getItemId().equals(m.getItemId()));
-	}
-
-	@Override
-	public int hashCode() {
-		return getItemId().hashCode();
-	}
 }
