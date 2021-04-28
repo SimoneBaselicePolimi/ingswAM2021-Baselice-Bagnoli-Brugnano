@@ -3,8 +3,11 @@ package it.polimi.ingsw.server.model.gamecontext.market;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,26 +16,31 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class MarketTest {
 
     @Mock
     GameItemsManager gameItemsManager;
 
-    // Marbles initialization
-    Map<MarbleColour,Integer> test21marbles = Map.of(
-        new MarbleColour(
-            "RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false
-        ), 8,
-        new MarbleColour(
-            "BlueMarble", gameItemsManager, Optional.of(ResourceType.COINS), 0, false
-        ), 5,
-        new MarbleColour(
-            "YellowMarble", gameItemsManager, Optional.of(ResourceType.STONES), 0, false
-        ), 3,
-        new MarbleColour(
-            "AnotherBoringColorMarble", gameItemsManager, Optional.empty(), 0, true
-        ), 5
-    );
+    Map<MarbleColour,Integer> test21marbles;
+
+    @BeforeEach
+    void setUp() {
+        test21marbles = Map.of(
+            new MarbleColour(
+                "RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false
+            ), 8,
+            new MarbleColour(
+                "BlueMarble", gameItemsManager, Optional.of(ResourceType.COINS), 0, false
+            ), 5,
+            new MarbleColour(
+                "YellowMarble", gameItemsManager, Optional.of(ResourceType.STONES), 0, false
+            ), 3,
+            new MarbleColour(
+                "AnotherBoringColorMarble", gameItemsManager, Optional.empty(), 0, true
+            ), 5
+        );
+    }
 
     /**
      * Tests Market initialization.

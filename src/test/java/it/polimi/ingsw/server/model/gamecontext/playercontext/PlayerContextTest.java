@@ -41,6 +41,9 @@ class PlayerContextTest {
 
     PlayerContext playerContext;
 
+    DevelopmentCardCostDiscount disc1, disc2, disc3, disc4, disc5;
+
+    WhiteMarbleSubstitution sub1, sub2, sub3, sub4, sub5, sub6;
 
     @BeforeEach
     void setUp() {
@@ -52,6 +55,20 @@ class PlayerContextTest {
                 temporaryStorage,
                 Set.of(baseProductions)
         );
+
+        disc1 = new DevelopmentCardCostDiscount("id1", gameItemsManager, ResourceType.COINS, 2);
+        disc2 = new DevelopmentCardCostDiscount("id2", gameItemsManager, ResourceType.STONES, 1);
+        disc3 = new DevelopmentCardCostDiscount("id3", gameItemsManager, ResourceType.STONES, 1);
+        disc4 = new DevelopmentCardCostDiscount("id4", gameItemsManager, ResourceType.STONES, 5);
+        disc5 = new DevelopmentCardCostDiscount("id5", gameItemsManager, ResourceType.COINS, 1);
+
+        sub1 = new WhiteMarbleSubstitution("ID_1", gameItemsManager, ResourceType.SHIELDS);
+        sub2 = new WhiteMarbleSubstitution("ID_2", gameItemsManager, ResourceType.SHIELDS);
+        sub3 = new WhiteMarbleSubstitution("ID_3", gameItemsManager, ResourceType.STONES);
+        sub4 = new WhiteMarbleSubstitution("ID_4", gameItemsManager, ResourceType.SERVANTS);
+        sub5 = new WhiteMarbleSubstitution("ID_5", gameItemsManager, ResourceType.COINS);
+        sub6 = new WhiteMarbleSubstitution("ID_6", gameItemsManager, ResourceType.COINS);
+
     }
 
     @Test
@@ -100,28 +117,20 @@ class PlayerContextTest {
     void testGetActiveLeaderCardsDiscounts() {
 
         LeaderCard cardWithCoinsDiscount = mock(LeaderCard.class);
-        when(cardWithCoinsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount("id1", gameItemsManager, ResourceType.COINS, 2)
-        ));
+        when(cardWithCoinsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(disc1));
         when(cardWithCoinsDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
+
         LeaderCard cardHiddenWithShieldsDiscount = mock(LeaderCard.class);
-        lenient().when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount("id2", gameItemsManager, ResourceType.STONES, 1)
-        ));
+        lenient().when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(disc2));
         when(cardHiddenWithShieldsDiscount.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard cardDiscardedWithShieldsDiscount = mock(LeaderCard.class);
-        lenient().when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount("id3", gameItemsManager, ResourceType.STONES, 1)
-        ));
+        lenient().when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(disc3));
         when(cardDiscardedWithShieldsDiscount.getState()).thenReturn(LeaderCardState.DISCARDED);
 
         LeaderCard cardWithCoinsAndStonesDiscount = mock(LeaderCard.class);
-        when(cardWithCoinsAndStonesDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount("id4", gameItemsManager, ResourceType.STONES, 5),
-                new DevelopmentCardCostDiscount("id5", gameItemsManager, ResourceType.COINS, 1)
-        ));
+        when(cardWithCoinsAndStonesDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(disc4, disc5));
         when(cardWithCoinsAndStonesDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardWithNoDiscount = mock(LeaderCard.class);
@@ -149,34 +158,23 @@ class PlayerContextTest {
     void testGetActiveLeaderCardsWhiteMarblesMarketSubstitutions() {
 
         LeaderCard cardWithShieldsSub = mock(LeaderCard.class);
-        when(cardWithShieldsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution("ID_1", gameItemsManager, ResourceType.SHIELDS)
-        ));
+        when(cardWithShieldsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(sub1));
         when(cardWithShieldsSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardWithShieldStoneSub = mock(LeaderCard.class);
-        when(cardWithShieldStoneSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution("ID_2", gameItemsManager, ResourceType.SHIELDS),
-                new WhiteMarbleSubstitution("ID_3", gameItemsManager, ResourceType.STONES)
-        ));
+        when(cardWithShieldStoneSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(sub2, sub3));
         when(cardWithShieldStoneSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardWithServantsSub = mock(LeaderCard.class);
-        when(cardWithServantsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution("ID_4", gameItemsManager, ResourceType.SERVANTS)
-        ));
+        when(cardWithServantsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(sub4));
         when(cardWithServantsSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         LeaderCard cardHiddenWithCoinsSub = mock(LeaderCard.class);
-        lenient().when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution("ID_5", gameItemsManager, ResourceType.COINS)
-        ));
+        lenient().when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(sub5));
         when(cardHiddenWithCoinsSub.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         LeaderCard cardDiscardedWithCoinsSub = mock(LeaderCard.class);
-        lenient().when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution("ID_6", gameItemsManager, ResourceType.COINS)
-        ));
+        lenient().when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(sub6));
         when(cardDiscardedWithCoinsSub.getState()).thenReturn(LeaderCardState.DISCARDED);
 
         playerContext.setLeaderCards(Set.of(

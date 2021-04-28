@@ -6,6 +6,8 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLev
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,9 +17,10 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
+@ExtendWith(MockitoExtension.class)
 class GameItemsManagerTest {
 
-    GameItemsManager itemsManager;
+    GameItemsManager gameItemsManager;
 
     LeaderCard lc1;
 
@@ -27,10 +30,11 @@ class GameItemsManagerTest {
 
     @BeforeEach
     void setUp() {
+        gameItemsManager = new GameItemsManager();
 
         lc1 = new LeaderCard(
             "lc1",
-            itemsManager,
+            gameItemsManager,
             new ArrayList<>(),
             new ArrayList<>(),
             new ArrayList<>(),
@@ -41,7 +45,7 @@ class GameItemsManagerTest {
 
         lc2 = new LeaderCard(
             "lc2",
-            itemsManager,
+            gameItemsManager,
             new ArrayList<>(),
             new ArrayList<>(),
             new ArrayList<>(),
@@ -52,7 +56,7 @@ class GameItemsManagerTest {
 
         dc1 = new DevelopmentCard(
             "dc1",
-            itemsManager,
+            gameItemsManager,
             DevelopmentCardLevel.FIRST_LEVEL,
             DevelopmentCardColour.BLUE,
             mock(Production.class),
@@ -60,36 +64,35 @@ class GameItemsManagerTest {
             new HashMap<>()
         );
 
-        itemsManager = new GameItemsManager();
-        itemsManager.addItem(lc1);
-        itemsManager.addItem(lc2);
-        itemsManager.addItem(dc1);
+        gameItemsManager.addItem(lc1);
+        gameItemsManager.addItem(lc2);
+        gameItemsManager.addItem(dc1);
 
     }
 
     @Test
     void testGetAllItemsOfType() {
-        assertEquals(Set.of(lc1, lc2), itemsManager.getAllItemsOfType(LeaderCard.class));
-        assertEquals(Set.of(dc1), itemsManager.getAllItemsOfType(DevelopmentCard.class));
+        assertEquals(Set.of(lc1, lc2), gameItemsManager.getAllItemsOfType(LeaderCard.class));
+        assertEquals(Set.of(dc1), gameItemsManager.getAllItemsOfType(DevelopmentCard.class));
     }
 
     @Test
     void testGetItem() {
-        assertEquals(lc1, itemsManager.getItem(LeaderCard.class, "lc1"));
-        assertEquals(lc2, itemsManager.getItem(LeaderCard.class, "lc2"));
-        assertEquals(dc1, itemsManager.getItem(DevelopmentCard.class, "dc1"));
+        assertEquals(lc1, gameItemsManager.getItem(LeaderCard.class, "lc1"));
+        assertEquals(lc2, gameItemsManager.getItem(LeaderCard.class, "lc2"));
+        assertEquals(dc1, gameItemsManager.getItem(DevelopmentCard.class, "dc1"));
     }
 
     @Test
     void testGetAllItemsOfTypeThatDoesNotExist() {
-        assertEquals(new HashSet<>(), itemsManager.getAllItemsOfType(MarbleColour.class));
+        assertEquals(new HashSet<>(), gameItemsManager.getAllItemsOfType(MarbleColour.class));
     }
 
     @Test
     void testGetItemWithInvalidId() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> itemsManager.getItem(LeaderCard.class, "ID_THAT_DOES_NOT_EXIST")
+            () -> gameItemsManager.getItem(LeaderCard.class, "ID_THAT_DOES_NOT_EXIST")
         );
     }
 

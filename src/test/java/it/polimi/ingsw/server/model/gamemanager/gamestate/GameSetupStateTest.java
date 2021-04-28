@@ -8,7 +8,9 @@ import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
@@ -16,14 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class GameSetupStateTest {
 
-    Player player1 = new Player("first");
-    Player player2 = new Player("second");
-    Player player3 = new Player("third");
-    Player player4 = new Player("fourth");
+    Player player1, player2, player3, player4;
 
-    List<Player> players = List.of(player1, player2, player3, player4);
+    List<Player> players;
 
     @Mock
     GameManager gameManager;
@@ -49,6 +49,7 @@ public class GameSetupStateTest {
     @Mock
     LeaderCard leaderCard6;
 
+    @Mock
     GameRules gameRules;
 
     @Mock
@@ -57,19 +58,13 @@ public class GameSetupStateTest {
     @Mock
     GameInfoConfig.GameSetup setup;
 
-    Set<LeaderCard> leaderCards = Set.of(
-        leaderCard1,
-        leaderCard2,
-        leaderCard3,
-        leaderCard4,
-        leaderCard5,
-        leaderCard6
-    );
+    Set<LeaderCard> leaderCards;
 
     @BeforeEach
     void setUp() {
         lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
         lenient().when(gameManager.getGameContext().getPlayersTurnOrder()).thenReturn(players);
+        lenient().when(gameManager.getGameRules()).thenReturn(gameRules);
 
 
         when(leaderCard1.getItemId()).thenReturn("L1");
@@ -78,6 +73,22 @@ public class GameSetupStateTest {
         when(leaderCard1.getItemId()).thenReturn("L4");
         when(leaderCard1.getItemId()).thenReturn("L5");
         when(leaderCard1.getItemId()).thenReturn("L6");
+
+        leaderCards = Set.of(
+            leaderCard1,
+            leaderCard2,
+            leaderCard3,
+            leaderCard4,
+            leaderCard5,
+            leaderCard6
+        );
+
+        player1 = new Player("first");
+        player2 = new Player("second");
+        player3 = new Player("third");
+        player4 = new Player("fourth");
+
+        players = List.of(player1, player2, player3, player4);
 
         //TODO
         /*
