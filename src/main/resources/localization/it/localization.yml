@@ -24,8 +24,8 @@ gameHistory:
     lastPositionReached: Il giocatore %s ha raggiunto l'ultima casella del tracciato fede
 
  leaderCard:
-   activateCard:
-   discardCard:
+   activateCard: Il giocatore %s ha attivato la carte leader %s
+   discardCard: Il giocatore %s ha scartato la carte leader %s
 
  gameState:
     setup:
@@ -34,10 +34,9 @@ gameHistory:
 
     mainTurn:
       initialMessage: Inizia il turno del giocatore %s
-      developmentAction:
-      //TODO
-      marketAction:
-      productionAction:
+      developmentAction: Il giocatore %s ha comprato la carta sviluppo %s
+      obtainedMarblesMarketAction: Il giocatore %s ha ottenuto le seguenti biglie %s
+      productionAction: Il giocaorre %s ha attivato le produzioni %s
 
     postTurn:
       finalMessage: E' concluso il turno del giocatore %s

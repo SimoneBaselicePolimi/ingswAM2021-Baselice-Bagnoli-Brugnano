@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gamehistory.MainTurnInitialAction;
+import it.polimi.ingsw.server.model.gamehistory.*;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
@@ -15,16 +15,13 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -107,6 +104,10 @@ public class GameTurnMainActionState extends GameState {
 		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToDiscard)
 			leaderCard.discardLeaderCard();
 
+		gameManager.getGameHistory().addAction(
+			new DiscardLeaderCardsAction(activePlayer, request.leaderCardsThePlayerWantsToDiscard)
+		);
+
 		return buildGameUpdateServerMessage();
 	}
 
@@ -124,6 +125,10 @@ public class GameTurnMainActionState extends GameState {
 		// activate leader cards
 		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToActivate)
 			leaderCard.activateLeaderCard(gameManager.getGameContext().getPlayerContext(activePlayer));
+
+		gameManager.getGameHistory().addAction(
+			new ActivateLeaderCardsAction(activePlayer, request.leaderCardsThePlayerWantsToActivate)
+		);
 
 		return buildGameUpdateServerMessage();
 	}
@@ -185,6 +190,10 @@ public class GameTurnMainActionState extends GameState {
 		playerContext.setTemporaryStorageResources(resources);
 		playerContext.setTempStarResources(numberOfStarResources);
 
+		gameManager.getGameHistory().addAction(
+			new ObtainedMarblesMarketAction (activePlayer, marblesThePlayerGets)
+		);
+
 		hasPlayerDoneMarketAction = true;
 		mainActionDone = true;
 		return buildGameUpdateServerMessage();
@@ -213,6 +222,10 @@ public class GameTurnMainActionState extends GameState {
 					),
 					request.deckNumber
 			);
+
+		gameManager.getGameHistory().addAction(
+			new DevelopmentAction(activePlayer, request.developmentCard)
+		);
 
 		mainActionDone = true;
 		return buildGameUpdateServerMessage();
@@ -270,6 +283,10 @@ public class GameTurnMainActionState extends GameState {
 		gameManager.getGameContext().getFaithPath().move(
 			activePlayer,
 			request.productions.stream().mapToInt(Production::getProductionFaithReward).sum()
+		);
+
+		gameManager.getGameHistory().addAction(
+			new ProductionAction(activePlayer, request.productions)
 		);
 
 		mainActionDone = true;
