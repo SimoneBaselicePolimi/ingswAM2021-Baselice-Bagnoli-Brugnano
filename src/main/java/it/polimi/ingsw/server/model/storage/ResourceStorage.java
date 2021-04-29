@@ -29,7 +29,7 @@ public class ResourceStorage extends RegisteredIdentifiableItem {
 	 *                          (see {@link RegisteredIdentifiableItem})
 	 * @param rules that the storage implements
 	 */
-	protected ResourceStorage(String resourceStorageID, GameItemsManager gameItemsManager, List<ResourceStorageRule> rules){
+	public ResourceStorage(String resourceStorageID, GameItemsManager gameItemsManager, List<ResourceStorageRule> rules){
 		super(resourceStorageID, gameItemsManager);
 		this.rules = rules;
 	}

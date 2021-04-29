@@ -58,7 +58,7 @@ public class PlayerContext {
 	 * @param temporaryStorage temporaryStorage (dependency injection)
 	 * @param baseProductions
 	 */
-	protected PlayerContext(
+	public PlayerContext(
 		Player player,
 		Set<ResourceStorage> shelves,
 		List<PlayerOwnedDevelopmentCardDeck> decks,

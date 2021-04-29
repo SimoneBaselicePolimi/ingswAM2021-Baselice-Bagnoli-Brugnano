@@ -13,13 +13,17 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 public class GameContextBuilder {
 
@@ -33,6 +37,8 @@ public class GameContextBuilder {
 
 	protected int numProductionID = 0;
 
+	protected int numResourceStorageID = 0;
+
 	public GameContextBuilder(
 		Set<Player> players,
 		GameRules gameRules,
@@ -43,6 +49,16 @@ public class GameContextBuilder {
 		this.gameItemsManager = gameItemsManager;
 	}
 
+	protected GameContext initializeGameContext(
+		Market market,
+		DevelopmentCardsTable developmentCardsTable,
+		FaithPath faithPath,
+		List<Player> playersOrder,
+		Map<Player, PlayerContext> playerContexts
+	) {
+		return new GameContext(market, developmentCardsTable, faithPath, playersOrder, playerContexts);
+	}
+
 	public GameContext buildGameContext() throws GameContextCreationError {
 
 		logger.log(LogLevel.INFO, "GameContext creation started");
@@ -51,15 +67,95 @@ public class GameContextBuilder {
 		DevelopmentCardsTable developmentCardsTable = buildDevelopmentCardsTable();
 		FaithPath faithPath = buildFaithPath();
 		List<Player> playersInOrder = generateRandomPlayersOrder();
-		// TODO: player context
 		Map<Player, PlayerContext> playerContexts = new HashMap<>();
+		for(Player player : players)
+			playerContexts.put(player, buildPlayerContext(player));
 
 		return initializeGameContext(market, developmentCardsTable, faithPath, playersInOrder, playerContexts);
 	}
 
+	private PlayerContext buildPlayerContext(Player player) {
+		GameInfoConfig gameInfoConfig = gameRules.gameInfoConfig;
+
+		Set<ResourceStorage> shelves = new HashSet<>();
+		for(ResourceStorageConfig resourceStorageConf : gameInfoConfig.resourceShelves) {
+			ResourceStorage resourceStorage = buildResourceStorage(resourceStorageConf);
+			shelves.add(resourceStorage);
+		}
+
+		List<PlayerOwnedDevelopmentCardDeck> decks = new ArrayList<>();
+		for(int i=0; i<gameInfoConfig.numberOfPlayerOwnedDevelopmentCardDecks; i++) {
+			decks.add(
+				new PlayerOwnedDevelopmentCardDeck(
+						generatePlayerOwnedDevCardDeckID(i+1),
+						gameItemsManager
+				)
+			);
+		}
+
+		ResourceStorage infiniteChest = new ResourceStorage(
+			"InfChest_ID", gameItemsManager, new ArrayList<>()
+		);
+
+		ResourceStorage temporaryStorage = new ResourceStorage(
+			"TempStorage_ID", gameItemsManager, new ArrayList<>()
+		);
+
+		Set<Production> baseProductions = new HashSet<>();
+		for(ProductionConfig basicProductionConfig : gameInfoConfig.basicProductionPower) {
+			Production production = buildProduction(basicProductionConfig);
+			baseProductions.add(production);
+		}
+
+		return initializePlayerContext(
+			player,
+			shelves,
+			decks,
+			infiniteChest,
+			temporaryStorage,
+			baseProductions
+			);
+	}
+
+	private String generatePlayerOwnedDevCardDeckID(int num) {
+		return "PlayerDevCardDeck_ID_" + num;
+	}
+
+	private ResourceStorage buildResourceStorage(ResourceStorageConfig resourceStorageConf) {
+		String resourceStorageID = generateResourceStorageID();
+
+		List<ResourceStorageRule> rules = resourceStorageConf.storage.rules.stream()
+			.map(ResourceStorageConfig.StorageConfig.RuleConfig::createRule)
+			.collect(Collectors.toList());
+
+		return initializeResourceStorage(resourceStorageID, rules);
+	}
+
+	private String generateResourceStorageID() {
+		numResourceStorageID++;
+		return "ResourceStorage_ID_" + numResourceStorageID;
+	}
+
+	private ResourceStorage initializeResourceStorage(
+		String resourceStorageID,
+		List<ResourceStorageRule> rules
+	) {
+		return new ResourceStorage(resourceStorageID, gameItemsManager, rules);
+	}
+
+	private PlayerContext initializePlayerContext(
+		Player player,
+		Set<ResourceStorage> shelves,
+		List<PlayerOwnedDevelopmentCardDeck> decks,
+		ResourceStorage infiniteChest,
+		ResourceStorage temporaryStorage,
+		Set<Production> baseProductions
+	) {
+		return new PlayerContext(player, shelves, decks, infiniteChest, temporaryStorage, baseProductions);
+	}
+
 	protected MarbleColour initializeMarbleColour(
 		String marbleID,
-		GameItemsManager gameItemsManager,
 		Optional<ResourceType> resourceType,
 		int faithPoints,
 		boolean isSpecialMarble
@@ -79,7 +175,6 @@ public class GameContextBuilder {
 		for(MarketConfig.MarbleConfigAndNumber marbleConf : marketConfig.marbles) {
 			MarbleColour marbleColour = initializeMarbleColour(
 				marbleConf.marbleConfig.marbleID,
-				gameItemsManager,
 				marbleConf.marbleConfig.resourceType != null ?
 					Optional.of(marbleConf.marbleConfig.resourceType) :
 					Optional.empty(),
@@ -237,16 +332,6 @@ public class GameContextBuilder {
 			playersInOrder.add(playersList.remove(randNum));
 		}
 		return playersInOrder;
-	}
-
-	protected GameContext initializeGameContext(
-		Market market,
-		DevelopmentCardsTable developmentCardsTable,
-		FaithPath faithPath,
-		List<Player> playersOrder,
-		Map<Player, PlayerContext> playerContexts
-	) {
-		return new GameContext(market, developmentCardsTable, faithPath, playersOrder, playerContexts);
 	}
 
 }
