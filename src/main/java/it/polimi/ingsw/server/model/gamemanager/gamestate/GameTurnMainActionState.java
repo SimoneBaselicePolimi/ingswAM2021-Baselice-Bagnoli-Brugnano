@@ -134,9 +134,15 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	/**
-	 *
-	 * @param request
-	 * @return
+	 * Method to perform the market action. The player selects a column of the market structure in order to get
+	 * the marbles inside that column.
+	 * Marbles can provide the player with:
+	 * - Resources that the method places in the temporary storages
+	 * - Faith points that advance the player on the faith track
+	 * - Star resources provided by the special marbles
+	 * @param request request made by the player to select a column of the market structure,
+	 * see {@link MarketActionFetchColumnClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update.
 	 * @throws ResourceStorageRuleViolationException
 	 * @throws NotEnoughResourcesException
 	 */
@@ -150,6 +156,19 @@ public class GameTurnMainActionState extends GameState {
 
 	}
 
+	/**
+	 * Method to perform the market action. The player selects a row of the market structure in order to get
+	 * the marbles inside that row.
+	 * Marbles can provide the player with:
+	 * - Resources that the method places in the temporary storages
+	 * - Faith points that advance the player on the faith track
+	 * - Star resources provided by the special marbles
+	 * @param request request made by the player to select a row of the market structure,
+	 * see {@link MarketActionFetchRowClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update.
+	 * @throws ResourceStorageRuleViolationException
+	 * @throws NotEnoughResourcesException
+	 */
 	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(
 		MarketActionFetchRowClientRequest request
 	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
@@ -160,9 +179,9 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	/**
-	 *
-	 * @param marblesThePlayerGets
-	 * @return
+	 * private method called by the methods that allow the player to perform the market action.
+	 * @param marblesThePlayerGets marbles obtained from the market row or column selected by the player
+	 * @return  messages sent to each player containing all changes made since the last game state update.
 	 * @throws ResourceStorageRuleViolationException
 	 * @throws NotEnoughResourcesException
 	 */
@@ -232,9 +251,12 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	/**
-	 *
-	 * @param request
-	 * @return
+	 * Method that allows to activating productions. The player pays for the resources needed to be able
+	 * to activate productions (the resources are first taken from special deposits and shelves and then,
+	 * if necessary, from the infinite chest). Then the player gets the resource rewards which are placed
+	 * in the infinite chest and the faith points which the respective productions provide.
+	 * @param request request of the player to activate production, see {@link ProductionActionClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
 	 * @throws NotEnoughResourcesException
 	 * @throws ResourceStorageRuleViolationException
 	 */
