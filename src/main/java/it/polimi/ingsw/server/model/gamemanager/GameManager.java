@@ -68,7 +68,7 @@ public class GameManager {
 		this.gameRules = readGameRulesFromFiles(gameRulesPath);
 
 		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(players, gameRules, gameItemsManager);
-		this.gameContext = contextBuilder.build();
+		this.gameContext = contextBuilder.buildGameContext();
 
 		changeState();
 	}

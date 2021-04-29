@@ -12,13 +12,16 @@ public class GameRules {
 
     public final LeaderCardsConfig leaderCardsConfig;
 
+    public final ProductionConfig productionConfig;
+
     public GameRules(GameInfoConfig gameInfoConfig, MarketConfig marketConfig, DevelopmentCardsConfig developmentCardsConfig,
-                     FaithPathConfig faithPathConfig, LeaderCardsConfig leaderCardsConfig) {
+                     FaithPathConfig faithPathConfig, LeaderCardsConfig leaderCardsConfig, ProductionConfig productionConfig) {
         this.gameInfoConfig = gameInfoConfig;
         this.marketConfig = marketConfig;
         this.developmentCardsConfig = developmentCardsConfig;
         this.faithPathConfig = faithPathConfig;
         this.leaderCardsConfig = leaderCardsConfig;
+        this.productionConfig = productionConfig;
     }
 
 }

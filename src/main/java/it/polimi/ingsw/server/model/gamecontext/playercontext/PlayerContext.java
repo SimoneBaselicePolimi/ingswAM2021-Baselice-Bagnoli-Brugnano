@@ -166,6 +166,7 @@ public class PlayerContext {
 	}
 
 	//TODO JavaDoc and Test
+	//TODO: Modificare il metodo: DevelopmentCard.getProduction ora restituisce una List<Production>, non una Production
 	public Set<Production> getActiveDevelopmentCardsProductions(){
 		return getDevelopmentCardsOnTop().stream()
 			.map(DevelopmentCard::getProduction)

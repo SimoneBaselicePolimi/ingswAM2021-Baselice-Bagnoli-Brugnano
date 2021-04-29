@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +23,7 @@ public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard
     GameItemsManager gameItemsManager;
 
     @Mock
-    Production production;
+    List<Production> production;
 
     @Mock
     Map<ResourceType, Integer> purchaseCost;
@@ -61,7 +62,7 @@ public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard
             gameItemsManager,
             DevelopmentCardLevel.FIRST_LEVEL,
             DevelopmentCardColour.BLUE,
-            mock(Production.class),
+            null,
             0,
             new HashMap<>()
         );

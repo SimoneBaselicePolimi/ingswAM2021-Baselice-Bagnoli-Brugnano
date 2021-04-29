@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
-class ProductionConfig {
+public class ProductionConfig {
 
     public final CostConfig costs;
 
