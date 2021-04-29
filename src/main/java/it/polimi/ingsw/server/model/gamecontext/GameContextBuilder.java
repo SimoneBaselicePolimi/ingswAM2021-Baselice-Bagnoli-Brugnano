@@ -9,15 +9,14 @@ import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
-import it.polimi.ingsw.server.model.gameitems.MarbleColour;
-import it.polimi.ingsw.server.model.gameitems.Production;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 
@@ -36,7 +35,8 @@ public class GameContextBuilder {
 	protected final GameItemsManager gameItemsManager;
 
 	protected int numProductionID = 0;
-
+	protected int numSpecialMarbleSubstitutionID = 0;
+	protected int numDevelopmentCardCostDiscountID = 0;
 	protected int numResourceStorageID = 0;
 
 	public GameContextBuilder(
@@ -74,7 +74,18 @@ public class GameContextBuilder {
 		return initializeGameContext(market, developmentCardsTable, faithPath, playersInOrder, playerContexts);
 	}
 
-	private PlayerContext buildPlayerContext(Player player) {
+	protected PlayerContext initializePlayerContext(
+		Player player,
+		Set<ResourceStorage> shelves,
+		List<PlayerOwnedDevelopmentCardDeck> decks,
+		ResourceStorage infiniteChest,
+		ResourceStorage temporaryStorage,
+		Set<Production> baseProductions
+	) {
+		return new PlayerContext(player, shelves, decks, infiniteChest, temporaryStorage, baseProductions);
+	}
+
+	protected PlayerContext buildPlayerContext(Player player) {
 		GameInfoConfig gameInfoConfig = gameRules.gameInfoConfig;
 
 		Set<ResourceStorage> shelves = new HashSet<>();
@@ -117,11 +128,23 @@ public class GameContextBuilder {
 			);
 	}
 
-	private String generatePlayerOwnedDevCardDeckID(int num) {
+	protected String generatePlayerOwnedDevCardDeckID(int num) {
 		return "PlayerDevCardDeck_ID_" + num;
 	}
 
-	private ResourceStorage buildResourceStorage(ResourceStorageConfig resourceStorageConf) {
+	protected String generateResourceStorageID() {
+		numResourceStorageID++;
+		return "ResourceStorage_ID_" + numResourceStorageID;
+	}
+
+	protected ResourceStorage initializeResourceStorage(
+		String resourceStorageID,
+		List<ResourceStorageRule> rules
+	) {
+		return new ResourceStorage(resourceStorageID, gameItemsManager, rules);
+	}
+
+	protected ResourceStorage buildResourceStorage(ResourceStorageConfig resourceStorageConf) {
 		String resourceStorageID = generateResourceStorageID();
 
 		List<ResourceStorageRule> rules = resourceStorageConf.storage.rules.stream()
@@ -129,29 +152,6 @@ public class GameContextBuilder {
 			.collect(Collectors.toList());
 
 		return initializeResourceStorage(resourceStorageID, rules);
-	}
-
-	private String generateResourceStorageID() {
-		numResourceStorageID++;
-		return "ResourceStorage_ID_" + numResourceStorageID;
-	}
-
-	private ResourceStorage initializeResourceStorage(
-		String resourceStorageID,
-		List<ResourceStorageRule> rules
-	) {
-		return new ResourceStorage(resourceStorageID, gameItemsManager, rules);
-	}
-
-	private PlayerContext initializePlayerContext(
-		Player player,
-		Set<ResourceStorage> shelves,
-		List<PlayerOwnedDevelopmentCardDeck> decks,
-		ResourceStorage infiniteChest,
-		ResourceStorage temporaryStorage,
-		Set<Production> baseProductions
-	) {
-		return new PlayerContext(player, shelves, decks, infiniteChest, temporaryStorage, baseProductions);
 	}
 
 	protected MarbleColour initializeMarbleColour(
@@ -220,7 +220,7 @@ public class GameContextBuilder {
 		);
 	}
 
-	private String generateNewProductionID() {
+	protected String generateNewProductionID() {
 		numProductionID++;
 		return "Prod_ID_" + numProductionID;
 	}
@@ -332,6 +332,94 @@ public class GameContextBuilder {
 			playersInOrder.add(playersList.remove(randNum));
 		}
 		return playersInOrder;
+	}
+
+	protected LeaderCard initializeLeaderCard(
+		String leaderCardID,
+		Set<LeaderCardRequirement> requirements,
+		Set<Production> productions,
+		Set<ResourceStorage> resourceStorages,
+		Set<DevelopmentCardCostDiscount> cardCostDiscounts,
+		Set<WhiteMarbleSubstitution> specialMarbleSubstitutions,
+		int victoryPoints
+	) {
+		return new LeaderCard(leaderCardID, gameItemsManager, requirements, productions, resourceStorages, cardCostDiscounts, specialMarbleSubstitutions, victoryPoints);
+	}
+
+	protected LeaderCard buildLeaderCard(LeaderCardsConfig.LeaderCardConfig leaderCardConfig) {
+		String leaderCardID = leaderCardConfig.leaderCardID;
+
+		Set<LeaderCardRequirement> requirements = leaderCardConfig.requirements.stream()
+				.map(LeaderCardsConfig.LeaderCardConfig.RequirementConfig::createRequirement)
+				.collect(Collectors.toSet());
+
+		Set<Production> productions = new HashSet<>();
+		for(ProductionConfig productionConfig : leaderCardConfig.productions) {
+			Production production = buildProduction(productionConfig);
+			productions.add(production);
+		}
+
+		Set<ResourceStorage> resourceStorages = new HashSet<>();
+		for(ResourceStorageConfig resourceStorageConf : leaderCardConfig.resourceStorages) {
+			ResourceStorage resourceStorage = buildResourceStorage(resourceStorageConf);
+			resourceStorages.add(resourceStorage);
+		}
+
+		Set<DevelopmentCardCostDiscount> cardCostDiscounts = new HashSet<>();
+		for(LeaderCardsConfig.LeaderCardConfig.DevelopmentCardCostDiscountConfig cardCostDiscountConfig : leaderCardConfig.developmentCardCostDiscounts) {
+			DevelopmentCardCostDiscount cardCostDiscount = buildDevelopmentCardCostDiscount(cardCostDiscountConfig);
+			cardCostDiscounts.add(cardCostDiscount);
+		}
+
+		Set<WhiteMarbleSubstitution> specialMarbleSubstitutions = new HashSet<>();
+		for(LeaderCardsConfig.LeaderCardConfig.WhiteMarbleSubstitutionConfig whiteMarbleSubstitutionConfig : leaderCardConfig.specialMarbleSubstitutions) {
+			WhiteMarbleSubstitution specialMarbleSubstitution = buildSpecialMarbleSubstitution(whiteMarbleSubstitutionConfig);
+			specialMarbleSubstitutions.add(specialMarbleSubstitution);
+		}
+
+		int victoryPoints =leaderCardConfig.victoryPoints;
+
+		return initializeLeaderCard(leaderCardID, requirements, productions, resourceStorages, cardCostDiscounts, specialMarbleSubstitutions, victoryPoints);
+	}
+
+	protected String generateNewSpecialMarbleSubstitutionID() {
+		numSpecialMarbleSubstitutionID++;
+		return "MarbleSubstitution_ID_" + numSpecialMarbleSubstitutionID;
+	}
+
+	protected WhiteMarbleSubstitution initializeSpecialMarbleSubstitution(
+		String marbleSubstitutionID,
+		ResourceType resourceTypeToSubstitute
+	) {
+		return new WhiteMarbleSubstitution(marbleSubstitutionID, gameItemsManager, resourceTypeToSubstitute);
+	}
+
+	protected WhiteMarbleSubstitution buildSpecialMarbleSubstitution(LeaderCardsConfig.LeaderCardConfig.WhiteMarbleSubstitutionConfig whiteMarbleSubstitutionConfig) {
+		return initializeSpecialMarbleSubstitution(
+			generateNewSpecialMarbleSubstitutionID(),
+			whiteMarbleSubstitutionConfig.resourceType
+		);
+	}
+
+	protected String generateNewDevelopmentCardCostDiscountID() {
+		numDevelopmentCardCostDiscountID++;
+		return "DevCardCostDiscount_ID_" + numDevelopmentCardCostDiscountID;
+	}
+
+	protected DevelopmentCardCostDiscount initializeDevelopmentCardCostDiscount(
+		String costDiscountID,
+		ResourceType resourceType,
+		int amountToDiscount
+	) {
+		return new DevelopmentCardCostDiscount(costDiscountID, gameItemsManager, resourceType, amountToDiscount);
+	}
+
+	protected DevelopmentCardCostDiscount buildDevelopmentCardCostDiscount(LeaderCardsConfig.LeaderCardConfig.DevelopmentCardCostDiscountConfig cardCostDiscountConfig) {
+		return initializeDevelopmentCardCostDiscount(
+			generateNewDevelopmentCardCostDiscountID(),
+			cardCostDiscountConfig.resourceType,
+			cardCostDiscountConfig.amountToDiscount
+		);
 	}
 
 }

@@ -19,12 +19,12 @@ public class GameInfoConfig {
 
     public final boolean differentResourcesInDifferentStorages;
 
-    public final boolean numberOfResourcesRewardingOneVictoryPoint;
+    public final int numberOfResourcesRewardingOneVictoryPoint;
 
     public GameInfoConfig(int maxNumberOfPlayers, boolean singlePlayerEnabled, GameSetup gameSetup,
                           int numberOfPlayerOwnedDevelopmentCardDecks, List<ProductionConfig> basicProductionPower,
                           List<ResourceStorageConfig> resourceShelves, boolean differentResourcesInDifferentStorages,
-                          boolean numberOfResourcesRewardingOneVictoryPoint) {
+                          int numberOfResourcesRewardingOneVictoryPoint) {
         this.maxNumberOfPlayers = maxNumberOfPlayers;
         this.singlePlayerEnabled = singlePlayerEnabled;
         this.gameSetup = gameSetup;

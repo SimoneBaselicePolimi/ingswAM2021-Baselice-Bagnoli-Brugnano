@@ -9,13 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 class GameItemsManagerTest {
@@ -35,22 +33,22 @@ class GameItemsManagerTest {
         lc1 = new LeaderCard(
             "lc1",
             gameItemsManager,
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
             0
         );
 
         lc2 = new LeaderCard(
             "lc2",
             gameItemsManager,
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
             0
         );
 

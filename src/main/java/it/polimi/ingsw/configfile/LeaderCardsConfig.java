@@ -3,6 +3,10 @@ package it.polimi.ingsw.configfile;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
+import it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourAndLevelRequirement;
+import it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourRequirement;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
+import it.polimi.ingsw.server.model.gameitems.leadercard.ResourceNumberRequirement;
 
 import java.util.List;
 
@@ -41,7 +45,7 @@ public class LeaderCardsConfig {
         }
 
         public static abstract class RequirementConfig {
-
+            public abstract LeaderCardRequirement createRequirement();
         }
 
         public static class ColourRequirementConfig extends RequirementConfig {
@@ -52,6 +56,10 @@ public class LeaderCardsConfig {
             public ColourRequirementConfig(DevelopmentCardColour cardColour, int numberOfCards) {
                 this.cardColour = cardColour;
                 this.numberOfCards = numberOfCards;
+            }
+
+            public LeaderCardRequirement createRequirement() {
+                return new DevelopmentCardColourRequirement(cardColour, numberOfCards);
             }
         }
 
@@ -65,6 +73,10 @@ public class LeaderCardsConfig {
                 this.cardLevel = cardLevel;
                 this.numberOfCards = numberOfCards;
             }
+
+            public LeaderCardRequirement createRequirement() {
+                return new DevelopmentCardColourAndLevelRequirement(cardColour, cardLevel, numberOfCards);
+            }
         }
 
         public static class ResourceRequirementConfig extends RequirementConfig {
@@ -75,6 +87,10 @@ public class LeaderCardsConfig {
             public ResourceRequirementConfig(ResourceType resourceType, int numberOfResources) {
                 this.resourceType = resourceType;
                 this.numberOfResources = numberOfResources;
+            }
+
+            public LeaderCardRequirement createRequirement() {
+                return new ResourceNumberRequirement(resourceType, numberOfResources);
             }
         }
 
