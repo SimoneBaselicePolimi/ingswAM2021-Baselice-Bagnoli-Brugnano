@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.model.gameitems.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This class represent a specific type of cards used in the game: the development card
@@ -12,7 +13,7 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 
 	private DevelopmentCardLevel level;
 	private DevelopmentCardColour colour;
-	private List<Production> productions;
+	private Set<Production> productions;
 	private int victoryPoints;
 	private Map<ResourceType, Integer> purchaseCost;
 
@@ -32,7 +33,7 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 		GameItemsManager gameItemsManager,
 		DevelopmentCardLevel level,
 		DevelopmentCardColour colour,
-		List<Production> productions,
+		Set<Production> productions,
 		int victoryPoints,
 		Map<ResourceType, Integer> purchaseCost
 	){
@@ -64,7 +65,7 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 	 * Method to get the list of productions of the development card
 	 * @return production list
 	 */
-	public List<Production> getProduction() {
+	public Set<Production> getProductions() {
 		return productions;
 	}
 

@@ -36,7 +36,7 @@ public class DevelopmentCardColourAndLevelRequirementTest {
     PlayerContext playerContext3;
 
     @Mock
-    Production production;
+    Set<Production> production;
 
     DevelopmentCardColourAndLevelRequirement requirement1, requirement2, requirement3, requirement4, requirement5, requirement6;
 

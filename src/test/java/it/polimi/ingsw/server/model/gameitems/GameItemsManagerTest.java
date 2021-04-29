@@ -59,7 +59,7 @@ class GameItemsManagerTest {
             gameItemsManager,
             DevelopmentCardLevel.FIRST_LEVEL,
             DevelopmentCardColour.BLUE,
-            mock(Production.class),
+            new HashSet<>(),
             0,
             new HashMap<>()
         );

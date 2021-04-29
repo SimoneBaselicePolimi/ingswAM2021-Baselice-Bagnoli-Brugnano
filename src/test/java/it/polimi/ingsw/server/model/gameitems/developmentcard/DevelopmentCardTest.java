@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -23,7 +24,7 @@ public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard
     GameItemsManager gameItemsManager;
 
     @Mock
-    List<Production> production;
+    Set<Production> production;
 
     @Mock
     Map<ResourceType, Integer> purchaseCost;
@@ -42,15 +43,15 @@ public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard
 
         assertEquals(developmentCard1.getLevel(), DevelopmentCardLevel.FIRST_LEVEL);
         assertEquals(developmentCard1.getColour(), DevelopmentCardColour.BLUE);
-        assertEquals(developmentCard1.getProduction(), production);
+        assertEquals(developmentCard1.getProductions(), production);
         assertEquals(developmentCard1.getVictoryPoints(),3);
         assertNull(developmentCard2.getLevel());
         assertNull(developmentCard2.getColour());
-        assertNull(developmentCard2.getProduction());
+        assertNull(developmentCard2.getProductions());
         assertEquals(developmentCard2.getVictoryPoints(),0);
         assertNotEquals(developmentCard2.getLevel(), DevelopmentCardLevel.SECOND_LEVEL);
         assertNotEquals(developmentCard1.getColour(), DevelopmentCardColour.PURPLE);
-        assertEquals(developmentCard1.getProduction(), production);
+        assertEquals(developmentCard1.getProductions(), production);
         assertEquals(developmentCard1.getPurchaseCost(), purchaseCost);
         assertNotEquals(developmentCard1.getPurchaseCost(), purchaseCost1);
     }

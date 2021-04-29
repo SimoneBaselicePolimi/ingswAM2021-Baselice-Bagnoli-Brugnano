@@ -12,8 +12,6 @@ public class GameRules {
 
     public final LeaderCardsConfig leaderCardsConfig;
 
-    public final ProductionConfig productionConfig;
-
     public GameRules(GameInfoConfig gameInfoConfig, MarketConfig marketConfig, DevelopmentCardsConfig developmentCardsConfig,
                      FaithPathConfig faithPathConfig, LeaderCardsConfig leaderCardsConfig, ProductionConfig productionConfig) {
         this.gameInfoConfig = gameInfoConfig;
@@ -21,7 +19,6 @@ public class GameRules {
         this.developmentCardsConfig = developmentCardsConfig;
         this.faithPathConfig = faithPathConfig;
         this.leaderCardsConfig = leaderCardsConfig;
-        this.productionConfig = productionConfig;
     }
 
 }

@@ -12,7 +12,6 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -166,10 +165,9 @@ public class PlayerContext {
 	}
 
 	//TODO JavaDoc and Test
-	//TODO: Modificare il metodo: DevelopmentCard.getProduction ora restituisce una List<Production>, non una Production
 	public Set<Production> getActiveDevelopmentCardsProductions(){
 		return getDevelopmentCardsOnTop().stream()
-			.map(DevelopmentCard::getProduction)
+			.flatMap(card -> card.getProductions().stream())
 			.collect(Collectors.toSet());
 	}
 

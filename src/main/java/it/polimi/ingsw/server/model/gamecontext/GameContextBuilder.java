@@ -31,6 +31,8 @@ public class GameContextBuilder {
 
 	protected final GameItemsManager gameItemsManager;
 
+	protected int numProductionID = 0;
+
 	public GameContextBuilder(
 		Set<Player> players,
 		GameRules gameRules,
@@ -48,9 +50,11 @@ public class GameContextBuilder {
 		Market market = buildMarket();
 		DevelopmentCardsTable developmentCardsTable = buildDevelopmentCardsTable();
 		FaithPath faithPath = buildFaithPath();
+		List<Player> playersInOrder = generateRandomPlayersOrder();
+		// TODO: player context
+		Map<Player, PlayerContext> playerContexts = new HashMap<>();
 
-		// TODO: last two parameters
-		return initializeGameContext(market, developmentCardsTable, faithPath, new ArrayList<>(), new HashMap<>());
+		return initializeGameContext(market, developmentCardsTable, faithPath, playersInOrder, playerContexts);
 	}
 
 	protected MarbleColour initializeMarbleColour(
@@ -110,34 +114,39 @@ public class GameContextBuilder {
 	}
 
 	protected Production buildProduction(ProductionConfig productionConfig) {
-		// TODO add ID to Productions
+		String productionID = generateNewProductionID();
 		return initializeProduction(
-			"ID",
+			productionID,
 			productionConfig.costs.resources,
 			productionConfig.rewards.resources,
 			productionConfig.costs.starResources,
 			productionConfig.rewards.starResources,
 			productionConfig.rewards.faithPoints
-				);
+		);
+	}
+
+	private String generateNewProductionID() {
+		numProductionID++;
+		return "Prod_ID_" + numProductionID;
 	}
 
 	protected DevelopmentCard initializeDevelopmentCard(
 		String cardID,
 		DevelopmentCardLevel level,
 		DevelopmentCardColour colour,
-		List<Production> productions,
+		Set<Production> productions,
 		int victoryPoints,
 		Map<ResourceType, Integer> purchaseCost
 	) {
 		return new DevelopmentCard(cardID, gameItemsManager, level, colour, productions, victoryPoints, purchaseCost);
 	}
 
-	protected DevelopmentCard buildDevelopmentCard(DevelopmentCardsConfig.DevelopmentCardConfig developmentCardConfig, List<Production> productionList) {
+	protected DevelopmentCard buildDevelopmentCard(DevelopmentCardsConfig.DevelopmentCardConfig developmentCardConfig, Set<Production> productionSet) {
 		return initializeDevelopmentCard(
 			developmentCardConfig.developmentCardID,
 			developmentCardConfig.level,
 			developmentCardConfig.colour,
-			productionList,
+			productionSet,
 			developmentCardConfig.victoryPoints,
 			developmentCardConfig.purchaseCost
 		);
@@ -155,20 +164,19 @@ public class GameContextBuilder {
 
 		List<DevelopmentCard> developmentCardList = new ArrayList<>();
 		for(DevelopmentCardsConfig.DevelopmentCardConfig developmentCardConfig : developmentCardsConfig.developmentCards) {
-			List<Production> productionList = new ArrayList<>();
+			Set<Production> productions = new HashSet<>();
 			for (ProductionConfig productionConfig : developmentCardConfig.productions) {
 				Production production = buildProduction(productionConfig);
-				productionList.add(production);
+				productions.add(production);
 			}
-			DevelopmentCard developmentCard = buildDevelopmentCard(developmentCardConfig, productionList);
+			DevelopmentCard developmentCard = buildDevelopmentCard(developmentCardConfig, productions);
 			developmentCardList.add(developmentCard);
 		}
 
-		// TODO add ID to DevelopmentCardDecks (getIdForDeckWithColourAndLevel)
 		return initializeDevelopmentCardsTable(
-			developmentCardList,
-			null
-		);
+				developmentCardList,
+				(colour, level) -> "DevCardDeckOnTable_ID_" + colour + "_" + level
+			);
 	}
 
 	protected VaticanReportSection initializeVaticanReportSection(
@@ -217,6 +225,18 @@ public class GameContextBuilder {
 			logger.log(newException);
 			throw newException;
 		}
+	}
+
+	protected List<Player> generateRandomPlayersOrder() {
+		List<Player> playersList = new ArrayList<>(players);
+		List<Player> playersInOrder = new ArrayList<>();
+		Random randGenerator = new Random();
+		int randNum;
+		while (playersList.size() > 0) {
+			randNum = randGenerator.nextInt(playersList.size());
+			playersInOrder.add(playersList.remove(randNum));
+		}
+		return playersInOrder;
 	}
 
 	protected GameContext initializeGameContext(
