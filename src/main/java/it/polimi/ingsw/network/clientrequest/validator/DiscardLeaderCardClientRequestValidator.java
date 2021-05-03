@@ -11,6 +11,13 @@ import java.util.Optional;
 
 public class DiscardLeaderCardClientRequestValidator extends ClientRequestValidator<DiscardLeaderCardClientRequest> {
 
+    /**
+     * Method that sends an error message if the leader card the player wants to discard is not from the group
+     * of card he holds in his hand.
+     * @param requestToValidate specific request sent by the client
+     * @param gameManager GameManager, see {@link GameManager}
+     * @return Optional<InvalidRequestServerMessage>, see {@link InvalidRequestServerMessage}
+     */
     @Override
     public Optional<InvalidRequestServerMessage> getErrorMessage(
         DiscardLeaderCardClientRequest requestToValidate,

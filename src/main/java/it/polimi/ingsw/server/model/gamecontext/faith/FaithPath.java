@@ -69,6 +69,7 @@ public class FaithPath {
 		this.faithPathLength = faithPathLength;
 		this.vaticanReportSections = vaticanSections;
 		this.victoryPointsByPosition = victoryPointsByPosition;
+		this.gameHistory = gameHistory;
 
 		for (Player player : players) {
 			faithPositions.put(player, 0);

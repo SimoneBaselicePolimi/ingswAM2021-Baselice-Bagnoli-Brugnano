@@ -18,6 +18,10 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 
 	protected final GameManager gameManager;
 
+	/**
+	 * GameState constructor
+	 * @param gameManager GameManager, see {@link GameManager}
+	 */
 	protected GameState(GameManager gameManager) {
 		this.gameManager = gameManager;
 	}
@@ -38,30 +42,105 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return new HashMap<>();
 	}
 
+	/**
+	 * Method that verifies that the current state is closed
+	 */
 	public abstract boolean isStateDone();
 
+	/**
+	 * Method that changes the state of the game
+	 */
 	public abstract GameState getNextState();
 
+	/**
+	 * The method checks that the player's requests are valid. Specifically, it verifies that:
+	 * - The player has not already sent a request.
+	 * - The number of resources chosen by the player is the same as the one assigned to him.
+	 * - The player only wants to add resources in valid storages (only on the shelves).
+	 * - The resources chosen by the player do not violate the rules of the storage they are to be added to.
+	 * - The number of leader cards chosen by the player is what is expected
+	 * (players can only hold a certain number of cards).
+	 * - The leader cards chosen by the player are part of the group of leader cards assigned to him.
+	 * After verifying these requirements, the method assigns the chosen leader cards to each player,
+	 * stores the resources resources in the shelves chosen by the player
+	 * and moves the player in the Faith Track for a specific number of steps forward.
+	 * Finally, the method returns these changes to each player, taking care to filter out private informations:
+	 * each player can only see his own leader cards, which he must keep secret from the other players.
+	 * @param request specifying each player's choices, see {@link InitialChoicesClientRequest}
+	 * @return a map specifying the message to be sent to each player
+	 * @throws ResourceStorageRuleViolationException if at least one of the above requirements is not met:
+	 * if a player's choice is not valid, the method throws an exception.
+	 */
 	public Map<Player, ServerMessage> handleInitialChoiceCR(InitialChoicesClientRequest request) throws ResourceStorageRuleViolationException {
 		return null;
 	}
 
+	/**
+	 * Method that discards the leader card chosen by the player according to his request.
+	 * The leader card state changes from active to discard.
+	 * @param request request of the player to discard the leader card, see {@link DiscardLeaderCardClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to discard some leader cards but not
+	 * all card requirements have been satisfied
+	 */
 	public Map<Player, ServerMessage> handleRequestDiscardLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 		return null;
 	}
 
+	/**
+	 * Method that activates the leader card chosen by the player according to his request.
+	 * The leader card state changes from hidden to active.
+	 * @param request request of the player to activate the leader card, see {@link ActivateLeaderCardClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to activate some leader cards but not
+	 * all card requirements have been satisfied
+	 */
 	public Map<Player, GameUpdateServerMessage> handleRequestActivateLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 		return null;
 	}
 
+	/**
+	 * Method to perform the market action. The player selects a column of the market structure in order to get
+	 * the marbles inside that column.
+	 * Marbles can provide the player with:
+	 * - Resources that the method places in the temporary storages
+	 * - Faith points that advance the player on the faith track
+	 * - Star resources provided by the special marbles
+	 * @param request request made by the player to select a column of the market structure,
+	 * see {@link MarketActionFetchColumnClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update.
+	 * @throws ResourceStorageRuleViolationException
+	 * @throws NotEnoughResourcesException
+	 */
 	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(MarketActionFetchColumnClientRequest request) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		return null;
 	}
 
+	/**
+	 * Method to perform the market action. The player selects a row of the market structure in order to get
+	 * the marbles inside that row.
+	 * Marbles can provide the player with:
+	 * - Resources that the method places in the temporary storages
+	 * - Faith points that advance the player on the faith track
+	 * - Star resources provided by the special marbles
+	 * @param request request made by the player to select a row of the market structure,
+	 * see {@link MarketActionFetchRowClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update.
+	 * @throws ResourceStorageRuleViolationException
+	 * @throws NotEnoughResourcesException
+	 */
 	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(MarketActionFetchRowClientRequest request) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		return null;
 	}
 
+	/**
+	 * Method that allows the player to choose where to place the resources obtained from the market
+	 * (including special resources) in his storages.
+	 * @param request of the player to place the obtained resources in his storages,
+	 * see {@link ManageResourcesFromMarketClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws ResourceStorageRuleViolationException
+	 */
 	public Map<Player, ServerMessage> handleRequestManageResourcesFromMarket(ManageResourcesFromMarketClientRequest request) throws ResourceStorageRuleViolationException {
 		return null;
 	}
@@ -70,15 +149,37 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 		return null;
 	}
 
+	/**
+	 * Method that allows to buy the development card chosen by the player among the available ones.
+	 * The card is paid by the player with the required cost resources.
+	 * @param request request of the player to buy the development card, see {@link DevelopmentActionClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws ForbiddenPushOnTopException if the rules imposed by the deck do not allow the development card
+	 * to be pushed on the top of this Deck
+	 */
 	public Map<Player, ServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) throws ForbiddenPushOnTopException {
 		return null;
 	}
 
+	/**
+	 * Method that allows to activating productions. The player pays for the resources needed to be able
+	 * to activate productions (the resources are first taken from special deposits and shelves and then,
+	 * if necessary, from the infinite chest). Then the player gets the resource rewards which are placed
+	 * in the infinite chest and the faith points which the respective productions provide.
+	 * @param request request of the player to activate production, see {@link ProductionActionClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws NotEnoughResourcesException
+	 * @throws ResourceStorageRuleViolationException
+	 */
 	public Map<Player, ServerMessage> handleRequestProductionAction(ProductionActionClientRequest request) throws NotEnoughResourcesException, ResourceStorageRuleViolationException {
 		return null;
 	}
-	//TODO
 
+	/**
+	 * Method that ends the active player's turn.
+	 * @param request request of the player to end his turn, see {@link EndTurnClientRequest}
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 */
 	public Map<Player, ServerMessage> handleRequestEndTurn(EndTurnClientRequest request) {
 		return null;
 	}

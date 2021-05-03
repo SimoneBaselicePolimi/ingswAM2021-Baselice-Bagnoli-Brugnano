@@ -19,6 +19,7 @@ import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionState;
 import it.polimi.ingsw.server.model.notifier.GameHistoryNotifier;
 import it.polimi.ingsw.server.model.notifier.Notifier;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
@@ -53,6 +54,14 @@ public class GameManager {
 
 	private ProjectLogger logger = ProjectLogger.getLogger();
 
+	/**
+	 * GameManager constructor
+	 * @param players players of the game
+	 * @param controller, see @link ServerController}
+	 * @param gameRulesPath
+	 * @throws InvalidGameRules
+	 * @throws GameContextCreationError
+	 */
 	public GameManager(
 	    Set<Player> players,
 		ServerController controller,
@@ -74,7 +83,6 @@ public class GameManager {
 	}
 
 
-
 	public void registerNotifier(Notifier notifier) {
 		notifiers.add(notifier);
 	}
@@ -89,22 +97,42 @@ public class GameManager {
 			.collect(Collectors.toSet());
 	}
 
+	/**
+	 * Method to get the Game History
+	 * @return GameHistory, see {@link GameHistory}
+	 */
 	public GameHistory getGameHistory() {
 		return gameHistory;
 	}
 
+	/**
+	 * Method to get all the players of the game
+	 * @return returns the set of players in the game
+	 */
 	public Set<Player> getPlayers() {
 		return new HashSet<>(players);
 	}
 
+	/**
+	 * Method to get the Game Context
+	 * @return GameContext, see {@link GameContext}
+	 */
 	public GameContext getGameContext() {
 		return gameContext;
 	}
 
+	/**
+	 * Method to get the Game Rules
+	 * @return GameContext, see {@link GameRules}
+	 */
 	public GameRules getGameRules() {
 		return gameRules;
 	}
 
+	/**
+	 * Method to get the Game Items Manager
+	 * @return GameItemsManager, see {@link GameItemsManager}
+	 */
 	public GameItemsManager getGameItemsManager() {
 		return gameItemsManager;
 	}
@@ -148,6 +176,9 @@ public class GameManager {
 
 	}
 
+	/**
+	 * Method to change the current game state. If the game has not yet started, the method creates the new game.
+	 */
 	private void changeState() {
 		if (currentState == null)
 			currentState = getInitialGameState();
@@ -158,7 +189,11 @@ public class GameManager {
 		controller.sendMessagesToClients(currentState.getInitialServerMessage());
 	}
 
-	private GameState getInitialGameState() {
+	/**
+	 * Method that returns the setup state of the game. The method is called when a new game is started.
+	 * @return GameSetupState, see {@link GameSetupState}
+	 */
+	private GameSetupState getInitialGameState() {
 		return new GameSetupState(this);
 	}
 

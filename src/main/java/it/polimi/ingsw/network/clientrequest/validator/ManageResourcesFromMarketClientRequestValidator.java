@@ -21,6 +21,13 @@ import java.util.stream.Stream;
 
 public class ManageResourcesFromMarketClientRequestValidator extends ClientRequestValidator <ManageResourcesFromMarketClientRequest>{
 
+    /**
+     * Method that sends an error message if:
+     * - Star resources chosen by the player are not from those possible to choose
+     * @param requestToValidate specific request sent by the client
+     * @param gameManager GameManager, see {@link GameManager}
+     * @return Optional<InvalidRequestServerMessage>, see {@link InvalidRequestServerMessage}
+     */
     @Override
     public Optional<InvalidRequestServerMessage> getErrorMessage(
         ManageResourcesFromMarketClientRequest requestToValidate,

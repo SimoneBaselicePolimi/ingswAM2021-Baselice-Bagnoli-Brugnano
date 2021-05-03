@@ -12,6 +12,14 @@ import java.util.Optional;
 
 public class ActivateLeaderCardClientRequestValidator extends ClientRequestValidator<ActivateLeaderCardClientRequest> {
 
+    /**
+     * Method that sends an error message if:
+     * - The leader card the player wants to activate is not from the group of card he holds in his hand
+     * - The player does not meet the requirements for activating the leader card
+     * @param requestToValidate, see {@link ActivateLeaderCardClientRequest}
+     * @param gameManager GameManager, see {@link GameManager}
+     * @return Optional<InvalidRequestServerMessage>, see {@link InvalidRequestServerMessage}
+     */
     @Override
     public Optional<InvalidRequestServerMessage> getErrorMessage(
         ActivateLeaderCardClientRequest requestToValidate,

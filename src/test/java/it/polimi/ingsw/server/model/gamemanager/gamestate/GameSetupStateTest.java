@@ -2,13 +2,19 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.configfile.GameInfoConfig;
 import it.polimi.ingsw.configfile.GameRules;
+import it.polimi.ingsw.network.servermessage.InitialChoicesServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
+import it.polimi.ingsw.server.model.gamehistory.GameHistory;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
@@ -16,14 +22,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class GameSetupStateTest {
 
     Player player1 = new Player("first");
     Player player2 = new Player("second");
     Player player3 = new Player("third");
-    Player player4 = new Player("fourth");
 
-    List<Player> players = List.of(player1, player2, player3, player4);
+    List<Player> playersInOrder = List.of(player1, player2, player3);
 
     @Mock
     GameManager gameManager;
@@ -32,67 +38,75 @@ public class GameSetupStateTest {
     GameContext gameContext;
 
     @Mock
-    LeaderCard leaderCard1;
+    GameItemsManager gameItemsManager;
 
     @Mock
-    LeaderCard leaderCard2;
+    GameHistory gameHistory;
 
-    @Mock
-    LeaderCard leaderCard3;
+    Set<LeaderCard> leaderCards;
 
-    @Mock
-    LeaderCard leaderCard4;
-
-    @Mock
-    LeaderCard leaderCard5;
-
-    @Mock
-    LeaderCard leaderCard6;
+    int maxNumberOfPlayers = 3;
+    int numberOfLeadersCardsGivenToThePlayer = 4;
+    int numberOfLeadersCardsThePlayerKeeps = 2;
+    Map<Player, Integer> playerInitialFaithPoints = Map.of(
+        player1, 0,
+        player2, 1,
+        player3, 3
+    );
+    Map<Player, Integer> playerInitialStarResources = Map.of(
+        player1, 0,
+        player2, 1,
+        player3, 2
+    );
 
     GameRules gameRules;
 
-    @Mock
-    GameInfoConfig gameInfo;
-
-    @Mock
-    GameInfoConfig.GameSetup setup;
-
-    Set<LeaderCard> leaderCards = Set.of(
-        leaderCard1,
-        leaderCard2,
-        leaderCard3,
-        leaderCard4,
-        leaderCard5,
-        leaderCard6
-    );
-
     @BeforeEach
     void setUp() {
-        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
-        lenient().when(gameManager.getGameContext().getPlayersTurnOrder()).thenReturn(players);
+        leaderCards = TestUtils.generateSetOfMockWithID(LeaderCard.class, 15);
 
+        Map<Integer, GameInfoConfig.GameSetup.InitialPlayerResourcesAndFaithPoints> initialResources = new HashMap<>();
+        for (int i = 0; i < playersInOrder.size(); i++){
+            Player player = playersInOrder.get(i);
+            initialResources.put(
+                i + 1,
+                new GameInfoConfig.GameSetup.InitialPlayerResourcesAndFaithPoints(
+                    playerInitialStarResources.get(player),
+                    playerInitialFaithPoints.get(player))
+                );
+        }
 
-        when(leaderCard1.getItemId()).thenReturn("L1");
-        when(leaderCard1.getItemId()).thenReturn("L2");
-        when(leaderCard1.getItemId()).thenReturn("L3");
-        when(leaderCard1.getItemId()).thenReturn("L4");
-        when(leaderCard1.getItemId()).thenReturn("L5");
-        when(leaderCard1.getItemId()).thenReturn("L6");
-
-        //TODO
-        /*
         gameRules = new GameRules(
-            new GameInfoConfig(),
+            new GameInfoConfig(
+                maxNumberOfPlayers,
+                false,
+                new GameInfoConfig.GameSetup(
+                    numberOfLeadersCardsGivenToThePlayer,
+                    numberOfLeadersCardsThePlayerKeeps,
+                    initialResources
+                ),
+                0,
+                null,
+                null,
+                false,
+                false
+            ),
+            null,
+            null,
             null,
             null
         );
-        */
 
-//        GameInfoConfig gameInfo = gameManager.getGameRules().gameInfoConfig;
-//        numberOfLeadersCardsGivenToThePlayer = gameInfo.gameSetup.numberOfLeadersCardsGivenToThePlayer;
-//        numberOfLeadersCardsThePlayerKeeps = gameInfo.gameSetup.numberOfLeadersCardsThePlayerKeeps;
+        when(gameManager.getGameContext()).thenReturn(gameContext);
+        when(gameContext.getPlayersTurnOrder()).thenReturn(playersInOrder);
+        when(gameManager.getPlayers()).thenReturn(new HashSet<>(playersInOrder));
+        when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
+        when(gameItemsManager.getAllItemsOfType(eq(LeaderCard.class))).thenReturn(leaderCards);
+        when(gameManager.getGameRules()).thenReturn(gameRules);
+        lenient().when(gameManager.getGameHistory()).thenReturn(gameHistory);
 
     }
+
 
     @Test
     void testRandomShuffle() {
@@ -103,25 +117,37 @@ public class GameSetupStateTest {
         assertEquals(state1.leaderCardsGivenToThePlayers, state1Copy.leaderCardsGivenToThePlayers);
         assertNotEquals(state1.leaderCardsGivenToThePlayers, state2.leaderCardsGivenToThePlayers);
     }
-}
 
-   // @Test
-    //void testRandomShuffle() {
-    //ShuffledCardDeck<String> deck1 = new ShuffledCardDeck<>(new Random(1), testCards);
-//        List<String> listDeck1 = new ArrayList<>();
-//        while(!deck1.isEmpty())
-//            listDeck1.add(deck1.pop());
-//
-//        ShuffledCardDeck<String> deck1_copy = new ShuffledCardDeck<>(new Random(1), testCards);
-//        List<String> listDeck1_copy = new ArrayList<>();
-//        while(!deck1_copy.isEmpty())
-//            listDeck1_copy.add(deck1_copy.pop());
-//
-//        ShuffledCardDeck<String> deck2 = new ShuffledCardDeck<>(new Random(2), testCards);
-//        List<String> listDeck2 = new ArrayList<>();
-//        while(!deck2.isEmpty())
-//            listDeck2.add(deck2.pop());
-//
-//        assertEquals(listDeck1, listDeck1_copy);
-//        assertNotEquals(listDeck1, listDeck2);
-//    }
+
+    @Test
+    void testInitialServerMessage() {
+
+        GameSetupState state = new GameSetupState(gameManager);
+        Map<Player, InitialChoicesServerMessage> serverMessages = state.getInitialServerMessage();
+        Set<LeaderCard> alreadyAssignedCard = new HashSet<>();
+        for (Player player : serverMessages.keySet()){
+
+            InitialChoicesServerMessage message = serverMessages.get(player);
+
+            assertEquals(
+                playerInitialStarResources.get(player),
+                message.numberOfStarResources
+            );
+
+            assertEquals(numberOfLeadersCardsGivenToThePlayer, message.leaderCardsGivenToThePlayer.size());
+            message.leaderCardsGivenToThePlayer.forEach(c -> assertFalse(alreadyAssignedCard.contains(c)));
+            alreadyAssignedCard.addAll(message.leaderCardsGivenToThePlayer);
+
+        }
+
+    }
+
+    @Test
+    void testHandleInitialChoiceCR() {
+
+        GameSetupState state = new GameSetupState(gameManager);
+
+
+    }
+
+}

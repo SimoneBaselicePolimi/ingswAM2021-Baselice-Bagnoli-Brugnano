@@ -114,7 +114,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 		for (Player player : gameManager.getPlayers()){
 
 			Set<LeaderCard> leaderCardsGivenToThePlayer = new HashSet<>();
-			for (int i = 0; i <numberOfLeadersCardsGivenToThePlayer; i++) {
+			for (int i = 0; i < numberOfLeadersCardsGivenToThePlayer; i++) {
 				int randNum = randGenerator.nextInt(listOfLeaderCards.size());
 				leaderCardsGivenToThePlayer.add(listOfLeaderCards.remove(randNum));
 			}

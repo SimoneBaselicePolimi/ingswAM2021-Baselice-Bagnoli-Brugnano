@@ -10,6 +10,15 @@ import java.util.Optional;
 
 public class DevelopmentActionClientRequestValidator extends ClientRequestValidator <DevelopmentActionClientRequest> {
 
+    /**
+     * Method that sends an error message if:
+     * - The development card requested by the player is not available
+     * - The player does not have the necessary resources to get the development card
+     * - The player cannot add the development card on top of the deck specified by him
+     * @param requestToValidate specific request sent by the client
+     * @param gameManager GameManager, see {@link GameManager}
+     * @return Optional<InvalidRequestServerMessage>, see {@link InvalidRequestServerMessage}
+     */
     @Override
     public Optional<InvalidRequestServerMessage> getErrorMessage(
         DevelopmentActionClientRequest requestToValidate,

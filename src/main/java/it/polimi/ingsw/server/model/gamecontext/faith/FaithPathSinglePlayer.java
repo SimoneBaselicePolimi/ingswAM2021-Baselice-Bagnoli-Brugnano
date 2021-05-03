@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,8 +25,8 @@ public class FaithPathSinglePlayer extends FaithPath {
 	 * @param player single Player who's playing
 	 */
 	public FaithPathSinglePlayer(int faithPathLength, List<VaticanReportSection> vaticanSections,
-                                 int[] victoryPointsByPosition, Player player) {
-		super(faithPathLength, vaticanSections, victoryPointsByPosition, Stream.of(player).collect(Collectors.toSet()));
+								 int[] victoryPointsByPosition, Player player, GameHistory gameHistory) {
+		super(faithPathLength, vaticanSections, victoryPointsByPosition, Stream.of(player).collect(Collectors.toSet()), gameHistory);
 	}
 
 	/**
