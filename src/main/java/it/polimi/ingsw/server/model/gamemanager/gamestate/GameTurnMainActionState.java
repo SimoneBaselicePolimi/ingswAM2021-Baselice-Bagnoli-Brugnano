@@ -68,7 +68,7 @@ public class GameTurnMainActionState extends GameState {
 
 	/**
 	 * Method that verifies that the current state is closed
-	 * @return true if the player's turn is over
+	 * @return true if the player has performed one of the three main actions
 	 */
 	public boolean isStateDone() {
 		return mainActionDone;
