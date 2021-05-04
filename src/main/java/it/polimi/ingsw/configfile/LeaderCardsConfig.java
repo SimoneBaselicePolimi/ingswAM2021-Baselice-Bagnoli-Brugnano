@@ -10,25 +10,80 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.ResourceNumberRequireme
 
 import java.util.List;
 
+/**
+ * This class sets all the parameters regarding the Leader Cards in the Game
+ * from values stored in leader-cards-config.yml file.
+ */
 public class LeaderCardsConfig {
+
+    /**
+     * List of Leader Cards in the Game
+     */
     public final List<LeaderCardConfig> leaderCards;
 
+    /**
+     * LeaderCardsConfig constructor.
+     * @param leaderCards list of Leader Cards in the Game
+     */
     public LeaderCardsConfig(List<LeaderCardConfig> leaderCards) {
         this.leaderCards = leaderCards;
     }
 
+    /**
+     * This class contains the configuration schema of a Leader Card.
+     */
     public static class LeaderCardConfig {
+
+        /**
+         * Unique ID which identifies this specific Leader Card
+         */
         public final String leaderCardID;
 
+        /**
+         * List of requirements the Player who owns this Leader Card must satisfy
+         * to activate this Card and obtain its special abilities.
+         */
         public final List<RequirementConfig> requirements;
 
+        /**
+         * List of Development Card Cost Discount special abilities: the Player who owns this Leader Card,
+         * when buying a Development Card, can pay its cost with a specified discount of the indicated Resource
+         */
         public final List<DevelopmentCardCostDiscountConfig> developmentCardCostDiscounts;
+
+        /**
+         * List of Special Marble Substitution special abilities: when taking Resources from the Market,
+         * the Player can choose which Resource to take from those given by this special ability for each special Marble
+         */
         public final List<WhiteMarbleSubstitutionConfig> specialMarbleSubstitutions;
+
+        /**
+         * List of Special Leader Storages: extra depots used only to store specific Resources within a certain amount
+         */
         public final List<ResourceStorageConfig> resourceStorages;
+
+        /**
+         * List of Production powers (the Player can pay specific costs to obtain specific rewards)
+         */
         public final List<ProductionConfig> productions;
 
+        /**
+         * Number of Victory Points given at the end of the Game to the Player who owns this Leader Card
+         */
         public final int victoryPoints;
 
+        /**
+         * LeaderCardConfig constructor.
+         * @param leaderCardID unique ID which identifies this specific Leader Card
+         * @param requirements list of requirements the Player who owns this Leader Card must satisfy
+         *                     to activate this Card and obtain its special abilities.
+         * @param developmentCardCostDiscounts list of Development Card Cost Discount special abilities
+         * @param specialMarbleSubstitutions list of Special Marble Substitution special abilities
+         * @param resourceStorages list of Special Leader Storages
+         * @param productions list of Production powers
+         * @param victoryPoints number of Victory Points given at the end of the Game
+         *                      to the Player who owns this Leader Card
+         */
         public LeaderCardConfig(String leaderCardID, List<RequirementConfig> requirements,
                                 List<DevelopmentCardCostDiscountConfig> developmentCardCostDiscounts,
                                 List<WhiteMarbleSubstitutionConfig> specialMarbleSubstitutions,
@@ -44,69 +99,176 @@ public class LeaderCardsConfig {
             this.victoryPoints = victoryPoints;
         }
 
+        /**
+         * This class contains the configuration schema of the Requirement of a specific Leader Card, which the Player
+         * who owns this Leader Card must satisfy to activate this Card and obtain its special abilities.
+         */
         public static abstract class RequirementConfig {
+
+            /**
+             * Abstract method to create a specific Requirement
+             * @return a LeaderCardRequirement
+             */
             public abstract LeaderCardRequirement createRequirement();
         }
 
+        /**
+         * Colour Requirement.
+         * Request for a specific number of Development Cards (even the covered ones) of a certain colour.
+         */
         public static class ColourRequirementConfig extends RequirementConfig {
+
+            /**
+             * Colour of Development Cards required
+             */
             public final DevelopmentCardColour cardColour;
 
+            /**
+             * Number of Development Cards required
+             */
             public final int numberOfCards;
 
+            /**
+             * ColourRequirementConfig constructor.
+             * @param cardColour colour of Development Cards required
+             * @param numberOfCards number of Development Cards required
+             */
             public ColourRequirementConfig(DevelopmentCardColour cardColour, int numberOfCards) {
                 this.cardColour = cardColour;
                 this.numberOfCards = numberOfCards;
             }
 
+            /**
+             * Specific implementation of the abstract method of RequirementConfig class
+             * @return a new DevelopmentCardColourRequirement
+             */
             public LeaderCardRequirement createRequirement() {
                 return new DevelopmentCardColourRequirement(cardColour, numberOfCards);
             }
         }
 
+        /**
+         * Colour and Level Requirement.
+         * Request for a specific number of Development Cards (even the covered ones) of a certain colour and level.
+         */
         public static class ColourAndLevelRequirementConfig extends RequirementConfig {
+
+            /**
+             * Colour of Development Cards required
+             */
             public final DevelopmentCardColour cardColour;
+
+            /**
+             * Level of Development Cards required
+             */
             public final DevelopmentCardLevel cardLevel;
+
+            /**
+             * Number of Development Cards required
+             */
             public final int numberOfCards;
 
-            public ColourAndLevelRequirementConfig(DevelopmentCardColour cardColour, DevelopmentCardLevel cardLevel, int numberOfCards) {
+            /**
+             * ColourAndLevelRequirementConfig constructor.
+             * @param cardColour colour of Development Cards required
+             * @param cardLevel level of Development Cards required
+             * @param numberOfCards number of Development Cards required
+             */
+            public ColourAndLevelRequirementConfig(DevelopmentCardColour cardColour, DevelopmentCardLevel cardLevel,
+                                                   int numberOfCards) {
                 this.cardColour = cardColour;
                 this.cardLevel = cardLevel;
                 this.numberOfCards = numberOfCards;
             }
 
+            /**
+             * Specific implementation of the abstract method of RequirementConfig class
+             * @return a new DevelopmentCardColourAndLevelRequirement
+             */
             public LeaderCardRequirement createRequirement() {
                 return new DevelopmentCardColourAndLevelRequirement(cardColour, cardLevel, numberOfCards);
             }
         }
 
+        /**
+         * Resource Requirement.
+         * Request for a specific number of Resources to be present in the Player's Storages.
+         */
         public static class ResourceRequirementConfig extends RequirementConfig {
+
+            /**
+             * Type of Resource required
+             */
             public final ResourceType resourceType;
 
+            /**
+             * Number of Resources required
+             */
             public final int numberOfResources;
 
+            /**
+             * ResourceRequirementConfig constructor.
+             * @param resourceType type of Resource required
+             * @param numberOfResources number of Resources required
+             */
             public ResourceRequirementConfig(ResourceType resourceType, int numberOfResources) {
                 this.resourceType = resourceType;
                 this.numberOfResources = numberOfResources;
             }
 
+            /**
+             * Specific implementation of the abstract method of RequirementConfig class
+             * @return a new ResourceNumberRequirement
+             */
             public LeaderCardRequirement createRequirement() {
                 return new ResourceNumberRequirement(resourceType, numberOfResources);
             }
         }
 
+        /**
+         * This class contains the configuration schema of the Development Card Cost Discount special ability.
+         * The Player who owns this Leader Card, when buying a Development Card, can pay its cost
+         * with a specified discount of the indicated Resource.
+         */
         public static class DevelopmentCardCostDiscountConfig {
+
+            /**
+             * Resource type the Player can discount from the cost of a Development Card
+             */
             public final ResourceType resourceType;
+
+            /**
+             * Number of resources the Player can discount from the cost of a Development Card
+             */
             public final int amountToDiscount;
 
+            /**
+             * DevelopmentCardCostDiscountConfig constructor.
+             * @param resourceType resource type the Player can discount from the cost of a Development Card
+             * @param amountToDiscount number of resources the Player can discount from the cost of a Development Card
+             */
             public DevelopmentCardCostDiscountConfig(ResourceType resourceType, int amountToDiscount) {
                 this.resourceType = resourceType;
                 this.amountToDiscount = amountToDiscount;
             }
         }
 
+        /**
+         * This class contains the configuration schema of the Special Marble Substitution special ability.
+         * When taking Resources from the Market, the Player can choose which Resource to take
+         * from those given by this special ability for each special Marble.
+         */
         public static class WhiteMarbleSubstitutionConfig {
+
+            /**
+             * Resource type the Player can substitute to a Special Marble taken from the Market
+             */
             public final ResourceType resourceType;
 
+            /**
+             * WhiteMarbleSubstitutionConfig constructor.
+             * @param resourceType resource type the Player can substitute to a Special Marble taken from the Market
+             */
             public WhiteMarbleSubstitutionConfig(ResourceType resourceType) {
                 this.resourceType = resourceType;
             }

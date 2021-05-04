@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * If the storage implements this rule, the storage can only contain resources that are
- * equal to each other (different type of resources cannot be present)
+ * equal to each other (different types of resources cannot be present)
  */
 public class SameResourceTypeRule extends ResourceStorageRule {
 

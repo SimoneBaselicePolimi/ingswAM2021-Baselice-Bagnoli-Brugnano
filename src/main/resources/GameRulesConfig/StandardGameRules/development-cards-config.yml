@@ -7,7 +7,7 @@
 #  - unique ID
 #  - fixed level (according to the standard Game rules, a number between 1 and 3)
 #  - colour (according to the standard Game rules, a colour between GREEN, YELLOW, BLUE and PURPLE)
-#  - Production power (the Player can pay the following costs to obtain the specified rewards), characterized by:
+#  - Production powers (the Player can pay the following costs to obtain the specified rewards), each characterized by:
 #    - costs:
 #      - cost made of specific type and number of Resources
 #      - cost made of a generic type of Resource (Player can choose), in a fixed quantity
