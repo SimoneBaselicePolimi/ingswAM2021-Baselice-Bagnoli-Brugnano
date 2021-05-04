@@ -25,7 +25,9 @@ public class DevelopmentActionClientRequestValidator extends ClientRequestValida
         GameManager gameManager
     ) {
         // check if the development card requested by the player is available
-        if (!gameManager.getGameContext().getDevelopmentCardsTable().getAvailableCards().contains(requestToValidate.developmentCard))
+        if (!gameManager.getGameContext().getDevelopmentCardsTable().getAvailableCards().contains(
+            requestToValidate.developmentCard
+        ))
             return createInvalidRequestServerMessage(
                 "The development card requested by the player is not available"
             );

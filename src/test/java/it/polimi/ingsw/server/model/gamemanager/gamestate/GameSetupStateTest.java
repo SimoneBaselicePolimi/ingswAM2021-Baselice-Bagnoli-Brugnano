@@ -7,8 +7,11 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,6 +64,8 @@ public class GameSetupStateTest {
 
     GameRules gameRules;
 
+    Set<GameUpdate> mockUpdates;
+
     @BeforeEach
     void setUp() {
         leaderCards = TestUtils.generateSetOfMockWithID(LeaderCard.class, 15);
@@ -97,6 +102,13 @@ public class GameSetupStateTest {
             null
         );
 
+        mockUpdates = Set.of(
+            mock(GameUpdate.class),
+            mock(GameUpdate.class),
+            mock(GameUpdate.class),
+            mock(GameUpdate.class)
+        );
+
         when(gameManager.getGameContext()).thenReturn(gameContext);
         when(gameContext.getPlayersTurnOrder()).thenReturn(playersInOrder);
         when(gameManager.getPlayers()).thenReturn(new HashSet<>(playersInOrder));
@@ -104,12 +116,14 @@ public class GameSetupStateTest {
         when(gameItemsManager.getAllItemsOfType(eq(LeaderCard.class))).thenReturn(leaderCards);
         when(gameManager.getGameRules()).thenReturn(gameRules);
         lenient().when(gameManager.getGameHistory()).thenReturn(gameHistory);
+        lenient().when(gameManager.getAllGameUpdates()).thenReturn(mockUpdates);
 
     }
 
 
     @Test
     void testRandomShuffle() {
+
         GameSetupState state1 = new GameSetupState(new Random(1), gameManager);
         GameSetupState state1Copy = new GameSetupState(new Random(1), gameManager);
         GameSetupState state2 = new GameSetupState(new Random(2), gameManager);
@@ -125,7 +139,7 @@ public class GameSetupStateTest {
         GameSetupState state = new GameSetupState(gameManager);
         Map<Player, InitialChoicesServerMessage> serverMessages = state.getInitialServerMessage();
         Set<LeaderCard> alreadyAssignedCard = new HashSet<>();
-        for (Player player : serverMessages.keySet()){
+        for (Player player : serverMessages.keySet()) {
 
             InitialChoicesServerMessage message = serverMessages.get(player);
 
@@ -138,16 +152,30 @@ public class GameSetupStateTest {
             message.leaderCardsGivenToThePlayer.forEach(c -> assertFalse(alreadyAssignedCard.contains(c)));
             alreadyAssignedCard.addAll(message.leaderCardsGivenToThePlayer);
 
+            assertEquals(mockUpdates, message.gameUpdates);
         }
-
     }
 
     @Test
-    void testHandleInitialChoiceCR() {
+    void testHandleInitialChoiceCR(){
 
         GameSetupState state = new GameSetupState(gameManager);
+        state.getInitialServerMessage();
+        Iterator<LeaderCard> iter = leaderCards.iterator();
 
+        LeaderCard card1 = iter.next();
+        LeaderCard card2 = iter.next();
+        Set<LeaderCard> leaderCardsChosenByThePlayer = Set.of(card1, card2);
 
+        Map<ResourceStorage, Map<ResourceType, Integer>> chosenResourcesToAddByStorage;
+
+        Map<ResourceType, Integer> resources = new HashMap<>();
+        //for (Player player : serverMessages.keySet()) {
+
+           // InitialChoicesServerMessage message = serverMessages.get(player);
+
+           // assertEquals(mockUpdates, message.gameUpdates);
+        //}
     }
 
 }

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.testutils;
 
+import it.polimi.ingsw.network.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
+import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,4 +49,5 @@ public class TestUtils {
         }
         return set;
     }
+
 }
