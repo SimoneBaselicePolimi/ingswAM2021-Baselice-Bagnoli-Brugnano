@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.clientrequest.validator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.Player;
@@ -26,6 +27,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,8 +43,7 @@ class DevelopmentActionClientRequestValidatorTest {
     @Mock
     PlayerContext playerContext;
 
-    @Mock
-    DevelopmentActionClientRequestValidator validator;
+    DevelopmentActionClientRequestValidator validator = new DevelopmentActionClientRequestValidator();
 
     @Mock
     DevelopmentCardsTable table;
@@ -80,19 +81,29 @@ class DevelopmentActionClientRequestValidatorTest {
         rightCardFirstLevel = iter.next();
         notEnoughResourcesCard = iter.next();
 
-        when(gameManager.getGameContext()).thenReturn(gameContext);
-        when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
-        when(gameContext.getDevelopmentCardsTable()).thenReturn(table);
-        when(table.getAvailableCards()).thenReturn(developmentCards);
-        when(playerContext.getAllResources()).thenReturn(resources);
-        when(rightCardFirstLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
-        when(rightCardSecondLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
-        when(rightCardThirdLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
-        when(notEnoughResourcesCard.getPurchaseCost()).thenReturn(Map.of(ResourceType.SERVANTS, 4));
-        when(rightCardSecondLevel.getLevel()).thenReturn(DevelopmentCardLevel.SECOND_LEVEL);
-        when(rightCardFirstLevel.getLevel()).thenReturn(DevelopmentCardLevel.FIRST_LEVEL);
-        when(rightCardThirdLevel.getLevel()).thenReturn(DevelopmentCardLevel.THIRD_LEVEL);
+        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
+        lenient().when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
+        lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(table);
+        lenient().when(table.getAvailableCards()).thenReturn(developmentCards);
+        lenient().when(playerContext.getAllResources()).thenReturn(resources);
+        lenient().when(rightCardFirstLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
+        lenient().when(rightCardSecondLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
+        lenient().when(rightCardThirdLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
+        lenient().when(notEnoughResourcesCard.getPurchaseCost()).thenReturn(Map.of(ResourceType.SERVANTS, 4));
+        lenient().when(rightCardSecondLevel.getLevel()).thenReturn(DevelopmentCardLevel.SECOND_LEVEL);
+        lenient().when(rightCardFirstLevel.getLevel()).thenReturn(DevelopmentCardLevel.FIRST_LEVEL);
+        lenient().when(rightCardThirdLevel.getLevel()).thenReturn(DevelopmentCardLevel.THIRD_LEVEL);
 
+    }
+
+    @Test
+    void getValidatorFromClientRequest() {
+        DevelopmentActionClientRequest request = new DevelopmentActionClientRequest(
+            player,
+            rightCardFirstLevel,
+            1
+        );
+        assertTrue(request.getValidator() instanceof DevelopmentActionClientRequestValidator);
     }
 
     @Test

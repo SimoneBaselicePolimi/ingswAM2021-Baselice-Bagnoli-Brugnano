@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
+import it.polimi.ingsw.network.clientrequest.MarketActionFetchRowClientRequest;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
@@ -20,6 +21,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,8 +40,7 @@ class ManageResourcesFromMarketClientRequestValidatorTest {
     @Mock
     GameItemsManager gameItemsManager;
 
-    @Mock
-    ManageResourcesFromMarketClientRequestValidator validator;
+    ManageResourcesFromMarketClientRequestValidator validator = new ManageResourcesFromMarketClientRequestValidator();
 
     @Mock
     Player player;
@@ -63,17 +64,28 @@ class ManageResourcesFromMarketClientRequestValidatorTest {
     @BeforeEach
     void setUp(){
 
-        when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
-        when(gameManager.getGameContext()).thenReturn(gameContext);
-        when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
-        when(playerContext.getActiveLeaderCardsWhiteMarblesMarketSubstitutions()).thenReturn(playerMarbleSubstitution);
-        when(storage1.canAddResources(any())).thenReturn(false);
-        when(storage2.canAddResources(any())).thenReturn(true);
-        when(playerContext.getTempStarResources()).thenReturn(2);
-        when(playerContext.getTemporaryStorageResources()).thenReturn(Map.of(
+        lenient().when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
+        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
+        lenient().when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
+        lenient().when(playerContext.getActiveLeaderCardsWhiteMarblesMarketSubstitutions()).thenReturn(playerMarbleSubstitution);
+        lenient().when(storage1.canAddResources(any())).thenReturn(false);
+        lenient().when(storage2.canAddResources(any())).thenReturn(true);
+        lenient().when(playerContext.getTempStarResources()).thenReturn(2);
+        lenient().when(playerContext.getTemporaryStorageResources()).thenReturn(Map.of(
             ResourceType.SHIELDS, 3,
             ResourceType.STONES,2
         ));
+    }
+
+    @Test
+    void getValidatorFromClientRequest() {
+        ManageResourcesFromMarketClientRequest request = new ManageResourcesFromMarketClientRequest(
+            player,
+            validStarResourcesChosenToAddByStorage,
+            new HashMap<>(),
+            resourcesLeftInTemporaryStorage
+            );
+        assertTrue(request.getValidator() instanceof ManageResourcesFromMarketClientRequestValidator);
     }
 
     @Test
@@ -138,8 +150,8 @@ class ManageResourcesFromMarketClientRequestValidatorTest {
 
         ManageResourcesFromMarketClientRequest validRequest2 = new ManageResourcesFromMarketClientRequest(
             player,
-            resourcesToAddByValidStorage,
-            invalidNumberOfStarResourcesToAddByStorage,
+            invalidResourcesToAddByValidStorage,
+            validStarResourcesChosenToAddByStorage,
             resourcesLeftInTemporaryStorage2
         );
 
@@ -151,4 +163,5 @@ class ManageResourcesFromMarketClientRequestValidatorTest {
         assertTrue(validator.getErrorMessage(validRequest2, gameManager).isEmpty());
 
     }
+
 }

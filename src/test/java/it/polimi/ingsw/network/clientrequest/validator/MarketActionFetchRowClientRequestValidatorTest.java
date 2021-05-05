@@ -52,41 +52,35 @@ class MarketActionFetchRowClientRequestValidatorTest {
     @Test
     void testGetError(){
 
-        int validRow1 = 2;
-        int validRow2 = 0;
-        int invalidRow1 = -1;
-        int invalidRow2 = 10;
-        int invalidRow3 = 3;
+        assertTrue(validator.getErrorMessage(new MarketActionFetchRowClientRequest(
+                player,
+                2
+            ), gameManager
+        ).isEmpty());
 
-        MarketActionFetchRowClientRequest validRequest1 = new MarketActionFetchRowClientRequest(
-            player,
-            validRow1
-        );
+        assertTrue(validator.getErrorMessage(new MarketActionFetchRowClientRequest(
+                player,
+                0
+            ), gameManager
+        ).isEmpty());
 
-        MarketActionFetchRowClientRequest validRequest2 = new MarketActionFetchRowClientRequest(
-            player,
-            validRow2
-        );
+        assertTrue(validator.getErrorMessage(new MarketActionFetchRowClientRequest(
+                player,
+                -1
+            ), gameManager
+        ).isPresent());
 
-        MarketActionFetchRowClientRequest invalidRequest1 = new MarketActionFetchRowClientRequest(
-            player,
-            invalidRow1
-        );
+        assertTrue(validator.getErrorMessage(new MarketActionFetchRowClientRequest(
+                player,
+                10
+            ), gameManager
+        ).isPresent());
 
-        MarketActionFetchRowClientRequest invalidRequest2 = new MarketActionFetchRowClientRequest(
-            player,
-            invalidRow2
-        );
+        assertTrue(validator.getErrorMessage(new MarketActionFetchRowClientRequest(
+                player,
+                3
+            ), gameManager
+        ).isPresent());
 
-        MarketActionFetchRowClientRequest invalidRequest3 = new MarketActionFetchRowClientRequest(
-            player,
-            invalidRow3
-        );
-
-        assertTrue(validator.getErrorMessage(validRequest1, gameManager).isEmpty());
-        assertTrue(validator.getErrorMessage(validRequest2, gameManager).isEmpty());
-        assertTrue(validator.getErrorMessage(invalidRequest1, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(invalidRequest2, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(invalidRequest3, gameManager).isPresent());
     }
 }

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
+import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.DiscardLeaderCardClientRequest;
+import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
@@ -9,6 +11,7 @@ import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
@@ -18,12 +21,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,8 +40,7 @@ class ActivateLeaderCardClientRequestValidatorTest {
     @Mock
     PlayerContext playerContext;
 
-    @Mock
-    DiscardLeaderCardClientRequestValidator validator;
+    ActivateLeaderCardClientRequestValidator validator = new ActivateLeaderCardClientRequestValidator();
 
     @Mock
     LeaderCard l1;
@@ -57,35 +57,44 @@ class ActivateLeaderCardClientRequestValidatorTest {
     @Mock
     Player player;
 
-    Set<LeaderCard> leaderCardsOwnedByThePlayer;
     Set<LeaderCard> leaderCardsThePlayerWantsToActivate1;
     Set<LeaderCard> leaderCardsThePlayerWantsToActivate2;
 
     @BeforeEach
-    void setUp() throws ResourceStorageRuleViolationException, NotEnoughResourcesException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException {
+    void setUp() {
 
-        when(gameManager.getGameContext()).thenReturn(gameContext);
-        when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
-        when(playerContext.getLeaderCards()).thenReturn(leaderCardsOwnedByThePlayer);
+        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
+        lenient().when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
+        lenient().when(gameContext.getActivePlayer()).thenReturn(player);
+        lenient().when(playerContext.getLeaderCards()).thenReturn(Set.of(l1, l2));
+        lenient().when(l1.getState()).thenReturn(LeaderCardState.HIDDEN);
+        lenient().when(l2.getState()).thenReturn(LeaderCardState.HIDDEN);
     }
 
     @Test
-    void testGetError() throws ResourceStorageRuleViolationException, NotEnoughResourcesException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException {
+    void getValidatorFromClientRequest() {
+        ActivateLeaderCardClientRequest request = new ActivateLeaderCardClientRequest(
+            player,
+            leaderCardsThePlayerWantsToActivate1
+        );
+        assertTrue(request.getValidator() instanceof ActivateLeaderCardClientRequestValidator);
+    }
 
-        leaderCardsOwnedByThePlayer= Set.of(l1, l2);
+    @Test
+    void testGetError() {
+
         leaderCardsThePlayerWantsToActivate1 = Set.of (l1);
         leaderCardsThePlayerWantsToActivate2 = Set.of (l3, l4);
 
-        DiscardLeaderCardClientRequest request1 = new DiscardLeaderCardClientRequest (
+        ActivateLeaderCardClientRequest request1 = new ActivateLeaderCardClientRequest (
             player,
             leaderCardsThePlayerWantsToActivate1
         );
 
-        DiscardLeaderCardClientRequest request2 = new DiscardLeaderCardClientRequest (
+        ActivateLeaderCardClientRequest request2 = new ActivateLeaderCardClientRequest(
             player,
             leaderCardsThePlayerWantsToActivate2
         );
-
 
         assertTrue(validator.getErrorMessage(request1, gameManager).isEmpty());
         assertTrue(validator.getErrorMessage(request2, gameManager).isPresent());

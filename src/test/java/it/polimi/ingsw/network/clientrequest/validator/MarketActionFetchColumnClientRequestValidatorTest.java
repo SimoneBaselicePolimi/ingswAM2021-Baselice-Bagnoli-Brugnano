@@ -26,8 +26,7 @@ class MarketActionFetchColumnClientRequestValidatorTest {
     @Mock
     Market market;
 
-    @Mock
-    MarketActionFetchColumnClientRequestValidator validator;
+    MarketActionFetchColumnClientRequestValidator validator = new MarketActionFetchColumnClientRequestValidator();
 
     @Mock
     Player player;
@@ -43,43 +42,35 @@ class MarketActionFetchColumnClientRequestValidatorTest {
     @Test
     void testGetError(){
 
-        int validColumn1 = 3;
-        int validColumn2 = 0;
-        int invalidColumn1 = -1;
-        int invalidColumn2 = 6;
-        int invalidColumn3 = 4;
+        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
+                player,
+                3
+            ), gameManager
+        ).isEmpty());
 
-        MarketActionFetchColumnClientRequest validRequest1 = new MarketActionFetchColumnClientRequest(
-            player,
-            validColumn1
-        );
+        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
+                player,
+                0
+            ), gameManager
+        ).isEmpty());
 
-        MarketActionFetchColumnClientRequest validRequest2 = new MarketActionFetchColumnClientRequest(
-            player,
-            validColumn2
-        );
+        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
+                player,
+                -1
+            ), gameManager
+        ).isPresent());
 
-        MarketActionFetchColumnClientRequest invalidRequest1 = new MarketActionFetchColumnClientRequest(
-            player,
-            invalidColumn1
-        );
+        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
+                player,
+                6
+            ), gameManager
+        ).isPresent());
 
-        MarketActionFetchColumnClientRequest invalidRequest2 = new MarketActionFetchColumnClientRequest(
-            player,
-            invalidColumn2
-        );
+        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
+                player,
+                4
+            ), gameManager
+        ).isPresent());
 
-        MarketActionFetchColumnClientRequest invalidRequest3 = new MarketActionFetchColumnClientRequest(
-            player,
-            invalidColumn3
-        );
-
-
-        assertTrue(validator.getErrorMessage(validRequest1, gameManager).isEmpty());
-        assertTrue(validator.getErrorMessage(validRequest2, gameManager).isEmpty());
-        assertTrue(validator.getErrorMessage(invalidRequest1, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(invalidRequest2, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(invalidRequest3, gameManager).isPresent());
     }
-
 }

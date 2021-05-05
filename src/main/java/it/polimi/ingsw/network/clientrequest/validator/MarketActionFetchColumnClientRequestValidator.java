@@ -17,7 +17,7 @@ public class MarketActionFetchColumnClientRequestValidator extends ClientRequest
     ) {
 
         Market market = gameManager.getGameContext().getMarket();
-        if (requestToValidate.column < 0 || requestToValidate.column > market.getNumOfColumns())
+        if (requestToValidate.column < 0 || requestToValidate.column >= market.getNumOfColumns())
             return createInvalidRequestServerMessage(
                 "The column indicated by the player is not a valid column of the market matrix"
             );
