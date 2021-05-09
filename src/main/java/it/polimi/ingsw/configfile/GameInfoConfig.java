@@ -109,9 +109,9 @@ public class GameInfoConfig {
          *                                               number of Faith Points based on Play Order
          */
         public GameSetup(
-            int numberOfLeadersCardsGivenToThePlayer,
-            int numberOfLeadersCardsThePlayerKeeps,
-            Map<Integer, InitialPlayerResourcesAndFaithPoints> initialPlayerResourcesBasedOnPlayOrder
+            @JsonProperty("numberOfLeadersCardsGivenToThePlayer") int numberOfLeadersCardsGivenToThePlayer,
+            @JsonProperty("numberOfLeadersCardsThePlayerKeeps") int numberOfLeadersCardsThePlayerKeeps,
+            @JsonProperty("initialPlayerResourcesBasedOnPlayOrder") Map<Integer, InitialPlayerResourcesAndFaithPoints> initialPlayerResourcesBasedOnPlayOrder
         ) {
             this.numberOfLeadersCardsGivenToThePlayer = numberOfLeadersCardsGivenToThePlayer;
             this.numberOfLeadersCardsThePlayerKeeps = numberOfLeadersCardsThePlayerKeeps;
@@ -139,7 +139,10 @@ public class GameInfoConfig {
              * @param starResources initial Star Resources (the Player has to choose which type of Resource he wants)
              * @param faithPoints initial number of Faith Points
              */
-            public InitialPlayerResourcesAndFaithPoints(int starResources, int faithPoints) {
+            public InitialPlayerResourcesAndFaithPoints(
+                @JsonProperty("starResources") int starResources,
+                @JsonProperty("faithPoints") int faithPoints
+            ) {
                 this.starResources = starResources;
                 this.faithPoints = faithPoints;
             }

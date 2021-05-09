@@ -1,5 +1,6 @@
 package it.polimi.ingsw.configfile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -22,7 +23,8 @@ public class DevelopmentCardsConfig {
      * DevelopmentCardsConfig constructor.
      * @param developmentCards list of Development Cards in the Game
      */
-    public DevelopmentCardsConfig(List<DevelopmentCardConfig> developmentCards) {
+    public DevelopmentCardsConfig(
+        @JsonProperty("developmentCards") List<DevelopmentCardConfig> developmentCards) {
         this.developmentCards = developmentCards;
     }
 
@@ -72,9 +74,14 @@ public class DevelopmentCardsConfig {
          *                      to the Player who owns this Development Card
          * @param purchaseCost purchase cost necessary to allow the Player to buy this Development Card
          */
-        public DevelopmentCardConfig(String developmentCardID, DevelopmentCardLevel level, DevelopmentCardColour colour,
-                                      List<ProductionConfig> productions, int victoryPoints,
-                                     Map<ResourceType, Integer> purchaseCost) {
+        public DevelopmentCardConfig(
+            @JsonProperty("developmentCardID") String developmentCardID,
+            @JsonProperty("level") DevelopmentCardLevel level,
+            @JsonProperty("colour") DevelopmentCardColour colour,
+            @JsonProperty("productions") List<ProductionConfig> productions,
+            @JsonProperty("victoryPoints") int victoryPoints,
+            @JsonProperty("purchaseCost") Map<ResourceType, Integer> purchaseCost
+        ) {
             this.developmentCardID = developmentCardID;
             this.level = level;
             this.colour = colour;

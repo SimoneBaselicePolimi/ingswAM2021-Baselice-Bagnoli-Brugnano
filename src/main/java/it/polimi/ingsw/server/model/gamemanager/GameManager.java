@@ -123,7 +123,7 @@ public class GameManager {
 
 		FileManager fileManager = FileManager.getFileManagerInstance();
 
-		if (gameRulesPath != null && !gameRulesPath.isEmpty())
+		if (gameRulesPath == null || gameRulesPath.isEmpty())
 			gameRulesPath = FileManager.DEFAULT_RULES_PATH;
 
 		try {

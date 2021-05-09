@@ -1,9 +1,11 @@
 package it.polimi.ingsw.utils.serialization;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
 import java.io.IOException;
@@ -60,6 +62,7 @@ public class SerializationHelper {
         InputStream serializedObj,
         Class<T> objType
     ) throws IOException {
+
         return getObjectMapper().readValue(serializedObj, objType);
     }
 

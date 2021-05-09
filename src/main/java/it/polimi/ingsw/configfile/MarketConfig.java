@@ -1,5 +1,6 @@
 package it.polimi.ingsw.configfile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.List;
@@ -24,7 +25,10 @@ public class MarketConfig {
      * @param marketMatrix matrix representing the Market
      * @param marbles list of Coloured Marbles in different quantities which fill the Market matrix
      */
-    public MarketConfig(MatrixConfig marketMatrix, List<MarbleConfigAndNumber> marbles) {
+    public MarketConfig(
+        @JsonProperty("marketMatrix") MatrixConfig marketMatrix,
+        @JsonProperty("marbles") List<MarbleConfigAndNumber> marbles
+    ) {
         this.marketMatrix = marketMatrix;
         this.marbles = marbles;
     }
@@ -49,7 +53,10 @@ public class MarketConfig {
          * @param numberOfRows number of rows in the matrix
          * @param numberOfColumns number of columns in the matrix
          */
-        public MatrixConfig(int numberOfRows, int numberOfColumns) {
+        public MatrixConfig(
+            @JsonProperty("numberOfRows") int numberOfRows,
+            @JsonProperty("numberOfColumns") int numberOfColumns
+        ) {
             this.numberOfRows = numberOfRows;
             this.numberOfColumns = numberOfColumns;
         }
@@ -75,7 +82,10 @@ public class MarketConfig {
          * @param marbleConfig configuration of a Coloured Marble
          * @param numberOfMarbles number of Coloured Marbles
          */
-        public MarbleConfigAndNumber(MarbleConfig marbleConfig, int numberOfMarbles) {
+        public MarbleConfigAndNumber(
+            @JsonProperty("marbleConfig") MarbleConfig marbleConfig,
+            @JsonProperty("numberOfMarbles") int numberOfMarbles
+        ) {
             this.marbleConfig = marbleConfig;
             this.numberOfMarbles = numberOfMarbles;
         }
@@ -114,7 +124,12 @@ public class MarketConfig {
              * @param isSpecial true if the Marble can be transformed into a generic type of Resource by activating the
              *                  Special Marble Substitution power of a Leader Card, false otherwise
              */
-            public MarbleConfig(String marbleID, ResourceType resourceType, int numberOfFaithPoints, boolean isSpecial) {
+            public MarbleConfig(
+                @JsonProperty("marbleID") String marbleID,
+                @JsonProperty("resourceType") ResourceType resourceType,
+                @JsonProperty("numberOfFaithPoints") int numberOfFaithPoints,
+                @JsonProperty("isSpecial") boolean isSpecial
+            ) {
                 this.marbleID = marbleID;
                 this.resourceType = resourceType;
                 this.numberOfFaithPoints = numberOfFaithPoints;

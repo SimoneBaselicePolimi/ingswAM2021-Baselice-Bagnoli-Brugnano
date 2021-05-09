@@ -39,6 +39,8 @@ public class GameContextBuilder {
 	protected int numDevelopmentCardCostDiscountID = 0;
 	protected int numResourceStorageID = 0;
 
+	private Random randGenerator;
+
 	public GameContextBuilder(
 		Set<Player> players,
 		GameRules gameRules,
@@ -47,6 +49,19 @@ public class GameContextBuilder {
 		this.players = players;
 		this.gameRules = gameRules;
 		this.gameItemsManager = gameItemsManager;
+		this.randGenerator = new Random();
+	}
+
+	public GameContextBuilder(
+		Set<Player> players,
+		GameRules gameRules,
+		GameItemsManager gameItemsManager,
+		Random randGenerator
+	) {
+		this.players = players;
+		this.gameRules = gameRules;
+		this.gameItemsManager = gameItemsManager;
+		this.randGenerator = randGenerator;
 	}
 
 	protected GameContext initializeGameContext(
@@ -305,7 +320,7 @@ public class GameContextBuilder {
 
 		int[] victoryPointsByPosition = new int[faithPathConfig.faithPathLength];
 		int cell;
-		for(FaithPathConfig.VictoryPointsByPositionConfig victoryPointsConf : faithPathConfig.victoryPointsByPositions)
+		for(FaithPathConfig.VictoryPointsByPositionConfig victoryPointsConf : faithPathConfig.victoryPointsByPosition)
 			for (cell = victoryPointsConf.startPosition; cell > victoryPointsConf.endPosition; cell++)
 				victoryPointsByPosition[cell] = victoryPointsConf.victoryPoints;
 
@@ -322,10 +337,9 @@ public class GameContextBuilder {
 		}
 	}
 
-	protected List<Player> generateRandomPlayersOrder() {
+	public List<Player> generateRandomPlayersOrder() {
 		List<Player> playersList = new ArrayList<>(players);
 		List<Player> playersInOrder = new ArrayList<>();
-		Random randGenerator = new Random();
 		int randNum;
 		while (playersList.size() > 0) {
 			randNum = randGenerator.nextInt(playersList.size());

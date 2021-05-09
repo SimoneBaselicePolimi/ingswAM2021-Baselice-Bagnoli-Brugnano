@@ -1,0 +1,55 @@
+# STANDARD RULES VALUES #
+
+## MARKET CONFIGURATION FILE ##
+# This file sets all the parameters regarding the Market structure.
+
+# The Market is represented by a matrix of a fixed number of rows and columns, filled with specific coloured Marbles
+# in different quantities.
+
+# Each Marble is characterized by the following aspects:
+#  - unique ID
+#  - optional type of Resource obtainable with this Marble
+#  - number of Faith Points given to the Player who owns this Marble (according to the standard Game rules,
+#    only Red Marbles can give Faith Points)
+#  - possibility to be transformed into a generic type of Resource by activating the Special Marble Substitution power
+#    of a Leader Card (according to the standard Game rules, only White Marbles have this special ability)
+marketMatrix:
+  numberOfRows: 3
+  numberOfColumns: 4
+marbles:
+  - marbleConfig:
+      marbleID: MARBLE_WHITE
+      resourceType: null
+      numberOfFaithPoints: 0
+      isSpecial: true
+    numberOfMarbles: 4
+  - marbleConfig:
+      marbleID: MARBLE_BLUE
+      resourceType: SHIELDS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_GREY
+      resourceType: STONES
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: YELLOW
+      resourceType: COINS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_PURPLE
+      resourceType: SERVANTS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_RED
+      resourceType: null
+      numberOfFaithPoints: 1
+      isSpecial: false
+    numberOfMarbles: 1

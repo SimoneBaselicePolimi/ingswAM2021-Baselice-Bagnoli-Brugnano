@@ -1,5 +1,9 @@
 package it.polimi.ingsw.configfile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -25,7 +29,9 @@ public class LeaderCardsConfig {
      * LeaderCardsConfig constructor.
      * @param leaderCards list of Leader Cards in the Game
      */
-    public LeaderCardsConfig(List<LeaderCardConfig> leaderCards) {
+    public LeaderCardsConfig(
+        @JsonProperty("leaderCards") List<LeaderCardConfig> leaderCards
+    ) {
         this.leaderCards = leaderCards;
     }
 
@@ -74,22 +80,26 @@ public class LeaderCardsConfig {
 
         /**
          * LeaderCardConfig constructor.
-         * @param leaderCardID unique ID which identifies this specific Leader Card
-         * @param requirements list of requirements the Player who owns this Leader Card must satisfy
-         *                     to activate this Card and obtain its special abilities.
+         *
+         * @param leaderCardID                 unique ID which identifies this specific Leader Card
+         * @param requirements                 list of requirements the Player who owns this Leader Card must satisfy
+         *                                     to activate this Card and obtain its special abilities.
          * @param developmentCardCostDiscounts list of Development Card Cost Discount special abilities
-         * @param specialMarbleSubstitutions list of Special Marble Substitution special abilities
-         * @param resourceStorages list of Special Leader Storages
-         * @param productions list of Production powers
-         * @param victoryPoints number of Victory Points given at the end of the Game
-         *                      to the Player who owns this Leader Card
+         * @param specialMarbleSubstitutions   list of Special Marble Substitution special abilities
+         * @param resourceStorages             list of Special Leader Storages
+         * @param productions                  list of Production powers
+         * @param victoryPoints                number of Victory Points given at the end of the Game
+         *                                     to the Player who owns this Leader Card
          */
-        public LeaderCardConfig(String leaderCardID, List<RequirementConfig> requirements,
-                                List<DevelopmentCardCostDiscountConfig> developmentCardCostDiscounts,
-                                List<WhiteMarbleSubstitutionConfig> specialMarbleSubstitutions,
-                                List<ResourceStorageConfig> resourceStorages,
-                                List<ProductionConfig> productions,
-                                int victoryPoints) {
+        public LeaderCardConfig(
+            @JsonProperty("leaderCardID") String leaderCardID,
+            @JsonProperty("requirements") List<RequirementConfig> requirements,
+            @JsonProperty("developmentCardCostDiscounts") List<DevelopmentCardCostDiscountConfig> developmentCardCostDiscounts,
+            @JsonProperty("specialMarbleSubstitutions") List<WhiteMarbleSubstitutionConfig> specialMarbleSubstitutions,
+            @JsonProperty("resourceStorages") List<ResourceStorageConfig> resourceStorages,
+            @JsonProperty("productions") List<ProductionConfig> productions,
+            @JsonProperty("victoryPoints") int victoryPoints
+        ) {
             this.leaderCardID = leaderCardID;
             this.requirements = requirements;
             this.developmentCardCostDiscounts = developmentCardCostDiscounts;
@@ -103,10 +113,17 @@ public class LeaderCardsConfig {
          * This class contains the configuration schema of the Requirement of a specific Leader Card, which the Player
          * who owns this Leader Card must satisfy to activate this Card and obtain its special abilities.
          */
+        @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "requirementType")
+        @JsonSubTypes({
+            @JsonSubTypes.Type(value = ColourRequirementConfig.class, name = "COLOUR"),
+            @JsonSubTypes.Type(value = ColourAndLevelRequirementConfig.class, name = "COLOUR_AND_LEVEL"),
+            @JsonSubTypes.Type(value = ResourceRequirementConfig.class, name = "RESOURCE")
+        })
         public static abstract class RequirementConfig {
 
             /**
              * Abstract method to create a specific Requirement
+             *
              * @return a LeaderCardRequirement
              */
             public abstract LeaderCardRequirement createRequirement();
@@ -116,6 +133,7 @@ public class LeaderCardsConfig {
          * Colour Requirement.
          * Request for a specific number of Development Cards (even the covered ones) of a certain colour.
          */
+        @JsonTypeName("COLOUR")
         public static class ColourRequirementConfig extends RequirementConfig {
 
             /**
@@ -130,16 +148,21 @@ public class LeaderCardsConfig {
 
             /**
              * ColourRequirementConfig constructor.
-             * @param cardColour colour of Development Cards required
+             *
+             * @param cardColour    colour of Development Cards required
              * @param numberOfCards number of Development Cards required
              */
-            public ColourRequirementConfig(DevelopmentCardColour cardColour, int numberOfCards) {
+            public ColourRequirementConfig(
+                @JsonProperty("cardColour") DevelopmentCardColour cardColour,
+                @JsonProperty("numberOfCards") int numberOfCards
+            ) {
                 this.cardColour = cardColour;
                 this.numberOfCards = numberOfCards;
             }
 
             /**
              * Specific implementation of the abstract method of RequirementConfig class
+             *
              * @return a new DevelopmentCardColourRequirement
              */
             public LeaderCardRequirement createRequirement() {
@@ -151,6 +174,7 @@ public class LeaderCardsConfig {
          * Colour and Level Requirement.
          * Request for a specific number of Development Cards (even the covered ones) of a certain colour and level.
          */
+        @JsonTypeName("COLOUR_AND_LEVEL")
         public static class ColourAndLevelRequirementConfig extends RequirementConfig {
 
             /**
@@ -170,12 +194,16 @@ public class LeaderCardsConfig {
 
             /**
              * ColourAndLevelRequirementConfig constructor.
-             * @param cardColour colour of Development Cards required
-             * @param cardLevel level of Development Cards required
+             *
+             * @param cardColour    colour of Development Cards required
+             * @param cardLevel     level of Development Cards required
              * @param numberOfCards number of Development Cards required
              */
-            public ColourAndLevelRequirementConfig(DevelopmentCardColour cardColour, DevelopmentCardLevel cardLevel,
-                                                   int numberOfCards) {
+            public ColourAndLevelRequirementConfig(
+                @JsonProperty("cardColour") DevelopmentCardColour cardColour,
+                @JsonProperty("cardLevel") DevelopmentCardLevel cardLevel,
+                @JsonProperty("numberOfCards") int numberOfCards
+            ) {
                 this.cardColour = cardColour;
                 this.cardLevel = cardLevel;
                 this.numberOfCards = numberOfCards;
@@ -183,6 +211,7 @@ public class LeaderCardsConfig {
 
             /**
              * Specific implementation of the abstract method of RequirementConfig class
+             *
              * @return a new DevelopmentCardColourAndLevelRequirement
              */
             public LeaderCardRequirement createRequirement() {
@@ -194,6 +223,7 @@ public class LeaderCardsConfig {
          * Resource Requirement.
          * Request for a specific number of Resources to be present in the Player's Storages.
          */
+        @JsonTypeName("RESOURCE")
         public static class ResourceRequirementConfig extends RequirementConfig {
 
             /**
@@ -208,16 +238,21 @@ public class LeaderCardsConfig {
 
             /**
              * ResourceRequirementConfig constructor.
-             * @param resourceType type of Resource required
+             *
+             * @param resourceType      type of Resource required
              * @param numberOfResources number of Resources required
              */
-            public ResourceRequirementConfig(ResourceType resourceType, int numberOfResources) {
+            public ResourceRequirementConfig(
+                @JsonProperty("resourceType") ResourceType resourceType,
+                @JsonProperty("numberOfResources") int numberOfResources
+            ) {
                 this.resourceType = resourceType;
                 this.numberOfResources = numberOfResources;
             }
 
             /**
              * Specific implementation of the abstract method of RequirementConfig class
+             *
              * @return a new ResourceNumberRequirement
              */
             public LeaderCardRequirement createRequirement() {
@@ -244,10 +279,14 @@ public class LeaderCardsConfig {
 
             /**
              * DevelopmentCardCostDiscountConfig constructor.
-             * @param resourceType resource type the Player can discount from the cost of a Development Card
+             *
+             * @param resourceType     resource type the Player can discount from the cost of a Development Card
              * @param amountToDiscount number of resources the Player can discount from the cost of a Development Card
              */
-            public DevelopmentCardCostDiscountConfig(ResourceType resourceType, int amountToDiscount) {
+            public DevelopmentCardCostDiscountConfig(
+                @JsonProperty("resourceType") ResourceType resourceType,
+                @JsonProperty("amountToDiscount") int amountToDiscount
+            ) {
                 this.resourceType = resourceType;
                 this.amountToDiscount = amountToDiscount;
             }
@@ -267,9 +306,12 @@ public class LeaderCardsConfig {
 
             /**
              * WhiteMarbleSubstitutionConfig constructor.
+             *
              * @param resourceType resource type the Player can substitute to a Special Marble taken from the Market
              */
-            public WhiteMarbleSubstitutionConfig(ResourceType resourceType) {
+            public WhiteMarbleSubstitutionConfig(
+                @JsonProperty("resourceType") ResourceType resourceType
+            ) {
                 this.resourceType = resourceType;
             }
         }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.configfile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
@@ -25,7 +26,10 @@ public class ProductionConfig {
      * @param costs cost the Player must pay to activate this Production power
      * @param rewards reward the Player obtains by activating this Production power
      */
-    public ProductionConfig(CostConfig costs, RewardConfig rewards) {
+    public ProductionConfig(
+        @JsonProperty("costs") CostConfig costs,
+        @JsonProperty("rewards") RewardConfig rewards
+    ) {
         this.costs = costs;
         this.rewards = rewards;
     }
@@ -50,7 +54,10 @@ public class ProductionConfig {
          * @param resources cost made of specific type and number of Resources
          * @param starResources cost made of a generic type of Resource (Player can choose), in a fixed quantity
          */
-        public CostConfig(Map<ResourceType, Integer> resources, int starResources) {
+        public CostConfig(
+            @JsonProperty("resources") Map<ResourceType, Integer> resources,
+            @JsonProperty("starResources") int starResources
+        ) {
             this.resources = resources;
             this.starResources = starResources;
         }
@@ -82,7 +89,11 @@ public class ProductionConfig {
          * @param starResources reward made of a generic type of Resource (Player can choose), in a fixed quantity
          * @param faithPoints reward made of a fixed number of Faith Points
          */
-        public RewardConfig(Map<ResourceType, Integer> resources, int starResources, int faithPoints) {
+        public RewardConfig(
+            @JsonProperty("resources") Map<ResourceType, Integer> resources,
+            @JsonProperty("starResources") int starResources,
+            @JsonProperty("faithPoints") int faithPoints
+        ) {
             this.resources = resources;
             this.starResources = starResources;
             this.faithPoints = faithPoints;

@@ -1,10 +1,12 @@
 package it.polimi.ingsw.configfile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
  * This class sets all the parameters regarding the Faith Path from values stored in faith-path-config.yml file.
  */
+
 public class FaithPathConfig {
 
     /**
@@ -21,20 +23,23 @@ public class FaithPathConfig {
      * List of sections which give at the end of the Game a specific number of Victory Points to the Player
      * based on his position on the Faith Track
      */
-    public final List<VictoryPointsByPositionConfig> victoryPointsByPositions;
+    public final List<VictoryPointsByPositionConfig> victoryPointsByPosition;
 
     /**
      * FaithPathConfig constructor.
      * @param faithPathLength length of the Faith Path
      * @param vaticanReportSections list of Vatican Report Sections included in the Faith Path
-     * @param victoryPointsByPositions list of sections which give at the end of the Game a specific number
+     * @param victoryPointsByPosition list of sections which give at the end of the Game a specific number
      *                                 of Victory Points to the Player based on his position on the Faith Track
      */
-    public FaithPathConfig(int faithPathLength, List<VaticanReportSectionConfig> vaticanReportSections,
-                           List<VictoryPointsByPositionConfig> victoryPointsByPositions) {
+    public FaithPathConfig(
+        @JsonProperty("faithPathLength") int faithPathLength,
+        @JsonProperty("vaticanReportSections") List<VaticanReportSectionConfig> vaticanReportSections,
+        @JsonProperty("victoryPointsByPositions") List<VictoryPointsByPositionConfig> victoryPointsByPosition
+    ) {
         this.faithPathLength = faithPathLength;
         this.vaticanReportSections = vaticanReportSections;
-        this.victoryPointsByPositions = victoryPointsByPositions;
+        this.victoryPointsByPosition = victoryPointsByPosition;
     }
 
     /**
@@ -64,7 +69,11 @@ public class FaithPathConfig {
          * @param victoryPoints number of Victory Points scored by a Player
          *                      for the related Pope's Favor card turned face-up (active)
          */
-        public VaticanReportSectionConfig(int initialPosition, int popeSpacePosition, int victoryPoints) {
+        public VaticanReportSectionConfig(
+            @JsonProperty("initialPosition") int initialPosition,
+            @JsonProperty("popeSpacePosition") int popeSpacePosition,
+            @JsonProperty("victoryPoints") int victoryPoints
+        ) {
             this.initialPosition = initialPosition;
             this.popeSpacePosition = popeSpacePosition;
             this.victoryPoints = victoryPoints;
@@ -98,7 +107,11 @@ public class FaithPathConfig {
          * @param endPosition position in which this section ends
          * @param victoryPoints number of Victory Points given to the Player
          */
-        public VictoryPointsByPositionConfig(int startPosition, int endPosition, int victoryPoints) {
+        public VictoryPointsByPositionConfig(
+            @JsonProperty("startPosition") int startPosition,
+            @JsonProperty("endPosition") int endPosition,
+            @JsonProperty("victoryPoints") int victoryPoints
+        ) {
             this.startPosition = startPosition;
             this.endPosition = endPosition;
             this.victoryPoints = victoryPoints;

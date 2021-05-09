@@ -1,5 +1,9 @@
 package it.polimi.ingsw.configfile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.storage.MaxResourceNumberRule;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
@@ -12,6 +16,7 @@ import java.util.List;
  * This class sets all the parameters regarding the Resource Storages used by each Player to keep Resources bought
  * at the Market.
  */
+
 public class ResourceStorageConfig {
 
     /**
@@ -33,13 +38,21 @@ public class ResourceStorageConfig {
          * StorageConfig constructor
          * @param rules list of Rules implemented by the Resource Storage
          */
-        public StorageConfig(List<StorageConfig.RuleConfig> rules) {
+        public StorageConfig(
+            @JsonProperty("rules") List<StorageConfig.RuleConfig> rules
+        ) {
             this.rules = rules;
         }
 
         /**
          * This class contains the configuration schema of a Rule implemented by a Storage.
          */
+        @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "ruleType")
+        @JsonSubTypes({
+            @JsonSubTypes.Type(value = MaxResourceNumberRuleConfig.class, name = "MAX_RESOURCE_NUMBER"),
+            @JsonSubTypes.Type(value = SpecificResourceTypeRuleConfig.class, name = "SPECIFIC_RESOURCE_TYPE"),
+            @JsonSubTypes.Type(value = SameResourceTypeRuleConfig.class, name = "SAME_RESOURCE_TYPE")
+        })
         public abstract static class RuleConfig {
 
             /**
@@ -53,6 +66,7 @@ public class ResourceStorageConfig {
          * If the storage implements this Rule, the Storage has a maximum number of Resources (it has a limited space).
          * If the storage is full, it is not possible to add resources until some are removed.
          */
+        @JsonTypeName("MAX_RESOURCE_NUMBER")
         public static class MaxResourceNumberRuleConfig extends RuleConfig {
 
             /**
@@ -64,7 +78,9 @@ public class ResourceStorageConfig {
              * MaxResourceNumberRuleConfig constructor.
              * @param maxNumber max number of Resources that the Storage can contain
              */
-            public MaxResourceNumberRuleConfig(int maxNumber) {
+            public MaxResourceNumberRuleConfig(
+                @JsonProperty("maxNumber") int maxNumber
+            ) {
                 this.maxNumber = maxNumber;
             }
 
@@ -75,12 +91,12 @@ public class ResourceStorageConfig {
             public ResourceStorageRule createRule() {
                 return new MaxResourceNumberRule(maxNumber);
             }
-
         }
 
         /**
          * If the Storage implements this Rule, only a certain type of Resources can be added to the Storage.
          */
+        @JsonTypeName("SPECIFIC_RESOURCE_TYPE")
         public static class SpecificResourceTypeRuleConfig extends RuleConfig {
 
             /**
@@ -92,7 +108,9 @@ public class ResourceStorageConfig {
              * SpecificResourceTypeRuleConfig constructor.
              * @param resourceType specific type of Resource that the Storage can contain
              */
-            public SpecificResourceTypeRuleConfig(ResourceType resourceType) {
+            public SpecificResourceTypeRuleConfig(
+                @JsonProperty("resourceType") ResourceType resourceType
+            ) {
                 this.resourceType = resourceType;
             }
 
@@ -109,6 +127,7 @@ public class ResourceStorageConfig {
          * If the Storage implements this Rule, the Storage can only contain Resources that are equal to each other
          * (different types of Resources can not be present)
          */
+        @JsonTypeName("SAME_RESOURCE_TYPE")
         public static class SameResourceTypeRuleConfig extends RuleConfig {
 
             /**
