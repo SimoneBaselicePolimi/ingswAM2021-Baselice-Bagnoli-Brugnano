@@ -1,13 +1,10 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
-import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
@@ -15,7 +12,6 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
-import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.testutils.TestUtils;
@@ -27,37 +23,22 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 
-class DevelopmentActionClientRequestValidatorTest {
+class DevelopmentActionClientRequestValidatorTest extends ValidatorTest<DevelopmentActionClientRequest, DevelopmentActionClientRequestValidator>{
 
-    @Mock
-    GameManager gameManager;
-
-    @Mock
-    GameContext gameContext;
-
-    @Mock
-    PlayerContext playerContext;
-
-    DevelopmentActionClientRequestValidator validator = new DevelopmentActionClientRequestValidator();
+    DevelopmentActionClientRequestValidator validator = getValidator();
 
     @Mock
     DevelopmentCardsTable table;
 
     @Mock
-    DevelopmentCard differentDevelopmentCard;
-
-    @Mock
-    Player player;
+    DevelopmentCard notAvailableDevelopmentCard;
 
     @Mock
     ShuffledCardDeck deck;
 
-    List<DevelopmentCard> developmentCards;
+    List<DevelopmentCard> availableDevelopmentCards;
 
     Map<ResourceType, Integer> resources = Map.of(
         ResourceType.COINS, 3,
@@ -71,20 +52,19 @@ class DevelopmentActionClientRequestValidatorTest {
     DevelopmentCard notEnoughResourcesCard;
 
     @BeforeEach
-    void setUp() throws ResourceStorageRuleViolationException, NotEnoughResourcesException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException {
+    void setUp(){
 
-        developmentCards = TestUtils.generateListOfMockWithID(DevelopmentCard.class, 4);
+        availableDevelopmentCards = TestUtils.generateListOfMockWithID(DevelopmentCard.class, 4);
 
-        iter = developmentCards.iterator();
+        iter = availableDevelopmentCards.iterator();
         rightCardThirdLevel = iter.next();
         rightCardSecondLevel = iter.next();
         rightCardFirstLevel = iter.next();
         notEnoughResourcesCard = iter.next();
 
-        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
-        lenient().when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
+
         lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(table);
-        lenient().when(table.getAvailableCards()).thenReturn(developmentCards);
+        lenient().when(table.getAvailableCards()).thenReturn(availableDevelopmentCards);
         lenient().when(playerContext.getAllResources()).thenReturn(resources);
         lenient().when(rightCardFirstLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
         lenient().when(rightCardSecondLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
@@ -97,14 +77,7 @@ class DevelopmentActionClientRequestValidatorTest {
     }
 
     @Test
-    void getValidatorFromClientRequest() {
-        DevelopmentActionClientRequest request = new DevelopmentActionClientRequest(
-            player,
-            rightCardFirstLevel,
-            1
-        );
-        assertTrue(request.getValidator() instanceof DevelopmentActionClientRequestValidator);
-    }
+    void
 
     @Test
     void testGetError(){
@@ -118,7 +91,7 @@ class DevelopmentActionClientRequestValidatorTest {
 
         DevelopmentActionClientRequest differentCardRequest = new DevelopmentActionClientRequest (
             player,
-            differentDevelopmentCard,
+            notAvailableDevelopmentCard,
             deckNumber
         );
 
@@ -148,4 +121,17 @@ class DevelopmentActionClientRequestValidatorTest {
         assertTrue(validator.getErrorMessage(secondLevelCardRequest, gameManager).isPresent());
     }
 
+    @Override
+    DevelopmentActionClientRequest createClientRequestToValidate() {
+        return new DevelopmentActionClientRequest(
+            player,
+            mock(DevelopmentCard.class),
+            1
+        );
+    }
+
+    @Override
+    Class<DevelopmentActionClientRequestValidator> getValidatorType() {
+        return DevelopmentActionClientRequestValidator.class;
+    }
 }

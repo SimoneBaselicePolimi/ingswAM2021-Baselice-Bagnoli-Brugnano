@@ -1,13 +1,8 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
-import it.polimi.ingsw.network.clientrequest.MarketActionFetchRowClientRequest;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,20 +17,11 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 
-class ManageResourcesFromMarketClientRequestValidatorTest {
-
-    @Mock
-    GameManager gameManager;
-
-    @Mock
-    GameContext gameContext;
-
-    @Mock
-    PlayerContext playerContext;
+class ManageResourcesFromMarketClientRequestValidatorTest extends ValidatorTest<ManageResourcesFromMarketClientRequest, ManageResourcesFromMarketClientRequestValidator>
+{
 
     @Mock
     GameItemsManager gameItemsManager;
@@ -43,33 +29,28 @@ class ManageResourcesFromMarketClientRequestValidatorTest {
     ManageResourcesFromMarketClientRequestValidator validator = new ManageResourcesFromMarketClientRequestValidator();
 
     @Mock
-    Player player;
+    ResourceStorage invalidStorage;
 
     @Mock
-    ResourceStorage storage1;
+    ResourceStorage validStorage;
 
-    @Mock
-    ResourceStorage storage2;
-
-    Map<ResourceStorage, Map<ResourceType, Integer>> invalidStarResourcesChosenToAddByStorage = new HashMap<>();
-    Map<ResourceStorage, Map<ResourceType, Integer>> invalidNumberOfStarResourcesToAddByStorage = new HashMap<>();
     Map<ResourceStorage, Map<ResourceType, Integer>> validStarResourcesChosenToAddByStorage = new HashMap<>();
-    Map<ResourceStorage, Map<ResourceType, Integer>> resourcesToAddByInvalidStorage = new HashMap<>();
     Map<ResourceStorage, Map<ResourceType, Integer>> resourcesToAddByValidStorage = new HashMap<>();
-    Map<ResourceStorage, Map<ResourceType, Integer>> invalidResourcesToAddByValidStorage = new HashMap<>();
-    Set<ResourceType> playerMarbleSubstitution = Set.of(ResourceType.COINS);
-    Map<ResourceType, Integer> resourcesLeftInTemporaryStorage = new HashMap<>();
-    Map<ResourceType, Integer> resourcesLeftInTemporaryStorage2 = Map.of(ResourceType.STONES, 1);
 
     @BeforeEach
     void setUp(){
+        //TemporaryStorageResources = 3 SHIELDS, 2 STONES
+        //TempStarResources = 2
+        //playerMarbleSubstitution = COINS
+
+        validStarResourcesChosenToAddByStorage.put(validStorage, Map.of(ResourceType.COINS, 2));
+
+        resourcesToAddByValidStorage.put(validStorage, Map.of(ResourceType.SHIELDS, 3,ResourceType.STONES,2));
 
         lenient().when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
-        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
-        lenient().when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
-        lenient().when(playerContext.getActiveLeaderCardsWhiteMarblesMarketSubstitutions()).thenReturn(playerMarbleSubstitution);
-        lenient().when(storage1.canAddResources(any())).thenReturn(false);
-        lenient().when(storage2.canAddResources(any())).thenReturn(true);
+        lenient().when(playerContext.getActiveLeaderCardsWhiteMarblesMarketSubstitutions()).thenReturn(Set.of(ResourceType.COINS));
+        lenient().when(invalidStorage.canAddResources(any())).thenReturn(false);
+        lenient().when(validStorage.canAddResources(any())).thenReturn(true);
         lenient().when(playerContext.getTempStarResources()).thenReturn(2);
         lenient().when(playerContext.getTemporaryStorageResources()).thenReturn(Map.of(
             ResourceType.SHIELDS, 3,
@@ -78,90 +59,97 @@ class ManageResourcesFromMarketClientRequestValidatorTest {
     }
 
     @Test
-    void getValidatorFromClientRequest() {
-        ManageResourcesFromMarketClientRequest request = new ManageResourcesFromMarketClientRequest(
+    void testInvalidStorage() {
+
+        ManageResourcesFromMarketClientRequest invalidStorageRequest = new ManageResourcesFromMarketClientRequest(
             player,
+            Map.of(invalidStorage, Map.of(ResourceType.SHIELDS, 3,ResourceType.STONES,2)),
             validStarResourcesChosenToAddByStorage,
-            new HashMap<>(),
-            resourcesLeftInTemporaryStorage
-            );
-        assertTrue(request.getValidator() instanceof ManageResourcesFromMarketClientRequestValidator);
+            new HashMap<>()
+        );
+
+        assertTrue(validator.getErrorMessage(invalidStorageRequest, gameManager).isPresent());
     }
 
     @Test
-    void testGetError(){
-
-        Map<ResourceType, Integer> resources = Map.of(
-            ResourceType.SHIELDS, 3,
-            ResourceType.STONES,2
-        );
-
-        Map<ResourceType, Integer> invalidResources = Map.of(
-            ResourceType.SHIELDS, 3,
-            ResourceType.STONES,1
-        );
-
-        resourcesToAddByInvalidStorage.put(storage1, resources);
-        resourcesToAddByValidStorage.put(storage2,resources);
-        invalidResourcesToAddByValidStorage.put(storage2,invalidResources);
-
-        Map<ResourceType, Integer> validStarResources = Map.of(ResourceType.COINS, 2);
-        Map<ResourceType, Integer> invalidStarResources = Map.of(ResourceType.SERVANTS, 2);
-        Map<ResourceType, Integer> invalidNumberOfStarResources = Map.of(ResourceType.COINS, 3);
-
-        invalidStarResourcesChosenToAddByStorage.put(storage2, invalidStarResources);
-        validStarResourcesChosenToAddByStorage.put(storage2, validStarResources);
-        invalidNumberOfStarResourcesToAddByStorage.put(storage2, invalidNumberOfStarResources);
-
-        ManageResourcesFromMarketClientRequest invalidRequestForStorage = new ManageResourcesFromMarketClientRequest(
-            player,
-            resourcesToAddByInvalidStorage,
-            validStarResourcesChosenToAddByStorage,
-            resourcesLeftInTemporaryStorage
-        );
-
-        ManageResourcesFromMarketClientRequest invalidRequestForMarbleSubstitution = new ManageResourcesFromMarketClientRequest(
-            player,
-            resourcesToAddByValidStorage,
-            invalidStarResourcesChosenToAddByStorage,
-            resourcesLeftInTemporaryStorage
-        );
+    void testTypeAndNumberOfStarResources() {
 
         ManageResourcesFromMarketClientRequest invalidNumberOfStarResourcesRequest = new ManageResourcesFromMarketClientRequest(
             player,
             resourcesToAddByValidStorage,
-            invalidNumberOfStarResourcesToAddByStorage,
-            resourcesLeftInTemporaryStorage
+            Map.of(validStorage, Map.of(ResourceType.SERVANTS, 2)),
+            new HashMap<>()
         );
 
-        ManageResourcesFromMarketClientRequest invalidResourcesRequest = new ManageResourcesFromMarketClientRequest(
+        ManageResourcesFromMarketClientRequest invalidTypeOfStarResourcesRequest = new ManageResourcesFromMarketClientRequest(
             player,
             resourcesToAddByValidStorage,
-            invalidResourcesToAddByValidStorage,
-            resourcesLeftInTemporaryStorage
+            Map.of(validStorage, Map.of(ResourceType.SHIELDS, 3, ResourceType.STONES, 2)),
+            new HashMap<>()
         );
+
+        assertTrue(validator.getErrorMessage(invalidNumberOfStarResourcesRequest, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(invalidTypeOfStarResourcesRequest, gameManager).isPresent());
+
+    }
+
+
+    @Test
+    void testTypeAndNumberOfResources() {
+
+        ManageResourcesFromMarketClientRequest invalidNumberResourcesRequest = new ManageResourcesFromMarketClientRequest(
+            player,
+            resourcesToAddByValidStorage,
+            Map.of(validStorage, Map.of(ResourceType.SHIELDS, 1)),
+            new HashMap<>()
+        );
+
+        ManageResourcesFromMarketClientRequest invalidTypeResourcesRequest = new ManageResourcesFromMarketClientRequest(
+            player,
+            resourcesToAddByValidStorage,
+            Map.of(validStorage, Map.of(ResourceType.COINS, 3, ResourceType.STONES, 2)),
+            new HashMap<>()
+        );
+
+        assertTrue(validator.getErrorMessage(invalidNumberResourcesRequest, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(invalidTypeResourcesRequest, gameManager).isPresent());
+    }
+
+    @Test
+    void testValidRequest() {
 
         ManageResourcesFromMarketClientRequest validRequest1 = new ManageResourcesFromMarketClientRequest(
             player,
             resourcesToAddByValidStorage,
             validStarResourcesChosenToAddByStorage,
-            resourcesLeftInTemporaryStorage
+            new HashMap<>()
         );
 
         ManageResourcesFromMarketClientRequest validRequest2 = new ManageResourcesFromMarketClientRequest(
             player,
-            invalidResourcesToAddByValidStorage,
+            Map.of(validStorage, Map.of(ResourceType.SHIELDS, 1,ResourceType.STONES,2)),
             validStarResourcesChosenToAddByStorage,
-            resourcesLeftInTemporaryStorage2
+            Map.of(ResourceType.SHIELDS, 2)
         );
 
-        assertTrue(validator.getErrorMessage(invalidRequestForStorage, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(invalidRequestForMarbleSubstitution, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(invalidNumberOfStarResourcesRequest, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(invalidResourcesRequest, gameManager).isPresent());
         assertTrue(validator.getErrorMessage(validRequest1, gameManager).isEmpty());
         assertTrue(validator.getErrorMessage(validRequest2, gameManager).isEmpty());
 
+    }
+
+    @Override
+    ManageResourcesFromMarketClientRequest createClientRequestToValidate() {
+        return new ManageResourcesFromMarketClientRequest(
+            player,
+            resourcesToAddByValidStorage,
+            validStarResourcesChosenToAddByStorage,
+            new HashMap<>()
+        );
+    }
+
+    @Override
+    Class<ManageResourcesFromMarketClientRequestValidator> getValidatorType() {
+        return ManageResourcesFromMarketClientRequestValidator.class;
     }
 
 }

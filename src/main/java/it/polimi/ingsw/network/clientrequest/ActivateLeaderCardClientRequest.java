@@ -12,17 +12,25 @@ import it.polimi.ingsw.utils.serialization.annotations.*;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Class representing the player's request to activate a leader card he holds in his hand
+ */
 public class ActivateLeaderCardClientRequest extends ClientRequest {
 
     @SerializeAsSetOfIds
-    public final Set<LeaderCard> leaderCardsThePlayerWantsToActivate;
+    public final LeaderCard leaderCardThePlayerWantsToActivate;
 
+    /**
+     * ActivateLeaderCardClientRequest constructor
+     * @param player
+     * @param leaderCardThePlayerWantsToActivate
+     */
     public ActivateLeaderCardClientRequest(
         Player player,
-        Set<LeaderCard> leaderCardsThePlayerWantsToActivate
+        LeaderCard leaderCardThePlayerWantsToActivate
     ) {
         super(player);
-        this.leaderCardsThePlayerWantsToActivate = leaderCardsThePlayerWantsToActivate;
+        this.leaderCardThePlayerWantsToActivate = leaderCardThePlayerWantsToActivate;
     }
 
     public Map<Player, ServerMessage> callHandler(GameState state) throws LeaderCardRequirementsNotSatisfiedException {

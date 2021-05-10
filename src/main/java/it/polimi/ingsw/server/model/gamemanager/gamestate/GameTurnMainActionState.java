@@ -90,50 +90,6 @@ public class GameTurnMainActionState extends GameState {
 	}
 
 	/**
-	 * Method that discards the leader card chosen by the player according to his request.
-	 * The leader card state changes from active to discard.
-	 * @param request request of the player to discard the leader card, see {@link DiscardLeaderCardClientRequest}
-	 * @return messages sent to each player containing all changes made since the last game state update
-	 * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to discard some leader cards but not
-	 * all card requirements have been satisfied
-	 */
-	@Override
-	public Map<Player, ServerMessage> handleRequestDiscardLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
-
-		// discard leader cards
-		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToDiscard)
-			leaderCard.discardLeaderCard();
-
-		gameManager.getGameHistory().addAction(
-			new DiscardLeaderCardsAction(activePlayer, request.leaderCardsThePlayerWantsToDiscard)
-		);
-
-		return buildGameUpdateServerMessage();
-	}
-
-	/**
-	 * Method that activates the leader card chosen by the player according to his request.
-	 * The leader card state changes from hidden to active.
-	 * @param request request of the player to activate the leader card, see {@link ActivateLeaderCardClientRequest}
-	 * @return messages sent to each player containing all changes made since the last game state update
-	 * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to activate some leader cards but not
-	 * all card requirements have been satisfied
-	 */
-	@Override
-	public Map<Player, GameUpdateServerMessage> handleRequestActivateLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
-
-		// activate leader cards
-		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToActivate)
-			leaderCard.activateLeaderCard(gameManager.getGameContext().getPlayerContext(activePlayer));
-
-		gameManager.getGameHistory().addAction(
-			new ActivateLeaderCardsAction(activePlayer, request.leaderCardsThePlayerWantsToActivate)
-		);
-
-		return buildGameUpdateServerMessage();
-	}
-
-	/**
 	 * Method to perform the market action. The player selects a column of the market structure in order to get
 	 * the marbles inside that column.
 	 * Marbles can provide the player with:

@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.configfile.GameInfoConfig;
 import it.polimi.ingsw.configfile.GameRules;
+import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 
-class InitialChoicesClientRequestValidatorTest {
+class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoicesClientRequest, InitialChoicesClientRequestValidator>{
 
     @Mock
     ResourceStorage storage1;
@@ -33,23 +34,10 @@ class InitialChoicesClientRequestValidatorTest {
     @Mock
     ResourceStorage storage2;
 
-    @Mock
-    PlayerContext playerContext;
 
     Map<ResourceStorage, Map<ResourceType, Integer>> twoResourcesChosen = new HashMap<>();
     Map<ResourceStorage, Map<ResourceType, Integer>> fiveResourcesChosen = new HashMap<>();
     Map<ResourceStorage, Map<ResourceType, Integer>> invalidStorageWithOneResourceChosen = new HashMap<>();
-
-    Player player1 = new Player("first");
-    Player player2 = new Player("second");
-
-    List<Player> playersInOrder = List.of(player1, player2);
-
-    @Mock
-    GameManager gameManager;
-
-    @Mock
-    GameContext gameContext;
 
     Set<LeaderCard> leaderCardsGivenToThePlayer;
 
@@ -134,17 +122,20 @@ class InitialChoicesClientRequestValidatorTest {
         invalidStorageWithOneResourceChosen.put(storage1, Map.of(ResourceType.COINS, 1));
     }
 
-    @Test
-
-    void getValidatorFromClientRequest() {
-        InitialChoicesClientRequest request = new InitialChoicesClientRequest(
-            player1,
-            Set.of(rightCard1, rightCard2),
-            twoResourcesChosen
+    @Override
+    InitialChoicesClientRequest createClientRequestToValidate() {
+        return new InitialChoicesClientRequest(
+            player,
+            new HashSet<>(),
+            new HashMap<>()
         );
-
-        assertTrue(request.getValidator() instanceof InitialChoicesClientRequestValidator);
     }
+
+    @Override
+    Class<InitialChoicesClientRequestValidator> getValidatorType() {
+        return InitialChoicesClientRequestValidator.class;
+    }
+
 
     @Test
     void testGetError(){

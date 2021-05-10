@@ -7,6 +7,8 @@ import it.polimi.ingsw.network.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.network.servermessage.EndTurnServerMessage;
+import it.polimi.ingsw.server.model.gamehistory.ActivateLeaderCardsAction;
+import it.polimi.ingsw.server.model.gamehistory.DiscardLeaderCardsAction;
 import it.polimi.ingsw.server.model.gamehistory.PostTurnFinalAction;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
@@ -54,42 +56,6 @@ public class GameTurnPostActionState extends GameState {
 	 */
 	public GameTurnMainActionState getNextState() {
 		return new GameTurnMainActionState(gameManager);
-	}
-
-	/**
-	 * Method that discards the leader card chosen by the player according to his request.
-	 * The leader card state changes from active to discard.
-	 * @param request request of the player to discard the leader card, see {@link DiscardLeaderCardClientRequest}
-	 * @return messages sent to each player containing all changes made since the last game state update
-	 * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to discard some leader cards but not
-	 * all card requirements have been satisfied
-	 */
-	@Override
-	public Map<Player, ServerMessage> handleRequestDiscardLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
-
-    	// discard leader cards
-		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToDiscard)
-			leaderCard.discardLeaderCard();
-
-		return buildGameUpdateServerMessage();
-	}
-
-	/**
-	 * Method that activates the leader card chosen by the player according to his request.
-	 * The leader card state changes from hidden to active.
-	 * @param request request of the player to activate the leader card, see {@link ActivateLeaderCardClientRequest}
-	 * @return messages sent to each player containing all changes made since the last game state update
-	 * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to activate some leader cards but not
-	 * all card requirements have been satisfied
-	 */
-	@Override
-	public Map<Player, GameUpdateServerMessage> handleRequestActivateLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
-
-		// activate leader cards
-		for (LeaderCard leaderCard : request.leaderCardsThePlayerWantsToActivate)
-			leaderCard.activateLeaderCard(gameManager.getGameContext().getPlayerContext(activePlayer));
-
-		return buildGameUpdateServerMessage();
 	}
 
 	/**

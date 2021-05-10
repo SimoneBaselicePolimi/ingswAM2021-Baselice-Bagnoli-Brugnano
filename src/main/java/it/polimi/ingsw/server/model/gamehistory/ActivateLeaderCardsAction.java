@@ -8,11 +8,11 @@ import java.util.Set;
 
 public class ActivateLeaderCardsAction extends GameAction {
     private final Player player;
-    private final Set<LeaderCard> leaderCards;
+    private final LeaderCard leaderCard;
 
-    public ActivateLeaderCardsAction(Player player, Set<LeaderCard> leaderCards) {
+    public ActivateLeaderCardsAction(Player player, LeaderCard leaderCard) {
         this.player = player;
-        this.leaderCards = leaderCards;
+        this.leaderCard = leaderCard;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class ActivateLeaderCardsAction extends GameAction {
         return Localization.getLocalization().getString(
             "gameHistory.leaderCard.activateCard",
             player,
-            leaderCards
+            leaderCard
         );
     }
 }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.network.clientrequest.validator;
+import it.polimi.ingsw.network.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.MarketActionFetchColumnClientRequest;
+import it.polimi.ingsw.network.clientrequest.MarketActionFetchRowClientRequest;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
@@ -15,62 +17,23 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 
-class MarketActionFetchColumnClientRequestValidatorTest {
+class MarketActionFetchColumnClientRequestValidatorTest extends MarketActionClientRequestValidatorTest<MarketActionFetchColumnClientRequest, MarketActionFetchColumnClientRequestValidator>{
 
-    @Mock
-    GameManager gameManager;
-
-    @Mock
-    GameContext gameContext;
-
-    @Mock
-    Market market;
-
-    MarketActionFetchColumnClientRequestValidator validator = new MarketActionFetchColumnClientRequestValidator();
-
-    @Mock
-    Player player;
-
-    @BeforeEach
-    void setUp() {
-
-        when(gameManager.getGameContext()).thenReturn(gameContext);
-        when(gameContext.getMarket()).thenReturn(market);
-        when(market.getNumOfColumns()).thenReturn(4);
+    @Override
+    MarketActionFetchColumnClientRequest createClientRequestToValidate() {
+        return new MarketActionFetchColumnClientRequest(player, 1);
     }
 
-    @Test
-    void testGetError(){
+    @Override
+    Class<MarketActionFetchColumnClientRequestValidator> getValidatorType() {
+        return MarketActionFetchColumnClientRequestValidator.class;
+    }
 
-        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
-                player,
-                3
-            ), gameManager
-        ).isEmpty());
-
-        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
-                player,
-                0
-            ), gameManager
-        ).isEmpty());
-
-        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
-                player,
-                -1
-            ), gameManager
-        ).isPresent());
-
-        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
-                player,
-                6
-            ), gameManager
-        ).isPresent());
-
-        assertTrue(validator.getErrorMessage(new MarketActionFetchColumnClientRequest(
-                player,
-                4
-            ), gameManager
-        ).isPresent());
-
+    @Override
+    MarketActionFetchColumnClientRequest createMarketActionRequest(int num) {
+        return new MarketActionFetchColumnClientRequest(
+            player,
+            num
+        );
     }
 }

@@ -24,81 +24,31 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 
-class ActivateLeaderCardClientRequestValidatorTest {
+class ActivateLeaderCardClientRequestValidatorTest
+    extends LeaderCardActionClientRequestValidatorTest<ActivateLeaderCardClientRequest, ActivateLeaderCardClientRequestValidator> {
 
-    @Mock
-    GameManager gameManager;
-
-    @Mock
-    GameContext gameContext;
-
-    @Mock
-    PlayerContext playerContext;
-
-    ActivateLeaderCardClientRequestValidator validator = new ActivateLeaderCardClientRequestValidator();
-
-    @Mock
-    LeaderCard l1;
-
-    @Mock
-    LeaderCard l2;
-
-    @Mock
-    LeaderCard l3;
-
-    @Mock
-    LeaderCard l4;
-
-    @Mock
-    Player player;
-
-    Set<LeaderCard> leaderCardsThePlayerWantsToActivate1;
-    Set<LeaderCard> leaderCardsThePlayerWantsToActivate2;
-
-    @BeforeEach
-    void setUp() {
-
-        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
-        lenient().when(gameContext.getPlayerContext(player)).thenReturn(playerContext);
-        lenient().when(gameContext.getActivePlayer()).thenReturn(player);
-        lenient().when(playerContext.getLeaderCards()).thenReturn(Set.of(l1, l2));
-        lenient().when(l1.getState()).thenReturn(LeaderCardState.HIDDEN);
-        lenient().when(l2.getState()).thenReturn(LeaderCardState.HIDDEN);
+    @Override
+    public ActivateLeaderCardClientRequest createClientRequestToValidate() {
+        return new ActivateLeaderCardClientRequest(
+            player,
+            mock(LeaderCard.class)
+        );
     }
 
-    @Test
-    void getValidatorFromClientRequest() {
-        ActivateLeaderCardClientRequest request = new ActivateLeaderCardClientRequest(
-            player,
-            leaderCardsThePlayerWantsToActivate1
-        );
-        assertTrue(request.getValidator() instanceof ActivateLeaderCardClientRequestValidator);
+    @Override
+    public Class<ActivateLeaderCardClientRequestValidator> getValidatorType() {
+        return ActivateLeaderCardClientRequestValidator.class;
     }
 
-    @Test
-    void testGetError() {
-
-        leaderCardsThePlayerWantsToActivate1 = Set.of (l1);
-        leaderCardsThePlayerWantsToActivate2 = Set.of (l3, l4);
-
-        ActivateLeaderCardClientRequest request1 = new ActivateLeaderCardClientRequest (
+    @Override
+    ActivateLeaderCardClientRequest createLeaderCardActionRequest(LeaderCard leaderCard) {
+        return new ActivateLeaderCardClientRequest(
             player,
-            leaderCardsThePlayerWantsToActivate1
+            leaderCard
         );
-
-        ActivateLeaderCardClientRequest request2 = new ActivateLeaderCardClientRequest(
-            player,
-            leaderCardsThePlayerWantsToActivate2
-        );
-
-        assertTrue(validator.getErrorMessage(request1, gameManager).isEmpty());
-        assertTrue(validator.getErrorMessage(request2, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(request2, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(request1, gameManager).isPresent());
     }
 }
