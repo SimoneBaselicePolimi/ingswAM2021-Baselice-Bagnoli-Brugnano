@@ -6,6 +6,7 @@ import it.polimi.ingsw.utils.serialization.SerializationHelper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
 public class FileManager {
@@ -20,7 +21,7 @@ public class FileManager {
 	public static final String DEV_CARDS_CONFIG_FILE_NAME = "development-cards-config.yml";
 	public static final String LEAD_CARDS_CONFIG_FILE_NAME = "leader-cards-config.yml";
 
-	protected Map<String, GameRules> cachedGameRules;
+	protected Map<String, GameRules> cachedGameRules = new HashMap<>();
 
 	protected ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 
@@ -38,7 +39,7 @@ public class FileManager {
 
 	public GameRules getGameRules(String gameRulesPath) throws IOException {
 		if(cachedGameRules.containsKey(gameRulesPath))
-			return cachedGameRules.get(cachedGameRules);
+			return cachedGameRules.get(gameRulesPath);
 		else
 		    return readGameRules(gameRulesPath);
 	}

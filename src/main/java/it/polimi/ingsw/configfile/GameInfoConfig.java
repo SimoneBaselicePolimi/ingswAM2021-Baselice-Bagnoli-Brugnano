@@ -1,5 +1,7 @@
 package it.polimi.ingsw.configfile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Map;
 
@@ -63,10 +65,16 @@ public class GameInfoConfig {
      * @param numberOfResourcesRewardingOneVictoryPoint number of Resources that at the end of the Game
      *                                                  rewards the Player with one Victory Point
      */
-    public GameInfoConfig(int maxNumberOfPlayers, boolean singlePlayerEnabled, GameSetup gameSetup,
-                          int numberOfPlayerOwnedDevelopmentCardDecks, List<ProductionConfig> basicProductionPower,
-                          List<ResourceStorageConfig> resourceShelves, boolean differentResourcesInDifferentStorages,
-                          int numberOfResourcesRewardingOneVictoryPoint) {
+    public GameInfoConfig(
+        @JsonProperty("maxNumberOfPlayers") int maxNumberOfPlayers,
+        @JsonProperty("singlePlayerEnabled") boolean singlePlayerEnabled,
+        @JsonProperty("gameSetup") GameSetup gameSetup,
+        @JsonProperty("numberOfPlayerOwnedDevelopmentCardDecks") int numberOfPlayerOwnedDevelopmentCardDecks,
+        @JsonProperty("basicProductionPower") List<ProductionConfig> basicProductionPower,
+        @JsonProperty("resourceShelves") List<ResourceStorageConfig> resourceShelves,
+        @JsonProperty("differentResourcesInDifferentStorages") boolean differentResourcesInDifferentStorages,
+        @JsonProperty("numberOfResourcesRewardingOneVictoryPoint") int numberOfResourcesRewardingOneVictoryPoint
+    ) {
         this.maxNumberOfPlayers = maxNumberOfPlayers;
         this.singlePlayerEnabled = singlePlayerEnabled;
         this.gameSetup = gameSetup;
