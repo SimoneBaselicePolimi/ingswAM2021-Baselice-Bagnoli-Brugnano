@@ -29,14 +29,14 @@ public class ObservableGameContextBuilder extends GameContextBuilder{
 	}
 
 	@Override
-	protected Market initializeMarket(
+	public Market initializeMarket(
 		int nRows, int nColumns, Map<MarbleColour, Integer> marbles
 	) throws WrongNumberOfMarblesException {
 		return new MarketNotifier(nRows, nColumns, marbles);
 	}
 
 	@Override
-	protected GameContext initializeGameContext(
+	public GameContext initializeGameContext(
 		Market market,
 		DevelopmentCardsTable developmentCardsTable,
 		FaithPath faithPath,

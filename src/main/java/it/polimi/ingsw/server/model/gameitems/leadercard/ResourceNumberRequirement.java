@@ -7,8 +7,8 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
  * This class represent the request for a specific number of resources in the player's storages
  */
 public class ResourceNumberRequirement extends LeaderCardRequirement {
-    private final ResourceType resourceType;
-    private final int resourceNumber;
+    public final ResourceType resourceType;
+    public final int resourceNumber;
 
     /**
      * ResourceNumberRequirement constructor

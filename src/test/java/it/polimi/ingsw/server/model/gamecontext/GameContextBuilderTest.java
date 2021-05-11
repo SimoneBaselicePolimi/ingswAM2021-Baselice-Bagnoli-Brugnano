@@ -55,6 +55,4 @@ class GameContextBuilderTest {
         assertNotEquals(randomList1, randomList2);
     }
 
-
-
 }

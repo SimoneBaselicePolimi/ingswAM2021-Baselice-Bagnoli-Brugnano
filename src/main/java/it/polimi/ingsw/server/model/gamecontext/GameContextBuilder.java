@@ -64,7 +64,7 @@ public class GameContextBuilder {
 		this.randGenerator = randGenerator;
 	}
 
-	protected GameContext initializeGameContext(
+	public GameContext initializeGameContext(
 		Market market,
 		DevelopmentCardsTable developmentCardsTable,
 		FaithPath faithPath,
@@ -79,6 +79,7 @@ public class GameContextBuilder {
 		logger.log(LogLevel.INFO, "GameContext creation started");
 
 		Market market = buildMarket();
+		gameRules.leaderCardsConfig.leaderCards.forEach(this::buildLeaderCard);
 		DevelopmentCardsTable developmentCardsTable = buildDevelopmentCardsTable();
 		FaithPath faithPath = buildFaithPath();
 		List<Player> playersInOrder = generateRandomPlayersOrder();
@@ -89,7 +90,7 @@ public class GameContextBuilder {
 		return initializeGameContext(market, developmentCardsTable, faithPath, playersInOrder, playerContexts);
 	}
 
-	protected PlayerContext initializePlayerContext(
+	public PlayerContext initializePlayerContext(
 		Player player,
 		Set<ResourceStorage> shelves,
 		List<PlayerOwnedDevelopmentCardDeck> decks,
@@ -152,7 +153,7 @@ public class GameContextBuilder {
 		return "ResourceStorage_ID_" + numResourceStorageID;
 	}
 
-	protected ResourceStorage initializeResourceStorage(
+	public ResourceStorage initializeResourceStorage(
 		String resourceStorageID,
 		List<ResourceStorageRule> rules
 	) {
@@ -169,7 +170,7 @@ public class GameContextBuilder {
 		return initializeResourceStorage(resourceStorageID, rules);
 	}
 
-	protected MarbleColour initializeMarbleColour(
+	public MarbleColour initializeMarbleColour(
 		String marbleID,
 		Optional<ResourceType> resourceType,
 		int faithPoints,
@@ -178,7 +179,7 @@ public class GameContextBuilder {
 		return new MarbleColour(marbleID, gameItemsManager, resourceType, faithPoints, isSpecialMarble);
 	}
 
-	protected Market initializeMarket(int nRows, int nColumns, Map<MarbleColour,Integer> marbles)
+	public Market initializeMarket(int nRows, int nColumns, Map<MarbleColour,Integer> marbles)
 		throws WrongNumberOfMarblesException {
 		return new Market(nRows, nColumns, marbles);
 	}
@@ -212,7 +213,7 @@ public class GameContextBuilder {
 		}
 	}
 
-	protected Production initializeProduction(
+	public Production initializeProduction(
 		String productionID,
 		Map<ResourceType, Integer> resourceCost,
 		Map<ResourceType, Integer> resourceReward,
@@ -240,7 +241,7 @@ public class GameContextBuilder {
 		return "Prod_ID_" + numProductionID;
 	}
 
-	protected DevelopmentCard initializeDevelopmentCard(
+	public DevelopmentCard initializeDevelopmentCard(
 		String cardID,
 		DevelopmentCardLevel level,
 		DevelopmentCardColour colour,
@@ -262,7 +263,7 @@ public class GameContextBuilder {
 		);
 	}
 
-	protected DevelopmentCardsTable initializeDevelopmentCardsTable(
+	public DevelopmentCardsTable initializeDevelopmentCardsTable(
 		List<DevelopmentCard> cards,
 		BiFunction<DevelopmentCardColour, DevelopmentCardLevel, String> getIdForDeckWithColourAndLevel
 	) {
@@ -289,7 +290,7 @@ public class GameContextBuilder {
 			);
 	}
 
-	protected VaticanReportSection initializeVaticanReportSection(
+	public VaticanReportSection initializeVaticanReportSection(
 		int sectionInitialPos,
 		int popeSpacePos,
 		int sectionVictoryPoints
@@ -297,7 +298,7 @@ public class GameContextBuilder {
 		return new VaticanReportSection(sectionInitialPos, popeSpacePos, sectionVictoryPoints);
 	}
 
-	protected FaithPath initializeFaithPath(
+	public FaithPath initializeFaithPath(
 		int faithPathLength,
 		List<VaticanReportSection> vaticanSections,
 		int[] victoryPointsByPosition
@@ -321,7 +322,7 @@ public class GameContextBuilder {
 		int[] victoryPointsByPosition = new int[faithPathConfig.faithPathLength];
 		int cell;
 		for(FaithPathConfig.VictoryPointsByPositionConfig victoryPointsConf : faithPathConfig.victoryPointsByPosition)
-			for (cell = victoryPointsConf.startPosition; cell > victoryPointsConf.endPosition; cell++)
+			for (cell = victoryPointsConf.startPosition; cell <= victoryPointsConf.endPosition; cell++)
 				victoryPointsByPosition[cell] = victoryPointsConf.victoryPoints;
 
 		try {
@@ -348,7 +349,7 @@ public class GameContextBuilder {
 		return playersInOrder;
 	}
 
-	protected LeaderCard initializeLeaderCard(
+	public LeaderCard initializeLeaderCard(
 		String leaderCardID,
 		Set<LeaderCardRequirement> requirements,
 		Set<Production> productions,
@@ -401,7 +402,7 @@ public class GameContextBuilder {
 		return "MarbleSubstitution_ID_" + numSpecialMarbleSubstitutionID;
 	}
 
-	protected WhiteMarbleSubstitution initializeSpecialMarbleSubstitution(
+	public WhiteMarbleSubstitution initializeSpecialMarbleSubstitution(
 		String marbleSubstitutionID,
 		ResourceType resourceTypeToSubstitute
 	) {
@@ -420,7 +421,7 @@ public class GameContextBuilder {
 		return "DevCardCostDiscount_ID_" + numDevelopmentCardCostDiscountID;
 	}
 
-	protected DevelopmentCardCostDiscount initializeDevelopmentCardCostDiscount(
+	public DevelopmentCardCostDiscount initializeDevelopmentCardCostDiscount(
 		String costDiscountID,
 		ResourceType resourceType,
 		int amountToDiscount

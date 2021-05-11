@@ -8,8 +8,8 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardCol
  * This class represent the request for a specific number of development cards of a certain colour
  */
 public class DevelopmentCardColourRequirement extends LeaderCardRequirement {
-    private final DevelopmentCardColour cardColour;
-    private final int numberOfCards;
+    public final DevelopmentCardColour cardColour;
+    public final int numberOfCards;
 
     /**
      * DevelopmentCardColorRequirement constructor

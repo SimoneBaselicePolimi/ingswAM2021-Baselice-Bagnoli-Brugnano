@@ -16,7 +16,7 @@ public class ResourceStorage extends RegisteredIdentifiableItem {
 	/**
 	 * List of rules that the storage implements
 	 */
-	private List<ResourceStorageRule> rules;
+	public final List<ResourceStorageRule> rules;
 	/**
 	 * Type and number of resources that are present in the storage
 	 */

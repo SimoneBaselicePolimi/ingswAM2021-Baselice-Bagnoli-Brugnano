@@ -1,9 +1,6 @@
 package it.polimi.ingsw.configfile;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.*;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -12,6 +9,7 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourRe
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.gameitems.leadercard.ResourceNumberRequirement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
