@@ -234,6 +234,9 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				)).collect(Collectors.toSet());
 			serverMessages.put(player, new GameUpdateServerMessage(gameUpdatesForPlayer));
 		}
+
+		hasPlayerAlreadyAnswered.put(request.player, true);
+
 		return serverMessages;
 	}
 

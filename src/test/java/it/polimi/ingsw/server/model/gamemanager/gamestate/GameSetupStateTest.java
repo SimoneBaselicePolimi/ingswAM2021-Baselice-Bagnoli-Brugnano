@@ -2,20 +2,33 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.configfile.GameInfoConfig;
 import it.polimi.ingsw.configfile.GameRules;
+import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
+import it.polimi.ingsw.network.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.network.servermessage.InitialChoicesServerMessage;
+import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
+import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
+import it.polimi.ingsw.server.model.gamehistory.GameAction;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
+import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
+import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.notifier.gameupdate.FaithUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.LeaderCardsThePlayerOwnsUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.MarketUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -26,25 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class GameSetupStateTest {
-
-    Player player1 = new Player("first");
-    Player player2 = new Player("second");
-    Player player3 = new Player("third");
-
-    List<Player> playersInOrder = List.of(player1, player2, player3);
-
-    @Mock
-    GameManager gameManager;
-
-    @Mock
-    GameContext gameContext;
-
-    @Mock
-    GameItemsManager gameItemsManager;
-
-    @Mock
-    GameHistory gameHistory;
+public class GameSetupStateTest extends GameStateTest {
 
     Set<LeaderCard> leaderCards;
 
@@ -53,7 +48,7 @@ public class GameSetupStateTest {
     int numberOfLeadersCardsThePlayerKeeps = 2;
     Map<Player, Integer> playerInitialFaithPoints = Map.of(
         player1, 0,
-        player2, 1,
+        player2, 5,
         player3, 3
     );
     Map<Player, Integer> playerInitialStarResources = Map.of(
@@ -64,10 +59,11 @@ public class GameSetupStateTest {
 
     GameRules gameRules;
 
-    Set<GameUpdate> mockUpdates;
+    GameSetupState state;
 
     @BeforeEach
     void setUp() {
+
         leaderCards = TestUtils.generateSetOfMockWithID(LeaderCard.class, 15);
 
         Map<Integer, GameInfoConfig.GameSetup.InitialPlayerResourcesAndFaithPoints> initialResources = new HashMap<>();
@@ -102,21 +98,12 @@ public class GameSetupStateTest {
             null
         );
 
-        mockUpdates = Set.of(
-            mock(GameUpdate.class),
-            mock(GameUpdate.class),
-            mock(GameUpdate.class),
-            mock(GameUpdate.class)
-        );
-
-        when(gameManager.getGameContext()).thenReturn(gameContext);
         when(gameContext.getPlayersTurnOrder()).thenReturn(playersInOrder);
         when(gameManager.getPlayers()).thenReturn(new HashSet<>(playersInOrder));
-        when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
         when(gameItemsManager.getAllItemsOfType(eq(LeaderCard.class))).thenReturn(leaderCards);
         when(gameManager.getGameRules()).thenReturn(gameRules);
-        lenient().when(gameManager.getGameHistory()).thenReturn(gameHistory);
-        lenient().when(gameManager.getAllGameUpdates()).thenReturn(mockUpdates);
+
+        state = new GameSetupState(gameManager);
 
     }
 
@@ -136,7 +123,6 @@ public class GameSetupStateTest {
     @Test
     void testInitialServerMessage() {
 
-        GameSetupState state = new GameSetupState(gameManager);
         Map<Player, InitialChoicesServerMessage> serverMessages = state.getInitialServerMessage();
         Set<LeaderCard> alreadyAssignedCard = new HashSet<>();
         for (Player player : serverMessages.keySet()) {
@@ -152,30 +138,159 @@ public class GameSetupStateTest {
             message.leaderCardsGivenToThePlayer.forEach(c -> assertFalse(alreadyAssignedCard.contains(c)));
             alreadyAssignedCard.addAll(message.leaderCardsGivenToThePlayer);
 
-            assertEquals(mockUpdates, message.gameUpdates);
+            verifyMessageContainsAllGameUpdates(message);
         }
+
+        verifyGameHistoryActionAdded(SetupStartedAction.class);
     }
 
     @Test
-    void testHandleInitialChoiceCR(){
+    void testHandleInitialChoiceCR() throws ResourceStorageRuleViolationException {
 
+        Map<Player, InitialChoicesServerMessage> initialMessagesFromServer = state.getInitialServerMessage();
+        InitialChoicesServerMessage messageForPlayer = initialMessagesFromServer.get(player2);
+
+        Set<LeaderCard> leaderCardsChosenForPlayer2 = new HashSet<>();
+        Iterator<LeaderCard> cardsThePlayerCanChooseFromIterator = messageForPlayer.leaderCardsGivenToThePlayer.iterator();
+        for(int i = 0; i < numberOfLeadersCardsThePlayerKeeps; i++)
+                leaderCardsChosenForPlayer2.add(cardsThePlayerCanChooseFromIterator.next());
+
+        Iterator<ResourceStorage> shelvesIter = shelvesForPlayers.get(player2).iterator();
+        ResourceStorage playerShelve1 = shelvesIter.next();
+        ResourceStorage playerShelve2 = shelvesIter.next();
+        Map<ResourceType, Integer> resourcesChosenForShelve1 = Map.of(
+            ResourceType.STONES, 2
+        );
+        Map<ResourceType, Integer> resourcesChosenForShelve2 = Map.of(
+            ResourceType.SHIELDS, 2,
+            ResourceType.COINS, 1
+        );
+
+        GameUpdate leaderCardUpdatePlayer1 = new LeaderCardsThePlayerOwnsUpdate(player1, new HashSet<>());
+        GameUpdate leaderCardUpdatePlayer2 = new LeaderCardsThePlayerOwnsUpdate(player2, new HashSet<>());
+        GameUpdate leaderCardUpdatePlayer3 = new LeaderCardsThePlayerOwnsUpdate(player3, new HashSet<>());
+        GameUpdate otherUpdate1 = new MarketUpdate(null, null);
+        GameUpdate otherUpdate2 = new FaithUpdate(player1, 0);
+        Set<GameUpdate> allTestGameUpdates = Set.of(
+            leaderCardUpdatePlayer1,
+            leaderCardUpdatePlayer2,
+            leaderCardUpdatePlayer3,
+            otherUpdate1,
+            otherUpdate2
+        );
+        when(gameManager.getAllGameUpdates()).thenReturn(allTestGameUpdates);
+
+
+        //Send valid request
+        Map<Player, ServerMessage> validRequestAnswerServerMessages = state.handleInitialChoiceCR(
+            new InitialChoicesClientRequest(
+                player2,
+                leaderCardsChosenForPlayer2,
+                Map.of(
+                    playerShelve1, resourcesChosenForShelve1,
+                    playerShelve2, resourcesChosenForShelve2
+                )
+            )
+        );
+
+        verify(playerContext2).setLeaderCards(eq(leaderCardsChosenForPlayer2));
+
+        verify(faithPath).move(player2, playerInitialFaithPoints.get(player2));
+
+        verify(playerShelve1).addResources(eq(resourcesChosenForShelve1));
+        verify(playerShelve2).addResources(eq(resourcesChosenForShelve2));
+
+        verifyGameHistoryActionAdded(SetupChoiceAction.class);
+
+        verifyThereIsAValidServerMessageForEveryPlayer(validRequestAnswerServerMessages);
+
+        Set<GameUpdate> gameUpdatesVisibleForPlayer1 = Set.of(
+            leaderCardUpdatePlayer1,
+            otherUpdate1,
+            otherUpdate2
+        );
+        Set<GameUpdate> gameUpdatesVisibleForPlayer2 = Set.of(
+            leaderCardUpdatePlayer2,
+            otherUpdate1,
+            otherUpdate2
+        );
+
+        assertEquals(gameUpdatesVisibleForPlayer1, ((GameUpdateServerMessage)validRequestAnswerServerMessages.get(player1)).gameUpdates);
+        assertEquals(gameUpdatesVisibleForPlayer2, ((GameUpdateServerMessage)validRequestAnswerServerMessages.get(player2)).gameUpdates);
+
+
+        //Send duplicated request
+        Map<Player, ServerMessage> duplicatedRequestAnswerServerMessages = state.handleInitialChoiceCR(
+            new InitialChoicesClientRequest(
+                player2,
+                leaderCardsChosenForPlayer2,
+                Map.of(
+                    playerShelve1, resourcesChosenForShelve1,
+                    playerShelve2, resourcesChosenForShelve2
+                )
+            )
+        );
+
+        verifyServerMessageIsAnswerForInvalidRequest(player2, duplicatedRequestAnswerServerMessages);
+
+
+        //Send request with invalid leader cards
+        Map<Player, ServerMessage> wrongLeaderCardRequestAnswerServerMessages = state.handleInitialChoiceCR(
+            new InitialChoicesClientRequest(
+                player1,
+                leaderCardsChosenForPlayer2,
+                Map.of()
+            )
+        );
+
+        verifyServerMessageIsAnswerForInvalidRequest(player1, wrongLeaderCardRequestAnswerServerMessages);
+
+    }
+
+
+    @Test
+    void testGetFinalServerMessage(){
         GameSetupState state = new GameSetupState(gameManager);
-        state.getInitialServerMessage();
-        Iterator<LeaderCard> iter = leaderCards.iterator();
+        assertEquals(playersInOrder.size(), state.getFinalServerMessage().size());
+    }
 
-        LeaderCard card1 = iter.next();
-        LeaderCard card2 = iter.next();
-        Set<LeaderCard> leaderCardsChosenByThePlayer = Set.of(card1, card2);
+    @Test
+    void testStateLifecycle() throws ResourceStorageRuleViolationException {
 
-        Map<ResourceStorage, Map<ResourceType, Integer>> chosenResourcesToAddByStorage;
+        assertFalse(state.isStateDone());
 
-        Map<ResourceType, Integer> resources = new HashMap<>();
-        //for (Player player : serverMessages.keySet()) {
+        Map<Player, InitialChoicesServerMessage> initialMessagesFromServer = state.getInitialServerMessage();
+        assertFalse(state.isStateDone());
 
-           // InitialChoicesServerMessage message = serverMessages.get(player);
+        //send an InitialChoicesClientRequest for each player
+        Iterator<Player> playerIterator = initialMessagesFromServer.keySet().iterator();
+        while(playerIterator.hasNext()) {
 
-           // assertEquals(mockUpdates, message.gameUpdates);
-        //}
+            Player player = playerIterator.next();
+            InitialChoicesServerMessage messageForPlayer = initialMessagesFromServer.get(player);
+            Set<LeaderCard> leaderCardsChosen = new HashSet<>();
+            Iterator<LeaderCard> cardsThePlayerCanChooseFromIterator = messageForPlayer.leaderCardsGivenToThePlayer.iterator();
+            for(int i = 0; i < numberOfLeadersCardsThePlayerKeeps; i++)
+                leaderCardsChosen.add(cardsThePlayerCanChooseFromIterator.next());
+            ResourceStorage playerShelve1 = shelvesForPlayers.get(player).iterator().next();
+            state.handleInitialChoiceCR(
+                new InitialChoicesClientRequest(
+                    player,
+                    leaderCardsChosen,
+                    Map.of(
+                        playerShelve1,
+                        Map.of(ResourceType.STONES, messageForPlayer.numberOfStarResources)
+                    )
+                )
+            );
+
+            if(playerIterator.hasNext())
+                assertFalse(state.isStateDone());
+            else
+                assertTrue(state.isStateDone()); //after the last player has sent the request isStateDone should be true
+        }
+
+        assertNotNull(state.getNextState());
     }
 
 }
