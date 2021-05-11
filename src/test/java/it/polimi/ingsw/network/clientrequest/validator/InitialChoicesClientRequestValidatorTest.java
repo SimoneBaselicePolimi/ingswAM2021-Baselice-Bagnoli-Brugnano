@@ -22,73 +22,46 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 
 class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoicesClientRequest, InitialChoicesClientRequestValidator>{
 
-    @Mock
-    ResourceStorage storage1;
+    InitialChoicesClientRequestValidator validator = getValidator();
 
     @Mock
-    ResourceStorage storage2;
-
-
-    Map<ResourceStorage, Map<ResourceType, Integer>> twoResourcesChosen = new HashMap<>();
-    Map<ResourceStorage, Map<ResourceType, Integer>> fiveResourcesChosen = new HashMap<>();
-    Map<ResourceStorage, Map<ResourceType, Integer>> invalidStorageWithOneResourceChosen = new HashMap<>();
-
-    Set<LeaderCard> leaderCardsGivenToThePlayer;
-
-    Iterator<LeaderCard> iter;
-    LeaderCard rightCard1;
-    LeaderCard rightCard2;
+    ResourceStorage validShelve;
 
     @Mock
-    LeaderCard differentCard;
+    ResourceStorage validShelveWithViolationRule;
+
+    @Mock
+    ResourceStorage invalidStorage;
 
     int numberOfLeadersCardsGivenToThePlayer = 4;
     int numberOfLeadersCardsThePlayerKeeps = 2;
 
-    InitialChoicesClientRequestValidator validator = new InitialChoicesClientRequestValidator();
+    Map<Player, Integer> playerInitialFaithPoints;
+    Map<Player, Integer> playerInitialStarResources;
 
     GameRules gameRules;
 
-    Map<Player, Integer> playerInitialFaithPoints = Map.of(
-        player1, 0,
-        player2, 1
-    );
-
-    Map<Player, Integer> playerInitialStarResources = Map.of(
-        player1, 1,
-        player2, 5
-    );
-
-    int maxNumberOfPlayers = 3;
-
     @BeforeEach
-    void setUp() {
+    void setUp(){
 
-        leaderCardsGivenToThePlayer = TestUtils.generateSetOfMockWithID(LeaderCard.class, 4);
-        iter = leaderCardsGivenToThePlayer.iterator();
-        rightCard1 = iter.next();
-        rightCard2 = iter.next();
+        playerInitialFaithPoints = Map.of(player, 0);
+        playerInitialStarResources = Map.of(player, 3);
 
         Map<Integer, GameInfoConfig.GameSetup.InitialPlayerResourcesAndFaithPoints> initialResources = new HashMap<>();
-        for (int i = 0; i < playersInOrder.size(); i++){
-            Player player = playersInOrder.get(i);
-            initialResources.put(
-                i + 1,
-                new GameInfoConfig.GameSetup.InitialPlayerResourcesAndFaithPoints(
-                    playerInitialStarResources.get(player),
-                    playerInitialFaithPoints.get(player))
-            );
-        }
+        initialResources.put(1, new GameInfoConfig.GameSetup.InitialPlayerResourcesAndFaithPoints(
+            playerInitialStarResources.get(player),
+            playerInitialFaithPoints.get(player)
+        ));
 
         gameRules = new GameRules(
             new GameInfoConfig(
-                maxNumberOfPlayers,
+                1,
                 false,
                 new GameInfoConfig.GameSetup(
                     numberOfLeadersCardsGivenToThePlayer,
@@ -107,19 +80,84 @@ class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoi
             null
         );
 
-        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
         lenient().when(gameManager.getGameRules()).thenReturn(gameRules);
-        lenient().when(gameContext.getPlayerContext(player1)).thenReturn(playerContext);
-        lenient().when(gameContext.getPlayerContext(player2)).thenReturn(playerContext);
-        lenient().when(gameContext.getPlayersTurnOrder()).thenReturn(playersInOrder);
-        lenient().when(gameManager.getPlayers()).thenReturn(new HashSet<>(playersInOrder));
-        lenient().when(storage1.canAddResources(any())).thenReturn(false);
-        lenient().when(storage2.canAddResources(any())).thenReturn(true);
-        lenient().when(leaderCardsGivenToThePlayer.contains(differentCard)).thenReturn(false);
+        lenient().when(gameContext.getPlayersTurnOrder()).thenReturn(List.of(player));
+        lenient().when(playerContext.getShelves()).thenReturn(Set.of(validShelve, validShelveWithViolationRule));
+        lenient().when(validShelve.canAddResources(any())).thenReturn(true);
+        lenient().when(invalidStorage.canAddResources(any())).thenReturn(false);
+        lenient().when(validShelveWithViolationRule.canAddResources(any())).thenReturn(false);
+    }
 
-        twoResourcesChosen.put(storage2, Map.of(ResourceType.STONES, 1, ResourceType.SERVANTS, 1));
-        fiveResourcesChosen.put(storage2, Map.of(ResourceType.SHIELDS, 3, ResourceType.COINS, 2));
-        invalidStorageWithOneResourceChosen.put(storage1, Map.of(ResourceType.COINS, 1));
+    @Test
+    void testNumberOfStarResources(){
+
+        InitialChoicesClientRequest request1 = new InitialChoicesClientRequest(
+                player,
+                Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+                Map.of(validShelve, Map.of(ResourceType.COINS, 3, ResourceType.STONES, 1))
+        );
+
+        InitialChoicesClientRequest request2 = new InitialChoicesClientRequest(
+            player,
+            Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+            Map.of(validShelve, Map.of(ResourceType.SHIELDS, 1))
+        );
+
+        assertTrue(validator.getErrorMessage(request1, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(request2, gameManager).isPresent());
+    }
+
+    @Test
+    void testValidStorages(){
+
+        InitialChoicesClientRequest request1 = new InitialChoicesClientRequest(
+            player,
+            Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+            Map.of(invalidStorage, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
+        );
+
+        InitialChoicesClientRequest request2 = new InitialChoicesClientRequest(
+            player,
+            Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+            Map.of(validShelveWithViolationRule, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
+        );
+
+        InitialChoicesClientRequest request3 = new InitialChoicesClientRequest(
+            player,
+            Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+            Map.of(validShelve, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
+        );
+
+        assertTrue(validator.getErrorMessage(request1, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(request2, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(request3, gameManager).isEmpty());
+    }
+
+    @Test
+    void testNumberOfCards(){
+
+        InitialChoicesClientRequest request1 = new InitialChoicesClientRequest(
+            player,
+            Set.of(mock(LeaderCard.class)),
+            Map.of(invalidStorage, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
+        );
+
+        InitialChoicesClientRequest request2 = new InitialChoicesClientRequest(
+            player,
+            Set.of(mock(LeaderCard.class), mock(LeaderCard.class), mock(LeaderCard.class)),
+            Map.of(invalidStorage, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
+        );
+
+        InitialChoicesClientRequest request3 = new InitialChoicesClientRequest(
+            player,
+            new HashSet<>(),
+            Map.of(invalidStorage, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
+        );
+
+        assertTrue(validator.getErrorMessage(request1, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(request2, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(request3, gameManager).isPresent());
+
     }
 
     @Override
@@ -134,59 +172,5 @@ class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoi
     @Override
     Class<InitialChoicesClientRequestValidator> getValidatorType() {
         return InitialChoicesClientRequestValidator.class;
-    }
-
-
-    @Test
-    void testGetError(){
-
-        assertTrue(validator.getErrorMessage(new InitialChoicesClientRequest(
-                player1,
-                Set.of(rightCard1, rightCard2),
-                twoResourcesChosen
-            ), gameManager
-        ).isPresent());
-
-        assertTrue(validator.getErrorMessage(new InitialChoicesClientRequest(
-                player2,
-                Set.of(rightCard1, rightCard2),
-                fiveResourcesChosen
-            ), gameManager
-        ).isEmpty());
-
-        assertTrue(validator.getErrorMessage(new InitialChoicesClientRequest(
-                player2,
-                Set.of(rightCard1, rightCard2),
-                twoResourcesChosen
-            ), gameManager
-        ).isPresent());
-
-        assertTrue(validator.getErrorMessage(new InitialChoicesClientRequest(
-                player1,
-                Set.of(rightCard1, rightCard2),
-                invalidStorageWithOneResourceChosen
-            ), gameManager
-        ).isPresent());
-
-        assertTrue(validator.getErrorMessage(new InitialChoicesClientRequest(
-                player2,
-                Set.of(rightCard1),
-                fiveResourcesChosen
-            ), gameManager
-        ).isPresent());
-
-        assertTrue(validator.getErrorMessage(new InitialChoicesClientRequest(
-                player2,
-                Set.of(differentCard, rightCard2),
-                fiveResourcesChosen
-            ), gameManager
-        ).isPresent());
-
-        assertTrue(validator.getErrorMessage(new InitialChoicesClientRequest(
-                player2,
-                Set.of(differentCard, rightCard1),
-                twoResourcesChosen
-            ), gameManager
-        ).isPresent());
     }
 }

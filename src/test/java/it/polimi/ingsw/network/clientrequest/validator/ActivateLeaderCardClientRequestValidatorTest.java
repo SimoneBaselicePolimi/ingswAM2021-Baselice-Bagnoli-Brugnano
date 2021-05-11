@@ -51,4 +51,21 @@ class ActivateLeaderCardClientRequestValidatorTest
             leaderCard
         );
     }
+
+    @Test
+    void testThrowsErrorIfLeaderCardDoestNotSatisfyRequirements() {
+
+        LeaderCard l1 = mock(LeaderCard.class);
+        when(l1.getState()).thenReturn(LeaderCardState.HIDDEN);
+        when(l1.areRequirementsSatisfied(any())).thenReturn(true);
+
+        LeaderCard l2 = mock(LeaderCard.class);
+        when(l2.getState()).thenReturn(LeaderCardState.HIDDEN);
+        when(l2.areRequirementsSatisfied(any())).thenReturn(false);
+
+        when(playerContext.getLeaderCards()).thenReturn(Set.of(l1, l2));
+
+        assertValidatorDoesNotThrowError(createLeaderCardActionRequest(l1));
+        assertValidatorThrowsError(createLeaderCardActionRequest(l2));
+    }
 }

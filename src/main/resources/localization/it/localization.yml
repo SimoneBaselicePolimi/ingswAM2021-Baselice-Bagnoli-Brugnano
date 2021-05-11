@@ -24,8 +24,8 @@ gameHistory:
     lastPositionReached: Il giocatore %s ha raggiunto l'ultima casella del tracciato fede
 
  leaderCard:
-   activateCard: Il giocatore %s ha attivato la carte leader %s
-   discardCard: Il giocatore %s ha scartato la carte leader %s
+   activateCard: Il giocatore %s ha attivato la carta leader %s
+   discardCard: Il giocatore %s ha scartato la carta leader %s
 
  gameState:
     setup:

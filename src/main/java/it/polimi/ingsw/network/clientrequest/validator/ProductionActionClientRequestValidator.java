@@ -79,3 +79,15 @@ public class ProductionActionClientRequestValidator extends ClientRequestValidat
         return Optional.empty();
     }
 }
+
+//rightProduction1
+//- Cost : 0
+//- StarResourceCost : 2
+//- StarResourceReward : 3
+
+//rightProduction2
+//- Cost : 1 COINS, 2 SHIELDS
+//- StarResourceCost : 0
+//- StarResourceReward : 0
+
+//The player has 1 COINS, 5 SHIELDS, 3 STONES

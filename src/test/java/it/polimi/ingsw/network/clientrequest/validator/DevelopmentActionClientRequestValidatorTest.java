@@ -7,6 +7,7 @@ import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -35,91 +36,95 @@ class DevelopmentActionClientRequestValidatorTest extends ValidatorTest<Developm
     @Mock
     DevelopmentCard notAvailableDevelopmentCard;
 
-    @Mock
-    ShuffledCardDeck deck;
-
     List<DevelopmentCard> availableDevelopmentCards;
-
-    Map<ResourceType, Integer> resources = Map.of(
-        ResourceType.COINS, 3,
-        ResourceType.SERVANTS, 2
-    );
 
     Iterator<DevelopmentCard> iter;
     DevelopmentCard rightCardThirdLevel;
     DevelopmentCard rightCardSecondLevel;
     DevelopmentCard rightCardFirstLevel;
-    DevelopmentCard notEnoughResourcesCard;
 
     @BeforeEach
     void setUp(){
 
-        availableDevelopmentCards = TestUtils.generateListOfMockWithID(DevelopmentCard.class, 4);
+        availableDevelopmentCards = TestUtils.generateListOfMockWithID(DevelopmentCard.class, 8);
 
         iter = availableDevelopmentCards.iterator();
         rightCardThirdLevel = iter.next();
         rightCardSecondLevel = iter.next();
         rightCardFirstLevel = iter.next();
-        notEnoughResourcesCard = iter.next();
 
+        //The player has 3 COINS, 2 SERVANTS
+        // Third Level Card Cost : 3 COINS, 1 STONES (not enough resources)
+        // Second Level Card Cost : 1 COINS, 2 SERVANTS (enough resources)
 
         lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(table);
         lenient().when(table.getAvailableCards()).thenReturn(availableDevelopmentCards);
-        lenient().when(playerContext.getAllResources()).thenReturn(resources);
-        lenient().when(rightCardFirstLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
-        lenient().when(rightCardSecondLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
-        lenient().when(rightCardThirdLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 2));
-        lenient().when(notEnoughResourcesCard.getPurchaseCost()).thenReturn(Map.of(ResourceType.SERVANTS, 4));
+
+
+        lenient().when(playerContext.getAllResources()).thenReturn(Map.of(ResourceType.COINS, 3, ResourceType.SERVANTS, 2));
+
+        lenient().when(rightCardThirdLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 3, ResourceType.STONES, 1));
+        lenient().when(rightCardSecondLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 1, ResourceType.SERVANTS, 2));
+
+        lenient().when(playerContext.canAddDevelopmentCard(rightCardFirstLevel, 1)).thenReturn(false);
+        lenient().when(playerContext.canAddDevelopmentCard(rightCardSecondLevel, 1)).thenReturn(true);
+        lenient().when(playerContext.canAddDevelopmentCard(rightCardThirdLevel, 1)).thenReturn(true);
+
         lenient().when(rightCardSecondLevel.getLevel()).thenReturn(DevelopmentCardLevel.SECOND_LEVEL);
         lenient().when(rightCardFirstLevel.getLevel()).thenReturn(DevelopmentCardLevel.FIRST_LEVEL);
         lenient().when(rightCardThirdLevel.getLevel()).thenReturn(DevelopmentCardLevel.THIRD_LEVEL);
-
     }
 
     @Test
-    void
+    void testNotAvailableCard(){
+
+        DevelopmentActionClientRequest request = new DevelopmentActionClientRequest (
+            player,
+            mock(DevelopmentCard.class),
+            1
+        );
+
+        assertTrue(validator.getErrorMessage(request, gameManager).isPresent());
+    }
 
     @Test
-    void testGetError(){
-        int deckNumber = 1;
+    void testNotEnoughResources(){
 
-        DevelopmentActionClientRequest firstLevelCardRequest = new DevelopmentActionClientRequest (
-            player,
-            rightCardFirstLevel,
-            deckNumber
-        );
-
-        DevelopmentActionClientRequest differentCardRequest = new DevelopmentActionClientRequest (
-            player,
-            notAvailableDevelopmentCard,
-            deckNumber
-        );
-
-        DevelopmentActionClientRequest notEnoughResourcesCardRequest = new DevelopmentActionClientRequest (
-            player,
-            notEnoughResourcesCard,
-            deckNumber
-        );
-
-        DevelopmentActionClientRequest thirdLevelCardRequest = new DevelopmentActionClientRequest (
+        DevelopmentActionClientRequest request1 = new DevelopmentActionClientRequest (
             player,
             rightCardThirdLevel,
-            deckNumber
+            1
         );
 
-        DevelopmentActionClientRequest secondLevelCardRequest = new DevelopmentActionClientRequest (
+        DevelopmentActionClientRequest request2 = new DevelopmentActionClientRequest (
             player,
             rightCardSecondLevel,
-            deckNumber
+            1
         );
 
-        assertTrue(validator.getErrorMessage(firstLevelCardRequest, gameManager).isEmpty());
-        assertTrue(validator.getErrorMessage(firstLevelCardRequest, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(differentCardRequest, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(notEnoughResourcesCardRequest, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(thirdLevelCardRequest, gameManager).isPresent());
-        assertTrue(validator.getErrorMessage(secondLevelCardRequest, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(request1, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(request2, gameManager).isEmpty());
     }
+
+    @Test
+    void testWrongDeckNumber(){
+
+        DevelopmentActionClientRequest request1 = new DevelopmentActionClientRequest (
+            player,
+            rightCardFirstLevel,
+            1
+        );
+
+        DevelopmentActionClientRequest request2 = new DevelopmentActionClientRequest (
+            player,
+            rightCardSecondLevel,
+            1
+        );
+
+        assertTrue(validator.getErrorMessage(request1, gameManager).isPresent());
+        assertTrue(validator.getErrorMessage(request2, gameManager).isEmpty());
+    }
+
 
     @Override
     DevelopmentActionClientRequest createClientRequestToValidate() {
