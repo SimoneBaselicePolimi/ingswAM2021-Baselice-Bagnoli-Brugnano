@@ -16,7 +16,7 @@ public class MarketActionFetchRowClientRequestValidator extends ClientRequestVal
     ) {
 
         Market market = gameManager.getGameContext().getMarket();
-        if (requestToValidate.row < 0 || requestToValidate.row > market.getNumOfRows())
+        if (requestToValidate.row < 0 || requestToValidate.row >= market.getNumOfRows())
             return createInvalidRequestServerMessage(
                 "The row indicated by the player is not a valid row of the market matrix"
             );

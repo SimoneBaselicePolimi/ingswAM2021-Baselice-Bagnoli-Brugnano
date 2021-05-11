@@ -12,6 +12,14 @@ import java.util.Optional;
 
 public class ActivateLeaderCardClientRequestValidator extends ClientRequestValidator<ActivateLeaderCardClientRequest> {
 
+    /**
+     * Method that sends an error message if:
+     * - The leader card the player wants to activate is not from the group of card he holds in his hand
+     * - The player does not meet the requirements for activating the leader card
+     * @param requestToValidate, see {@link ActivateLeaderCardClientRequest}
+     * @param gameManager GameManager, see {@link GameManager}
+     * @return Optional<InvalidRequestServerMessage>, see {@link InvalidRequestServerMessage}
+     */
     @Override
     public Optional<InvalidRequestServerMessage> getErrorMessage(
         ActivateLeaderCardClientRequest requestToValidate,
@@ -21,26 +29,26 @@ public class ActivateLeaderCardClientRequestValidator extends ClientRequestValid
         Player activePlayer = gameManager.getGameContext().getActivePlayer();
 
         //check if the leader card the player wants to activate is from the group of card he holds in his hand
-        for (LeaderCard leaderCard : requestToValidate.leaderCardsThePlayerWantsToActivate){
-            if (!gameManager.getGameContext().getPlayerContext(activePlayer).getLeaderCards().contains(leaderCard))
-                return createInvalidRequestServerMessage(
-                    "The leader card cannot be activate: the player does not own this card"
-                );
-            if (!leaderCard.getState().equals(LeaderCardState.HIDDEN))
-                return createInvalidRequestServerMessage(
-                    "The leader card cannot be activate: " +
-                        "the player no longer has the card in his hand (the state is not HIDDEN)"
-                );
-        }
+        if (!gameManager.getGameContext().getPlayerContext(activePlayer).getLeaderCards()
+            .contains(requestToValidate.leaderCardThePlayerWantsToActivate))
+            return createInvalidRequestServerMessage(
+                "The leader card cannot be activate: the player does not own this card"
+            );
+
+        if (!requestToValidate.leaderCardThePlayerWantsToActivate.getState().equals(LeaderCardState.HIDDEN))
+            return createInvalidRequestServerMessage(
+                "The leader card cannot be activate: " +
+                    "the player no longer has the card in his hand (the state is not HIDDEN)"
+            );
 
         //check if the player meets the requirements for activating the leader card
-        for (LeaderCard leaderCard : requestToValidate.leaderCardsThePlayerWantsToActivate){
-            if(!leaderCard.areRequirementsSatisfied(gameManager.getGameContext().getPlayerContext(activePlayer)))
+        if(!requestToValidate.leaderCardThePlayerWantsToActivate
+            .areRequirementsSatisfied(gameManager.getGameContext().getPlayerContext(activePlayer)))
                 return createInvalidRequestServerMessage(
                     "The leader card cannot be activate: " +
                         "the player does not meet the requirements to activate the card"
                 );
-        }
+
         return Optional.empty();
     }
 

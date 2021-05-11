@@ -4,19 +4,16 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
-public class LeaderCardUpdate extends GameUpdate{
+public class LeaderCardStateUpdate extends GameUpdate{
 
 	@SerializeIdOnly
 	public final LeaderCard leaderCard;
 
 	public final LeaderCardState leaderCardState;
 
-	public final boolean canBeActivated;
-
-	public LeaderCardUpdate(LeaderCard leaderCard, LeaderCardState leaderCardState, boolean canBeActivated) {
+	public LeaderCardStateUpdate(LeaderCard leaderCard, LeaderCardState leaderCardState) {
 		this.leaderCard = leaderCard;
 		this.leaderCardState = leaderCardState;
-		this.canBeActivated = canBeActivated;
 	}
 }
 

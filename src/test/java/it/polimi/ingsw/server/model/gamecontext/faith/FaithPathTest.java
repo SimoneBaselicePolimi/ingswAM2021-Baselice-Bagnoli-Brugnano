@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,6 +26,9 @@ class FaithPathTest {
     );
     FaithPath faithPath;
 
+    @Mock
+    GameHistory gameHistory;
+
     /**
      * Faith Path initialization.
      */
@@ -37,7 +42,8 @@ class FaithPathTest {
                         new VaticanReportSection(15, 19, 300)
                 ),
                 new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19},
-                players
+                players,
+                gameHistory
         );
     }
 
@@ -51,22 +57,22 @@ class FaithPathTest {
     void testWrongConstructorParams() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2}, players),
+                () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2}, players, gameHistory),
                 "The faith path has length 4 but the size of victoryPointsByPosition is only 2 "
         );
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2,3,4}, null),
+                () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2,3,4}, null, gameHistory),
                 "Initializing a FaithPath with 0 players should not be allowed"
         );
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2,3,4}, new HashSet<>()),
+                () -> new FaithPath(4, new ArrayList<>(), new int[]{1,2,3,4}, new HashSet<>(), gameHistory),
                 "Initializing a FaithPath with 0 players should not be allowed"
         );
 
         assertDoesNotThrow(
-                () -> new FaithPath(4, null, new int[]{1,2,3,4}, players)
+                () -> new FaithPath(4, null, new int[]{1,2,3,4}, players, gameHistory)
         );
     }
 
@@ -77,7 +83,7 @@ class FaithPathTest {
         @Test
     void testMove() {
 
-        FaithPath basicFaithPath = new FaithPath(10, new ArrayList<>(), new int[]{0,0,0,0,0,0,0,0,0,0}, players);
+        FaithPath basicFaithPath = new FaithPath(10, new ArrayList<>(), new int[]{0,0,0,0,0,0,0,0,0,0}, players, gameHistory);
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(player1));
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(player2));
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(player3));
@@ -108,7 +114,7 @@ class FaithPathTest {
      */
     @Test
     void testLastPositionReached() {
-        FaithPath basicFaithPath = new FaithPath(10, new ArrayList<>(), new int[]{0,0,0,0,0,0,0,0,0,0}, players);
+        FaithPath basicFaithPath = new FaithPath(10, new ArrayList<>(), new int[]{0,0,0,0,0,0,0,0,0,0}, players, gameHistory);
         assertFalse(basicFaithPath.lastPositionHasBeenReached());
 
         basicFaithPath.move(player1, 2);

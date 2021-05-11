@@ -13,7 +13,7 @@ public class PostTurnFinalAction extends GameAction{
     @Override
     public String getActionMessage() {
         return Localization.getLocalization().getString(
-            "postTurn.finalMessage",
+            "gameHistory.gameState.postTurn.finalMessage",
             player.getName()
         );
     }

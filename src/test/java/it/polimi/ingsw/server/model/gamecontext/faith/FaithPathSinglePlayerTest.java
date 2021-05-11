@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,9 @@ class FaithPathSinglePlayerTest {
     Player singlePlayer = new Player("player1");
 
     FaithPathSinglePlayer faithPath;
+
+    @Mock
+    GameHistory gameHistory;
 
     /**
      * Faith Path initialization.
@@ -29,7 +34,8 @@ class FaithPathSinglePlayerTest {
                         new VaticanReportSection(15, 19, 300)
                 ),
                 new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19},
-                singlePlayer
+                singlePlayer,
+                gameHistory
         );
     }
 
@@ -42,7 +48,7 @@ class FaithPathSinglePlayerTest {
     void testMove() {
 
         FaithPathSinglePlayer basicFaithPath = new FaithPathSinglePlayer(
-                10, new ArrayList<>(), new int[]{0,0,0,0,0,0,0,0,0,0}, singlePlayer);
+                10, new ArrayList<>(), new int[]{0,0,0,0,0,0,0,0,0,0}, singlePlayer, gameHistory);
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(singlePlayer));
         assertEquals(0, basicFaithPath.getBlackCrossFaithPosition());
 

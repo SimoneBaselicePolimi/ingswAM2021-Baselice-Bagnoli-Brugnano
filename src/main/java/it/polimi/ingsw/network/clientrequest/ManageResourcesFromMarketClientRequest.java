@@ -17,14 +17,17 @@ public class ManageResourcesFromMarketClientRequest extends ClientRequest {
 
     public final Map<ResourceStorage, Map<ResourceType, Integer>> starResourcesChosenToAddByStorage;
 
+    public final Map<ResourceType, Integer> resourcesLeftInTemporaryStorage;
+
     public ManageResourcesFromMarketClientRequest(
         Player player, Map<ResourceStorage,
         Map<ResourceType, Integer>> resourcesToAddByStorage,
-        Map<ResourceStorage, Map<ResourceType, Integer>> starResourcesChosenToAddByStorage
-    ) {
+        Map<ResourceStorage, Map<ResourceType, Integer>> starResourcesChosenToAddByStorage,
+        Map<ResourceType, Integer> resourcesLeftInTemporaryStorage) {
         super(player);
         this.resourcesToAddByStorage = resourcesToAddByStorage;
         this.starResourcesChosenToAddByStorage = starResourcesChosenToAddByStorage;
+        this.resourcesLeftInTemporaryStorage = resourcesLeftInTemporaryStorage;
     }
 
     public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException {

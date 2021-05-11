@@ -1,0 +1,25 @@
+package it.polimi.ingsw.server.model.gamehistory;
+
+import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.localization.LocalizationUtils;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gameitems.MarbleColour;
+
+public class ObtainedMarblesMarketAction extends GameAction {
+    private final Player player;
+    private final MarbleColour [] marbleColours;
+
+    public ObtainedMarblesMarketAction(Player player, MarbleColour[] marbleColours) {
+        this.player = player;
+        this.marbleColours = marbleColours;
+    }
+
+    @Override
+    public String getActionMessage() {
+        return Localization.getLocalization().getString(
+            "gameState.mainTurn.obtainedMarblesMarketAction",
+            player,
+            marbleColours
+        );
+    }
+}

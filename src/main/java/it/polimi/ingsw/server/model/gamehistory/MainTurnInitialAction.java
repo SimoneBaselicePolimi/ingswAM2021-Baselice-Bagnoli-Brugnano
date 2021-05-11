@@ -13,7 +13,7 @@ public class MainTurnInitialAction extends GameAction{
     @Override
     public String getActionMessage() {
         return Localization.getLocalization().getString(
-            "mainTurn.initialMessage",
+            "gameHistory.gameState.mainTurn.initialMessage",
             player.getName()
         );
     }

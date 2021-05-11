@@ -35,21 +35,39 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	 */
 	Random randGenerator;
 
+	/**
+	 * Number of leader cards given to the players at the start of the game
+	 */
 	final int numberOfLeadersCardsGivenToThePlayer;
 
+	/**
+	 * Number of leader cards the player must hold in his hand
+	 */
 	final int numberOfLeadersCardsThePlayerKeeps;
 
+	/**
+	 * Set of all present leader cards of the game
+	 */
 	final Set<LeaderCard> allLeaderCards;
 
 	/**
-	 * map containing the leader cards given to each player at the start of the game.
+	 * Map containing the leader cards given to each player at the start of the game.
 	 */
 	Map <Player, Set<LeaderCard>> leaderCardsGivenToThePlayers = new HashMap<>();
 
+	/**
+	 * Number of star resources given to the players at the start of the game
+	 */
 	Map<Player, Integer> numOfStarResourcesGivenToThePlayers = new HashMap<>();
 
+	/**
+	 * Number of faith points given to the players at the start of the game
+	 */
 	Map<Player, Integer> numOfFaithPointsGivenToThePlayers = new HashMap<>();
 
+	/**
+	 * Map showing players who have already sent their request
+	 */
 	Map<Player, Boolean> hasPlayerAlreadyAnswered = new HashMap<>();
 
 	/**
@@ -96,7 +114,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 		for (Player player : gameManager.getPlayers()){
 
 			Set<LeaderCard> leaderCardsGivenToThePlayer = new HashSet<>();
-			for (int i = 0; i <numberOfLeadersCardsGivenToThePlayer; i++) {
+			for (int i = 0; i < numberOfLeadersCardsGivenToThePlayer; i++) {
 				int randNum = randGenerator.nextInt(listOfLeaderCards.size());
 				leaderCardsGivenToThePlayer.add(listOfLeaderCards.remove(randNum));
 			}
@@ -216,6 +234,9 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				)).collect(Collectors.toSet());
 			serverMessages.put(player, new GameUpdateServerMessage(gameUpdatesForPlayer));
 		}
+
+		hasPlayerAlreadyAnswered.put(request.player, true);
+
 		return serverMessages;
 	}
 

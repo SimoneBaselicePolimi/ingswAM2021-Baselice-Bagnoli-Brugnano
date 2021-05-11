@@ -1,6 +1,4 @@
-setup:
-  initialMessage: La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali.
-  choiceMessage: "Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono:\n%s."
+
 resources:
   coins:
     singular: moneta
@@ -14,18 +12,38 @@ resources:
   stones:
     singular: pietra
     plural: pietre
-  finalMessage: Il gioco è iniziato.
+  finalMessage: Il gioco è iniziato
 
-mainTurn:
-  initialMessage: Inizia il turno del giocatore %s.
-  finalMessage: Il giocatore %s ha compiuto la sua azione.
+gameHistory:
 
-postTurn:
-  initialMessage: Il giocatore %s ha eseguito l'azione principale. Può ora scegliere di compiere azioni leader prima di concludere il suo turno.
-  finalMessage: E' concluso il turno del giocatore %s.
+  faithPath:
+    playerMove:
+      singular: Il giocatore %s si è mosso sul tracciato fede di 1 passo
+      plural: Il giocatore %s si è mosso sul tracciato fede di %s passi
+    vaticanReport: E' avvenuto un rapporto in Vaticano
+    lastPositionReached: Il giocatore %s ha raggiunto l'ultima casella del tracciato fede
 
-manageResourcesFromMarketTurn:
-  initialMessage: Il giocatore %s deve scegliere dove posizionare le risorse prese dal mercato
-                  ed, evenutalmente, quali risorse ottenere dalle biglie bianche.
-  finalMessage: Le risorse prese al mercato sono ora presenti all'interno dei magazzini del giocatore %s. L'azione mercato è dunque conclusa.
+ leaderCard:
+   activateCard: Il giocatore %s ha attivato la carta leader %s
+   discardCard: Il giocatore %s ha scartato la carta leader %s
+
+ gameState:
+    setup:
+      initialMessage: La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali
+      choiceMessage: Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono:\n%s
+
+    mainTurn:
+      initialMessage: Inizia il turno del giocatore %s
+      developmentAction: Il giocatore %s ha comprato la carta sviluppo %s
+      obtainedMarblesMarketAction: Il giocatore %s ha ottenuto le seguenti biglie %s
+      productionAction: Il giocaorre %s ha attivato le produzioni %s
+
+    postTurn:
+      finalMessage: E' concluso il turno del giocatore %s
+
+    manageResourcesFromMarketTurn:
+      obtainedResourcesMarketMessage: Il giocatore %s ha ottenuto le seguenti risorse %s
+      discardedResourcesMarketAction:
+        singular: Il giocatore %s ha scartato 1 risorsa
+        plural: Il giocatore %s ha scartato %s risorse
 

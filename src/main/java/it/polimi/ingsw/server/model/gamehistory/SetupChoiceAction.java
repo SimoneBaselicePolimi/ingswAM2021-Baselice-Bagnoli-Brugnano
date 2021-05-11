@@ -19,7 +19,7 @@ public class SetupChoiceAction extends GameAction{
     @Override
     public String getActionMessage() {
         return Localization.getLocalization().getString(
-            "setup.initialMessage",
+            "gameHistory.gameState.setup.initialMessage",
             player.getName(),
             LocalizationUtils.getResourcesListAsString(initialResources)
         );

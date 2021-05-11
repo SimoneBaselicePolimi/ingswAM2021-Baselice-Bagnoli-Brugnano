@@ -13,6 +13,16 @@ import java.util.stream.Collectors;
 
 public class InitialChoicesClientRequestValidator extends ClientRequestValidator <InitialChoicesClientRequest> {
 
+    /**
+     * Method that sends an error message if:
+     * - The player is trying to add a number of resources different from the number of star resources assigned to him
+     * - The player is trying to add initial resources to some invalid storages (only shelves are valid)
+     * - The player is trying to add resources that violate a storage rule
+     * - The number of card chosen by the player is different from the number specified in the rules for this game
+     * @param requestToValidate specific request sent by the client
+     * @param gameManager GameManager, see {@link GameManager}
+     * @return Optional<InvalidRequestServerMessage>, see {@link InvalidRequestServerMessage}
+     */
     @Override
     public Optional<InvalidRequestServerMessage> getErrorMessage(
         InitialChoicesClientRequest requestToValidate,

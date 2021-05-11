@@ -15,23 +15,18 @@ import java.util.Set;
 public class DiscardLeaderCardClientRequest extends ClientRequest {
 
     @SerializeAsSetOfIds
-    public final Set<LeaderCard> leaderCardsThePlayerWantsToDiscard;
-
-    @SerializeAsSetOfIds
-    public final Set<LeaderCard> leaderCardsThePlayerWantsToActivate;
+    public final LeaderCard leaderCardThePlayerWantsToDiscard;
 
     public DiscardLeaderCardClientRequest(
         Player player,
-        Set<LeaderCard> leaderCardsThePlayerWantsToDiscard,
-        Set<LeaderCard> leaderCardsThePlayerWantsToActivate
+        LeaderCard leaderCardThePlayerWantsToDiscard
     ) {
         super(player);
-        this.leaderCardsThePlayerWantsToDiscard = leaderCardsThePlayerWantsToDiscard;
-        this.leaderCardsThePlayerWantsToActivate = leaderCardsThePlayerWantsToActivate;
+        this.leaderCardThePlayerWantsToDiscard = leaderCardThePlayerWantsToDiscard;
     }
 
     public Map<Player, ServerMessage> callHandler(GameState state) throws LeaderCardRequirementsNotSatisfiedException {
-		return(state.handleRequestLeaderAction(this));
+		return(state.handleRequestDiscardLeaderAction(this));
 	}
 
     @Override
