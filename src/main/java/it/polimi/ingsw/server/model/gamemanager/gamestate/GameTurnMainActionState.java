@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * This action can be performed as many times as the player wishes to do so (as long as it is possible to do so)
  * either before or after performing one of the three main actions mentioned above.
  */
-public class GameTurnMainActionState extends GameState {
+public class GameTurnMainActionState extends LeaderCardActionState {
 
 	//true after LeaderAction
 	private boolean mainActionDone = false;
@@ -57,7 +57,7 @@ public class GameTurnMainActionState extends GameState {
 	 * Method that sends to each player the initial message at the start of each turn.
 	 * @return a map specifying the initial message to be sent to each player
 	 */
-	public Map<Player, ServerMessage> getInitialServerMessage() {
+	public Map<Player, GameUpdateServerMessage> getInitialServerMessage() {
 
 		gameManager.getGameHistory().addAction(
 			new MainTurnInitialAction(activePlayer)
@@ -109,7 +109,6 @@ public class GameTurnMainActionState extends GameState {
 
 		MarbleColour[] marblesThePlayerGets = market.fetchMarbleColumn(request.column);
 		return doMarketAction(marblesThePlayerGets);
-
 	}
 
 	/**
@@ -197,6 +196,10 @@ public class GameTurnMainActionState extends GameState {
 					),
 					request.deckNumber
 			);
+
+		//remove required cost resources from the shelves of the player
+		gameContext.getPlayerContext(request.player)
+			.getShelves().remove(request.developmentCard.getPurchaseCost());
 
 		gameManager.getGameHistory().addAction(
 			new DevelopmentAction(activePlayer, request.developmentCard)

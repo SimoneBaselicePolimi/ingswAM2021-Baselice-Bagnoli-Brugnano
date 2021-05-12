@@ -12,6 +12,13 @@ import it.polimi.ingsw.server.model.gamehistory.GameAction;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.MarbleColour;
+import it.polimi.ingsw.server.model.gameitems.Production;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
@@ -23,9 +30,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -54,6 +59,8 @@ public class GameStateTest {
     @Mock
     DevelopmentCardsTable developmentCardsTable;
 
+    List<DevelopmentCard> availableDevelopmentCards;
+
     Player player1 = new Player("first");
     Player player2 = new Player("second");
     Player player3 = new Player("third");
@@ -73,13 +80,31 @@ public class GameStateTest {
 
     Set<GameUpdate> mockUpdates;
 
+    @Mock
+    MarbleColour marble1;
+
+    @Mock
+    MarbleColour marble2;
+
+    @Mock
+    MarbleColour marble3;
+
+    MarbleColour[] marblesInColumn = new MarbleColour[]{marble1, marble2, marble3};
+    MarbleColour[] marblesInRow = new MarbleColour[]{marble1, marble2};
+
+    Iterator<DevelopmentCard> iter;
+    DevelopmentCard developmentCard;
+
+    @Mock
+    PlayerOwnedDevelopmentCardDeck playerDeck;
+
     @BeforeEach
     void gameStateTestsSetUp() {
 
-        when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
+        lenient().when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
         lenient().when(gameManager.getGameHistory()).thenReturn(gameHistory);
 
-        when(gameManager.getGameContext()).thenReturn(gameContext);
+        lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
         lenient().when(gameContext.getMarket()).thenReturn(market);
         lenient().when(gameContext.getFaithPath()).thenReturn(faithPath);
         lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(developmentCardsTable);
@@ -87,6 +112,38 @@ public class GameStateTest {
         lenient().when(gameContext.getPlayerContext(eq(player1))).thenReturn(playerContext1);
         lenient().when(gameContext.getPlayerContext(eq(player2))).thenReturn(playerContext2);
         lenient().when(gameContext.getPlayerContext(eq(player3))).thenReturn(playerContext3);
+
+        //Matrix 2 x 3
+        lenient().when(market.getNumOfColumns()).thenReturn(3);
+        lenient().when(market.getNumOfRows()).thenReturn(3);
+
+        lenient().when(market.fetchMarbleColumn(2)).thenReturn(marblesInColumn);
+        lenient().when(market.fetchMarbleRow(1)).thenReturn(marblesInRow);
+
+        lenient().when(marble1.isSpecialMarble()).thenReturn(false);
+        lenient().when(marble2.isSpecialMarble()).thenReturn(true);
+        lenient().when(marble3.isSpecialMarble()).thenReturn(false);
+
+        lenient().when(marble1.getResourceType()).thenReturn(Optional.of(ResourceType.COINS));
+        lenient().when(marble2.getResourceType()).thenReturn(Optional.of(ResourceType.COINS));
+        lenient().when(marble3.getResourceType()).thenReturn(Optional.of(ResourceType.SERVANTS));
+
+        lenient().when(marble1.getFaithPoints()).thenReturn(0);
+        lenient().when(marble2.getFaithPoints()).thenReturn(1);
+        lenient().when(marble3.getFaithPoints()).thenReturn(2);
+
+        availableDevelopmentCards = TestUtils.generateListOfMockWithID(DevelopmentCard.class, 8);
+
+        lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(developmentCardsTable);
+        lenient().when(developmentCardsTable.getAvailableCards()).thenReturn(availableDevelopmentCards);
+
+        iter = availableDevelopmentCards.iterator();
+        developmentCard = iter.next();
+        lenient().when(developmentCard.getLevel()).thenReturn(DevelopmentCardLevel.THIRD_LEVEL);
+        lenient().when(developmentCard.getColour()).thenReturn(DevelopmentCardColour.YELLOW);
+
+        lenient().when(playerContext1.getDeck(1)).thenReturn(playerDeck);
+        lenient().when(playerDeck.isPushOnTopValid(developmentCard)).thenReturn(true);
 
         shelvesForPlayers = Map.of(
             player1, TestUtils.generateSetOfMockWithID(ResourceStorage.class, 3),
@@ -96,12 +153,20 @@ public class GameStateTest {
 
         lenient().when(playerContext1.getShelves()).thenReturn(shelvesForPlayers.get(player1));
         lenient().when(playerContext1.getResourceStoragesForResourcesFromMarket()).thenReturn(shelvesForPlayers.get(player1));
+        lenient().when()
 
         lenient().when(playerContext2.getShelves()).thenReturn(shelvesForPlayers.get(player2));
         lenient().when(playerContext2.getResourceStoragesForResourcesFromMarket()).thenReturn(shelvesForPlayers.get(player2));
 
         lenient().when(playerContext3.getShelves()).thenReturn(shelvesForPlayers.get(player3));
         lenient().when(playerContext3.getResourceStoragesForResourcesFromMarket()).thenReturn(shelvesForPlayers.get(player3));
+
+        lenient().when(playerContext1.getAllResources()).thenReturn(Map.of(
+            ResourceType.COINS, 10,
+            ResourceType.SHIELDS, 10,
+            ResourceType.STONES, 10,
+            ResourceType.SERVANTS, 10
+        ));
 
         mockUpdates = Set.of(
             mock(GameUpdate.class),

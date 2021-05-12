@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * In this turn, the active player can choose to perform leader actions to discard or activate his leader cards
  * and he can choose to end his turn.
  */
-public class GameTurnPostActionState extends GameState {
+public class GameTurnPostActionState extends LeaderCardActionState {
 
 	private boolean isTurnOver = false;
 	private final Player activePlayer;

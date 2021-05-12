@@ -33,9 +33,6 @@ class DevelopmentActionClientRequestValidatorTest extends ValidatorTest<Developm
     @Mock
     DevelopmentCardsTable table;
 
-    @Mock
-    DevelopmentCard notAvailableDevelopmentCard;
-
     List<DevelopmentCard> availableDevelopmentCards;
 
     Iterator<DevelopmentCard> iter;
@@ -59,7 +56,6 @@ class DevelopmentActionClientRequestValidatorTest extends ValidatorTest<Developm
 
         lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(table);
         lenient().when(table.getAvailableCards()).thenReturn(availableDevelopmentCards);
-
 
         lenient().when(playerContext.getAllResources()).thenReturn(Map.of(ResourceType.COINS, 3, ResourceType.SERVANTS, 2));
 
@@ -107,7 +103,7 @@ class DevelopmentActionClientRequestValidatorTest extends ValidatorTest<Developm
     }
 
     @Test
-    void testWrongDeckNumber(){
+    void testWrongLevelOfCardToAddOnDeck(){
 
         DevelopmentActionClientRequest request1 = new DevelopmentActionClientRequest (
             player,

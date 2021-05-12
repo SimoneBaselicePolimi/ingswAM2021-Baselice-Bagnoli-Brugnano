@@ -5,17 +5,11 @@ import it.polimi.ingsw.configfile.GameRules;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
 import it.polimi.ingsw.network.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.network.servermessage.InitialChoicesServerMessage;
-import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamehistory.GameAction;
-import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
 import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.notifier.gameupdate.FaithUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
@@ -27,9 +21,6 @@ import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
@@ -246,7 +237,6 @@ public class GameSetupStateTest extends GameStateTest {
         verifyServerMessageIsAnswerForInvalidRequest(player1, wrongLeaderCardRequestAnswerServerMessages);
 
     }
-
 
     @Test
     void testGetFinalServerMessage(){

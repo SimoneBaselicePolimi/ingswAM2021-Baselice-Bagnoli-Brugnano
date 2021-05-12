@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
+import java.rmi.ServerError;
 import java.util.Map;
 
 public abstract class LeaderCardActionState extends GameState {
@@ -56,7 +57,7 @@ public abstract class LeaderCardActionState extends GameState {
      * all card requirements have been satisfied
      */
     @Override
-    public Map<Player, GameUpdateServerMessage> handleRequestActivateLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+    public Map<Player, ServerMessage> handleRequestActivateLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 
         // activate leader card
        request.leaderCardThePlayerWantsToActivate.activateLeaderCard(gameManager.getGameContext().getPlayerContext(activePlayer));

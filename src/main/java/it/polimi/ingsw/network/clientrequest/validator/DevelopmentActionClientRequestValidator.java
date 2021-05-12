@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
@@ -24,6 +25,8 @@ public class DevelopmentActionClientRequestValidator extends ClientRequestValida
         DevelopmentActionClientRequest requestToValidate,
         GameManager gameManager
     ) {
+        PlayerContext playerContext = gameManager.getGameContext().getPlayerContext(requestToValidate.player);
+
         // check if the development card requested by the player is available
         if (!gameManager.getGameContext().getDevelopmentCardsTable().getAvailableCards().contains(
             requestToValidate.developmentCard
@@ -33,8 +36,7 @@ public class DevelopmentActionClientRequestValidator extends ClientRequestValida
             );
 
         //check if the player has the necessary resources to get the development card
-        Map<ResourceType, Integer> playerResources = gameManager.getGameContext()
-            .getPlayerContext(requestToValidate.player).getAllResources();
+        Map<ResourceType, Integer> playerResources = playerContext.getAllResources();
         for (ResourceType resourceType : requestToValidate.developmentCard.getPurchaseCost().keySet()) {
             if (!playerResources.keySet().contains(resourceType)
                 || playerResources.get(resourceType) < requestToValidate.developmentCard.getPurchaseCost().get(resourceType)
@@ -45,8 +47,7 @@ public class DevelopmentActionClientRequestValidator extends ClientRequestValida
         }
 
         //check if the player can add the development card on top of the deck specified by him
-        if (!gameManager.getGameContext().getPlayerContext(requestToValidate.player)
-            .canAddDevelopmentCard(requestToValidate.developmentCard, requestToValidate.deckNumber)
+        if (!playerContext.canAddDevelopmentCard(requestToValidate.developmentCard, requestToValidate.deckNumber)
         )
             return createInvalidRequestServerMessage(
                 "The player can not add the development card on the top of this deck"
