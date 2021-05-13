@@ -6,16 +6,15 @@ import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.notifier.GameContextNotifier;
 import it.polimi.ingsw.server.model.notifier.MarketNotifier;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public class ObservableGameContextBuilder extends GameContextBuilder{
@@ -23,9 +22,10 @@ public class ObservableGameContextBuilder extends GameContextBuilder{
 	public ObservableGameContextBuilder(
 		Set<Player> players,
 		GameRules gameRules,
-		GameItemsManager gameItemsManager
+		GameItemsManager gameItemsManager,
+		GameHistory gameHistory
 	) {
-		super(players, gameRules, gameItemsManager);
+		super(players, gameRules, gameItemsManager, gameHistory);
 	}
 
 	@Override

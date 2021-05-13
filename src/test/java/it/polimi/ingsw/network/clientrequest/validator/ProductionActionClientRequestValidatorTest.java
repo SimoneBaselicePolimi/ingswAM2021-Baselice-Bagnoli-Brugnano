@@ -1,27 +1,17 @@
 package it.polimi.ingsw.network.clientrequest.validator;
-import static org.junit.jupiter.api.Assertions.*;
-import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
+
 import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

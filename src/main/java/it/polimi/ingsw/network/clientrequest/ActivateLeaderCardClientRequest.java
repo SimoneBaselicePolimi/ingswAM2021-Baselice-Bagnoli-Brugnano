@@ -10,7 +10,6 @@ import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.utils.serialization.annotations.*;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Class representing the player's request to activate a leader card he holds in his hand
@@ -22,8 +21,8 @@ public class ActivateLeaderCardClientRequest extends ClientRequest {
 
     /**
      * ActivateLeaderCardClientRequest constructor
-     * @param player
-     * @param leaderCardThePlayerWantsToActivate
+     * @param player player who wants to activate a leader card
+     * @param leaderCardThePlayerWantsToActivate chosen leader card to be activated
      */
     public ActivateLeaderCardClientRequest(
         Player player,

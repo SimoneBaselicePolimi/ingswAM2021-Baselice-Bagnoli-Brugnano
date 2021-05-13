@@ -9,6 +9,7 @@ import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
@@ -34,6 +35,8 @@ public class GameContextBuilder {
 
 	protected final GameItemsManager gameItemsManager;
 
+	protected final GameHistory gameHistory;
+
 	protected int numProductionID = 0;
 	protected int numSpecialMarbleSubstitutionID = 0;
 	protected int numDevelopmentCardCostDiscountID = 0;
@@ -44,11 +47,13 @@ public class GameContextBuilder {
 	public GameContextBuilder(
 		Set<Player> players,
 		GameRules gameRules,
-		GameItemsManager gameItemsManager
+		GameItemsManager gameItemsManager,
+		GameHistory gameHistory
 	) {
 		this.players = players;
 		this.gameRules = gameRules;
 		this.gameItemsManager = gameItemsManager;
+		this.gameHistory = gameHistory;
 		this.randGenerator = new Random();
 	}
 
@@ -56,11 +61,13 @@ public class GameContextBuilder {
 		Set<Player> players,
 		GameRules gameRules,
 		GameItemsManager gameItemsManager,
+		GameHistory gameHistory,
 		Random randGenerator
 	) {
 		this.players = players;
 		this.gameRules = gameRules;
 		this.gameItemsManager = gameItemsManager;
+		this.gameHistory = gameHistory;
 		this.randGenerator = randGenerator;
 	}
 
@@ -303,7 +310,7 @@ public class GameContextBuilder {
 		List<VaticanReportSection> vaticanSections,
 		int[] victoryPointsByPosition
 	) {
-		return new FaithPath(faithPathLength, vaticanSections, victoryPointsByPosition, players);
+		return new FaithPath(faithPathLength, vaticanSections, victoryPointsByPosition, players, gameHistory);
 	}
 
 	protected FaithPath buildFaithPath() throws GameContextCreationError {

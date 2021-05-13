@@ -19,7 +19,13 @@ public abstract class ClientRequest {
 		this.player = player;
 	}
 
-	public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException, NotEnoughResourcesException { return null;}
+	public Map<Player, ServerMessage> callHandler(GameState state)
+		throws ResourceStorageRuleViolationException,
+		LeaderCardRequirementsNotSatisfiedException,
+		ForbiddenPushOnTopException,
+		NotEnoughResourcesException {
+		return null;
+	}
 
 	public abstract ClientRequestValidator getValidator();
 

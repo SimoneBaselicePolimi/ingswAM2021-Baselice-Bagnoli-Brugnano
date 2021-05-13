@@ -19,7 +19,6 @@ import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionState;
 import it.polimi.ingsw.server.model.notifier.GameHistoryNotifier;
 import it.polimi.ingsw.server.model.notifier.Notifier;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
@@ -57,7 +56,7 @@ public class GameManager {
 	/**
 	 * GameManager constructor
 	 * @param players players of the game
-	 * @param controller, see @link ServerController}
+	 * @param controller, see {@link ServerController}
 	 * @param gameRulesPath
 	 * @throws InvalidGameRules
 	 * @throws GameContextCreationError
@@ -76,7 +75,7 @@ public class GameManager {
 		this.gameHistory = new GameHistoryNotifier();
 		this.gameRules = readGameRulesFromFiles(gameRulesPath);
 
-		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(players, gameRules, gameItemsManager);
+		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(players, gameRules, gameItemsManager, gameHistory);
 		this.gameContext = contextBuilder.buildGameContext();
 
 		changeState();
@@ -138,7 +137,11 @@ public class GameManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) throws ResourceStorageRuleViolationException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException, NotEnoughResourcesException {
+	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request)
+		throws ResourceStorageRuleViolationException,
+		LeaderCardRequirementsNotSatisfiedException,
+		ForbiddenPushOnTopException,
+		NotEnoughResourcesException {
 		ClientRequestValidator validator = request.getValidator();
 		Optional<InvalidRequestServerMessage> error = validator.getErrorMessage(request, this);
 		if(error.isPresent())
@@ -177,7 +180,7 @@ public class GameManager {
 	}
 
 	/**
-	 * Method to change the current game state. If the game has not yet started, the method creates the new game.
+	 * Method to change the current game state. If the game has not started yet, the method creates the new game.
 	 */
 	private void changeState() {
 		if (currentState == null)

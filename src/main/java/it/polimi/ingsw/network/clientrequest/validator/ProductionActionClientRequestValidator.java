@@ -26,7 +26,7 @@ public class ProductionActionClientRequestValidator extends ClientRequestValidat
 
         Map<ResourceType, Integer> totalNonStarResourcesCost = new HashMap<>();
         int totalStarResourcesCost = 0;
-        int totalStarResourcesAwards = 0;
+        int totalStarResourcesRewards = 0;
 
         for (Production production : requestToValidate.productions) {
 
@@ -44,7 +44,7 @@ public class ProductionActionClientRequestValidator extends ClientRequestValidat
                 production.getProductionResourceCost()
             );
             totalStarResourcesCost += production.getProductionStarResourceCost();
-            totalStarResourcesAwards += production.getProductionStarResourceReward();
+            totalStarResourcesRewards += production.getProductionStarResourceReward();
 
         }
 
@@ -55,10 +55,10 @@ public class ProductionActionClientRequestValidator extends ClientRequestValidat
                     "to activate all the productions"
             );
 
-        //check if the number of star resources award given is what expected
-        if (totalStarResourcesAwards != requestToValidate.starResourceReward.values().stream().mapToInt(i -> i).sum())
+        //check if the number of star resources reward given is what expected
+        if (totalStarResourcesRewards != requestToValidate.starResourceReward.values().stream().mapToInt(i -> i).sum())
             return createInvalidRequestServerMessage(
-                "The number of star resources chosen as award is different from the number of " +
+                "The number of star resources chosen as reward is different from the number of " +
                     "star resources given by the activation of all the productions selected"
             );
 
@@ -79,15 +79,3 @@ public class ProductionActionClientRequestValidator extends ClientRequestValidat
         return Optional.empty();
     }
 }
-
-//rightProduction1
-//- Cost : 0
-//- StarResourceCost : 2
-//- StarResourceReward : 3
-
-//rightProduction2
-//- Cost : 1 COINS, 2 SHIELDS
-//- StarResourceCost : 0
-//- StarResourceReward : 0
-
-//The player has 1 COINS, 5 SHIELDS, 3 STONES

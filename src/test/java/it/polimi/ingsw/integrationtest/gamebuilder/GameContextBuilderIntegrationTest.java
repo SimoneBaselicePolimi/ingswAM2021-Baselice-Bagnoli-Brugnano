@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.gamecontext.ObservableGameContextBuilder;
 import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
+import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
@@ -49,6 +50,8 @@ public class GameContextBuilderIntegrationTest {
     GameContext gameContext;
 
     GameItemsManager gameItemsManager = new GameItemsManager();
+
+    GameHistory gameHistory = new GameHistory();
 
     Player player1, player2, player3, player4;
 
@@ -179,7 +182,7 @@ public class GameContextBuilderIntegrationTest {
 
         gameRules = FileManager.getFileManagerInstance().getGameRules(CONFIG_RULES_PATH);
 
-        gameContextBuilder = spy(new ObservableGameContextBuilder(players, gameRules, gameItemsManager));
+        gameContextBuilder = spy(new ObservableGameContextBuilder(players, gameRules, gameItemsManager, gameHistory));
         gameContext = gameContextBuilder.buildGameContext();
     }
 
