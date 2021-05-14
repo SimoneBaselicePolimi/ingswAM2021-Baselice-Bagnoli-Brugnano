@@ -69,6 +69,9 @@ public class ManageResourcesFromMarketState extends GameState {
 		ManageResourcesFromMarketClientRequest request
 	) throws ResourceStorageRuleViolationException {
 
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
+
 		for (ResourceStorage storage : request.resourcesToAddByStorage.keySet())
 			storage.addResources(request.resourcesToAddByStorage.get(storage));
 

@@ -157,7 +157,7 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 	 * @throws ForbiddenPushOnTopException if the rules imposed by the deck do not allow the development card
 	 * to be pushed on the top of this Deck
 	 */
-	public Map<Player, ServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) throws ForbiddenPushOnTopException {
+	public Map<Player, ServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) throws ForbiddenPushOnTopException, NotEnoughResourcesException {
 		return null;
 	}
 

@@ -63,7 +63,11 @@ public class GameTurnPostActionState extends LeaderCardActionState {
 	 * @param request request of the player to end his turn, see {@link EndTurnClientRequest}
 	 * @return messages sent to each player containing all changes made since the last game state update
 	 */
-	public Map<Player, EndTurnServerMessage> handleRequestEndTurn(EndTurnClientRequest request) {
+	public Map<Player, ServerMessage> handleRequestEndTurn(EndTurnClientRequest request) {
+
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
+
     	isTurnOver = true;
 		gameManager.getGameHistory().addAction(
 			new PostTurnFinalAction(activePlayer)
@@ -75,5 +79,4 @@ public class GameTurnPostActionState extends LeaderCardActionState {
 					player ->  new EndTurnServerMessage(updates)
 				));
 	}
-
 }

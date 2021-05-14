@@ -128,6 +128,9 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 		MarketActionFetchRowClientRequest request
 	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
+
 		MarbleColour[] marblesThePlayerGets = market.fetchMarbleRow(request.row);
 		return doMarketAction(marblesThePlayerGets);
 
@@ -183,7 +186,12 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	 * to be pushed on the top of this Deck
 	 */
 	@Override
-	public Map<Player, ServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) throws ForbiddenPushOnTopException {
+	public Map<Player, ServerMessage> handleRequestDevelopmentAction(
+		DevelopmentActionClientRequest request
+	) throws ForbiddenPushOnTopException, NotEnoughResourcesException {
+
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
 		//add development card to the player deck and remove that from the top of the table deck
 		GameContext gameContext = gameManager.getGameContext();
@@ -223,6 +231,9 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	public Map<Player, ServerMessage> handleRequestProductionAction(
 		ProductionActionClientRequest request
 	) throws NotEnoughResourcesException, ResourceStorageRuleViolationException {
+
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
 		PlayerContext playerContext = gameManager.getGameContext().getPlayerContext(request.player);
 
