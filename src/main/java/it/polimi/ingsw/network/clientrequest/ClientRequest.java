@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationExceptio
 
 import java.util.Map;
 
+//TODO rename ClientRequest in PlayerRequest
 public abstract class ClientRequest {
 
 	public final Player player;

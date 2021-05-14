@@ -153,7 +153,7 @@ public class GameStateTest {
 
         lenient().when(playerContext1.getShelves()).thenReturn(shelvesForPlayers.get(player1));
         lenient().when(playerContext1.getResourceStoragesForResourcesFromMarket()).thenReturn(shelvesForPlayers.get(player1));
-        lenient().when()
+        //lenient().when()
 
         lenient().when(playerContext2.getShelves()).thenReturn(shelvesForPlayers.get(player2));
         lenient().when(playerContext2.getResourceStoragesForResourcesFromMarket()).thenReturn(shelvesForPlayers.get(player2));
