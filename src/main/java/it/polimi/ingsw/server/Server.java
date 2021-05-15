@@ -7,14 +7,19 @@ import it.polimi.ingsw.server.network.SocketConnectionsProcessor;
 
 public class Server {
 
-    protected final ProjectLogger logger = ProjectLogger.getLogger();
+    protected static final ProjectLogger logger = ProjectLogger.getLogger();
 
     private final int TCP_SERVER_PORT = 0;
 
-    public Server() {
+    public static void main( String[] args ) {
 
-        //ClientRawMessageProcessor clientRawMessageProcessor = new ClientRawMessageProcessor()
 
     }
 
+    public static void startServer() {
+        ClientRawMessageProcessor clientRawMessageProcessor = new ClientRawMessageProcessor(
+            client -> logger.log("new conn %s", client.)
+        );
+
+    }
 }
