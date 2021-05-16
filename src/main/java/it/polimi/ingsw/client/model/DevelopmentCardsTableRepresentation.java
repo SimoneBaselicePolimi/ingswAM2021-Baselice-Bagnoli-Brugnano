@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
@@ -13,7 +11,9 @@ public class DevelopmentCardsTableRepresentation extends Representation{
     /**
      * Map that contains the cards in each deck, along with their colour and level
      */
-    private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> cards;
+    //TODO proposta: avere come attributo solo le cards on top, dato che gli interi mazzetti sono nascosti
+    // (semplifica anche l'Handler)
+    private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCardRepresentation>>> cards;
 
     /**
      * DevelopmentCardsTableRepresentation constructor
@@ -22,16 +22,17 @@ public class DevelopmentCardsTableRepresentation extends Representation{
     public DevelopmentCardsTableRepresentation(
         Map<DevelopmentCardLevel,
             Map<DevelopmentCardColour,
-                ShuffledCardDeck<DevelopmentCard>>> cards
+                ShuffledCardDeck<DevelopmentCardRepresentation>>> cards
     ) {
         this.cards = cards;
     }
 
-    public Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> getCards() {
+    public Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCardRepresentation>>> getCards() {
         return cards;
     }
 
-    public void setCards(Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> cards) {
+    public void setCards(Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCardRepresentation>>> cards) {
         this.cards = cards;
     }
+
 }

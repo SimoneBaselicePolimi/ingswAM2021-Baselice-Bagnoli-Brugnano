@@ -3,17 +3,20 @@ package it.polimi.ingsw.client.model;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 
+import java.util.Stack;
+
 public class PlayerOwnedDevelopmentCardDeckRepresentation extends CardDeckRepresentation<DevelopmentCardRepresentation>{
+
     /**
-     * Class constructor.
-     * @param itemID ID which identifies this specific Card Deck
-     * @param gameItemsManager a reference to gameItemsManager is needed to register the new PlayerOwnedDevelopmentCardDeck object
-     * (see {@link RegisteredIdentifiableItem})
+     * CardDeckRepresentation constructor.
+     *
+     * @param itemID           ID which identifies this specific Card Deck
+     * @param gameItemsManager a reference to gameItemsManager is needed to register the new CardDeck object
+     *                         (see {@link RegisteredIdentifiableItem})
+     * @param cardDeck
      */
-    protected PlayerOwnedDevelopmentCardDeckRepresentation(
-        String itemID,
-        GameItemsManager gameItemsManager
-    ) {
-        super(itemID, gameItemsManager);
+    protected PlayerOwnedDevelopmentCardDeckRepresentation(String itemID, GameItemsManager gameItemsManager, Stack<DevelopmentCardRepresentation> cardDeck) {
+        super(itemID, gameItemsManager, cardDeck);
     }
+
 }

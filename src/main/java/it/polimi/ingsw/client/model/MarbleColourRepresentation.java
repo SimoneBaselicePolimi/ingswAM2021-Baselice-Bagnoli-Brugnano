@@ -11,17 +11,17 @@ public class MarbleColourRepresentation extends RegisteredIdentifiableItemRepres
     /**
      * Optional type of resource obtainable with this Marble
      */
-    private Optional<ResourceType> resourceType;
+    private final Optional<ResourceType> resourceType;
 
     /**
      * Number of faith points given to the Player who owns this Marble
      */
-    private int faithPoints;
+    private final int faithPoints;
 
     /**
      * Marble that can be transformed into a generic type of resource by activating a special Leader card power
      */
-    private boolean isSpecialMarble;
+    private final boolean isSpecialMarble;
 
     /**
      * MarbleColourRepresentation constructor.
