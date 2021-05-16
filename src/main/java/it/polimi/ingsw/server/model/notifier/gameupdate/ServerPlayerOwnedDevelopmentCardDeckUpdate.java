@@ -6,14 +6,14 @@ import it.polimi.ingsw.utils.serialization.annotations.*;
 
 import java.util.List;
 
-public class PlayerOwnedDevelopmentCardDeckUpdate extends GameUpdate {
+public class ServerPlayerOwnedDevelopmentCardDeckUpdate extends ServerGameUpdate {
 
     @SerializeIdOnly
     public final PlayerOwnedDevelopmentCardDeck deck;
 
 	public final List<DevelopmentCard> developmentCardsDeck;
 
-    public PlayerOwnedDevelopmentCardDeckUpdate(
+    public ServerPlayerOwnedDevelopmentCardDeckUpdate(
         PlayerOwnedDevelopmentCardDeck deck,
         List<DevelopmentCard> developmentCardsDeck
     ) {

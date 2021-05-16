@@ -1,11 +1,11 @@
-package it.polimi.ingsw.server.model.notifier.gameupdate;
+package it.polimi.ingsw.client.gameupdate;
 
 
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
-public class ResourceStorageUpdate extends GameUpdate {
+public class ClientResourceStorageUpdate extends ClientGameUpdate {
 
 	public Map<ResourceType, Integer> resourcesInStorage;
 

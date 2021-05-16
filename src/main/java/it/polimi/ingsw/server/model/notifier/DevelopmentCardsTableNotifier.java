@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 
 import java.util.List;
 import java.util.Set;
@@ -21,7 +21,7 @@ public class DevelopmentCardsTableNotifier extends DevelopmentCardsTable impleme
 		super(cards, gameItemsManager, getIdForDeckWithColourAndLevel);
 	}
 
-	public Set<GameUpdate> getUpdates() {
+	public Set<ServerGameUpdate> getUpdates() {
 		return null;
 	}
 

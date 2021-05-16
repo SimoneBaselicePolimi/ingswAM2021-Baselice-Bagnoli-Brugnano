@@ -2,10 +2,10 @@ package it.polimi.ingsw.server.model.notifier.gameupdate;
 
 import it.polimi.ingsw.server.model.Player;
 
-public class ActivePlayerUpdate extends GameUpdate {
+public class ServerActivePlayerUpdate extends ServerGameUpdate {
     public final Player newActivePlayer;
 
-    public ActivePlayerUpdate(Player newActivePlayer) {
+    public ServerActivePlayerUpdate(Player newActivePlayer) {
         this.newActivePlayer = newActivePlayer;
     }
 }

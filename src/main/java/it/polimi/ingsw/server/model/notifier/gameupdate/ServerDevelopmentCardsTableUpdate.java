@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLev
 
 import java.util.Map;
 
-public class DevelopmentCardsTableUpdate extends GameUpdate {
+public class ServerDevelopmentCardsTableUpdate extends ServerGameUpdate {
 
 	public Map<DevelopmentCardLevel, Map<DevelopmentCardColour, DevelopmentCard>> developmentCardsOnTop;
 

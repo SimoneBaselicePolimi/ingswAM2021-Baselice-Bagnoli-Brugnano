@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model.notifier;
 
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 
@@ -17,7 +17,7 @@ public class ResourceStorageNotifier extends ResourceStorage implements Notifier
 	}
 
 	@Override
-	public Set<GameUpdate> getUpdates() {
+	public Set<ServerGameUpdate> getUpdates() {
 		return null;
 	}
 

@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class LeaderCardNotifier extends LeaderCard implements Notifier {
         super(leaderCardID, gameItemsManager, requirements, productions, resourceStorages, cardCostDiscounts, whiteMarbleSubstitutions, victoryPoints);
     }
 
-    public Set<GameUpdate> getUpdates() {
+    public Set<ServerGameUpdate> getUpdates() {
         //WARNING: may return sensitive data! When the LeaderCard state is 'hidden' the ID of the card should be kept
         //  secret to every player but the one that owns the card.
         //  Probably, a GameState will not handle this notifier like all the others.

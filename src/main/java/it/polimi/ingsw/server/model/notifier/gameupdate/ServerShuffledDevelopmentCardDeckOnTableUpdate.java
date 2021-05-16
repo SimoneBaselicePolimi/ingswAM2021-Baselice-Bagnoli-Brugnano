@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.utils.serialization.annotations.*;
 
-public class ShuffledDevelopmentCardDeckOnTableUpdate extends GameUpdate {
+public class ServerShuffledDevelopmentCardDeckOnTableUpdate extends ServerGameUpdate {
 
     @SerializeIdOnly
     public final ShuffledCardDeck<DevelopmentCard> deck;
@@ -14,7 +14,7 @@ public class ShuffledDevelopmentCardDeckOnTableUpdate extends GameUpdate {
 
     public final int numberOfCardsInDeck;
 
-    public ShuffledDevelopmentCardDeckOnTableUpdate(
+    public ServerShuffledDevelopmentCardDeckOnTableUpdate(
         ShuffledCardDeck<DevelopmentCard> deck,
         DevelopmentCard cardOnTop,
         int numberOfCardsInDeck

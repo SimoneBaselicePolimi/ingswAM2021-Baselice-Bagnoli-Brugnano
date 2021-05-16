@@ -9,8 +9,8 @@ import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.LeaderCardsThePlayerOwnsUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerLeaderCardsThePlayerOwnsUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
@@ -223,14 +223,14 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 			ResourceUtils.sum(request.chosenResourcesToAddByStorage.values())
 		));
 
-		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
+		Set<ServerGameUpdate> gameUpdates = gameManager.getAllGameUpdates();
 		Map<Player, ServerMessage> serverMessages = new HashMap<>();
 		for (Player player : gameManager.getPlayers()){
 			// Filter out private info on leader cards HIDDEN
-			Set <GameUpdate> gameUpdatesForPlayer = gameUpdates.stream()
+			Set <ServerGameUpdate> gameUpdatesForPlayer = gameUpdates.stream()
 				.filter(gameUpdate -> !(
-					gameUpdate instanceof LeaderCardsThePlayerOwnsUpdate &&
-					!((LeaderCardsThePlayerOwnsUpdate)gameUpdate).player.equals(player)
+					gameUpdate instanceof ServerLeaderCardsThePlayerOwnsUpdate &&
+					!((ServerLeaderCardsThePlayerOwnsUpdate)gameUpdate).player.equals(player)
 				)).collect(Collectors.toSet());
 			serverMessages.put(player, new GameUpdateServerMessage(gameUpdatesForPlayer));
 		}

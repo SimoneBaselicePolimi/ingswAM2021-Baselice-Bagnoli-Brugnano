@@ -8,7 +8,7 @@ import it.polimi.ingsw.utils.serialization.annotations.SerializeAsMapWithIdKey;
 import java.util.List;
 import java.util.Map;
 
-public class PopeCardsUpdate extends GameUpdate {
+public class ServerPopeCardsUpdate extends ServerGameUpdate {
 
 	@SerializeAsMapWithIdKey
 	public Map<Player, List<PopeFavorCardState>> faithPopeCards;

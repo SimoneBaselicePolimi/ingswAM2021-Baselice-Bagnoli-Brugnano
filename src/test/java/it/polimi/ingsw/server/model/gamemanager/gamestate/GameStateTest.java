@@ -10,10 +10,8 @@ import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gamehistory.GameAction;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
-import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
-import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
@@ -21,7 +19,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardCol
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,7 +76,7 @@ public class GameStateTest {
 
     Map<Player, Set<ResourceStorage>> shelvesForPlayers;
 
-    Set<GameUpdate> mockUpdates;
+    Set<ServerGameUpdate> mockUpdates;
 
     @Mock
     MarbleColour marble1;
@@ -169,10 +167,10 @@ public class GameStateTest {
         ));
 
         mockUpdates = Set.of(
-            mock(GameUpdate.class),
-            mock(GameUpdate.class),
-            mock(GameUpdate.class),
-            mock(GameUpdate.class)
+            mock(ServerGameUpdate.class),
+            mock(ServerGameUpdate.class),
+            mock(ServerGameUpdate.class),
+            mock(ServerGameUpdate.class)
         );
         lenient().when(gameManager.getAllGameUpdates()).thenReturn(mockUpdates);
 

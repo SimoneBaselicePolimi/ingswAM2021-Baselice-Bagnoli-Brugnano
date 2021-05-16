@@ -19,10 +19,9 @@ import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionState;
 import it.polimi.ingsw.server.model.notifier.GameHistoryNotifier;
 import it.polimi.ingsw.server.model.notifier.Notifier;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.utils.FileManager;
@@ -91,7 +90,7 @@ public class GameManager {
 	 * Side effects!!!
 	 * @return
 	 */
-	public Set<GameUpdate> getAllGameUpdates() {
+	public Set<ServerGameUpdate> getAllGameUpdates() {
 		return notifiers.stream()
 			.flatMap(notifier -> notifier.getUpdates().stream())
 			.collect(Collectors.toSet());

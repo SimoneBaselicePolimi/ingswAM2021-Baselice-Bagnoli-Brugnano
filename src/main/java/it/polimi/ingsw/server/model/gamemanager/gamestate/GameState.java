@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.servermessage.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
@@ -185,7 +185,7 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 	}
 
 	protected Map<Player, GameUpdateServerMessage> buildGameUpdateServerMessage() {
-		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
+		Set<ServerGameUpdate> gameUpdates = gameManager.getAllGameUpdates();
 		Map<Player, GameUpdateServerMessage> serverMessages = new HashMap<>();
 		for (Player player : gameManager.getPlayers())
 			serverMessages.put(player, new GameUpdateServerMessage(gameUpdates));

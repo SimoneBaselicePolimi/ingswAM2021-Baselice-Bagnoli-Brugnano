@@ -6,14 +6,14 @@ import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
 import java.util.Set;
 
-public class LeaderCardsThePlayerOwnsUpdate extends GameUpdate {
+public class ServerLeaderCardsThePlayerOwnsUpdate extends ServerGameUpdate {
 
 	@SerializeIdOnly
 	public final Player player;
 
 	public final Set<LeaderCard> leaderCardsThePlayerOwns;
 
-	public LeaderCardsThePlayerOwnsUpdate(Player player, Set<LeaderCard> leaderCardsThePlayerOwns) {
+	public ServerLeaderCardsThePlayerOwnsUpdate(Player player, Set<LeaderCard> leaderCardsThePlayerOwns) {
 		this.player = player;
 		this.leaderCardsThePlayerOwns = leaderCardsThePlayerOwns;
 	}

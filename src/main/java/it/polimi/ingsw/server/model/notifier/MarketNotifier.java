@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.model.notifier;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +15,7 @@ public class MarketNotifier extends Market implements Notifier {
 		super(nRows, nColumns, marbles);
 	}
 
-	public Set<GameUpdate> getUpdates() {
+	public Set<ServerGameUpdate> getUpdates() {
 		return null;
 	}
 

@@ -11,10 +11,10 @@ import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
 import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.model.notifier.gameupdate.FaithUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.LeaderCardsThePlayerOwnsUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.MarketUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerFaithUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerLeaderCardsThePlayerOwnsUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerMarketUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.testutils.TestUtils;
@@ -157,12 +157,12 @@ public class GameSetupStateTest extends GameStateTest {
             ResourceType.COINS, 1
         );
 
-        GameUpdate leaderCardUpdatePlayer1 = new LeaderCardsThePlayerOwnsUpdate(player1, new HashSet<>());
-        GameUpdate leaderCardUpdatePlayer2 = new LeaderCardsThePlayerOwnsUpdate(player2, new HashSet<>());
-        GameUpdate leaderCardUpdatePlayer3 = new LeaderCardsThePlayerOwnsUpdate(player3, new HashSet<>());
-        GameUpdate otherUpdate1 = new MarketUpdate(null, null);
-        GameUpdate otherUpdate2 = new FaithUpdate(player1, 0);
-        Set<GameUpdate> allTestGameUpdates = Set.of(
+        ServerGameUpdate leaderCardUpdatePlayer1 = new ServerLeaderCardsThePlayerOwnsUpdate(player1, new HashSet<>());
+        ServerGameUpdate leaderCardUpdatePlayer2 = new ServerLeaderCardsThePlayerOwnsUpdate(player2, new HashSet<>());
+        ServerGameUpdate leaderCardUpdatePlayer3 = new ServerLeaderCardsThePlayerOwnsUpdate(player3, new HashSet<>());
+        ServerGameUpdate otherUpdate1 = new ServerMarketUpdate(null, null);
+        ServerGameUpdate otherUpdate2 = new ServerFaithUpdate(player1, 0);
+        Set<ServerGameUpdate> allTestGameUpdates = Set.of(
             leaderCardUpdatePlayer1,
             leaderCardUpdatePlayer2,
             leaderCardUpdatePlayer3,
@@ -195,12 +195,12 @@ public class GameSetupStateTest extends GameStateTest {
 
         verifyThereIsAValidServerMessageForEveryPlayer(validRequestAnswerServerMessages);
 
-        Set<GameUpdate> gameUpdatesVisibleForPlayer1 = Set.of(
+        Set<ServerGameUpdate> gameUpdatesVisibleForPlayer1 = Set.of(
             leaderCardUpdatePlayer1,
             otherUpdate1,
             otherUpdate2
         );
-        Set<GameUpdate> gameUpdatesVisibleForPlayer2 = Set.of(
+        Set<ServerGameUpdate> gameUpdatesVisibleForPlayer2 = Set.of(
             leaderCardUpdatePlayer2,
             otherUpdate1,
             otherUpdate2
