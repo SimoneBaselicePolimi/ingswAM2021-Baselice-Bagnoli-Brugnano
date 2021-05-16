@@ -7,7 +7,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
 
-public class LeaderCardRepresentation extends Representation{
+public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresentation{
 
     private LeaderCardState state;
     private List<LeaderCardRequirement> requirements;
@@ -19,6 +19,9 @@ public class LeaderCardRepresentation extends Representation{
 
     /**
      * LeaderCardRepresentation constructor
+     * @param itemID ID of the leader card, see {@link IdentifiableItem}
+     * @param gameItemsManager a reference to gameItemsManager is needed to register the new LeaderCard object
+     * (see {@link RegisteredIdentifiableItem})
      * @param requirements requirements to activate the leader card
      * @param productions list of productions (special skill) that the leader card can own (it can be an empty list)
      * @param resourceStorages list of resource storages (special skill) that the leader card can own (it can be an empty list)
@@ -28,6 +31,8 @@ public class LeaderCardRepresentation extends Representation{
      * @param victoryPoints number of victory points that the card gives
      */
     public LeaderCardRepresentation(
+        String itemID,
+        GameItemsManager gameItemsManager,
         LeaderCardState state,
         List<LeaderCardRequirement> requirements,
         List<Production> productions,
@@ -36,6 +41,7 @@ public class LeaderCardRepresentation extends Representation{
         List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
         int victoryPoints
     ) {
+        super(itemID, gameItemsManager);
         this.state = state;
         this.requirements = requirements;
         this.productions = productions;
