@@ -12,7 +12,7 @@ public class SpecificResourceTypeRule extends ResourceStorageRule {
 	/**
 	 * Specific type of resource that the storage can contain
 	 */
-	private ResourceType resourceType;
+	private final ResourceType resourceType;
 
 	/**
 	 * SpecificResourceTypeRule Constructor

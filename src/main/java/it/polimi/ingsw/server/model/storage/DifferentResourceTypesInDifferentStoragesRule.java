@@ -16,7 +16,7 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 	/**
 	 * List of storages that implement this specific rule
 	 */
-	private List<ResourceStorage> storages = new ArrayList<>();
+	private final List<ResourceStorage> storages = new ArrayList<>();
 
 	/**
 	 * DifferentResourceTypesInDifferentStoragesRule Constructor

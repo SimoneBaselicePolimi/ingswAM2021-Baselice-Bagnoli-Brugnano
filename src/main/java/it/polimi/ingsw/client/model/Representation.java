@@ -5,19 +5,19 @@ import it.polimi.ingsw.client.view.View;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Representation<V extends View> {
-    Set<V> subscribedView = new HashSet<>();
+public abstract class Representation {
+    Set<View> subscribedView = new HashSet<>();
 
-    public void subscribe(V view) {
+    public void subscribe(View view) {
         subscribedView.add(view);
     }
 
-    public void unsubscribe(V view) {
+    public void unsubscribe(View view) {
         subscribedView.remove(view);
     }
 
-    public void notifyViews() {
-        subscribedView.forEach(v -> v.updateView(this));
+    protected void notifyViews() {
+        subscribedView.forEach(View::updateView);
     }
 
 }

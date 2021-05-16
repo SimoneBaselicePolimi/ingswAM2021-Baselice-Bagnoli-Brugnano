@@ -1,9 +1,8 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 
-public class MarketRepresentation extends Representation<View<MarketRepresentation>> {
+public class MarketRepresentation extends Representation {
 
     /**
      * Matrix representing the Market, filled with Marbles
