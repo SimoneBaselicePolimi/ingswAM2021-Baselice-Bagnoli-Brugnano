@@ -1,15 +1,16 @@
 package it.polimi.ingsw.server.model;
 
-public class Player {
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 
-	private final String name;
+public class Player extends RegisteredIdentifiableItem {
 
-	public Player(String name) {
-		this.name = name;
+	public Player(String name, GameItemsManager gameItemsManager) {
+		super(name, gameItemsManager);
 	}
 
 	public String getName() {
-		return name;
+		return getItemId();
 	}
 
 }

@@ -5,17 +5,17 @@ public class VaticanReportSectionRepresentation  extends Representation{
     /**
      * Position in which this Vatican Report section start
      */
-    int sectionInitialPos;
+    private final int sectionInitialPos;
 
     /**
      * Position of the Pope space related to this Vatican Report section
      */
-    int popeSpacePos;
+    private final int popeSpacePos;
 
     /**
      * Number of victory points scored by a Player for the related Pope's Favor card turned face-up (active)
      */
-    int sectionVictoryPoints;
+    private final int sectionVictoryPoints;
 
     /**
      * Class constructor.
@@ -41,15 +41,4 @@ public class VaticanReportSectionRepresentation  extends Representation{
         return sectionVictoryPoints;
     }
 
-    public void setSectionInitialPos(int sectionInitialPos) {
-        this.sectionInitialPos = sectionInitialPos;
-    }
-
-    public void setPopeSpacePos(int popeSpacePos) {
-        this.popeSpacePos = popeSpacePos;
-    }
-
-    public void setSectionVictoryPoints(int sectionVictoryPoints) {
-        this.sectionVictoryPoints = sectionVictoryPoints;
-    }
 }

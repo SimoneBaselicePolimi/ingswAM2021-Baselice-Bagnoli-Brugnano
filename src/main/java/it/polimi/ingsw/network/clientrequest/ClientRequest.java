@@ -8,12 +8,14 @@ import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
+import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
 import java.util.Map;
 
 //TODO rename ClientRequest in PlayerRequest
 public abstract class ClientRequest {
 
+	@SerializeIdOnly
 	public final Player player;
 
 	public ClientRequest(Player player) {

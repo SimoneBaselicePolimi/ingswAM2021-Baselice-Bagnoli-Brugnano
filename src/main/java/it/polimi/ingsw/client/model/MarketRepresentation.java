@@ -7,22 +7,22 @@ public class MarketRepresentation extends Representation {
     /**
      * Matrix representing the Market, filled with Marbles
      */
-    MarbleColour[][] matrix;
+    private MarbleColour[][] matrix;
 
     /**
      * Single Marble on the slide, outside the Market
      */
-    MarbleColour outMarble;
+    private MarbleColour outMarble;
 
     /**
      * Number of rows of the Market
      */
-    int nRows;
+    private final int nRows;
 
     /**
      * Number of columns of the Market
      */
-    int nColumns;
+    private final int nColumns;
 
     /**
      * Class constructor.
