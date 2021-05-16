@@ -34,5 +34,4 @@ public class DevelopmentCardsTableRepresentation extends Representation{
     public void setCards(Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCardRepresentation>>> cards) {
         this.cards = cards;
     }
-
 }

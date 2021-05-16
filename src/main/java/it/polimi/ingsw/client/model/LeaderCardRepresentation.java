@@ -10,11 +10,11 @@ import java.util.List;
 public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresentation{
 
     private LeaderCardState state;
-    private List<LeaderCardRequirement> requirements;
-    private List<Production> productions;
-    private List<ResourceStorage> resourceStorages;
-    private List<DevelopmentCardCostDiscount> cardCostDiscounts;
-    private List<WhiteMarbleSubstitution> whiteMarbleSubstitutions;
+    private List<LeaderCardRequirementRepresentation> requirements;
+    private List<ProductionRepresentation> productions;
+    private List<ResourceStorageRepresentation> resourceStorages;
+    private List<DevelopmentCardCostDiscountRepresentation> cardCostDiscounts;
+    private List<WhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions;
     int victoryPoints;
 
     /**
@@ -34,11 +34,11 @@ public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresen
         String itemID,
         GameItemsManager gameItemsManager,
         LeaderCardState state,
-        List<LeaderCardRequirement> requirements,
-        List<Production> productions,
-        List<ResourceStorage> resourceStorages,
-        List<DevelopmentCardCostDiscount> cardCostDiscounts,
-        List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
+        List<LeaderCardRequirementRepresentation> requirements,
+        List<ProductionRepresentation> productions,
+        List<ResourceStorageRepresentation> resourceStorages,
+        List<DevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
+        List<WhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
         int victoryPoints
     ) {
         super(itemID, gameItemsManager);
@@ -59,23 +59,23 @@ public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresen
         this.state = state;
     }
 
-    public List<LeaderCardRequirement> getRequirements() {
+    public List<LeaderCardRequirementRepresentation> getRequirements() {
         return requirements;
     }
 
-    public List<Production> getProductions() {
+    public List<ProductionRepresentation> getProductions() {
         return productions;
     }
 
-    public List<ResourceStorage> getResourceStorages() {
+    public List<ResourceStorageRepresentation> getResourceStorages() {
         return resourceStorages;
     }
 
-    public List<DevelopmentCardCostDiscount> getCardCostDiscounts() {
+    public List<DevelopmentCardCostDiscountRepresentation> getCardCostDiscounts() {
         return cardCostDiscounts;
     }
 
-    public List<WhiteMarbleSubstitution> getWhiteMarbleSubstitutions() {
+    public List<WhiteMarbleSubstitutionRepresentation> getWhiteMarbleSubstitutions() {
         return whiteMarbleSubstitutions;
     }
 

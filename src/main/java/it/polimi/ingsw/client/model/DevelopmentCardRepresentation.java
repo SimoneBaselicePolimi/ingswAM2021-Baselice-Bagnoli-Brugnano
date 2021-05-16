@@ -10,7 +10,7 @@ public class DevelopmentCardRepresentation extends RegisteredIdentifiableItemRep
 
     private DevelopmentCardLevel level;
     private DevelopmentCardColour colour;
-    private Production production;
+    private ProductionRepresentation production;
     private int victoryPoints;
     private Map<ResourceType, Integer> purchaseCost;
 
@@ -30,7 +30,7 @@ public class DevelopmentCardRepresentation extends RegisteredIdentifiableItemRep
         GameItemsManager gameItemsManager,
         DevelopmentCardLevel level,
         DevelopmentCardColour colour,
-        Production production,
+        ProductionRepresentation production,
         int victoryPoints,
         Map<ResourceType, Integer> purchaseCost
     ) {
@@ -50,7 +50,7 @@ public class DevelopmentCardRepresentation extends RegisteredIdentifiableItemRep
         return colour;
     }
 
-    public Production getProduction() {
+    public ProductionRepresentation getProduction() {
         return production;
     }
 
