@@ -10,12 +10,23 @@ import java.util.List;
 
 public class MessageReader {
 
+    enum ReaderState {
+        SETUP_FOR_NEXT_MESSAGE,
+        READ_MESSAGE_HEADER,
+        PARSE_MESSAGE_HEADER_AND_ALLOC_VAL_BUFF,
+        READ_MESSAGE_VALUE,
+        PARSE_MESSAGE_VALUE
+    }
+
     protected Client client;
     protected SocketChannel socket;
+
+    ReaderState readerState;
 
     public MessageReader(Client client, SocketChannel socket) {
         this.client = client;
         this.socket = socket;
+        this.readerState = ReaderState.SETUP_FOR_NEXT_MESSAGE;
     }
 
     private ByteBuffer messageHeaderBuffer = ByteBuffer.allocate(
@@ -29,58 +40,67 @@ public class MessageReader {
 
     public List<ClientRawMessage> readIncomingMessages() throws IOException {
 
-        List<ClientRawMessage> newCompleteMessages = new ArrayList<>(1);
+        List<ClientRawMessage> newCompleteMessages = new ArrayList<>();
 
-        //check if we still need to read some of the bytes of the message header
-        if(messageHeaderBuffer.hasRemaining()) {
-            socket.read(messageHeaderBuffer);
+        while(true) {
+            switch (readerState) {
 
-            //if the header has now been completely read we can parse it, reset the buffer and allocate a buffer
-            // of the right size for the message body
-            if(!messageHeaderBuffer.hasRemaining()) {
+                case SETUP_FOR_NEXT_MESSAGE -> {
 
-                messageHeaderBuffer.flip();
+                    messageHeaderBuffer.clear();
+                    unfinishedMessageValueBuffer = null;
 
-                //parse header
-                unfinishedMessageType = messageHeaderBuffer.get(0);
-                unfinishedMessageFormat = messageHeaderBuffer.get(RawMessage.TYPE_SIZE);
-                unfinishedMessageLength = messageHeaderBuffer.getInt(RawMessage.TYPE_SIZE + RawMessage.FORMAT_SIZE);
+                    readerState = ReaderState.READ_MESSAGE_HEADER;
+                }
 
-                //messageHeaderBuffer.reset();
+                case READ_MESSAGE_HEADER -> {
 
-                unfinishedMessageValueBuffer = ByteBuffer.allocate(unfinishedMessageLength);
+                    socket.read(messageHeaderBuffer);
+
+                    if (messageHeaderBuffer.hasRemaining())
+                        return newCompleteMessages;
+                    else
+                        readerState = ReaderState.PARSE_MESSAGE_HEADER_AND_ALLOC_VAL_BUFF;
+                }
+
+                case PARSE_MESSAGE_HEADER_AND_ALLOC_VAL_BUFF -> {
+
+                    messageHeaderBuffer.flip();
+                    unfinishedMessageType = messageHeaderBuffer.get(0);
+                    unfinishedMessageFormat = messageHeaderBuffer.get(RawMessage.TYPE_SIZE);
+                    unfinishedMessageLength = messageHeaderBuffer.getInt(RawMessage.TYPE_SIZE + RawMessage.FORMAT_SIZE);
+                    unfinishedMessageValueBuffer = ByteBuffer.allocate(unfinishedMessageLength);
+
+                    readerState = ReaderState.READ_MESSAGE_VALUE;
+                }
+
+                case READ_MESSAGE_VALUE -> {
+
+                    socket.read(unfinishedMessageValueBuffer);
+
+                    if (unfinishedMessageValueBuffer.hasRemaining())
+                        return newCompleteMessages;
+                    else
+                        readerState = ReaderState.PARSE_MESSAGE_VALUE;
+                }
+
+                case PARSE_MESSAGE_VALUE -> {
+
+                    unfinishedMessageValueBuffer.flip();
+                    byte[] messageValue = unfinishedMessageValueBuffer.array();
+                    newCompleteMessages.add(new ClientRawMessage(
+                        client,
+                        unfinishedMessageType,
+                        unfinishedMessageFormat,
+                        unfinishedMessageLength,
+                        messageValue
+                    ));
+
+                    readerState = ReaderState.SETUP_FOR_NEXT_MESSAGE;
+                }
 
             }
-
         }
-
-        //read bytes of message value if we have already read the header
-        if(!messageHeaderBuffer.hasRemaining() && unfinishedMessageValueBuffer.hasRemaining()) {
-            socket.read(unfinishedMessageValueBuffer);
-
-            //if the value of the message has now been completely read we can assemble and return the whole message
-            if(!unfinishedMessageValueBuffer.hasRemaining()) {
-
-                unfinishedMessageValueBuffer.flip();
-
-                byte[] messageValue = unfinishedMessageValueBuffer.array();
-
-                newCompleteMessages.add(new ClientRawMessage(
-                    client,
-                    unfinishedMessageType,
-                    unfinishedMessageFormat,
-                    unfinishedMessageLength,
-                    messageValue
-                ));
-
-                messageHeaderBuffer.reset();
-                unfinishedMessageValueBuffer = null;
-
-            }
-
-        }
-
-        return newCompleteMessages;
     }
 
 }
