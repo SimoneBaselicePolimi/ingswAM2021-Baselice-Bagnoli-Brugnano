@@ -8,7 +8,7 @@ public class MarketUpdateHandler extends GameUpdateHandler<ServerMarketUpdate> {
 
     @Override
     public void handleGameUpdate(ServerMarketUpdate update, GameContextRepresentation gameContextRepresentation) {
-        MarketRepresentation market; // gameContextRepresentation ...
+        MarketRepresentation market = gameContextRepresentation.getMarket();
         market.setMatrix(update.matrix);
         market.setOutMarble(update.outMarble);
     }
