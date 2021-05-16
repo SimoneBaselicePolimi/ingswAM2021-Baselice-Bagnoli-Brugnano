@@ -13,7 +13,7 @@ public class DevelopmentCardsTableRepresentation extends Representation{
     /**
      * Map that contains the cards in each deck, along with their colour and level
      */
-    private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> cards;
+    private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCardRepresentation>>> cards;
 
     /**
      * DevelopmentCardsTableRepresentation constructor
@@ -22,16 +22,16 @@ public class DevelopmentCardsTableRepresentation extends Representation{
     public DevelopmentCardsTableRepresentation(
         Map<DevelopmentCardLevel,
             Map<DevelopmentCardColour,
-                ShuffledCardDeck<DevelopmentCard>>> cards
+                ShuffledCardDeck<DevelopmentCardRepresentation>>> cards
     ) {
         this.cards = cards;
     }
 
-    public Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> getCards() {
+    public Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCardRepresentation>>> getCards() {
         return cards;
     }
 
-    public void setCards(Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> cards) {
+    public void setCards(Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCardRepresentation>>> cards) {
         this.cards = cards;
     }
 }

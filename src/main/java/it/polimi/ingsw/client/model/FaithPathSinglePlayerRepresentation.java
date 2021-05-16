@@ -14,7 +14,15 @@ public class FaithPathSinglePlayerRepresentation extends FaithPathRepresentation
      */
     private int blackCrossFaithPosition;
 
-    public FaithPathSinglePlayerRepresentation(int faithPathLength, List<VaticanReportSection> vaticanReportSections, int[] victoryPointsByPosition, Map<Player, Integer> faithPositions, Map<Player, List<PopeFavorCardState>> popeFavorCards, Map<Player, Integer> victoryPoints, int blackCrossFaithPosition) {
+    public FaithPathSinglePlayerRepresentation(
+        int faithPathLength,
+        List<VaticanReportSectionRepresentation> vaticanReportSections,
+        int[] victoryPointsByPosition,
+        Map<PlayerRepresentation, Integer> faithPositions,
+        Map<PlayerRepresentation, List<PopeFavorCardState>> popeFavorCards,
+        Map<PlayerRepresentation, Integer> victoryPoints,
+        int blackCrossFaithPosition
+    ) {
         super(faithPathLength, vaticanReportSections, victoryPointsByPosition, faithPositions, popeFavorCards, victoryPoints);
         this.blackCrossFaithPosition = blackCrossFaithPosition;
     }

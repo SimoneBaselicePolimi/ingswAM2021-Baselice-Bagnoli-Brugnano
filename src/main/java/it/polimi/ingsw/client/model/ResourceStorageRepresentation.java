@@ -13,20 +13,25 @@ public class ResourceStorageRepresentation extends RegisteredIdentifiableItemRep
     /**
      * List of rules that the storage implements
      */
-    private final List<ResourceStorageRule> rules;
+    private final List<ResourceStorageRuleRepresentation> rules;
 
     /**
      * Type and number of resources that are present in the storage
      */
     private Map<ResourceType,Integer> resources;
 
-    protected ResourceStorageRepresentation(String itemID, GameItemsManager gameItemsManager, List<ResourceStorageRule> rules, Map<ResourceType, Integer> resources) {
+    protected ResourceStorageRepresentation(
+        String itemID,
+        GameItemsManager gameItemsManager,
+        List<ResourceStorageRuleRepresentation> rules,
+        Map<ResourceType, Integer> resources
+    ) {
         super(itemID, gameItemsManager);
         this.rules = rules;
         this.resources = new HashMap<>(resources);
     }
 
-    public List<ResourceStorageRule> getRules() {
+    public List<ResourceStorageRuleRepresentation> getRules() {
         return rules;
     }
 

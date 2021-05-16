@@ -13,11 +13,20 @@ public class PlayerContextRepresentation extends Representation{
     private final ResourceStorageRepresentation infiniteChest;
     private final ResourceStorageRepresentation tempStorage;
     private int tempStarResources;
-    private Set<LeaderCard> leaderCardsPlayerOwns;
-    private List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks;
-    private final Set<Production> baseProductions;
+    private Set<LeaderCardRepresentation> leaderCardsPlayerOwns;
+    private List<PlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks;
+    private final Set<ProductionRepresentation> baseProductions;
 
-    public PlayerContextRepresentation(PlayerRepresentation player, Set<ResourceStorageRepresentation> shelves, ResourceStorageRepresentation infiniteChest, ResourceStorageRepresentation tempStorage, int tempStarResources, Set<LeaderCard> leaderCardsPlayerOwns, List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks, Set<Production> baseProductions) {
+    public PlayerContextRepresentation(
+        PlayerRepresentation player,
+        Set<ResourceStorageRepresentation> shelves,
+        ResourceStorageRepresentation infiniteChest,
+        ResourceStorageRepresentation tempStorage,
+        int tempStarResources,
+        Set<LeaderCardRepresentation> leaderCardsPlayerOwns,
+        List<PlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
+        Set<ProductionRepresentation> baseProductions
+    ) {
         this.player = player;
         this.shelves = shelves;
         this.infiniteChest = infiniteChest;
@@ -48,15 +57,15 @@ public class PlayerContextRepresentation extends Representation{
         return tempStarResources;
     }
 
-    public Set<LeaderCard> getLeaderCardsPlayerOwns() {
+    public Set<LeaderCardRepresentation> getLeaderCardsPlayerOwns() {
         return leaderCardsPlayerOwns;
     }
 
-    public List<PlayerOwnedDevelopmentCardDeck> getDevelopmentCardDecks() {
+    public List<PlayerOwnedDevelopmentCardDeckRepresentation> getDevelopmentCardDecks() {
         return developmentCardDecks;
     }
 
-    public Set<Production> getBaseProductions() {
+    public Set<ProductionRepresentation> getBaseProductions() {
         return baseProductions;
     }
 
@@ -68,11 +77,11 @@ public class PlayerContextRepresentation extends Representation{
         this.tempStarResources = tempStarResources;
     }
 
-    public void setLeaderCardsPlayerOwns(Set<LeaderCard> leaderCardsPlayerOwns) {
+    public void setLeaderCardsPlayerOwns(Set<LeaderCardRepresentation> leaderCardsPlayerOwns) {
         this.leaderCardsPlayerOwns = leaderCardsPlayerOwns;
     }
 
-    public void setDevelopmentCardDecks(List<PlayerOwnedDevelopmentCardDeck> developmentCardDecks) {
+    public void setDevelopmentCardDecks(List<PlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks) {
         this.developmentCardDecks = developmentCardDecks;
     }
 }

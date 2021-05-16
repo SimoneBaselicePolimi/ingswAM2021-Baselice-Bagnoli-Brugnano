@@ -7,12 +7,12 @@ public class MarketRepresentation extends Representation {
     /**
      * Matrix representing the Market, filled with Marbles
      */
-    private MarbleColour[][] matrix;
+    private MarbleColourRepresentation[][] matrix;
 
     /**
      * Single Marble on the slide, outside the Market
      */
-    private MarbleColour outMarble;
+    private MarbleColourRepresentation outMarble;
 
     /**
      * Number of rows of the Market
@@ -31,18 +31,23 @@ public class MarketRepresentation extends Representation {
      * @param nRows Number of rows of the Market
      * @param nColumns Number of columns of the Market
      */
-    public MarketRepresentation(MarbleColour[][] matrix, MarbleColour outMarble, int nRows, int nColumns) {
+    public MarketRepresentation(
+        MarbleColourRepresentation[][] matrix,
+        MarbleColourRepresentation outMarble,
+        int nRows,
+        int nColumns
+    ) {
         this.matrix = matrix;
         this.outMarble = outMarble;
         this.nRows = nRows;
         this.nColumns = nColumns;
     }
 
-    public MarbleColour[][] getMatrix() {
+    public MarbleColourRepresentation[][] getMatrix() {
         return matrix;
     }
 
-    public MarbleColour getOutMarble() {
+    public MarbleColourRepresentation getOutMarble() {
         return outMarble;
     }
 
@@ -54,11 +59,11 @@ public class MarketRepresentation extends Representation {
         return nColumns;
     }
 
-    public void setMatrix(MarbleColour[][] matrix) {
+    public void setMatrix(MarbleColourRepresentation[][] matrix) {
         this.matrix = matrix;
     }
 
-    public void setOutMarble(MarbleColour outMarble) {
+    public void setOutMarble(MarbleColourRepresentation outMarble) {
         this.outMarble = outMarble;
     }
 

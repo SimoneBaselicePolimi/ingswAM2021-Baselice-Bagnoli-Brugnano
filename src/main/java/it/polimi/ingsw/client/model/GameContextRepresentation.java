@@ -12,7 +12,14 @@ public class GameContextRepresentation  extends Representation{
     private final Map<PlayerRepresentation, PlayerContextRepresentation> playerContexts;
     private PlayerRepresentation activePlayer;
 
-    public GameContextRepresentation(MarketRepresentation market, DevelopmentCardsTableRepresentation developmentCardsTable, FaithPathRepresentation faithPath, List<PlayerRepresentation> playersOrder, Map<PlayerRepresentation, PlayerContextRepresentation> playerContexts, PlayerRepresentation activePlayer) {
+    public GameContextRepresentation(
+        MarketRepresentation market,
+        DevelopmentCardsTableRepresentation developmentCardsTable,
+        FaithPathRepresentation faithPath,
+        List<PlayerRepresentation> playersOrder,
+        Map<PlayerRepresentation, PlayerContextRepresentation> playerContexts,
+        PlayerRepresentation activePlayer
+    ) {
         this.market = market;
         this.developmentCardsTable = developmentCardsTable;
         this.faithPath = faithPath;
