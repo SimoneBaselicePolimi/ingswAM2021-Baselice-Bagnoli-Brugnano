@@ -2,10 +2,7 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
-import it.polimi.ingsw.server.network.ClientRawMessageProcessor;
-import it.polimi.ingsw.server.network.NetworkLayer;
-import it.polimi.ingsw.server.network.SocketConnectionsAccepter;
-import it.polimi.ingsw.server.network.SocketConnectionsProcessor;
+import it.polimi.ingsw.server.network.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,14 +19,21 @@ public class Server {
     }
 
     public static void startServer() {
-
-        ClientRawMessageProcessor clientRawMessageProcessor = new ClientRawMessageProcessor(
-            client -> logger.log(LogLevel.INFO, "new conn %s", client.getClientId()),
-            message -> logger.log(LogLevel.INFO, Arrays.toString(message.value)),
+        ClientRawMessageProcessor clientRawMessageProcessor = new ClientRawMessageProcessor();
+        clientRawMessageProcessor.setNewConnectionProcessingPolicy(
+            (client, sender) -> {
+                logger.log(LogLevel.INFO, "new conn %s", client.getClientId());
+                sender.sendMessage(new ServerRawMessage(client, (byte)0, (byte)0, 4, new byte[]{4, 3, 2 ,1}));
+            }
+        );
+        clientRawMessageProcessor.setMessageProcessingPolicy(
+            (message, sender) -> logger.log(LogLevel.INFO, Arrays.toString(message.value))
+        );
+        clientRawMessageProcessor.setOnConnectionDroppedProcessingPolicy(
             client -> logger.log(LogLevel.INFO, "client disconnected %s", client.getClientId())
         );
-
         NetworkLayer net = new NetworkLayer(TCP_SERVER_PORT, clientRawMessageProcessor);
+
         try {
             net.start();
         } catch (IOException e) {

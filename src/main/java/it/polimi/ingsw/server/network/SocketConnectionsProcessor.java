@@ -13,6 +13,8 @@ import java.util.Set;
 
 public class SocketConnectionsProcessor implements Runnable {
 
+    NetworkLayer networkLayer;
+
     ClientRawMessageProcessor inboundMessagesProcessor;
 
     private Queue<SocketChannel> newSocketsQueue;
@@ -22,10 +24,12 @@ public class SocketConnectionsProcessor implements Runnable {
     private Selector writeSelector;
 
     public SocketConnectionsProcessor(
+        NetworkLayer networkLayer,
         Queue<SocketChannel> newSocketsQueue,
         ClientRawMessageProcessor inboundMessagesProcessor,
         Map<Client, SocketConnection> clientConnections
     ) throws IOException {
+        this.networkLayer = networkLayer;
         this.newSocketsQueue = newSocketsQueue;
         this.inboundMessagesProcessor = inboundMessagesProcessor;
         this.clientConnections = clientConnections;
@@ -68,7 +72,7 @@ public class SocketConnectionsProcessor implements Runnable {
             SelectionKey key = newSocket.register(this.readSelector, SelectionKey.OP_READ);
             key.attach(newConnection);
 
-            inboundMessagesProcessor.processNewClientConnection(newConnection.getClient());
+            inboundMessagesProcessor.processNewClientConnection(newConnection.getClient(), networkLayer);
 
             newSocket = this.newSocketsQueue.poll();
         }
@@ -89,7 +93,9 @@ public class SocketConnectionsProcessor implements Runnable {
                 SelectionKey key = keyIterator.next();
                 SocketConnection connection = (SocketConnection) key.attachment();
 
-                connection.readIncomingMessages().forEach(inboundMessagesProcessor::processNewMessage);
+                connection.readIncomingMessages().forEach(
+                    m -> inboundMessagesProcessor.processNewMessage(m, networkLayer)
+                );
 
                 keyIterator.remove();
 
@@ -112,7 +118,9 @@ public class SocketConnectionsProcessor implements Runnable {
             while(keyIterator.hasNext()){
                 SelectionKey key = keyIterator.next();
 
-                SocketConnection connection = (SocketConnection) key.attachment();
+                Client client = (Client) key.attachment();
+
+                SocketConnection connection = clientConnections.get(client);
 
                 connection.flushOutboundMessages();
 
@@ -123,6 +131,5 @@ public class SocketConnectionsProcessor implements Runnable {
 
         }
     }
-
 
 }

@@ -6,8 +6,8 @@ import it.polimi.ingsw.logger.ProjectLogger;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.Arrays;
 
 public class Client {
 
@@ -53,8 +53,18 @@ public class Client {
             socketChannel.write(h);
         while (s.hasRemaining())
             socketChannel.write(s);
-
         logger.log(LogLevel.INFO, "written!!!!");
+
+        ByteBuffer h2 = ByteBuffer.allocate(1 + 1 + 4);
+        ByteBuffer r = ByteBuffer.allocate(4);
+        while (h2.hasRemaining())
+            socketChannel.read(h2);
+        while (r.hasRemaining())
+            socketChannel.read(r);
+        r.flip();
+        byte[] cont = r.array();
+        logger.log(LogLevel.INFO, Arrays.toString(cont));
+
 
 
     }

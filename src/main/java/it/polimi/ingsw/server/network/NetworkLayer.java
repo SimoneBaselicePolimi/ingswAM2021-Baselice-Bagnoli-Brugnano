@@ -10,7 +10,7 @@ import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NetworkLayer {
+public class NetworkLayer implements ServerRawMessageSender {
 
     static final int NEW_CONNECTIONS_QUEUE_SIZE = 1024;
 
@@ -33,6 +33,7 @@ public class NetworkLayer {
 
         SocketConnectionsAccepter newConnectionsAccepter = new SocketConnectionsAccepter(tcpPort, newConnectionsQueue);
         SocketConnectionsProcessor netMessagesProcessor = new SocketConnectionsProcessor(
+            this,
             newConnectionsQueue,
             inboundMessagesProcessor,
             clientConnections
@@ -43,9 +44,14 @@ public class NetworkLayer {
 
     }
 
-    public void sendMessage(ServerRawMessage serverMessage) throws ClosedChannelException {
+    public void sendMessage(ServerRawMessage serverMessage) {
         SocketConnection connection = clientConnections.get(serverMessage.receiver);
-        connection.sendMessage(serverMessage);
+        try {
+            connection.sendMessage(serverMessage);
+        } catch (ClosedChannelException e) {
+            //TODO
+            e.printStackTrace();
+        }
     }
 
 }

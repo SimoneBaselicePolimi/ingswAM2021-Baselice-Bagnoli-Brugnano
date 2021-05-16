@@ -14,7 +14,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class MessageWriter {
 
     enum WriterState {
-        REGISTER_AND_SETUP_FOR_NEXT_MESSAGE,
+        SETUP_FOR_NEXT_MESSAGE,
         WAIT_FOR_NEXT_MESSAGE,
         PUT_MESSAGE_CONTENT_IN_BUFFERS,
         WRITE_MESSAGE_HEADER,
@@ -38,12 +38,14 @@ public class MessageWriter {
 
     private ByteBuffer unfinishedMessageValueBuffer = null;
 
+    WriterState writerState;
 
     public MessageWriter(Client client, SocketChannel socket, Selector writeSelector) {
         this.client = client;
         this.socket = socket;
         this.writeSelector = writeSelector;
         this.messagesToSendQueue = new ArrayBlockingQueue<>(MESSAGES_TO_SEND_QUEUE_SIZE);
+        writerState = WriterState.SETUP_FOR_NEXT_MESSAGE;
     }
 
     void addServerMessageToOutboundQueue(ServerRawMessage serverMessage) throws ClosedChannelException {
@@ -59,45 +61,59 @@ public class MessageWriter {
 
     void flushMessagesInQueue() throws IOException {
 
-        if(unfinishedMessage == null) {
-            unfinishedMessage = messagesToSendQueue.poll();
+        while(true) {
 
-            //Write message content in buffers
-            if(unfinishedMessage != null) {
-
-                messageHeaderBuffer.put(unfinishedMessage.type);
-                messageHeaderBuffer.put(unfinishedMessage.valueFormat);
-                messageHeaderBuffer.putInt(unfinishedMessage.valueLength);
-                messageHeaderBuffer.flip();
-
-                unfinishedMessageValueBuffer = ByteBuffer.allocate(unfinishedMessage.valueLength);
-                unfinishedMessageValueBuffer.put(unfinishedMessage.value);
-                unfinishedMessageValueBuffer.flip();
-
-            }
-
-        }
-
-        //Write buffers content to socket
-        if(unfinishedMessage != null ) {
-
-            if(messageHeaderBuffer.hasRemaining()) {
-                socket.write(messageHeaderBuffer);
-            }
-
-            if(!messageHeaderBuffer.hasRemaining() && unfinishedMessageValueBuffer.hasRemaining()) {
-                socket.write(unfinishedMessageValueBuffer);
-
-                if(!unfinishedMessageValueBuffer.hasRemaining()) {
+            switch (writerState) {
+                case SETUP_FOR_NEXT_MESSAGE -> {
                     messageHeaderBuffer.clear();
                     unfinishedMessageValueBuffer = null;
                     unfinishedMessage = null;
 
-                    //If we do not have anything else to write we can deregister the socket from the writeSelector
+                    writerState = WriterState.WAIT_FOR_NEXT_MESSAGE;
+                }
+                case WAIT_FOR_NEXT_MESSAGE -> {
+                    unfinishedMessage = messagesToSendQueue.poll();
+
+                    if(unfinishedMessage == null)
+                        return;
+                    else
+                        writerState = WriterState.PUT_MESSAGE_CONTENT_IN_BUFFERS;
+                }
+                case PUT_MESSAGE_CONTENT_IN_BUFFERS -> {
+                    messageHeaderBuffer.put(unfinishedMessage.type);
+                    messageHeaderBuffer.put(unfinishedMessage.valueFormat);
+                    messageHeaderBuffer.putInt(unfinishedMessage.valueLength);
+                    messageHeaderBuffer.flip();
+
+                    unfinishedMessageValueBuffer = ByteBuffer.allocate(unfinishedMessage.valueLength);
+                    unfinishedMessageValueBuffer.put(unfinishedMessage.value);
+                    unfinishedMessageValueBuffer.flip();
+
+                    writerState = WriterState.WRITE_MESSAGE_HEADER;
+                }
+                case WRITE_MESSAGE_HEADER -> {
+                    socket.write(messageHeaderBuffer);
+
+                    if (messageHeaderBuffer.hasRemaining())
+                        return;
+                    else
+                        writerState = WriterState.WRITE_MESSAGE_VALUE;
+                }
+                case WRITE_MESSAGE_VALUE -> {
+                    socket.write(unfinishedMessageValueBuffer);
+
+                    if (unfinishedMessageValueBuffer.hasRemaining())
+                        return;
+                    else
+                        writerState = WriterState.DEREGISTER_OR_CONTINUE;
+                }
+                case DEREGISTER_OR_CONTINUE -> {
                     if(messagesToSendQueue.isEmpty()) {
                         socket.keyFor(writeSelector).cancel();
+                        return;
+                    } else {
+                        writerState = WriterState.SETUP_FOR_NEXT_MESSAGE;
                     }
-
                 }
             }
 
