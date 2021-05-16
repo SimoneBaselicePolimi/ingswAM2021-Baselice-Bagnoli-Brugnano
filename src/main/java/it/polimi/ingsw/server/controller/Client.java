@@ -19,15 +19,15 @@ public class Client {
 
     String uniqueClientIdentifier;
 
-    String getClientId() {
+    public String getClientId() {
         return uniqueClientIdentifier;
     }
 
-    boolean hasHandler() {
+    public boolean hasHandler() {
         return handler.isPresent();
     }
 
-    ClientHandler getHandler() {
+    public ClientHandler getHandler() {
         return handler.get();
     }
 

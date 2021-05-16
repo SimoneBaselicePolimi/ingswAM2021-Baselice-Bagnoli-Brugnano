@@ -13,8 +13,16 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class MessageWriter {
 
-    static final int MESSAGES_TO_SEND_QUEUE_SIZE = 1024;
+    enum WriterState {
+        REGISTER_AND_SETUP_FOR_NEXT_MESSAGE,
+        WAIT_FOR_NEXT_MESSAGE,
+        PUT_MESSAGE_CONTENT_IN_BUFFERS,
+        WRITE_MESSAGE_HEADER,
+        WRITE_MESSAGE_VALUE,
+        DEREGISTER_OR_CONTINUE
+    }
 
+    static final int MESSAGES_TO_SEND_QUEUE_SIZE = 1024;
 
     protected Client client;
     protected SocketChannel socket;
