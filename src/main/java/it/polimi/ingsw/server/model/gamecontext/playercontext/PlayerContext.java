@@ -292,6 +292,28 @@ public class PlayerContext {
 				.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
 	}
 
+	public void removeResourcesBasedOnResourcesStoragesPriority(
+		Map<ResourceType, Integer> resourcesToRemove
+	) throws NotEnoughResourcesException {
+
+		Map<ResourceType, Integer> resourceCostLeftToRemove = new HashMap<>(resourcesToRemove);
+
+		for (ResourceStorage storage : getResourceStoragesForResourcesFromMarket()) {
+			Map<ResourceType, Integer> resourcesRemovableFromStorage = ResourceUtils.intersection(
+				storage.peekResources(),
+				resourceCostLeftToRemove
+			);
+			storage.removeResources(resourcesRemovableFromStorage);
+			resourceCostLeftToRemove = ResourceUtils.difference(
+				resourceCostLeftToRemove,
+				resourcesRemovableFromStorage
+			);
+		}
+
+		getInfiniteChest().removeResources(resourceCostLeftToRemove);
+	}
+
+
 	/**
 	 * This method allows to get one of the decks of development cards owned by the player.
 	 * <p>

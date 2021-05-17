@@ -3,11 +3,15 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 import it.polimi.ingsw.network.clientrequest.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.network.servermessage.*;
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.HashMap;
@@ -202,6 +206,18 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 			String.format(errorMessage, messageArgs)
 		);
 		return Map.of(requestSender, serverMessage);
+	}
+
+	protected static Map<Player, ServerMessage> createInvalidRequestSenderIsNotActivePlayer(
+		Player sender,
+		Player activePlayer
+	) {
+		return createInvalidRequestServerMessage(
+			sender,
+			"Player %s is not the active player. [Current active player is %s]",
+			sender,
+			activePlayer
+		);
 	}
 
 }

@@ -107,6 +107,9 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 		MarketActionFetchColumnClientRequest request
 	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
+
 		MarbleColour[] marblesThePlayerGets = market.fetchMarbleColumn(request.column);
 		return doMarketAction(marblesThePlayerGets);
 	}
@@ -197,17 +200,15 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 		GameContext gameContext = gameManager.getGameContext();
 		gameContext.getPlayerContext(request.player)
 			.addDevelopmentCard(
-				gameContext.getDevelopmentCardsTable().popCard
-					(
-						request.developmentCard.getLevel(),
-						request.developmentCard.getColour()
-					),
-					request.deckNumber
+				gameContext.getDevelopmentCardsTable().popCard(
+					request.developmentCard.getLevel(),
+					request.developmentCard.getColour()
+				),
+				request.deckNumber
 			);
 
 		//remove required cost resources from the shelves of the player
-		gameContext.getPlayerContext(request.player)
-			.getShelves().remove(request.developmentCard.getPurchaseCost());
+		playerContext.removeResourcesBasedOnResourcesStoragesPriority(request.developmentCard.getPurchaseCost());
 
 		gameManager.getGameHistory().addAction(
 			new DevelopmentAction(activePlayer, request.developmentCard)
@@ -241,24 +242,12 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 		Set<Map<ResourceType, Integer>> productionCosts = request.productions.stream()
 			.map(Production::getProductionResourceCost).collect(Collectors.toSet());
 
-		Map<ResourceType, Integer> resourceCostLeftToRemove = ResourceUtils.sum(
+		Map<ResourceType, Integer> totalResourceToRemove = ResourceUtils.sum(
 			ResourceUtils.sum(productionCosts),
 			request.starResourceCost
 		);
 
-		for (ResourceStorage storage : playerContext.getResourceStoragesForResourcesFromMarket()) {
-			Map<ResourceType, Integer> resourcesRemovableFromStorage = ResourceUtils.intersection(
-				storage.peekResources(),
-				resourceCostLeftToRemove
-			);
-			storage.removeResources(resourcesRemovableFromStorage);
-			resourceCostLeftToRemove = ResourceUtils.difference(
-				resourceCostLeftToRemove,
-				resourcesRemovableFromStorage
-			);
-		}
-
-		playerContext.getInfiniteChest().removeResources(resourceCostLeftToRemove);
+		playerContext.removeResourcesBasedOnResourcesStoragesPriority(totalResourceToRemove);
 
 		//add resource rewards
 		Set<Map<ResourceType, Integer>> productionRewards = request.productions.stream()

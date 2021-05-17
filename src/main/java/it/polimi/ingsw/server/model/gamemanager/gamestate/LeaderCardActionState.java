@@ -37,6 +37,9 @@ public abstract class LeaderCardActionState extends GameState {
     @Override
     public Map<Player, ServerMessage> handleRequestDiscardLeaderAction(DiscardLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
 
+        if(!request.player.equals(activePlayer))
+            return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
+
         // discard leader card
         request.leaderCardThePlayerWantsToDiscard.discardLeaderCard();
 
@@ -58,6 +61,9 @@ public abstract class LeaderCardActionState extends GameState {
      */
     @Override
     public Map<Player, ServerMessage> handleRequestActivateLeaderAction(ActivateLeaderCardClientRequest request) throws LeaderCardRequirementsNotSatisfiedException {
+
+        if(!request.player.equals(activePlayer))
+            return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
         // activate leader card
        request.leaderCardThePlayerWantsToActivate.activateLeaderCard(gameManager.getGameContext().getPlayerContext(activePlayer));

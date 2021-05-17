@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.*;
+import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
@@ -49,6 +50,8 @@ class GameTurnMainActionStateTest extends GameStateTest {
 
     @Test
     void testHandleRequestFetchColumnMarketAction() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+
+        lenient().when(market.fetchMarbleColumn(eq(2))).thenReturn(new MarbleColour[]{marble1, marble2, marble3});
 
         assertFalse(state.isStateDone());
         Map<Player, GameUpdateServerMessage> initialMessagesFromServer = state.getInitialServerMessage();
@@ -252,7 +255,7 @@ class GameTurnMainActionStateTest extends GameStateTest {
 
         verify(leaderCardThePlayerWantsToActivate).activateLeaderCard(playerContext1);
 
-        verifyThatEveryPlayerGetsAllGameUpdates(Map.of(player1, messageForPlayer));
+        verifyThatEveryPlayerGetsAllGameUpdates(initialMessagesFromServer);
         verifyGameHistoryActionAdded(ActivateLeaderCardsAction.class);
 
         assertFalse(state.isStateDone());

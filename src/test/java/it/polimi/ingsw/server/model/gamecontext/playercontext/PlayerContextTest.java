@@ -10,6 +10,8 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
+import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
+import it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionState;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
@@ -312,6 +314,100 @@ class PlayerContextTest {
     @Test
     void testGetTemporaryStorage() {
         assertEquals(temporaryStorage, playerContext.getTemporaryStorage());
+    }
+
+    @Test
+    void testRemoveResourcesBasedOnResourcesStoragesPriority() throws NotEnoughResourcesException {
+
+//        ResourceStorage shelve1 = mock(ResourceStorage.class);
+//        ResourceStorage shelve2 = mock(ResourceStorage.class);
+//        ResourceStorage shelve3 = mock(ResourceStorage.class);
+//        ResourceStorage leaderCardStorage1 = mock(ResourceStorage.class);
+//        ResourceStorage leaderCardStorage2 = mock(ResourceStorage.class);
+//        Set<ResourceStorage> shelves = Set.of(shelve1, shelve2);
+//
+//        LeaderCard leaderCard1 = mock(LeaderCard.class);
+//        when(leaderCard1.getResourceStorages()).thenReturn(List.of(leaderCardStorage1));
+//        when(leaderCard1.getState()).thenReturn(LeaderCardState.ACTIVE);
+//
+//        LeaderCard leaderCard2 = mock(LeaderCard.class);
+//        when(leaderCard2.getResourceStorages()).thenReturn(List.of(leaderCardStorage2));
+//        when(leaderCard2.getState()).thenReturn(LeaderCardState.ACTIVE);
+//
+//        playerContext = new PlayerContext(
+//            player,
+//            shelves,
+//            new ArrayList<>(),
+//            infiniteChest,
+//            temporaryStorage,
+//            Set.of(baseProductions)
+//        );
+//        playerContext.setLeaderCards(Set.of(leaderCard1, leaderCard2));
+//
+//        Map<ResourceStorage, Map<ResourceType, Integer>> resourcesInStorages = Map.of(
+//            shelve1, Map.of(
+//                ResourceType.SHIELDS, 3
+//            ),
+//            shelve2, Map.of(
+//                ResourceType.SHIELDS, 2,
+//                ResourceType.COINS, 10
+//            ),
+//            shelve3, Map.of(
+//                ResourceType.SHIELDS,3
+//            ),
+//            leaderCardStorage1, Map.of(
+//                ResourceType.STONES,3,
+//                ResourceType.SERVANTS, 2
+//            ),
+//            leaderCardStorage2, Map.of(
+//                ResourceType.SHIELDS, 1
+//            )
+//        );
+//
+//        when(shelve1.peekResources()).thenReturn(resourcesInStorages.get(shelve1));
+//
+//        when(shelve2.peekResources()).thenReturn(resourcesInStorages.get(shelve2));
+//
+//        when(shelve3.peekResources()).thenReturn(resourcesInStorages.get(shelve3));
+//
+//        when(leaderCardStorage1.peekResources()).thenReturn(resourcesInStorages.get(leaderCardStorage1));
+//
+//        when(leaderCardStorage2.peekResources()).thenReturn(resourcesInStorages.get(leaderCardStorage2));
+//
+//        playerContext.removeResourcesBasedOnResourcesStoragesPriority(Map.of(
+//            ResourceType.SHIELDS, 4,
+//            ResourceType.COINS, 100,
+//            ResourceType.SERVANTS, 3
+//        ));
+//
+//        Map<ResourceType, Integer> resourcesTakenFromStoragesForMarket = resourcesInStorages.
+//
+//
+//
+//
+//
+//        verify(shelve1).removeResources(eq(Map.of(
+//            ResourceType.SHIELDS,3
+//        )));
+//
+//        verify(shelve2).removeResources(eq(Map.of(
+//            ResourceType.SHIELDS, 1,
+//            ResourceType.COINS, 10
+//        )));
+//
+//        verify(shelve3).removeResources(eq(Map.of()));
+//
+//        verify(leaderCardStorage1).removeResources(eq(Map.of(
+//            ResourceType.SERVANTS, 2
+//        )));
+//
+//        verify(leaderCardStorage2).removeResources(eq(Map.of()));
+//
+//        verify(infiniteChest).removeResources(eq(Map.of(
+//            ResourceType.SERVANTS, 1,
+//            ResourceType.COINS, 90
+//        )));
+
     }
 
     @Test

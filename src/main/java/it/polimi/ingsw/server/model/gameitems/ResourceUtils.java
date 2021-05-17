@@ -63,7 +63,7 @@ public class ResourceUtils {
                 ));
         }
 
-        for (ResourceType resourceType : resourcesA.keySet()){
+        for (ResourceType resourceType : resourcesB.keySet()){
             if (resourcesA.get(resourceType) >= resourcesB.get(resourceType))
                 difference.put(resourceType, resourcesA.get(resourceType) - resourcesB.get(resourceType));
             else

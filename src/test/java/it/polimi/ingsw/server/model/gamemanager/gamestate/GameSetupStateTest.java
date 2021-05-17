@@ -89,8 +89,6 @@ public class GameSetupStateTest extends GameStateTest {
             null
         );
 
-        when(gameContext.getPlayersTurnOrder()).thenReturn(playersInOrder);
-        when(gameManager.getPlayers()).thenReturn(new HashSet<>(playersInOrder));
         when(gameItemsManager.getAllItemsOfType(eq(LeaderCard.class))).thenReturn(leaderCards);
         when(gameManager.getGameRules()).thenReturn(gameRules);
 
