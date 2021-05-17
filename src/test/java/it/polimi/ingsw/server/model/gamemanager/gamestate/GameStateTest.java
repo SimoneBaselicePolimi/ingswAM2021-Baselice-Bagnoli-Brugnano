@@ -57,11 +57,6 @@ public class GameStateTest {
     @Mock
     FaithPath faithPath;
 
-    @Mock
-    DevelopmentCardsTable developmentCardsTable;
-
-    List<DevelopmentCard> availableDevelopmentCards;
-
     Player player1 = new Player("first", gameItemsManager);
     Player player2 = new Player("second", gameItemsManager);
     Player player3 = new Player("third", gameItemsManager);
@@ -78,6 +73,8 @@ public class GameStateTest {
     PlayerContext playerContext3;
 
     Map<Player, Set<ResourceStorage>> shelvesForPlayers;
+
+    Set<ResourceStorage> leaderStoragesForPlayer1;
 
     Set<ServerGameUpdate> mockUpdates;
 
