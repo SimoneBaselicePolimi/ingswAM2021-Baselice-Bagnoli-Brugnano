@@ -2,24 +2,31 @@ package it.polimi.ingsw.server.model.gamecontext.faith;
 
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class FaithPathSinglePlayerTest {
-
-    // Player Initialization
-    Player singlePlayer = new Player("player1");
-
-    FaithPathSinglePlayer faithPath;
 
     @Mock
     GameHistory gameHistory;
+
+    @Mock
+    GameItemsManager gameItemsManager;
+
+    // Player Initialization
+    Player singlePlayer = new Player("player1", gameItemsManager);
+
+    FaithPathSinglePlayer faithPath;
 
     /**
      * Faith Path initialization.

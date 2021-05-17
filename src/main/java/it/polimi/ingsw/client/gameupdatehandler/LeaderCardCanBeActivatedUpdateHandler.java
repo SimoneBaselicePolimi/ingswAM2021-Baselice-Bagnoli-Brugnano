@@ -7,7 +7,7 @@ public class LeaderCardCanBeActivatedUpdateHandler extends GameUpdateHandler<Cli
 
     @Override
     public void handleGameUpdate(ClientLeaderCardCanBeActivatedUpdate update, GameContextRepresentation gameContextRepresentation) {
-        //TODO: posso aggiungere al LeaderCardRepresentation un boolean che setto ogni volta che ricevo questo GameUpdate?
+        update.leaderCard.setCanBeActivated(update.canBeActivated);
     }
 
 }

@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.server.model.gamehistory.GameAction;
-
-public class FaithPathLastPositionReachedActionRepresentation extends GameAction {
+public class FaithPathLastPositionReachedActionRepresentation extends GameActionRepresentation {
     private final PlayerRepresentation player;
 
     public FaithPathLastPositionReachedActionRepresentation(PlayerRepresentation player) {

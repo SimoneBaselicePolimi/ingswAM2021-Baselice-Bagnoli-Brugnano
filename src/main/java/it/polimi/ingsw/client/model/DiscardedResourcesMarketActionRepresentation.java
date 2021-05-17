@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.server.model.gamehistory.GameAction;
-
-public class DiscardedResourcesMarketActionRepresentation extends GameAction {
+public class DiscardedResourcesMarketActionRepresentation extends GameActionRepresentation {
 
     private final PlayerRepresentation player;
     private final int numberOfResourcesDiscarded;

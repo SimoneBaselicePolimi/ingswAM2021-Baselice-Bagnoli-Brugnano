@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.server.model.gamehistory.GameAction;
-
-public class ActivateLeaderCardsActionRepresentation extends GameAction {
+public class ActivateLeaderCardsActionRepresentation extends GameActionRepresentation {
 
     private final PlayerRepresentation player;
     private final LeaderCardRepresentation leaderCard;

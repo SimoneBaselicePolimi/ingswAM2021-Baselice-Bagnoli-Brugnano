@@ -1,17 +1,16 @@
 package it.polimi.ingsw.client.gameupdatehandler;
 
-import it.polimi.ingsw.client.gameupdate.ClientDevelopmentCardsTableUpdate;
-import it.polimi.ingsw.client.model.CardDeckRepresentation;
-import it.polimi.ingsw.client.model.DevelopmentCardsTableRepresentation;
+import it.polimi.ingsw.client.gameupdate.ClientShuffledDevelopmentCardDeckOnTableUpdate;
+import it.polimi.ingsw.client.model.CoveredCardsDeckRepresentation;
+import it.polimi.ingsw.client.model.DevelopmentCardRepresentation;
 import it.polimi.ingsw.client.model.GameContextRepresentation;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerDevelopmentCardsTableUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerMarketUpdate;
 
-public class ShuffledDevelopmentCardDeckOnTableUpdateHandler extends GameUpdateHandler<ClientDevelopmentCardsTableUpdate>{
-    //TODO Stesso di ClientDevelopmentCardsTableUpdate? Quale utilizziamo?
+public class ShuffledDevelopmentCardDeckOnTableUpdateHandler extends GameUpdateHandler<ClientShuffledDevelopmentCardDeckOnTableUpdate>{
+
     @Override
-    public void handleGameUpdate(ClientDevelopmentCardsTableUpdate update, GameContextRepresentation gameContextRepresentation) {
-        DevelopmentCardsTableRepresentation cardDeck = gameContextRepresentation.getDevelopmentCardsTable();
-        cardDeck.setCards(update.developmentCardsOnTop);
+    public void handleGameUpdate(ClientShuffledDevelopmentCardDeckOnTableUpdate update, GameContextRepresentation gameContextRepresentation) {
+        CoveredCardsDeckRepresentation<DevelopmentCardRepresentation> deckToUpdate = update.deck;
+        deckToUpdate.setCardOnTop(update.cardOnTop);
+        deckToUpdate.setNumberOfCardsInDeck(update.numberOfCardsInDeck);
     }
 }

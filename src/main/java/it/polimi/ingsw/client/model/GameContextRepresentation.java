@@ -44,8 +44,8 @@ public class GameContextRepresentation  extends Representation{
         return playersOrder;
     }
 
-    public Map<PlayerRepresentation, PlayerContextRepresentation> getPlayerContexts() {
-        return playerContexts;
+    public PlayerContextRepresentation getPlayerContext(PlayerRepresentation playerRepresentation) {
+        return playerContexts.get(playerRepresentation);
     }
 
     public PlayerRepresentation getActivePlayer() {

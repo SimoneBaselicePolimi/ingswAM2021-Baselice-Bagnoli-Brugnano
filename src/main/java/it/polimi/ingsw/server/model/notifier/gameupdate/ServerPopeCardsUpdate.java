@@ -11,6 +11,6 @@ import java.util.Map;
 public class ServerPopeCardsUpdate extends ServerGameUpdate {
 
 	@SerializeAsMapWithIdKey
-	public Map<Player, List<PopeFavorCardState>> faithPopeCards;
+	public Map<Player, List<PopeFavorCardState>> faithPopeCardsState;
 
 }

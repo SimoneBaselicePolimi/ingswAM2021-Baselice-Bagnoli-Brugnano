@@ -59,9 +59,9 @@ public class GameStateTest {
 
     List<DevelopmentCard> availableDevelopmentCards;
 
-    Player player1 = new Player("first");
-    Player player2 = new Player("second");
-    Player player3 = new Player("third");
+    Player player1 = new Player("first", gameItemsManager);
+    Player player2 = new Player("second", gameItemsManager);
+    Player player3 = new Player("third", gameItemsManager);
 
     List<Player> playersInOrder = List.of(player1, player2, player3);
 

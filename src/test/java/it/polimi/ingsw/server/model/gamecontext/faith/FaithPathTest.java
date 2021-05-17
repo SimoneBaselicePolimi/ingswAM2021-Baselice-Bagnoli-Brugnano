@@ -2,9 +2,12 @@ package it.polimi.ingsw.server.model.gamecontext.faith;
 
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,12 +16,19 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class FaithPathTest {
 
+    @Mock
+    GameHistory gameHistory;
+
+    @Mock
+    GameItemsManager gameItemsManager;
+
     // Players Initialization
-    Player player1 = new Player("player1");
-    Player player2 = new Player("player2");
-    Player player3 = new Player("player3");
+    Player player1 = new Player("player1", gameItemsManager);
+    Player player2 = new Player("player2", gameItemsManager);
+    Player player3 = new Player("player3", gameItemsManager);
     Set<Player> players = Set.of(
             player1,
             player2,
@@ -26,8 +36,7 @@ class FaithPathTest {
     );
     FaithPath faithPath;
 
-    @Mock
-    GameHistory gameHistory;
+
 
     /**
      * Faith Path initialization.
@@ -51,7 +60,7 @@ class FaithPathTest {
      * Tests the constructor of Faith Path if illegal arguments are passed as parameters:
      * size of victory points array not equals to the length of Faith Path,
      * null pointer to Players,
-     * empy set of Players.
+     * empty set of Players.
      */
     @Test
     void testWrongConstructorParams() {

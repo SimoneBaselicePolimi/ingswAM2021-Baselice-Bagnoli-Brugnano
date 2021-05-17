@@ -18,5 +18,4 @@ public class PlayerOwnedDevelopmentCardDeckRepresentation extends CardDeckRepres
     protected PlayerOwnedDevelopmentCardDeckRepresentation(String itemID, GameItemsManager gameItemsManager, Stack<DevelopmentCardRepresentation> cardDeck) {
         super(itemID, gameItemsManager, cardDeck);
     }
-
 }

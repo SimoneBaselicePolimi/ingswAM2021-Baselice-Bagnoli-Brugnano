@@ -1,21 +1,22 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.server.model.gameitems.*;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
+import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
-import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
 
 public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresentation{
 
     private LeaderCardState state;
-    private List<LeaderCardRequirementRepresentation> requirements;
-    private List<ProductionRepresentation> productions;
-    private List<ResourceStorageRepresentation> resourceStorages;
-    private List<DevelopmentCardCostDiscountRepresentation> cardCostDiscounts;
-    private List<WhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions;
-    int victoryPoints;
+    private final List<LeaderCardRequirementRepresentation> requirements;
+    private final List<ProductionRepresentation> productions;
+    private final List<ResourceStorageRepresentation> resourceStorages;
+    private final List<DevelopmentCardCostDiscountRepresentation> cardCostDiscounts;
+    private final List<WhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions;
+    private final int victoryPoints;
+    private boolean canBeActivated;
 
     /**
      * LeaderCardRepresentation constructor
@@ -27,8 +28,9 @@ public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresen
      * @param resourceStorages list of resource storages (special skill) that the leader card can own (it can be an empty list)
      * @param cardCostDiscounts list of discounts (special skill) that the leader card can own (it can be an empty list)
      * @param whiteMarbleSubstitutions list of substitutions with white marbles (special skill) that the leader card can own
-     * (it can be an empty list)
+* (it can be an empty list)
      * @param victoryPoints number of victory points that the card gives
+     * @param canBeActivated states if the card can be activated
      */
     public LeaderCardRepresentation(
         String itemID,
@@ -39,8 +41,8 @@ public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresen
         List<ResourceStorageRepresentation> resourceStorages,
         List<DevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
         List<WhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
-        int victoryPoints
-    ) {
+        int victoryPoints,
+        boolean canBeActivated) {
         super(itemID, gameItemsManager);
         this.state = state;
         this.requirements = requirements;
@@ -49,6 +51,7 @@ public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresen
         this.cardCostDiscounts = cardCostDiscounts;
         this.whiteMarbleSubstitutions = whiteMarbleSubstitutions;
         this.victoryPoints = victoryPoints;
+        this.canBeActivated = canBeActivated;
     }
 
     public LeaderCardState getState() {
@@ -81,5 +84,13 @@ public class LeaderCardRepresentation extends RegisteredIdentifiableItemRepresen
 
     public int getVictoryPoints() {
         return victoryPoints;
+    }
+
+    public boolean isCanBeActivated() {
+        return canBeActivated;
+    }
+
+    public void setCanBeActivated(boolean canBeActivated) {
+        this.canBeActivated = canBeActivated;
     }
 }

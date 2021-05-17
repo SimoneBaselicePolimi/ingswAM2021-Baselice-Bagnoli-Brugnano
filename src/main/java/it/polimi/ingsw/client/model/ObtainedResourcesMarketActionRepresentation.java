@@ -1,11 +1,10 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.server.model.gamehistory.GameAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
-public class ObtainedResourcesMarketActionRepresentation extends GameAction {
+public class ObtainedResourcesMarketActionRepresentation extends GameActionRepresentation {
     private final PlayerRepresentation player;
     private final Map<ResourceType, Integer> resourcesObtained;
 

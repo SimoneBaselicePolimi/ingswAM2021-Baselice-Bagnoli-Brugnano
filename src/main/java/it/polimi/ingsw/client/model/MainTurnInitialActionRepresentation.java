@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.model;
 
-import it.polimi.ingsw.server.model.gamehistory.GameAction;
-
-public class MainTurnInitialActionRepresentation extends GameAction {
+public class MainTurnInitialActionRepresentation extends GameActionRepresentation {
     private final PlayerRepresentation player;
 
     public MainTurnInitialActionRepresentation(PlayerRepresentation player) {
