@@ -22,7 +22,7 @@ public class PlayerOwnedDevelopmentCardDeck extends CardDeck<DevelopmentCard> {
 	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new PlayerOwnedDevelopmentCardDeck object
 	 *                          (see {@link RegisteredIdentifiableItem})
 	 */
-	protected PlayerOwnedDevelopmentCardDeck(
+	public PlayerOwnedDevelopmentCardDeck(
 		String deckID,
 		GameItemsManager gameItemsManager
 	) {

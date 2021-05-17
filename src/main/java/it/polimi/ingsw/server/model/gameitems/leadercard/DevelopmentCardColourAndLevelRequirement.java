@@ -9,9 +9,9 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLev
  * This class represent the request for a specific number of development cards of a certain colour and level
  */
 public class DevelopmentCardColourAndLevelRequirement extends LeaderCardRequirement {
-    DevelopmentCardColour cardColour;
-    DevelopmentCardLevel cardLevel;
-    int numberOfCards;
+    public final DevelopmentCardColour cardColour;
+    public final DevelopmentCardLevel cardLevel;
+    public final int numberOfCards;
 
     /**
      * DevelopmentCardColorAndLevelRequirement constructor

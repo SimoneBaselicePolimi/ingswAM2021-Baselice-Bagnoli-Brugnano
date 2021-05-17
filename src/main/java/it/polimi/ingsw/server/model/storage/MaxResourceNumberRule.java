@@ -12,7 +12,7 @@ public class MaxResourceNumberRule extends ResourceStorageRule {
 	/**
 	 * Max number of resources that the storage can contain
 	 */
-	private int maxResources;
+	public final int maxResources;
 
 	/**
 	 * MaxResourceNumberRule Constructor

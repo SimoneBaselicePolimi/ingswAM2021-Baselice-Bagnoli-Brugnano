@@ -13,13 +13,13 @@ import java.util.Map;
 public class MarketActionFetchColumnClientRequest extends ClientRequest {
     public final int column;
 
-    public MarketActionFetchColumnClientRequest(
-        Player player, int column) {
+    public MarketActionFetchColumnClientRequest(Player player, int column) {
         super(player);
         this.column = column;
     }
 
-    public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+    public Map<Player, ServerMessage> callHandler(GameState state)
+        throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		return(state.handleRequestFetchColumnMarketAction(this));
 	}
 

@@ -10,13 +10,11 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 
 import java.util.Map;
-import java.util.Set;
 
 public class DevelopmentActionClientRequest extends ClientRequest {
 
     public final DevelopmentCard developmentCard;
     public final int deckNumber;
-
 
     public DevelopmentActionClientRequest(Player player, DevelopmentCard developmentCard, int deckNumber) {
         super(player);

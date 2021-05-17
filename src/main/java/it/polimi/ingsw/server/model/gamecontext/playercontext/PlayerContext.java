@@ -12,7 +12,6 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,7 +58,7 @@ public class PlayerContext {
 	 * @param temporaryStorage temporaryStorage (dependency injection)
 	 * @param baseProductions
 	 */
-	protected PlayerContext(
+	public PlayerContext(
 		Player player,
 		Set<ResourceStorage> shelves,
 		List<PlayerOwnedDevelopmentCardDeck> decks,
@@ -168,7 +167,7 @@ public class PlayerContext {
 	//TODO JavaDoc and Test
 	public Set<Production> getActiveDevelopmentCardsProductions(){
 		return getDevelopmentCardsOnTop().stream()
-			.map(DevelopmentCard::getProduction)
+			.flatMap(card -> card.getProductions().stream())
 			.collect(Collectors.toSet());
 	}
 

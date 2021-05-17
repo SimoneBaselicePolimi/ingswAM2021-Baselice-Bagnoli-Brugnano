@@ -81,7 +81,7 @@ public class GameSetupStateTest extends GameStateTest {
                 null,
                 null,
                 false,
-                false
+                0
             ),
             null,
             null,

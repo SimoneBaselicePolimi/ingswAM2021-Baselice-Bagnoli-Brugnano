@@ -7,7 +7,6 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.ActivateLeaderCardsAction;
 import it.polimi.ingsw.server.model.gamehistory.DiscardLeaderCardsAction;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
@@ -27,8 +26,8 @@ public abstract class LeaderCardActionState extends GameState {
     }
 
     /**
-     * Method that discards the leader card chosen by the player according to his request.
-     * The leader card state changes from active to discard.
+     * Method to discard the leader card chosen by the player according to his request.
+     * The leader card state changes from active to discarded.
      * @param request request of the player to discard the leader card, see {@link DiscardLeaderCardClientRequest}
      * @return messages sent to each player containing all changes made since the last game state update
      * @throws LeaderCardRequirementsNotSatisfiedException if a player wants to discard some leader cards but not
@@ -46,7 +45,6 @@ public abstract class LeaderCardActionState extends GameState {
         gameManager.getGameHistory().addAction(
             new DiscardLeaderCardsAction(activePlayer, request.leaderCardThePlayerWantsToDiscard)
         );
-
 
         return buildGameUpdateServerMessage();
     }

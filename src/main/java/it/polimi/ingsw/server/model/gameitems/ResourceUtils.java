@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.model.gameitems;
 
-import it.polimi.ingsw.server.model.storage.ResourceStorage;
-
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

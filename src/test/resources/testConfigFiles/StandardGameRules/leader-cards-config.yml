@@ -1,0 +1,56 @@
+# TESTING #
+
+## LEADER CARDS CONFIGURATION FILE ##
+leaderCards:
+  - leaderCardID: LEADER_DISC_1
+    requirements:
+      - requirementType: COLOUR
+        cardColour: YELLOW
+        numberOfCards: 1
+      - requirementType: COLOUR
+        cardColour: PURPLE
+        numberOfCards: 1
+    developmentCardCostDiscounts:
+      - resourceType: COINS
+        amountToDiscount: 1
+    victoryPoints: 2
+  - leaderCardID: LEADER_STOR_1
+    requirements:
+      - requirementType: RESOURCE
+        resourceType: SHIELDS
+        numberOfResources: 5
+    resourceStorages:
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: COINS
+    victoryPoints: 3
+  - leaderCardID: LEADER_PROD_1
+    requirements:
+      - requirementType: COLOUR_AND_LEVEL
+        cardColour: YELLOW
+        cardLevel: 2
+        numberOfCards: 1
+    productions:
+      - costs:
+          resources:
+            SHIELDS: 1
+          starResources: 0
+        rewards:
+          resources: {}
+          starResources: 1
+          faithPoints: 1
+    victoryPoints: 4
+  - leaderCardID: LEADER_SUB_1
+    requirements:
+      - requirementType: COLOUR
+        cardColour: YELLOW
+        numberOfCards: 2
+      - requirementType: COLOUR
+        cardColour: BLUE
+        numberOfCards: 1
+    specialMarbleSubstitutions:
+      - resourceType: SERVANTS
+    victoryPoints: 5

@@ -38,8 +38,8 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
 
         // check if the player is trying to add a number of resources different from the number of star resources
         // assigned to him
-        int numOfTotalResourcesInRequest = ResourceUtils.sum(requestToValidate.chosenResourcesToAddByStorage.values()).values()
-            .stream().mapToInt(e -> e).sum();
+        int numOfTotalResourcesInRequest = ResourceUtils.sum(requestToValidate.chosenResourcesToAddByStorage.values())
+            .values().stream().mapToInt(e -> e).sum();
         if (numOfTotalResourcesInRequest != numOfStarResourcesGivenToThePlayer)
             return createInvalidRequestServerMessage(
                 "The number of resources sent is invalid. The number of resources assigned to this " +
@@ -77,7 +77,7 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
         if (requestToValidate.leaderCardsChosenByThePlayer.size() != numberOfLeadersCardsThePlayerKeeps)
             return createInvalidRequestServerMessage(
                 "Invalid request: the number of leader cards chosen by the player is different from the " +
-                    "number specified in the rules for this game. Number of cards to chose: %s",
+                    "number specified in the rules for this game. Number of cards to choose: %s",
                 numberOfLeadersCardsThePlayerKeeps
             );
 
