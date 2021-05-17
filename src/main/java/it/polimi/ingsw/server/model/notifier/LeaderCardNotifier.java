@@ -19,11 +19,11 @@ public class LeaderCardNotifier extends LeaderCard implements Notifier {
     public LeaderCardNotifier(
         String leaderCardID,
         GameItemsManager gameItemsManager,
-        List<LeaderCardRequirement> requirements,
-        List<Production> productions,
-        List<ResourceStorage> resourceStorages,
-        List<DevelopmentCardCostDiscount> cardCostDiscounts,
-        List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
+        Set<LeaderCardRequirement> requirements,
+        Set<Production> productions,
+        Set<ResourceStorage> resourceStorages,
+        Set<DevelopmentCardCostDiscount> cardCostDiscounts,
+        Set<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
         int victoryPoints
     ) {
         super(leaderCardID, gameItemsManager, requirements, productions, resourceStorages, cardCostDiscounts, whiteMarbleSubstitutions, victoryPoints);

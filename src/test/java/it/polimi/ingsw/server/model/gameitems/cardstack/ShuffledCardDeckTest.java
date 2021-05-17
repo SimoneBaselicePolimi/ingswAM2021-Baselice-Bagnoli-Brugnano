@@ -1,8 +1,11 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -11,21 +14,29 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class ShuffledCardDeckTest {
 
     @Mock
     GameItemsManager gameItemsManager;
 
-    List<String> testCards = List.of(
+    List<String> testCards;
+
+    String oneMoreTestCard;
+
+    @BeforeEach
+    void setUp() {
+        testCards = List.of(
             "card1",
             "card2",
             "card3",
             "card4",
             "card5",
             "card6"
-    );
+        );
 
-    String oneMoreTestCard = "anotherCard";
+        oneMoreTestCard = "anotherCard";
+    }
 
     /**
      * Tests Shuffled Card Deck initialization passing to the constructor a specific type of random number generator.

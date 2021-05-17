@@ -14,12 +14,16 @@ public class ResourceStorageBuilder {
 	 */
 	private List<ResourceStorageRule> rules = new ArrayList<>();
 
+	public ResourceStorageBuilder(GameItemsManager gameItemsManager) {
+		this.gameItemsManager = gameItemsManager;
+	}
+
 	/**
 	 * Method to create new ResourceStorageBuilder
 	 * @return ResourceStorageBuilder
 	 */
-	public static ResourceStorageBuilder initResourceStorageBuilder() {
-		return new ResourceStorageBuilder();
+	public static ResourceStorageBuilder initResourceStorageBuilder(GameItemsManager gameItemsManager) {
+		return new ResourceStorageBuilder(gameItemsManager);
 	}
 
 	/**

@@ -1,0 +1,43 @@
+# TESTING #
+
+## MARKET CONFIGURATION FILE ##
+marketMatrix:
+  numberOfRows: 3
+  numberOfColumns: 4
+marbles:
+  - marbleConfig:
+      marbleID: MARBLE_WHITE
+      resourceType: null
+      numberOfFaithPoints: 0
+      isSpecial: true
+    numberOfMarbles: 4
+  - marbleConfig:
+      marbleID: MARBLE_BLUE
+      resourceType: SHIELDS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_GREY
+      resourceType: STONES
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_YELLOW
+      resourceType: COINS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_PURPLE
+      resourceType: SERVANTS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_RED
+      resourceType: null
+      numberOfFaithPoints: 1
+      isSpecial: false
+    numberOfMarbles: 1

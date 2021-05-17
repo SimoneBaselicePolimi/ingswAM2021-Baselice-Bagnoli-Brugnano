@@ -1,10 +1,18 @@
 package it.polimi.ingsw.server.model.gameitems;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class WhiteMarbleSubstitutionTest {
+
+    @Mock
+    GameItemsManager gameItemsManager;
+
     /**
      * Tests the construction of White Marble Substitution Item. If null Resource type is passed as parameter
      * to the constructor, an Exception is thrown.
@@ -13,10 +21,10 @@ class WhiteMarbleSubstitutionTest {
     void testWhiteMarbleSubstitutionConstructor() {
         assertThrows(
                 IllegalArgumentException.class,
-                ()->new WhiteMarbleSubstitution(null)
+                ()->new WhiteMarbleSubstitution("ID1", gameItemsManager, null)
         );
         assertDoesNotThrow(
-                ()->new WhiteMarbleSubstitution(ResourceType.SERVANTS)
+                ()->new WhiteMarbleSubstitution("ID2", gameItemsManager, ResourceType.SERVANTS)
         );
     }
 
@@ -26,11 +34,11 @@ class WhiteMarbleSubstitutionTest {
     @Test
     void testWhiteMarbleSubstitutionResource() {
         WhiteMarbleSubstitution substitution1 = new WhiteMarbleSubstitution(
-                ResourceType.SHIELDS);
+                "ID1", gameItemsManager, ResourceType.SHIELDS);
         WhiteMarbleSubstitution substitution2 = new WhiteMarbleSubstitution(
-                ResourceType.COINS);
+                "ID2", gameItemsManager, ResourceType.COINS);
         WhiteMarbleSubstitution substitution3 = new WhiteMarbleSubstitution(
-                ResourceType.SHIELDS);
+                "ID3", gameItemsManager, ResourceType.SHIELDS);
 
         assertEquals(ResourceType.SHIELDS,substitution1.getResourceTypeToSubstitute());
         assertEquals(ResourceType.COINS, substitution2.getResourceTypeToSubstitute());

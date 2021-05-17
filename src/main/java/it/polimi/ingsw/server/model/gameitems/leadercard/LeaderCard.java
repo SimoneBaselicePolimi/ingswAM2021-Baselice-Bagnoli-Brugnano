@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * This class represent a specific type of card used in the game: the leader card
@@ -12,12 +12,12 @@ import java.util.List;
 public class LeaderCard extends RegisteredIdentifiableItem {
 
 	private LeaderCardState state;
-	private List<LeaderCardRequirement> requirements;
-	private List<Production> productions;
-	private List<ResourceStorage> resourceStorages;
-	private List<DevelopmentCardCostDiscount> cardCostDiscounts;
-	private List<WhiteMarbleSubstitution> whiteMarbleSubstitutions;
-	int victoryPoints;
+	private final Set<LeaderCardRequirement> requirements;
+	private final Set<Production> productions;
+	private final Set<ResourceStorage> resourceStorages;
+	private final Set<DevelopmentCardCostDiscount> cardCostDiscounts;
+	private final Set<WhiteMarbleSubstitution> whiteMarbleSubstitutions;
+	private final int victoryPoints;
 
 	/**
 	 * LeaderCard constructor
@@ -25,21 +25,21 @@ public class LeaderCard extends RegisteredIdentifiableItem {
 	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new LeaderCard object
 	 *                         (see {@link RegisteredIdentifiableItem})
 	 * @param requirements requirements to activate the leader card
-	 * @param productions list of productions (special skill) that the leader card can own (it can be an empty list)
-	 * @param resourceStorages list of resource storages (special skill) that the leader card can own (it can be an empty list)
-	 * @param cardCostDiscounts list of discounts (special skill) that the leader card can own (it can be an empty list)
-	 * @param whiteMarbleSubstitutions list of substitutions with white marbles (special skill) that the leader card can own
-	 * (it can be an empty list)
+	 * @param productions set of productions (special skill) that the leader card can own (it can be an empty set)
+	 * @param resourceStorages set of resource storages (special skill) that the leader card can own (it can be an empty set)
+	 * @param cardCostDiscounts set of discounts (special skill) that the leader card can own (it can be an empty set)
+	 * @param whiteMarbleSubstitutions set of substitutions with white marbles (special skill) that the leader card can own
+	 * (it can be an empty set)
 	 * @param victoryPoints number of victory points that the card gives
 	 */
 	public LeaderCard (
 		String leaderCardID,
 		GameItemsManager gameItemsManager,
-		List<LeaderCardRequirement> requirements,
-		List<Production> productions,
-		List<ResourceStorage> resourceStorages,
-		List<DevelopmentCardCostDiscount> cardCostDiscounts,
-		List<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
+		Set<LeaderCardRequirement> requirements,
+		Set<Production> productions,
+		Set<ResourceStorage> resourceStorages,
+		Set<DevelopmentCardCostDiscount> cardCostDiscounts,
+		Set<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
 		int victoryPoints
 	){
 	    super(leaderCardID, gameItemsManager);
@@ -102,7 +102,7 @@ public class LeaderCard extends RegisteredIdentifiableItem {
 	 * Method to get the list of productions of the leader card
 	 * @return list of productions (special skills) that the leader card can own (it can be an empty list)
 	 */
-	public List<Production> getProductions() {
+	public Set<Production> getProductions() {
 		return productions;
 	}
 
@@ -110,7 +110,7 @@ public class LeaderCard extends RegisteredIdentifiableItem {
 	 * Method to get the list of resource storages of the leader card
 	 * @return list of resource storages (special skills) that the leader card can own (it can be an empty list)
 	 */
-	public List<ResourceStorage> getResourceStorages() {
+	public Set<ResourceStorage> getResourceStorages() {
 		return resourceStorages;
 	}
 
@@ -118,7 +118,7 @@ public class LeaderCard extends RegisteredIdentifiableItem {
 	 * Method to get the list of discounts of the leader card
 	 * @return list of discounts (special skills) that the leader card can own (it can be an empty list)
 	 */
-	public List<DevelopmentCardCostDiscount> getDevelopmentCardCostDiscount() {
+	public Set<DevelopmentCardCostDiscount> getDevelopmentCardCostDiscount() {
 		return cardCostDiscounts;
 	}
 
@@ -126,7 +126,7 @@ public class LeaderCard extends RegisteredIdentifiableItem {
 	 * Method to get the list of substitutions of the leader card
 	 * @return list of substitutions with white marbles (special skills) that the leader card can own (it can be an empty list)
 	 */
-	public List<WhiteMarbleSubstitution> getWhiteMarbleSubstitutions() {
+	public Set<WhiteMarbleSubstitution> getWhiteMarbleSubstitutions() {
 		return whiteMarbleSubstitutions;
 	}
 

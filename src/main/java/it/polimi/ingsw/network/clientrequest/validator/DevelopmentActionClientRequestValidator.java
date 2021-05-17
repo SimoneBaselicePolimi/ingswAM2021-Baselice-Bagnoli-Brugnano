@@ -15,7 +15,7 @@ public class DevelopmentActionClientRequestValidator extends ClientRequestValida
      * Method that sends an error message if:
      * - The development card requested by the player is not available
      * - The player does not have the necessary resources to get the development card
-     * - The player cannot add the development card on top of the deck specified by him
+     * - The player can not add the development card on top of the specified deck
      * @param requestToValidate specific request sent by the client
      * @param gameManager GameManager, see {@link GameManager}
      * @return Optional<InvalidRequestServerMessage>, see {@link InvalidRequestServerMessage}
@@ -38,7 +38,7 @@ public class DevelopmentActionClientRequestValidator extends ClientRequestValida
         //check if the player has the necessary resources to get the development card
         Map<ResourceType, Integer> playerResources = playerContext.getAllResources();
         for (ResourceType resourceType : requestToValidate.developmentCard.getPurchaseCost().keySet()) {
-            if (!playerResources.keySet().contains(resourceType)
+            if (!playerResources.containsKey(resourceType)
                 || playerResources.get(resourceType) < requestToValidate.developmentCard.getPurchaseCost().get(resourceType)
             )
                 return createInvalidRequestServerMessage(

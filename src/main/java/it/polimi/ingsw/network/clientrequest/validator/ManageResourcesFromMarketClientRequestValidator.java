@@ -1,14 +1,10 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
-import it.polimi.ingsw.network.clientrequest.MarketActionFetchColumnClientRequest;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
@@ -41,7 +37,7 @@ public class ManageResourcesFromMarketClientRequestValidator extends ClientReque
         Map<ResourceStorage, Map<ResourceType, Integer>> totalResources = new HashMap<>();
 
         // check if star resources chosen by the player are from those possible to choose
-        for (Map<ResourceType, Integer> starResourcesChosenToAdd: requestToValidate.starResourcesChosenToAddByStorage.values()){
+        for (Map<ResourceType, Integer> starResourcesChosenToAdd : requestToValidate.starResourcesChosenToAddByStorage.values()){
             for (ResourceType resourceType : starResourcesChosenToAdd.keySet()){
                 if (!possibleStarMarbleSubstitution.contains(resourceType)) {
                     return createInvalidRequestServerMessage(

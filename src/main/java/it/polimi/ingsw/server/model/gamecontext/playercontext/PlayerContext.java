@@ -12,7 +12,6 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,7 +58,7 @@ public class PlayerContext {
 	 * @param temporaryStorage temporaryStorage (dependency injection)
 	 * @param baseProductions
 	 */
-	protected PlayerContext(
+	public PlayerContext(
 		Player player,
 		Set<ResourceStorage> shelves,
 		List<PlayerOwnedDevelopmentCardDeck> decks,
@@ -168,7 +167,7 @@ public class PlayerContext {
 	//TODO JavaDoc and Test
 	public Set<Production> getActiveDevelopmentCardsProductions(){
 		return getDevelopmentCardsOnTop().stream()
-			.map(DevelopmentCard::getProduction)
+			.flatMap(card -> card.getProductions().stream())
 			.collect(Collectors.toSet());
 	}
 
@@ -291,6 +290,28 @@ public class PlayerContext {
 				.flatMap(resourceStorage -> resourceStorage.peekResources().entrySet().stream())
 				.collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
 	}
+
+	public void removeResourcesBasedOnResourcesStoragesPriority(
+		Map<ResourceType, Integer> resourcesToRemove
+	) throws NotEnoughResourcesException {
+
+		Map<ResourceType, Integer> resourceCostLeftToRemove = new HashMap<>(resourcesToRemove);
+
+		for (ResourceStorage storage : getResourceStoragesForResourcesFromMarket()) {
+			Map<ResourceType, Integer> resourcesRemovableFromStorage = ResourceUtils.intersection(
+				storage.peekResources(),
+				resourceCostLeftToRemove
+			);
+			storage.removeResources(resourcesRemovableFromStorage);
+			resourceCostLeftToRemove = ResourceUtils.difference(
+				resourceCostLeftToRemove,
+				resourcesRemovableFromStorage
+			);
+		}
+
+		getInfiniteChest().removeResources(resourceCostLeftToRemove);
+	}
+
 
 	/**
 	 * This method allows to get one of the decks of development cards owned by the player.

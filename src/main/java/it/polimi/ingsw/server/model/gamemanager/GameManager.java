@@ -56,7 +56,7 @@ public class GameManager {
 	/**
 	 * GameManager constructor
 	 * @param players players of the game
-	 * @param controller, see @link ServerController}
+	 * @param controller, see {@link ServerController}
 	 * @param gameRulesPath
 	 * @throws InvalidGameRules
 	 * @throws GameContextCreationError
@@ -75,8 +75,8 @@ public class GameManager {
 		this.gameHistory = new GameHistoryNotifier();
 		this.gameRules = readGameRulesFromFiles(gameRulesPath);
 
-		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(players, gameRules, gameItemsManager);
-		this.gameContext = contextBuilder.build();
+		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(players, gameRules, gameItemsManager, gameHistory);
+		this.gameContext = contextBuilder.buildGameContext();
 
 		changeState();
 	}
@@ -137,7 +137,11 @@ public class GameManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request) throws ResourceStorageRuleViolationException, LeaderCardRequirementsNotSatisfiedException, ForbiddenPushOnTopException, NotEnoughResourcesException {
+	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request)
+		throws ResourceStorageRuleViolationException,
+		LeaderCardRequirementsNotSatisfiedException,
+		ForbiddenPushOnTopException,
+		NotEnoughResourcesException {
 		ClientRequestValidator validator = request.getValidator();
 		Optional<InvalidRequestServerMessage> error = validator.getErrorMessage(request, this);
 		if(error.isPresent())
@@ -150,7 +154,7 @@ public class GameManager {
 
 		FileManager fileManager = FileManager.getFileManagerInstance();
 
-		if (gameRulesPath != null && !gameRulesPath.isEmpty())
+		if (gameRulesPath == null || gameRulesPath.isEmpty())
 			gameRulesPath = FileManager.DEFAULT_RULES_PATH;
 
 		try {
@@ -176,7 +180,7 @@ public class GameManager {
 	}
 
 	/**
-	 * Method to change the current game state. If the game has not yet started, the method creates the new game.
+	 * Method to change the current game state. If the game has not started yet, the method creates the new game.
 	 */
 	private void changeState() {
 		if (currentState == null)

@@ -72,7 +72,7 @@ class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoi
                 null,
                 null,
                 false,
-                false
+                0
             ),
             null,
             null,

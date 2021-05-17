@@ -10,7 +10,6 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.utils.serialization.annotations.*;
 
 import java.util.Map;
-import java.util.Set;
 
 public class DiscardLeaderCardClientRequest extends ClientRequest {
 
