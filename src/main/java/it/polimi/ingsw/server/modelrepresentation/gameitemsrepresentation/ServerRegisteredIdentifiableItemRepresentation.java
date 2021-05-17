@@ -3,9 +3,10 @@ package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
+import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 
-public class ServerRegisteredIdentifiableItemRepresentation extends ClientRepresentation implements IdentifiableItem {
-    protected final String itemID;
+public class ServerRegisteredIdentifiableItemRepresentation extends ServerRepresentation implements IdentifiableItem {
+    public final String itemID;
 
     protected ServerRegisteredIdentifiableItemRepresentation(String itemID, GameItemsManager gameItemsManager) {
         this.itemID = itemID;

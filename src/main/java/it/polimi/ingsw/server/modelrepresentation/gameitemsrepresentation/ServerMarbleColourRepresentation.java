@@ -11,17 +11,17 @@ public class ServerMarbleColourRepresentation extends ServerRegisteredIdentifiab
     /**
      * Optional type of resource obtainable with this Marble
      */
-    private final Optional<ResourceType> resourceType;
+    public final Optional<ResourceType> resourceType;
 
     /**
      * Number of faith points given to the Player who owns this Marble
      */
-    private final int faithPoints;
+    public final int faithPoints;
 
     /**
      * Marble that can be transformed into a generic type of resource by activating a special Leader card power
      */
-    private final boolean isSpecialMarble;
+    public final boolean isSpecialMarble;
 
     /**
      * MarbleColourRepresentation constructor.
@@ -44,17 +44,5 @@ public class ServerMarbleColourRepresentation extends ServerRegisteredIdentifiab
         this.resourceType = resourceType;
         this.faithPoints = faithPoints;
         this.isSpecialMarble = isSpecialMarble;
-    }
-
-    public Optional<ResourceType> getResourceType() {
-        return resourceType;
-    }
-
-    public int getFaithPoints() {
-        return faithPoints;
-    }
-
-    public boolean isSpecialMarble() {
-        return isSpecialMarble;
     }
 }

@@ -8,12 +8,12 @@ public class ServerDevelopmentCardCostDiscountRepresentation extends ServerRegis
     /**
      * Resource type the Player can discount from the cost of a Development Card
      */
-    private final ResourceType resourceType;
+    public final ResourceType resourceType;
 
     /**
      * Number of resources the Player can discount from the cost of a Development Card
      */
-    private final int amountToDiscount;
+    public final int amountToDiscount;
 
     /**
      * DevelopmentCardCostDiscountRepresentation constructor.
@@ -31,13 +31,5 @@ public class ServerDevelopmentCardCostDiscountRepresentation extends ServerRegis
         super(itemID, gameItemsManager);
         this.resourceType = resourceType;
         this.amountToDiscount = amountToDiscount;
-    }
-
-    public ResourceType getResourceType() {
-        return resourceType;
-    }
-
-    public int getAmountToDiscount() {
-        return amountToDiscount;
     }
 }
