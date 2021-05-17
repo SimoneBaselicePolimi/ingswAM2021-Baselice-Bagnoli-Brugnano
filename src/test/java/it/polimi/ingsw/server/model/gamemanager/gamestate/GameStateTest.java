@@ -13,7 +13,6 @@ import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -30,8 +29,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -57,11 +54,9 @@ public class GameStateTest {
     @Mock
     FaithPath faithPath;
 
-    Player player1 = new Player("first", gameItemsManager);
-    Player player2 = new Player("second", gameItemsManager);
-    Player player3 = new Player("third", gameItemsManager);
+    Player player1, player2, player3;
 
-    List<Player> playersInOrder = List.of(player1, player2, player3);
+    List<Player> playersInOrder;
 
     @Mock
     PlayerContext playerContext1;
@@ -97,11 +92,14 @@ public class GameStateTest {
     DevelopmentCard rightCardSecondLevel;
     DevelopmentCard rightCardFirstLevel;
 
-    @Mock
-    PlayerOwnedDevelopmentCardDeck playerDeck;
-
     @BeforeEach
     void gameStateTestsSetUp() {
+
+        player1 = new Player("first", gameItemsManager);
+        player2 = new Player("second", gameItemsManager);
+        player3 = new Player("third", gameItemsManager);
+
+        playersInOrder = List.of(player1, player2, player3);
 
         lenient().when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
         lenient().when(gameManager.getGameHistory()).thenReturn(gameHistory);

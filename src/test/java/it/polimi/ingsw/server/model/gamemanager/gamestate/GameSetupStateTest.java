@@ -37,16 +37,9 @@ public class GameSetupStateTest extends GameStateTest {
     int maxNumberOfPlayers = 3;
     int numberOfLeadersCardsGivenToThePlayer = 4;
     int numberOfLeadersCardsThePlayerKeeps = 2;
-    Map<Player, Integer> playerInitialFaithPoints = Map.of(
-        player1, 0,
-        player2, 5,
-        player3, 3
-    );
-    Map<Player, Integer> playerInitialStarResources = Map.of(
-        player1, 0,
-        player2, 1,
-        player3, 2
-    );
+
+    Map<Player, Integer> playerInitialFaithPoints;
+    Map<Player, Integer> playerInitialStarResources;
 
     GameRules gameRules;
 
@@ -54,6 +47,18 @@ public class GameSetupStateTest extends GameStateTest {
 
     @BeforeEach
     void setUp() {
+
+        playerInitialFaithPoints = Map.of(
+            player1, 0,
+            player2, 5,
+            player3, 3
+        );
+
+        playerInitialStarResources = Map.of(
+            player1, 0,
+            player2, 1,
+            player3, 2
+        );
 
         leaderCards = TestUtils.generateSetOfMockWithID(LeaderCard.class, 15);
 

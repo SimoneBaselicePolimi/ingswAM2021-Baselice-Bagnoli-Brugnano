@@ -25,24 +25,27 @@ class FaithPathTest {
     @Mock
     GameItemsManager gameItemsManager;
 
-    // Players Initialization
-    Player player1 = new Player("player1", gameItemsManager);
-    Player player2 = new Player("player2", gameItemsManager);
-    Player player3 = new Player("player3", gameItemsManager);
-    Set<Player> players = Set.of(
-            player1,
-            player2,
-            player3
-    );
+    Player player1, player2, player3;
+    Set<Player> players;
+
     FaithPath faithPath;
-
-
 
     /**
      * Faith Path initialization.
      */
     @BeforeEach
     void setUp() {
+
+        player1 = new Player("player1", gameItemsManager);
+        player2 = new Player("player2", gameItemsManager);
+        player3 = new Player("player3", gameItemsManager);
+
+        players = Set.of(
+            player1,
+            player2,
+            player3
+        );
+
         faithPath = new FaithPath(
                 20,
                 List.of(

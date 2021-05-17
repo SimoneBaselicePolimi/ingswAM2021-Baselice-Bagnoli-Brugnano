@@ -24,7 +24,7 @@ class FaithPathSinglePlayerTest {
     GameItemsManager gameItemsManager;
 
     // Player Initialization
-    Player singlePlayer = new Player("player1", gameItemsManager);
+    Player singlePlayer;
 
     FaithPathSinglePlayer faithPath;
 
@@ -33,6 +33,9 @@ class FaithPathSinglePlayerTest {
      */
     @BeforeEach
     void setUp() {
+
+        singlePlayer = new Player("player1", gameItemsManager);
+
         faithPath = new FaithPathSinglePlayer(
                 20,
                 List.of(

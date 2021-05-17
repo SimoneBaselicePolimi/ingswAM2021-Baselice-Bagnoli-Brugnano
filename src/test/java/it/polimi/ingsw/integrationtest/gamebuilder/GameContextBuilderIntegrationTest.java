@@ -13,7 +13,10 @@ import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
-import it.polimi.ingsw.server.model.gameitems.*;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.MarbleColour;
+import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -29,14 +32,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
 public class GameContextBuilderIntegrationTest {
@@ -168,10 +171,10 @@ public class GameContextBuilderIntegrationTest {
 
     @BeforeEach
     void buildGameContext() throws IOException, GameContextCreationError {
-        player1 = new Player("id1");
-        player2 = new Player("id2");
-        player3 = new Player("id3");
-        player4 = new Player("id4");
+        player1 = new Player("id1", gameItemsManager);
+        player2 = new Player("id2", gameItemsManager);
+        player3 = new Player("id3", gameItemsManager);
+        player4 = new Player("id4", gameItemsManager);
 
         players = Set.of(
             player1,

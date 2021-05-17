@@ -34,10 +34,10 @@ class GameContextBuilderTest {
 
     @BeforeEach
     void setUp() {
-        player1 = new Player("id1");
-        player2 = new Player("id2");
-        player3 = new Player("id3");
-        player4 = new Player("id4");
+        player1 = new Player("id1", gameItemsManager);
+        player2 = new Player("id2", gameItemsManager);
+        player3 = new Player("id3", gameItemsManager);
+        player4 = new Player("id4", gameItemsManager);
 
         players = Set.of(
             player1,
