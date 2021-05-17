@@ -2,12 +2,12 @@ package it.polimi.ingsw.client.gameupdate;
 
 import it.polimi.ingsw.client.gameupdatehandler.ActivePlayerUpdateHandler;
 import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
-import it.polimi.ingsw.client.model.PlayerRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
 
 public class ClientActivePlayerUpdate extends ClientGameUpdate {
-    public final PlayerRepresentation newActivePlayer;
+    public final ClientPlayerRepresentation newActivePlayer;
 
-    public ClientActivePlayerUpdate(PlayerRepresentation newActivePlayer) {
+    public ClientActivePlayerUpdate(ClientPlayerRepresentation newActivePlayer) {
         this.newActivePlayer = newActivePlayer;
     }
 

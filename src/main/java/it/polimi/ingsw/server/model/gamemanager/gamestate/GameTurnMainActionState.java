@@ -183,7 +183,7 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	 * to be pushed on the top of this Deck
 	 */
 	@Override
-	public Map<Player, ServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) throws ForbiddenPushOnTopException {
+	public Map<Player, ServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) throws ForbiddenPushOnTopException, NotEnoughResourcesException {
 
 		//add development card to the player deck and remove that from the top of the table deck
 		GameContext gameContext = gameManager.getGameContext();

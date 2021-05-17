@@ -1,0 +1,7 @@
+package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation;
+
+import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation;
+
+public class ClientFaithPathVaticanReportActionRepresentation extends ClientGameActionRepresentation {
+
+}
