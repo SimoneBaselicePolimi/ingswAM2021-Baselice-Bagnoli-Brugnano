@@ -8,7 +8,7 @@ public class ServerWhiteMarbleSubstitutionRepresentation extends ServerRegistere
     /**
      * Resource type the Player can substitute to a White Marble taken from the Market
      */
-    private final ResourceType resourceTypeToSubstitute;
+    public final ResourceType resourceTypeToSubstitute;
 
     /**
      * WhiteMarbleSubstitutionRepresentation constructor.

@@ -13,11 +13,11 @@ import java.util.Map;
 
 public class ServerDevelopmentCardRepresentation extends ServerRegisteredIdentifiableItemRepresentation {
 
-    private DevelopmentCardLevel level;
-    private DevelopmentCardColour colour;
-    private ServerProductionRepresentation production;
-    private int victoryPoints;
-    private Map<ResourceType, Integer> purchaseCost;
+    public final DevelopmentCardLevel level;
+    public final DevelopmentCardColour colour;
+    public final ServerProductionRepresentation production;
+    public final int victoryPoints;
+    public final Map<ResourceType, Integer> purchaseCost;
 
     /**
      * DevelopmentCardRepresentation constructor
@@ -47,23 +47,4 @@ public class ServerDevelopmentCardRepresentation extends ServerRegisteredIdentif
         this.purchaseCost = purchaseCost;
     }
 
-    public DevelopmentCardLevel getLevel() {
-        return level;
-    }
-
-    public DevelopmentCardColour getColour() {
-        return colour;
-    }
-
-    public ServerProductionRepresentation getProduction() {
-        return production;
-    }
-
-    public int getVictoryPoints() {
-        return victoryPoints;
-    }
-
-    public Map<ResourceType, Integer> getPurchaseCost() {
-        return purchaseCost;
-    }
 }

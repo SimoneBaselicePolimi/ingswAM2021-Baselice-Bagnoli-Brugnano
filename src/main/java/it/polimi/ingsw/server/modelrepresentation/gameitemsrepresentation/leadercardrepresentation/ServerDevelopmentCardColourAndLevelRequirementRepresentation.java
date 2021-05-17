@@ -5,9 +5,9 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLev
 
 public class ServerDevelopmentCardColourAndLevelRequirementRepresentation extends ServerLeaderCardRequirementRepresentation {
 
-    DevelopmentCardColour cardColour;
-    DevelopmentCardLevel cardLevel;
-    int numberOfCards;
+    public final DevelopmentCardColour cardColour;
+    public final DevelopmentCardLevel cardLevel;
+    public final int numberOfCards;
 
     /**
      * DevelopmentCardColourAndLevelRequirementRepresentation constructor
@@ -23,17 +23,5 @@ public class ServerDevelopmentCardColourAndLevelRequirementRepresentation extend
         this.cardColour=cardColour;
         this.cardLevel=cardLevel;
         this.numberOfCards=numberOfCards;
-    }
-
-    public DevelopmentCardColour getCardColour() {
-        return cardColour;
-    }
-
-    public DevelopmentCardLevel getCardLevel() {
-        return cardLevel;
-    }
-
-    public int getNumberOfCards() {
-        return numberOfCards;
     }
 }

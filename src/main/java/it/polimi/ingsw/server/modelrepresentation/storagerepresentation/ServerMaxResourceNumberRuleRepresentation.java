@@ -4,13 +4,10 @@ public class ServerMaxResourceNumberRuleRepresentation extends ServerResourceSto
 	/**
 	 * Max number of resources that the storage can contain
 	 */
-	private final int maxResources;
+	public final int maxResources;
 
 	public ServerMaxResourceNumberRuleRepresentation(int maxResources) {
 		this.maxResources = maxResources;
 	}
 
-	public int getMaxResources() {
-		return maxResources;
-	}
 }

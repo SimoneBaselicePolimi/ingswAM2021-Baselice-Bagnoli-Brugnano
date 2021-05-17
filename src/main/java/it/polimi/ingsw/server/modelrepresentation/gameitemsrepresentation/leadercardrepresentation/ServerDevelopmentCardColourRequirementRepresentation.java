@@ -3,8 +3,9 @@ package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leade
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 
 public class ServerDevelopmentCardColourRequirementRepresentation extends ServerLeaderCardRequirementRepresentation {
-    DevelopmentCardColour cardColour;
-    int numberOfCards;
+
+    public final DevelopmentCardColour cardColour;
+    public final int numberOfCards;
 
     /**
      * DevelopmentCardColourRequirementRepresentation constructor
@@ -14,13 +15,5 @@ public class ServerDevelopmentCardColourRequirementRepresentation extends Server
     public ServerDevelopmentCardColourRequirementRepresentation(DevelopmentCardColour cardColour, int numberOfCards) {
         this.cardColour = cardColour;
         this.numberOfCards = numberOfCards;
-    }
-
-    public DevelopmentCardColour getCardColour() {
-        return cardColour;
-    }
-
-    public int getNumberOfCards() {
-        return numberOfCards;
     }
 }

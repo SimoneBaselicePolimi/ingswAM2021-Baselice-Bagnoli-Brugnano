@@ -9,19 +9,20 @@ import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.Server
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerWhiteMarbleSubstitutionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation;
 
 import java.util.List;
 
 public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiableItemRepresentation {
 
-    private LeaderCardState state;
-    private final List<ServerLeaderCardRequirementRepresentation> requirements;
-    private final List<ServerProductionRepresentation> productions;
-    private final List<ClientResourceStorageRepresentation> resourceStorages;
-    private final List<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts;
-    private final List<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions;
-    private final int victoryPoints;
-    private boolean canBeActivated;
+    public final LeaderCardState state;
+    public final List<ServerLeaderCardRequirementRepresentation> requirements;
+    public final List<ServerProductionRepresentation> productions;
+    public final List<ServerResourceStorageRepresentation> resourceStorages;
+    public final List<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts;
+    public final List<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions;
+    public final int victoryPoints;
+    public final boolean canBeActivated;
 
     /**
      * LeaderCardRepresentation constructor
@@ -43,7 +44,7 @@ public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiable
         LeaderCardState state,
         List<ServerLeaderCardRequirementRepresentation> requirements,
         List<ServerProductionRepresentation> productions,
-        List<ClientResourceStorageRepresentation> resourceStorages,
+        List<ServerResourceStorageRepresentation> resourceStorages,
         List<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
         List<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
         int victoryPoints,
@@ -56,46 +57,6 @@ public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiable
         this.cardCostDiscounts = cardCostDiscounts;
         this.whiteMarbleSubstitutions = whiteMarbleSubstitutions;
         this.victoryPoints = victoryPoints;
-        this.canBeActivated = canBeActivated;
-    }
-
-    public LeaderCardState getState() {
-        return state;
-    }
-
-    public void setState(LeaderCardState state) {
-        this.state = state;
-    }
-
-    public List<ServerLeaderCardRequirementRepresentation> getRequirements() {
-        return requirements;
-    }
-
-    public List<ServerProductionRepresentation> getProductions() {
-        return productions;
-    }
-
-    public List<ClientResourceStorageRepresentation> getResourceStorages() {
-        return resourceStorages;
-    }
-
-    public List<ServerDevelopmentCardCostDiscountRepresentation> getCardCostDiscounts() {
-        return cardCostDiscounts;
-    }
-
-    public List<ServerWhiteMarbleSubstitutionRepresentation> getWhiteMarbleSubstitutions() {
-        return whiteMarbleSubstitutions;
-    }
-
-    public int getVictoryPoints() {
-        return victoryPoints;
-    }
-
-    public boolean isCanBeActivated() {
-        return canBeActivated;
-    }
-
-    public void setCanBeActivated(boolean canBeActivated) {
         this.canBeActivated = canBeActivated;
     }
 }

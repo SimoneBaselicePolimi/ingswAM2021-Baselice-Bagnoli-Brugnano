@@ -6,13 +6,11 @@ public class ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation e
 	/**
 	 * List of storages that implement this specific rule
 	 */
-	private final List<ServerResourceStorageRepresentation> storages;
+	public final List<ServerResourceStorageRepresentation> storages;
 
-	public ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation(List<ServerResourceStorageRepresentation> storages) {
+	public ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation(
+		List<ServerResourceStorageRepresentation> storages
+	) {
 		this.storages = storages;
-	}
-
-	public List<ServerResourceStorageRepresentation> getStorages() {
-		return storages;
 	}
 }
