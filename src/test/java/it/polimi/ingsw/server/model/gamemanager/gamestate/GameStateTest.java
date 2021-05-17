@@ -32,6 +32,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -74,6 +76,8 @@ public class GameStateTest {
 
     Map<Player, Set<ResourceStorage>> shelvesForPlayers;
 
+    Set<ResourceStorage> leaderStoragesForPlayer1;
+
     Set<GameUpdate> mockUpdates;
 
     @Mock
@@ -103,6 +107,7 @@ public class GameStateTest {
 
         lenient().when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
         lenient().when(gameManager.getGameHistory()).thenReturn(gameHistory);
+        lenient().when(gameManager.getPlayers()).thenReturn(new HashSet<>(playersInOrder));
 
         lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
         lenient().when(gameContext.getMarket()).thenReturn(market);
@@ -117,9 +122,6 @@ public class GameStateTest {
         //Matrix 2 x 3
         lenient().when(market.getNumOfColumns()).thenReturn(3);
         lenient().when(market.getNumOfRows()).thenReturn(3);
-
-        lenient().when(market.fetchMarbleColumn(2)).thenReturn(marblesInColumn);
-        lenient().when(market.fetchMarbleRow(1)).thenReturn(marblesInRow);
 
         lenient().when(marble1.isSpecialMarble()).thenReturn(false);
         lenient().when(marble2.isSpecialMarble()).thenReturn(true);
@@ -167,6 +169,8 @@ public class GameStateTest {
             player3, TestUtils.generateSetOfMockWithID(ResourceStorage.class, 3)
         );
 
+        leaderStoragesForPlayer1 =  TestUtils.generateSetOfMockWithID(ResourceStorage.class, 2);
+
         lenient().when(playerContext1.getShelves()).thenReturn(shelvesForPlayers.get(player1));
         Set<ResourceStorage> totalStoragesStoragesForResourcesFromMarket = new HashSet<>();
         totalStoragesStoragesForResourcesFromMarket.addAll(shelvesForPlayers.get(player1));
@@ -209,7 +213,7 @@ public class GameStateTest {
         assertEquals(mockUpdates, message.gameUpdates);
     }
 
-    void verifyThatEveryPlayerGetsAllGameUpdates(Map<Player, ServerMessage> answerServerMessages) {
+    <M extends  ServerMessage> void verifyThatEveryPlayerGetsAllGameUpdates(Map<Player, M> answerServerMessages) {
         for(Player player : playersInOrder) {
             assertTrue(answerServerMessages.containsKey(player));
             assertTrue(answerServerMessages.get(player) instanceof GameUpdateServerMessage);
@@ -233,6 +237,45 @@ public class GameStateTest {
         assertEquals(Set.of(playerThatSentTheInvalidRequest), answerServerMessages.keySet());
 
         assertTrue(answerServerMessages.get(playerThatSentTheInvalidRequest) instanceof InvalidRequestServerMessage);
+
+    }
+
+    @Test
+    void testRemoveResourcesBasedOnResourcesStoragesPriority() {
+
+//        Iterator<ResourceStorage> player1ShelvesIter = shelvesForPlayers.get(player1).iterator();
+//        ResourceStorage shelve1 = player1ShelvesIter.next();
+//        ResourceStorage shelve2 = player1ShelvesIter.next();
+//        ResourceStorage shelve3 = player1ShelvesIter.next();
+//
+//        Iterator<ResourceStorage> player1LeaderStorageIter = leaderStoragesForPlayer1.iterator();
+//        ResourceStorage leaderStorage1 = player1LeaderStorageIter.next();
+//        ResourceStorage leaderStorage2 = player1LeaderStorageIter.next();
+//
+//        when(shelve1.peekResources()).thenReturn(Map.of(
+//            ResourceType.SHIELDS, 3
+//        ));
+//
+//        when(shelve2.peekResources()).thenReturn(Map.of(
+//            ResourceType.SHIELDS, 2,
+//            ResourceType.COINS, 10
+//        ));
+//
+//        when(shelve3.peekResources()).thenReturn(Map.of(
+//            ResourceType.SHIELDS,3
+//        ));
+//
+//        when(leaderStorage1.peekResources()).thenReturn(Map.of(
+//            ResourceType.STONES,3,
+//            ResourceType.SERVANTS, 2
+//        ));
+//
+//        when(leaderStorage2.peekResources()).thenReturn(Map.of(
+//            ResourceType.SHIELDS, 1
+//        ));
+//
+//        GameState state = new GameTurnMainActionState(gameManager);
+//        state.
 
     }
 
