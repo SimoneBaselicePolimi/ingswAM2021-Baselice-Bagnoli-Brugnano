@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
 import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerLeaderCardsThePlayerOwnsUpdate;
@@ -82,7 +83,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 		GameInfoConfig gameInfo = gameManager.getGameRules().gameInfoConfig;
 		numberOfLeadersCardsGivenToThePlayer = gameInfo.gameSetup.numberOfLeadersCardsGivenToThePlayer;
 		numberOfLeadersCardsThePlayerKeeps = gameInfo.gameSetup.numberOfLeadersCardsThePlayerKeeps;
-		allLeaderCards = gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class);
+		allLeaderCards = gameManager.getGameItemsManager().getAllItemsOfType(LeaderCardImp.class);
 		randGenerator = new Random();
 		initializeGameSetupState();
 	}
@@ -99,7 +100,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 		GameInfoConfig gameInfo = gameManager.getGameRules().gameInfoConfig;
 		numberOfLeadersCardsGivenToThePlayer = gameInfo.gameSetup.numberOfLeadersCardsGivenToThePlayer;
 		numberOfLeadersCardsThePlayerKeeps = gameInfo.gameSetup.numberOfLeadersCardsThePlayerKeeps;
-		allLeaderCards = gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class);
+		allLeaderCards = gameManager.getGameItemsManager().getAllItemsOfType(LeaderCardImp.class);
         this.randGenerator = randGenerator;
 		initializeGameSetupState();
 	}

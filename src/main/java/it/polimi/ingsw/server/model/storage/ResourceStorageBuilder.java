@@ -32,7 +32,7 @@ public class ResourceStorageBuilder {
 	 * @return ResourceStorage new storage
 	 */
 	public ResourceStorage createResourceStorage(String storageID) {
-		return new ResourceStorage(storageID, gameItemsManager, rules);
+		return new ResourceStorageImp(storageID, gameItemsManager, rules);
 	}
 
 	/**

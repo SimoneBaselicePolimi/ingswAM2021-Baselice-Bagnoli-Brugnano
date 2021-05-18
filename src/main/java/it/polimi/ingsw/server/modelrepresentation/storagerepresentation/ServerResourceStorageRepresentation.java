@@ -19,7 +19,7 @@ public class ServerResourceStorageRepresentation extends ServerRegisteredIdentif
      */
     public final Map<ResourceType,Integer> resources;
 
-    protected ServerResourceStorageRepresentation(
+    public ServerResourceStorageRepresentation(
         String itemID,
         List<ServerResourceStorageRuleRepresentation> rules,
         Map<ResourceType, Integer> resources

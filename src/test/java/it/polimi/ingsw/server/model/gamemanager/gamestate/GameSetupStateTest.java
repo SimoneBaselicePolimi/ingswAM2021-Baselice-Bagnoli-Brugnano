@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
 import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerFaithUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerLeaderCardsThePlayerOwnsUpdate;
@@ -60,7 +61,7 @@ public class GameSetupStateTest extends GameStateTest {
             player3, 2
         );
 
-        leaderCards = TestUtils.generateSetOfMockWithID(LeaderCard.class, 15);
+        leaderCards = TestUtils.generateSetOfMockWithID(LeaderCardImp.class, 15);
 
         Map<Integer, GameInfoConfig.GameSetup.InitialPlayerResourcesAndFaithPoints> initialResources = new HashMap<>();
         for (int i = 0; i < playersInOrder.size(); i++){
@@ -94,7 +95,7 @@ public class GameSetupStateTest extends GameStateTest {
             null
         );
 
-        when(gameItemsManager.getAllItemsOfType(eq(LeaderCard.class))).thenReturn(leaderCards);
+        when(gameItemsManager.getAllItemsOfType(eq(LeaderCardImp.class))).thenReturn(leaderCards);
         when(gameManager.getGameRules()).thenReturn(gameRules);
 
         state = new GameSetupState(gameManager);

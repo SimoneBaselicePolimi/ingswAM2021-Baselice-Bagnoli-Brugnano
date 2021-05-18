@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,7 @@ class GameItemsManagerTest {
     void setUp() {
         gameItemsManager = new GameItemsManager();
 
-        lc1 = new LeaderCard(
+        lc1 = new LeaderCardImp(
             "lc1",
             gameItemsManager,
             new HashSet<>(),
@@ -41,7 +42,7 @@ class GameItemsManagerTest {
             0
         );
 
-        lc2 = new LeaderCard(
+        lc2 = new LeaderCardImp(
             "lc2",
             gameItemsManager,
             new HashSet<>(),
@@ -70,14 +71,14 @@ class GameItemsManagerTest {
 
     @Test
     void testGetAllItemsOfType() {
-        assertEquals(Set.of(lc1, lc2), gameItemsManager.getAllItemsOfType(LeaderCard.class));
+        assertEquals(Set.of(lc1, lc2), gameItemsManager.getAllItemsOfType(LeaderCardImp.class));
         assertEquals(Set.of(dc1), gameItemsManager.getAllItemsOfType(DevelopmentCard.class));
     }
 
     @Test
     void testGetItem() {
-        assertEquals(lc1, gameItemsManager.getItem(LeaderCard.class, "lc1"));
-        assertEquals(lc2, gameItemsManager.getItem(LeaderCard.class, "lc2"));
+        assertEquals(lc1, gameItemsManager.getItem(LeaderCardImp.class, "lc1"));
+        assertEquals(lc2, gameItemsManager.getItem(LeaderCardImp.class, "lc2"));
         assertEquals(dc1, gameItemsManager.getItem(DevelopmentCard.class, "dc1"));
     }
 
@@ -90,7 +91,7 @@ class GameItemsManagerTest {
     void testGetItemWithInvalidId() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> gameItemsManager.getItem(LeaderCard.class, "ID_THAT_DOES_NOT_EXIST")
+            () -> gameItemsManager.getItem(LeaderCardImp.class, "ID_THAT_DOES_NOT_EXIST")
         );
     }
 

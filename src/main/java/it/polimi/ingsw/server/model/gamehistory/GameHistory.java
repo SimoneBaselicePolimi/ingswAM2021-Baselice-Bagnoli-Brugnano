@@ -1,18 +1,13 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
-import java.util.ArrayList;
+import it.polimi.ingsw.server.model.Representable;
+import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation.ServerMarketRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameHistoryRepresentation;
+
 import java.util.List;
 
-public class GameHistory {
+public interface GameHistory extends Representable<ServerGameHistoryRepresentation> {
+    List<GameAction> getGameHistory();
 
-	private List<GameAction> gameActions = new ArrayList<>();
-
-	public List<GameAction> getGameHistory() {
-		return new ArrayList<>(gameActions);
-	}
-
-	public void addAction(GameAction gameAction){
-		gameActions.add(gameAction);
-	}
-
+    void addAction(GameAction gameAction);
 }

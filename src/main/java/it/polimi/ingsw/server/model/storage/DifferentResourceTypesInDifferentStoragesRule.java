@@ -1,10 +1,15 @@
 package it.polimi.ingsw.server.model.storage;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * This is a rule that "checks" multiple storages.
@@ -47,4 +52,15 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 			return true;
 	}
 
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentation() {
+		return new ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation(
+			storages.stream().map(Representable::getServerRepresentation).collect(Collectors.toList())
+		);
+	}
+
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }

@@ -16,8 +16,10 @@ import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.*;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 
 import java.util.*;
@@ -126,11 +128,11 @@ public class GameContextBuilder {
 			);
 		}
 
-		ResourceStorage infiniteChest = new ResourceStorage(
+		ResourceStorage infiniteChest = new ResourceStorageImp(
 			"InfChest_ID", gameItemsManager, new ArrayList<>()
 		);
 
-		ResourceStorage temporaryStorage = new ResourceStorage(
+		ResourceStorage temporaryStorage = new ResourceStorageImp(
 			"TempStorage_ID", gameItemsManager, new ArrayList<>()
 		);
 
@@ -163,7 +165,7 @@ public class GameContextBuilder {
 		String resourceStorageID,
 		List<ResourceStorageRule> rules
 	) {
-		return new ResourceStorage(resourceStorageID, gameItemsManager, rules);
+		return new ResourceStorageImp(resourceStorageID, gameItemsManager, rules);
 	}
 
 	protected ResourceStorage buildResourceStorage(ResourceStorageConfig resourceStorageConf) {
@@ -359,7 +361,7 @@ public class GameContextBuilder {
 		Set<WhiteMarbleSubstitution> specialMarbleSubstitutions,
 		int victoryPoints
 	) {
-		return new LeaderCard(leaderCardID, gameItemsManager, requirements, productions, resourceStorages, cardCostDiscounts, specialMarbleSubstitutions, victoryPoints);
+		return new LeaderCardImp(leaderCardID, gameItemsManager, requirements, productions, resourceStorages, cardCostDiscounts, specialMarbleSubstitutions, victoryPoints);
 	}
 
 	protected LeaderCard buildLeaderCard(LeaderCardsConfig.LeaderCardConfig leaderCardConfig) {

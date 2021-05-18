@@ -3,14 +3,14 @@ package it.polimi.ingsw.server.model.notifier;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
-import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ResourceStorageNotifier extends ResourceStorage implements Notifier {
+public class ResourceStorageNotifier extends ResourceStorageImp implements Notifier {
 
 	protected ResourceStorageNotifier(String resourceStorageID, GameItemsManager gameItemsManager, List<ResourceStorageRule> rules) {
 		super(resourceStorageID, gameItemsManager, rules);

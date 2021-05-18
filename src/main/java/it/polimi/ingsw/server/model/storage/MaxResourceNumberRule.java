@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.model.storage;
 
 
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerMaxResourceNumberRuleRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation;
 
 import java.util.Map;
 /**
@@ -41,4 +44,13 @@ public class MaxResourceNumberRule extends ResourceStorageRule {
 		return true;
 	}
 
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentation() {
+		return new ServerMaxResourceNumberRuleRepresentation(maxResources);
+	}
+
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }

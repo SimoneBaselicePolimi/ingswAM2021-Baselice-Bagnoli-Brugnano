@@ -1,19 +1,11 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
-import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.ClientRequest;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
-import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import org.junit.internal.requests.ClassRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
 
@@ -34,9 +26,9 @@ abstract class LeaderCardActionClientRequestValidatorTest<R extends ClientReques
 
     @Test
     void testThrowsErrorIfLeaderCardIsNotHidden() {
-        LeaderCard l1 = mock(LeaderCard.class);
-        LeaderCard l2 = mock(LeaderCard.class);
-        LeaderCard l3 = mock(LeaderCard.class);
+        LeaderCard l1 = mock(LeaderCardImp.class);
+        LeaderCard l2 = mock(LeaderCardImp.class);
+        LeaderCard l3 = mock(LeaderCardImp.class);
         when(playerContext.getLeaderCards()).thenReturn(Set.of(l1, l2, l3));
 
         when(l1.getState()).thenReturn(LeaderCardState.HIDDEN);
@@ -55,9 +47,9 @@ abstract class LeaderCardActionClientRequestValidatorTest<R extends ClientReques
     @Test
     void testThrowsErrorIfPlayerDoesNotOwnLeaderCard() {
 
-        LeaderCard l = mock(LeaderCard.class);
+        LeaderCard l = mock(LeaderCardImp.class);
         lenient().when(l.getState()).thenReturn(LeaderCardState.HIDDEN);
-        when(playerContext.getLeaderCards()).thenReturn(Set.of(mock(LeaderCard.class), mock(LeaderCard.class)));
+        when(playerContext.getLeaderCards()).thenReturn(Set.of(mock(LeaderCardImp.class), mock(LeaderCardImp.class)));
 
         assertValidatorThrowsError(createLeaderCardActionRequest(l));
     }

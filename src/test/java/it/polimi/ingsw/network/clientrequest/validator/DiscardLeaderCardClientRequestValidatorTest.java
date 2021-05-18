@@ -1,26 +1,10 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
-import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.DiscardLeaderCardClientRequest;
-import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
-import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
-import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
-import it.polimi.ingsw.testutils.TestUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -43,7 +27,7 @@ class DiscardLeaderCardClientRequestValidatorTest
     public DiscardLeaderCardClientRequest createClientRequestToValidate() {
         return new DiscardLeaderCardClientRequest(
             player,
-            mock(LeaderCard.class)
+            mock(LeaderCardImp.class)
         );
     }
 
