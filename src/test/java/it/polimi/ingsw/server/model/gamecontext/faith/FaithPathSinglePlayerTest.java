@@ -26,7 +26,7 @@ class FaithPathSinglePlayerTest {
     // Player Initialization
     Player singlePlayer;
 
-    FaithPathSinglePlayer faithPath;
+    FaithPathSinglePlayerImp faithPath;
 
     /**
      * Faith Path initialization.
@@ -36,7 +36,7 @@ class FaithPathSinglePlayerTest {
 
         singlePlayer = new Player("player1", gameItemsManager);
 
-        faithPath = new FaithPathSinglePlayer(
+        faithPath = new FaithPathSinglePlayerImp(
                 20,
                 List.of(
                         new VaticanReportSection(2, 3, 100),
@@ -57,7 +57,7 @@ class FaithPathSinglePlayerTest {
     @Test
     void testMove() {
 
-        FaithPathSinglePlayer basicFaithPath = new FaithPathSinglePlayer(
+        FaithPathSinglePlayerImp basicFaithPath = new FaithPathSinglePlayerImp(
                 10, new ArrayList<>(), new int[]{0,0,0,0,0,0,0,0,0,0}, singlePlayer, gameHistory);
         assertEquals(0, basicFaithPath.getPlayerFaithPosition(singlePlayer));
         assertEquals(0, basicFaithPath.getBlackCrossFaithPosition());

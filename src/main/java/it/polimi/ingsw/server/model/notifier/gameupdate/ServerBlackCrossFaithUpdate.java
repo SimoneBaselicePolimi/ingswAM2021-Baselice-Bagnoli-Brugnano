@@ -4,4 +4,7 @@ public class ServerBlackCrossFaithUpdate extends ServerGameUpdate {
 
 	public int blackCrossFaithPosition;
 
+	public ServerBlackCrossFaithUpdate(int blackCrossFaithPosition) {
+		this.blackCrossFaithPosition = blackCrossFaithPosition;
+	}
 }

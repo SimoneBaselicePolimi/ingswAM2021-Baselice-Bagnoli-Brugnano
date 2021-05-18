@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.Server
 
 public class ServerPlayerRepresentation extends ServerRegisteredIdentifiableItemRepresentation {
 
-    protected ServerPlayerRepresentation(String itemID) {
+    public ServerPlayerRepresentation(String itemID) {
         super(itemID);
     }
 

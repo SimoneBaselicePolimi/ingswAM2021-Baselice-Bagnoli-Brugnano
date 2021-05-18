@@ -13,7 +13,11 @@ import java.util.Map;
 public class ClientPopeCardsUpdate extends ClientGameUpdate {
 
 	@SerializeAsMapWithIdKey
-	public Map<ClientPlayerRepresentation, List<PopeFavorCardState>> faithPopeCardsStates;
+	public final Map<ClientPlayerRepresentation, List<PopeFavorCardState>> faithPopeCardsStates;
+
+	public ClientPopeCardsUpdate(Map<ClientPlayerRepresentation, List<PopeFavorCardState>> faithPopeCardsStates) {
+		this.faithPopeCardsStates = faithPopeCardsStates;
+	}
 
 	@Override
 	public GameUpdateHandler getHandler() {

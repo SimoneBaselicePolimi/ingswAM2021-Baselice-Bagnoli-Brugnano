@@ -5,6 +5,7 @@ import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
+import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathImp;
 import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
@@ -311,7 +312,7 @@ public class GameContextBuilder {
 		List<VaticanReportSection> vaticanSections,
 		int[] victoryPointsByPosition
 	) {
-		return new FaithPath(faithPathLength, vaticanSections, victoryPointsByPosition, players, gameHistory);
+		return new FaithPathImp(faithPathLength, vaticanSections, victoryPointsByPosition, players, gameHistory);
 	}
 
 	protected FaithPath buildFaithPath() throws GameContextCreationError {

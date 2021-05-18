@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gamecontext;
 
+import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
@@ -7,7 +8,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
+import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathImp;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  *     a specific player </li>
  *     <li> The market, see {@link MarketImp}).</li>
  *     <li> The development cards table, see {@link DevelopmentCardsTable} </li>
- *     <li> The faith path, see {@link FaithPath} </li>
+ *     <li> The faith path, see {@link FaithPathImp} </li>
  * </ul>
  * <p>
  * The game context also offers some utility methods that aggregate together information obtained by multiple
@@ -50,7 +51,7 @@ public class GameContext {
 	 * @param market Market, see {@link MarketImp}
 	 * @param developmentCardsTable the table with the development cards the players can buy, see
 	 * 	{@link DevelopmentCardsTable}
-	 * @param faithPath the faith path, see {@link FaithPath}
+	 * @param faithPath the faith path, see {@link FaithPathImp}
 	 * @param playersOrder An ordered list of players that specifies the player turns order
 	 * @param playerContexts a map that associates every player with his player context. See {@link PlayerContext}
 	 */
@@ -123,7 +124,7 @@ public class GameContext {
 	}
 
 	/**
-	 * @return returns the FaithPath, see {@link FaithPath}
+	 * @return returns the FaithPath, see {@link FaithPathImp}
 	 */
 	public FaithPath getFaithPath() {
 		return faithPath;
