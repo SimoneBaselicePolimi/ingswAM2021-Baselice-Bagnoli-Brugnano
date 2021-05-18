@@ -18,6 +18,4 @@ public abstract class ObservableProxy<I> {
 
     public abstract Set<ServerGameUpdate> getUpdates();
 
-
-
 }

@@ -57,7 +57,7 @@ class GameItemsManagerTest {
             gameItemsManager,
             DevelopmentCardLevel.FIRST_LEVEL,
             DevelopmentCardColour.BLUE,
-            new HashSet<>(),
+            null,
             0,
             new HashMap<>()
         );

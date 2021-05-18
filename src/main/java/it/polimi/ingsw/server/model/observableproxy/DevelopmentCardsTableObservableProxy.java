@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.observableproxy;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -9,6 +9,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTa
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerShuffledDevelopmentCardDeckOnTableUpdate;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation;
 
 import java.util.HashSet;
@@ -45,7 +46,7 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
     }
 
     @Override
-    public ShuffledCardDeck<DevelopmentCard> getDeckByLevelAndColour(DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour) throws IllegalArgumentException {
+    public ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> getDeckByLevelAndColour(DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour) throws IllegalArgumentException {
         return imp.getDeckByLevelAndColour(cardLevel, cardColour);
     }
 

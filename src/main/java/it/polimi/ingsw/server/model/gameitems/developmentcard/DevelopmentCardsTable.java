@@ -1,7 +1,8 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
 import it.polimi.ingsw.server.model.Representable;
-import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation;
 
 import java.util.EmptyStackException;
@@ -37,6 +38,6 @@ public interface DevelopmentCardsTable extends Representable<ServerDevelopmentCa
      * @return the Deck that contains list of development cards that are randomly organized
      * @throws IllegalArgumentException if the deck does not exist
      */
-    ShuffledCardDeck<DevelopmentCard> getDeckByLevelAndColour(DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour)
+    ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> getDeckByLevelAndColour(DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour)
             throws IllegalArgumentException;
 }

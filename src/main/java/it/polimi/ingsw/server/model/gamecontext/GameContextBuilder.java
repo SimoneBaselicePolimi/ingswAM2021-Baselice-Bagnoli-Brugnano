@@ -251,19 +251,19 @@ public class GameContextBuilder {
 		String cardID,
 		DevelopmentCardLevel level,
 		DevelopmentCardColour colour,
-		Set<Production> productions,
+		Production production,
 		int victoryPoints,
 		Map<ResourceType, Integer> purchaseCost
 	) {
-		return new DevelopmentCard(cardID, gameItemsManager, level, colour, productions, victoryPoints, purchaseCost);
+		return new DevelopmentCard(cardID, gameItemsManager, level, colour, production, victoryPoints, purchaseCost);
 	}
 
-	protected DevelopmentCard buildDevelopmentCard(DevelopmentCardsConfig.DevelopmentCardConfig developmentCardConfig, Set<Production> productionSet) {
+	protected DevelopmentCard buildDevelopmentCard(DevelopmentCardsConfig.DevelopmentCardConfig developmentCardConfig, Production production) {
 		return initializeDevelopmentCard(
 			developmentCardConfig.developmentCardID,
 			developmentCardConfig.level,
 			developmentCardConfig.colour,
-			productionSet,
+			production,
 			developmentCardConfig.victoryPoints,
 			developmentCardConfig.purchaseCost
 		);
@@ -281,12 +281,7 @@ public class GameContextBuilder {
 
 		List<DevelopmentCard> developmentCardList = new ArrayList<>();
 		for(DevelopmentCardsConfig.DevelopmentCardConfig developmentCardConfig : developmentCardsConfig.developmentCards) {
-			Set<Production> productions = new HashSet<>();
-			for (ProductionConfig productionConfig : developmentCardConfig.productions) {
-				Production production = buildProduction(productionConfig);
-				productions.add(production);
-			}
-			DevelopmentCard developmentCard = buildDevelopmentCard(developmentCardConfig, productions);
+			DevelopmentCard developmentCard = buildDevelopmentCard(developmentCardConfig, buildProduction(developmentCardConfig.production));
 			developmentCardList.add(developmentCard);
 		}
 

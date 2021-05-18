@@ -11,10 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard> {
@@ -23,7 +21,7 @@ public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard
     GameItemsManager gameItemsManager;
 
     @Mock
-    Set<Production> production;
+    Production production;
 
     @Mock
     Map<ResourceType, Integer> purchaseCost;

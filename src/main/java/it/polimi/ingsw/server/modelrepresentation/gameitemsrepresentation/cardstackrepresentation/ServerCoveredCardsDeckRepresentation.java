@@ -1,20 +1,18 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation;
 
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
-public class ServerCoveredCardsDeckRepresentation<C extends ServerRepresentation> extends ServerRegisteredIdentifiableItemRepresentation {
+public class ServerCoveredCardsDeckRepresentation<C extends ServerRepresentation> extends ServerCardDeckRepresentation<C> {
 
     @SerializeIdOnly
-    public final ServerDevelopmentCardRepresentation cardOnTop;  //Only the card on top of the deck should be visible to the player
+    public final C cardOnTop;  //Only the card on top of the deck should be visible to the player
 
     public final int numberOfCardsInDeck;
 
     public ServerCoveredCardsDeckRepresentation(
         String itemID,
-        ServerDevelopmentCardRepresentation cardOnTop,
+        C cardOnTop,
         int numberOfCardsInDeck
     ) {
         super(itemID);

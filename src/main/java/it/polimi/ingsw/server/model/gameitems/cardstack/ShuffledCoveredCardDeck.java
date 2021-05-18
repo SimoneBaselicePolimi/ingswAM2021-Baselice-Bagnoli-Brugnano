@@ -3,13 +3,12 @@ package it.polimi.ingsw.server.model.gameitems.cardstack;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * This class represents a generic Deck made of randomly shuffled Cards.
@@ -17,7 +16,8 @@ import java.util.stream.Collectors;
  * and to show all the elements stored in it.
  * @param <C> generic parameter used to indicate the type of Card which form the Deck (Leader Card, Development Card)
  */
-public class ShuffledCardDeck<C extends Representable<?>> extends CardDeck<C> implements Representable<ServerCoveredCardsDeckRepresentation<?>> {
+public class ShuffledCoveredCardDeck<RC extends ServerRepresentation, C extends Representable<RC>> extends CardDeck<C>
+	implements Representable<ServerCoveredCardsDeckRepresentation<RC>> {
 
 	/**
 	 * A random number generator used to place Cards in the Deck
@@ -31,7 +31,7 @@ public class ShuffledCardDeck<C extends Representable<?>> extends CardDeck<C> im
 	 *                         (see {@link it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem})
 	 * @param objects list of generic Cards that will be randomly organized in this Deck
 	 */
-	public ShuffledCardDeck(
+	public ShuffledCoveredCardDeck(
 		String deckID,
 		GameItemsManager gameItemsManager,
 		List<C> objects
@@ -49,7 +49,7 @@ public class ShuffledCardDeck<C extends Representable<?>> extends CardDeck<C> im
 	 * @param randomGenerator random number generator
 	 * @param objects list of generic Cards that will be randomly organized in this Deck
 	 */
-	public ShuffledCardDeck(
+	public ShuffledCoveredCardDeck(
 		String deckID,
 		GameItemsManager gameItemsManager,
 		Random randomGenerator,
@@ -73,8 +73,8 @@ public class ShuffledCardDeck<C extends Representable<?>> extends CardDeck<C> im
 	}
 
 	@Override
-	public ServerCoveredCardsDeckRepresentation getServerRepresentation() {
-		return new ServerCoveredCardsDeckRepresentation(
+	public ServerCoveredCardsDeckRepresentation<RC> getServerRepresentation() {
+		return new ServerCoveredCardsDeckRepresentation<RC>(
 			getItemId(),
 			this.cardDeck.peek().getServerRepresentation(),
 			this.peekAll().size()
@@ -82,7 +82,8 @@ public class ShuffledCardDeck<C extends Representable<?>> extends CardDeck<C> im
 	}
 
 	@Override
-	public ServerCoveredCardsDeckRepresentation getServerRepresentationForPlayer(Player player) {
-		return null;
+	public ServerCoveredCardsDeckRepresentation<RC> getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
 	}
+
 }

@@ -24,13 +24,13 @@ public class DevelopmentCardsTableTest {
     GameItemsManager gameItemsManager;
 
     @Mock
-    Set<Production> production1;
+    Production production1;
 
     @Mock
-    Set<Production> production2;
+    Production production2;
 
     @Mock
-    Set<Production> production3;
+    Production production3;
 
     @Mock
     Map<ResourceType, Integer> purchaseCost;

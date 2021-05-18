@@ -281,11 +281,11 @@ public class GameContextBuilderIntegrationTest {
 
         assertEquals(DEV_CARD_G1_LEVEL, dev_g1.getLevel());
         assertEquals(DEV_CARD_G1_COLOUR, dev_g1.getColour());
-        assertEquals(DEV_CARD_G1_PROD1_COST, dev_g1.getProduction().stream().iterator().next().getProductionResourceCost());
-        assertEquals(DEV_CARD_G1_PROD1_STAR_COST, dev_g1.getProduction().stream().iterator().next().getProductionStarResourceCost());
-        assertEquals(DEV_CARD_G1_PROD1_REWARD, dev_g1.getProduction().stream().iterator().next().getProductionResourceReward());
-        assertEquals(DEV_CARD_G1_PROD1_STAR_REWARD, dev_g1.getProduction().stream().iterator().next().getProductionStarResourceReward());
-        assertEquals(DEV_CARD_G1_PROD1_FAITH_REWARD, dev_g1.getProduction().stream().iterator().next().getProductionFaithReward());
+        assertEquals(DEV_CARD_G1_PROD1_COST, dev_g1.getProduction().getProductionResourceCost());
+        assertEquals(DEV_CARD_G1_PROD1_STAR_COST, dev_g1.getProduction().getProductionStarResourceCost());
+        assertEquals(DEV_CARD_G1_PROD1_REWARD, dev_g1.getProduction().getProductionResourceReward());
+        assertEquals(DEV_CARD_G1_PROD1_STAR_REWARD, dev_g1.getProduction().getProductionStarResourceReward());
+        assertEquals(DEV_CARD_G1_PROD1_FAITH_REWARD, dev_g1.getProduction().getProductionFaithReward());
         assertEquals(DEV_CARD_G1_VICTORY_POINTS, dev_g1.getVictoryPoints());
         assertEquals(DEV_CARD_G1_PURCHASE_COST, dev_g1.getPurchaseCost());
     }

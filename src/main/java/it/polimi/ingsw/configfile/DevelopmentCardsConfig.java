@@ -51,7 +51,7 @@ public class DevelopmentCardsConfig {
         /**
          * List of Production powers (the Player can pay specific costs to obtain specific rewards)
          */
-        public final List<ProductionConfig> productions;
+        public final ProductionConfig production;
 
         /**
          * Number of Victory Points given at the end of the Game to the Player who owns this Development Card
@@ -69,7 +69,7 @@ public class DevelopmentCardsConfig {
          * @param developmentCardID unique ID which identifies this specific Development Card
          * @param level fixed level of this Development Card
          * @param colour fixed colour of this Development Card
-         * @param productions list of Production powers (the Player can pay specific costs to obtain specific rewards)
+         * @param production list of Production powers (the Player can pay specific costs to obtain specific rewards)
          * @param victoryPoints number of Victory Points given at the end of the Game
          *                      to the Player who owns this Development Card
          * @param purchaseCost purchase cost necessary to allow the Player to buy this Development Card
@@ -78,14 +78,14 @@ public class DevelopmentCardsConfig {
             @JsonProperty("developmentCardID") String developmentCardID,
             @JsonProperty("level") DevelopmentCardLevel level,
             @JsonProperty("colour") DevelopmentCardColour colour,
-            @JsonProperty("productions") List<ProductionConfig> productions,
+            @JsonProperty("production") ProductionConfig production,
             @JsonProperty("victoryPoints") int victoryPoints,
             @JsonProperty("purchaseCost") Map<ResourceType, Integer> purchaseCost
         ) {
             this.developmentCardID = developmentCardID;
             this.level = level;
             this.colour = colour;
-            this.productions = productions;
+            this.production = production;
             this.victoryPoints = victoryPoints;
             this.purchaseCost = purchaseCost;
         }

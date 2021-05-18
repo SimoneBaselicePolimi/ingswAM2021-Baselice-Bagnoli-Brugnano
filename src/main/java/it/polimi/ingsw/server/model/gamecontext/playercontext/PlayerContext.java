@@ -167,7 +167,7 @@ public class PlayerContext {
 	//TODO JavaDoc and Test
 	public Set<Production> getActiveDevelopmentCardsProductions(){
 		return getDevelopmentCardsOnTop().stream()
-			.flatMap(card -> card.getProduction().stream())
+			.map(DevelopmentCard::getProduction)
 			.collect(Collectors.toSet());
 	}
 

@@ -7,14 +7,15 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourAndLevelRequirement;
-import it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourRequirement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,7 +37,7 @@ public class DevelopmentCardColourAndLevelRequirementTest {
     PlayerContext playerContext3;
 
     @Mock
-    Set<Production> production;
+    Production production;
 
     DevelopmentCardColourAndLevelRequirement requirement1, requirement2, requirement3, requirement4, requirement5, requirement6;
 

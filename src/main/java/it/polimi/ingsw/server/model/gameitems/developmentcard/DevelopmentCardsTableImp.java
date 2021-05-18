@@ -2,7 +2,8 @@ package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
-import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCardDeck;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class DevelopmentCardsTableImp implements DevelopmentCardsTable {
 	/**
 	 * Map that contains the cards in each deck, along with their colour and level
 	 */
-	private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>>> cards;
+	private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard>>> cards;
 
 	/**
 	 * DevelopmentCardsTable constructor
@@ -44,7 +45,7 @@ public class DevelopmentCardsTableImp implements DevelopmentCardsTable {
 						DevelopmentCardColour deckColour = cardsForDeck.get(0).getColour();
 						DevelopmentCardLevel deckLevel = cardsForDeck.get(0).getLevel();
 						String deckID = getIdForDeckWithColourAndLevel.apply(deckColour, deckLevel);
-						return new ShuffledCardDeck<>(deckID, gameItemsManager, cardsForDeck);
+						return new ShuffledCoveredCardDeck<>(deckID, gameItemsManager, cardsForDeck);
 					}
 				)
 			)
@@ -58,8 +59,8 @@ public class DevelopmentCardsTableImp implements DevelopmentCardsTable {
 	@Override
 	public List<DevelopmentCard> getAvailableCards() {
 		List<DevelopmentCard> availableCards = new ArrayList<>();
-		for (Map<DevelopmentCardColour, ShuffledCardDeck<DevelopmentCard>> value : cards.values()) {
-			for (ShuffledCardDeck<DevelopmentCard> deck : value.values())
+		for (Map<DevelopmentCardColour, ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard>> value : cards.values()) {
+			for (ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck : value.values())
 				availableCards.add(deck.peek());
 		}
 		return availableCards;
@@ -83,17 +84,15 @@ public class DevelopmentCardsTableImp implements DevelopmentCardsTable {
 	 */
 	@Override
 	public Map<DevelopmentCardLevel,Map<DevelopmentCardColour,DevelopmentCard>> getAvailableCardsAsMap() {
-		Map<DevelopmentCardLevel, Map<DevelopmentCardColour, DevelopmentCard>> map =
-			getAvailableCards().stream().collect(
-				Collectors.groupingBy(
-					DevelopmentCard::getLevel,
-					Collectors.toMap(
-						DevelopmentCard::getColour,
-						Function.identity()
-					)
+		return getAvailableCards().stream().collect(
+			Collectors.groupingBy(
+				DevelopmentCard::getLevel,
+				Collectors.toMap(
+					DevelopmentCard::getColour,
+					Function.identity()
 				)
-			);
-		return map;
+			)
+		);
 	}
 
 	/**
@@ -104,7 +103,7 @@ public class DevelopmentCardsTableImp implements DevelopmentCardsTable {
 	 * @throws IllegalArgumentException if the deck does not exist
 	 */
 	@Override
-	public ShuffledCardDeck<DevelopmentCard> getDeckByLevelAndColour(DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour)
+	public ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> getDeckByLevelAndColour(DevelopmentCardLevel cardLevel, DevelopmentCardColour cardColour)
 			throws IllegalArgumentException{
 		if (!cards.containsKey(cardLevel) || !cards.get(cardLevel).containsKey(cardColour))
 			throw new IllegalArgumentException();
@@ -114,9 +113,11 @@ public class DevelopmentCardsTableImp implements DevelopmentCardsTable {
 	@Override
 	public ServerDevelopmentCardsTableRepresentation getServerRepresentation() {
 		return new ServerDevelopmentCardsTableRepresentation(
-			cards
-		)
-			;
+			cards.entrySet().stream().collect(Collectors
+				.toMap(Map.Entry::getKey, e -> e.getValue().entrySet().stream().collect(Collectors
+				.toMap(Map.Entry::getKey, v -> v.getValue().getServerRepresentation()))
+			))
+		);
 	}
 
 	@Override
