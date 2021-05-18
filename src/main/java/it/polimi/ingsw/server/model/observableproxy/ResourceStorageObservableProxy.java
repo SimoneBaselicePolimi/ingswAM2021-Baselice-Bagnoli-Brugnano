@@ -1,11 +1,13 @@
 package it.polimi.ingsw.server.model.observableproxy;
 
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.*;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -75,5 +77,15 @@ public class ResourceStorageObservableProxy extends ObservableProxy<ResourceStor
             updates.add(new ServerResourceStorageUpdate(imp, allResourcesAfterRemove));
         }
         return updates;
+    }
+
+    @Override
+    public ServerResourceStorageRepresentation getServerRepresentation() {
+        return imp.getServerRepresentation();
+    }
+
+    @Override
+    public ServerResourceStorageRepresentation getServerRepresentationForPlayer(Player player) {
+        return imp.getServerRepresentationForPlayer(player);
     }
 }

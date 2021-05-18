@@ -2,11 +2,8 @@ package it.polimi.ingsw.server.model.leadercard;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItemTest;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
+import it.polimi.ingsw.server.model.gameitems.leadercard.*;
 
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,13 +57,13 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         setTrueRequirements.add(trueRequirement1);
         setTrueRequirements.add(trueRequirement2);
 
-        LeaderCard leaderCard1 = new LeaderCard(
+        LeaderCard leaderCard1 = new LeaderCardImp(
             "1", gameItemsManager, setTrueRequirements, null, null, null,null, 3
         );
         assertTrue(() -> leaderCard1.areRequirementsSatisfied(player));
         assertDoesNotThrow(() ->leaderCard1.activateLeaderCard(player));
 
-        LeaderCard leaderCard2 = new LeaderCard(
+        LeaderCard leaderCard2 = new LeaderCardImp(
             "2", gameItemsManager, setTrueRequirements, null, null, null,null, 2
         );
         assertTrue(() -> leaderCard2.areRequirementsSatisfied(player));
@@ -88,13 +85,13 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         listTrueAndFalseRequirements.add(trueRequirement1);
         listTrueAndFalseRequirements.add(falseRequirement2);
 
-        LeaderCard leaderCard3 = new LeaderCard(
+        LeaderCard leaderCard3 = new LeaderCardImp(
             "3", gameItemsManager, setFalseRequirements, null, null, null, null, 2
         );
         assertFalse(() -> leaderCard3.areRequirementsSatisfied(player));
         assertThrows(LeaderCardRequirementsNotSatisfiedException.class, () -> leaderCard3.activateLeaderCard(player));
 
-        LeaderCard leaderCard4 = new LeaderCard(
+        LeaderCard leaderCard4 = new LeaderCardImp(
             "4", gameItemsManager, listTrueAndFalseRequirements, null, null, null, null, 2
         );
         assertFalse(() -> leaderCard4.areRequirementsSatisfied(player));
@@ -111,7 +108,7 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         setTrueRequirements.add(trueRequirement1);
         setTrueRequirements.add(trueRequirement2);
 
-        LeaderCard leaderCard1 = new LeaderCard(
+        LeaderCard leaderCard1 = new LeaderCardImp(
             "1", gameItemsManager, setTrueRequirements, null,null, null,null, 3
         );
         assertEquals(leaderCard1.getState(), LeaderCardState.HIDDEN);
@@ -130,7 +127,7 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         setTrueRequirements.add(trueRequirement1);
         setTrueRequirements.add(trueRequirement2);
 
-        LeaderCard leaderCard1 = new LeaderCard(
+        LeaderCard leaderCard1 = new LeaderCardImp(
             "1", gameItemsManager, setTrueRequirements,null, null, null,null, 3
         );
         assertEquals(leaderCard1.getState(), LeaderCardState.HIDDEN);
@@ -142,7 +139,7 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
     @Test
     void testGetLeaderCardId() {
         String id = "1";
-        LeaderCard leaderCard1 = new LeaderCard(
+        LeaderCard leaderCard1 = new LeaderCardImp(
             "1", gameItemsManager, new HashSet<>(), null, null, null,null, 3
         );
         assertEquals(id, leaderCard1.getItemId());
@@ -150,7 +147,7 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
 
     @Override
     public LeaderCard initializeItemWithId(String id) {
-        return new LeaderCard(
+        return new LeaderCardImp(
             id, gameItemsManager, new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), 0
         );
     }

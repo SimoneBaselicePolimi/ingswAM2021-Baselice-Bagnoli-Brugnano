@@ -16,6 +16,7 @@ import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.*;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
@@ -365,7 +366,7 @@ public class GameContextBuilder {
 		Set<WhiteMarbleSubstitution> specialMarbleSubstitutions,
 		int victoryPoints
 	) {
-		return new LeaderCard(leaderCardID, gameItemsManager, requirements, productions, resourceStorages, cardCostDiscounts, specialMarbleSubstitutions, victoryPoints);
+		return new LeaderCardImp(leaderCardID, gameItemsManager, requirements, productions, resourceStorages, cardCostDiscounts, specialMarbleSubstitutions, victoryPoints);
 	}
 
 	protected LeaderCard buildLeaderCard(LeaderCardsConfig.LeaderCardConfig leaderCardConfig) {

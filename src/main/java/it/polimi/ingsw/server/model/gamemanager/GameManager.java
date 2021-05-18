@@ -93,7 +93,7 @@ public class GameManager {
 	public Set<ServerGameUpdate> getAllGameUpdates() {
 		return observableProxies.stream()
 			.flatMap(observable -> (Stream<ServerGameUpdate>) observable.getUpdates().stream())
-			.collect(Collectors.toSet());
+			.colllect(Collectors.toSet());
 	}
 
 	/**

@@ -305,13 +305,13 @@ public class GameContextBuilderIntegrationTest {
 
     @Test
     void testLeaderCard() {
-        Set<String> cardsId = gameItemsManager.getAllItemsOfType(LeaderCard.class).stream()
+        Set<String> cardsId = gameItemsManager.getAllItemsOfType(LeaderCardImp.class).stream()
             .map(RegisteredIdentifiableItem::getItemId)
             .collect(Collectors.toSet());
 
         assertEquals(leaderCardsIds, cardsId);
 
-        LeaderCard leader_disc_1 = gameItemsManager.getItem(LeaderCard.class, "LEADER_DISC_1");
+        LeaderCard leader_disc_1 = gameItemsManager.getItem(LeaderCardImp.class, "LEADER_DISC_1");
 
         ArgumentCaptor<Set<LeaderCardRequirement>> requirementsCaptor = ArgumentCaptor.forClass(Set.class);
         verify(gameContextBuilder).initializeLeaderCard(
@@ -340,7 +340,7 @@ public class GameContextBuilderIntegrationTest {
         assertEquals(new HashSet<>(), leader_disc_1.getWhiteMarbleSubstitutions());
         assertEquals(LEAD_CARD_DISC_1_VICTORY_POINTS, leader_disc_1.getVictoryPoints());
 
-        LeaderCard leader_stor_1 = gameItemsManager.getItem(LeaderCard.class, "LEADER_STOR_1");
+        LeaderCard leader_stor_1 = gameItemsManager.getItem(LeaderCardImp.class, "LEADER_STOR_1");
 
         ArgumentCaptor<Set<ResourceStorage>> resourceStoragesCaptor = ArgumentCaptor.forClass(Set.class);
         verify(gameContextBuilder).initializeLeaderCard(
@@ -385,7 +385,7 @@ public class GameContextBuilderIntegrationTest {
 
         assertEquals(LEAD_CARD_STOR_1_VICTORY_POINTS, leader_stor_1.getVictoryPoints());
 
-        LeaderCard leader_prod_1 = gameItemsManager.getItem(LeaderCard.class, "LEADER_PROD_1");
+        LeaderCard leader_prod_1 = gameItemsManager.getItem(LeaderCardImp.class, "LEADER_PROD_1");
 
         verify(gameContextBuilder).initializeLeaderCard(
             eq("LEADER_PROD_1"),
@@ -414,7 +414,7 @@ public class GameContextBuilderIntegrationTest {
         assertEquals(LEAD_CARD_PROD_1_PROD1_FAITH_REWARD, leader_prod_1.getProductions().stream().iterator().next().getProductionFaithReward());
         assertEquals(LEAD_CARD_PROD_1_VICTORY_POINTS, leader_prod_1.getVictoryPoints());
 
-        LeaderCard leader_sub_1 = gameItemsManager.getItem(LeaderCard.class, "LEADER_SUB_1");
+        LeaderCard leader_sub_1 = gameItemsManager.getItem(LeaderCardImp.class, "LEADER_SUB_1");
 
         verify(gameContextBuilder).initializeLeaderCard(
             eq("LEADER_SUB_1"),

@@ -9,15 +9,16 @@ import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.Server
 import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation;
 
 import java.util.List;
+import java.util.Set;
 
 public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiableItemRepresentation {
 
     public final LeaderCardState state;
-    public final List<ServerLeaderCardRequirementRepresentation> requirements;
-    public final List<ServerProductionRepresentation> productions;
-    public final List<ServerResourceStorageRepresentation> resourceStorages;
-    public final List<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts;
-    public final List<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions;
+    public final Set<ServerLeaderCardRequirementRepresentation> requirements;
+    public final Set<ServerProductionRepresentation> productions;
+    public final Set<ServerResourceStorageRepresentation> resourceStorages;
+    public final Set<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts;
+    public final Set<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions;
     public final int victoryPoints;
     public final boolean canBeActivated;
 
@@ -36,11 +37,11 @@ public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiable
     public ServerLeaderCardRepresentation(
         String itemID,
         LeaderCardState state,
-        List<ServerLeaderCardRequirementRepresentation> requirements,
-        List<ServerProductionRepresentation> productions,
-        List<ServerResourceStorageRepresentation> resourceStorages,
-        List<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
-        List<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
+        Set<ServerLeaderCardRequirementRepresentation> requirements,
+        Set<ServerProductionRepresentation> productions,
+        Set<ServerResourceStorageRepresentation> resourceStorages,
+        Set<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
+        Set<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
         int victoryPoints,
         boolean canBeActivated) {
         super(itemID);

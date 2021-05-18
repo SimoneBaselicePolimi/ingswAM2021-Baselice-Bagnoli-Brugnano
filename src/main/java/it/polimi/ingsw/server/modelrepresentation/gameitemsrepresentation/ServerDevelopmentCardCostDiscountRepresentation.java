@@ -23,7 +23,6 @@ public class ServerDevelopmentCardCostDiscountRepresentation extends ServerRegis
      */
     public ServerDevelopmentCardCostDiscountRepresentation(
         String itemID,
-        GameItemsManager gameItemsManager,
         ResourceType resourceType,
         int amountToDiscount
     ) {

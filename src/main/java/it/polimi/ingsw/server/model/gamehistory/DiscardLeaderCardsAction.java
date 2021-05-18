@@ -4,8 +4,6 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 
-import java.util.Set;
-
 public class DiscardLeaderCardsAction extends GameAction {
     private final Player player;
     private final LeaderCard leaderCard;
