@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation;
 
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation;
 
 import java.util.Stack;
@@ -12,7 +11,7 @@ public class ServerCardDeckRepresentation<C> extends ServerRegisteredIdentifiabl
      */
     public final Stack<C> cardDeck = new Stack<>();
 
-    public ServerCardDeckRepresentation(String itemID, GameItemsManager gameItemsManager) {
-        super(itemID, gameItemsManager);
+    public ServerCardDeckRepresentation(String itemID) {
+        super(itemID);
     }
 }

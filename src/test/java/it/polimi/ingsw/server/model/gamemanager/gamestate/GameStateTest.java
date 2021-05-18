@@ -22,7 +22,6 @@ import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -236,7 +235,7 @@ public class GameStateTest {
 
     }
 
-    @Test
+    // @Test
     void testRemoveResourcesBasedOnResourcesStoragesPriority() {
 
 //        Iterator<ResourceStorage> player1ShelvesIter = shelvesForPlayers.get(player1).iterator();

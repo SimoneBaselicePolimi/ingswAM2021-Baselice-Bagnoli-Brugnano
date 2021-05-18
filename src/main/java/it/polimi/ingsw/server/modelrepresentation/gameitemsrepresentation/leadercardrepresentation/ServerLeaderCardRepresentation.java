@@ -1,9 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
-import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerDevelopmentCardCostDiscountRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation;
@@ -27,8 +24,6 @@ public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiable
     /**
      * LeaderCardRepresentation constructor
      * @param itemID ID of the leader card, see {@link IdentifiableItem}
-     * @param gameItemsManager a reference to gameItemsManager is needed to register the new LeaderCard object
-     * (see {@link RegisteredIdentifiableItem})
      * @param requirements requirements to activate the leader card
      * @param productions list of productions (special skill) that the leader card can own (it can be an empty list)
      * @param resourceStorages list of resource storages (special skill) that the leader card can own (it can be an empty list)
@@ -40,7 +35,6 @@ public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiable
      */
     public ServerLeaderCardRepresentation(
         String itemID,
-        GameItemsManager gameItemsManager,
         LeaderCardState state,
         List<ServerLeaderCardRequirementRepresentation> requirements,
         List<ServerProductionRepresentation> productions,
@@ -49,7 +43,7 @@ public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiable
         List<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
         int victoryPoints,
         boolean canBeActivated) {
-        super(itemID, gameItemsManager);
+        super(itemID);
         this.state = state;
         this.requirements = requirements;
         this.productions = productions;

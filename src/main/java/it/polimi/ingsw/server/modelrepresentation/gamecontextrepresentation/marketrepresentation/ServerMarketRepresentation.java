@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation;
 
-import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
 

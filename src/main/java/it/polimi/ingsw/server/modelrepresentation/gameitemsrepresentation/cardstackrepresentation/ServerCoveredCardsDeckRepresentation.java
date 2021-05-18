@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation;
 
-import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
@@ -16,11 +14,10 @@ public class ServerCoveredCardsDeckRepresentation<C extends ServerRepresentation
 
     public ServerCoveredCardsDeckRepresentation(
         String itemID,
-        GameItemsManager gameItemsManager,
         ServerDevelopmentCardRepresentation cardOnTop,
         int numberOfCardsInDeck
     ) {
-        super(itemID, gameItemsManager);
+        super(itemID);
         this.cardOnTop = cardOnTop;
         this.numberOfCardsInDeck = numberOfCardsInDeck;
     }

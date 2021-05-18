@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.gamecontext;
 
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
+import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  *     player in the list will play, then the second player in the list will play his turn, then the third, etc.)</li>
  *     <li> A {@link PlayerContext} object for each player. The PlayerContext aggregates all the information relative to
  *     a specific player </li>
- *     <li> The market, see {@link Market}).</li>
+ *     <li> The market, see {@link MarketImp}).</li>
  *     <li> The development cards table, see {@link DevelopmentCardsTable} </li>
  *     <li> The faith path, see {@link FaithPath} </li>
  * </ul>
@@ -46,7 +47,7 @@ public class GameContext {
 	 * Note2: this constructor is marked as protected because this class should only ever be initialized by the
 	 *  {@link it.polimi.ingsw.server.model.gamecontext.GameContextBuilder} and thus the constructor should never be
 	 *  called from outside this package
-	 * @param market Market, see {@link Market}
+	 * @param market Market, see {@link MarketImp}
 	 * @param developmentCardsTable the table with the development cards the players can buy, see
 	 * 	{@link DevelopmentCardsTable}
 	 * @param faithPath the faith path, see {@link FaithPath}
@@ -107,7 +108,7 @@ public class GameContext {
 	}
 
 	/**
-	 * @return returns the Market, see {@link Market}
+	 * @return returns the Market, see {@link MarketImp}
 	 */
 	public Market getMarket() {
 		return market;

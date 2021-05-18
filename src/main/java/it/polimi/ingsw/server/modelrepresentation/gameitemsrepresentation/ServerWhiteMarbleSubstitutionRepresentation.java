@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation;
 
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 public class ServerWhiteMarbleSubstitutionRepresentation extends ServerRegisteredIdentifiableItemRepresentation {
@@ -16,10 +15,9 @@ public class ServerWhiteMarbleSubstitutionRepresentation extends ServerRegistere
      */
     public ServerWhiteMarbleSubstitutionRepresentation(
         String itemID,
-        GameItemsManager gameItemsManager,
         ResourceType resourceTypeToSubstitute
     ) {
-        super(itemID, gameItemsManager);
+        super(itemID);
         this.resourceTypeToSubstitute = resourceTypeToSubstitute;
     }
 }

@@ -3,8 +3,11 @@ package it.polimi.ingsw.server.model.gamemanager;
 import it.polimi.ingsw.configfile.GameRules;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
+import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
+import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.GameContextBuilder;
@@ -16,12 +19,9 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
-import it.polimi.ingsw.server.controller.ServerController;
-import it.polimi.ingsw.network.clientrequest.ClientRequest;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.notifier.GameHistoryNotifier;
-import it.polimi.ingsw.server.model.notifier.Notifier;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.observableproxy.ObservableProxy;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.utils.FileManager;
@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameManager {
 
@@ -47,7 +48,7 @@ public class GameManager {
 
 	private GameRules gameRules;
 
-	private Set<Notifier> notifiers =  new HashSet<>();
+	private Set<ObservableProxy> observableProxies =  new HashSet<>();
 
 	private GameHistory gameHistory;
 
@@ -81,9 +82,8 @@ public class GameManager {
 		changeState();
 	}
 
-
-	public void registerNotifier(Notifier notifier) {
-		notifiers.add(notifier);
+	public void registerObservableProxy(ObservableProxy observableProxy) {
+		observableProxies.add(observableProxy);
 	}
 
 	/**
@@ -91,8 +91,8 @@ public class GameManager {
 	 * @return
 	 */
 	public Set<ServerGameUpdate> getAllGameUpdates() {
-		return notifiers.stream()
-			.flatMap(notifier -> notifier.getUpdates().stream())
+		return observableProxies.stream()
+			.flatMap(observable -> (Stream<ServerGameUpdate>) observable.getUpdates().stream())
 			.collect(Collectors.toSet());
 	}
 

@@ -18,7 +18,6 @@ public class ServerDevelopmentCardCostDiscountRepresentation extends ServerRegis
     /**
      * DevelopmentCardCostDiscountRepresentation constructor.
      * @param itemID
-     * @param gameItemsManager
      * @param resourceType resource the Player can discount from the cost
      * @param amountToDiscount number of resources the Player can discount from the cost
      */
@@ -28,7 +27,7 @@ public class ServerDevelopmentCardCostDiscountRepresentation extends ServerRegis
         ResourceType resourceType,
         int amountToDiscount
     ) {
-        super(itemID, gameItemsManager);
+        super(itemID);
         this.resourceType = resourceType;
         this.amountToDiscount = amountToDiscount;
     }

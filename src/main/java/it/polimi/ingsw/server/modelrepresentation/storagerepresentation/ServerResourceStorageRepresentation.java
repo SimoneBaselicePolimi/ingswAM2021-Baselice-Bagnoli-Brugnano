@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.modelrepresentation.storagerepresentation;
 
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation;
 
@@ -23,11 +21,10 @@ public class ServerResourceStorageRepresentation extends ServerRegisteredIdentif
 
     protected ServerResourceStorageRepresentation(
         String itemID,
-        GameItemsManager gameItemsManager,
         List<ServerResourceStorageRuleRepresentation> rules,
         Map<ResourceType, Integer> resources
     ) {
-        super(itemID, gameItemsManager);
+        super(itemID);
         this.rules = rules;
         this.resources = new HashMap<>(resources);
     }

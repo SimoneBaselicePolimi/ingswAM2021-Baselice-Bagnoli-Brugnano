@@ -1,7 +1,5 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation;
 
-import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
-import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Optional;
@@ -26,8 +24,6 @@ public class ServerMarbleColourRepresentation extends ServerRegisteredIdentifiab
     /**
      * MarbleColourRepresentation constructor.
      * @param itemID ID which identifies this specific Marble
-     * @param gameItemsManager a reference to gameItemsManager is needed to register the new MarbleColour object
-     * (see {@link RegisteredIdentifiableItem})
      * @param resourceType optional type of resource obtainable with this Marble
      * @param faithPoints number of faith points obtainable by this Marble
      * @param isSpecialMarble boolean which states if this Marble can be transformed into a generic type of resource
@@ -35,12 +31,11 @@ public class ServerMarbleColourRepresentation extends ServerRegisteredIdentifiab
      */
     public ServerMarbleColourRepresentation(
         String itemID,
-        GameItemsManager gameItemsManager,
         Optional<ResourceType> resourceType,
         int faithPoints,
         boolean isSpecialMarble
     ) {
-        super(itemID, gameItemsManager);
+        super(itemID);
         this.resourceType = resourceType;
         this.faithPoints = faithPoints;
         this.isSpecialMarble = isSpecialMarble;

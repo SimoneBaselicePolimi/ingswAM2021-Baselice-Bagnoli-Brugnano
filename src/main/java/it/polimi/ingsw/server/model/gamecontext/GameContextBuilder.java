@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
 import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
+import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
@@ -188,7 +189,7 @@ public class GameContextBuilder {
 
 	public Market initializeMarket(int nRows, int nColumns, Map<MarbleColour,Integer> marbles)
 		throws WrongNumberOfMarblesException {
-		return new Market(nRows, nColumns, marbles);
+		return new MarketImp(nRows, nColumns, marbles);
 	}
 
 	protected Market buildMarket() throws GameContextCreationError {
