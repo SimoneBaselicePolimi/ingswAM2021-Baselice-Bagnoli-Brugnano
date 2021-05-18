@@ -1,5 +1,9 @@
 package it.polimi.ingsw.server.model.gameitems;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation;
+
 import java.util.Map;
 
 /**
@@ -9,7 +13,7 @@ import java.util.Map;
  * can pay this cost to obtain this reward.
  * Each Production Item is identified by an unique ID.
  */
-public class Production extends RegisteredIdentifiableItem{
+public class Production extends RegisteredIdentifiableItem implements Representable<ServerProductionRepresentation> {
 	/**
 	 * Production cost made of specific type and number of Resources
 	 */
@@ -102,4 +106,20 @@ public class Production extends RegisteredIdentifiableItem{
 		return faithReward;
 	}
 
+	@Override
+	public ServerProductionRepresentation getServerRepresentation() {
+		return new ServerProductionRepresentation(
+			itemID,
+			resourceCost,
+			resourceReward,
+			starResourceCost,
+			starResourceReward,
+			faithReward
+		);
+	}
+
+	@Override
+	public ServerProductionRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }

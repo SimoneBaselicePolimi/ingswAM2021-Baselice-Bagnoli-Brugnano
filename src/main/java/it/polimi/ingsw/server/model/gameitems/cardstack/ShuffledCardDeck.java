@@ -1,10 +1,15 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * This class represents a generic Deck made of randomly shuffled Cards.
@@ -12,7 +17,7 @@ import java.util.Random;
  * and to show all the elements stored in it.
  * @param <C> generic parameter used to indicate the type of Card which form the Deck (Leader Card, Development Card)
  */
-public class ShuffledCardDeck<C> extends CardDeck<C> {
+public class ShuffledCardDeck<C extends Representable<?>> extends CardDeck<C> implements Representable<ServerCoveredCardsDeckRepresentation<?>> {
 
 	/**
 	 * A random number generator used to place Cards in the Deck
@@ -67,4 +72,17 @@ public class ShuffledCardDeck<C> extends CardDeck<C> {
 		}
 	}
 
+	@Override
+	public ServerCoveredCardsDeckRepresentation getServerRepresentation() {
+		return new ServerCoveredCardsDeckRepresentation(
+			getItemId(),
+			this.cardDeck.peek().getServerRepresentation(),
+			this.peekAll().size()
+		);
+	}
+
+	@Override
+	public ServerCoveredCardsDeckRepresentation getServerRepresentationForPlayer(Player player) {
+		return null;
+	}
 }

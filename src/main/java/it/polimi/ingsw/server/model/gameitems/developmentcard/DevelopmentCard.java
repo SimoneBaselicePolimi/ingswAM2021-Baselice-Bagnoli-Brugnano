@@ -1,19 +1,20 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.*;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * This class represent a specific type of cards used in the game: the development card
  */
-public class DevelopmentCard extends RegisteredIdentifiableItem {
+public class DevelopmentCard extends RegisteredIdentifiableItem implements Representable<ServerDevelopmentCardRepresentation> {
 
 	private DevelopmentCardLevel level;
 	private DevelopmentCardColour colour;
-	private Set<Production> productions;
+	private Production production;
 	private int victoryPoints;
 	private Map<ResourceType, Integer> purchaseCost;
 
@@ -24,7 +25,7 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 	 *                         (see {@link RegisteredIdentifiableItem})
 	 * @param level of the development card
 	 * @param colour of the development card
-	 * @param productions that the the development card can give to the player
+	 * @param production that the the development card can give to the player
 	 * @param victoryPoints that the development card gives at the end of the game
 	 * @param purchaseCost necessary to buy the development card
 	 */
@@ -33,14 +34,14 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 		GameItemsManager gameItemsManager,
 		DevelopmentCardLevel level,
 		DevelopmentCardColour colour,
-		Set<Production> productions,
+		Production production,
 		int victoryPoints,
 		Map<ResourceType, Integer> purchaseCost
 	){
 	    super(developmentCardID, gameItemsManager);
 		this.level=level;
 		this.colour=colour;
-		this.productions=productions;
+		this.production = production;
 		this.victoryPoints=victoryPoints;
 		this.purchaseCost=purchaseCost;
 	}
@@ -65,8 +66,8 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 	 * Method to get the list of productions of the development card
 	 * @return production list
 	 */
-	public Set<Production> getProductions() {
-		return productions;
+	public Production getProduction() {
+		return production;
 	}
 
 	/**
@@ -85,4 +86,20 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 		return purchaseCost;
 	}
 
+	@Override
+	public ServerDevelopmentCardRepresentation getServerRepresentation() {
+		return new ServerDevelopmentCardRepresentation(
+			itemID,
+			level,
+			colour,
+			production.getServerRepresentation(),
+			victoryPoints,
+			purchaseCost
+		);
+	}
+
+	@Override
+	public ServerDevelopmentCardRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }

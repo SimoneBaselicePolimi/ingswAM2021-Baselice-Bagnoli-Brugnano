@@ -80,7 +80,7 @@ public class DevelopmentCardsTableTest {
      */
     @Test
     void testDevelopmentCardsTableConstructor (){
-        DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
+        DevelopmentCardsTable table = new DevelopmentCardsTableImp(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
         assertEquals(
                 Set.of(developmentCard1, developmentCard2, developmentCard3),
                 new HashSet<>(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll())
@@ -112,7 +112,7 @@ public class DevelopmentCardsTableTest {
      */
         @Test
         void testGetAvailableCards(){
-            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
+            DevelopmentCardsTable table = new DevelopmentCardsTableImp(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
 
             assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.BLUE).peek()));
             assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.GREEN).peek()));
@@ -128,7 +128,7 @@ public class DevelopmentCardsTableTest {
      */
         @Test
         void testPopCard (){
-            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
+            DevelopmentCardsTable table = new DevelopmentCardsTableImp(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
 
             List<DevelopmentCard> list1 = table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll();
             DevelopmentCard card1 = table.popCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW);
@@ -154,7 +154,7 @@ public class DevelopmentCardsTableTest {
          */
         @Test
         void testGetAvailableCardsAsMap(){
-            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
+            DevelopmentCardsTable table = new DevelopmentCardsTableImp(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
 
             for (DevelopmentCard card : table.getAvailableCards()) {
                 assertEquals(card, table.getAvailableCardsAsMap().get(card.getLevel()).get(card.getColour()));

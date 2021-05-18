@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.notifier;
 
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTableImp;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-public class DevelopmentCardsTableNotifier extends DevelopmentCardsTable implements Notifier {
+public class DevelopmentCardsTableNotifier extends DevelopmentCardsTableImp implements Notifier {
 
 	public DevelopmentCardsTableNotifier(
 		List<DevelopmentCard> cards,

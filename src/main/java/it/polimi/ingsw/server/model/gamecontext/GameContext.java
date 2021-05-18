@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTableImp;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathImp;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  *     <li> A {@link PlayerContext} object for each player. The PlayerContext aggregates all the information relative to
  *     a specific player </li>
  *     <li> The market, see {@link MarketImp}).</li>
- *     <li> The development cards table, see {@link DevelopmentCardsTable} </li>
+ *     <li> The development cards table, see {@link DevelopmentCardsTableImp} </li>
  *     <li> The faith path, see {@link FaithPathImp} </li>
  * </ul>
  * <p>
@@ -50,7 +51,7 @@ public class GameContext {
 	 *  called from outside this package
 	 * @param market Market, see {@link MarketImp}
 	 * @param developmentCardsTable the table with the development cards the players can buy, see
-	 * 	{@link DevelopmentCardsTable}
+	 * 	{@link DevelopmentCardsTableImp}
 	 * @param faithPath the faith path, see {@link FaithPathImp}
 	 * @param playersOrder An ordered list of players that specifies the player turns order
 	 * @param playerContexts a map that associates every player with his player context. See {@link PlayerContext}
@@ -117,7 +118,7 @@ public class GameContext {
 
 	/**
 	 * Returns the DevelopmentCardTable, a table with the development cards the players can buy
-	 * @return returns the DevelopmentCardTable, see {@link DevelopmentCardsTable}
+	 * @return returns the DevelopmentCardTable, see {@link DevelopmentCardsTableImp}
 	 */
 	public DevelopmentCardsTable getDevelopmentCardsTable() {
 		return developmentCardsTable;

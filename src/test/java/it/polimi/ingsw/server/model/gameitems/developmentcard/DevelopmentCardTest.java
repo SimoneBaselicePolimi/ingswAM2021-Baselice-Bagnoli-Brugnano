@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,15 +42,15 @@ public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard
 
         assertEquals(developmentCard1.getLevel(), DevelopmentCardLevel.FIRST_LEVEL);
         assertEquals(developmentCard1.getColour(), DevelopmentCardColour.BLUE);
-        assertEquals(developmentCard1.getProductions(), production);
+        assertEquals(developmentCard1.getProduction(), production);
         assertEquals(developmentCard1.getVictoryPoints(),3);
         assertNull(developmentCard2.getLevel());
         assertNull(developmentCard2.getColour());
-        assertNull(developmentCard2.getProductions());
+        assertNull(developmentCard2.getProduction());
         assertEquals(developmentCard2.getVictoryPoints(),0);
         assertNotEquals(developmentCard2.getLevel(), DevelopmentCardLevel.SECOND_LEVEL);
         assertNotEquals(developmentCard1.getColour(), DevelopmentCardColour.PURPLE);
-        assertEquals(developmentCard1.getProductions(), production);
+        assertEquals(developmentCard1.getProduction(), production);
         assertEquals(developmentCard1.getPurchaseCost(), purchaseCost);
         assertNotEquals(developmentCard1.getPurchaseCost(), purchaseCost1);
     }

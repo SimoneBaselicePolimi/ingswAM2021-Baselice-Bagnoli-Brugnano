@@ -17,10 +17,7 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.*;
 import it.polimi.ingsw.server.model.gameitems.leadercard.*;
 import it.polimi.ingsw.server.model.storage.MaxResourceNumberRule;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
@@ -284,11 +281,11 @@ public class GameContextBuilderIntegrationTest {
 
         assertEquals(DEV_CARD_G1_LEVEL, dev_g1.getLevel());
         assertEquals(DEV_CARD_G1_COLOUR, dev_g1.getColour());
-        assertEquals(DEV_CARD_G1_PROD1_COST, dev_g1.getProductions().stream().iterator().next().getProductionResourceCost());
-        assertEquals(DEV_CARD_G1_PROD1_STAR_COST, dev_g1.getProductions().stream().iterator().next().getProductionStarResourceCost());
-        assertEquals(DEV_CARD_G1_PROD1_REWARD, dev_g1.getProductions().stream().iterator().next().getProductionResourceReward());
-        assertEquals(DEV_CARD_G1_PROD1_STAR_REWARD, dev_g1.getProductions().stream().iterator().next().getProductionStarResourceReward());
-        assertEquals(DEV_CARD_G1_PROD1_FAITH_REWARD, dev_g1.getProductions().stream().iterator().next().getProductionFaithReward());
+        assertEquals(DEV_CARD_G1_PROD1_COST, dev_g1.getProduction().stream().iterator().next().getProductionResourceCost());
+        assertEquals(DEV_CARD_G1_PROD1_STAR_COST, dev_g1.getProduction().stream().iterator().next().getProductionStarResourceCost());
+        assertEquals(DEV_CARD_G1_PROD1_REWARD, dev_g1.getProduction().stream().iterator().next().getProductionResourceReward());
+        assertEquals(DEV_CARD_G1_PROD1_STAR_REWARD, dev_g1.getProduction().stream().iterator().next().getProductionStarResourceReward());
+        assertEquals(DEV_CARD_G1_PROD1_FAITH_REWARD, dev_g1.getProduction().stream().iterator().next().getProductionFaithReward());
         assertEquals(DEV_CARD_G1_VICTORY_POINTS, dev_g1.getVictoryPoints());
         assertEquals(DEV_CARD_G1_PURCHASE_COST, dev_g1.getPurchaseCost());
     }

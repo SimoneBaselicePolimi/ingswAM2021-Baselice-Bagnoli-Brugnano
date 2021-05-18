@@ -14,10 +14,7 @@ import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.*;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
@@ -276,7 +273,7 @@ public class GameContextBuilder {
 		List<DevelopmentCard> cards,
 		BiFunction<DevelopmentCardColour, DevelopmentCardLevel, String> getIdForDeckWithColourAndLevel
 	) {
-		return new DevelopmentCardsTable(cards, gameItemsManager, getIdForDeckWithColourAndLevel);
+		return new DevelopmentCardsTableImp(cards, gameItemsManager, getIdForDeckWithColourAndLevel);
 	}
 
 	protected DevelopmentCardsTable buildDevelopmentCardsTable() {
