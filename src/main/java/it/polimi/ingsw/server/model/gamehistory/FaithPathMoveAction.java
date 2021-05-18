@@ -2,6 +2,8 @@ package it.polimi.ingsw.server.model.gamehistory;
 
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathMoveActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
 
 public class FaithPathMoveAction extends GameAction {
     private final Player player;
@@ -25,5 +27,15 @@ public class FaithPathMoveAction extends GameAction {
                 player.getName(),
                 steps
             );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentation() {
+        return new ServerFaithPathMoveActionRepresentation(player.getServerRepresentation(), steps);
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }

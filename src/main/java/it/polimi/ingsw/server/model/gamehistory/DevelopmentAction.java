@@ -3,6 +3,8 @@ package it.polimi.ingsw.server.model.gamehistory;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerDevelopmentActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
 
 public class DevelopmentAction extends GameAction {
     private final Player player;
@@ -20,5 +22,18 @@ public class DevelopmentAction extends GameAction {
             player,
             developmentCard
         );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentation() {
+        return new ServerDevelopmentActionRepresentation(
+            player.getServerRepresentation(),
+            developmentCard.getServerRepresentation()
+        );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }

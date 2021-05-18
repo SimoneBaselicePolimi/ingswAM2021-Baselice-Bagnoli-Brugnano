@@ -13,6 +13,7 @@ import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
+import it.polimi.ingsw.server.model.gamehistory.GameHistoryImp;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
@@ -51,7 +52,7 @@ public class GameContextBuilderIntegrationTest {
 
     GameItemsManager gameItemsManager = new GameItemsManager();
 
-    GameHistory gameHistory = new GameHistory();
+    GameHistory gameHistory = new GameHistoryImp();
 
     Player player1, player2, player3, player4;
 

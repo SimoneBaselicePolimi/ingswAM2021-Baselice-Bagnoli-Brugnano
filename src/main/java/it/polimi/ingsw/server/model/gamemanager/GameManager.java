@@ -14,6 +14,7 @@ import it.polimi.ingsw.server.model.gamecontext.GameContextBuilder;
 import it.polimi.ingsw.server.model.gamecontext.GameContextCreationError;
 import it.polimi.ingsw.server.model.gamecontext.ObservableGameContextBuilder;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
+import it.polimi.ingsw.server.model.gamehistory.GameHistoryImp;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
@@ -98,7 +99,7 @@ public class GameManager {
 
 	/**
 	 * Method to get the Game History
-	 * @return GameHistory, see {@link GameHistory}
+	 * @return GameHistory, see {@link GameHistoryImp}
 	 */
 	public GameHistory getGameHistory() {
 		return gameHistory;

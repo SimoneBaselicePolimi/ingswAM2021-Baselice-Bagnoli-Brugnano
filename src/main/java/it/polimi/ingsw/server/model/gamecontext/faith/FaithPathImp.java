@@ -45,7 +45,7 @@ public class FaithPathImp implements FaithPath {
 	protected Map<Player,Integer> victoryPoints = new HashMap<>();
 
 	/**
-	 * @see GameHistory
+	 * @see GameHistoryImp
 	 */
 	protected GameHistory gameHistory;
 
@@ -56,7 +56,7 @@ public class FaithPathImp implements FaithPath {
 	 * @param vaticanSections spaces in which a Vatican Report can occur
 	 * @param victoryPointsByPosition victory points given by each space in the Faith Track
 	 * @param players players in the Game
-	 * @param gameHistory see {@link GameHistory}. Events triggered by a move action are automatically logged in the
+	 * @param gameHistory see {@link GameHistoryImp}. Events triggered by a move action are automatically logged in the
 	 *                    Game History
 	 * @throws IllegalArgumentException if there are no Players or if the victory points passed as parameter
 	 * are not as many as the spaces in the Faith Track

@@ -166,9 +166,8 @@ public class LeaderCardImp extends RegisteredIdentifiableItem implements LeaderC
 		);
 	}
 
-	//TODO Informazioni private da passare a ciascun giocatore (persistenza)
 	@Override
 	public ServerLeaderCardRepresentation getServerRepresentationForPlayer(Player player) {
-		return null;
+		return getServerRepresentation();
 	}
 }
