@@ -7,10 +7,9 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
-import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
-import it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionState;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -196,10 +195,10 @@ class PlayerContextTest {
     @Test
     void testGetActiveLeaderCardsResourceStorages() {
 
-        ResourceStorage storage1 = mock(ResourceStorage.class);
-        ResourceStorage storage2 = mock(ResourceStorage.class);
-        ResourceStorage storage3 = mock(ResourceStorage.class);
-        ResourceStorage storage4 = mock(ResourceStorage.class);
+        ResourceStorage storage1 = mock(ResourceStorageImp.class);
+        ResourceStorage storage2 = mock(ResourceStorageImp.class);
+        ResourceStorage storage3 = mock(ResourceStorageImp.class);
+        ResourceStorage storage4 = mock(ResourceStorageImp.class);
 
         LeaderCard cardWithStorage1 = mock(LeaderCard.class);
         when(cardWithStorage1.getResourceStorages()).thenReturn(Set.of(storage1));
@@ -252,9 +251,9 @@ class PlayerContextTest {
     @Test
     void testGetShelves() {
         Set<ResourceStorage> shelves = Set.of(
-                mock(ResourceStorage.class),
-                mock(ResourceStorage.class),
-                mock(ResourceStorage.class)
+                mock(ResourceStorageImp.class),
+                mock(ResourceStorageImp.class),
+                mock(ResourceStorageImp.class)
         );
         playerContext = new PlayerContext(
             player,
@@ -270,10 +269,10 @@ class PlayerContextTest {
     @Test
     void testGetResourceStoragesForResourcesFromMarket() {
 
-        ResourceStorage shelve1 = mock(ResourceStorage.class);
-        ResourceStorage shelve2 = mock(ResourceStorage.class);
-        ResourceStorage leaderCardStorage1 = mock(ResourceStorage.class);
-        ResourceStorage leaderCardStorage2 = mock(ResourceStorage.class);
+        ResourceStorage shelve1 = mock(ResourceStorageImp.class);
+        ResourceStorage shelve2 = mock(ResourceStorageImp.class);
+        ResourceStorage leaderCardStorage1 = mock(ResourceStorageImp.class);
+        ResourceStorage leaderCardStorage2 = mock(ResourceStorageImp.class);
         Set<ResourceStorage> shelves = Set.of(shelve1, shelve2);
 
         LeaderCard leaderCard1 = mock(LeaderCard.class);
@@ -452,19 +451,19 @@ class PlayerContextTest {
     @Test
     void testGetAllResourceAndResourcesStorages() {
 
-        ResourceStorage shelve1 = mock(ResourceStorage.class);
+        ResourceStorage shelve1 = mock(ResourceStorageImp.class);
         when(shelve1.peekResources()).thenReturn(Map.of(
                 ResourceType.COINS, 2
         ));
 
-        ResourceStorage shelve2 = mock(ResourceStorage.class);
+        ResourceStorage shelve2 = mock(ResourceStorageImp.class);
         when(shelve2.peekResources()).thenReturn(Map.of(
                 ResourceType.SHIELDS, 1
         ));
 
         Set<ResourceStorage> shelves = Set.of(shelve1, shelve2);
 
-        ResourceStorage leaderCardStorage1 = mock(ResourceStorage.class);
+        ResourceStorage leaderCardStorage1 = mock(ResourceStorageImp.class);
         when(leaderCardStorage1.peekResources()).thenReturn(Map.of(
                 ResourceType.COINS, 2
         ));
@@ -472,7 +471,7 @@ class PlayerContextTest {
         when(leaderCard1.getResourceStorages()).thenReturn(Set.of(leaderCardStorage1));
         when(leaderCard1.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        ResourceStorage leaderCardStorage2 = mock(ResourceStorage.class);
+        ResourceStorage leaderCardStorage2 = mock(ResourceStorageImp.class);
         lenient().when(leaderCardStorage2.peekResources()).thenReturn(Map.of(
                 ResourceType.SERVANTS, 100
         ));

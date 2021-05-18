@@ -11,7 +11,6 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsN
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
-import java.util.List;
 import java.util.Set;
 
 public class LeaderCardNotifier extends LeaderCard implements Notifier {

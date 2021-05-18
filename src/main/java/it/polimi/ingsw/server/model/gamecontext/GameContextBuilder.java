@@ -18,6 +18,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.*;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 
 import java.util.*;
@@ -126,11 +127,11 @@ public class GameContextBuilder {
 			);
 		}
 
-		ResourceStorage infiniteChest = new ResourceStorage(
+		ResourceStorage infiniteChest = new ResourceStorageImp(
 			"InfChest_ID", gameItemsManager, new ArrayList<>()
 		);
 
-		ResourceStorage temporaryStorage = new ResourceStorage(
+		ResourceStorage temporaryStorage = new ResourceStorageImp(
 			"TempStorage_ID", gameItemsManager, new ArrayList<>()
 		);
 
@@ -163,7 +164,7 @@ public class GameContextBuilder {
 		String resourceStorageID,
 		List<ResourceStorageRule> rules
 	) {
-		return new ResourceStorage(resourceStorageID, gameItemsManager, rules);
+		return new ResourceStorageImp(resourceStorageID, gameItemsManager, rules);
 	}
 
 	protected ResourceStorage buildResourceStorage(ResourceStorageConfig resourceStorageConf) {

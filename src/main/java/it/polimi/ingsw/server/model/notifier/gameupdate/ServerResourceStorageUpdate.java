@@ -9,6 +9,11 @@ import java.util.Map;
 
 public class ServerResourceStorageUpdate extends ServerGameUpdate {
 
+	public ServerResourceStorageUpdate(ResourceStorage storage, Map<ResourceType, Integer> resourcesInStorage) {
+		this.storage = storage;
+		this.resourcesInStorage = resourcesInStorage;
+	}
+
 	@SerializeIdOnly
 	public ResourceStorage storage;
 

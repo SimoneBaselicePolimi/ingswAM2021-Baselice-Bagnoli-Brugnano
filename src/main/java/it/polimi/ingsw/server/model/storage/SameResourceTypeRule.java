@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.model.storage;
 
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerSameResourceTypeRuleRepresentation;
 
 import java.util.Map;
 
@@ -31,4 +34,13 @@ public class SameResourceTypeRule extends ResourceStorageRule {
 				storage.peekResources().keySet().iterator().next() == newResources.keySet().iterator().next();
 	}
 
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentation() {
+		return new ServerSameResourceTypeRuleRepresentation();
+	}
+
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }
