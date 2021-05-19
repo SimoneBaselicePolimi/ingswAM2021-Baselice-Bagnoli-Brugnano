@@ -1,15 +1,18 @@
 package it.polimi.ingsw.server.model.gameitems.leadercard;
 
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerDevelopmentCardColourRequirementRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRequirementRepresentation;
 
 /**
  * This class represent the request for a specific number of development cards of a certain colour
  */
 public class DevelopmentCardColourRequirement extends LeaderCardRequirement {
-    DevelopmentCardColour cardColour;
-    int numberOfCards;
+    public final DevelopmentCardColour cardColour;
+    public final int numberOfCards;
 
     /**
      * DevelopmentCardColorRequirement constructor
@@ -36,5 +39,15 @@ public class DevelopmentCardColourRequirement extends LeaderCardRequirement {
         if (sumOfRightColourCard >= numberOfCards)
             return true;
         return false;
+    }
+
+    @Override
+    public ServerLeaderCardRequirementRepresentation getServerRepresentation() {
+        return new ServerDevelopmentCardColourRequirementRepresentation(cardColour, numberOfCards);
+    }
+
+    @Override
+    public ServerLeaderCardRequirementRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }

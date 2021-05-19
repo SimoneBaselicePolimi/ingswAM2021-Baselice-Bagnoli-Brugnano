@@ -3,8 +3,11 @@ package it.polimi.ingsw.server.model.gamecontext.market;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,26 +16,31 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class MarketTest {
 
     @Mock
     GameItemsManager gameItemsManager;
 
-    // Marbles initialization
-    Map<MarbleColour,Integer> test21marbles = Map.of(
-        new MarbleColour(
-            "RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false
-        ), 8,
-        new MarbleColour(
-            "BlueMarble", gameItemsManager, Optional.of(ResourceType.COINS), 0, false
-        ), 5,
-        new MarbleColour(
-            "YellowMarble", gameItemsManager, Optional.of(ResourceType.STONES), 0, false
-        ), 3,
-        new MarbleColour(
-            "AnotherBoringColorMarble", gameItemsManager, Optional.empty(), 0, true
-        ), 5
-    );
+    Map<MarbleColour,Integer> test21marbles;
+
+    @BeforeEach
+    void setUp() {
+        test21marbles = Map.of(
+            new MarbleColour(
+                "RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false
+            ), 8,
+            new MarbleColour(
+                "BlueMarble", gameItemsManager, Optional.of(ResourceType.COINS), 0, false
+            ), 5,
+            new MarbleColour(
+                "YellowMarble", gameItemsManager, Optional.of(ResourceType.STONES), 0, false
+            ), 3,
+            new MarbleColour(
+                "AnotherBoringColorMarble", gameItemsManager, Optional.empty(), 0, true
+            ), 5
+        );
+    }
 
     /**
      * Tests Market initialization.
@@ -47,7 +55,7 @@ class MarketTest {
         Map<MarbleColour,Integer> marbles = new HashMap<>();
         marbles.put(new MarbleColour("RedMarble", gameItemsManager, Optional.of(ResourceType.SERVANTS), 1, false),5);
         marbles.put(new MarbleColour("GreyMarble", gameItemsManager, Optional.of(ResourceType.SHIELDS), 0, false),2);
-        Market market = new Market(nRow, nColumn, marbles);
+        Market market = new MarketImp(nRow, nColumn, marbles);
         assertNotNull(market.getMarbleMatrix());
         assertEquals(nRow,market.getMarbleMatrix().length);
         assertEquals(nColumn, market.getMarbleMatrix()[0].length);
@@ -73,7 +81,7 @@ class MarketTest {
         marbles.put(new MarbleColour("GreyMarble", gameItemsManager, Optional.of(ResourceType.SHIELDS), 0, false), 3);
         assertThrows(
             WrongNumberOfMarblesException.class,
-            () -> new Market(nRow, nColumn, marbles),
+            () -> new MarketImp(nRow, nColumn, marbles),
             "If the number of given marbles is not equal to nRow * nColumn + 1 an exception should be thrown"
         );
     }
@@ -89,9 +97,9 @@ class MarketTest {
     void testMarketInitializationRandomness() throws WrongNumberOfMarblesException {
         int nRow = 4;
         int nCol = 5;
-        Market market1 = new Market(new Random(1), nRow, nCol, test21marbles);
-        Market market1Copy = new Market(new Random(1), nRow, nCol, test21marbles);
-        Market market2 = new Market(new Random(2), nRow, nCol, test21marbles);
+        Market market1 = new MarketImp(new Random(1), nRow, nCol, test21marbles);
+        Market market1Copy = new MarketImp(new Random(1), nRow, nCol, test21marbles);
+        Market market2 = new MarketImp(new Random(2), nRow, nCol, test21marbles);
         assertTrue(marbleMatricesEquals(market1.getMarbleMatrix(), market1Copy.getMarbleMatrix()));
         assertEquals(market1.getOutMarble(), market1Copy.getOutMarble());
         assertFalse(marbleMatricesEquals(market1.getMarbleMatrix(), market2.getMarbleMatrix()));
@@ -106,7 +114,7 @@ class MarketTest {
     @Test
     void testFetchMarbleRow() throws IllegalArgumentException, WrongNumberOfMarblesException {
         int nRows = 5, nColumns = 4;
-        Market market = new Market(nRows, nColumns, test21marbles);
+        Market market = new MarketImp(nRows, nColumns, test21marbles);
         MarbleColour[][] oldMatrix = market.getMarbleMatrix();
         MarbleColour oldOutMarble = market.getOutMarble();
         int chosenRow = 2;
@@ -125,7 +133,7 @@ class MarketTest {
     @Test
     void testFetchMarbleRowIllegalArgument() throws IllegalArgumentException, WrongNumberOfMarblesException {
         int nRows = 5, nColumns = 4;
-        Market market = new Market(nRows, nColumns, test21marbles);
+        Market market = new MarketImp(nRows, nColumns, test21marbles);
         int chosenWrongRow = 5;
         assertThrows(IllegalArgumentException.class, () -> market.fetchMarbleRow(chosenWrongRow));
         int chosenNegativeRow = -1;
@@ -140,7 +148,7 @@ class MarketTest {
     @Test
     void testFetchMarbleColumn() throws IllegalArgumentException, WrongNumberOfMarblesException {
         int nRows = 5, nColumns = 4;
-        Market market = new Market(nRows, nColumns, test21marbles);
+        Market market = new MarketImp(nRows, nColumns, test21marbles);
         MarbleColour[][] oldMatrix = market.getMarbleMatrix();
         MarbleColour oldOutMarble = market.getOutMarble();
         int chosenWrongColumn = 5;
@@ -165,7 +173,7 @@ class MarketTest {
     @Test
     void testFetchMarbleColumnIllegalArgument() throws IllegalArgumentException, WrongNumberOfMarblesException {
         int nRows = 5, nColumns = 4;
-        Market market = new Market(nRows, nColumns, test21marbles);
+        Market market = new MarketImp(nRows, nColumns, test21marbles);
         int chosenWrongColumn = 5;
         assertThrows(IllegalArgumentException.class, () -> market.fetchMarbleColumn(chosenWrongColumn));
         int chosenNegativeColumn = -1;

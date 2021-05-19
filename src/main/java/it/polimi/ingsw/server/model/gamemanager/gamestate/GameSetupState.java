@@ -1,37 +1,37 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.configfile.GameInfoConfig;
-import it.polimi.ingsw.network.servermessage.*;
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
+import it.polimi.ingsw.network.servermessage.GameUpdateServerMessage;
+import it.polimi.ingsw.network.servermessage.InitialChoicesServerMessage;
+import it.polimi.ingsw.network.servermessage.PostGameSetupServerMessage;
+import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
 import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.LeaderCardsThePlayerOwnsUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerLeaderCardsThePlayerOwnsUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.*;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * This class represents the initial phase of the game.
- * Everything that is needed to start the game is initialised in the setup state.
- * Each player is assigned a variable number of leader cards, resources and faith points.
- * Each player then chooses which leader cards to hold and discard
- * and which bonus resources to obtain based on the number assigned to him.
+ * Everything that is needed to start the game is initialized in the setup state.
+ * A variable number of leader cards, resources and faith points is assigned to each player.
+ * Each player then chooses which leader cards he wants to hold, which ones to discard
+ * and which bonus resources he wants to take based on the assigned number.
  */
 public class GameSetupState extends GameState<InitialChoicesServerMessage, PostGameSetupServerMessage> {
 
 	/**
-	 * A random number generator used to randomly give leader cards to each player at the start of the game.
+	 * A random number generator used to randomly give leader cards to each player at the start of the game
 	 */
 	Random randGenerator;
 
@@ -72,7 +72,9 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 
 	/**
 	 * GameSetupState constructor
-	 * The leader cards will be given randomly to each player.
+	 * From the configuration file are taken the number of cards to give to each player,
+	 * the number of cards that each player must hold in his hand and all the leader cards
+	 * that are then randomly assigned to each player with the initializeGameSetupState() function
 	 * @param gameManager GameManager, see {@link GameManager}
 	 */
 	public GameSetupState(GameManager gameManager) {
@@ -105,7 +107,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	/**
 	 * Initializes GameSetupState.
 	 * Leader cards are randomly assigned to each player.
-	 * The number of resources to choose from and the number of faith points are also assigned to each player.
+	 * The number of resources to choose and the number of faith points are also assigned to each player.
 	 */
 	private void initializeGameSetupState (){
 
@@ -180,9 +182,9 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	 * (players can only hold a certain number of cards).
 	 * - The leader cards chosen by the player are part of the group of leader cards assigned to him.
 	 * After verifying these requirements, the method assigns the chosen leader cards to each player,
-	 * stores the resources resources in the shelves chosen by the player
+	 * stores the resources in the shelves chosen by the player
 	 * and moves the player in the Faith Track for a specific number of steps forward.
-	 * Finally, the method returns these changes to each player, taking care to filter out private informations:
+	 * Finally, the method returns these changes to each player, taking care to filter out private information:
 	 * each player can only see his own leader cards, which he must keep secret from the other players.
 	 * @param request specifying each player's choices, see {@link InitialChoicesClientRequest}
 	 * @return a map specifying the message to be sent to each player
@@ -198,7 +200,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				"A request for this player has already been sent"
 			);
 
-		// check if the player choose a leader card that was not from the group of leader cards assigned to him.
+		// check if the player chooses a leader card that was not from the group of leader cards assigned to him.
 		if (!leaderCardsGivenToThePlayers.get(request.player).containsAll(request.leaderCardsChosenByThePlayer))
 			return createInvalidRequestServerMessage(
 				request.player,
@@ -223,14 +225,14 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 			ResourceUtils.sum(request.chosenResourcesToAddByStorage.values())
 		));
 
-		Set<GameUpdate> gameUpdates = gameManager.getAllGameUpdates();
+		Set<ServerGameUpdate> gameUpdates = gameManager.getAllGameUpdates();
 		Map<Player, ServerMessage> serverMessages = new HashMap<>();
 		for (Player player : gameManager.getPlayers()){
 			// Filter out private info on leader cards HIDDEN
-			Set <GameUpdate> gameUpdatesForPlayer = gameUpdates.stream()
+			Set <ServerGameUpdate> gameUpdatesForPlayer = gameUpdates.stream()
 				.filter(gameUpdate -> !(
-					gameUpdate instanceof LeaderCardsThePlayerOwnsUpdate &&
-					!((LeaderCardsThePlayerOwnsUpdate)gameUpdate).player.equals(player)
+					gameUpdate instanceof ServerLeaderCardsThePlayerOwnsUpdate &&
+					!((ServerLeaderCardsThePlayerOwnsUpdate)gameUpdate).player.equals(player)
 				)).collect(Collectors.toSet());
 			serverMessages.put(player, new GameUpdateServerMessage(gameUpdatesForPlayer));
 		}
@@ -254,9 +256,9 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	}
 
 	/**
-	 * Method that changes the state of the game:
-	 * the setup state ends and the game switches to the main state where the player can choose what action to perform.
-	 * @return GameTurnMainActionState main state of the game, see {@link GameTurnMainActionState}
+	 * Method that changes the state of the game: the setup state ends and the game switches to the main state,
+	 * during which the player can choose what action to perform.
+	 * @return GameTurnMainActionState: main state of the game, see {@link GameTurnMainActionState}
 	 */
 	public GameTurnMainActionState getNextState() {
 		return new GameTurnMainActionState(gameManager);

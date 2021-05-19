@@ -60,19 +60,19 @@ class PlayerOwnedDevelopmentCardDeckTest {
      */
     @Test
     void testInitializeDevelopmentCardDeck() throws ForbiddenPushOnTopException {
-        PlayerOwnedDevelopmentCardDeck deck1 = new PlayerOwnedDevelopmentCardDeck("ID_1", gameItemsManager);
+        PlayerOwnedDevelopmentCardDeckImp deck1 = new PlayerOwnedDevelopmentCardDeckImp("ID_1", gameItemsManager);
         fillDeck(deck1, testThreeCards);
         List<DevelopmentCard> listThreeCards = new ArrayList<>();
         while(!deck1.isEmpty())
             listThreeCards.add(deck1.pop());
 
-        PlayerOwnedDevelopmentCardDeck deck1Copy = new PlayerOwnedDevelopmentCardDeck("ID_1Copy", gameItemsManager);
+        PlayerOwnedDevelopmentCardDeckImp deck1Copy = new PlayerOwnedDevelopmentCardDeckImp("ID_1Copy", gameItemsManager);
         fillDeck(deck1Copy, testThreeCards);
         List<DevelopmentCard> listThreeCardsCopy = new ArrayList<>();
         while(!deck1Copy.isEmpty())
             listThreeCardsCopy.add(deck1Copy.pop());
 
-        PlayerOwnedDevelopmentCardDeck deck2 = new PlayerOwnedDevelopmentCardDeck("ID_2", gameItemsManager);
+        PlayerOwnedDevelopmentCardDeckImp deck2 = new PlayerOwnedDevelopmentCardDeckImp("ID_2", gameItemsManager);
         fillDeck(deck2, testTwoCards);
         List<DevelopmentCard> listTwoCards = new ArrayList<>();
         while(!deck2.isEmpty())
@@ -88,12 +88,12 @@ class PlayerOwnedDevelopmentCardDeckTest {
      */
     @Test
     void testPeekAll() throws EmptyStackException, ForbiddenPushOnTopException {
-        PlayerOwnedDevelopmentCardDeck deckThreeCards = new PlayerOwnedDevelopmentCardDeck("ID_1", gameItemsManager);
+        PlayerOwnedDevelopmentCardDeckImp deckThreeCards = new PlayerOwnedDevelopmentCardDeckImp("ID_1", gameItemsManager);
         fillDeck(deckThreeCards, testThreeCards);
         List<DevelopmentCard> listThreeCards = deckThreeCards.peekAll();
         assertEquals(testThreeCards, listThreeCards);
 
-        PlayerOwnedDevelopmentCardDeck deckTwoCards = new PlayerOwnedDevelopmentCardDeck("ID_2", gameItemsManager);
+        PlayerOwnedDevelopmentCardDeckImp deckTwoCards = new PlayerOwnedDevelopmentCardDeckImp("ID_2", gameItemsManager);
         fillDeck(deckTwoCards, testTwoCards);
         List<DevelopmentCard> listTwoCards = deckTwoCards.peekAll();
         assertEquals(testTwoCards, listTwoCards);
@@ -109,7 +109,7 @@ class PlayerOwnedDevelopmentCardDeckTest {
      */
     @Test
     void testPushOnTop() throws ForbiddenPushOnTopException {
-        PlayerOwnedDevelopmentCardDeck deck = new PlayerOwnedDevelopmentCardDeck("ID_1", gameItemsManager);
+        PlayerOwnedDevelopmentCardDeckImp deck = new PlayerOwnedDevelopmentCardDeckImp("ID_1", gameItemsManager);
         assertThrows(EmptyStackException.class, deck::peek);
 
         assertThrows(ForbiddenPushOnTopException.class, () -> deck.pushOnTop(card3));
@@ -140,7 +140,7 @@ class PlayerOwnedDevelopmentCardDeckTest {
      */
     @Test
     void testPop() throws ForbiddenPushOnTopException{
-        PlayerOwnedDevelopmentCardDeck deck = new PlayerOwnedDevelopmentCardDeck("ID_1", gameItemsManager);
+        PlayerOwnedDevelopmentCardDeckImp deck = new PlayerOwnedDevelopmentCardDeckImp("ID_1", gameItemsManager);
         fillDeck(deck, testThreeCards);
 
         while (!deck.isEmpty())

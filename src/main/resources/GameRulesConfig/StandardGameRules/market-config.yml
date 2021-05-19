@@ -36,7 +36,7 @@ marbles:
       isSpecial: false
     numberOfMarbles: 2
   - marbleConfig:
-      marbleID: YELLOW
+      marbleID: MARBLE_YELLOW
       resourceType: COINS
       numberOfFaithPoints: 0
       isSpecial: false

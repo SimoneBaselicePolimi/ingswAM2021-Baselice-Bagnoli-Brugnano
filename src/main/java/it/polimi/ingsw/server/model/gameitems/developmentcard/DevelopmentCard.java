@@ -1,13 +1,16 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.*;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 
 import java.util.Map;
 
 /**
  * This class represent a specific type of cards used in the game: the development card
  */
-public class DevelopmentCard extends RegisteredIdentifiableItem {
+public class DevelopmentCard extends RegisteredIdentifiableItem implements Representable<ServerDevelopmentCardRepresentation> {
 
 	private DevelopmentCardLevel level;
 	private DevelopmentCardColour colour;
@@ -38,7 +41,7 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 	    super(developmentCardID, gameItemsManager);
 		this.level=level;
 		this.colour=colour;
-		this.production=production;
+		this.production = production;
 		this.victoryPoints=victoryPoints;
 		this.purchaseCost=purchaseCost;
 	}
@@ -60,8 +63,8 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 	}
 
 	/**
-	 * Method to get the production of the development card
-	 * @return production
+	 * Method to get the list of productions of the development card
+	 * @return production list
 	 */
 	public Production getProduction() {
 		return production;
@@ -83,4 +86,20 @@ public class DevelopmentCard extends RegisteredIdentifiableItem {
 		return purchaseCost;
 	}
 
+	@Override
+	public ServerDevelopmentCardRepresentation getServerRepresentation() {
+		return new ServerDevelopmentCardRepresentation(
+			itemID,
+			level,
+			colour,
+			production.getServerRepresentation(),
+			victoryPoints,
+			purchaseCost
+		);
+	}
+
+	@Override
+	public ServerDevelopmentCardRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }

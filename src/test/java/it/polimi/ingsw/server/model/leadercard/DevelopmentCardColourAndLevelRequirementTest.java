@@ -13,7 +13,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,6 +23,7 @@ import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class DevelopmentCardColourAndLevelRequirementTest {
+
     @Mock
     GameItemsManager gameItemsManager;
 
@@ -36,49 +39,59 @@ public class DevelopmentCardColourAndLevelRequirementTest {
     @Mock
     Production production;
 
-    DevelopmentCardColourAndLevelRequirement requirement1 =
-        new DevelopmentCardColourAndLevelRequirement(DevelopmentCardColour.BLUE, DevelopmentCardLevel.FIRST_LEVEL,3);
-    DevelopmentCardColourAndLevelRequirement requirement2 =
-        new DevelopmentCardColourAndLevelRequirement(DevelopmentCardColour.BLUE, DevelopmentCardLevel.SECOND_LEVEL,2);
-    DevelopmentCardColourAndLevelRequirement requirement3 =
-        new DevelopmentCardColourAndLevelRequirement(DevelopmentCardColour.YELLOW, DevelopmentCardLevel.THIRD_LEVEL,1);
-    DevelopmentCardColourAndLevelRequirement requirement4 =
-        new DevelopmentCardColourAndLevelRequirement(DevelopmentCardColour.YELLOW, DevelopmentCardLevel.SECOND_LEVEL,1);
-    DevelopmentCardColourAndLevelRequirement requirement5 =
-        new DevelopmentCardColourAndLevelRequirement(DevelopmentCardColour.PURPLE, DevelopmentCardLevel.THIRD_LEVEL,2);
-    DevelopmentCardColourAndLevelRequirement requirement6 =
-        new DevelopmentCardColourAndLevelRequirement(DevelopmentCardColour.GREEN, DevelopmentCardLevel.FIRST_LEVEL,3);
+    DevelopmentCardColourAndLevelRequirement requirement1, requirement2, requirement3, requirement4, requirement5, requirement6;
 
     @BeforeEach
     void setUp() {
+        requirement1 = new DevelopmentCardColourAndLevelRequirement(
+            DevelopmentCardColour.BLUE, DevelopmentCardLevel.FIRST_LEVEL,3
+        );
+        requirement2 = new DevelopmentCardColourAndLevelRequirement(
+            DevelopmentCardColour.BLUE, DevelopmentCardLevel.SECOND_LEVEL,2
+        );
+        requirement3 = new DevelopmentCardColourAndLevelRequirement(
+            DevelopmentCardColour.YELLOW, DevelopmentCardLevel.THIRD_LEVEL,1
+        );
+        requirement4 = new DevelopmentCardColourAndLevelRequirement(
+            DevelopmentCardColour.YELLOW, DevelopmentCardLevel.SECOND_LEVEL,1
+        );
+        requirement5 = new DevelopmentCardColourAndLevelRequirement(
+            DevelopmentCardColour.PURPLE, DevelopmentCardLevel.THIRD_LEVEL,2
+        );
+        requirement6 = new DevelopmentCardColourAndLevelRequirement(
+            DevelopmentCardColour.GREEN, DevelopmentCardLevel.FIRST_LEVEL,3
+        );
 
         // 3 BLUE FIRST LEVEL, 2 GREEN FIRST LEVEL, 1 BLUE SECOND LEVEL, 3 PURPLE THIRD LEVEL, 1 YELLOW THIRD LEVEL
-        lenient().when(playerContext1.getAllDevelopmentCards()).thenReturn(Set.of(
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production,2, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production,2, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production,1, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW, production,1, new HashMap<>())
-        ));
+        Set<DevelopmentCard> developmentCardSet1 = Set.of(
+            new DevelopmentCard("testID1", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3, new HashMap<>()),
+            new DevelopmentCard("testID2", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3, new HashMap<>()),
+            new DevelopmentCard("testID3", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production,3, new HashMap<>()),
+            new DevelopmentCard("testID4", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production,2, new HashMap<>()),
+            new DevelopmentCard("testID5", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production,2, new HashMap<>()),
+            new DevelopmentCard("testID6", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production,1, new HashMap<>()),
+            new DevelopmentCard("testID7", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3, new HashMap<>()),
+            new DevelopmentCard("testID8", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3, new HashMap<>()),
+            new DevelopmentCard("testID9", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production,3, new HashMap<>()),
+            new DevelopmentCard("testID10", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.YELLOW, production,1, new HashMap<>())
+        );
 
         // 5 YELLOW FIRST LEVEL, 2 YELLOW SECOND LEVEL
-        lenient().when(playerContext2.getAllDevelopmentCards()).thenReturn(Set.of(
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production,2, new HashMap<>()),
-            new DevelopmentCard("testID", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production,2, new HashMap<>())
-        ));
+        Set<DevelopmentCard> developmentCardSet2 = Set.of(
+            new DevelopmentCard("testID11", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
+            new DevelopmentCard("testID12", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
+            new DevelopmentCard("testID13", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
+            new DevelopmentCard("testID14", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
+            new DevelopmentCard("testID15", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.YELLOW, production,5, new HashMap<>()),
+            new DevelopmentCard("testID16", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production,2, new HashMap<>()),
+            new DevelopmentCard("testID17", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production,2, new HashMap<>())
+        );
+
+        lenient().when(playerContext1.getAllDevelopmentCards()).thenReturn(developmentCardSet1);
+
+        lenient().when(playerContext2.getAllDevelopmentCards()).thenReturn(developmentCardSet2);
 
         lenient().when(playerContext3.getAllDevelopmentCards()).thenReturn(new HashSet<>());
-
     }
 
     /**

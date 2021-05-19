@@ -3,8 +3,11 @@ package it.polimi.ingsw.server.model.gamehistory;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.Production;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerProductionActionRepresentation;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ProductionAction extends GameAction {
     private final Player player;
@@ -22,5 +25,18 @@ public class ProductionAction extends GameAction {
             player,
             productions
         );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentation() {
+        return new ServerProductionActionRepresentation(
+            player.getServerRepresentation(),
+            productions.stream().map(production -> production.getServerRepresentation()).collect(Collectors.toSet())
+        );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }

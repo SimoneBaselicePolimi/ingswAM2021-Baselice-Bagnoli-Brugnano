@@ -10,18 +10,15 @@ import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gamehistory.GameAction;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
-import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
-import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,16 +53,9 @@ public class GameStateTest {
     @Mock
     FaithPath faithPath;
 
-    @Mock
-    DevelopmentCardsTable developmentCardsTable;
+    Player player1, player2, player3;
 
-    List<DevelopmentCard> availableDevelopmentCards;
-
-    Player player1 = new Player("first");
-    Player player2 = new Player("second");
-    Player player3 = new Player("third");
-
-    List<Player> playersInOrder = List.of(player1, player2, player3);
+    List<Player> playersInOrder;
 
     @Mock
     PlayerContext playerContext1;
@@ -78,7 +68,9 @@ public class GameStateTest {
 
     Map<Player, Set<ResourceStorage>> shelvesForPlayers;
 
-    Set<GameUpdate> mockUpdates;
+    Set<ResourceStorage> leaderStoragesForPlayer1;
+
+    Set<ServerGameUpdate> mockUpdates;
 
     @Mock
     MarbleColour marble1;
@@ -89,26 +81,35 @@ public class GameStateTest {
     @Mock
     MarbleColour marble3;
 
-    MarbleColour[] marblesInColumn = new MarbleColour[]{marble1, marble2, marble3};
-    MarbleColour[] marblesInRow = new MarbleColour[]{marble1, marble2};
+    @Mock
+    DevelopmentCardsTable table;
+
+    List<DevelopmentCard> availableDevelopmentCards;
 
     Iterator<DevelopmentCard> iter;
-    DevelopmentCard developmentCard;
-
-    @Mock
-    PlayerOwnedDevelopmentCardDeck playerDeck;
+    DevelopmentCard rightCardThirdLevel;
+    DevelopmentCard rightCardSecondLevel;
+    DevelopmentCard rightCardFirstLevel;
 
     @BeforeEach
     void gameStateTestsSetUp() {
 
+        player1 = new Player("first", gameItemsManager);
+        player2 = new Player("second", gameItemsManager);
+        player3 = new Player("third", gameItemsManager);
+
+        playersInOrder = List.of(player1, player2, player3);
+
         lenient().when(gameManager.getGameItemsManager()).thenReturn(gameItemsManager);
         lenient().when(gameManager.getGameHistory()).thenReturn(gameHistory);
+        lenient().when(gameManager.getPlayers()).thenReturn(new HashSet<>(playersInOrder));
 
         lenient().when(gameManager.getGameContext()).thenReturn(gameContext);
         lenient().when(gameContext.getMarket()).thenReturn(market);
         lenient().when(gameContext.getFaithPath()).thenReturn(faithPath);
-        lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(developmentCardsTable);
+        lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(table);
 
+        lenient().when(gameContext.getPlayersTurnOrder()).thenReturn(playersInOrder);
         lenient().when(gameContext.getPlayerContext(eq(player1))).thenReturn(playerContext1);
         lenient().when(gameContext.getPlayerContext(eq(player2))).thenReturn(playerContext2);
         lenient().when(gameContext.getPlayerContext(eq(player3))).thenReturn(playerContext3);
@@ -116,9 +117,6 @@ public class GameStateTest {
         //Matrix 2 x 3
         lenient().when(market.getNumOfColumns()).thenReturn(3);
         lenient().when(market.getNumOfRows()).thenReturn(3);
-
-        lenient().when(market.fetchMarbleColumn(2)).thenReturn(marblesInColumn);
-        lenient().when(market.fetchMarbleRow(1)).thenReturn(marblesInRow);
 
         lenient().when(marble1.isSpecialMarble()).thenReturn(false);
         lenient().when(marble2.isSpecialMarble()).thenReturn(true);
@@ -134,16 +132,31 @@ public class GameStateTest {
 
         availableDevelopmentCards = TestUtils.generateListOfMockWithID(DevelopmentCard.class, 8);
 
-        lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(developmentCardsTable);
-        lenient().when(developmentCardsTable.getAvailableCards()).thenReturn(availableDevelopmentCards);
-
         iter = availableDevelopmentCards.iterator();
-        developmentCard = iter.next();
-        lenient().when(developmentCard.getLevel()).thenReturn(DevelopmentCardLevel.THIRD_LEVEL);
-        lenient().when(developmentCard.getColour()).thenReturn(DevelopmentCardColour.YELLOW);
+        rightCardFirstLevel = iter.next();
+        rightCardSecondLevel = iter.next();
+        rightCardThirdLevel = iter.next();
 
-        lenient().when(playerContext1.getDeck(1)).thenReturn(playerDeck);
-        lenient().when(playerDeck.isPushOnTopValid(developmentCard)).thenReturn(true);
+        //The player has 3 COINS, 2 SERVANTS
+        //Third Level Card Cost : 3 COINS, 1 STONES (not enough resources)
+        //Second Level Card Cost : 1 COINS, 2 SERVANTS (enough resources)
+
+        lenient().when(gameContext.getDevelopmentCardsTable()).thenReturn(table);
+        lenient().when(table.getAvailableCards()).thenReturn(availableDevelopmentCards);
+        lenient().when(table.popCard(eq(DevelopmentCardLevel.FIRST_LEVEL), eq(DevelopmentCardColour.YELLOW))).thenReturn(rightCardFirstLevel);
+        lenient().when(rightCardFirstLevel.getLevel()).thenReturn(DevelopmentCardLevel.FIRST_LEVEL);
+        lenient().when(rightCardFirstLevel.getColour()).thenReturn(DevelopmentCardColour.YELLOW);
+
+        lenient().when(rightCardSecondLevel.getLevel()).thenReturn(DevelopmentCardLevel.SECOND_LEVEL);
+        lenient().when(rightCardThirdLevel.getLevel()).thenReturn(DevelopmentCardLevel.THIRD_LEVEL);
+        lenient().when(playerContext1.getAllResources()).thenReturn(Map.of(ResourceType.COINS, 3, ResourceType.SERVANTS, 2));
+
+        lenient().when(rightCardThirdLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 3, ResourceType.STONES, 1));
+        lenient().when(rightCardSecondLevel.getPurchaseCost()).thenReturn(Map.of(ResourceType.COINS, 1, ResourceType.SERVANTS, 2));
+
+        lenient().when(playerContext1.canAddDevelopmentCard(rightCardFirstLevel, 1)).thenReturn(false);
+        lenient().when(playerContext1.canAddDevelopmentCard(rightCardSecondLevel, 1)).thenReturn(true);
+        lenient().when(playerContext1.canAddDevelopmentCard(rightCardThirdLevel, 1)).thenReturn(true);
 
         shelvesForPlayers = Map.of(
             player1, TestUtils.generateSetOfMockWithID(ResourceStorage.class, 3),
@@ -151,9 +164,15 @@ public class GameStateTest {
             player3, TestUtils.generateSetOfMockWithID(ResourceStorage.class, 3)
         );
 
+        leaderStoragesForPlayer1 =  TestUtils.generateSetOfMockWithID(ResourceStorage.class, 2);
+
         lenient().when(playerContext1.getShelves()).thenReturn(shelvesForPlayers.get(player1));
-        lenient().when(playerContext1.getResourceStoragesForResourcesFromMarket()).thenReturn(shelvesForPlayers.get(player1));
-        //lenient().when()
+        Set<ResourceStorage> totalStoragesStoragesForResourcesFromMarket = new HashSet<>();
+        totalStoragesStoragesForResourcesFromMarket.addAll(shelvesForPlayers.get(player1));
+        totalStoragesStoragesForResourcesFromMarket.addAll(leaderStoragesForPlayer1);
+        lenient().when(playerContext1.getResourceStoragesForResourcesFromMarket()).thenReturn(
+            totalStoragesStoragesForResourcesFromMarket
+        );
 
         lenient().when(playerContext2.getShelves()).thenReturn(shelvesForPlayers.get(player2));
         lenient().when(playerContext2.getResourceStoragesForResourcesFromMarket()).thenReturn(shelvesForPlayers.get(player2));
@@ -169,10 +188,10 @@ public class GameStateTest {
         ));
 
         mockUpdates = Set.of(
-            mock(GameUpdate.class),
-            mock(GameUpdate.class),
-            mock(GameUpdate.class),
-            mock(GameUpdate.class)
+            mock(ServerGameUpdate.class),
+            mock(ServerGameUpdate.class),
+            mock(ServerGameUpdate.class),
+            mock(ServerGameUpdate.class)
         );
         lenient().when(gameManager.getAllGameUpdates()).thenReturn(mockUpdates);
 
@@ -189,7 +208,7 @@ public class GameStateTest {
         assertEquals(mockUpdates, message.gameUpdates);
     }
 
-    void verifyThatEveryPlayerGetsAllGameUpdates(Map<Player, ServerMessage> answerServerMessages) {
+    <M extends  ServerMessage> void verifyThatEveryPlayerGetsAllGameUpdates(Map<Player, M> answerServerMessages) {
         for(Player player : playersInOrder) {
             assertTrue(answerServerMessages.containsKey(player));
             assertTrue(answerServerMessages.get(player) instanceof GameUpdateServerMessage);
@@ -213,6 +232,45 @@ public class GameStateTest {
         assertEquals(Set.of(playerThatSentTheInvalidRequest), answerServerMessages.keySet());
 
         assertTrue(answerServerMessages.get(playerThatSentTheInvalidRequest) instanceof InvalidRequestServerMessage);
+
+    }
+
+    // @Test
+    void testRemoveResourcesBasedOnResourcesStoragesPriority() {
+
+//        Iterator<ResourceStorage> player1ShelvesIter = shelvesForPlayers.get(player1).iterator();
+//        ResourceStorage shelve1 = player1ShelvesIter.next();
+//        ResourceStorage shelve2 = player1ShelvesIter.next();
+//        ResourceStorage shelve3 = player1ShelvesIter.next();
+//
+//        Iterator<ResourceStorage> player1LeaderStorageIter = leaderStoragesForPlayer1.iterator();
+//        ResourceStorage leaderStorage1 = player1LeaderStorageIter.next();
+//        ResourceStorage leaderStorage2 = player1LeaderStorageIter.next();
+//
+//        when(shelve1.peekResources()).thenReturn(Map.of(
+//            ResourceType.SHIELDS, 3
+//        ));
+//
+//        when(shelve2.peekResources()).thenReturn(Map.of(
+//            ResourceType.SHIELDS, 2,
+//            ResourceType.COINS, 10
+//        ));
+//
+//        when(shelve3.peekResources()).thenReturn(Map.of(
+//            ResourceType.SHIELDS,3
+//        ));
+//
+//        when(leaderStorage1.peekResources()).thenReturn(Map.of(
+//            ResourceType.STONES,3,
+//            ResourceType.SERVANTS, 2
+//        ));
+//
+//        when(leaderStorage2.peekResources()).thenReturn(Map.of(
+//            ResourceType.SHIELDS, 1
+//        ));
+//
+//        GameState state = new GameTurnMainActionState(gameManager);
+//        state.
 
     }
 

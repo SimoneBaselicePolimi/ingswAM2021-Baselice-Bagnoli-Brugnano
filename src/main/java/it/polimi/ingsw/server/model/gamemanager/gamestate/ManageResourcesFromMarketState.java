@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.network.clientrequest.ManageResourcesFromMarketClientRequest;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathEvent;
 import it.polimi.ingsw.server.model.gamehistory.*;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
@@ -13,14 +12,13 @@ import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationExceptio
 
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * This class represents the phase of the game where the player has already performed a market action and
  * the resources obtained from the marbles have been put into the temporary storage.
  * In this state, the player must choose where to place the resources obtained in his storages and,
- * if necessary, which special resources to obtain and where to place them
+ * if necessary, which type of resources he wants to get as star resources and where he wants to place them
  * (the player knows how many special resources he has obtained as a result of the market action).
  * This state of the game ends when the player has performed the previously described action and the game switches
  * to the GameTurnPostActionState.
@@ -63,11 +61,15 @@ public class ManageResourcesFromMarketState extends GameState {
 	 * @param request of the player to place the obtained resources in his storages,
 	 * see {@link ManageResourcesFromMarketClientRequest}
 	 * @return messages sent to each player containing all changes made since the last game state update
-	 * @throws ResourceStorageRuleViolationException
+	 * @throws ResourceStorageRuleViolationException if a player wants to add some resources to a storage
+	 * by violating a specific rule that the storage implements
 	 */
 	public Map<Player,ServerMessage> handleRequestManageResourcesFromMarket(
 		ManageResourcesFromMarketClientRequest request
 	) throws ResourceStorageRuleViolationException {
+
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
 		for (ResourceStorage storage : request.resourcesToAddByStorage.keySet())
 			storage.addResources(request.resourcesToAddByStorage.get(storage));

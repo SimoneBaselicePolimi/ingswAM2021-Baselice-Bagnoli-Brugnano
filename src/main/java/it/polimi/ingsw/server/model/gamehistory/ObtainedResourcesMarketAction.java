@@ -4,6 +4,8 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerObtainedResourcesMarketActionRepresentation;
 
 import java.util.Map;
 
@@ -23,5 +25,18 @@ public class ObtainedResourcesMarketAction extends GameAction {
             player.getName(),
             LocalizationUtils.getResourcesListAsString(resourcesObtained)
         );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentation() {
+        return new ServerObtainedResourcesMarketActionRepresentation(
+            player.getServerRepresentation(),
+            resourcesObtained
+        );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }

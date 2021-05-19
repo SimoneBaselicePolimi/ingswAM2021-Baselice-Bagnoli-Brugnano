@@ -1,5 +1,9 @@
 package it.polimi.ingsw.server.model.gameitems;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
+
 import java.util.Optional;
 
 /**
@@ -7,7 +11,7 @@ import java.util.Optional;
  * Each Marble can be used by a Player to obtain certain types of resources or faith points. There are also some
  * special Marbles which can be used to gain a generic type of resources if activated by a special Leader card power.
  */
-public class MarbleColour extends RegisteredIdentifiableItem {
+public class MarbleColour extends RegisteredIdentifiableItem implements Representable<ServerMarbleColourRepresentation> {
 	/**
 	 * Optional type of resource obtainable with this Marble
 	 */
@@ -71,26 +75,14 @@ public class MarbleColour extends RegisteredIdentifiableItem {
 		return isSpecialMarble;
 	}
 
-	/**
-	 * Override of the equals method used to compare the equality between two Marbles.
-	 * @param o Object to compare to this Marble
-	 * @return true if the Object passed as parameter is identified by the same Marble ID of the Marble
-	 * which invokes this method, false otherwise
-	 */
+
 	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof MarbleColour)) return false;
-		MarbleColour m = (MarbleColour) o;
-		return (getItemId().equals(m.getItemId()));
+	public ServerMarbleColourRepresentation getServerRepresentation() {
+		return new ServerMarbleColourRepresentation(itemID, resourceType, faithPoints, isSpecialMarble);
 	}
 
-	/**
-	 * Override of the hashCode method used to return the hash code of this Marble.
-	 * @return hash code of this Marble based on its ID
-	 */
 	@Override
-	public int hashCode() {
-		return getItemId().hashCode();
+	public ServerMarbleColourRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
 	}
-
 }

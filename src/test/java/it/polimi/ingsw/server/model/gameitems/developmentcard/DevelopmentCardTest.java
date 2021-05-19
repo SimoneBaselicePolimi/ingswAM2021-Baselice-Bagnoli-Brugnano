@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard> {
@@ -61,7 +60,7 @@ public class DevelopmentCardTest implements IdentifiableItemTest<DevelopmentCard
             gameItemsManager,
             DevelopmentCardLevel.FIRST_LEVEL,
             DevelopmentCardColour.BLUE,
-            mock(Production.class),
+            null,
             0,
             new HashMap<>()
         );

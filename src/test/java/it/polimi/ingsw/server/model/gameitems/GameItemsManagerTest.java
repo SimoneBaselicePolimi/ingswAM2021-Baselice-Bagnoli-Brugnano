@@ -4,20 +4,22 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
+@ExtendWith(MockitoExtension.class)
 class GameItemsManagerTest {
 
-    GameItemsManager itemsManager;
+    GameItemsManager gameItemsManager;
 
     LeaderCard lc1;
 
@@ -27,69 +29,69 @@ class GameItemsManagerTest {
 
     @BeforeEach
     void setUp() {
+        gameItemsManager = new GameItemsManager();
 
-        lc1 = new LeaderCard(
+        lc1 = new LeaderCardImp(
             "lc1",
-            itemsManager,
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
+            gameItemsManager,
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
             0
         );
 
-        lc2 = new LeaderCard(
+        lc2 = new LeaderCardImp(
             "lc2",
-            itemsManager,
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
-            new ArrayList<>(),
+            gameItemsManager,
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
+            new HashSet<>(),
             0
         );
 
         dc1 = new DevelopmentCard(
             "dc1",
-            itemsManager,
+            gameItemsManager,
             DevelopmentCardLevel.FIRST_LEVEL,
             DevelopmentCardColour.BLUE,
-            mock(Production.class),
+            null,
             0,
             new HashMap<>()
         );
 
-        itemsManager = new GameItemsManager();
-        itemsManager.addItem(lc1);
-        itemsManager.addItem(lc2);
-        itemsManager.addItem(dc1);
+        gameItemsManager.addItem(lc1);
+        gameItemsManager.addItem(lc2);
+        gameItemsManager.addItem(dc1);
 
     }
 
     @Test
     void testGetAllItemsOfType() {
-        assertEquals(Set.of(lc1, lc2), itemsManager.getAllItemsOfType(LeaderCard.class));
-        assertEquals(Set.of(dc1), itemsManager.getAllItemsOfType(DevelopmentCard.class));
+        assertEquals(Set.of(lc1, lc2), gameItemsManager.getAllItemsOfType(LeaderCardImp.class));
+        assertEquals(Set.of(dc1), gameItemsManager.getAllItemsOfType(DevelopmentCard.class));
     }
 
     @Test
     void testGetItem() {
-        assertEquals(lc1, itemsManager.getItem(LeaderCard.class, "lc1"));
-        assertEquals(lc2, itemsManager.getItem(LeaderCard.class, "lc2"));
-        assertEquals(dc1, itemsManager.getItem(DevelopmentCard.class, "dc1"));
+        assertEquals(lc1, gameItemsManager.getItem(LeaderCardImp.class, "lc1"));
+        assertEquals(lc2, gameItemsManager.getItem(LeaderCardImp.class, "lc2"));
+        assertEquals(dc1, gameItemsManager.getItem(DevelopmentCard.class, "dc1"));
     }
 
     @Test
     void testGetAllItemsOfTypeThatDoesNotExist() {
-        assertEquals(new HashSet<>(), itemsManager.getAllItemsOfType(MarbleColour.class));
+        assertEquals(new HashSet<>(), gameItemsManager.getAllItemsOfType(MarbleColour.class));
     }
 
     @Test
     void testGetItemWithInvalidId() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> itemsManager.getItem(LeaderCard.class, "ID_THAT_DOES_NOT_EXIST")
+            () -> gameItemsManager.getItem(LeaderCardImp.class, "ID_THAT_DOES_NOT_EXIST")
         );
     }
 

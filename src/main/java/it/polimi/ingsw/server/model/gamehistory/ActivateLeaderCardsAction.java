@@ -3,8 +3,8 @@ package it.polimi.ingsw.server.model.gamehistory;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-
-import java.util.Set;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerActivateLeaderCardsActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
 
 public class ActivateLeaderCardsAction extends GameAction {
     private final Player player;
@@ -22,5 +22,17 @@ public class ActivateLeaderCardsAction extends GameAction {
             player,
             leaderCard
         );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentation() {
+        return new ServerActivateLeaderCardsActionRepresentation(
+            player.getServerRepresentation(),
+            leaderCard.getServerRepresentation());
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }

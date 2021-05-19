@@ -1,10 +1,8 @@
 package it.polimi.ingsw.server.model.leadercard;
 
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.model.gameitems.leadercard.ResourceNumberRequirement;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.leadercard.ResourceNumberRequirement;
 
 
 import org.junit.jupiter.api.BeforeEach;

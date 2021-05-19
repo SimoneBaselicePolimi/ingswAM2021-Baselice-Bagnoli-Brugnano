@@ -3,7 +3,6 @@ package it.polimi.ingsw.network.clientrequest.validator;
 import it.polimi.ingsw.network.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
@@ -26,7 +25,7 @@ public class DiscardLeaderCardClientRequestValidator extends ClientRequestValida
 
         Player activePlayer = gameManager.getGameContext().getActivePlayer();
 
-        //check if the leader card the player wants to discard is from the group of card he holds in his hand
+        //check if the leader card the player wants to discard is from the group of cards he holds in his hand
         if (!gameManager.getGameContext().getPlayerContext(activePlayer).getLeaderCards()
             .contains(requestToValidate.leaderCardThePlayerWantsToDiscard))
             return createInvalidRequestServerMessage(

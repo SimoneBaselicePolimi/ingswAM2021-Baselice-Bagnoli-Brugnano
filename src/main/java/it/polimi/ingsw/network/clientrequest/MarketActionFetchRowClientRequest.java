@@ -13,13 +13,13 @@ import java.util.Map;
 public class MarketActionFetchRowClientRequest extends ClientRequest {
     public final int row;
 
-    public MarketActionFetchRowClientRequest(
-        Player player, int row) {
+    public MarketActionFetchRowClientRequest(Player player, int row) {
         super(player);
         this.row = row;
     }
 
-    public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+    public Map<Player, ServerMessage> callHandler(GameState state)
+        throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		return(state.handleRequestFetchRowMarketAction(this));
 	}
 

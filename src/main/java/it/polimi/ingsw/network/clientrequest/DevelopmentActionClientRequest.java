@@ -7,15 +7,14 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 
 import java.util.Map;
-import java.util.Set;
 
 public class DevelopmentActionClientRequest extends ClientRequest {
 
     public final DevelopmentCard developmentCard;
     public final int deckNumber;
-
 
     public DevelopmentActionClientRequest(Player player, DevelopmentCard developmentCard, int deckNumber) {
         super(player);
@@ -23,7 +22,7 @@ public class DevelopmentActionClientRequest extends ClientRequest {
         this.deckNumber = deckNumber;
     }
 
-    public Map<Player, ServerMessage> callHandler(GameState state) throws ForbiddenPushOnTopException {
+    public Map<Player, ServerMessage> callHandler(GameState state) throws ForbiddenPushOnTopException, NotEnoughResourcesException {
 		return(state.handleRequestDevelopmentAction(this));
 	}
 

@@ -2,16 +2,11 @@ package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.configfile.GameInfoConfig;
 import it.polimi.ingsw.configfile.GameRules;
-import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
-import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -72,7 +67,7 @@ class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoi
                 null,
                 null,
                 false,
-                false
+                0
             ),
             null,
             null,
@@ -93,13 +88,13 @@ class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoi
 
         InitialChoicesClientRequest request1 = new InitialChoicesClientRequest(
                 player,
-                Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+                Set.of(mock(LeaderCardImp.class), mock(LeaderCardImp.class)),
                 Map.of(validShelve, Map.of(ResourceType.COINS, 3, ResourceType.STONES, 1))
         );
 
         InitialChoicesClientRequest request2 = new InitialChoicesClientRequest(
             player,
-            Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+            Set.of(mock(LeaderCardImp.class), mock(LeaderCardImp.class)),
             Map.of(validShelve, Map.of(ResourceType.SHIELDS, 1))
         );
 
@@ -112,19 +107,19 @@ class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoi
 
         InitialChoicesClientRequest request1 = new InitialChoicesClientRequest(
             player,
-            Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+            Set.of(mock(LeaderCardImp.class), mock(LeaderCardImp.class)),
             Map.of(invalidStorage, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
         );
 
         InitialChoicesClientRequest request2 = new InitialChoicesClientRequest(
             player,
-            Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+            Set.of(mock(LeaderCardImp.class), mock(LeaderCardImp.class)),
             Map.of(validShelveWithViolationRule, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
         );
 
         InitialChoicesClientRequest request3 = new InitialChoicesClientRequest(
             player,
-            Set.of(mock(LeaderCard.class), mock(LeaderCard.class)),
+            Set.of(mock(LeaderCardImp.class), mock(LeaderCardImp.class)),
             Map.of(validShelve, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
         );
 
@@ -138,13 +133,13 @@ class InitialChoicesClientRequestValidatorTest extends ValidatorTest<InitialChoi
 
         InitialChoicesClientRequest request1 = new InitialChoicesClientRequest(
             player,
-            Set.of(mock(LeaderCard.class)),
+            Set.of(mock(LeaderCardImp.class)),
             Map.of(invalidStorage, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
         );
 
         InitialChoicesClientRequest request2 = new InitialChoicesClientRequest(
             player,
-            Set.of(mock(LeaderCard.class), mock(LeaderCard.class), mock(LeaderCard.class)),
+            Set.of(mock(LeaderCardImp.class), mock(LeaderCardImp.class), mock(LeaderCardImp.class)),
             Map.of(invalidStorage, Map.of(ResourceType.COINS, 2, ResourceType.STONES, 1))
         );
 

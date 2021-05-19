@@ -1,5 +1,9 @@
 package it.polimi.ingsw.server.model.gameitems;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation;
+
 import java.util.Map;
 
 /**
@@ -9,7 +13,7 @@ import java.util.Map;
  * can pay this cost to obtain this reward.
  * Each Production Item is identified by an unique ID.
  */
-public class Production extends RegisteredIdentifiableItem{
+public class Production extends RegisteredIdentifiableItem implements Representable<ServerProductionRepresentation> {
 	/**
 	 * Production cost made of specific type and number of Resources
 	 */
@@ -102,26 +106,20 @@ public class Production extends RegisteredIdentifiableItem{
 		return faithReward;
 	}
 
-	/**
-	 * Override of the equals method used to compare the equality between two Production Items.
-	 * @param o Object to compare to this Production Item
-	 * @return true if the Object passed as parameter is identified by the same Production ID of the Item
-	 * which invokes this method, false otherwise
-	 */
 	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof Production)) return false;
-		Production m = (Production) o;
-		return (getItemId().equals(m.getItemId()));
+	public ServerProductionRepresentation getServerRepresentation() {
+		return new ServerProductionRepresentation(
+			itemID,
+			resourceCost,
+			resourceReward,
+			starResourceCost,
+			starResourceReward,
+			faithReward
+		);
 	}
 
-	/**
-	 * Override of the hashCode method used to return the hash code of this Production Item.
-	 * @return hash code of this Production Item based on its ID
-	 */
 	@Override
-	public int hashCode() {
-		return getItemId().hashCode();
+	public ServerProductionRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
 	}
-
 }

@@ -4,6 +4,12 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerObtainedMarblesMarketActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class ObtainedMarblesMarketAction extends GameAction {
     private final Player player;
@@ -21,5 +27,20 @@ public class ObtainedMarblesMarketAction extends GameAction {
             player,
             marbleColours
         );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentation() {
+        return new ServerObtainedMarblesMarketActionRepresentation(
+            player.getServerRepresentation(),
+            Arrays.stream(marbleColours)
+                .map(MarbleColour::getServerRepresentation)
+                .toArray(ServerMarbleColourRepresentation[]::new)
+        );
+    }
+
+    @Override
+    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }

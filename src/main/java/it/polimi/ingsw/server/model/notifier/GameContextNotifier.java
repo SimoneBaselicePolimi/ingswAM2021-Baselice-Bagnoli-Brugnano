@@ -1,19 +1,18 @@
 package it.polimi.ingsw.server.model.notifier;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamecontext.GameContextBuilder;
+import it.polimi.ingsw.server.model.gamecontext.GameContextImp;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
-import it.polimi.ingsw.server.model.notifier.gameupdate.GameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class GameContextNotifier extends GameContext implements Notifier {
+public class GameContextNotifier extends GameContextImp implements Notifier {
 
     public GameContextNotifier(
         Market market,
@@ -26,7 +25,7 @@ public class GameContextNotifier extends GameContext implements Notifier {
     }
 
     @Override
-    public Set<GameUpdate> getUpdates() {
+    public Set<ServerGameUpdate> getUpdates() {
         return null;
     }
 

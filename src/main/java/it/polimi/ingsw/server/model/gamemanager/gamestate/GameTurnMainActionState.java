@@ -12,11 +12,8 @@ import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
-import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
 import java.util.HashMap;
@@ -26,17 +23,16 @@ import java.util.stream.Collectors;
 
 /**
  * This class represents the main phase of the game.
- * During his turn, the player can perform one of the three possible actions of the game:
+ * During his turn, the player has to perform one of these three possible actions of the game:
  * - Take resources from the market
  * - Buy a development card
  * - Activate productions
  * In addition, during his turn the player can also perform leader actions to discard or activate his leader cards.
- * This action can be performed as many times as the player wishes to do so (as long as it is possible to do so)
+ * This action can be performed as many times as the player wishes to do, so (as long as it is possible to do so)
  * either before or after performing one of the three main actions mentioned above.
  */
 public class GameTurnMainActionState extends LeaderCardActionState {
 
-	//true after LeaderAction
 	private boolean mainActionDone = false;
 	private final Player activePlayer;
 	private boolean hasPlayerDoneMarketAction = false;
@@ -77,9 +73,11 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	/**
 	 * Method that changes the state of the game.
 	 * The main state ends and the next possible game states are:
-	 * - The post state if the player has bought a development card or activated a production
-	 * - The market state if the player has requested to take resources from the market
-	 * @return GameState new game state, it can be a ManageResourcesFromMarketState or a GameTurnPostActionState
+	 * - The post state (see {@link GameTurnPostActionState}) if the player has bought a development card
+	 * or activated a production
+	 * - The market state (see {@link ManageResourcesFromMarketState}) if the player has requested to take resources
+	 * from the market
+	 * @return GameState new game state, it can be a ManageResourcesFromMarketState or a GameTurnPostActionState,
 	 * according to the action performed by the player in the current state
 	 */
 	public GameState getNextState() {
@@ -93,19 +91,22 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	 * Method to perform the market action. The player selects a column of the market structure in order to get
 	 * the marbles inside that column.
 	 * Marbles can provide the player with:
-	 * - Resources that the method places in the temporary storages
-	 * - Faith points that advance the player on the faith track
+	 * - Resources that the method places in the temporary storage
+	 * - Faith points that let the player move on the faith path
 	 * - Star resources provided by the special marbles
 	 * @param request request made by the player to select a column of the market structure,
 	 * see {@link MarketActionFetchColumnClientRequest}
-	 * @return messages sent to each player containing all changes made since the last game state update.
-	 * @throws ResourceStorageRuleViolationException
-	 * @throws NotEnoughResourcesException
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws ResourceStorageRuleViolationException if a player wants to add some resources to a storage
+	 * by violating a specific rule that the storage implements
+	 * @throws NotEnoughResourcesException if a player wants to remove from a storage more resources than there are currently
 	 */
 	@Override
-	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(
-		MarketActionFetchColumnClientRequest request
-	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+	public Map<Player, ServerMessage> handleRequestFetchColumnMarketAction(MarketActionFetchColumnClientRequest request)
+		throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
 		MarbleColour[] marblesThePlayerGets = market.fetchMarbleColumn(request.column);
 		return doMarketAction(marblesThePlayerGets);
@@ -115,18 +116,21 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	 * Method to perform the market action. The player selects a row of the market structure in order to get
 	 * the marbles inside that row.
 	 * Marbles can provide the player with:
-	 * - Resources that the method places in the temporary storages
-	 * - Faith points that advance the player on the faith track
+	 * - Resources that the method places in the temporary storage
+	 * - Faith points that let the player move on the faith path
 	 * - Star resources provided by the special marbles
 	 * @param request request made by the player to select a row of the market structure,
 	 * see {@link MarketActionFetchRowClientRequest}
-	 * @return messages sent to each player containing all changes made since the last game state update.
-	 * @throws ResourceStorageRuleViolationException
-	 * @throws NotEnoughResourcesException
+	 * @return messages sent to each player containing all changes made since the last game state update
+	 * @throws ResourceStorageRuleViolationException if a player wants to add some resources to a storage
+	 * by violating a specific rule that the storage implements
+	 * @throws NotEnoughResourcesException if a player wants to remove from a storage more resources than there are currently
 	 */
-	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(
-		MarketActionFetchRowClientRequest request
-	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+	public Map<Player, ServerMessage> handleRequestFetchRowMarketAction(MarketActionFetchRowClientRequest request)
+		throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
 		MarbleColour[] marblesThePlayerGets = market.fetchMarbleRow(request.row);
 		return doMarketAction(marblesThePlayerGets);
@@ -134,19 +138,20 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	}
 
 	/**
-	 * private method called by the methods that allow the player to perform the market action.
+	 * Private method called by the methods that allow the player to perform the market action.
 	 * @param marblesThePlayerGets marbles obtained from the market row or column selected by the player
-	 * @return  messages sent to each player containing all changes made since the last game state update.
-	 * @throws ResourceStorageRuleViolationException
-	 * @throws NotEnoughResourcesException
+	 * @return  messages sent to each player containing all changes made since the last game state update
+	 * @throws ResourceStorageRuleViolationException if a player wants to add some resources to a storage
+	 * by violating a specific rule that the storage implements
+	 * @throws NotEnoughResourcesException if a player wants to remove from a storage more resources than there are currently
 	 */
-	private Map<Player, ServerMessage> doMarketAction (
-		MarbleColour[] marblesThePlayerGets
-	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+	private Map<Player, ServerMessage> doMarketAction (MarbleColour[] marblesThePlayerGets)
+		throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
 		int numberOfStarResources = 0;
-		Map<ResourceType, Integer> resources = new HashMap<>();
 		int numberOfFaithPoints = 0;
+
+		Map<ResourceType, Integer> resources = new HashMap<>();
 
 		for (MarbleColour marbleColour : marblesThePlayerGets){
 
@@ -183,23 +188,26 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	 * to be pushed on the top of this Deck
 	 */
 	@Override
-	public Map<Player, ServerMessage> handleRequestDevelopmentAction(DevelopmentActionClientRequest request) throws ForbiddenPushOnTopException {
+	public Map<Player, ServerMessage> handleRequestDevelopmentAction(
+		DevelopmentActionClientRequest request
+	) throws ForbiddenPushOnTopException, NotEnoughResourcesException {
+
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
 		//add development card to the player deck and remove that from the top of the table deck
 		GameContext gameContext = gameManager.getGameContext();
 		gameContext.getPlayerContext(request.player)
 			.addDevelopmentCard(
-				gameContext.getDevelopmentCardsTable().popCard
-					(
-						request.developmentCard.getLevel(),
-						request.developmentCard.getColour()
-					),
-					request.deckNumber
+				gameContext.getDevelopmentCardsTable().popCard(
+					request.developmentCard.getLevel(),
+					request.developmentCard.getColour()
+				),
+				request.deckNumber
 			);
 
 		//remove required cost resources from the shelves of the player
-		gameContext.getPlayerContext(request.player)
-			.getShelves().remove(request.developmentCard.getPurchaseCost());
+		playerContext.removeResourcesBasedOnResourcesStoragesPriority(request.developmentCard.getPurchaseCost());
 
 		gameManager.getGameHistory().addAction(
 			new DevelopmentAction(activePlayer, request.developmentCard)
@@ -210,19 +218,22 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 	}
 
 	/**
-	 * Method that allows to activating productions. The player pays for the resources needed to be able
-	 * to activate productions (the resources are first taken from special deposits and shelves and then,
-	 * if necessary, from the infinite chest). Then the player gets the resource rewards which are placed
-	 * in the infinite chest and the faith points which the respective productions provide.
-	 * @param request request of the player to activate production, see {@link ProductionActionClientRequest}
+	 * Method that allows to activate productions. The player pays for the resources needed to be able
+	 * to activate productions (the resources are first taken from special storages and shelves and then,
+	 * if necessary, from the infinite chest). Then the player gets the resources as rewards, which are placed
+	 * in the infinite chest, and the faith points which the respective productions provide.
+	 * @param request request of the player to activate productions, see {@link ProductionActionClientRequest}
 	 * @return messages sent to each player containing all changes made since the last game state update
-	 * @throws NotEnoughResourcesException
-	 * @throws ResourceStorageRuleViolationException
+	 * @throws ResourceStorageRuleViolationException if a player wants to add some resources to a storage
+	 * by violating a specific rule that the storage implements
+	 * @throws NotEnoughResourcesException if a player wants to remove from a storage more resources than there are currently
 	 */
 	@Override
-	public Map<Player, ServerMessage> handleRequestProductionAction(
-		ProductionActionClientRequest request
-	) throws NotEnoughResourcesException, ResourceStorageRuleViolationException {
+	public Map<Player, ServerMessage> handleRequestProductionAction(ProductionActionClientRequest request)
+		throws NotEnoughResourcesException, ResourceStorageRuleViolationException {
+
+		if(!request.player.equals(activePlayer))
+			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
 		PlayerContext playerContext = gameManager.getGameContext().getPlayerContext(request.player);
 
@@ -230,24 +241,12 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 		Set<Map<ResourceType, Integer>> productionCosts = request.productions.stream()
 			.map(Production::getProductionResourceCost).collect(Collectors.toSet());
 
-		Map<ResourceType, Integer> resourceCostLeftToRemove = ResourceUtils.sum(
+		Map<ResourceType, Integer> totalResourceToRemove = ResourceUtils.sum(
 			ResourceUtils.sum(productionCosts),
 			request.starResourceCost
 		);
 
-		for (ResourceStorage storage : playerContext.getResourceStoragesForResourcesFromMarket()) {
-			Map<ResourceType, Integer> resourcesRemovableFromStorage = ResourceUtils.intersection(
-				storage.peekResources(),
-				resourceCostLeftToRemove
-			);
-			storage.removeResources(resourcesRemovableFromStorage);
-			resourceCostLeftToRemove = ResourceUtils.difference(
-				resourceCostLeftToRemove,
-				resourcesRemovableFromStorage
-			);
-		}
-
-		playerContext.getInfiniteChest().removeResources(resourceCostLeftToRemove);
+		playerContext.removeResourcesBasedOnResourcesStoragesPriority(totalResourceToRemove);
 
 		//add resource rewards
 		Set<Map<ResourceType, Integer>> productionRewards = request.productions.stream()

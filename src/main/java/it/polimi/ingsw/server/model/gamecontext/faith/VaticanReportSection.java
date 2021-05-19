@@ -1,9 +1,13 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
+import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerVaticanReportSectionRepresentation;
+
 /**
  * This class contains the characteristics of a specific Vatican Report section, in which Vatican Reports can occur.
  */
-public class VaticanReportSection {
+public class VaticanReportSection implements Representable<ServerVaticanReportSectionRepresentation> {
     /**
      * Position in which this Vatican Report section start
      */
@@ -51,5 +55,15 @@ public class VaticanReportSection {
      */
     public int getSectionVictoryPoints() {
         return sectionVictoryPoints;
+    }
+
+    @Override
+    public ServerVaticanReportSectionRepresentation getServerRepresentation() {
+        return new ServerVaticanReportSectionRepresentation(sectionInitialPos, popeSpacePos, sectionVictoryPoints);
+    }
+
+    @Override
+    public ServerVaticanReportSectionRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }
