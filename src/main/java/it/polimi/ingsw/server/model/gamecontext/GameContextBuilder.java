@@ -11,9 +11,11 @@ import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContextImp;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeckImp;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.*;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
@@ -79,7 +81,7 @@ public class GameContextBuilder {
 		List<Player> playersOrder,
 		Map<Player, PlayerContext> playerContexts
 	) {
-		return new GameContext(market, developmentCardsTable, faithPath, playersOrder, playerContexts);
+		return new GameContextImp(market, developmentCardsTable, faithPath, playersOrder, playerContexts);
 	}
 
 	public GameContext buildGameContext() throws GameContextCreationError {
@@ -106,7 +108,7 @@ public class GameContextBuilder {
 		ResourceStorage temporaryStorage,
 		Set<Production> baseProductions
 	) {
-		return new PlayerContext(player, shelves, decks, infiniteChest, temporaryStorage, baseProductions);
+		return new PlayerContextImp(player, shelves, decks, infiniteChest, temporaryStorage, baseProductions);
 	}
 
 	protected PlayerContext buildPlayerContext(Player player) {
@@ -121,7 +123,7 @@ public class GameContextBuilder {
 		List<PlayerOwnedDevelopmentCardDeck> decks = new ArrayList<>();
 		for(int i=0; i<gameInfoConfig.numberOfPlayerOwnedDevelopmentCardDecks; i++) {
 			decks.add(
-				new PlayerOwnedDevelopmentCardDeck(
+				new PlayerOwnedDevelopmentCardDeckImp(
 						generatePlayerOwnedDevCardDeckID(i+1),
 						gameItemsManager
 				)

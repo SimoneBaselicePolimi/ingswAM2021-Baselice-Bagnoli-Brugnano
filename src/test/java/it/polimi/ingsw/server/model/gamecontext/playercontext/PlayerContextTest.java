@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.model.gamecontext.playercontext;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeckImp;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
@@ -49,7 +49,7 @@ class PlayerContextTest {
 
     @BeforeEach
     void setUp() {
-        playerContext = new PlayerContext(
+        playerContext = new PlayerContextImp(
                 player,
                 new HashSet<>(),
                 new ArrayList<>(),
@@ -256,7 +256,7 @@ class PlayerContextTest {
                 mock(ResourceStorageImp.class),
                 mock(ResourceStorageImp.class)
         );
-        playerContext = new PlayerContext(
+        playerContext = new PlayerContextImp(
             player,
             shelves,
             new ArrayList<>(),
@@ -284,7 +284,7 @@ class PlayerContextTest {
         lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(Set.of(leaderCardStorage2)); //Should not be called
         when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.DISCARDED);
 
-        playerContext = new PlayerContext(
+        playerContext = new PlayerContextImp(
             player,
             shelves,
             new ArrayList<>(),
@@ -489,7 +489,7 @@ class PlayerContextTest {
                 ResourceType.SERVANTS, 1000
         ));
 
-        PlayerContext playerContext = new PlayerContext(
+        PlayerContext playerContext = new PlayerContextImp(
             player,
             shelves,
             new ArrayList<>(),
@@ -526,10 +526,10 @@ class PlayerContextTest {
         DevelopmentCard devCard1Deck2 = mock(DevelopmentCard.class);
         DevelopmentCard devCard2Deck2 = mock(DevelopmentCard.class);
         DevelopmentCard devCard3Deck2 = mock(DevelopmentCard.class);
-        PlayerOwnedDevelopmentCardDeck deck1 = mock(PlayerOwnedDevelopmentCardDeck.class);
-        PlayerOwnedDevelopmentCardDeck deck2 = mock(PlayerOwnedDevelopmentCardDeck.class);
+        PlayerOwnedDevelopmentCardDeckImp deck1 = mock(PlayerOwnedDevelopmentCardDeckImp.class);
+        PlayerOwnedDevelopmentCardDeckImp deck2 = mock(PlayerOwnedDevelopmentCardDeckImp.class);
 
-        PlayerContext playerContext = new PlayerContext(
+        PlayerContext playerContext = new PlayerContextImp(
             player,
             new HashSet<>(),
             List.of(deck1, deck2),

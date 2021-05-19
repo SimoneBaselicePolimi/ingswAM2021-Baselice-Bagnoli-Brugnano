@@ -9,10 +9,7 @@ import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
-import it.polimi.ingsw.server.model.gamecontext.GameContextBuilder;
-import it.polimi.ingsw.server.model.gamecontext.GameContextCreationError;
-import it.polimi.ingsw.server.model.gamecontext.ObservableGameContextBuilder;
+import it.polimi.ingsw.server.model.gamecontext.*;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gamehistory.GameHistoryImp;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
@@ -112,7 +109,7 @@ public class GameManager {
 
 	/**
 	 * Method to get the Game Context
-	 * @return GameContext, see {@link GameContext}
+	 * @return GameContext, see {@link GameContextImp}
 	 */
 	public GameContext getGameContext() {
 		return gameContext;

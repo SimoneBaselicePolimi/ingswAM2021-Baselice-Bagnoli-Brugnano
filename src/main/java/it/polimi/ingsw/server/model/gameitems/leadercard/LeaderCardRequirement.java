@@ -2,8 +2,6 @@ package it.polimi.ingsw.server.model.gameitems.leadercard;
 
 import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
-import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRequirementRepresentation;
 
 /**

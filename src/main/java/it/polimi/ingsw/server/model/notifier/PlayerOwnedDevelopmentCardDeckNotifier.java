@@ -1,14 +1,14 @@
 package it.polimi.ingsw.server.model.notifier;
 
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeckImp;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 
 import java.util.EmptyStackException;
 import java.util.Set;
 
-public class PlayerOwnedDevelopmentCardDeckNotifier extends PlayerOwnedDevelopmentCardDeck implements Notifier {
+public class PlayerOwnedDevelopmentCardDeckNotifier extends PlayerOwnedDevelopmentCardDeckImp implements Notifier {
 
 	protected PlayerOwnedDevelopmentCardDeckNotifier(String deckID, GameItemsManager gameItemsManager) {
 		super(deckID, gameItemsManager);

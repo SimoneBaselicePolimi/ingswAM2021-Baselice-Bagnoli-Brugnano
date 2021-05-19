@@ -9,7 +9,9 @@ import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientRe
 import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation;
 
 import java.util.List;
@@ -21,9 +23,9 @@ public class ServerPlayerContextRepresentation extends ServerRepresentation {
     public final ServerResourceStorageRepresentation infiniteChest;
     public final ServerResourceStorageRepresentation tempStorage;
     public final int tempStarResources;
-    public final Set<ServerGameActionRepresentation> leaderCardsPlayerOwns;
+    public final Set<ServerLeaderCardRepresentation> leaderCardsPlayerOwns;
     public final List<ServerPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks;
-    public final Set<ServerGameActionRepresentation> baseProductions;
+    public final Set<ServerProductionRepresentation> baseProductions;
 
     public ServerPlayerContextRepresentation(
         ServerPlayerRepresentation player,
@@ -31,9 +33,9 @@ public class ServerPlayerContextRepresentation extends ServerRepresentation {
         ServerResourceStorageRepresentation infiniteChest,
         ServerResourceStorageRepresentation tempStorage,
         int tempStarResources,
-        Set<ServerGameActionRepresentation> leaderCardsPlayerOwns,
+        Set<ServerLeaderCardRepresentation> leaderCardsPlayerOwns,
         List<ServerPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
-        Set<ServerGameActionRepresentation> baseProductions
+        Set<ServerProductionRepresentation> baseProductions
     ) {
         this.player = player;
         this.shelves = shelves;

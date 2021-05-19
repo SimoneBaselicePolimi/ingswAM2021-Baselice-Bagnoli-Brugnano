@@ -55,7 +55,7 @@ class GameContextTest {
                 player3, player3Context
         );
 
-        gameContext = new GameContext(market, cardsTable, faithPath, playersOrder, playerContextMap);
+        gameContext = new GameContextImp(market, cardsTable, faithPath, playersOrder, playerContextMap);
     }
 
     @Test

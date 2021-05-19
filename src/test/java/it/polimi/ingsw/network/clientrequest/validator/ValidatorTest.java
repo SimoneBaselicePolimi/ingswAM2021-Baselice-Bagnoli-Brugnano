@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
-import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
@@ -10,12 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import javax.xml.validation.Validator;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
 
 public abstract class ValidatorTest<R extends ClientRequest, V extends ClientRequestValidator<R>> {
 
