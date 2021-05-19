@@ -18,6 +18,7 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     private Set<ClientLeaderCardRepresentation> leaderCardsPlayerOwns;
     private List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks;
     private final Set<ClientProductionRepresentation> baseProductions;
+    private int numberOfLeaderCardsThePlayerOwns;
 
     public ClientPlayerContextRepresentation(
         ClientPlayerRepresentation player,
@@ -27,8 +28,8 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         int tempStarResources,
         Set<ClientLeaderCardRepresentation> leaderCardsPlayerOwns,
         List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
-        Set<ClientProductionRepresentation> baseProductions
-    ) {
+        Set<ClientProductionRepresentation> baseProductions,
+        int numberOfLeaderCardsThePlayerOwns) {
         this.player = player;
         this.shelves = shelves;
         this.infiniteChest = infiniteChest;
@@ -37,6 +38,7 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         this.leaderCardsPlayerOwns = leaderCardsPlayerOwns;
         this.developmentCardDecks = developmentCardDecks;
         this.baseProductions = baseProductions;
+        this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
     }
 
     public ClientPlayerRepresentation getPlayer() {
@@ -71,6 +73,10 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         return baseProductions;
     }
 
+    public int getNumberOfLeaderCardsThePlayerOwns() {
+        return numberOfLeaderCardsThePlayerOwns;
+    }
+
     public void setShelves(Set<ClientResourceStorageRepresentation> shelves) {
         this.shelves = shelves;
     }
@@ -86,4 +92,9 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     public void setDevelopmentCardDecks(List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks) {
         this.developmentCardDecks = developmentCardDecks;
     }
+
+    public void setNumberOfLeaderCardsThePlayerOwns(int numberOfLeaderCardsThePlayerOwns) {
+        this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
+    }
+
 }

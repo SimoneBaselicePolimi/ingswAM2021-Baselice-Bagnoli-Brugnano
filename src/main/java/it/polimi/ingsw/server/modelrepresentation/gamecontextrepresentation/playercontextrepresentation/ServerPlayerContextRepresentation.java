@@ -1,14 +1,7 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation;
 
-import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRepresentation;
@@ -26,6 +19,8 @@ public class ServerPlayerContextRepresentation extends ServerRepresentation {
     public final Set<ServerLeaderCardRepresentation> leaderCardsPlayerOwns;
     public final List<ServerPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks;
     public final Set<ServerProductionRepresentation> baseProductions;
+    private int numberOfLeaderCardsThePlayerOwns;
+
 
     public ServerPlayerContextRepresentation(
         ServerPlayerRepresentation player,
@@ -35,7 +30,8 @@ public class ServerPlayerContextRepresentation extends ServerRepresentation {
         int tempStarResources,
         Set<ServerLeaderCardRepresentation> leaderCardsPlayerOwns,
         List<ServerPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
-        Set<ServerProductionRepresentation> baseProductions
+        Set<ServerProductionRepresentation> baseProductions,
+        int numberOfLeaderCardsThePlayerOwns
     ) {
         this.player = player;
         this.shelves = shelves;
@@ -45,5 +41,6 @@ public class ServerPlayerContextRepresentation extends ServerRepresentation {
         this.leaderCardsPlayerOwns = leaderCardsPlayerOwns;
         this.developmentCardDecks = developmentCardDecks;
         this.baseProductions = baseProductions;
+        this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
     }
 }

@@ -91,6 +91,11 @@ public class PlayerContextImp implements PlayerContext {
 		leaderCardsPlayerOwns = new HashSet<>(cards);
 	}
 
+	@Override
+	public Player getPlayer() {
+		return player;
+	}
+
 	/**
 	 * @return the leader cards owned by the player
 	 */
@@ -413,14 +418,6 @@ public class PlayerContextImp implements PlayerContext {
 		return developmentCardDecks.stream().map(PlayerOwnedDevelopmentCardDeck::peek).collect(Collectors.toSet());
 	}
 
-	//ServerPlayerRepresentation player,
-	// Set<ServerResourceStorageRepresentation> shelves,
-	// ServerResourceStorageRepresentation infiniteChest,
-	// ServerResourceStorageRepresentation tempStorage,
-	// int tempStarResources,
-	// Set<ServerGameActionRepresentation> leaderCardsPlayerOwns,
-	// List<ServerPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
-	// Set<ServerGameActionRepresentation> baseProductions
 	@Override
 	public ServerPlayerContextRepresentation getServerRepresentation() {
 		return new ServerPlayerContextRepresentation(
@@ -429,15 +426,29 @@ public class PlayerContextImp implements PlayerContext {
 			infiniteChest.getServerRepresentation(),
 			tempStorage.getServerRepresentation(),
 			tempStarResources,
-			//TODO
 			leaderCardsPlayerOwns.stream().map(Representable::getServerRepresentation).collect(Collectors.toSet()),
 			developmentCardDecks.stream().map(Representable::getServerRepresentation).collect(Collectors.toList()),
-			baseProductions.stream().map(Representable::getServerRepresentation).collect(Collectors.toSet())
+			baseProductions.stream().map(Representable::getServerRepresentation).collect(Collectors.toSet()),
+			leaderCardsPlayerOwns.size()
 		);
 	}
 
 	@Override
 	public ServerPlayerContextRepresentation getServerRepresentationForPlayer(Player player) {
-		return getServerRepresentation();
+		if (this.player.equals(player))
+			return getServerRepresentation();
+		else {
+			return new ServerPlayerContextRepresentation(
+				player.getServerRepresentation(),
+				shelves.stream().map(Representable::getServerRepresentation).collect(Collectors.toSet()),
+				infiniteChest.getServerRepresentation(),
+				tempStorage.getServerRepresentation(),
+				tempStarResources,
+				null,
+				developmentCardDecks.stream().map(Representable::getServerRepresentation).collect(Collectors.toList()),
+				baseProductions.stream().map(Representable::getServerRepresentation).collect(Collectors.toSet()),
+				leaderCardsPlayerOwns.size()
+			);
+		}
 	}
 }

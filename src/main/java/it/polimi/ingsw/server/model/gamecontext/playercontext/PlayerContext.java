@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gamecontext.playercontext;
 
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
@@ -11,7 +12,6 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
-import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation.ServerMarketRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation;
 
 import java.util.Map;
@@ -27,6 +27,11 @@ public interface PlayerContext extends Representable<ServerPlayerContextRepresen
      * @param cards a set of cards to keep.
      */
     void setLeaderCards(Set<LeaderCard> cards);
+
+    /**
+     * @return player associated to this player context
+     */
+    Player getPlayer();
 
     /**
      * @return the leader cards owned by the player

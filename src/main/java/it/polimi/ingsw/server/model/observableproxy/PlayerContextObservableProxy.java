@@ -17,17 +17,14 @@ import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.play
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext> implements PlayerContext {
 
-    protected DevelopmentCard developmentCard;
-    protected Set<LeaderCard> leaderCards;
     protected int deckNumber;
-    protected boolean hasLeaderCardsChanged = false;
-    protected boolean hasTemporaryStorageResourcesChanged = false;
-    protected boolean hasTempStarResourcesChanged = false;
+    protected boolean haveLeaderCardsChanged = false;
+    protected boolean haveTemporaryStorageResourcesChanged = false;
+    protected boolean haveTempStarResourcesChanged = false;
     protected boolean haveResourcesInStorageChanged = false;
     protected boolean hasDevelopmentCardDeckChanged = false;
 
@@ -47,8 +44,13 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void setLeaderCards(Set<LeaderCard> cards) {
-        hasLeaderCardsChanged = true;
+        haveLeaderCardsChanged = true;
         imp.setLeaderCards(cards);
+    }
+
+    @Override
+    public Player getPlayer() {
+        return imp.getPlayer();
     }
 
     @Override
@@ -113,19 +115,19 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void setTemporaryStorageResources(Map<ResourceType, Integer> resources) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
-        hasTemporaryStorageResourcesChanged = true;
+        haveTemporaryStorageResourcesChanged = true;
         imp.setTemporaryStorageResources(resources);
     }
 
     @Override
     public Map<ResourceType, Integer> getTemporaryStorageResources() {
-        hasTempStarResourcesChanged = true;
+        haveTempStarResourcesChanged = true;
         return imp.getTemporaryStorageResources();
     }
 
     @Override
     public Map<ResourceType, Integer> clearTemporaryStorageResources() throws NotEnoughResourcesException {
-        hasTemporaryStorageResourcesChanged = true;
+        haveTemporaryStorageResourcesChanged = true;
         return imp.clearTemporaryStorageResources();
     }
 
@@ -162,7 +164,6 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void addDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException, ForbiddenPushOnTopException {
-        this.developmentCard = card;
         this.deckNumber = deckNumber;
         hasDevelopmentCardDeckChanged = true;
         imp.addDevelopmentCard(card, deckNumber);
@@ -188,28 +189,28 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
         Set<ServerGameUpdate> updates = new HashSet<>();
 
-        if(hasTemporaryStorageResourcesChanged) {
-            hasTemporaryStorageResourcesChanged = false;
+        if (haveTemporaryStorageResourcesChanged) {
+            haveTemporaryStorageResourcesChanged = false;
             updates.add(new ServerResourceStorageUpdate(
                 imp.getTemporaryStorage(),
                 imp.getTemporaryStorage().peekResources())
             );
         }
 
-        if (hasTempStarResourcesChanged){
-            hasTempStarResourcesChanged = false;
+        if (haveTempStarResourcesChanged) {
+            haveTempStarResourcesChanged = false;
             updates.add(new ServerTempStarResourcesUpdate(imp.getTempStarResources()));
         }
 
-        if(haveResourcesInStorageChanged){
+        if (haveResourcesInStorageChanged) {
             haveResourcesInStorageChanged = false;
-            for(ResourceStorage storage : imp.getResourceStoragesForResourcesFromMarket()){
+            for (ResourceStorage storage : imp.getResourceStoragesForResourcesFromMarket()) {
                 updates.add(new ServerResourceStorageUpdate(storage, storage.peekResources()));
             }
             updates.add(new ServerResourceStorageUpdate(imp.getInfiniteChest(), imp.getInfiniteChest().peekResources()));
         }
 
-        if(hasDevelopmentCardDeckChanged){
+        if (hasDevelopmentCardDeckChanged) {
             hasDevelopmentCardDeckChanged = false;
             updates.add(new ServerPlayerOwnedDevelopmentCardDeckUpdate(
                 imp.getDeck(deckNumber),
@@ -217,10 +218,14 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
             ));
         }
 
-        if(hasLeaderCardsChanged){
-            hasLeaderCardsChanged = false;
-            //TODO ci vuole il player!! Forse qui dobbiamo fare quello che dicevamo
-            updates.add(new ServerLeaderCardsThePlayerOwnsUpdate())
+        if (haveLeaderCardsChanged) {
+            haveLeaderCardsChanged = false;
+            updates.add(new ServerLeaderCardsThePlayerOwnsUpdate(
+                imp.getPlayer(),
+                imp.getLeaderCards()
+            ));
         }
+        return updates;
+    }
 
 }
