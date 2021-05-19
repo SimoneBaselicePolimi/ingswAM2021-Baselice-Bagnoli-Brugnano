@@ -112,6 +112,11 @@ public class ResourceStorageImp extends RegisteredIdentifiableItem implements Re
 	}
 
 	@Override
+	public List<ResourceStorageRule> getRules() {
+		return rules;
+	}
+
+	@Override
 	public ServerResourceStorageRepresentation getServerRepresentation() {
 		return new ServerResourceStorageRepresentation(
 			getItemId(),

@@ -28,12 +28,8 @@ import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationExceptio
 import it.polimi.ingsw.utils.FileManager;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GameManager {
 
@@ -49,7 +45,7 @@ public class GameManager {
 
 	private GameRules gameRules;
 
-	private Set<ObservableProxy> observableProxies =  new HashSet<>();
+	private Set<ObservableProxy<?>> observableProxies =  new HashSet<>();
 
 	private GameHistory gameHistory;
 
@@ -93,8 +89,9 @@ public class GameManager {
 	 */
 	public Set<ServerGameUpdate> getAllGameUpdates() {
 		return observableProxies.stream()
-			.flatMap(observable -> (Stream<ServerGameUpdate>) observable.getUpdates().stream())
-			.colllect(Collectors.toSet());
+			.map(ObservableProxy::getUpdates)
+			.flatMap(Collection::stream)
+			.collect(Collectors.toSet());
 	}
 
 	/**

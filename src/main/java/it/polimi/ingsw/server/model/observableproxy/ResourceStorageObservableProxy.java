@@ -3,23 +3,22 @@ package it.polimi.ingsw.server.model.observableproxy;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.*;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerResourceStorageUpdate;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation;
 
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class ResourceStorageObservableProxy extends ObservableProxy<ResourceStorage> implements ResourceStorage {
 
-    protected boolean hasThePlayerAddResources = false;
-    protected boolean hasThePlayerRemoveResources = false;
-    Map<ResourceType, Integer> resourcesToAdd;
-    Map<ResourceType, Integer> resourcesToRemove;
+    protected boolean haveResourcesInStorageChanged = false;
 
     public ResourceStorageObservableProxy(ResourceStorage imp, GameManager gameManager) {
         super(imp, gameManager);
@@ -42,15 +41,13 @@ public class ResourceStorageObservableProxy extends ObservableProxy<ResourceStor
 
     @Override
     public void addResources(Map<ResourceType, Integer> newResources) throws ResourceStorageRuleViolationException {
-        this.resourcesToAdd = newResources;
-        hasThePlayerAddResources = true;
+        haveResourcesInStorageChanged = true;
         imp.addResources(newResources);
     }
 
     @Override
     public Map<ResourceType, Integer> removeResources(Map<ResourceType, Integer> resourcesToRemove) throws NotEnoughResourcesException {
-        this.resourcesToRemove = resourcesToRemove;
-        hasThePlayerRemoveResources = true;
+        haveResourcesInStorageChanged = true;
         return imp.removeResources(resourcesToRemove);
     }
 
@@ -60,23 +57,18 @@ public class ResourceStorageObservableProxy extends ObservableProxy<ResourceStor
     }
 
     @Override
-    public Set<ServerGameUpdate> getUpdates() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
-        Set<ServerGameUpdate> updates = new HashSet<>();
-        if(hasThePlayerAddResources) {
-            hasThePlayerAddResources = false;
-            Map<ResourceType, Integer> allResourcesAfterAdd = new HashMap<>();
-            allResourcesAfterAdd.putAll(imp.peekResources());
-            allResourcesAfterAdd.putAll(resourcesToAdd);
-            updates.add(new ServerResourceStorageUpdate(imp, allResourcesAfterAdd));
+    public List<ResourceStorageRule> getRules() {
+        return imp.getRules();
+    }
+
+    @Override
+    public Set<ServerGameUpdate> getUpdates() {
+        if(haveResourcesInStorageChanged) {
+            haveResourcesInStorageChanged = false;
+            return Set.of(new ServerResourceStorageUpdate(this, imp.peekResources()));
         }
-        if (hasThePlayerRemoveResources){
-            hasThePlayerRemoveResources = false;
-            Map<ResourceType, Integer> allResourcesAfterRemove = new HashMap<>();
-            allResourcesAfterRemove.putAll(imp.peekResources());
-            allResourcesAfterRemove.putAll(imp.removeResources(resourcesToRemove));
-            updates.add(new ServerResourceStorageUpdate(imp, allResourcesAfterRemove));
-        }
-        return updates;
+        else
+            return new HashSet<>();
     }
 
     @Override
@@ -88,4 +80,5 @@ public class ResourceStorageObservableProxy extends ObservableProxy<ResourceStor
     public ServerResourceStorageRepresentation getServerRepresentationForPlayer(Player player) {
         return imp.getServerRepresentationForPlayer(player);
     }
+
 }

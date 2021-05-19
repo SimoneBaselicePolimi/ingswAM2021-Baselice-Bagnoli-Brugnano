@@ -366,7 +366,7 @@ public class GameContextBuilderIntegrationTest {
 
         assertTrue(resource_storages_leader_stor_1.stream()
             .anyMatch(
-                storage -> storage.rules.stream()
+                storage -> storage.getRules().stream()
                     .anyMatch(
                         rule -> rule instanceof MaxResourceNumberRule
                         && ((MaxResourceNumberRule) rule).maxResources == LEAD_CARD_STOR_1_STOR1_MAX_NUMBER
@@ -376,7 +376,7 @@ public class GameContextBuilderIntegrationTest {
 
         assertTrue(resource_storages_leader_stor_1.stream()
             .anyMatch(
-                storage -> storage.rules.stream()
+                storage -> storage.getRules().stream()
                     .anyMatch(
                         rule -> rule instanceof SpecificResourceTypeRule
                             && ((SpecificResourceTypeRule) rule).resourceType == LEAD_CARD_STOR_1_STOR1_RESOURCE_TYPE

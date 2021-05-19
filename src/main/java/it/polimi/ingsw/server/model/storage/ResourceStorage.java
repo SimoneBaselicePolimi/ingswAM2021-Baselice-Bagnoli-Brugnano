@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ResourceStorage extends IdentifiableItem, Representable <ServerResourceStorageRepresentation> {
@@ -43,4 +44,6 @@ public interface ResourceStorage extends IdentifiableItem, Representable <Server
      * @return Type and number of resources in the storage
      */
     Map<ResourceType, Integer> peekResources();
+
+    List<ResourceStorageRule> getRules();
 }

@@ -13,11 +13,13 @@ import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.*;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
-import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
 import it.polimi.ingsw.testutils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -157,12 +159,12 @@ public class GameStateTest {
         lenient().when(playerContext1.canAddDevelopmentCard(rightCardThirdLevel, 1)).thenReturn(true);
 
         shelvesForPlayers = Map.of(
-            player1, TestUtils.generateSetOfMockWithID(ResourceStorageImp.class, 3),
-            player2, TestUtils.generateSetOfMockWithID(ResourceStorageImp.class, 3),
-            player3, TestUtils.generateSetOfMockWithID(ResourceStorageImp.class, 3)
+            player1, TestUtils.generateSetOfMockWithID(ResourceStorage.class, 3),
+            player2, TestUtils.generateSetOfMockWithID(ResourceStorage.class, 3),
+            player3, TestUtils.generateSetOfMockWithID(ResourceStorage.class, 3)
         );
 
-        leaderStoragesForPlayer1 =  TestUtils.generateSetOfMockWithID(ResourceStorageImp.class, 2);
+        leaderStoragesForPlayer1 =  TestUtils.generateSetOfMockWithID(ResourceStorage.class, 2);
 
         lenient().when(playerContext1.getShelves()).thenReturn(shelvesForPlayers.get(player1));
         Set<ResourceStorage> totalStoragesStoragesForResourcesFromMarket = new HashSet<>();
