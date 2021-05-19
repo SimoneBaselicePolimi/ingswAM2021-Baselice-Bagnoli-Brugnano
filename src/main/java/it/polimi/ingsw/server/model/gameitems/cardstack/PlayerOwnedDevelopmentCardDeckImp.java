@@ -6,7 +6,6 @@ import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 
 /**
  * This class represents a generic Card Deck, owned by a Player, consisting of Developments Cards.
@@ -17,7 +16,7 @@ import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.develo
  * This class also inherits attributes and methods from the parent class CardDeck to peek, push or pop
  * one of its elements and to show all the elements stored in it.
  */
-public class PlayerOwnedDevelopmentCardDeckImp extends CardDeck<DevelopmentCard>  implements PlayerOwnedDevelopmentCardDeck {
+public class PlayerOwnedDevelopmentCardDeckImp extends CardDeckImp<DevelopmentCard> implements PlayerOwnedDevelopmentCardDeck {
 
 	/**
 	 * Class constructor.

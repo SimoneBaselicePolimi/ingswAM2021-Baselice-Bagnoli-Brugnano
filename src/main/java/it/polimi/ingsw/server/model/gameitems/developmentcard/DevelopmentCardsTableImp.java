@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.gameitems.developmentcard;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck;
+import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeckImp;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation;
 
@@ -45,7 +46,7 @@ public class DevelopmentCardsTableImp implements DevelopmentCardsTable {
 						DevelopmentCardColour deckColour = cardsForDeck.get(0).getColour();
 						DevelopmentCardLevel deckLevel = cardsForDeck.get(0).getLevel();
 						String deckID = getIdForDeckWithColourAndLevel.apply(deckColour, deckLevel);
-						return new ShuffledCoveredCardDeck<>(deckID, gameItemsManager, cardsForDeck);
+						return new ShuffledCoveredCardDeckImp<>(deckID, gameItemsManager, cardsForDeck);
 					}
 				)
 			)

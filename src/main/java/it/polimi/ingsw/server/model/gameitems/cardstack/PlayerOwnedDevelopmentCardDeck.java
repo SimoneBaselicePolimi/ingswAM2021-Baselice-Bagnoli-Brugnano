@@ -1,11 +1,10 @@
 package it.polimi.ingsw.server.model.gameitems.cardstack;
 
 import it.polimi.ingsw.server.model.Representable;
-import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation;
 
-public interface PlayerOwnedDevelopmentCardDeck extends IdentifiableItem, Representable<ServerPlayerOwnedDevelopmentCardDeckRepresentation> {
+public interface PlayerOwnedDevelopmentCardDeck extends CardDeck<DevelopmentCard>, Representable<ServerPlayerOwnedDevelopmentCardDeckRepresentation> {
 
     /**
      * Method to push a Development Card on the top of the Deck if the Level of the Card is suitable for this Deck and

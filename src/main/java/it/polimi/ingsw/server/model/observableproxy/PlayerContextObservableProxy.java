@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model.observableproxy;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
@@ -10,7 +9,9 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.*;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerPlayerOwnedDevelopmentCardDeckUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.ServerResourceStorageUpdate;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
@@ -197,7 +198,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
         if(haveResourcesInStorageChanged){
             haveResourcesInStorageChanged = false;
             for(ResourceStorage storage : imp.getResourceStoragesForResourcesFromMarket()){
-                updates.add(new ServerResourceStorageUpdate(storage, storage.peekResources());
+                updates.add(new ServerResourceStorageUpdate(storage, storage.peekResources()));
             }
             updates.add(new ServerResourceStorageUpdate(imp.getInfiniteChest(), imp.getInfiniteChest().peekResources()));
         }

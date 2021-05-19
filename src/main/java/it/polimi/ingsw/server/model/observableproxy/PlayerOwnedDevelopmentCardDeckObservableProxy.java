@@ -9,7 +9,9 @@ import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerPlayerOwnedDevelopmentCardDeckUpdate;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation;
 
+import java.util.EmptyStackException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class PlayerOwnedDevelopmentCardDeckObservableProxy extends ObservableProxy<PlayerOwnedDevelopmentCardDeck> implements PlayerOwnedDevelopmentCardDeck {
@@ -33,6 +35,26 @@ public class PlayerOwnedDevelopmentCardDeckObservableProxy extends ObservablePro
     @Override
     public String getItemId() {
         return imp.getItemId();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return imp.isEmpty();
+    }
+
+    @Override
+    public DevelopmentCard peek() throws EmptyStackException {
+        return imp.peek();
+    }
+
+    @Override
+    public List<DevelopmentCard> peekAll() throws EmptyStackException {
+        return imp.peekAll();
+    }
+
+    @Override
+    public DevelopmentCard pop() throws EmptyStackException {
+        return imp.pop();
     }
 
     @Override

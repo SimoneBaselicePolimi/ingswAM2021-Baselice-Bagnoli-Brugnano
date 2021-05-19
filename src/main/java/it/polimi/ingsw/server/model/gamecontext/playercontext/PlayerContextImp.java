@@ -410,7 +410,7 @@ public class PlayerContextImp implements PlayerContext {
 	 */
 	@Override
 	public Set<DevelopmentCard> getDevelopmentCardsOnTop() {
-		return developmentCardDecks.stream().map(PlayerOwnedDevelopmentCardDeckImp::peek).collect(Collectors.toSet());
+		return developmentCardDecks.stream().map(PlayerOwnedDevelopmentCardDeck::peek).collect(Collectors.toSet());
 	}
 
 	//ServerPlayerRepresentation player,

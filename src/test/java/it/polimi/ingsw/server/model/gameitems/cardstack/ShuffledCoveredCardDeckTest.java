@@ -40,17 +40,17 @@ class ShuffledCoveredCardDeckTest {
      */
     @Test
     void testRandomShuffle() {
-        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck1 = new ShuffledCoveredCardDeck<>("deckId1", gameItemsManager, new Random(1), testCards);
+        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck1 = new ShuffledCoveredCardDeckImp<>("deckId1", gameItemsManager, new Random(1), testCards);
         List<DevelopmentCard> listDeck1 = new ArrayList<>();
         while(!deck1.isEmpty())
             listDeck1.add(deck1.pop());
 
-        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck1_copy = new ShuffledCoveredCardDeck<>("deckId1Copy", gameItemsManager, new Random(1), testCards);
+        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck1_copy = new ShuffledCoveredCardDeckImp<>("deckId1Copy", gameItemsManager, new Random(1), testCards);
         List<DevelopmentCard> listDeck1_copy = new ArrayList<>();
         while(!deck1_copy.isEmpty())
             listDeck1_copy.add(deck1_copy.pop());
 
-        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck2 = new ShuffledCoveredCardDeck<>("deckId2", gameItemsManager, new Random(2), testCards);
+        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck2 = new ShuffledCoveredCardDeckImp<>("deckId2", gameItemsManager, new Random(2), testCards);
         List<DevelopmentCard> listDeck2 = new ArrayList<>();
         while(!deck2.isEmpty())
             listDeck2.add(deck2.pop());
@@ -67,7 +67,7 @@ class ShuffledCoveredCardDeckTest {
      */
     @Test
     void testPeekAll() throws EmptyStackException {
-        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck = new ShuffledCoveredCardDeck<>("deckId1", gameItemsManager, testCards);
+        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck = new ShuffledCoveredCardDeckImp<>("deckId1", gameItemsManager, testCards);
         List<DevelopmentCard> cardsList = deck.peekAll();
         assertTrue(testCards.size() == cardsList.size() &&
                 testCards.containsAll(cardsList) && cardsList.containsAll(testCards));
@@ -82,7 +82,7 @@ class ShuffledCoveredCardDeckTest {
      */
     @Test
     void testPushOnTop() throws ForbiddenPushOnTopException{
-        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck = new ShuffledCoveredCardDeck<>("deckId1", gameItemsManager, new ArrayList<>());
+        ShuffledCoveredCardDeckImp<ServerDevelopmentCardRepresentation, DevelopmentCard> deck = new ShuffledCoveredCardDeckImp<>("deckId1", gameItemsManager, new ArrayList<>());
         assertThrows(EmptyStackException.class, deck::peek);
 
         deck.pushOnTop(oneMoreTestCard);
@@ -98,7 +98,7 @@ class ShuffledCoveredCardDeckTest {
      */
     @Test
     void testPop() throws ForbiddenPushOnTopException{
-        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck = new ShuffledCoveredCardDeck<>("deckId1", gameItemsManager, testCards);
+        ShuffledCoveredCardDeckImp<ServerDevelopmentCardRepresentation, DevelopmentCard> deck = new ShuffledCoveredCardDeckImp<>("deckId1", gameItemsManager, testCards);
 
         deck.pushOnTop(oneMoreTestCard);
         assertEquals(oneMoreTestCard, deck.pop());
