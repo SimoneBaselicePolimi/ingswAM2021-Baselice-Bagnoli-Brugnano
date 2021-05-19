@@ -9,9 +9,7 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerPlayerOwnedDevelopmentCardDeckUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerResourceStorageUpdate;
+import it.polimi.ingsw.server.model.notifier.gameupdate.*;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
@@ -19,14 +17,17 @@ import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.play
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext> implements PlayerContext {
 
-    protected DevelopmentCard card;
+    protected DevelopmentCard developmentCard;
+    protected Set<LeaderCard> leaderCards;
     protected int deckNumber;
     protected boolean hasLeaderCardsChanged = false;
     protected boolean hasTemporaryStorageResourcesChanged = false;
+    protected boolean hasTempStarResourcesChanged = false;
     protected boolean haveResourcesInStorageChanged = false;
     protected boolean hasDevelopmentCardDeckChanged = false;
 
@@ -118,6 +119,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public Map<ResourceType, Integer> getTemporaryStorageResources() {
+        hasTempStarResourcesChanged = true;
         return imp.getTemporaryStorageResources();
     }
 
@@ -133,7 +135,6 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
     }
 
     @Override
-    //TODO Update?
     public void setTempStarResources(int tempStarResources) {
         imp.setTempStarResources(tempStarResources);
     }
@@ -161,7 +162,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void addDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException, ForbiddenPushOnTopException {
-        this.card = card;
+        this.developmentCard = card;
         this.deckNumber = deckNumber;
         hasDevelopmentCardDeckChanged = true;
         imp.addDevelopmentCard(card, deckNumber);
@@ -195,6 +196,11 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
             );
         }
 
+        if (hasTempStarResourcesChanged){
+            hasTempStarResourcesChanged = false;
+            updates.add(new ServerTempStarResourcesUpdate(imp.getTempStarResources()));
+        }
+
         if(haveResourcesInStorageChanged){
             haveResourcesInStorageChanged = false;
             for(ResourceStorage storage : imp.getResourceStoragesForResourcesFromMarket()){
@@ -211,7 +217,10 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
             ));
         }
 
-        return updates;
+        if(hasLeaderCardsChanged){
+            hasLeaderCardsChanged = false;
+            //TODO ci vuole il player!! Forse qui dobbiamo fare quello che dicevamo
+            updates.add(new ServerLeaderCardsThePlayerOwnsUpdate())
+        }
 
-    }
 }
