@@ -21,7 +21,7 @@ public class LocalizationUtils {
             s.append(String.format(
                 "- %s %s",
                 resources.get(resourceType),
-                Localization.getLocalization().getString(resourceNamePlaceholder)
+                Localization.getLocalizationInstance().getString(resourceNamePlaceholder)
             ));
         }
         return s.toString();

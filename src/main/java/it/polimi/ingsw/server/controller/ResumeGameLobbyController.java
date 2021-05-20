@@ -19,7 +19,7 @@ public class ResumeGameLobbyController extends NewClientsAccepterClientHandler {
      * @param client new client to manage
      */
     @Override
-    public void acceptAndRegisterNewClient(Client client) {
+    public void acceptNewClient(Client client) {
 
     }
 

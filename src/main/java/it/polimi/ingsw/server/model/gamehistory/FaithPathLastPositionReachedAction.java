@@ -14,7 +14,7 @@ public class FaithPathLastPositionReachedAction extends GameAction {
 
     @Override
     public String getActionMessage() {
-        return Localization.getLocalization().getString(
+        return Localization.getLocalizationInstance().getString(
             "gameHistory.faithPath.lastPositionReached",
             player.getName()
         );

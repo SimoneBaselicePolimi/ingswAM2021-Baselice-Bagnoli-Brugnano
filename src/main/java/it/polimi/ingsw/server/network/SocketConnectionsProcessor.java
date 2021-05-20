@@ -62,7 +62,7 @@ public class SocketConnectionsProcessor implements Runnable {
             newSocket.configureBlocking(false);
 
             SocketConnection newConnection = new SocketConnection(
-                new Client(String.format("%s:%s", newSocket.socket().getLocalAddress(), newSocket.socket().getLocalPort())),
+                new Client(String.format("%s", newSocket.socket().getRemoteSocketAddress())),
                 newSocket,
                 writeSelector
             );

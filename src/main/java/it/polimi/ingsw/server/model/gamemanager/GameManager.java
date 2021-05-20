@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 
 public class GameManager {
 
+	final private String gameID;
+
 	private GameState currentState;
 
 	private Set<Player> players;
@@ -50,6 +52,7 @@ public class GameManager {
 
 	/**
 	 * GameManager constructor
+     * @param gameID
 	 * @param players players of the game
 	 * @param controller, see {@link ServerController}
 	 * @param gameRulesPath
@@ -57,10 +60,12 @@ public class GameManager {
 	 * @throws GameContextCreationError
 	 */
 	public GameManager(
-	    Set<Player> players,
+		String gameID,
+		Set<Player> players,
 		ServerController controller,
 		String gameRulesPath
 	) throws InvalidGameRules, GameContextCreationError {
+		this.gameID = gameID;
 
 		logger.log(LogLevel.INFO, "GameManager initialization started for game with players %s.", players);
 

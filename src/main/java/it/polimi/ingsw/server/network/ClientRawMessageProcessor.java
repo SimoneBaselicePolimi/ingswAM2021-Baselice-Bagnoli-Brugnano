@@ -12,9 +12,9 @@ public class ClientRawMessageProcessor {
 
     private BiConsumer<Client, ServerRawMessageSender> newConnectionProcessingPolicy = (c, s) -> {};
 
-    private BiConsumer<RawMessage, ServerRawMessageSender> defaultMessageProcessingPolicy = (m, s) -> {};;
+    private BiConsumer<ClientRawMessage, ServerRawMessageSender> defaultMessageProcessingPolicy = (m, s) -> {};;
 
-    private Map<Byte, BiConsumer<RawMessage, ServerRawMessageSender>> processingPoliciesByMessageType = new HashMap<>();
+    private Map<Byte, BiConsumer<ClientRawMessage, ServerRawMessageSender>> processingPoliciesByMessageType = new HashMap<>();
 
     private Consumer<Client> onConnectionDroppedProcessingPolicy = c -> {};
 
@@ -23,7 +23,7 @@ public class ClientRawMessageProcessor {
     @Deprecated
     public ClientRawMessageProcessor(
         BiConsumer<Client, ServerRawMessageSender> newConnectionProcessingPolicy,
-        BiConsumer<RawMessage, ServerRawMessageSender> messageProcessingPolicy,
+        BiConsumer<ClientRawMessage, ServerRawMessageSender> messageProcessingPolicy,
         Consumer<Client> onConnectionDroppedProcessingPolicy
     ) {
         this.newConnectionProcessingPolicy = newConnectionProcessingPolicy;
@@ -34,8 +34,8 @@ public class ClientRawMessageProcessor {
     @Deprecated
     public ClientRawMessageProcessor(
         BiConsumer<Client, ServerRawMessageSender> newConnectionProcessingPolicy,
-        Map<Byte, BiConsumer<RawMessage, ServerRawMessageSender>> processingPoliciesByMessageType,
-        BiConsumer<RawMessage, ServerRawMessageSender> defaultMessageProcessingPolicy,
+        Map<Byte, BiConsumer<ClientRawMessage, ServerRawMessageSender>> processingPoliciesByMessageType,
+        BiConsumer<ClientRawMessage, ServerRawMessageSender> defaultMessageProcessingPolicy,
         Consumer<Client> onConnectionDroppedProcessingPolicy
     ) {
         this.newConnectionProcessingPolicy = newConnectionProcessingPolicy;
@@ -48,11 +48,11 @@ public class ClientRawMessageProcessor {
         this.newConnectionProcessingPolicy = newConnectionProcessingPolicy;
     }
 
-    public void setMessageProcessingPolicy(BiConsumer<RawMessage, ServerRawMessageSender> defaultMessageProcessingPolicy) {
+    public void setMessageProcessingPolicy(BiConsumer<ClientRawMessage, ServerRawMessageSender> defaultMessageProcessingPolicy) {
         this.defaultMessageProcessingPolicy = defaultMessageProcessingPolicy;
     }
 
-    public void addPolicyForMessageType(Byte messageType, BiConsumer<RawMessage, ServerRawMessageSender> processingPolicy) {
+    public void setPolicyForMessageType(Byte messageType, BiConsumer<ClientRawMessage, ServerRawMessageSender> processingPolicy) {
         processingPoliciesByMessageType.put(messageType, processingPolicy);
     }
 
@@ -64,8 +64,8 @@ public class ClientRawMessageProcessor {
         newConnectionProcessingPolicy.accept(client, sender);
     }
 
-    public void processNewMessage(RawMessage message, ServerRawMessageSender sender) {
-        BiConsumer<RawMessage, ServerRawMessageSender> policyToApply = processingPoliciesByMessageType.getOrDefault(
+    public void processNewMessage(ClientRawMessage message, ServerRawMessageSender sender) {
+        BiConsumer<ClientRawMessage, ServerRawMessageSender> policyToApply = processingPoliciesByMessageType.getOrDefault(
             message.type,
             defaultMessageProcessingPolicy
         );

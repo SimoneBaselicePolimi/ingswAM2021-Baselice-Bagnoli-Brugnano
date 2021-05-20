@@ -19,19 +19,19 @@ public class Client {
 
     String uniqueClientIdentifier;
 
-    public String getClientId() {
+    public synchronized String getClientId() {
         return uniqueClientIdentifier;
     }
 
-    public boolean hasHandler() {
+    public synchronized boolean hasHandler() {
         return handler.isPresent();
     }
 
-    public ClientHandler getHandler() {
+    public synchronized ClientHandler getHandler() {
         return handler.get();
     }
 
-    void setHandler(ClientHandler handler) {
+    synchronized void setHandler(ClientHandler handler) {
         this.handler = Optional.of(handler);
     }
 

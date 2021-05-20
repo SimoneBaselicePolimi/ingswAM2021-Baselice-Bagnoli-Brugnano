@@ -2,7 +2,12 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
+import it.polimi.ingsw.network.NetworkProto;
+import it.polimi.ingsw.server.controller.PlayerRegistrationAndDispatchController;
+import it.polimi.ingsw.server.controller.ServerMessageSender;
 import it.polimi.ingsw.server.network.*;
+import it.polimi.ingsw.server.workers.YAMLDeserializationWorker;
+import it.polimi.ingsw.server.workers.YAMLSerializationWorker;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -19,6 +24,61 @@ public class Server {
     }
 
     public static void startServer() {
+
+        ClientRawMessageProcessor clientRawMessageProcessor = new ClientRawMessageProcessor();
+
+        NetworkLayer networkLayer = new NetworkLayer(TCP_SERVER_PORT, clientRawMessageProcessor);
+
+        YAMLSerializationWorker serializationWorker = new YAMLSerializationWorker(networkLayer::sendMessage);
+
+        YAMLDeserializationWorker deserializationWorker = new YAMLDeserializationWorker(
+            deserializedClientMessage ->
+                deserializedClientMessage.client.getHandler().addNewMessageToQueue(deserializedClientMessage)
+        );
+
+        ServerMessageSender messageSendingPolicy = serializationWorker::addMessageToSerialize;
+
+        PlayerRegistrationAndDispatchController dispatcherController = new PlayerRegistrationAndDispatchController(
+            messageSendingPolicy
+        );
+
+        clientRawMessageProcessor.setNewConnectionProcessingPolicy(
+            (client, sender) -> {
+                logger.log(LogLevel.BORING_INFO, "New client connected: %s", client.getClientId());
+                dispatcherController.acceptNewClient(client);
+            }
+        );
+
+        clientRawMessageProcessor.setPolicyForMessageType(
+            NetworkProto.MESSAGE_TYPE.GAME_MESSAGE,
+            (message, sender) -> {
+                logger.log(
+                    LogLevel.BORING_INFO,
+                    "New message received from client %s. [%s bytes]",
+                    message.sender,
+                    message.valueLength
+                );
+                deserializationWorker.addMessageToDeserialize(message);
+            }
+        );
+
+        clientRawMessageProcessor.setOnConnectionDroppedProcessingPolicy(
+            client -> logger.log(LogLevel.INFO, "client disconnected %s", client.getClientId())
+        );
+
+        serializationWorker.start();
+        deserializationWorker.start();
+        dispatcherController.start();
+        try {
+            networkLayer.start();
+        } catch (IOException e) {
+            //TODO
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void startTestServer() {
         ClientRawMessageProcessor clientRawMessageProcessor = new ClientRawMessageProcessor();
         clientRawMessageProcessor.setNewConnectionProcessingPolicy(
             (client, sender) -> {
@@ -41,4 +101,5 @@ public class Server {
         }
 
     }
+
 }

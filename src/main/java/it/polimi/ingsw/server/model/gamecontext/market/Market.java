@@ -4,7 +4,19 @@ import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation.ServerMarketRepresentation;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+/**
+ * This class represents the Market structure, containing a specific number of coloured Marbles.
+ * The marbles will be organized randomly in the Market matrix. Only one marble, at any moment, will be left out
+ * of this market. A Player can select a row or column of the matrix, obtaining a copy of the marbles selected
+ * and shifting the position of the marbles in the matrix.
+ */
 public interface Market extends Representable<ServerMarketRepresentation> {
+
     /**
      * Returns the Market structure.
      * @return matrix of Marbles inside the Market

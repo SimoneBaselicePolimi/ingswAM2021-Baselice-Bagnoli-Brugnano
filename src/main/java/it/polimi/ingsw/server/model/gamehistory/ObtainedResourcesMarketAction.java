@@ -20,7 +20,7 @@ public class ObtainedResourcesMarketAction extends GameAction {
 
     @Override
     public String getActionMessage() {
-        return Localization.getLocalization().getString(
+        return Localization.getLocalizationInstance().getString(
             "gameHistory.gameState.manageResourcesFromMarketTurn.initialMessage",
             player.getName(),
             LocalizationUtils.getResourcesListAsString(resourcesObtained)

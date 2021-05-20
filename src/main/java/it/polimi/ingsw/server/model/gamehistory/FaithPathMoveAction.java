@@ -17,12 +17,12 @@ public class FaithPathMoveAction extends GameAction {
     @Override
     public String getActionMessage() {
         if (steps == 1)
-            return Localization.getLocalization().getString(
+            return Localization.getLocalizationInstance().getString(
                 "gameHistory.faithPath.playerMove.singular",
                 player.getName()
             );
         else
-            return Localization.getLocalization().getString(
+            return Localization.getLocalizationInstance().getString(
                 "gameHistory.faithPath.playerMove.plural",
                 player.getName(),
                 steps

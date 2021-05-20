@@ -17,7 +17,7 @@ public class ActivateLeaderCardsAction extends GameAction {
 
     @Override
     public String getActionMessage() {
-        return Localization.getLocalization().getString(
+        return Localization.getLocalizationInstance().getString(
             "gameHistory.leaderCard.activateCard",
             player,
             leaderCard

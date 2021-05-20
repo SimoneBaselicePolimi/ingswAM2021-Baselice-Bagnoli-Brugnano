@@ -20,7 +20,7 @@ public class ProductionAction extends GameAction {
 
     @Override
     public String getActionMessage() {
-        return Localization.getLocalization().getString(
+        return Localization.getLocalizationInstance().getString(
             "gameState.mainTurn.developmentAction",
             player,
             productions

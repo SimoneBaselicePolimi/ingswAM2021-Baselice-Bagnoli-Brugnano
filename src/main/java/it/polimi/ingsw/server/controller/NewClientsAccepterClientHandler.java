@@ -12,6 +12,6 @@ public abstract class NewClientsAccepterClientHandler extends ClientHandler {
      * Accept a socket connection from a new client
      * @param client new client to manage
      */
-    public abstract void acceptAndRegisterNewClient(Client client);
+    public abstract void acceptNewClient(Client client);
 
 }

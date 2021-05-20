@@ -4,6 +4,6 @@ import it.polimi.ingsw.network.servermessage.ServerMessage;
 
 public interface ServerMessageSender {
 
-    void sendMessage(ServerMessage message);
+    void sendMessage(ServerMessage message, Client receiver);
 
 }

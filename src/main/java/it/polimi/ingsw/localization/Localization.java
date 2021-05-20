@@ -2,31 +2,45 @@ package it.polimi.ingsw.localization;
 
 import it.polimi.ingsw.utils.FileManager;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class Localization {
 
-    private static Localization localization;
-    private static Map<String, Object> langLocalization;
-    //startMessage: game started
-    //setup:
-    //  leaderCardMessage: the player...
-    //mainAction:
-    //   playerTurnStarted: the turn of player %s has started
-    //Localization.getLocalization.getString("startMessage");
-    //Localization.getLocalization.getString("gameHistory.gameState.setup.leaderCardMessage");
-    //Localization.getLocalization.getString("mainAction.playerTurnStarted", player1);
+    public static final String DEFAULT_LANG = "en";
+    private static Localization localizationInstance;
 
+    private final FileManager fileManager;
+    private Map<String, Object> langLocalization;
 
     private Localization(FileManager fileManager){
+        this.fileManager = fileManager;
+        try {
+            langLocalization = fileManager.getLocalization(DEFAULT_LANG);
+        } catch (IOException e) {
+            //TODO
+            e.printStackTrace();
+        }
     }
 
-    public static Localization getLocalization(){
-        return localization;
+    public static Localization getLocalizationInstance(){
+        if(localizationInstance == null)
+            localizationInstance = new Localization(FileManager.getFileManagerInstance());
+        return localizationInstance;
+    }
+
+
+    public void setLocalizationLanguage(String localizationLanguage) {
+        try {
+            langLocalization = fileManager.getLocalization(DEFAULT_LANG);
+        } catch (IOException e) {
+            //TODO
+            e.printStackTrace();
+        }
     }
 
     public String getString(String placeholder, Object... args) throws IllegalArgumentException{
-        String[] tokens = placeholder.split(".");
+        String[] tokens = placeholder.split("\\.");
         Object o = langLocalization;
         for (int i = 0; i < tokens.length; i++){
             if (o instanceof Map && ((Map<String, Object>) o).containsKey(tokens[i]))
@@ -36,4 +50,5 @@ public class Localization {
         }
         return String.format((String)o, args);
     }
+
 }

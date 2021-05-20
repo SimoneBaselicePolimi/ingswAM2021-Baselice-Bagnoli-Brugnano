@@ -17,7 +17,7 @@ public class DevelopmentAction extends GameAction {
 
     @Override
     public String getActionMessage() {
-        return Localization.getLocalization().getString(
+        return Localization.getLocalizationInstance().getString(
             "gameState.mainTurn.developmentAction",
             player,
             developmentCard

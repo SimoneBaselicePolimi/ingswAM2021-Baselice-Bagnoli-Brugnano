@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model.gamehistory;
 
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerDiscardLeaderCardsActionRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerDiscardedResourcesMarketActionRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
 
@@ -21,12 +20,12 @@ public class DiscardedResourcesMarketAction extends GameAction {
     @Override
     public String getActionMessage() {
         if (numberOfResourcesDiscarded == 1)
-            return Localization.getLocalization().getString(
+            return Localization.getLocalizationInstance().getString(
                 "gameHistory.gameState.manageResourcesFromMarketTurn. discardedResourcesMarketAction.singular",
                 player
             );
         else
-            return Localization.getLocalization().getString(
+            return Localization.getLocalizationInstance().getString(
                 "gameHistory.gameState.manageResourcesFromMarketTurn. discardedResourcesMarketAction.plural",
                 player,
                 numberOfResourcesDiscarded

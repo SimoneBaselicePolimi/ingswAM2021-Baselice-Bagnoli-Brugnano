@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
 import it.polimi.ingsw.localization.Localization;
-import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
@@ -9,7 +8,6 @@ import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.Serv
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class ObtainedMarblesMarketAction extends GameAction {
     private final Player player;
@@ -22,7 +20,7 @@ public class ObtainedMarblesMarketAction extends GameAction {
 
     @Override
     public String getActionMessage() {
-        return Localization.getLocalization().getString(
+        return Localization.getLocalizationInstance().getString(
             "gameState.mainTurn.obtainedMarblesMarketAction",
             player,
             marbleColours

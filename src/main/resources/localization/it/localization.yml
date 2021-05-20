@@ -1,4 +1,10 @@
 
+client:
+  cli:
+    setup:
+      askPlayerName: "Player name: "
+      notifyPlayerNameAlreadyInUse: Player name %s is already in use.
+
 resources:
   coins:
     singular: moneta

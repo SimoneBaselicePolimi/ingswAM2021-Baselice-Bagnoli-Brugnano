@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.controller.Client;
 
 public class ClientRawMessage extends RawMessage{
 
-    final Client sender;
+    public final Client sender;
 
     public ClientRawMessage(
         Client sender,
