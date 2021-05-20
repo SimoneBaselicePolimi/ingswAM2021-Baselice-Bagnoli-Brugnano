@@ -53,13 +53,21 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
                 playersManager.getClientForPlayer(player)
             ));
         } else {
-            //TDO
+            //TODO
         }
 
     }
 
-    public boolean canAcceptNewPlayers() {
+    public boolean hasLobbyBeenCreated() {
         return lobbyAlreadyCreated;
+    }
+
+    public boolean isLobbyFull() {
+        return playersInLobby.size() == lobbySize;
+    }
+
+    public boolean canAcceptNewPlayers() {
+        return hasLobbyBeenCreated() && !isLobbyFull();
     }
 
     public void addOnLobbyCreatedCallback(Runnable callback) {
