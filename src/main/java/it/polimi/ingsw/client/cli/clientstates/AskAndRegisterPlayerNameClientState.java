@@ -2,17 +2,18 @@ package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
+import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
+import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
+import it.polimi.ingsw.network.servermessage.PlayerCanCreateNewLobbyServerMessage;
 import it.polimi.ingsw.network.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 
 public class AskAndRegisterPlayerNameClientState extends ClientState {
 
-    public AskAndRegisterPlayerNameClientState(
-        ConsoleWriter consoleWriter,
-        MessageSender serverSender
-    ) {
-        super(consoleWriter, serverSender);
+
+    public AskAndRegisterPlayerNameClientState(ClientManager clientManager) {
+        super(clientManager);
     }
 
     @Override
@@ -24,7 +25,7 @@ public class AskAndRegisterPlayerNameClientState extends ClientState {
     @Override
     public void handleServerMessage(ServerMessage serverMessage) {
 
-        if(serverMessage instanceof PlayerNameAlreadyExistsServerMessage) {
+        if (serverMessage instanceof PlayerNameAlreadyExistsServerMessage) {
             printLineLocalized(
                 "client.cli.setup.notifyPlayerNameAlreadyInUse",
                 ((PlayerNameAlreadyExistsServerMessage) serverMessage).invalidPlayerName
@@ -32,11 +33,21 @@ public class AskAndRegisterPlayerNameClientState extends ClientState {
             printLocalized("client.cli.setup.askPlayerName");
             userCanSendNewInput();
         } else {
-            System.out.println("whuodwhiouwdhudiow");
-//            if(serverMessage instanceof)
-//                nextState();
-        }
+            if (serverMessage instanceof PlayerCanCreateNewLobbyServerMessage)
+                nextState(new CreateNewLobbyClientState(
+                    clientManager,
+                    (PlayerCanCreateNewLobbyServerMessage) serverMessage)
+                );
 
+            if (serverMessage instanceof NewPlayerEnteredNewGameLobbyServerMessage) {
+                nextState(new JoinNewLobbyClientState(
+                    clientManager,
+                    (NewPlayerEnteredNewGameLobbyServerMessage) serverMessage)
+                );
+                clientManager.setPlayer(((NewPlayerEnteredNewGameLobbyServerMessage) serverMessage).newPlayer);
+            }
+
+        }
     }
 
     @Override

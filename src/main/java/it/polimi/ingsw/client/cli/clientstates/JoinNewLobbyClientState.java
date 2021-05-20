@@ -2,12 +2,19 @@ package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
+import it.polimi.ingsw.client.cli.ClientManager;
+import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
+import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
+import it.polimi.ingsw.network.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 
 public class JoinNewLobbyClientState extends ClientState{
 
-    public JoinNewLobbyClientState(ConsoleWriter consoleWriter, MessageSender serverSender) {
-        super(consoleWriter, serverSender);
+    protected NewPlayerEnteredNewGameLobbyServerMessage serverMessage;
+
+    public JoinNewLobbyClientState(ClientManager clientManager, NewPlayerEnteredNewGameLobbyServerMessage serverMessage) {
+        super(clientManager);
+        this.serverMessage = serverMessage;
     }
 
     @Override
@@ -21,7 +28,10 @@ public class JoinNewLobbyClientState extends ClientState{
 
     @Override
     public void onStateBegin() {
-
+        if(!clientManager.getPlayer().equals(serverMessage.newPlayer))
+            printLineLocalized("client.cli.setup.notifyEntryPlayerInLobby", serverMessage.newPlayer);
+        else
+            printLineLocalized("client.cli.setup.notifyYouEntryInLobby");
     }
 
     @Override

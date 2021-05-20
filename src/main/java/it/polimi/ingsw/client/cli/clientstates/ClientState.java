@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
+import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 
@@ -9,14 +10,16 @@ public abstract class ClientState {
 
     protected ConsoleWriter consoleWriter;
     protected MessageSender serverSender;
+    protected ClientManager clientManager;
 
     protected boolean isNewUserInputInvalid = false;
     protected boolean isStateDone = false;
     protected ClientState nextState = null;
 
-    public ClientState(ConsoleWriter consoleWriter, MessageSender serverSender) {
-        this.consoleWriter = consoleWriter;
-        this.serverSender = serverSender;
+    public ClientState(ClientManager clientManager) {
+        this.clientManager = clientManager;
+        this.serverSender = clientManager.getServerSender();
+        this.consoleWriter = clientManager.getConsoleWriter();
     }
 
     public void handleUserInput(String input) {
@@ -39,8 +42,6 @@ public abstract class ClientState {
     public abstract void onStateBegin();
     public abstract void onStateDone();
 ;
-
-
     protected void userCannotSendNewInput() {
         isNewUserInputInvalid = true;
     }

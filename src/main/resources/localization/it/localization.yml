@@ -2,8 +2,12 @@
 client:
   cli:
     setup:
-      askPlayerName: "Player name: "
-      notifyPlayerNameAlreadyInUse: Player name %s is already in use.
+      askPlayerName: "Nome del giocatore: "
+      notifyPlayerNameAlreadyInUse: Il nome %s è già utilizzato da un altro giocatore.
+      askNumberOfPlayers: "Numero di giocatori: "
+      notifyPlayerNumberOfPlayersIsInvalid: Il numero di giocatori non è valido per creazione della lobby.
+      notifyEntryPlayerInLobby: Il giocatore %s è appena entrato nella lobby.
+      notifyYouEntryInLobby: Sei appena entrato nella lobby.
 
 resources:
   coins:

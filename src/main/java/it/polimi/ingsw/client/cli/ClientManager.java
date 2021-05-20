@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.model.Player;
 
 public class ClientManager {
 
@@ -13,6 +14,7 @@ public class ClientManager {
     protected MessageSender serverSender;
 
     ClientState currentState;
+    Player player;
 
     public ClientManager(ConsoleWriter consoleWriter, MessageSender serverSender) {
         this.consoleWriter = consoleWriter;
@@ -33,7 +35,7 @@ public class ClientManager {
     }
 
     protected ClientState getInitialState() {
-        return new AskAndRegisterPlayerNameClientState(consoleWriter, serverSender);
+        return new AskAndRegisterPlayerNameClientState(this);
     }
 
     protected void changeStateIfDone() {
@@ -44,4 +46,19 @@ public class ClientManager {
         }
     }
 
+    public ConsoleWriter getConsoleWriter() {
+        return consoleWriter;
+    }
+
+    public MessageSender getServerSender() {
+        return serverSender;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 }
