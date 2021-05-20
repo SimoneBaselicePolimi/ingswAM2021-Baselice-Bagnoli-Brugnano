@@ -67,10 +67,21 @@ public class PlayerRegistrationAndDispatchController extends NewClientsAccepterC
             e.printStackTrace();
         }
 
-        if(newGameLobby.isEmpty()) {
-            initNewGameLobby(registerPlayerMessage.client);
+        assignClientToNewGameLobby(registerPlayerMessage.client);
+
+    }
+
+    protected void assignClientToNewGameLobby(Client client) {
+
+        if(newGameLobby.isEmpty() || newGameLobby.get().isLobbyFull()) {
+            initNewGameLobby(client);
         } else {
-        newGameLobby.get().acceptNewClient(message.client);
+            if(newGameLobby.get().hasLobbyBeenCreated())
+                newGameLobby.get().acceptNewClient(client);
+            else
+                newGameLobby.get().addOnLobbyCreatedCallback(
+                    () -> assignClientToNewGameLobby(client)
+                );
         }
 
     }
