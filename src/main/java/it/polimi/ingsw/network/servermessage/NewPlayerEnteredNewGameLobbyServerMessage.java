@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.servermessage;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.Player;
 
 import java.util.Set;
@@ -9,8 +10,8 @@ public class NewPlayerEnteredNewGameLobbyServerMessage extends LobbyStatusServer
     public final Player newPlayer;
 
     public NewPlayerEnteredNewGameLobbyServerMessage(
-        Player newPlayer,
-        Set<Player> playersInLobby
+        @JsonProperty("newPlayer") Player newPlayer,
+        @JsonProperty("playersInLobby") Set<Player> playersInLobby
     ) {
         super(playersInLobby);
         this.newPlayer = newPlayer;

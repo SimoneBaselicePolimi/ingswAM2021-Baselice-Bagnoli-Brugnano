@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.servermessage;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.utils.serialization.annotations.*;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
@@ -14,9 +15,9 @@ public class InitialChoicesServerMessage extends GameUpdateServerMessage{
     public final int numberOfStarResources;
 
     public InitialChoicesServerMessage(
-        Set<ServerGameUpdate> gameUpdates,
-        Set<LeaderCard> leaderCardsGivenToThePlayer,
-        int numberOfStarResources
+        @JsonProperty("gameUpdates") Set<ServerGameUpdate> gameUpdates,
+        @JsonProperty("leaderCardsGivenToThePlayer") Set<LeaderCard> leaderCardsGivenToThePlayer,
+        @JsonProperty("numberOfStarResources") int numberOfStarResources
     ) {
         super(gameUpdates);
         this.leaderCardsGivenToThePlayer = leaderCardsGivenToThePlayer;
