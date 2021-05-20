@@ -1,9 +1,9 @@
-package it.polimi.ingsw.client.cli;
+package it.polimi.ingsw.client.CLI;
 
+import it.polimi.ingsw.client.CLI.clientstates.AskAndRegisterPlayerNameClientState;
+import it.polimi.ingsw.client.CLI.clientstates.ClientState;
 import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
-import it.polimi.ingsw.client.cli.clientstates.AskAndRegisterPlayerNameClientState;
-import it.polimi.ingsw.client.cli.clientstates.ClientState;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 

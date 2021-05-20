@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.cli.clientstates;
+package it.polimi.ingsw.client.CLI.clientstates;
 
 import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;

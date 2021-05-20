@@ -1,9 +1,7 @@
 package it.polimi.ingsw.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import it.polimi.ingsw.client.cli.ClientManager;
-import it.polimi.ingsw.client.clientmessage.ClientMessage;
-import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
+import it.polimi.ingsw.client.CLI.ClientManager;
 import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.logger.LogLevel;
