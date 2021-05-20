@@ -1,8 +1,7 @@
-package it.polimi.ingsw.client.CLI.clientstates;
+package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
-import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
 import it.polimi.ingsw.network.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
