@@ -8,8 +8,7 @@ import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerM
 import it.polimi.ingsw.server.GlobalPlayersManager;
 import it.polimi.ingsw.server.model.Player;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class NewGameLobbyController extends NewClientsAccepterClientHandler {
 
@@ -17,7 +16,7 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
 
     protected Player playerThatShouldCreateTheLobby;
 
-    protected Set<Player> playersInLobby;
+    protected List<Player> playersInLobby;
 
     protected int lobbySize;
 
@@ -25,9 +24,14 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
 
     protected GlobalPlayersManager playersManager;
 
-    public NewGameLobbyController(ServerMessageSender messageSender) {
+    protected List<Runnable> onLobbyCreatedCallbacks = Collections.synchronizedList(new ArrayList<>());
+
+    public NewGameLobbyController(ServerMessageSender messageSender, Client clientThatShouldCreateTheLobby) {
         super(new HashSet<>(), messageSender);
         playersManager = GlobalPlayersManager.getGlobalPlayerManager();
+        registerClientWithThisHandler(clientThatShouldCreateTheLobby);
+        playerThatShouldCreateTheLobby = playersManager.getPlayerAssociatedWithClient(clientThatShouldCreateTheLobby);
+        playersInLobby = new ArrayList<>();
     }
 
     /**
@@ -36,17 +40,34 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
      */
     @Override
     public void acceptNewClient(Client client) {
-        registerClientWithThisHandler(client);
-        Player newPlayer = playersManager.getPlayerAssociatedWithClient(client);
-        logger.log(
-            LogLevel.INFO,
-            "Player %s has joined the lobby",
-            newPlayer.getName()
-        );
-//        playersInLobby.forEach(player -> sendMessage(
-//            new NewPlayerEnteredNewGameLobbyServerMessage(newPlayer, playersInLobby),
-//            playersManager.getClientForPlayer(player)
-//        ));
+        if(canAcceptNewPlayers()) {
+            registerClientWithThisHandler(client);
+            Player newPlayer = playersManager.getPlayerAssociatedWithClient(client);
+            logger.log(
+                LogLevel.INFO,
+                "Player %s has joined the lobby",
+                newPlayer.getName()
+            );
+            playersInLobby.forEach(player -> sendMessage(
+                new NewPlayerEnteredNewGameLobbyServerMessage(newPlayer, playersInLobby),
+                playersManager.getClientForPlayer(player)
+            ));
+        } else {
+            //TDO
+        }
+
+    }
+
+    public boolean canAcceptNewPlayers() {
+        return lobbyAlreadyCreated;
+    }
+
+    public void addOnLobbyCreatedCallback(Runnable callback) {
+        onLobbyCreatedCallbacks.add(callback);
+    }
+
+    protected void runOnLobbyCreatedCallbacks() {
+        onLobbyCreatedCallbacks.forEach(Runnable::run);
     }
 
     @Override

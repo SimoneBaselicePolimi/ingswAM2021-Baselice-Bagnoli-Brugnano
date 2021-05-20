@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PlayerCanCreateNewLobbyServerMessage extends ServerMessage {
 
-    public final int minLobbySize;
+    public final boolean singlePlayerEnabled;
     public final int maxLobbySize;
 
     public PlayerCanCreateNewLobbyServerMessage(
-        @JsonProperty("minLobbySize") int minLobbySize,
+        @JsonProperty("singlePlayerEnabled") boolean singlePlayerEnabled,
         @JsonProperty("maxLobbySize") int maxLobbySize
     ) {
-        this.minLobbySize = minLobbySize;
+        this.singlePlayerEnabled = singlePlayerEnabled;
         this.maxLobbySize = maxLobbySize;
     }
 

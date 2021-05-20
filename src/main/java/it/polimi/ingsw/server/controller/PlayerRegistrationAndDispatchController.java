@@ -67,14 +67,16 @@ public class PlayerRegistrationAndDispatchController extends NewClientsAccepterC
             e.printStackTrace();
         }
 
-        if(newGameLobby.isEmpty())
-            initNewGameLobby();
+        if(newGameLobby.isEmpty()) {
+            initNewGameLobby(registerPlayerMessage.client);
+        } else {
         newGameLobby.get().acceptNewClient(message.client);
+        }
 
     }
 
-    protected void initNewGameLobby() {
-        newGameLobby = Optional.of(new NewGameLobbyController(messageSender));
+    protected void initNewGameLobby(Client clientThatShouldCreateLobby) {
+        newGameLobby = Optional.of(new NewGameLobbyController(messageSender, clientThatShouldCreateLobby));
         newGameLobby.get().start();
     }
 
