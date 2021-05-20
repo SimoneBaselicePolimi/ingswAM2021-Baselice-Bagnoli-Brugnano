@@ -4,9 +4,9 @@ import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 
-public class CreateNewLobbyClientState extends ClientState{
+public class CreateNewGameClientState extends ClientState{
 
-    public CreateNewLobbyClientState(ConsoleWriter consoleWriter, MessageSender serverSender) {
+    public CreateNewGameClientState(ConsoleWriter consoleWriter, MessageSender serverSender) {
         super(consoleWriter, serverSender);
     }
 
