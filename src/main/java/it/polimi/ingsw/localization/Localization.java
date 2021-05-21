@@ -32,7 +32,7 @@ public class Localization {
 
     public void setLocalizationLanguage(String localizationLanguage) {
         try {
-            langLocalization = fileManager.getLocalization(DEFAULT_LANG);
+            langLocalization = fileManager.getLocalization(localizationLanguage);
         } catch (IOException e) {
             //TODO
             e.printStackTrace();

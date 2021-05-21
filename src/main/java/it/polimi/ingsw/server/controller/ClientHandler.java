@@ -34,7 +34,7 @@ public abstract class ClientHandler extends Thread {
         client.setHandler(this);
         if(oldHandler != null)
             //TODO in the very rare case that a message was sent to the client while switching handler an error may occur
-            client.getHandler().deregisterClientWithThisHandler(client);
+            oldHandler.deregisterClientWithThisHandler(client);
     }
 
     public void deregisterClientWithThisHandler(Client client) {

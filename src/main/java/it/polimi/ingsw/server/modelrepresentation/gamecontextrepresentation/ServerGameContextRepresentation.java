@@ -1,8 +1,5 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation;
 
-import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathRepresentation;

@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
+import it.polimi.ingsw.network.servermessage.PlayerCanCreateNewLobbyServerMessage;
 import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.CreateNewLobbyClientMessage;
 import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
@@ -12,11 +13,13 @@ import java.util.*;
 
 public class NewGameLobbyController extends NewClientsAccepterClientHandler {
 
+    //TODO handle client disconnected
+
     protected boolean lobbyAlreadyCreated = false;
 
     protected Player playerThatShouldCreateTheLobby;
 
-    protected List<Player> playersInLobby;
+    protected List<Player> playersInLobby = new ArrayList<>();
 
     protected int lobbySize;
 
@@ -31,7 +34,10 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
         playersManager = GlobalPlayersManager.getGlobalPlayerManager();
         registerClientWithThisHandler(clientThatShouldCreateTheLobby);
         playerThatShouldCreateTheLobby = playersManager.getPlayerAssociatedWithClient(clientThatShouldCreateTheLobby);
-        playersInLobby = new ArrayList<>();
+        sendMessage(
+            new PlayerCanCreateNewLobbyServerMessage(false, 4), //TODO
+            clientThatShouldCreateTheLobby
+        );
     }
 
     /**
@@ -48,8 +54,9 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
                 "Player %s has joined the lobby",
                 newPlayer.getName()
             );
+            playersInLobby.add(newPlayer);
             playersInLobby.forEach(player -> sendMessage(
-                new NewPlayerEnteredNewGameLobbyServerMessage(newPlayer, playersInLobby),
+                new NewPlayerEnteredNewGameLobbyServerMessage(newPlayer, playersInLobby, lobbySize),
                 playersManager.getClientForPlayer(player)
             ));
         } else {
@@ -84,7 +91,17 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
             message instanceof CreateNewLobbyClientMessage &&
             playersManager.getPlayerAssociatedWithClient(message.client).equals(playerThatShouldCreateTheLobby)
         ) {
-
+            CreateNewLobbyClientMessage lobbyCreationInfoMessage = (CreateNewLobbyClientMessage) message;
+            lobbySize = lobbyCreationInfoMessage.lobbySize;      //TODO check lobby size
+            lobbyAlreadyCreated = true;
+            playersInLobby.add(playerThatShouldCreateTheLobby);
+            sendMessage(
+                new NewPlayerEnteredNewGameLobbyServerMessage(
+                    playerThatShouldCreateTheLobby,
+                    playersInLobby,
+                    lobbySize
+                ), message.client
+            );
         }
     }
 

@@ -1,12 +1,9 @@
 package it.polimi.ingsw.client.cli.clientstates;
 
-import it.polimi.ingsw.client.ConsoleWriter;
-import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
 import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
 import it.polimi.ingsw.network.servermessage.PlayerCanCreateNewLobbyServerMessage;
-import it.polimi.ingsw.network.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 
 public class CreateNewLobbyClientState extends ClientState{
@@ -21,9 +18,9 @@ public class CreateNewLobbyClientState extends ClientState{
     @Override
     protected void _handleUserInput(String input) {
         int intInput = Integer.parseInt(input);
-        int lobbyMinSize = serverMessage.singlePlayerEnabled ? 0 : 1;
+        int lobbyMinSize = serverMessage.singlePlayerEnabled ? 1 : 2;
         int lobbyMaxSize = serverMessage.maxLobbySize;
-        if (lobbyMaxSize <= 0 || lobbyMaxSize > serverMessage.maxLobbySize){
+        if (intInput < lobbyMinSize || intInput > lobbyMaxSize){
             printLineLocalized("client.cli.setup.notifyPlayerNumberOfPlayersIsInvalid");
             printLocalized("client.cli.setup.askNumberOfPlayers");
         } else

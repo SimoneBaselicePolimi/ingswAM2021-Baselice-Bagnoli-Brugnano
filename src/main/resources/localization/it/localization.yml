@@ -1,13 +1,13 @@
-
 client:
   cli:
     setup:
       askPlayerName: "Nome del giocatore: "
       notifyPlayerNameAlreadyInUse: Il nome %s è già utilizzato da un altro giocatore.
       askNumberOfPlayers: "Numero di giocatori: "
-      notifyPlayerNumberOfPlayersIsInvalid: Il numero di giocatori non è valido per creazione della lobby.
-      notifyEntryPlayerInLobby: Il giocatore %s è appena entrato nella lobby.
-      notifyYouEntryInLobby: Sei appena entrato nella lobby.
+      notifyPlayerNumberOfPlayersIsInvalid: Il numero di giocatori non è valido per la creazione della lobby.
+      notifyPlayerEnteredInLobby: Il giocatore %s è appena entrato nella lobby.
+      notifyCurrentPlayerEnteredInLobby: Sei appena entrat* nella lobby.
+      notifyLobbyPlayersList: "Giocatori attualmente nella lobby (%s/%s): \n%s"
 
 resources:
   coins:
@@ -33,27 +33,26 @@ gameHistory:
     vaticanReport: E' avvenuto un rapporto in Vaticano
     lastPositionReached: Il giocatore %s ha raggiunto l'ultima casella del tracciato fede
 
- leaderCard:
-   activateCard: Il giocatore %s ha attivato la carta leader %s
-   discardCard: Il giocatore %s ha scartato la carta leader %s
+  leaderCard:
+    activateCard: Il giocatore %s ha attivato la carta leader %s
+    discardCard: Il giocatore %s ha scartato la carta leader %s
 
- gameState:
+  gameState:
     setup:
       initialMessage: La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali
       choiceMessage: Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono:\n%s
 
-    mainTurn:
-      initialMessage: Inizia il turno del giocatore %s
-      developmentAction: Il giocatore %s ha comprato la carta sviluppo %s
-      obtainedMarblesMarketAction: Il giocatore %s ha ottenuto le seguenti biglie %s
-      productionAction: Il giocaorre %s ha attivato le produzioni %s
+  mainTurn:
+    initialMessage: Inizia il turno del giocatore %s
+    developmentAction: Il giocatore %s ha comprato la carta sviluppo %s
+    obtainedMarblesMarketAction: Il giocatore %s ha ottenuto le seguenti biglie %s
+    productionAction: Il giocaorre %s ha attivato le produzioni %s
 
-    postTurn:
-      finalMessage: E' concluso il turno del giocatore %s
+  postTurn:
+    finalMessage: E' concluso il turno del giocatore %s
 
-    manageResourcesFromMarketTurn:
-      obtainedResourcesMarketMessage: Il giocatore %s ha ottenuto le seguenti risorse %s
-      discardedResourcesMarketAction:
-        singular: Il giocatore %s ha scartato 1 risorsa
-        plural: Il giocatore %s ha scartato %s risorse
-
+  manageResourcesFromMarketTurn:
+    obtainedResourcesMarketMessage: Il giocatore %s ha ottenuto le seguenti risorse %s
+    discardedResourcesMarketAction:
+      singular: Il giocatore %s ha scartato 1 risorsa
+      plural: Il giocatore %s ha scartato %s risorse
