@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
 
@@ -7,7 +8,10 @@ public class ClientDiscardLeaderCardsActionRepresentation extends ClientGameActi
     private final ClientPlayerRepresentation player;
     private final ClientLeaderCardRepresentation leaderCard;
 
-    public ClientDiscardLeaderCardsActionRepresentation(ClientPlayerRepresentation player, ClientLeaderCardRepresentation leaderCard) {
+    public ClientDiscardLeaderCardsActionRepresentation(
+        @JsonProperty("player") ClientPlayerRepresentation player,
+        @JsonProperty("leaderCard") ClientLeaderCardRepresentation leaderCard
+    ) {
         this.player = player;
         this.leaderCard = leaderCard;
     }
