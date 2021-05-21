@@ -1,17 +1,17 @@
 package it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation;
 
-import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
 
 public class ServerObtainedMarblesMarketActionRepresentation extends ServerGameActionRepresentation {
+
     public final ServerPlayerRepresentation player;
     public final ServerMarbleColourRepresentation[] marbleColours;
 
     public ServerObtainedMarblesMarketActionRepresentation(
-        ServerPlayerRepresentation player,
-        ServerMarbleColourRepresentation[] marbleColours
+        @JsonProperty("player") ServerPlayerRepresentation player,
+        @JsonProperty("marbleColours") ServerMarbleColourRepresentation[] marbleColours
     ) {
         this.player = player;
         this.marbleColours = marbleColours;

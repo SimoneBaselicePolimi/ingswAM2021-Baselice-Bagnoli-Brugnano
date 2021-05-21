@@ -1,5 +1,6 @@
-package it.polimi.ingsw.client.modelrepresentation.storagerepresentation;
+package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -13,7 +14,10 @@ public class ClientResourceNumberRequirementRepresentation extends ClientLeaderC
      * @param resourceType type of resource required
      * @param resourceNumber number of resource required
      */
-    public ClientResourceNumberRequirementRepresentation(ResourceType resourceType, int resourceNumber) {
+    public ClientResourceNumberRequirementRepresentation(
+        @JsonProperty("resourceType") ResourceType resourceType,
+        @JsonProperty("resourceNumber") int resourceNumber
+    ) {
         this.resourceType = resourceType;
         this.resourceNumber = resourceNumber;
     }

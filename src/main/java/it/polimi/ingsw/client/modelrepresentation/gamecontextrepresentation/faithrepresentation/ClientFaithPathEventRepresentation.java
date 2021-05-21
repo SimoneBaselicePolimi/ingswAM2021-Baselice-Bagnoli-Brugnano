@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 
 public class ClientFaithPathEventRepresentation extends ClientRepresentation {
@@ -19,7 +20,10 @@ public class ClientFaithPathEventRepresentation extends ClientRepresentation {
      * @param endReached boolean which states if the final space of the Faith Track is reached
      * @param vaticanMeeting boolean which states if at least one Vatican Report has occurred
      */
-    public ClientFaithPathEventRepresentation(boolean endReached, boolean vaticanMeeting) {
+    public ClientFaithPathEventRepresentation(
+        @JsonProperty("endReached") boolean endReached,
+        @JsonProperty("vaticanMeeting") boolean vaticanMeeting
+    ) {
         this.endReached = endReached;
         this.vaticanMeeting = vaticanMeeting;
     }

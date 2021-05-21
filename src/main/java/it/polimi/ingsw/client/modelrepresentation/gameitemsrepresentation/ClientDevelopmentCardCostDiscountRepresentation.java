@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -23,10 +25,10 @@ public class ClientDevelopmentCardCostDiscountRepresentation extends ClientRegis
      * @param amountToDiscount number of resources the Player can discount from the cost
      */
     public ClientDevelopmentCardCostDiscountRepresentation(
-        String itemID,
-        GameItemsManager gameItemsManager,
-        ResourceType resourceType,
-        int amountToDiscount
+        @JsonProperty("itemID") String itemID,
+        @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
+        @JsonProperty("resourceType") ResourceType resourceType,
+        @JsonProperty("amountToDiscount") int amountToDiscount
     ) {
         super(itemID, gameItemsManager);
         this.resourceType = resourceType;

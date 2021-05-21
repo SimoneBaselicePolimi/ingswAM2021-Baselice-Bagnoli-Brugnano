@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.server.model.gameitems.*;
@@ -28,13 +30,13 @@ public class ClientDevelopmentCardRepresentation extends ClientRegisteredIdentif
      * @param purchaseCost necessary to buy the development card
      */
     public ClientDevelopmentCardRepresentation(
-        String itemID,
-        GameItemsManager gameItemsManager,
-        DevelopmentCardLevel level,
-        DevelopmentCardColour colour,
-        ClientProductionRepresentation production,
-        int victoryPoints,
-        Map<ResourceType, Integer> purchaseCost
+        @JsonProperty("itemID") String itemID,
+        @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
+        @JsonProperty("level") DevelopmentCardLevel level,
+        @JsonProperty("colour") DevelopmentCardColour colour,
+        @JsonProperty("production") ClientProductionRepresentation production,
+        @JsonProperty("victoryPoints") int victoryPoints,
+        @JsonProperty("purchaseCost") Map<ResourceType, Integer> purchaseCost
     ) {
         super(itemID, gameItemsManager);
         this.level = level;

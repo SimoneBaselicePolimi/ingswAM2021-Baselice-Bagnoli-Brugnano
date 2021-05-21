@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.*;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
@@ -21,15 +22,16 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     private int numberOfLeaderCardsThePlayerOwns;
 
     public ClientPlayerContextRepresentation(
-        ClientPlayerRepresentation player,
-        Set<ClientResourceStorageRepresentation> shelves,
-        ClientResourceStorageRepresentation infiniteChest,
-        ClientResourceStorageRepresentation tempStorage,
-        int tempStarResources,
-        Set<ClientLeaderCardRepresentation> leaderCardsPlayerOwns,
-        List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
-        Set<ClientProductionRepresentation> baseProductions,
-        int numberOfLeaderCardsThePlayerOwns) {
+        @JsonProperty("player") ClientPlayerRepresentation player,
+        @JsonProperty("shelves") Set<ClientResourceStorageRepresentation> shelves,
+        @JsonProperty("infiniteChest") ClientResourceStorageRepresentation infiniteChest,
+        @JsonProperty("tempStorage") ClientResourceStorageRepresentation tempStorage,
+        @JsonProperty("tempStarResources") int tempStarResources,
+        @JsonProperty("leaderCardsPlayerOwns") Set<ClientLeaderCardRepresentation> leaderCardsPlayerOwns,
+        @JsonProperty("developmentCardDecks") List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
+        @JsonProperty("baseProductions") Set<ClientProductionRepresentation> baseProductions,
+        @JsonProperty("numberOfLeaderCardsThePlayerOwns") int numberOfLeaderCardsThePlayerOwns
+    ) {
         this.player = player;
         this.shelves = shelves;
         this.infiniteChest = infiniteChest;

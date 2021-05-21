@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
@@ -13,7 +15,12 @@ public class ClientCoveredCardsDeckRepresentation<C extends ClientRepresentation
 
     public int numberOfCardsInDeck;
 
-    public ClientCoveredCardsDeckRepresentation(String itemID, GameItemsManager gameItemsManager, ClientDevelopmentCardRepresentation cardOnTop, int numberOfCardsInDeck) {
+    public ClientCoveredCardsDeckRepresentation(
+        @JsonProperty("itemID") String itemID,
+        @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
+        @JsonProperty("cardOnTop") ClientDevelopmentCardRepresentation cardOnTop,
+        @JsonProperty("numberOfCardsInDeck") int numberOfCardsInDeck
+    ) {
         super(itemID, gameItemsManager);
         this.cardOnTop = cardOnTop;
         this.numberOfCardsInDeck = numberOfCardsInDeck;

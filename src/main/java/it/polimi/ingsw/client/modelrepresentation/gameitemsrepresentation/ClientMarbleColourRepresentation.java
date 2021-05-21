@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
@@ -34,11 +36,11 @@ public class ClientMarbleColourRepresentation extends ClientRegisteredIdentifiab
      * by activating a special Leader card power
      */
     public ClientMarbleColourRepresentation(
-        String itemID,
-        GameItemsManager gameItemsManager,
-        Optional<ResourceType> resourceType,
-        int faithPoints,
-        boolean isSpecialMarble
+        @JsonProperty("itemID") String itemID,
+        @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
+        @JsonProperty("resourceType") Optional<ResourceType> resourceType,
+        @JsonProperty("faithPoints") int faithPoints,
+        @JsonProperty("isSpecialMarble") boolean isSpecialMarble
     ) {
         super(itemID, gameItemsManager);
         this.resourceType = resourceType;

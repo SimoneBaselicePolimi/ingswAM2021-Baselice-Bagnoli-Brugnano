@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerDevelopmentCardCostDiscountRepresentation;
@@ -8,7 +9,6 @@ import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.Server
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerWhiteMarbleSubstitutionRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation;
 
-import java.util.List;
 import java.util.Set;
 
 public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiableItemRepresentation {
@@ -35,15 +35,16 @@ public class ServerLeaderCardRepresentation extends ServerRegisteredIdentifiable
      * @param canBeActivated states if the card can be activated
      */
     public ServerLeaderCardRepresentation(
-        String itemID,
-        LeaderCardState state,
-        Set<ServerLeaderCardRequirementRepresentation> requirements,
-        Set<ServerProductionRepresentation> productions,
-        Set<ServerResourceStorageRepresentation> resourceStorages,
-        Set<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
-        Set<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
-        int victoryPoints,
-        boolean canBeActivated) {
+        @JsonProperty("itemID") String itemID,
+        @JsonProperty("state") LeaderCardState state,
+        @JsonProperty("requirements") Set<ServerLeaderCardRequirementRepresentation> requirements,
+        @JsonProperty("productions") Set<ServerProductionRepresentation> productions,
+        @JsonProperty("resourceStorages") Set<ServerResourceStorageRepresentation> resourceStorages,
+        @JsonProperty("cardCostDiscounts") Set<ServerDevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
+        @JsonProperty("whiteMarbleSubstitutions") Set<ServerWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
+        @JsonProperty("victoryPoints") int victoryPoints,
+        @JsonProperty("canBeActivated") boolean canBeActivated
+    ) {
         super(itemID);
         this.state = state;
         this.requirements = requirements;

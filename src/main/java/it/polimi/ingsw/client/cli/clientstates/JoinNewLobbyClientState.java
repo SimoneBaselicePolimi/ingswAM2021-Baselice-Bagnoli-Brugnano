@@ -26,7 +26,7 @@ public class JoinNewLobbyClientState extends ClientState{
         else if(serverMessage instanceof GameInitializationStartedServerMessage)
             nextState(new GameInitializationClientState(clientManager));
         else
-            throw new RuntimeException();   //TODO
+            throw new RuntimeException();   //TODO: InvalidClientMessageServerMessage?
     }
 
     @Override

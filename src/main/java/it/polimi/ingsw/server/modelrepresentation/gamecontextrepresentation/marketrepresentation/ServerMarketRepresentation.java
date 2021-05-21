@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
 
@@ -33,10 +34,10 @@ public class ServerMarketRepresentation extends ServerRepresentation {
      * @param nColumns Number of columns of the Market
      */
     public ServerMarketRepresentation(
-        ServerMarbleColourRepresentation[][] matrix,
-        ServerMarbleColourRepresentation outMarble,
-        int nRows,
-        int nColumns
+        @JsonProperty("matrix") ServerMarbleColourRepresentation[][] matrix,
+        @JsonProperty("outMarble") ServerMarbleColourRepresentation outMarble,
+        @JsonProperty("nRows") int nRows,
+        @JsonProperty("nColumns") int nColumns
     ) {
         this.matrix = matrix;
         this.outMarble = outMarble;

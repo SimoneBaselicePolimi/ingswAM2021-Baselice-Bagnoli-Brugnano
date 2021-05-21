@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client.cli.clientstates;
 
-import it.polimi.ingsw.client.ConsoleWriter;
-import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
 import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;

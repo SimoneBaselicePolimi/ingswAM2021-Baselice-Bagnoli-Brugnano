@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 
 public class ServerDevelopmentCardColourRequirementRepresentation extends ServerLeaderCardRequirementRepresentation {
@@ -12,7 +13,10 @@ public class ServerDevelopmentCardColourRequirementRepresentation extends Server
      * @param cardColour colour of development cards required
      * @param numberOfCards number of development cards required
      */
-    public ServerDevelopmentCardColourRequirementRepresentation(DevelopmentCardColour cardColour, int numberOfCards) {
+    public ServerDevelopmentCardColourRequirementRepresentation(
+        @JsonProperty("cardColour") DevelopmentCardColour cardColour,
+        @JsonProperty("numberOfCards") int numberOfCards
+    ) {
         this.cardColour = cardColour;
         this.numberOfCards = numberOfCards;
     }

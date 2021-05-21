@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -9,7 +10,10 @@ public class ClientObtainedResourcesMarketActionRepresentation extends ClientGam
     private final ClientPlayerRepresentation player;
     private final Map<ResourceType, Integer> resourcesObtained;
 
-    public ClientObtainedResourcesMarketActionRepresentation(ClientPlayerRepresentation player, Map<ResourceType, Integer> resourcesObtained) {
+    public ClientObtainedResourcesMarketActionRepresentation(
+        @JsonProperty("player")ClientPlayerRepresentation player,
+        @JsonProperty("resourcesObtained")Map<ResourceType, Integer> resourcesObtained
+    ) {
         this.player = player;
         this.resourcesObtained = resourcesObtained;
     }
