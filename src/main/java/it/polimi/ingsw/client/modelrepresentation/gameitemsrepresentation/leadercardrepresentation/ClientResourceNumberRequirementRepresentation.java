@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.modelrepresentation.storagerepresentation;
+package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
