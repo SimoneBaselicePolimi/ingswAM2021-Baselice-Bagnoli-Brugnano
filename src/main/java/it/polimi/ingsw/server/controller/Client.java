@@ -1,17 +1,17 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.network.servermessage.ServerMessage;
-
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * logic client
  */
 public class Client {
-
     @SuppressWarnings("all")
     Optional<ClientHandler> handler = Optional.empty();
+
+    Map<String, Object> deserializationContextMap = new ConcurrentHashMap<>(Map.of("client", this));
 
     public Client(String uniqueClientIdentifier) {
         this.uniqueClientIdentifier = uniqueClientIdentifier;
@@ -33,6 +33,18 @@ public class Client {
 
     synchronized void setHandler(ClientHandler handler) {
         this.handler = Optional.of(handler);
+    }
+
+    public Map<String, Object> getDeserializationContextMap() {
+        return deserializationContextMap;
+    }
+
+    public void addEntryToDeserializationContextMap(String key, Object value) {
+        deserializationContextMap.put(key, value);
+    }
+
+    public void removeEntryFromDeserializationContextMap(String key) {
+        deserializationContextMap.remove(key);
     }
 
 }

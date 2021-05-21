@@ -13,8 +13,11 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SerializationHelper {
 
@@ -45,7 +48,7 @@ public class SerializationHelper {
         return getObjectMapper().readerFor(objType)
             // we need to pass the gameItemManager to our custom deserializer so that it can retrieve the object
             // reference using the ID.
-            .withAttribute("GameItemManager", gameItemsManager);
+            .withAttribute("GameItemsManager", gameItemsManager);
     }
 
     public static <T> T deserializeYamlFromString(
@@ -94,6 +97,7 @@ public class SerializationHelper {
         return getObjectMapper().readValue(serializedObj, objType);
     }
 
+    @Deprecated
     public static <T> T deserializeYamlFromBytes(
         Client client,
         byte[] serializedObj,
@@ -104,6 +108,22 @@ public class SerializationHelper {
         ObjectMapper mapper = getObjectMapper();
         mapper.setInjectableValues(iv);
         return mapper.readValue(serializedObj, objType);
+    }
+
+    public static <T> T deserializeYamlFromBytes(
+        byte[] serializedObj,
+        Class<T> objType,
+        Map<String, Object> deserializationContextMap
+    ) throws IOException {
+        InjectableValues.Std iv = new InjectableValues.Std();
+        deserializationContextMap.forEach(iv::addValue);
+        ObjectMapper mapper = getObjectMapper();
+        mapper.setInjectableValues(iv);
+        ObjectReader reader = mapper.readerFor(objType);
+        for(Map.Entry<String, Object> contextEntry : deserializationContextMap.entrySet()) {
+            reader = reader.withAttribute(contextEntry.getKey() , contextEntry.getValue());
+        }
+        return reader.readValue(serializedObj);
     }
 
 }

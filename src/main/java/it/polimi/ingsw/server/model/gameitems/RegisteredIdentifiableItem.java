@@ -11,14 +11,33 @@ public abstract class RegisteredIdentifiableItem implements IdentifiableItem {
      */
     protected final String itemID;
 
+
     /**
      * Class constructor.
      * @param itemID unique ID that identifies this Item
      * @param gameItemsManager a reference to gameItemsManager is needed to register this new Item
      */
-    protected RegisteredIdentifiableItem(String itemID, GameItemsManager gameItemsManager) {
+    protected <T extends RegisteredIdentifiableItem> RegisteredIdentifiableItem(
+        String itemID,
+        GameItemsManager gameItemsManager
+    ) {
         this.itemID = itemID;
         gameItemsManager.addItem(this);
+    }
+
+    /**
+     * Class constructor.
+     * @param itemID unique ID that identifies this Item
+     * @param gameItemsManager a reference to gameItemsManager is needed to register this new Item
+     * @param typeToUseForRegistrationWithGameItemsManager type to use for registration
+     */
+    protected <T extends IdentifiableItem> RegisteredIdentifiableItem(
+        String itemID,
+        GameItemsManager gameItemsManager,
+        Class<T> typeToUseForRegistrationWithGameItemsManager
+    ) {
+        this.itemID = itemID;
+        gameItemsManager.addItem(this, (Class<IdentifiableItem>) typeToUseForRegistrationWithGameItemsManager);
     }
 
     /**

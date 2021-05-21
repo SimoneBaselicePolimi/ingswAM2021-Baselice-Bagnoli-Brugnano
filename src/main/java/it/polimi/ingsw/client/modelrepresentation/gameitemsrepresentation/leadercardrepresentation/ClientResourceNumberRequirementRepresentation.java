@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.modelrepresentation.storagerepresentation;
+package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation;

@@ -35,9 +35,9 @@ public class YAMLDeserializationWorker extends Thread {
                 if(messageToDeserialize.type == NetworkProto.MESSAGE_TYPE.GAME_MESSAGE &&
                     messageToDeserialize.valueFormat == NetworkProto.MESSAGE_FORMAT.YAML) {
                     ClientMessage clientMessage = SerializationHelper.deserializeYamlFromBytes(
-                        messageToDeserialize.sender,
                         messageToDeserialize.value,
-                        ClientMessage.class
+                        ClientMessage.class,
+                        messageToDeserialize.sender.getDeserializationContextMap()
                     );
                     deserializedMessageProcessingPolicy.accept(clientMessage);
                 }

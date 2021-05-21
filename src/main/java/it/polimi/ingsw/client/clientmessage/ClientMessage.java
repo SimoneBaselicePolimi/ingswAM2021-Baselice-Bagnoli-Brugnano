@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = PlayerRequestClientMessage.class, name = "PlayerRequestClientMessage"),
     @JsonSubTypes.Type(value = CreateNewLobbyClientMessage.class, name = "CreateNewLobbyClientMessage"),
-    @JsonSubTypes.Type(value = RegisterPlayerNameClientMessage.class, name = "RegisterPlayerNameClientMessage")
+    @JsonSubTypes.Type(value = RegisterPlayerNameClientMessage.class, name = "RegisterPlayerNameClientMessage"),
+    @JsonSubTypes.Type(value = GetInitialGameRepresentationClientMessage.class, name = "GetInitialGameRepresentationClientMessage")
+
 })
 public class ClientMessage {
 

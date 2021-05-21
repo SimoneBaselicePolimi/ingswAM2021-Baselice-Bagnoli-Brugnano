@@ -62,4 +62,16 @@ public class GameItemsManager {
             .put(item.getItemId(), item);
     }
 
+    /**
+     * Registers an item with the GameItemsManager. Should always be called when initializing an instance of a class
+     * that implements IdentifiableItem (see {@link IdentifiableItem})
+     * @param item the item to add
+     * @param itemType type that should be used to register the item
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends IdentifiableItem> void addItem(T item, Class<T> itemType) {
+        items.computeIfAbsent( (Class<IdentifiableItem>) itemType, (k) -> new HashMap<>())
+            .put(item.getItemId(), item);
+    }
+
 }

@@ -1,9 +1,11 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.network.servermessage.GameInitialRepresentationServerMessage;
+import it.polimi.ingsw.network.servermessage.GameInitializationStartedServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.GlobalPlayersManager;
 import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
+import it.polimi.ingsw.server.controller.clientmessage.GetInitialGameRepresentationClientMessage;
+import it.polimi.ingsw.server.controller.servermessage.GameInitialRepresentationServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContextCreationError;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
@@ -32,15 +34,15 @@ public class GameController extends ClientHandler {
             .map(p -> playersManager.getClientForPlayer(p))
             .forEach(this::registerClientWithThisHandler);
         gameManager = new GameManager(generateGameName(), players, this, null);
+        players.stream()
+            .map(p -> playersManager.getClientForPlayer(p))
+            .forEach(client ->
+                client.addEntryToDeserializationContextMap("GameItemsManager", gameManager.getGameItemsManager())
+            );
         players.forEach(player -> sendMessage(
-            new GameInitialRepresentationServerMessage(
-                gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class).stream()
-                    .map(leaderCard -> leaderCard.getServerRepresentationForPlayer(player))
-                    .collect(Collectors.toSet()),
-                gameManager.getGameContext().getServerRepresentationForPlayer(player)
-            ),
-            playersManager.getClientForPlayer(player)
-        ));
+            new GameInitializationStartedServerMessage(),
+            playersManager.getClientForPlayer(player))
+        );
     }
 
     public void sendMessagesToClients(Map<Player, ServerMessage> messageForClients) {
@@ -50,7 +52,17 @@ public class GameController extends ClientHandler {
 
     @Override
     protected void handleNewMessage(ClientMessage message) {
-        super.handleNewMessage(message);
+        if(message instanceof GetInitialGameRepresentationClientMessage) {
+            players.forEach(player -> sendMessage(
+                new GameInitialRepresentationServerMessage(
+                    gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class).stream()
+                        .map(leaderCard -> leaderCard.getServerRepresentationForPlayer(player))
+                        .collect(Collectors.toSet()),
+                    gameManager.getGameContext().getServerRepresentationForPlayer(player)
+                ),
+                playersManager.getClientForPlayer(player)
+            ));
+        }
     }
 
     protected String generateGameName() {

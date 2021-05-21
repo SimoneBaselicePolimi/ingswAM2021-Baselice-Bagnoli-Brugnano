@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -9,7 +10,10 @@ public class ClientSetupChoiceActionRepresentation extends ClientGameActionRepre
     private final ClientPlayerRepresentation player;
     private final Map<ResourceType,Integer> initialResources;
 
-    public ClientSetupChoiceActionRepresentation(ClientPlayerRepresentation player, Map<ResourceType, Integer> initialResources) {
+    public ClientSetupChoiceActionRepresentation(
+        @JsonProperty("player") ClientPlayerRepresentation player,
+        @JsonProperty("initialResources") Map<ResourceType, Integer> initialResources
+    ) {
         this.player = player;
         this.initialResources = initialResources;
     }

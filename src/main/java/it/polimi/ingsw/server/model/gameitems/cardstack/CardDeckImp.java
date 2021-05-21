@@ -32,7 +32,7 @@ public abstract class CardDeckImp<C extends Representable<?>> extends Registered
 		String deckID,
 		GameItemsManager gameItemsManager
 	) {
-		super(deckID, gameItemsManager);
+		super(deckID, gameItemsManager, CardDeck.class);
 	}
 
 	/**
