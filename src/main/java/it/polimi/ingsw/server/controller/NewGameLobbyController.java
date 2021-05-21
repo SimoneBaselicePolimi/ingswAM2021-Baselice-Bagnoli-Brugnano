@@ -8,6 +8,8 @@ import it.polimi.ingsw.server.controller.clientmessage.CreateNewLobbyClientMessa
 import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
 import it.polimi.ingsw.server.GlobalPlayersManager;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamecontext.GameContextCreationError;
+import it.polimi.ingsw.server.model.gamemanager.InvalidGameRules;
 
 import java.util.*;
 
@@ -59,6 +61,18 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
                 new NewPlayerEnteredNewGameLobbyServerMessage(newPlayer, playersInLobby, lobbySize),
                 playersManager.getClientForPlayer(player)
             ));
+            if(isLobbyFull()) {
+                try {
+                    GameController gameController = new GameController(messageSender, new HashSet<>(playersInLobby));
+                    gameController.start();
+                } catch (GameContextCreationError gameContextCreationError) {
+                    //TODO
+                    gameContextCreationError.printStackTrace();
+                } catch (InvalidGameRules invalidGameRules) {
+                    //TODO
+                    invalidGameRules.printStackTrace();
+                }
+            }
         } else {
             //TODO
         }

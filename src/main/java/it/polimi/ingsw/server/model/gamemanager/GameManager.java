@@ -7,7 +7,9 @@ import it.polimi.ingsw.network.clientrequest.ClientRequest;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.GameController;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.controller.ServerMessageSender;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.*;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
@@ -36,7 +38,7 @@ public class GameManager {
 
 	private Set<Player> players;
 
-	private ServerController controller;
+	private GameController controller;
 
 	private GameContext gameContext;
 
@@ -62,7 +64,7 @@ public class GameManager {
 	public GameManager(
 		String gameID,
 		Set<Player> players,
-		ServerController controller,
+		GameController controller,
 		String gameRulesPath
 	) throws InvalidGameRules, GameContextCreationError {
 		this.gameID = gameID;

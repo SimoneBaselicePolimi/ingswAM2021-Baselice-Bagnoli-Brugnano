@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.cli.ClientManager;
+import it.polimi.ingsw.network.servermessage.GameInitialRepresentationServerMessage;
 import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
@@ -12,17 +13,18 @@ public class JoinNewLobbyClientState extends ClientState{
     public JoinNewLobbyClientState(ClientManager clientManager, NewPlayerEnteredNewGameLobbyServerMessage initialMessageFromServer) {
         super(clientManager);
         this.initialMessageFromServer = initialMessageFromServer;
+        userCannotSendNewInput();
     }
 
     @Override
-    protected void _handleUserInput(String input) {
-
-    }
+    protected void _handleUserInput(String input) {}
 
     @Override
     public void handleServerMessage(ServerMessage serverMessage) {
         if(serverMessage instanceof NewPlayerEnteredNewGameLobbyServerMessage)
             printPlayerEnteredInLobbyMessage((NewPlayerEnteredNewGameLobbyServerMessage) serverMessage);
+        else if(serverMessage instanceof GameInitialRepresentationServerMessage)
+            nextState(new GameSetupClientState(clientManager, (GameInitialRepresentationServerMessage) serverMessage));
         else
             throw new RuntimeException();   //TODO
     }
@@ -33,8 +35,7 @@ public class JoinNewLobbyClientState extends ClientState{
     }
 
     @Override
-    public void onStateDone() {
-    }
+    public void onStateDone() {}
 
     protected void printPlayerEnteredInLobbyMessage(NewPlayerEnteredNewGameLobbyServerMessage message) {
         if(!clientManager.getPlayer().equals(message.newPlayer))
