@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 
 public class ServerVaticanReportSectionRepresentation extends ServerRepresentation {
@@ -25,7 +26,11 @@ public class ServerVaticanReportSectionRepresentation extends ServerRepresentati
      * @param popeSpacePos position of the Pope space related to this Vatican Report section
      * @param sectionVictoryPoints victory points scored for the related Pope's Favor card if active
      */
-    public ServerVaticanReportSectionRepresentation(int sectionInitialPos, int popeSpacePos, int sectionVictoryPoints) {
+    public ServerVaticanReportSectionRepresentation(
+        @JsonProperty("sectionInitialPos") int sectionInitialPos,
+        @JsonProperty("popeSpacePos") int popeSpacePos,
+        @JsonProperty("sectionVictoryPoints") int sectionVictoryPoints
+    ) {
         this.sectionInitialPos = sectionInitialPos;
         this.popeSpacePos = popeSpacePos;
         this.sectionVictoryPoints = sectionVictoryPoints;

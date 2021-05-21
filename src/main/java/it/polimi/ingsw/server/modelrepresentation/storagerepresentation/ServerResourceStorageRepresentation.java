@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.storagerepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation;
 
@@ -20,9 +21,9 @@ public class ServerResourceStorageRepresentation extends ServerRegisteredIdentif
     public final Map<ResourceType,Integer> resources;
 
     public ServerResourceStorageRepresentation(
-        String itemID,
-        List<ServerResourceStorageRuleRepresentation> rules,
-        Map<ResourceType, Integer> resources
+        @JsonProperty("itemID") String itemID,
+        @JsonProperty("rules") List<ServerResourceStorageRuleRepresentation> rules,
+        @JsonProperty("resources") Map<ResourceType, Integer> resources
     ) {
         super(itemID);
         this.rules = rules;

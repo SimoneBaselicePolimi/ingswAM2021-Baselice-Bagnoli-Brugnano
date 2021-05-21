@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
@@ -41,12 +42,12 @@ public class ServerProductionRepresentation extends ServerRegisteredIdentifiable
      * @param faithReward reward made of a fixed number of Faith Points
      */
     public ServerProductionRepresentation(
-        String itemID,
-        Map<ResourceType, Integer> resourceCost,
-        Map<ResourceType, Integer> resourceReward,
-        int starResourceCost,
-        int starResourceReward,
-        int faithReward
+        @JsonProperty("itemID") String itemID,
+        @JsonProperty("resourceCost") Map<ResourceType, Integer> resourceCost,
+        @JsonProperty("resourceReward") Map<ResourceType, Integer> resourceReward,
+        @JsonProperty("starResourceCost") int starResourceCost,
+        @JsonProperty("starResourceReward") int starResourceReward,
+        @JsonProperty("faithReward") int faithReward
     ) {
         super(itemID);
         this.resourceCost = resourceCost;

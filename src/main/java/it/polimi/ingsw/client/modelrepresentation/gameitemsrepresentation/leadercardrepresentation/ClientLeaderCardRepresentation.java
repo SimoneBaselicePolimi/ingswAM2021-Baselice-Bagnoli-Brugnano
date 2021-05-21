@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientDevelopmentCardCostDiscountRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
@@ -38,16 +40,17 @@ public class ClientLeaderCardRepresentation extends ClientRegisteredIdentifiable
      * @param canBeActivated states if the card can be activated
      */
     public ClientLeaderCardRepresentation(
-        String itemID,
-        GameItemsManager gameItemsManager,
-        LeaderCardState state,
-        List<ClientLeaderCardRequirementRepresentation> requirements,
-        List<ClientProductionRepresentation> productions,
-        List<ClientResourceStorageRepresentation> resourceStorages,
-        List<ClientDevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
-        List<ClientWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
-        int victoryPoints,
-        boolean canBeActivated) {
+        @JsonProperty("itemID") String itemID,
+        @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
+        @JsonProperty("state") LeaderCardState state,
+        @JsonProperty("requirements") List<ClientLeaderCardRequirementRepresentation> requirements,
+        @JsonProperty("productions") List<ClientProductionRepresentation> productions,
+        @JsonProperty("resourceStorages") List<ClientResourceStorageRepresentation> resourceStorages,
+        @JsonProperty("cardCostDiscounts") List<ClientDevelopmentCardCostDiscountRepresentation> cardCostDiscounts,
+        @JsonProperty("whiteMarbleSubstitutions") List<ClientWhiteMarbleSubstitutionRepresentation> whiteMarbleSubstitutions,
+        @JsonProperty("victoryPoints") int victoryPoints,
+        @JsonProperty("canBeActivated") boolean canBeActivated
+    ) {
         super(itemID, gameItemsManager);
         this.state = state;
         this.requirements = requirements;

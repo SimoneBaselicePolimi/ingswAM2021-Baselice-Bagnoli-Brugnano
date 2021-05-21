@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.storagerepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 public class ServerSpecificResourceTypeRuleRepresentation extends ServerResourceStorageRuleRepresentation {
@@ -9,7 +10,9 @@ public class ServerSpecificResourceTypeRuleRepresentation extends ServerResource
 	 */
 	public final ResourceType resourceType;
 
-	public ServerSpecificResourceTypeRuleRepresentation(ResourceType resourceType) {
+	public ServerSpecificResourceTypeRuleRepresentation(
+		@JsonProperty("resourceType") ResourceType resourceType
+	) {
 		this.resourceType = resourceType;
 	}
 

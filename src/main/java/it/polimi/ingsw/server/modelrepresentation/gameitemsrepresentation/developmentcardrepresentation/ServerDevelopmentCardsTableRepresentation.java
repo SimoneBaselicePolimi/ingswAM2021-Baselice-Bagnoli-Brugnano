@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation;
 
-import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
@@ -20,7 +20,7 @@ public class ServerDevelopmentCardsTableRepresentation extends ServerRepresentat
      * @param cards that are placed in decks
      */
     public ServerDevelopmentCardsTableRepresentation(
-        Map<DevelopmentCardLevel,
+        @JsonProperty("cards") Map<DevelopmentCardLevel,
             Map<DevelopmentCardColour,
                 ServerCoveredCardsDeckRepresentation<ServerDevelopmentCardRepresentation>>> cards
     ) {

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
@@ -45,13 +47,13 @@ public class ClientProductionRepresentation extends ClientRegisteredIdentifiable
      * @param faithReward reward made of a fixed number of Faith Points
      */
     public ClientProductionRepresentation(
-        String itemID,
-        GameItemsManager gameItemsManager,
-        Map<ResourceType, Integer> resourceCost,
-        Map<ResourceType, Integer> resourceReward,
-        int starResourceCost,
-        int starResourceReward,
-        int faithReward
+        @JsonProperty("itemID") String itemID,
+        @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
+        @JsonProperty("resourceCost") Map<ResourceType, Integer> resourceCost,
+        @JsonProperty("resourceReward") Map<ResourceType, Integer> resourceReward,
+        @JsonProperty("starResourceCost") int starResourceCost,
+        @JsonProperty("starResourceReward") int starResourceReward,
+        @JsonProperty("faithReward") int faithReward
     ) {
         super(itemID, gameItemsManager);
         this.resourceCost = resourceCost;

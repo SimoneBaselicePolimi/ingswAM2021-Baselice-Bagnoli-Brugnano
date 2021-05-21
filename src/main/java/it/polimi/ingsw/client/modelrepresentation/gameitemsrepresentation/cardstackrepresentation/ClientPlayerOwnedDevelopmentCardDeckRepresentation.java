@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
@@ -16,7 +18,11 @@ public class ClientPlayerOwnedDevelopmentCardDeckRepresentation extends ClientCa
      *                         (see {@link RegisteredIdentifiableItem})
      * @param cardDeck
      */
-    protected ClientPlayerOwnedDevelopmentCardDeckRepresentation(String itemID, GameItemsManager gameItemsManager, Stack<ClientDevelopmentCardRepresentation> cardDeck) {
+    protected ClientPlayerOwnedDevelopmentCardDeckRepresentation(
+        @JsonProperty("itemID") String itemID,
+        @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
+        @JsonProperty("cardDeck") Stack<ClientDevelopmentCardRepresentation> cardDeck
+    ) {
         super(itemID, gameItemsManager, cardDeck);
     }
 }

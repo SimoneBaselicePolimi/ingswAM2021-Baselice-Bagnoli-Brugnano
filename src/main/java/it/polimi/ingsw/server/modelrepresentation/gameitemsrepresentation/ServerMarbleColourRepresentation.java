@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Optional;
@@ -30,10 +31,10 @@ public class ServerMarbleColourRepresentation extends ServerRegisteredIdentifiab
      * by activating a special Leader card power
      */
     public ServerMarbleColourRepresentation(
-        String itemID,
-        Optional<ResourceType> resourceType,
-        int faithPoints,
-        boolean isSpecialMarble
+        @JsonProperty("itemID") String itemID,
+        @JsonProperty("resourceType") Optional<ResourceType> resourceType,
+        @JsonProperty("faithPoints") int faithPoints,
+        @JsonProperty("isSpecialMarble") boolean isSpecialMarble
     ) {
         super(itemID);
         this.resourceType = resourceType;

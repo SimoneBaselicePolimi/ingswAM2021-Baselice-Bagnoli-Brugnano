@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
@@ -11,9 +12,9 @@ public class ServerCoveredCardsDeckRepresentation<C extends ServerRepresentation
     public final int numberOfCardsInDeck;
 
     public ServerCoveredCardsDeckRepresentation(
-        String itemID,
-        C cardOnTop,
-        int numberOfCardsInDeck
+        @JsonProperty("itemID") String itemID,
+        @JsonProperty("cardOnTop") C cardOnTop,
+        @JsonProperty("numberOfCardsInDeck") int numberOfCardsInDeck
     ) {
         super(itemID);
         this.cardOnTop = cardOnTop;

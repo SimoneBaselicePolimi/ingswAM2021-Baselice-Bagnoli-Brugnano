@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -15,9 +17,9 @@ public class ClientWhiteMarbleSubstitutionRepresentation extends ClientRegistere
      * @param resourceTypeToSubstitute resource type to substitute to a White Marble
      */
     public ClientWhiteMarbleSubstitutionRepresentation(
-        String itemID,
-        GameItemsManager gameItemsManager,
-        ResourceType resourceTypeToSubstitute
+        @JsonProperty("itemID") String itemID,
+        @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
+        @JsonProperty("resourceTypeToSubstitute") ResourceType resourceTypeToSubstitute
     ) {
         super(itemID, gameItemsManager);
         this.resourceTypeToSubstitute = resourceTypeToSubstitute;

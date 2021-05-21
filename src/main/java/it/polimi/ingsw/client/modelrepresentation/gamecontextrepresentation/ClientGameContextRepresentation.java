@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
@@ -20,12 +21,12 @@ public class ClientGameContextRepresentation extends ClientRepresentation {
     private ClientPlayerRepresentation activePlayer;
 
     public ClientGameContextRepresentation(
-        ClientMarketRepresentation market,
-        ClientDevelopmentCardsTableRepresentation developmentCardsTable,
-        ClientFaithPathRepresentation faithPath,
-        List<ClientPlayerRepresentation> playersOrder,
-        Map<ClientPlayerRepresentation, ClientPlayerContextRepresentation> playerContexts,
-        ClientPlayerRepresentation activePlayer
+        @JsonProperty("market") ClientMarketRepresentation market,
+        @JsonProperty("developmentCardsTable") ClientDevelopmentCardsTableRepresentation developmentCardsTable,
+        @JsonProperty("faithPath") ClientFaithPathRepresentation faithPath,
+        @JsonProperty("playersOrder") List<ClientPlayerRepresentation> playersOrder,
+        @JsonProperty("playerContexts") Map<ClientPlayerRepresentation, ClientPlayerContextRepresentation> playerContexts,
+        @JsonProperty("activePlayer") ClientPlayerRepresentation activePlayer
     ) {
         this.market = market;
         this.developmentCardsTable = developmentCardsTable;
