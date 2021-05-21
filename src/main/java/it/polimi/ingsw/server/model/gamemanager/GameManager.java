@@ -80,7 +80,6 @@ public class GameManager {
 		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(players, gameRules, gameItemsManager, gameHistory);
 		this.gameContext = contextBuilder.buildGameContext();
 
-		changeState();
 	}
 
 	public void registerObservableProxy(ObservableProxy observableProxy) {
@@ -136,6 +135,10 @@ public class GameManager {
 	 */
 	public GameItemsManager getGameItemsManager() {
 		return gameItemsManager;
+	}
+
+	public void startGame() {
+		changeState();
 	}
 
 	@SuppressWarnings("unchecked")
