@@ -4,17 +4,27 @@ import it.polimi.ingsw.client.cli.clientstates.AskAndRegisterPlayerNameClientSta
 import it.polimi.ingsw.client.cli.clientstates.ClientState;
 import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
+import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientManager {
 
     protected ConsoleWriter consoleWriter;
     protected MessageSender serverSender;
 
-    ClientState currentState;
-    Player player;
+    protected ClientState currentState;
+    protected Player player;
+
+    protected Map<String, Object> deserializationContextMap = new ConcurrentHashMap<>();
+
+    protected GameItemsManager gameItemsManager;
+    protected ClientGameContextRepresentation gameContextRepresentation;
 
     public ClientManager(ConsoleWriter consoleWriter, MessageSender serverSender) {
         this.consoleWriter = consoleWriter;
@@ -61,4 +71,29 @@ public class ClientManager {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    public void addEntryToDeserializationContextMap(String key, Object value) {
+        deserializationContextMap.put(key, value);
+    }
+
+    public void removeEntryFromDeserializationContextMap(String key) {
+        deserializationContextMap.remove(key);
+    }
+
+    public GameItemsManager getGameItemsManager() {
+        return gameItemsManager;
+    }
+
+    public ClientGameContextRepresentation getGameContextRepresentation() {
+        return gameContextRepresentation;
+    }
+
+    public void setGameComponents(
+        GameItemsManager gameItemsManager,
+        ClientGameContextRepresentation gameContextRepresentation
+    ) {
+        this.gameItemsManager = gameItemsManager;
+        this.gameContextRepresentation = gameContextRepresentation;
+    }
+
 }

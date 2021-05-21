@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.cli.ClientManager;
-import it.polimi.ingsw.network.servermessage.GameInitialRepresentationServerMessage;
+import it.polimi.ingsw.network.servermessage.GameInitializationStartedServerMessage;
 import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
 import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
@@ -23,8 +23,8 @@ public class JoinNewLobbyClientState extends ClientState{
     public void handleServerMessage(ServerMessage serverMessage) {
         if(serverMessage instanceof NewPlayerEnteredNewGameLobbyServerMessage)
             printPlayerEnteredInLobbyMessage((NewPlayerEnteredNewGameLobbyServerMessage) serverMessage);
-        else if(serverMessage instanceof GameInitialRepresentationServerMessage)
-            nextState(new GameSetupClientState(clientManager, (GameInitialRepresentationServerMessage) serverMessage));
+        else if(serverMessage instanceof GameInitializationStartedServerMessage)
+            nextState(new GameInitializationClientState(clientManager));
         else
             throw new RuntimeException();   //TODO
     }

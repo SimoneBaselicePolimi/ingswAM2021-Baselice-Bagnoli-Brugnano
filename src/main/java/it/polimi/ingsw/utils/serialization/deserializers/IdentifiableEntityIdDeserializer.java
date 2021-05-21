@@ -27,7 +27,7 @@ public class IdentifiableEntityIdDeserializer<T extends IdentifiableItem> extend
 
     @Override
     public T deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        GameItemsManager manager = (GameItemsManager) deserializationContext.getAttribute("GameItemManager");
+        GameItemsManager manager = (GameItemsManager) deserializationContext.getAttribute("GameItemsManager");
         return manager.getItem(typeOfItemToDeserialize, jsonParser.getValueAsString());
     }
 

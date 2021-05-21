@@ -32,7 +32,7 @@ public class DevelopmentCardCostDiscount extends RegisteredIdentifiableItem impl
 	public DevelopmentCardCostDiscount(
 		String costDiscountID, GameItemsManager gameItemsManager, ResourceType resourceType, int amountToDiscount
 	) throws IllegalArgumentException {
-		super(costDiscountID, gameItemsManager);
+		super(costDiscountID, gameItemsManager, DevelopmentCardCostDiscount.class);
 		if(resourceType == null || amountToDiscount<0)
 			throw new IllegalArgumentException();
 		this.resourceType = resourceType;

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import it.polimi.ingsw.server.controller.Client;
 
-@JsonTypeName("CreateNewLobbyClientMessage")
 public class CreateNewLobbyClientMessage extends ClientMessage {
 
     public final int lobbySize;

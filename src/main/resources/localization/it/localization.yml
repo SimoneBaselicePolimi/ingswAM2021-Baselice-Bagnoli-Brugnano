@@ -8,6 +8,8 @@ client:
       notifyPlayerEnteredInLobby: Il giocatore %s è appena entrato nella lobby.
       notifyCurrentPlayerEnteredInLobby: Sei appena entrat* nella lobby.
       notifyLobbyPlayersList: "Giocatori attualmente nella lobby (%s/%s): \n%s"
+      notifyRepresentationDownloaded: [Info partita scaricate dal server]
+      notifyGameStarted: Il gioco è iniziato
 
 resources:
   coins:

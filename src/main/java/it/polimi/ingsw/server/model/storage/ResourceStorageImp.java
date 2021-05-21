@@ -33,7 +33,7 @@ public class ResourceStorageImp extends RegisteredIdentifiableItem implements Re
 	 * @param rules that the storage implements
 	 */
 	public ResourceStorageImp(String resourceStorageID, GameItemsManager gameItemsManager, List<ResourceStorageRule> rules){
-		super(resourceStorageID, gameItemsManager);
+		super(resourceStorageID, gameItemsManager, ResourceStorage.class);
 		this.rules = rules;
 	}
 

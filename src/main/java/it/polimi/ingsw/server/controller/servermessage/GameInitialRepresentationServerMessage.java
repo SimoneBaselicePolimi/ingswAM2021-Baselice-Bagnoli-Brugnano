@@ -1,11 +1,14 @@
-package it.polimi.ingsw.network.servermessage;
+package it.polimi.ingsw.server.controller.servermessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.ServerGameContextRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRepresentation;
 
 import java.util.Set;
 
+//NOTE: this message must be serialized/deserialized using different classes for client and server
+//SERVER VERSION
 public class GameInitialRepresentationServerMessage extends ServerMessage {
 
     public final Set<ServerLeaderCardRepresentation> leaderCardRepresentations;

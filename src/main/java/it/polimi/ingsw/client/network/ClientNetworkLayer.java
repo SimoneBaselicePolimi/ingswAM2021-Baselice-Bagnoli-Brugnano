@@ -61,12 +61,12 @@ public class ClientNetworkLayer extends Thread {
             messageWriter = new ClientMessageWriter(socketChannel);
             while (true) {
                 RawMessage newMessageFromServer = messageReader.readMessage();
-                logger.log(
-                    LogLevel.BORING_INFO,
-                    "New message from server [type: %s, bytes: %s]",
-                    newMessageFromServer.type,
-                    newMessageFromServer.valueLength
-                );
+//                logger.log(
+//                    LogLevel.BORING_INFO,
+//                    "New message from server [type: %s, bytes: %s]",
+//                    newMessageFromServer.type,
+//                    newMessageFromServer.valueLength
+//                );
                 messageFromServerProcessingPolicy.accept(newMessageFromServer);
             }
 

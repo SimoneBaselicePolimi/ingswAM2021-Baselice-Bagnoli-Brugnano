@@ -39,7 +39,7 @@ public class MapWithIdKeyDeserializer<K extends IdentifiableItem, V>  extends Js
     @Override
     public Map<K, V> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
-        GameItemsManager manager = (GameItemsManager) deserializationContext.getAttribute("GameItemManager");
+        GameItemsManager manager = (GameItemsManager) deserializationContext.getAttribute("GameItemsManager");
         Map<String, V> mapWithIdKey = jsonParser.readValueAs(Map.class);
         return mapWithIdKey.entrySet().stream().collect(Collectors.toMap(
             (e) -> manager.getItem(typeOfKey, e.getKey()),

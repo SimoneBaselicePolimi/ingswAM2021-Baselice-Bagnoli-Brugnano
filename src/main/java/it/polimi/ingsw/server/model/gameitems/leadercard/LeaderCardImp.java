@@ -46,7 +46,7 @@ public class LeaderCardImp extends RegisteredIdentifiableItem implements LeaderC
 		Set<WhiteMarbleSubstitution> whiteMarbleSubstitutions,
 		int victoryPoints
 	){
-	    super(leaderCardID, gameItemsManager);
+	    super(leaderCardID, gameItemsManager, LeaderCard.class);
 		this.requirements = requirements;
 		this.state = LeaderCardState.HIDDEN;
 		this.productions = productions;
