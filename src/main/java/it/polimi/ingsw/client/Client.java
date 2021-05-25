@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import it.polimi.ingsw.client.cli.Cli;
 import it.polimi.ingsw.client.cli.ClientManager;
+import it.polimi.ingsw.client.cli.NewClientManager;
 import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.logger.LogLevel;
@@ -76,7 +78,7 @@ public class Client {
             }
         };
 
-        ClientManager clientManager = new ClientManager(consoleWriter, messageSender);
+        NewClientManager clientManager = new NewClientManager(consoleWriter, messageSender);
 
         networkLayer.setMessageFromServerProcessingPolicy(messageFromServer -> {
             try {
@@ -92,6 +94,9 @@ public class Client {
         });
 
         networkLayer.start();
+
+
+        new Cli(clientManager).startCli();
 
         BufferedReader reader = new BufferedReader(
             new InputStreamReader(System.in));

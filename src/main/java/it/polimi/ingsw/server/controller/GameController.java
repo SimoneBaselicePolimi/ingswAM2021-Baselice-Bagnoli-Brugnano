@@ -63,17 +63,16 @@ public class GameController extends ClientHandler {
     @Override
     protected void handleNewMessage(ClientMessage message) {
         if(message instanceof GetInitialGameRepresentationClientMessage) {
-            //TODO
-//            Player player = playersManager.getPlayerAssociatedWithClient(message.client);
-//            sendMessage(
-//                new GameInitialRepresentationServerMessage(
-//                    gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class).stream()
-//                        .map(leaderCard -> leaderCard.getServerRepresentationForPlayer(player))
-//                        .collect(Collectors.toSet()),
-//                    gameManager.getGameContext().getServerRepresentationForPlayer(player)
-//                ),
-//                message.client
-//            );
+            Player player = playersManager.getPlayerAssociatedWithClient(message.client);
+            sendMessage(
+                new GameInitialRepresentationServerMessage(
+                    gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class).stream()
+                        .map(leaderCard -> leaderCard.getServerRepresentationForPlayer(player))
+                        .collect(Collectors.toSet()),
+                    gameManager.getGameContext().getServerRepresentationForPlayer(player)
+                ),
+                message.client
+            );
         } else if (message instanceof ReadyToStartGameClientMessage) {
             playersReadyToStart.add(playersManager.getPlayerAssociatedWithClient(message.client));
             if(players.equals(playersReadyToStart))

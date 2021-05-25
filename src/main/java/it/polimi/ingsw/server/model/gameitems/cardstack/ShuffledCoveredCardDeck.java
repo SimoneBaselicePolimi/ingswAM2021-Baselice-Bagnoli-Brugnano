@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation;
 
-public interface ShuffledCoveredCardDeck<RC extends ServerRepresentation, C extends Representable<RC>> extends IdentifiableItem, CardDeck<C>, Representable<ServerCoveredCardsDeckRepresentation<RC>> {
+public interface ShuffledCoveredCardDeck<RC extends ServerRepresentation & IdentifiableItem, C extends Representable<RC>> extends IdentifiableItem, CardDeck<C>, Representable<ServerCoveredCardsDeckRepresentation<RC>> {
     @Override
     ServerCoveredCardsDeckRepresentation<RC> getServerRepresentation();
 

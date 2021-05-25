@@ -1,4 +1,9 @@
 client:
+
+  errors:
+    unexpectedServerMessage: Unexpected error! [The server sent an unexpected message]
+    userInputNotExpected: Wait, operation ongoing...
+
   cli:
     setup:
       askPlayerName: "Player name: "

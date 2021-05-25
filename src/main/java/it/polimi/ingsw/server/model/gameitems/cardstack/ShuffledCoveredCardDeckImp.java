@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.gameitems.cardstack;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation;
 
@@ -16,7 +17,7 @@ import java.util.Random;
  * and to show all the elements stored in it.
  * @param <C> generic parameter used to indicate the type of Card which form the Deck (Leader Card, Development Card)
  */
-public class ShuffledCoveredCardDeckImp<RC extends ServerRepresentation, C extends Representable<RC>> extends CardDeckImp<C>
+public class ShuffledCoveredCardDeckImp<RC extends ServerRepresentation & IdentifiableItem, C extends Representable<RC>> extends CardDeckImp<C>
 	implements ShuffledCoveredCardDeck<RC, C> {
 
 	/**

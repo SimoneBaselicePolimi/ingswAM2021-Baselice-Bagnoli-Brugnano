@@ -2,6 +2,7 @@ package it.polimi.ingsw.utils.serialization.serializers;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 
@@ -21,5 +22,12 @@ public class IdentifiableEntityIdSerializer extends StdSerializer<IdentifiableIt
     ) throws IOException {
         jsonGenerator.writeString(identifiableItem.getItemId());
     }
+
+//    @Override
+//    public void serializeWithType(
+//        IdentifiableItem value, JsonGenerator gen, SerializerProvider serializers, TypeSerializer typeSer
+//    ) throws IOException {
+//       gen.writeString("teeest");
+//    }
 
 }
