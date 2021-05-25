@@ -13,6 +13,7 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Deprecated
 public class ClientManager {
 
     protected ConsoleWriter consoleWriter;

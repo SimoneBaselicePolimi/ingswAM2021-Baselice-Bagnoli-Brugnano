@@ -7,6 +7,8 @@ import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.utils.serialization.annotations.SerializeAsMapWithIdKey;
 
 import java.util.List;
 import java.util.Map;
@@ -17,15 +19,17 @@ public class ClientGameContextRepresentation extends ClientRepresentation {
     private final ClientDevelopmentCardsTableRepresentation developmentCardsTable;
     private final ClientFaithPathRepresentation faithPath;
     private final List<ClientPlayerRepresentation> playersOrder;
-    private final Map<ClientPlayerRepresentation, ClientPlayerContextRepresentation> playerContexts;
     private ClientPlayerRepresentation activePlayer;
+
+    @SerializeAsMapWithIdKey
+    private final Map<Player, ClientPlayerContextRepresentation> playerContexts;
 
     public ClientGameContextRepresentation(
         @JsonProperty("market") ClientMarketRepresentation market,
         @JsonProperty("developmentCardsTable") ClientDevelopmentCardsTableRepresentation developmentCardsTable,
         @JsonProperty("faithPath") ClientFaithPathRepresentation faithPath,
         @JsonProperty("playersOrder") List<ClientPlayerRepresentation> playersOrder,
-        @JsonProperty("playerContexts") Map<ClientPlayerRepresentation, ClientPlayerContextRepresentation> playerContexts,
+        @JsonProperty("playerContexts") Map<Player, ClientPlayerContextRepresentation> playerContexts,
         @JsonProperty("activePlayer") ClientPlayerRepresentation activePlayer
     ) {
         this.market = market;

@@ -162,7 +162,7 @@ public class GameContextImp implements GameContext {
 			playersOrder.stream().map(Player::getServerRepresentation).collect(Collectors.toList()),
 			playerContexts.entrySet().stream()
 				.collect((Collectors.toMap(
-					e -> e.getKey().getServerRepresentation(),
+					Map.Entry::getKey,
 					e -> e.getValue().getServerRepresentation()
 				))),
 			activePlayer.getServerRepresentation()

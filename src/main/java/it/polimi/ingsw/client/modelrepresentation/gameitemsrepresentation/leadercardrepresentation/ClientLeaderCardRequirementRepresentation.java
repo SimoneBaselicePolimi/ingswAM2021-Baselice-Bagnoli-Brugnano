@@ -3,8 +3,13 @@ package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leade
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCardDeckRepresentation;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "requirementType")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = ClientDevelopmentCardColourAndLevelRequirementRepresentation.class, name = "DevelopmentCardColourAndLevelRequirementRepresentation"),
+    @JsonSubTypes.Type(value = ClientDevelopmentCardColourRequirementRepresentation.class, name = "DevelopmentCardColourRequirementRepresentation"),
+    @JsonSubTypes.Type(value = ClientResourceNumberRequirementRepresentation.class, name = "ResourceNumberRequirementRepresentation"),
+})
 public abstract class ClientLeaderCardRequirementRepresentation extends ClientRepresentation {
 
 }
