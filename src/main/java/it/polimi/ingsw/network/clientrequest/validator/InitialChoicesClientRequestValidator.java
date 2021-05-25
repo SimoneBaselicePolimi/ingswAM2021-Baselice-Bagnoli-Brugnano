@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.configfile.GameInfoConfig;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
-import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;

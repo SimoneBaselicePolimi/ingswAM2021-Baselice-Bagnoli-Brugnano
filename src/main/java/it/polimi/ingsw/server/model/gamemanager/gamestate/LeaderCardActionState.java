@@ -2,15 +2,13 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.network.clientrequest.DiscardLeaderCardClientRequest;
-import it.polimi.ingsw.network.servermessage.GameUpdateServerMessage;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.ActivateLeaderCardsAction;
 import it.polimi.ingsw.server.model.gamehistory.DiscardLeaderCardsAction;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
-import java.rmi.ServerError;
 import java.util.Map;
 
 public abstract class LeaderCardActionState extends GameState {

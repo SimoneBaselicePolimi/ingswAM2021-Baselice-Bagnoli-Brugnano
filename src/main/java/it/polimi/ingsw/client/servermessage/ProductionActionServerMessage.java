@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.servermessage;
+package it.polimi.ingsw.client.servermessage;
 
 public class ProductionActionServerMessage extends ServerMessage {
 

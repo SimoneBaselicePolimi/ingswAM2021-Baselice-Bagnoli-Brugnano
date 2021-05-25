@@ -6,7 +6,7 @@ import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMe
 import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
 import it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage;
-import it.polimi.ingsw.network.servermessage.*;
+import it.polimi.ingsw.server.controller.servermessage.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 

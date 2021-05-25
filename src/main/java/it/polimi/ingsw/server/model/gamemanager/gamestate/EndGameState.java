@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
-import it.polimi.ingsw.network.servermessage.*;
+import it.polimi.ingsw.server.controller.servermessage.EndGameServerMessage;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
 import java.util.Map;

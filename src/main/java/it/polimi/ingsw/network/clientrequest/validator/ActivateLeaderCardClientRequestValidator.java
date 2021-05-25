@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.clientrequest.validator;
 
 import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
-import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;

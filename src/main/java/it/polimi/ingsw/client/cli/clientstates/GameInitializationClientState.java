@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.cli.clientstates;
 import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage;
 import it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
 public class GameInitializationClientState extends ClientState {

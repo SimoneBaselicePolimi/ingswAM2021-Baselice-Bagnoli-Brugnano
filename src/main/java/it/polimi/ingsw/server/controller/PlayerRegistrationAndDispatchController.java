@@ -5,8 +5,8 @@ import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.server.PlayerNameAlreadyInUseException;
 import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.RegisterPlayerNameClientMessage;
-import it.polimi.ingsw.network.servermessage.InvalidClientMessageServerMessage;
-import it.polimi.ingsw.network.servermessage.PlayerNameAlreadyExistsServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.InvalidClientMessageServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.server.GlobalPlayersManager;
 
 import java.util.HashSet;

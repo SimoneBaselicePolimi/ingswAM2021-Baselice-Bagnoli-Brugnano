@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.controller.servermessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.ServerGameContextRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRepresentation;

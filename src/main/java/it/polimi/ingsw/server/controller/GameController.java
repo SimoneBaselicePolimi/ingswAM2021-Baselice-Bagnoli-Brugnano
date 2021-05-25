@@ -1,9 +1,9 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.network.servermessage.GameInitializationStartedServerMessage;
-import it.polimi.ingsw.network.servermessage.InvalidClientMessageServerMessage;
-import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.GameInitializationStartedServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.InvalidClientMessageServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.GlobalPlayersManager;
 import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.GetInitialGameRepresentationClientMessage;

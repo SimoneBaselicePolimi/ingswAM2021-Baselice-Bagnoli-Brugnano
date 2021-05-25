@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.clientrequest;
 
 import it.polimi.ingsw.network.clientrequest.validator.ActivateLeaderCardClientRequestValidator;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;

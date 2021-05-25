@@ -2,10 +2,10 @@ package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
-import it.polimi.ingsw.network.servermessage.PlayerCanCreateNewLobbyServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.PlayerCanCreateNewLobbyServerMessage;
 import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.CreateNewLobbyClientMessage;
-import it.polimi.ingsw.network.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
 import it.polimi.ingsw.server.GlobalPlayersManager;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContextCreationError;

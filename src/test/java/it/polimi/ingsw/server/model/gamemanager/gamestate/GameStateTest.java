@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
-import it.polimi.ingsw.network.servermessage.GameUpdateServerMessage;
-import it.polimi.ingsw.network.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;

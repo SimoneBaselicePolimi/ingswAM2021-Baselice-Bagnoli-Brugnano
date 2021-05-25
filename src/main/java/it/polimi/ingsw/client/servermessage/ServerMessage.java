@@ -1,7 +1,8 @@
-package it.polimi.ingsw.network.servermessage;
+package it.polimi.ingsw.client.servermessage;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import it.polimi.ingsw.server.controller.servermessage.GameInitialRepresentationServerMessage;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "serverMessageType")
 @JsonSubTypes({
@@ -20,10 +21,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = PlayerNameAlreadyExistsServerMessage.class, name = "PlayerNameAlreadyExistsServerMessage"),
     @JsonSubTypes.Type(value = PostGameSetupServerMessage.class, name = "PostGameSetupServerMessage"),
     @JsonSubTypes.Type(value = ProductionActionServerMessage.class, name = "ProductionActionServerMessage"),
-
-    //MESSAGE SERIALIZED/DESERIALIZED USING DIFFERENT CLASSES FOR CLIENT AND SERVER:
-    @JsonSubTypes.Type(value = it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage.class, name = "GameInitialRepresentationServerMessage"),
-    @JsonSubTypes.Type(value = it.polimi.ingsw.server.controller.servermessage.GameInitialRepresentationServerMessage.class, name = "GameInitialRepresentationServerMessage")
+    @JsonSubTypes.Type(value = GameInitialRepresentationServerMessage.class, name = "GameInitialRepresentationServerMessage")
 })
 public class ServerMessage {
 

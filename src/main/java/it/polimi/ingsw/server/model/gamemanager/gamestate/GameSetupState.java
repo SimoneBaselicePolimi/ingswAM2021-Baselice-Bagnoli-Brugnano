@@ -2,10 +2,10 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
 import it.polimi.ingsw.configfile.GameInfoConfig;
 import it.polimi.ingsw.network.clientrequest.InitialChoicesClientRequest;
-import it.polimi.ingsw.network.servermessage.GameUpdateServerMessage;
-import it.polimi.ingsw.network.servermessage.InitialChoicesServerMessage;
-import it.polimi.ingsw.network.servermessage.PostGameSetupServerMessage;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.InitialChoicesServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.PostGameSetupServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
 import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;

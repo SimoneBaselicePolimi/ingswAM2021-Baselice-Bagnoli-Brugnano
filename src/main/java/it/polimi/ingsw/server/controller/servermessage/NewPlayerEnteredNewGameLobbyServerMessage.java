@@ -1,4 +1,4 @@
-package it.polimi.ingsw.network.servermessage;
+package it.polimi.ingsw.server.controller.servermessage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.Player;

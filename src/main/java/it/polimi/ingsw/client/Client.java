@@ -2,14 +2,13 @@ package it.polimi.ingsw.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.client.cli.Cli;
-import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.client.cli.NewClientManager;
 import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.network.NetworkProto;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.network.RawMessage;
 import it.polimi.ingsw.utils.serialization.SerializationHelper;
 

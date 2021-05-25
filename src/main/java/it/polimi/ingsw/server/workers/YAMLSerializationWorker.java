@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.workers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.network.NetworkProto;
-import it.polimi.ingsw.network.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.controller.Client;
 import it.polimi.ingsw.server.network.ServerRawMessage;
 import it.polimi.ingsw.utils.serialization.SerializationHelper;
