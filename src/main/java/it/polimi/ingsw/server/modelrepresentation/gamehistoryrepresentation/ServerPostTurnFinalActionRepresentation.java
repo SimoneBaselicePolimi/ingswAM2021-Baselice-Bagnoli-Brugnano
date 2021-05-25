@@ -1,14 +1,14 @@
 package it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
+import it.polimi.ingsw.server.model.Player;
 
 public class ServerPostTurnFinalActionRepresentation extends ServerGameActionRepresentation {
 
-    public final ServerPlayerRepresentation player;
+    public final Player player;
 
     public ServerPostTurnFinalActionRepresentation(
-        @JsonProperty("player") ServerPlayerRepresentation player
+        @JsonProperty("player") Player player
     ) {
         this.player = player;
     }

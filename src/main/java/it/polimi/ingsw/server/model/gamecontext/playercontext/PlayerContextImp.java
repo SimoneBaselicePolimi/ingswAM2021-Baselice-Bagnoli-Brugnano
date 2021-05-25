@@ -421,7 +421,7 @@ public class PlayerContextImp implements PlayerContext {
 	@Override
 	public ServerPlayerContextRepresentation getServerRepresentation() {
 		return new ServerPlayerContextRepresentation(
-			player.getServerRepresentation(),
+			player,
 			shelves.stream().map(Representable::getServerRepresentation).collect(Collectors.toSet()),
 			infiniteChest.getServerRepresentation(),
 			tempStorage.getServerRepresentation(),
@@ -439,7 +439,7 @@ public class PlayerContextImp implements PlayerContext {
 			return getServerRepresentation();
 		else {
 			return new ServerPlayerContextRepresentation(
-				player.getServerRepresentation(),
+				player,
 				shelves.stream().map(Representable::getServerRepresentation).collect(Collectors.toSet()),
 				infiniteChest.getServerRepresentation(),
 				tempStorage.getServerRepresentation(),

@@ -47,7 +47,7 @@ public class GameController extends ClientHandler {
         players.stream()
             .map(p -> playersManager.getClientForPlayer(p))
             .forEach(client ->
-                client.addEntryToDeserializationContextMap("GameItemsManager", gameManager.getGameItemsManager())
+                client.addEntryToDeserializationContextMap("gameItemsManager", gameManager.getGameItemsManager())
             );
         players.forEach(player -> sendMessage(
             new GameInitializationStartedServerMessage(),

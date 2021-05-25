@@ -107,6 +107,10 @@ protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<Ser
         deserializationContextMap.put(key, value);
     }
 
+    public Map<String, Object> getDeserializationContextMap() {
+        return deserializationContextMap;
+    }
+
     public void removeEntryFromDeserializationContextMap(String key) {
         deserializationContextMap.remove(key);
     }

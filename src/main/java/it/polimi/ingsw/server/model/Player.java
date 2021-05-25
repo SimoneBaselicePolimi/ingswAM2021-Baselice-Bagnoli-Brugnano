@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
-import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
 
-public class Player implements Representable<ServerPlayerRepresentation>, IdentifiableItem {
+public class Player implements IdentifiableItem {
 
 	public final String playerName;
 
@@ -34,18 +33,6 @@ public class Player implements Representable<ServerPlayerRepresentation>, Identi
 	@JsonIgnore
 	public String getName() {
 		return getItemId();
-	}
-
-	@Override
-	@JsonIgnore
-	public ServerPlayerRepresentation getServerRepresentation() {
-		return new ServerPlayerRepresentation(getName());
-	}
-
-	@Override
-	@JsonIgnore
-	public ServerPlayerRepresentation getServerRepresentationForPlayer(Player player) {
-		return getServerRepresentation();
 	}
 
 	@Override

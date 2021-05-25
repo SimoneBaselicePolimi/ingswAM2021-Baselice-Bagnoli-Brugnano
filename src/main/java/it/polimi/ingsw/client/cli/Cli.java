@@ -129,7 +129,7 @@ public class Cli {
             }).apply()
         ).thenCompose(lobbyMessage -> {
             clientManager.setGameItemsManager(new GameItemsManager());
-            clientManager.addEntryToDeserializationContextMap("GameItemsManager", clientManager.getGameItemsManager());
+            clientManager.addEntryToDeserializationContextMap("gameItemsManager", clientManager.getGameItemsManager());
             return handleLobbyMessagesUntilGameInitialization(lobbyMessage);
         }).thenCompose(gameInitializationStartedServerMessage ->
             clientManager.sendMessageAndGetAnswer(new GetInitialGameRepresentationClientMessage())

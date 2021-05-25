@@ -78,11 +78,11 @@ public class FaithPathSinglePlayerImp extends FaithPathImp implements FaithPathS
 			vaticanReportSections.stream().map(VaticanReportSection::getServerRepresentation).collect(Collectors.toList()),
 			victoryPointsByPosition,
 			faithPositions.entrySet().stream()
-				.collect(Collectors.toMap(e -> e.getKey().getServerRepresentation(), Map.Entry::getValue)),
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)),
 			popeFavorCards.entrySet().stream()
-				.collect(Collectors.toMap(e -> e.getKey().getServerRepresentation(), Map.Entry::getValue)),
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)),
 			victoryPoints.entrySet().stream()
-				.collect(Collectors.toMap(e -> e.getKey().getServerRepresentation(), Map.Entry::getValue)),
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)),
 			blackCrossFaithPosition
 		);
 	}

@@ -30,7 +30,7 @@ public class ObtainedMarblesMarketAction extends GameAction {
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
         return new ServerObtainedMarblesMarketActionRepresentation(
-            player.getServerRepresentation(),
+            player,
             Arrays.stream(marbleColours)
                 .map(MarbleColour::getServerRepresentation)
                 .toArray(ServerMarbleColourRepresentation[]::new)

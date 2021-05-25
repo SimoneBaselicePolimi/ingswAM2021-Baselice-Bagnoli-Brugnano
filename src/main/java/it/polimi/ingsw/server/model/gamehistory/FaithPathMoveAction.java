@@ -31,7 +31,7 @@ public class FaithPathMoveAction extends GameAction {
 
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerFaithPathMoveActionRepresentation(player.getServerRepresentation(), steps);
+        return new ServerFaithPathMoveActionRepresentation(player, steps);
     }
 
     @Override

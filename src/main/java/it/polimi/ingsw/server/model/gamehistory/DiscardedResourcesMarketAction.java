@@ -35,7 +35,7 @@ public class DiscardedResourcesMarketAction extends GameAction {
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
         return new ServerDiscardedResourcesMarketActionRepresentation(
-            player.getServerRepresentation(),
+            player,
             numberOfResourcesDiscarded
         );
     }

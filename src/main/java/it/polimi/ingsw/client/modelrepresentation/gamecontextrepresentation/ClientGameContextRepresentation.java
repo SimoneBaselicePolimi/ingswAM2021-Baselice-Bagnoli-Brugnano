@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation;
@@ -18,8 +17,8 @@ public class ClientGameContextRepresentation extends ClientRepresentation {
     private final ClientMarketRepresentation market;
     private final ClientDevelopmentCardsTableRepresentation developmentCardsTable;
     private final ClientFaithPathRepresentation faithPath;
-    private final List<ClientPlayerRepresentation> playersOrder;
-    private ClientPlayerRepresentation activePlayer;
+    private final List<Player> playersOrder;
+    private Player activePlayer;
 
     @SerializeAsMapWithIdKey
     private final Map<Player, ClientPlayerContextRepresentation> playerContexts;
@@ -28,9 +27,9 @@ public class ClientGameContextRepresentation extends ClientRepresentation {
         @JsonProperty("market") ClientMarketRepresentation market,
         @JsonProperty("developmentCardsTable") ClientDevelopmentCardsTableRepresentation developmentCardsTable,
         @JsonProperty("faithPath") ClientFaithPathRepresentation faithPath,
-        @JsonProperty("playersOrder") List<ClientPlayerRepresentation> playersOrder,
+        @JsonProperty("playersOrder") List<Player> playersOrder,
         @JsonProperty("playerContexts") Map<Player, ClientPlayerContextRepresentation> playerContexts,
-        @JsonProperty("activePlayer") ClientPlayerRepresentation activePlayer
+        @JsonProperty("activePlayer") Player activePlayer
     ) {
         this.market = market;
         this.developmentCardsTable = developmentCardsTable;
@@ -52,19 +51,19 @@ public class ClientGameContextRepresentation extends ClientRepresentation {
         return faithPath;
     }
 
-    public List<ClientPlayerRepresentation> getPlayersOrder() {
+    public List<Player> getPlayersOrder() {
         return playersOrder;
     }
 
-    public ClientPlayerContextRepresentation getPlayerContext(ClientPlayerRepresentation playerRepresentation) {
+    public ClientPlayerContextRepresentation getPlayerContext(Player playerRepresentation) {
         return playerContexts.get(playerRepresentation);
     }
 
-    public ClientPlayerRepresentation getActivePlayer() {
+    public Player getActivePlayer() {
         return activePlayer;
     }
 
-    public void setActivePlayer(ClientPlayerRepresentation activePlayer) {
+    public void setActivePlayer(Player activePlayer) {
         this.activePlayer = activePlayer;
     }
 }

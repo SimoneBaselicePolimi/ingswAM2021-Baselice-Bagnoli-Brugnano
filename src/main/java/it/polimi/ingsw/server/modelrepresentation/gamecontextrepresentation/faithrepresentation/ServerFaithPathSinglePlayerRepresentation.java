@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
-import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
 
 import java.util.List;
 import java.util.Map;
@@ -18,9 +18,9 @@ public class ServerFaithPathSinglePlayerRepresentation extends ServerFaithPathRe
         @JsonProperty("faithPathLength") int faithPathLength,
         @JsonProperty("vaticanReportSections") List<ServerVaticanReportSectionRepresentation> vaticanReportSections,
         @JsonProperty("victoryPointsByPosition") int[] victoryPointsByPosition,
-        @JsonProperty("faithPositions") Map<ServerPlayerRepresentation, Integer> faithPositions,
-        @JsonProperty("popeFavorCards") Map<ServerPlayerRepresentation, List<PopeFavorCardState>> popeFavorCards,
-        @JsonProperty("victoryPoints") Map<ServerPlayerRepresentation, Integer> victoryPoints,
+        @JsonProperty("faithPositions") Map<Player, Integer> faithPositions,
+        @JsonProperty("popeFavorCards") Map<Player, List<PopeFavorCardState>> popeFavorCards,
+        @JsonProperty("victoryPoints") Map<Player, Integer> victoryPoints,
         @JsonProperty("blackCrossFaithPosition") int blackCrossFaithPosition
     ) {
         super(faithPathLength, vaticanReportSections, victoryPointsByPosition, faithPositions, popeFavorCards, victoryPoints);

@@ -27,7 +27,7 @@ public class DiscardLeaderCardsAction extends GameAction {
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
         return new ServerDiscardLeaderCardsActionRepresentation(
-            player.getServerRepresentation(),
+            player,
             leaderCard.getServerRepresentation()
         );
     }

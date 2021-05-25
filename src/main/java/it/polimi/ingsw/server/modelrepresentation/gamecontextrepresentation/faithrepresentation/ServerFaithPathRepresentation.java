@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
-import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 
 import java.util.List;
@@ -28,25 +28,25 @@ public class ServerFaithPathRepresentation extends ServerRepresentation {
     /**
      * Position of each Player in the Faith Track
      */
-    public final Map<ServerPlayerRepresentation,Integer> faithPositions;
+    public final Map<Player, Integer> faithPositions;
 
     /**
      * State of the Pope's Favor cards of each Player
      */
-    public final Map<ServerPlayerRepresentation, List<PopeFavorCardState>> popeFavorCards;
+    public final Map<Player, List<PopeFavorCardState>> popeFavorCards;
 
     /**
      * Victory points scored by each Player
      */
-    public final Map<ServerPlayerRepresentation,Integer> victoryPoints;
+    public final Map<Player, Integer> victoryPoints;
 
     public ServerFaithPathRepresentation(
         @JsonProperty("faithPathLength") int faithPathLength,
         @JsonProperty("vaticanReportSections") List<ServerVaticanReportSectionRepresentation> vaticanReportSections,
         @JsonProperty("victoryPointsByPosition") int[] victoryPointsByPosition,
-        @JsonProperty("faithPositions") Map<ServerPlayerRepresentation, Integer> faithPositions,
-        @JsonProperty("popeFavorCards") Map<ServerPlayerRepresentation, List<PopeFavorCardState>> popeFavorCards,
-        @JsonProperty("victoryPoints") Map<ServerPlayerRepresentation, Integer> victoryPoints
+        @JsonProperty("faithPositions") Map<Player, Integer> faithPositions,
+        @JsonProperty("popeFavorCards") Map<Player, List<PopeFavorCardState>> popeFavorCards,
+        @JsonProperty("victoryPoints") Map<Player, Integer> victoryPoints
     ) {
         this.faithPathLength = faithPathLength;
         this.vaticanReportSections = vaticanReportSections;

@@ -27,7 +27,7 @@ public class ActivateLeaderCardsAction extends GameAction {
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
         return new ServerActivateLeaderCardsActionRepresentation(
-            player.getServerRepresentation(),
+            player,
             leaderCard.getServerRepresentation());
     }
 

@@ -60,7 +60,7 @@ import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.*;
 //    @JsonSubTypes.Type(value = ServerProductionRepresentation.class, name = "ProductionRepresentation"),
 //    @JsonSubTypes.Type(value = ServerWhiteMarbleSubstitutionRepresentation.class, name = "WhiteMarbleSubstitutionRepresentation"),
 //    @JsonSubTypes.Type(value = ServerResourceStorageRepresentation.class, name = "ResourceStorageRepresentation"),
-//    @JsonSubTypes.Type(value = ServerPlayerRepresentation.class, name = "PlayerRepresentation"),
+//    @JsonSubTypes.Type(value = Player.class, name = "PlayerRepresentation"),
 //    @JsonSubTypes.Type(value = ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation.class, name = "DifferentResourceTypesInDifferentStoragesRuleRepresentation"),
 //    @JsonSubTypes.Type(value = ServerMaxResourceNumberRuleRepresentation.class, name = "MaxResourceNumberRuleRepresentation"),
 //    @JsonSubTypes.Type(value = ServerSameResourceTypeRuleRepresentation.class, name = "SameResourceTypeRuleRepresentation"),

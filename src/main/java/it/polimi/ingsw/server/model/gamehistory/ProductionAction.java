@@ -30,8 +30,8 @@ public class ProductionAction extends GameAction {
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
         return new ServerProductionActionRepresentation(
-            player.getServerRepresentation(),
-            productions.stream().map(production -> production.getServerRepresentation()).collect(Collectors.toSet())
+            player,
+            productions.stream().map(Production::getServerRepresentation).collect(Collectors.toSet())
         );
     }
 

@@ -29,10 +29,7 @@ public class SetupChoiceAction extends GameAction{
 
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerSetupChoiceActionRepresentation(
-            player.getServerRepresentation(),
-            initialResources
-        );
+        return new ServerSetupChoiceActionRepresentation(player, initialResources);
     }
 
     @Override

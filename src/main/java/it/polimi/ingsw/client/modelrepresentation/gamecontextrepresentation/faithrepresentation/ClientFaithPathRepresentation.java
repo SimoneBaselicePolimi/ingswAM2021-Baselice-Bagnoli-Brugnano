@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.client.modelrepresentation.ClientPlayerRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
 
 import java.util.List;
@@ -28,25 +28,25 @@ public class ClientFaithPathRepresentation extends ClientRepresentation {
     /**
      * Position of each Player in the Faith Track
      */
-    protected Map<ClientPlayerRepresentation,Integer> faithPositions;
+    protected Map<Player,Integer> faithPositions;
 
     /**
      * State of the Pope's Favor cards of each Player
      */
-    protected Map<ClientPlayerRepresentation, List<PopeFavorCardState>> popeFavorCards;
+    protected Map<Player, List<PopeFavorCardState>> popeFavorCards;
 
     /**
      * Victory points scored by each Player
      */
-    protected Map<ClientPlayerRepresentation,Integer> victoryPoints;
+    protected Map<Player,Integer> victoryPoints;
 
     public ClientFaithPathRepresentation(
         @JsonProperty("faithPathLength") int faithPathLength,
         @JsonProperty("vaticanReportSections") List<ClientVaticanReportSectionRepresentation> vaticanReportSections,
         @JsonProperty("victoryPointsByPosition") int[] victoryPointsByPosition,
-        @JsonProperty("faithPositions") Map<ClientPlayerRepresentation, Integer> faithPositions,
-        @JsonProperty("popeFavorCards") Map<ClientPlayerRepresentation, List<PopeFavorCardState>> popeFavorCards,
-        @JsonProperty("victoryPoints") Map<ClientPlayerRepresentation, Integer> victoryPoints
+        @JsonProperty("faithPositions") Map<Player, Integer> faithPositions,
+        @JsonProperty("popeFavorCards") Map<Player, List<PopeFavorCardState>> popeFavorCards,
+        @JsonProperty("victoryPoints") Map<Player, Integer> victoryPoints
         ) {
         this.faithPathLength = faithPathLength;
         this.vaticanReportSections = vaticanReportSections;
@@ -68,27 +68,27 @@ public class ClientFaithPathRepresentation extends ClientRepresentation {
         return victoryPointsByPosition;
     }
 
-    public Map<ClientPlayerRepresentation, Integer> getFaithPositions() {
+    public Map<Player, Integer> getFaithPositions() {
         return faithPositions;
     }
 
-    public Map<ClientPlayerRepresentation, List<PopeFavorCardState>> getPopeFavorCards() {
+    public Map<Player, List<PopeFavorCardState>> getPopeFavorCards() {
         return popeFavorCards;
     }
 
-    public Map<ClientPlayerRepresentation, Integer> getVictoryPoints() {
+    public Map<Player, Integer> getVictoryPoints() {
         return victoryPoints;
     }
 
-    public void setFaithPositions(Map<ClientPlayerRepresentation, Integer> faithPositions) {
+    public void setFaithPositions(Map<Player, Integer> faithPositions) {
         this.faithPositions = faithPositions;
     }
 
-    public void setPopeFavorCards(Map<ClientPlayerRepresentation, List<PopeFavorCardState>> popeFavorCards) {
+    public void setPopeFavorCards(Map<Player, List<PopeFavorCardState>> popeFavorCards) {
         this.popeFavorCards = popeFavorCards;
     }
 
-    public void setVictoryPoints(Map<ClientPlayerRepresentation, Integer> victoryPoints) {
+    public void setVictoryPoints(Map<Player, Integer> victoryPoints) {
         this.victoryPoints = victoryPoints;
     }
 }

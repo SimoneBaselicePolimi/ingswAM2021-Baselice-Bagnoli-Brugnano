@@ -29,10 +29,7 @@ public class ObtainedResourcesMarketAction extends GameAction {
 
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerObtainedResourcesMarketActionRepresentation(
-            player.getServerRepresentation(),
-            resourcesObtained
-        );
+        return new ServerObtainedResourcesMarketActionRepresentation(player, resourcesObtained);
     }
 
     @Override

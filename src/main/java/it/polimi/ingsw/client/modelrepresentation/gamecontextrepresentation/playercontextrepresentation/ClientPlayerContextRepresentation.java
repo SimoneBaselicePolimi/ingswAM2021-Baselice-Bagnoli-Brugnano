@@ -6,12 +6,13 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.Client
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
+import it.polimi.ingsw.server.model.Player;
 
 import java.util.List;
 import java.util.Set;
 
 public class ClientPlayerContextRepresentation extends ClientRepresentation {
-    private final ClientPlayerRepresentation player;
+    private final Player player;
     private Set<ClientResourceStorageRepresentation> shelves;
     private final ClientResourceStorageRepresentation infiniteChest;
     private final ClientResourceStorageRepresentation tempStorage;
@@ -22,7 +23,7 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     private int numberOfLeaderCardsThePlayerOwns;
 
     public ClientPlayerContextRepresentation(
-        @JsonProperty("player") ClientPlayerRepresentation player,
+        @JsonProperty("player") Player player,
         @JsonProperty("shelves") Set<ClientResourceStorageRepresentation> shelves,
         @JsonProperty("infiniteChest") ClientResourceStorageRepresentation infiniteChest,
         @JsonProperty("tempStorage") ClientResourceStorageRepresentation tempStorage,
@@ -43,7 +44,7 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
     }
 
-    public ClientPlayerRepresentation getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 

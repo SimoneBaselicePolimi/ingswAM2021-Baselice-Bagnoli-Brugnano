@@ -66,7 +66,7 @@ import java.util.Set;
 //    @JsonSubTypes.Type(value = ClientProductionRepresentation.class, name = "ProductionRepresentation"),
 //    @JsonSubTypes.Type(value = ClientWhiteMarbleSubstitutionRepresentation.class, name = "WhiteMarbleSubstitutionRepresentation"),
 //    @JsonSubTypes.Type(value = ClientResourceStorageRepresentation.class, name = "ResourceStorageRepresentation"),
-//    @JsonSubTypes.Type(value = ClientPlayerRepresentation.class, name = "PlayerRepresentation"),
+//    @JsonSubTypes.Type(value = Player.class, name = "PlayerRepresentation"),
 //    @JsonSubTypes.Type(value = ClientDifferentResourceTypesInDifferentStoragesRuleRepresentation.class, name = "DifferentResourceTypesInDifferentStoragesRuleRepresentation"),
 //    @JsonSubTypes.Type(value = ClientMaxResourceNumberRuleRepresentation.class, name = "MaxResourceNumberRuleRepresentation"),
 //    @JsonSubTypes.Type(value = ClientSameResourceTypeRuleRepresentation.class, name = "SameResourceTypeRuleRepresentation"),

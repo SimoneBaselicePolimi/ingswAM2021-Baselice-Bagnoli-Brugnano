@@ -23,7 +23,7 @@ public class FaithPathLastPositionReachedAction extends GameAction {
 
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerFaithPathLastPositionReachedActionRepresentation(player.getServerRepresentation());
+        return new ServerFaithPathLastPositionReachedActionRepresentation(player);
     }
 
     @Override

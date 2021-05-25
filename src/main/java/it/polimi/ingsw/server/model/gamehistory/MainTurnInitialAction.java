@@ -22,7 +22,7 @@ public class MainTurnInitialAction extends GameAction{
 
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerMainTurnInitialActionRepresentation(player.getServerRepresentation());
+        return new ServerMainTurnInitialActionRepresentation(player);
     }
 
     @Override

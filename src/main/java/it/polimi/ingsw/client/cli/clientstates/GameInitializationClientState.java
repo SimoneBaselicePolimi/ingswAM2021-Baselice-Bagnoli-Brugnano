@@ -16,7 +16,7 @@ public class GameInitializationClientState extends ClientState {
     ) {
         super(clientManager);
         itemsManager = new GameItemsManager();
-        clientManager.addEntryToDeserializationContextMap("GameItemsManager", itemsManager);
+        clientManager.addEntryToDeserializationContextMap("gameItemsManager", itemsManager);
         serverSender.sendMessageToServer(new GetInitialGameRepresentationClientMessage());
         userCannotSendNewInput();
     }

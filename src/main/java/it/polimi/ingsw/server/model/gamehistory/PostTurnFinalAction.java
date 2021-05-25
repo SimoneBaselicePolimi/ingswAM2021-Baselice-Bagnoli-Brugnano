@@ -22,7 +22,7 @@ public class PostTurnFinalAction extends GameAction{
 
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerPostTurnFinalActionRepresentation(player.getServerRepresentation());
+        return new ServerPostTurnFinalActionRepresentation(player);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class SerializationHelper {
         return getObjectMapper().readerFor(objType)
             // we need to pass the gameItemManager to our custom deserializer so that it can retrieve the object
             // reference using the ID.
-            .withAttribute("GameItemsManager", gameItemsManager);
+            .withAttribute("gameItemsManager", gameItemsManager);
     }
 
     public static <T> T deserializeYamlFromString(

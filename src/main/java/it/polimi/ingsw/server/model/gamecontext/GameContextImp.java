@@ -159,13 +159,13 @@ public class GameContextImp implements GameContext {
 			market.getServerRepresentation(),
 			developmentCardsTable.getServerRepresentation(),
 			faithPath.getServerRepresentation(),
-			playersOrder.stream().map(Player::getServerRepresentation).collect(Collectors.toList()),
+			new ArrayList<Player>(playersOrder),
 			playerContexts.entrySet().stream()
 				.collect((Collectors.toMap(
 					Map.Entry::getKey,
 					e -> e.getValue().getServerRepresentation()
 				))),
-			activePlayer.getServerRepresentation()
+			activePlayer
 		);
 	}
 

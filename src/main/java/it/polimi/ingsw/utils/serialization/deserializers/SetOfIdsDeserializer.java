@@ -39,7 +39,7 @@ public class SetOfIdsDeserializer<I extends IdentifiableItem>  extends JsonDeser
     @Override
     public Set<I> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
-        GameItemsManager manager = (GameItemsManager) deserializationContext.getAttribute("GameItemsManager");
+        GameItemsManager manager = (GameItemsManager) deserializationContext.getAttribute("gameItemsManager");
         Set<String> setOfIds = jsonParser.readValueAs(Set.class);
         return setOfIds.stream().map(id -> manager.getItem(typeOfItem, id)).collect(Collectors.toSet());
     }

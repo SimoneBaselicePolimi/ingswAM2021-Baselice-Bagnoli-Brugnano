@@ -27,7 +27,7 @@ public class DevelopmentAction extends GameAction {
     @Override
     public ServerGameActionRepresentation getServerRepresentation() {
         return new ServerDevelopmentActionRepresentation(
-            player.getServerRepresentation(),
+            player,
             developmentCard.getServerRepresentation()
         );
     }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.server.modelrepresentation.ServerPlayerRepresentation;
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation;
@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class ServerPlayerContextRepresentation extends ServerRepresentation {
 
-    public final ServerPlayerRepresentation player;
+    public final Player player;
     public final Set<ServerResourceStorageRepresentation> shelves;
     public final ServerResourceStorageRepresentation infiniteChest;
     public final ServerResourceStorageRepresentation tempStorage;
@@ -24,7 +24,7 @@ public class ServerPlayerContextRepresentation extends ServerRepresentation {
     public final int numberOfLeaderCardsThePlayerOwns;
 
     public ServerPlayerContextRepresentation(
-        @JsonProperty("player") ServerPlayerRepresentation player,
+        @JsonProperty("player") Player player,
         @JsonProperty("shelves") Set<ServerResourceStorageRepresentation> shelves,
         @JsonProperty("infiniteChest") ServerResourceStorageRepresentation infiniteChest,
         @JsonProperty("tempStorage") ServerResourceStorageRepresentation tempStorage,
