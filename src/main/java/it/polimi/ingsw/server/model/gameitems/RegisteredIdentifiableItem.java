@@ -45,7 +45,7 @@ public abstract class RegisteredIdentifiableItem implements IdentifiableItem {
      * @return ID of this Item
      */
     @Override
-    public String getItemId() {
+    public String getItemID() {
         return itemID;
     }
 

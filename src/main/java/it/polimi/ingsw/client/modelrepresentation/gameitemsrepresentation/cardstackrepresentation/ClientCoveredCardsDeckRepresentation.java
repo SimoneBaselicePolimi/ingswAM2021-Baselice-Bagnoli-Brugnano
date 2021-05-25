@@ -2,23 +2,23 @@ package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cards
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
-public class ClientCoveredCardsDeckRepresentation<C extends ClientRepresentation> extends ClientRegisteredIdentifiableItemRepresentation {
+public class ClientCoveredCardsDeckRepresentation<C extends ClientRepresentation & IdentifiableItem> extends ClientRegisteredIdentifiableItemRepresentation {
 
     @SerializeIdOnly
-    public ClientDevelopmentCardRepresentation cardOnTop;  //Only the card on top of the deck should be visible to the player
+    public C cardOnTop;  //Only the card on top of the deck should be visible to the player
 
     public int numberOfCardsInDeck;
 
     public ClientCoveredCardsDeckRepresentation(
         @JsonProperty("itemID") String itemID,
         @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
-        @JsonProperty("cardOnTop") ClientDevelopmentCardRepresentation cardOnTop,
+        @JsonProperty("cardOnTop") C cardOnTop,
         @JsonProperty("numberOfCardsInDeck") int numberOfCardsInDeck
     ) {
         super(itemID, gameItemsManager);
@@ -26,7 +26,7 @@ public class ClientCoveredCardsDeckRepresentation<C extends ClientRepresentation
         this.numberOfCardsInDeck = numberOfCardsInDeck;
     }
 
-    public ClientDevelopmentCardRepresentation getCardOnTop() {
+    public C getCardOnTop() {
         return cardOnTop;
     }
 
@@ -34,7 +34,7 @@ public class ClientCoveredCardsDeckRepresentation<C extends ClientRepresentation
         return numberOfCardsInDeck;
     }
 
-    public void setCardOnTop(ClientDevelopmentCardRepresentation cardOnTop) {
+    public void setCardOnTop(C cardOnTop) {
         this.cardOnTop = cardOnTop;
     }
 

@@ -32,12 +32,12 @@ public class Player implements IdentifiableItem {
 
 	@JsonIgnore
 	public String getName() {
-		return getItemId();
+		return getItemID();
 	}
 
 	@Override
 	@JsonIgnore
-	public String getItemId() {
+	public String getItemID() {
 		return playerName;
 	}
 

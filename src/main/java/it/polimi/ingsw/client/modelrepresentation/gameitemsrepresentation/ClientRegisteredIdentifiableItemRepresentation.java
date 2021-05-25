@@ -18,7 +18,7 @@ public class ClientRegisteredIdentifiableItemRepresentation extends ClientRepres
     }
 
     @Override
-    public String getItemId() {
+    public String getItemID() {
         return itemID;
     }
 

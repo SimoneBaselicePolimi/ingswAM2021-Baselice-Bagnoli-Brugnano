@@ -30,8 +30,8 @@ public class LeaderCardObservableProxy extends ObservableProxy<LeaderCard> imple
     }
 
     @Override
-    public String getItemId() {
-        return imp.getItemId();
+    public String getItemID() {
+        return imp.getItemID();
     }
 
     @Override

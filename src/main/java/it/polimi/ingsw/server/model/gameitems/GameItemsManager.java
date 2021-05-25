@@ -59,7 +59,7 @@ public class GameItemsManager {
     @SuppressWarnings("unchecked")
     public void addItem(IdentifiableItem item) {
         items.computeIfAbsent( (Class<IdentifiableItem>) item.getClass(), (k) -> new HashMap<>())
-            .put(item.getItemId(), item);
+            .put(item.getItemID(), item);
     }
 
     /**
@@ -71,7 +71,7 @@ public class GameItemsManager {
     @SuppressWarnings("unchecked")
     public <T extends IdentifiableItem> void addItem(T item, Class<T> itemType) {
         items.computeIfAbsent( (Class<IdentifiableItem>) itemType, (k) -> new HashMap<>())
-            .put(item.getItemId(), item);
+            .put(item.getItemID(), item);
     }
 
 }

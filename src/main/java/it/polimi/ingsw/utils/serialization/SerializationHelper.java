@@ -8,16 +8,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import it.polimi.ingsw.server.controller.Client;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class SerializationHelper {
 
@@ -29,6 +27,7 @@ public class SerializationHelper {
             yamlFactory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
             yamlObjectMapper = new ObjectMapper(yamlFactory);
             yamlObjectMapper.configOverride(List.class).setSetterInfo(JsonSetter.Value.forValueNulls(Nulls.AS_EMPTY));
+            yamlObjectMapper.registerModule(new Jdk8Module());
         }
         return yamlObjectMapper;
     }

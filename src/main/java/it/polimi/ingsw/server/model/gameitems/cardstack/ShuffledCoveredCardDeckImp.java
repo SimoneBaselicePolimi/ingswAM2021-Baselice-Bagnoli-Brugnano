@@ -76,7 +76,7 @@ public class ShuffledCoveredCardDeckImp<RC extends ServerRepresentation & Identi
 	@Override
 	public ServerCoveredCardsDeckRepresentation<RC> getServerRepresentation() {
 		return new ServerCoveredCardsDeckRepresentation<RC>(
-			getItemId(),
+			getItemID(),
 			this.cardDeck.peek().getServerRepresentation(),
 			this.peekAll().size()
 		);

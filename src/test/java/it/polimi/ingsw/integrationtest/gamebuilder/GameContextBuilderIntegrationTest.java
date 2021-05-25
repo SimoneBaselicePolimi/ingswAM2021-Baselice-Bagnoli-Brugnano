@@ -213,14 +213,14 @@ public class GameContextBuilderIntegrationTest {
         );
         Map<MarbleColour,Integer> marbles = marbleCaptor.getValue();
         Map<String, Integer> marbleIDToNumber = marbles.entrySet().stream()
-            .collect(Collectors.toMap(e -> e.getKey().getItemId(), Map.Entry::getValue));
+            .collect(Collectors.toMap(e -> e.getKey().getItemID(), Map.Entry::getValue));
         assertEquals(MARBLES_IN_MARKET, marbleIDToNumber);
 
         Market market = gameContext.getMarket();
 
         assertEquals(MARKET_N_ROWS, market.getNumOfRows());
         assertEquals(MARKET_N_COLUMNS, market.getNumOfColumns());
-        assertTrue(MARBLES_IN_MARKET.containsKey(market.getOutMarble().getItemId()));
+        assertTrue(MARBLES_IN_MARKET.containsKey(market.getOutMarble().getItemID()));
     }
 
     @Test
@@ -270,7 +270,7 @@ public class GameContextBuilderIntegrationTest {
     @Test
     void testDevelopmentCard() {
         Set<String> cardsId = gameItemsManager.getAllItemsOfType(DevelopmentCard.class).stream()
-            .map(RegisteredIdentifiableItem::getItemId)
+            .map(RegisteredIdentifiableItem::getItemID)
             .collect(Collectors.toSet());
 
         assertEquals(developmentCardsIds, cardsId);
@@ -294,7 +294,7 @@ public class GameContextBuilderIntegrationTest {
 
         assertTrue(developmentCardsIds.containsAll(
             developmentCardsTable.getAvailableCards().stream()
-            .map(RegisteredIdentifiableItem::getItemId)
+            .map(RegisteredIdentifiableItem::getItemID)
             .collect(Collectors.toSet())
         ));
 
@@ -304,7 +304,7 @@ public class GameContextBuilderIntegrationTest {
     @Test
     void testLeaderCard() {
         Set<String> cardsId = gameItemsManager.getAllItemsOfType(LeaderCardImp.class).stream()
-            .map(RegisteredIdentifiableItem::getItemId)
+            .map(RegisteredIdentifiableItem::getItemID)
             .collect(Collectors.toSet());
 
         assertEquals(leaderCardsIds, cardsId);

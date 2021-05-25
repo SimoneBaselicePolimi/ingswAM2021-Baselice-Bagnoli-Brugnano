@@ -154,7 +154,7 @@ public class LeaderCardImp extends RegisteredIdentifiableItem implements LeaderC
 	@Override
 	public ServerLeaderCardRepresentation getServerRepresentation() {
 		return new ServerLeaderCardRepresentation(
-			getItemId(),
+			getItemID(),
 			getState(),
 			requirements.stream().map(Representable::getServerRepresentation).collect(Collectors.toSet()),
 			productions.stream().map(Production::getServerRepresentation).collect(Collectors.toSet()),

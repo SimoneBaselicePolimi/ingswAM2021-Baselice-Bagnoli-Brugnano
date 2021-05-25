@@ -58,7 +58,7 @@ public class DevelopmentCardCostDiscount extends RegisteredIdentifiableItem impl
 	@Override
 	public ServerDevelopmentCardCostDiscountRepresentation getServerRepresentation() {
 		return new ServerDevelopmentCardCostDiscountRepresentation(
-			getItemId(),
+			getItemID(),
 			resourceType,
 			amountToDiscount
 		);

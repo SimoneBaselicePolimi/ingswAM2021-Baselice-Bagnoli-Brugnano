@@ -91,7 +91,7 @@ class ProductionTest {
         assertEquals(0, p1.getProductionStarResourceCost());
         assertEquals(1, p1.getProductionStarResourceReward());
         assertEquals(2, p1.getProductionFaithReward());
-        assertEquals("ID_1", p1.getItemId());
+        assertEquals("ID_1", p1.getItemID());
 
         assertEquals(p1.getProductionResourceReward(), p2.getProductionResourceCost());
         assertEquals(p1.getProductionStarResourceCost(), p2.getProductionFaithReward());

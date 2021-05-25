@@ -15,7 +15,7 @@ public class ServerRegisteredIdentifiableItemRepresentation extends ServerRepres
     }
 
     @Override
-    public String getItemId() {
+    public String getItemID() {
         return itemID;
     }
 

@@ -14,7 +14,7 @@ public class SetOfIdsSerializer<I extends IdentifiableItem> extends JsonSerializ
     @Override
     public void serialize(Set<I> setOfItems, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
         throws IOException {
-        Set<String> setOfIds = setOfItems.stream().map(IdentifiableItem::getItemId).collect(Collectors.toSet());
+        Set<String> setOfIds = setOfItems.stream().map(IdentifiableItem::getItemID).collect(Collectors.toSet());
         jsonGenerator.writeObject(setOfIds);
     }
 

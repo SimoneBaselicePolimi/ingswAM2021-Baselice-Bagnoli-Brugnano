@@ -142,7 +142,7 @@ public class LeaderCardTest implements IdentifiableItemTest<LeaderCard> {
         LeaderCard leaderCard1 = new LeaderCardImp(
             "1", gameItemsManager, new HashSet<>(), null, null, null,null, 3
         );
-        assertEquals(id, leaderCard1.getItemId());
+        assertEquals(id, leaderCard1.getItemID());
     }
 
     @Override

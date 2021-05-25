@@ -35,7 +35,7 @@ public class ProductionActionClientRequestValidator extends ClientRequestValidat
                 return createInvalidRequestServerMessage(
                     "The player cannot activate the production with ID: %s." +
                         "\nThe productions the player can activate are %s",
-                    production.getItemId(),
+                    production.getItemID(),
                     productionsThePlayerCanActivate
                 );
 

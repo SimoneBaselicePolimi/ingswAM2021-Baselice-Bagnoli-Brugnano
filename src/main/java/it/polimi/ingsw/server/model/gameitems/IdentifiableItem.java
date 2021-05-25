@@ -5,5 +5,5 @@ package it.polimi.ingsw.server.model.gameitems;
  * This is particularly useful when we need to refer to an item in a data structure that will be serialized.
  */
 public interface IdentifiableItem {
-    String getItemId();
+    String getItemID();
 }

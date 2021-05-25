@@ -63,7 +63,7 @@ public class PlayerOwnedDevelopmentCardDeckImp extends CardDeckImp<DevelopmentCa
 
 	@Override
 	public ServerPlayerOwnedDevelopmentCardDeckRepresentation getServerRepresentation() {
-		return new ServerPlayerOwnedDevelopmentCardDeckRepresentation(getItemId());
+		return new ServerPlayerOwnedDevelopmentCardDeckRepresentation(getItemID());
 	}
 
 	@Override

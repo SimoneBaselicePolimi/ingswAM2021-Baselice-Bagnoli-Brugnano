@@ -39,7 +39,7 @@ class MarbleColourTest implements IdentifiableItemTest<MarbleColour> {
     void MarbleColourConstructorTest() {
         assertEquals(Optional.of(ResourceType.SERVANTS), red1.getResourceType());
         assertEquals(Optional.of(ResourceType.SHIELDS), red3.getResourceType());
-        assertEquals("RedMarble", red1.getItemId());
+        assertEquals("RedMarble", red1.getItemID());
         assertEquals(2, red3.getFaithPoints());
         assertTrue(red3.isSpecialMarble());
     }

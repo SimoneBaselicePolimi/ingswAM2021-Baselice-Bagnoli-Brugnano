@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model.gameitems;
 
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Representable;
-import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerDevelopmentCardCostDiscountRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerWhiteMarbleSubstitutionRepresentation;
 
 /**
@@ -45,7 +44,7 @@ public class WhiteMarbleSubstitution extends RegisteredIdentifiableItem implemen
 
 	@Override
 	public ServerWhiteMarbleSubstitutionRepresentation getServerRepresentation() {
-		return new ServerWhiteMarbleSubstitutionRepresentation(getItemId(), resourceTypeToSubstitute);
+		return new ServerWhiteMarbleSubstitutionRepresentation(getItemID(), resourceTypeToSubstitute);
 	}
 
 	@Override

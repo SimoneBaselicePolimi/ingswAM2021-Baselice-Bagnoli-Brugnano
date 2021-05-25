@@ -13,6 +13,7 @@ import it.polimi.ingsw.server.controller.servermessage.GameInitialRepresentation
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContextCreationError;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
@@ -66,6 +67,9 @@ public class GameController extends ClientHandler {
             Player player = playersManager.getPlayerAssociatedWithClient(message.client);
             sendMessage(
                 new GameInitialRepresentationServerMessage(
+                    gameManager.getGameItemsManager().getAllItemsOfType(DevelopmentCard.class).stream()
+                        .map(developmentCard -> developmentCard.getServerRepresentationForPlayer(player))
+                        .collect(Collectors.toSet()),
                     gameManager.getGameItemsManager().getAllItemsOfType(LeaderCard.class).stream()
                         .map(leaderCard -> leaderCard.getServerRepresentationForPlayer(player))
                         .collect(Collectors.toSet()),
@@ -82,7 +86,7 @@ public class GameController extends ClientHandler {
             if(!request.request.player.equals(playersManager.getPlayerAssociatedWithClient(message.client)))
                 sendMessage(
                     new InvalidClientMessageServerMessage(
-                        "Illegal request. A cliet can not send a message impersonating another player!"
+                        "Illegal request. A client can not send a message impersonating another player!"
                     ), message.client
                 );
             else {

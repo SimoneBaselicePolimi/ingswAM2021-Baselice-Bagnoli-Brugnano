@@ -58,8 +58,8 @@ class ResourceStorageTest {
         ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
             .createResourceStorage("secondStorage");
 
-        assertEquals(storage1.getItemId(), "firstStorage");
-        assertEquals(storage2.getItemId(), "secondStorage");
+        assertEquals(storage1.getItemID(), "firstStorage");
+        assertEquals(storage2.getItemID(), "secondStorage");
     }
 
     /**

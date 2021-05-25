@@ -119,7 +119,7 @@ public class ResourceStorageImp extends RegisteredIdentifiableItem implements Re
 	@Override
 	public ServerResourceStorageRepresentation getServerRepresentation() {
 		return new ServerResourceStorageRepresentation(
-			getItemId(),
+			getItemID(),
 			rules.stream().map(r -> r.getServerRepresentation()).collect(Collectors.toList()),
 			resources
 		);

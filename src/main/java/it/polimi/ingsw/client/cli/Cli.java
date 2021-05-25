@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
 import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage;
+import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
 import it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage;
 import it.polimi.ingsw.network.servermessage.*;
@@ -88,7 +89,7 @@ public class Cli {
     public CompletableFuture<GameInitializationStartedServerMessage> handleLobbyMessagesUntilGameInitialization(
         NewPlayerEnteredNewGameLobbyServerMessage message
     ) {
-        clientManager.getGameItemsManager().addItem(message.newPlayer);
+        message.playersInLobby.forEach(player -> clientManager.getGameItemsManager().addItem(player));
         if(!clientManager.getPlayer().equals(message.newPlayer))
             clientManager.tellUserLocalized(
                 "client.cli.setup.notifyPlayerEnteredInLobby",
@@ -139,14 +140,23 @@ public class Cli {
                 representationServerMessage -> {
                     clientManager.setGameContextRepresentation(representationServerMessage.gameContextRepresentation);
                     clientManager.tellUserLocalized("client.cli.setup.notifyRepresentationDownloaded");
-                    return CompletableFuture.completedFuture(null);
+                    return clientManager.sendMessageAndGetAnswer(new ReadyToStartGameClientMessage());
                 }
             ).elseCompute(message -> {
                 clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");
                 return CompletableFuture.failedFuture(new UnexpectedServerMessage());
             }).apply()
+        ).thenCompose(serverMessage -> ServerMessageUtils.ifMessageTypeCompute(
+            serverMessage,
+            InitialChoicesServerMessage.class,
+            initialChoicesServerMessage -> {
+                clientManager.tellUser("Il game setup può iniziareee yeeeey");
+                return CompletableFuture.completedFuture(null);
+            }).elseCompute(message -> {
+                clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");
+                return CompletableFuture.failedFuture(new UnexpectedServerMessage());
+            }).apply()
         );
-
     }
 
 }

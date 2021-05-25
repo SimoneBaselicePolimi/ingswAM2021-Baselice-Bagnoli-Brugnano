@@ -17,8 +17,8 @@ public interface IdentifiableItemTest<I extends IdentifiableItem> {
         String id2 = "testID2";
         IdentifiableItem item1 = initializeItemWithId(id1);
         IdentifiableItem item2 = initializeItemWithId(id2);
-        assertEquals(id1, item1.getItemId());
-        assertEquals(id2, item2.getItemId());
+        assertEquals(id1, item1.getItemID());
+        assertEquals(id2, item2.getItemID());
     }
 
 }

@@ -25,8 +25,8 @@ public class ResourceStorageObservableProxy extends ObservableProxy<ResourceStor
     }
 
     @Override
-    public String getItemId() {
-        return imp.getItemId();
+    public String getItemID() {
+        return imp.getItemID();
     }
 
     @Override

@@ -33,8 +33,8 @@ public class PlayerOwnedDevelopmentCardDeckObservableProxy extends ObservablePro
     }
 
     @Override
-    public String getItemId() {
-        return imp.getItemId();
+    public String getItemID() {
+        return imp.getItemID();
     }
 
     @Override

@@ -23,7 +23,7 @@ public class TestUtils {
         List<T> list = new ArrayList<>();
         for (int i = 0; i < numberOfObject; i++){
             T mock = mock(objectType);
-            lenient().when(mock.getItemId()).thenReturn("mock_ID_" + i);
+            lenient().when(mock.getItemID()).thenReturn("mock_ID_" + i);
             list.add(mock);
         }
         return list;
@@ -41,7 +41,7 @@ public class TestUtils {
         Set<T> set = new HashSet<>();
         for (int i = 0; i < numberOfObject; i++){
             T mock = mock(objectType);
-            lenient().when(mock.getItemId()).thenReturn("mock_ID_" + i);
+            lenient().when(mock.getItemID()).thenReturn("mock_ID_" + i);
             set.add(mock);
         }
         return set;

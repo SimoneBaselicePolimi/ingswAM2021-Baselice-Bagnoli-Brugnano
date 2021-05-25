@@ -57,9 +57,9 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
                 return createInvalidRequestServerMessage(
                     "Invalid request: the player cannot add initial resources to the storage with ID: %s. " +
                         "Valid storages for initial resources are: %s",
-                    storage.getItemId(),
+                    storage.getItemID(),
                     validResourceStorages.stream()
-                        .map(ResourceStorage::getItemId)
+                        .map(ResourceStorage::getItemID)
                         .collect(Collectors.toList())
                 );
 
@@ -68,7 +68,7 @@ public class InitialChoicesClientRequestValidator extends ClientRequestValidator
                 return createInvalidRequestServerMessage(
                     "Invalid request: it is not possible to add the specified resources to the storage with " +
                         "ID: %s. Resource storage rules violation.",
-                    storage.getItemId()
+                    storage.getItemID()
                 );
 
         }

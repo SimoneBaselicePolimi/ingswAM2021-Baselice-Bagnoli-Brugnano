@@ -152,7 +152,7 @@ class IdentifiableItemMock implements IdentifiableItem {
     }
 
     @Override
-    public String getItemId() {
+    public String getItemID() {
         return id;
     }
 

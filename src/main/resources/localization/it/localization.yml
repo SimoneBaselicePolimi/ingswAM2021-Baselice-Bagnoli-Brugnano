@@ -1,20 +1,20 @@
 client:
 
   errors:
-    unexpectedServerMessage: Errore inaspettato! [Il server ha inviato un messaggio inaspettato]
-    userInputNotExpected: Aspetta, operazione in corso...
+    unexpectedServerMessage: "Errore inaspettato! [Il server ha inviato un messaggio inaspettato]"
+    userInputNotExpected: "Aspetta, operazione in corso..."
 
   cli:
     setup:
       askPlayerName: "Nome del giocatore: "
-      notifyPlayerNameAlreadyInUse: Il nome %s è già utilizzato da un altro giocatore.
+      notifyPlayerNameAlreadyInUse: "Il nome %s è già utilizzato da un altro giocatore."
       askNumberOfPlayers: "Numero di giocatori: "
-      notifyPlayerNumberOfPlayersIsInvalid: Il numero di giocatori non è valido per la creazione della lobby.
-      notifyPlayerEnteredInLobby: Il giocatore %s è appena entrato nella lobby.
-      notifyCurrentPlayerEnteredInLobby: Sei appena entrat* nella lobby.
+      notifyPlayerNumberOfPlayersIsInvalid: "Il numero di giocatori non è valido per la creazione della lobby."
+      notifyPlayerEnteredInLobby: "Il giocatore %s è appena entrato nella lobby."
+      notifyCurrentPlayerEnteredInLobby: "Sei appena entrat* nella lobby."
       notifyLobbyPlayersList: "Giocatori attualmente nella lobby (%s/%s): \n%s"
-      notifyRepresentationDownloaded: [Info partita scaricate dal server]
-      notifyGameStarted: Il gioco è iniziato
+      notifyRepresentationDownloaded: "[Info partita scaricate dal server]"
+      notifyGameStarted: "Il gioco è iniziato"
 
 resources:
   coins:
