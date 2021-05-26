@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.controller.Client;
 
 public class ReadyToStartGameClientMessage extends ClientMessage {
 
-    public ReadyToStartGameClientMessage(@JacksonInject Client client) {
+    public ReadyToStartGameClientMessage(@JacksonInject("client") Client client) {
         super(client);
     }
 
