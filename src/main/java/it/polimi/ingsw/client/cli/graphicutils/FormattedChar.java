@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.cli.graphicutils;
 
+import java.util.Objects;
+
 public class FormattedChar {
 
     public final char character;
@@ -20,6 +22,19 @@ public class FormattedChar {
         this.defaultFG = defaultFG;
         this.isBold = isBold;
         this.isUnderlined = isUnderlined;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FormattedChar that = (FormattedChar) o;
+        return character == that.character && isBold == that.isBold && isUnderlined == that.isUnderlined && defaultBG == that.defaultBG && defaultFG == that.defaultFG;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(character, defaultBG, defaultFG, isBold, isUnderlined);
     }
 
 }
