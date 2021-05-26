@@ -6,6 +6,7 @@ public class CliColour {
 
     public static final CliColour BLACK = new CliColour(0,0,0);
     public static final CliColour WHITE = new CliColour(255,255,255);
+    public static final CliColour RED = new CliColour(255,0,0);
     public static final CliColour GREEN = new CliColour(0,255,0);
 
     public final int r, g, b;

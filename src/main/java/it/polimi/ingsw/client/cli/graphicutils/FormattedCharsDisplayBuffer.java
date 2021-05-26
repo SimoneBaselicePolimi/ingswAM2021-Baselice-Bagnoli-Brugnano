@@ -108,9 +108,11 @@ public class FormattedCharsDisplayBuffer {
         List<FormattedCharBlock> row = rows.get(rowIndex);
         FormattedCharBlockInBlockList blockForStartIndex = getBlockForIndex(row, colStartIndex, 0, row.size());
         FormattedCharBlockInBlockList blockForEndIndex = getBlockForIndex(row, colEndIndex, 0, row.size());
-        for(int i = blockForStartIndex.blockPositionInBlockList; i < blockForEndIndex.blockPositionInBlockList; i++)
-            row.remove(blockForStartIndex.blockPositionInBlockList+1);
         int blockAfterBlockForEndIndexPosition = blockForEndIndex.blockPositionInBlockList + 1;
+        for(int i = blockForStartIndex.blockPositionInBlockList; i < blockForEndIndex.blockPositionInBlockList; i++) {
+            row.remove(blockForStartIndex.blockPositionInBlockList + 1);
+            blockAfterBlockForEndIndexPosition--;
+        }
         if(!blockForStartIndex.block.formattedChar.equals(newFormattedChar)) {
             if (blockForStartIndex.block.blockStartIndex == colStartIndex)
                 row.set(
@@ -122,7 +124,7 @@ public class FormattedCharsDisplayBuffer {
                     blockForStartIndex.blockPositionInBlockList + 1,
                     new FormattedCharBlock(colStartIndex, newFormattedChar)
                 );
-                blockAfterBlockForEndIndexPosition = blockForEndIndex.blockPositionInBlockList + 2;
+                blockAfterBlockForEndIndexPosition++;
             }
         }
         if(colEndIndex != columnSize-1) {
