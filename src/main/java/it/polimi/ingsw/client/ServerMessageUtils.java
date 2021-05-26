@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.client.servermessage.ServerMessage;
 
 import java.util.HashSet;
 import java.util.Optional;

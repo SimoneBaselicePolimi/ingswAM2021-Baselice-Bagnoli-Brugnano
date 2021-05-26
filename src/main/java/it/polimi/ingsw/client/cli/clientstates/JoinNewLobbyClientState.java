@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.cli.ClientManager;
-import it.polimi.ingsw.server.controller.servermessage.GameInitializationStartedServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.client.servermessage.GameInitializationStartedServerMessage;
+import it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
+import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 
 public class JoinNewLobbyClientState extends ClientState{

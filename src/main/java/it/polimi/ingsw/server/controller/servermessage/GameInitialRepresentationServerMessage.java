@@ -7,14 +7,11 @@ import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leader
 
 import java.util.Set;
 
-//NOTE: this message must be serialized/deserialized using different classes for client and server
-//SERVER VERSION
 public class GameInitialRepresentationServerMessage extends ServerMessage {
 
     public final Set<ServerDevelopmentCardRepresentation> developmentCardRepresentations;
     public final Set<ServerLeaderCardRepresentation> leaderCardRepresentations;
     public final ServerGameContextRepresentation gameContextRepresentation;
-
 
     public GameInitialRepresentationServerMessage(
         @JsonProperty("developmentCardRepresentations") Set<ServerDevelopmentCardRepresentation> developmentCardRepresentations,

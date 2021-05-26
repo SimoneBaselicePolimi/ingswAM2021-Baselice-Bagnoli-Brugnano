@@ -2,10 +2,10 @@ package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
-import it.polimi.ingsw.server.controller.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.PlayerCanCreateNewLobbyServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.PlayerNameAlreadyExistsServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
+import it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage;
+import it.polimi.ingsw.client.servermessage.PlayerNameAlreadyExistsServerMessage;
+import it.polimi.ingsw.client.servermessage.ServerMessage;
 
 public class AskAndRegisterPlayerNameClientState extends ClientState {
 

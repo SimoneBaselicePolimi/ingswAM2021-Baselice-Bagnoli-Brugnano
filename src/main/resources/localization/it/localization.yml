@@ -15,6 +15,7 @@ client:
       notifyLobbyPlayersList: "Giocatori attualmente nella lobby (%s/%s): \n%s"
       notifyRepresentationDownloaded: "[Info partita scaricate dal server]"
       notifyGameStarted: "Il gioco è iniziato"
+      notifySetupIsStarting: "Inizia il setup del gioco!"
 
 resources:
   coins:

@@ -5,8 +5,7 @@ import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
 import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage;
 import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
-import it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.*;
+import it.polimi.ingsw.client.servermessage.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
@@ -150,7 +149,7 @@ public class Cli {
             serverMessage,
             InitialChoicesServerMessage.class,
             initialChoicesServerMessage -> {
-                clientManager.tellUser("Il game setup può iniziareee yeeeey");
+                clientManager.tellUserLocalized("client.cli.setup.notifySetupIsStarting");
                 return CompletableFuture.completedFuture(null);
             }).elseCompute(message -> {
                 clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");

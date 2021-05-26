@@ -2,9 +2,9 @@ package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
-import it.polimi.ingsw.server.controller.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.PlayerCanCreateNewLobbyServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
+import it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage;
+import it.polimi.ingsw.client.servermessage.ServerMessage;
 
 public class CreateNewLobbyClientState extends ClientState{
 

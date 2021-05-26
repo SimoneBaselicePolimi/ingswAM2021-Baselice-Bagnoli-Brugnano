@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.cli.clientstates;
 
 import it.polimi.ingsw.client.cli.ClientManager;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.client.servermessage.ServerMessage;
 
 public class GameSetupClientState extends ClientState {
 

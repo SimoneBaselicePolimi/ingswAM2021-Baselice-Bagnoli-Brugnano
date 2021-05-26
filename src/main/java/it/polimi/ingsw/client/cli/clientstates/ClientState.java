@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.localization.Localization;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.client.servermessage.ServerMessage;
 
 public abstract class ClientState {
 
