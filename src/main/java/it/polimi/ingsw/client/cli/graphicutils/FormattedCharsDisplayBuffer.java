@@ -5,7 +5,7 @@ import it.polimi.ingsw.client.ConsoleWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ColouredCharsDisplayBuffer {
+public class FormattedCharsDisplayBuffer {
 
     protected static class FormattedCharBlock {
         public final int blockStartIndex;
@@ -36,17 +36,11 @@ public class ColouredCharsDisplayBuffer {
 
     protected List<List<FormattedCharBlock>> rows;
 
-    public ColouredCharsDisplayBuffer(int rowSize, int columnSize) {
+    public FormattedCharsDisplayBuffer(int rowSize, int columnSize) {
         this.rowSize = rowSize;
         this.columnSize = columnSize;
 
-        defaultFormattedChar = new FormattedChar(
-            ' ',
-            ConsoleBGColour.BLACK,
-            ConsoleFGColour.WHITE,
-            false,
-            false
-        );
+        defaultFormattedChar = new FormattedChar(' ');
 
         rows = new ArrayList<>(rowSize);
         for (int i = 0; i < rowSize; i++) {
@@ -151,8 +145,58 @@ public class ColouredCharsDisplayBuffer {
         }
     }
 
-    public void print(ConsoleWriter consoleWriter, int rowStartIndex, int rowEndIndex, int colStartIndex, int colEndIndex) {
+    /**
+     * @param consoleWriter
+     * @param rowStartIndex (included)
+     * @param colStartIndex (included)
+     * @param rowEndIndex (included)
+     * @param colEndIndex (included)
+     */
+    public void print(
+        ConsoleWriter consoleWriter,
+        int rowStartIndex,
+        int colStartIndex,
+        int rowEndIndex,
+        int colEndIndex
+    ) {
+        checkIndexesBounds(rowStartIndex, colStartIndex);
+        checkIndexesBounds(rowEndIndex, colEndIndex);
+        StringBuilder out = new StringBuilder(rowSize * columnSize * 2);
+        for (int rowIndex = rowStartIndex; rowIndex <= rowEndIndex; rowIndex++) {
+            List<FormattedCharBlock> row = rows.get(rowIndex);
+            FormattedCharBlockInBlockList oldBlock = null;
+            FormattedCharBlockInBlockList currBlock = getBlockForIndex(row, colStartIndex, 0, row.size());
+            int colIndex = colStartIndex;
+            while (colIndex <= colEndIndex) {
+                boolean hasNextBlock = currBlock.blockPositionInBlockList < row.size() - 1;
+                if(hasNextBlock) {
+                    FormattedCharBlockInBlockList nextBlock = new FormattedCharBlockInBlockList(
+                        row.get(currBlock.blockPositionInBlockList+1),
+                        currBlock.blockPositionInBlockList+1
+                    );
+                    if(oldBlock==null)
+                        out.append(currBlock.block.formattedChar.getCompleteFormattingCmd());
+                    else
+                        out.append(currBlock.block.formattedChar.getDeltaFormattingCmd(oldBlock.block.formattedChar));
+                    for(; colIndex < nextBlock.block.blockStartIndex && colIndex <= colEndIndex; colIndex++)
+                        out.append(currBlock.block.formattedChar.character);
+                    oldBlock = currBlock;
+                    currBlock = nextBlock;
+                } else {
+                    if(oldBlock==null)
+                        out.append(currBlock.block.formattedChar.getCompleteFormattingCmd());
+                    else
+                        out.append(currBlock.block.formattedChar.getDeltaFormattingCmd(oldBlock.block.formattedChar));
+                    for(; colIndex <= colEndIndex; colIndex++)
+                        out.append(currBlock.block.formattedChar.character);
+                    oldBlock = currBlock;
+                }
 
+            }
+            out.append(FormattedChar.getResetFormatCmd());
+            out.append("\n");
+        }
+        consoleWriter.writeNewLineToConsole(out.toString());
     }
 
     /**

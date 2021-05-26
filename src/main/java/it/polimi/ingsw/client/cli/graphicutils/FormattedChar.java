@@ -1,32 +1,75 @@
 package it.polimi.ingsw.client.cli.graphicutils;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FormattedChar {
 
-    public static final String ESCAPE_CMD_PREFIX = "\u001B";
-    public static final String REGULAR_TEXT_CODE = "0";
+    public static final String ESCAPE_CMD_RESET_FORMAT = "\u001B[0m";
+
+    public static final String ESCAPE_CMD_PREFIX = "\u001B[";
+    public static final String ESCAPE_CMD_SUFFIX = "m";
+
+    public static final String RGB_FG_COLOR_CODE_PREFIX = "38;2";
+    public static final String RGB_BG_COLOR_CODE_PREFIX = "48;2";
+
     public static final String BOLD_CODE = "1";
+    public static final String DISABLE_BOLD_CODE = "21";
+
+    public static final String ITALIC_CODE = "3";
+    public static final String DISABLE_ITALIC_CODE = "23";
+
     public static final String UNDERLINE_CODE = "4";
+    public static final String DISABLE_UNDERLINE_CODE = "24";
 
     public final char character;
-    public final ConsoleBGColour defaultBG;
-    public final ConsoleFGColour defaultFG;
+    public final CliColour foregroundColour;
+    public final CliColour backgroundColour;
     public final boolean isBold;
+    public final boolean isItalic;
     public final boolean isUnderlined;
+
+    public static String getResetFormatCmd() {
+        return ESCAPE_CMD_RESET_FORMAT;
+    }
+
+    public FormattedChar(
+        char character
+    ) {
+        this(character, CliColour.WHITE, CliColour.BLACK);
+    }
 
     public FormattedChar(
         char character,
-        ConsoleBGColour defaultBG,
-        ConsoleFGColour defaultFG,
+        CliColour foregroundColour,
+        CliColour backgroundColour
+    ) {
+        this(character, foregroundColour, backgroundColour, false, false);
+    }
+
+    public FormattedChar(
+        char character,
+        CliColour foregroundColour,
+        CliColour backgroundColour,
         boolean isBold,
         boolean isUnderlined
     ) {
+        this(character, foregroundColour, backgroundColour, isBold, isUnderlined, false);
+    }
+
+    public FormattedChar(
+        char character,
+        CliColour foregroundColour,
+        CliColour backgroundColour,
+        boolean isBold,
+        boolean isItalic,
+        boolean isUnderlined
+    ) {
         this.character = character;
-        this.defaultBG = defaultBG;
-        this.defaultFG = defaultFG;
+        this.foregroundColour = foregroundColour;
+        this.backgroundColour = backgroundColour;
         this.isBold = isBold;
+        this.isItalic = isItalic;
         this.isUnderlined = isUnderlined;
     }
 
@@ -36,35 +79,49 @@ public class FormattedChar {
      * @return the ANSI command
      */
     public String getCompleteFormattingCmd() {
-        return "";
+        List<Object> codes = new ArrayList<>(16);
+        codes.add(isBold ? BOLD_CODE : DISABLE_BOLD_CODE);
+        codes.add(isItalic ? ITALIC_CODE : DISABLE_ITALIC_CODE);
+        codes.add(isUnderlined ? UNDERLINE_CODE : DISABLE_UNDERLINE_CODE);
+        codes.addAll(List.of(RGB_FG_COLOR_CODE_PREFIX, foregroundColour.r, foregroundColour.g, foregroundColour.b));
+        codes.addAll(List.of(RGB_BG_COLOR_CODE_PREFIX, backgroundColour.r, backgroundColour.g, backgroundColour.b));
+        return getCommandWithCodes(codes);
     }
 
     /**
      * Returns a command (ANSI escape code) that includes only the formatting options that are different from the
-     * ones in oldFormattedChar.
+     * ones in lastFormattedChar.
      * Note: Does not include char
-     * @param oldFormattedChar oldFormattedChar
+     * @param lastFormattedChar lastFormattedChar
      * @return the ANSI command
      */
-    public String getDeltaFormattingCmd(FormattedChar oldFormattedChar) {
-        return "";
+    public String getDeltaFormattingCmd(FormattedChar lastFormattedChar) {
+        if(this.equals(lastFormattedChar))
+            return "";
+        List<Object> codes = new ArrayList<>(16);
+        if(isBold != lastFormattedChar.isBold)
+            codes.add(isBold ? BOLD_CODE : DISABLE_BOLD_CODE);
+        if(isItalic != lastFormattedChar.isItalic)
+            codes.add(isItalic ? ITALIC_CODE : DISABLE_ITALIC_CODE);
+        if(isUnderlined != lastFormattedChar.isUnderlined)
+            codes.add(isUnderlined ? UNDERLINE_CODE : DISABLE_UNDERLINE_CODE);
+        if(!foregroundColour.equals(lastFormattedChar.foregroundColour))
+            codes.addAll(List.of(RGB_FG_COLOR_CODE_PREFIX, foregroundColour.r, foregroundColour.g, foregroundColour.b));
+        if(!backgroundColour.equals(lastFormattedChar.backgroundColour))
+            codes.addAll(List.of(RGB_BG_COLOR_CODE_PREFIX, backgroundColour.r, backgroundColour.g, backgroundColour.b));
+        return getCommandWithCodes(codes);
     }
 
-    protected String printCommandWithCodes(List<String> codes) {
-        return "";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FormattedChar that = (FormattedChar) o;
-        return character == that.character && isBold == that.isBold && isUnderlined == that.isUnderlined && defaultBG == that.defaultBG && defaultFG == that.defaultFG;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(character, defaultBG, defaultFG, isBold, isUnderlined);
+    protected String getCommandWithCodes(List<Object> codes) {
+        StringBuilder command = new StringBuilder();
+        if(codes.size() > 0) {
+            command.append(ESCAPE_CMD_PREFIX);
+            command.append(codes.get(0));
+            for(Object code : codes.subList(1, codes.size()))
+                command.append(";").append(code);
+            command.append(ESCAPE_CMD_SUFFIX);
+        }
+        return command.toString();
     }
 
 }
