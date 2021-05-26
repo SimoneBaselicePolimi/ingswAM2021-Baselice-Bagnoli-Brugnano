@@ -121,4 +121,64 @@ class ColouredCharsDisplayBufferTest {
 
     }
 
+    @Test
+    void testDrawLine() {
+
+        ColouredCharsDisplayBuffer charsDisplayBuffer = new ColouredCharsDisplayBuffer(10, 20);
+
+        charsDisplayBuffer.setDefaultFormattedChar(defaultChar);
+
+        charsDisplayBuffer.drawHorizontalLine(0,2, 10, char1);
+        assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(0,1));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(0,2));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(0,3));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(0,9));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(0,10));
+        assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(0,11));
+
+        charsDisplayBuffer.drawHorizontalLine(0,5, 10, char2);
+        assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(0,1));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(0,2));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(0,4));
+        assertEquals(char2, charsDisplayBuffer.getFormattedCharAtPosition(0,5));
+        assertEquals(char2, charsDisplayBuffer.getFormattedCharAtPosition(0,9));
+        assertEquals(char2, charsDisplayBuffer.getFormattedCharAtPosition(0,10));
+        assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(0,11));
+
+    }
+
+    @Test
+    void testVerticalLine() {
+
+        ColouredCharsDisplayBuffer charsDisplayBuffer = new ColouredCharsDisplayBuffer(20, 20);
+
+        charsDisplayBuffer.setDefaultFormattedChar(defaultChar);
+
+        charsDisplayBuffer.drawVerticalLine(2, 10, 11, char1);
+        assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(1, 11));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(2, 11));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(3, 11));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(9, 11));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(10, 11));
+        assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(11, 11));
+        for (int r = 2; r <= 10; r++) {
+            assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(r, 10));
+            assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(r, 12));
+        }
+
+        charsDisplayBuffer.drawVerticalLine(5, 10, 11, char2);
+        assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(1, 11));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(2, 11));
+        assertEquals(char1, charsDisplayBuffer.getFormattedCharAtPosition(4, 11));
+        assertEquals(char2, charsDisplayBuffer.getFormattedCharAtPosition(5, 11));
+        assertEquals(char2, charsDisplayBuffer.getFormattedCharAtPosition(9, 11));
+        assertEquals(char2, charsDisplayBuffer.getFormattedCharAtPosition(10, 11));
+        assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(11, 11));
+        for (int r = 2; r <= 10; r++) {
+            assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(r, 10));
+            assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(r, 12));
+        }
+
+    }
+
 }

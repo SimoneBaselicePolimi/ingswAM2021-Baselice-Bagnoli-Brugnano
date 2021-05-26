@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.cli.graphicutils;
 
+import it.polimi.ingsw.client.ConsoleWriter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,17 +69,29 @@ public class ColouredCharsDisplayBuffer {
             List<FormattedCharBlock> row = rows.get(rowIndex);
             if (colIndex != columnSize - 1) {
                 FormattedCharBlockInBlockList blockForIndex = getBlockForIndex(row, colIndex, 0, row.size());
-                if (blockForIndex.block.blockStartIndex == colIndex)
+
+                int blockAfterNewOnePosition;
+                if (blockForIndex.block.blockStartIndex == colIndex) {
                     row.set(blockForIndex.blockPositionInBlockList, new FormattedCharBlock(colIndex, newFormattedChar));
+                    blockAfterNewOnePosition = blockForIndex.blockPositionInBlockList + 1;
+                } else {
+                    row.add(
+                        blockForIndex.blockPositionInBlockList + 1,
+                        new FormattedCharBlock(colIndex, newFormattedChar)
+                    );
+                    blockAfterNewOnePosition = blockForIndex.blockPositionInBlockList + 2;
+                }
+
                 if (
-                    blockForIndex.blockPositionInBlockList == row.size()-1 ||
-                    row.get(blockForIndex.blockPositionInBlockList+1).blockStartIndex != colIndex + 1
+                    blockAfterNewOnePosition == row.size() ||
+                    row.get(blockAfterNewOnePosition).blockStartIndex != colIndex + 1
                 ) {
                     row.add(
-                        blockForIndex.blockPositionInBlockList,
+                        blockAfterNewOnePosition,
                         new FormattedCharBlock(colIndex+1, blockForIndex.block.formattedChar)
                     );
                 }
+
             } else {
                 if (row.get(row.size()-1).blockStartIndex == columnSize-1)
                     row.set(row.size()-1, new FormattedCharBlock(columnSize-1, newFormattedChar));
@@ -102,34 +116,43 @@ public class ColouredCharsDisplayBuffer {
         FormattedCharBlockInBlockList blockForEndIndex = getBlockForIndex(row, colEndIndex, 0, row.size());
         for(int i = blockForStartIndex.blockPositionInBlockList; i < blockForEndIndex.blockPositionInBlockList; i++)
             row.remove(blockForStartIndex.blockPositionInBlockList+1);
+        int blockAfterBlockForEndIndexPosition = blockForEndIndex.blockPositionInBlockList + 1;
         if(!blockForStartIndex.block.formattedChar.equals(newFormattedChar)) {
             if (blockForStartIndex.block.blockStartIndex == colStartIndex)
                 row.set(
                     blockForStartIndex.blockPositionInBlockList,
                     new FormattedCharBlock(colStartIndex, newFormattedChar)
                 );
-            else
+            else {
                 row.add(
-                    blockForStartIndex.blockPositionInBlockList,
+                    blockForStartIndex.blockPositionInBlockList + 1,
                     new FormattedCharBlock(colStartIndex, newFormattedChar)
                 );
+                blockAfterBlockForEndIndexPosition = blockForEndIndex.blockPositionInBlockList + 2;
+            }
         }
         if(colEndIndex != columnSize-1) {
             if(
-                blockForEndIndex.blockPositionInBlockList == row.size()-1 ||
-                row.get(blockForEndIndex.blockPositionInBlockList+1).blockStartIndex != colEndIndex + 1
+                blockAfterBlockForEndIndexPosition == row.size() ||
+                row.get(blockAfterBlockForEndIndexPosition).blockStartIndex != colEndIndex + 1
             ) {
                 row.add(
-                    blockForEndIndex.blockPositionInBlockList,
-                    new FormattedCharBlock(colStartIndex+1, blockForEndIndex.block.formattedChar)
+                    blockAfterBlockForEndIndexPosition,
+                    new FormattedCharBlock(colEndIndex+1, blockForEndIndex.block.formattedChar)
                 );
             }
         }
 
     }
 
-    public FormattedChar getDefaultFormattedChar() {
-        return defaultFormattedChar;
+    public void drawVerticalLine(int rowStartIndex, int rowEndIndex, int colIndex, FormattedChar newFormattedChar) {
+        for (int r = rowStartIndex; r <= rowEndIndex; r++) {
+            setFormattedCharAtPosition(r, colIndex, newFormattedChar);
+        }
+    }
+
+    public void print(ConsoleWriter consoleWriter, int rowStartIndex, int rowEndIndex, int colStartIndex, int colEndIndex) {
+
     }
 
     /**
