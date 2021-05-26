@@ -16,7 +16,9 @@ public class ClientMessage {
     @JsonIgnore
     public final Client client;
 
-    public ClientMessage(@JacksonInject("client") Client client) {
+    public ClientMessage(
+        @JacksonInject("client") Client client
+    ) {
         this.client = client;
     }
 

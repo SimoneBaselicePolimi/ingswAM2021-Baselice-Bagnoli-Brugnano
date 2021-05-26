@@ -5,7 +5,9 @@ import it.polimi.ingsw.server.controller.Client;
 
 public class GetInitialGameRepresentationClientMessage extends ClientMessage {
 
-    public GetInitialGameRepresentationClientMessage(@JacksonInject("client") Client client) {
+    public GetInitialGameRepresentationClientMessage(
+        @JacksonInject("client") Client client
+    ) {
         super(client);
     }
 
