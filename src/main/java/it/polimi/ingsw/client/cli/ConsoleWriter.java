@@ -1,6 +1,4 @@
-package it.polimi.ingsw.client;
-
-import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
+package it.polimi.ingsw.client.cli;
 
 public interface ConsoleWriter {
 

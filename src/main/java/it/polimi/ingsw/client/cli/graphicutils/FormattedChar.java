@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.cli.graphicutils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FormattedChar {
 
@@ -71,6 +72,39 @@ public class FormattedChar {
         this.isBold = isBold;
         this.isItalic = isItalic;
         this.isUnderlined = isUnderlined;
+    }
+
+    public static List<FormattedChar> convertStringToFormattedCharList(
+        String text
+    ) {
+        return text.chars()
+            .mapToObj(c -> new FormattedChar((char)c))
+            .collect(Collectors.toList());
+    }
+
+
+    public static List<FormattedChar> convertStringToFormattedCharList(
+        String text,
+        CliColour foregroundColour,
+        CliColour backgroundColour
+    ) {
+        return text.chars()
+            .mapToObj(c -> new FormattedChar((char)c, foregroundColour, backgroundColour))
+            .collect(Collectors.toList());
+    }
+
+    public static List<FormattedChar> convertStringToFormattedCharList(
+        String text,
+        CliColour foregroundColour,
+        CliColour backgroundColour,
+        boolean isBold,
+        boolean isItalic,
+        boolean isUnderlined
+    ) {
+        return text.chars()
+            .mapToObj(c ->
+                new FormattedChar((char)c, foregroundColour, backgroundColour, isBold, isItalic, isUnderlined)
+            ).collect(Collectors.toList());
     }
 
     /**

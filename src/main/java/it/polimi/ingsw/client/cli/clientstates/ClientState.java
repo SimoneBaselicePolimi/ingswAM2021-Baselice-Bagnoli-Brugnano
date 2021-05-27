@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.cli.clientstates;
 
-import it.polimi.ingsw.client.ConsoleWriter;
+import it.polimi.ingsw.client.cli.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.client.cli.ClientManager;
 import it.polimi.ingsw.localization.Localization;

@@ -14,9 +14,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Cli {
 
-    NewClientManager clientManager;
+    NewCliClientManager clientManager;
 
-    public Cli(NewClientManager clientManager) {
+    public Cli(NewCliClientManager clientManager) {
         this.clientManager = clientManager;
     }
 

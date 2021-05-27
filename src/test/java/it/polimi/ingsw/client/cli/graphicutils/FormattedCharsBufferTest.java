@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-class FormattedCharsDisplayBufferTest {
+class FormattedCharsBufferTest {
 
     FormattedChar defaultChar = new FormattedChar(
         ' ',
@@ -34,49 +34,49 @@ class FormattedCharsDisplayBufferTest {
     @Test
     void testGetBlockForIndex() {
         //0 3 66 77
-        List<FormattedCharsDisplayBuffer.FormattedCharBlock> row = List.of(
-            new FormattedCharsDisplayBuffer.FormattedCharBlock(0, mock(FormattedChar.class)),
-            new FormattedCharsDisplayBuffer.FormattedCharBlock(3, mock(FormattedChar.class)),
-            new FormattedCharsDisplayBuffer.FormattedCharBlock(66, mock(FormattedChar.class)),
-            new FormattedCharsDisplayBuffer.FormattedCharBlock(77, mock(FormattedChar.class))
+        List<FormattedCharsBuffer.FormattedCharBlock> row = List.of(
+            new FormattedCharsBuffer.FormattedCharBlock(0, mock(FormattedChar.class)),
+            new FormattedCharsBuffer.FormattedCharBlock(3, mock(FormattedChar.class)),
+            new FormattedCharsBuffer.FormattedCharBlock(66, mock(FormattedChar.class)),
+            new FormattedCharsBuffer.FormattedCharBlock(77, mock(FormattedChar.class))
         );
         assertEquals(
             3,
-            FormattedCharsDisplayBuffer.getBlockForIndex(row, 4, 0, row.size()).block.blockStartIndex
+            FormattedCharsBuffer.getBlockForIndex(row, 4, 0, row.size()).block.blockStartIndex
         );
         assertEquals(
             3,
-            FormattedCharsDisplayBuffer.getBlockForIndex(row, 3, 0, row.size()).block.blockStartIndex
+            FormattedCharsBuffer.getBlockForIndex(row, 3, 0, row.size()).block.blockStartIndex
         );
         assertEquals(
             0,
-            FormattedCharsDisplayBuffer.getBlockForIndex(row, 2, 0, row.size()).block.blockStartIndex
+            FormattedCharsBuffer.getBlockForIndex(row, 2, 0, row.size()).block.blockStartIndex
         );
         assertEquals(
             77,
-            FormattedCharsDisplayBuffer.getBlockForIndex(row, 80, 0, row.size()).block.blockStartIndex
+            FormattedCharsBuffer.getBlockForIndex(row, 80, 0, row.size()).block.blockStartIndex
         );
         assertEquals(
             66,
-            FormattedCharsDisplayBuffer.getBlockForIndex(row, 76, 0, row.size()).block.blockStartIndex
+            FormattedCharsBuffer.getBlockForIndex(row, 76, 0, row.size()).block.blockStartIndex
         );
         assertEquals(
             66,
-            FormattedCharsDisplayBuffer.getBlockForIndex(row, 66, 0, row.size()).block.blockStartIndex
+            FormattedCharsBuffer.getBlockForIndex(row, 66, 0, row.size()).block.blockStartIndex
         );
         assertEquals(
             0,
-            FormattedCharsDisplayBuffer.getBlockForIndex(row, 0, 0, row.size()).block.blockStartIndex
+            FormattedCharsBuffer.getBlockForIndex(row, 0, 0, row.size()).block.blockStartIndex
         );
         assertEquals(
             77,
-            FormattedCharsDisplayBuffer.getBlockForIndex(row, 77, 0, row.size()).block.blockStartIndex
+            FormattedCharsBuffer.getBlockForIndex(row, 77, 0, row.size()).block.blockStartIndex
         );
     }
 
     @Test
     void testOutOfBoundsIndexes() {
-        FormattedCharsDisplayBuffer charsDisplayBuffer = new FormattedCharsDisplayBuffer(10, 20);
+        FormattedCharsBuffer charsDisplayBuffer = new FormattedCharsBuffer(10, 20);
         assertThrows(
             IndexOutOfBoundsException.class,
             () -> charsDisplayBuffer.getFormattedCharAtPosition(-1, 0)
@@ -98,7 +98,7 @@ class FormattedCharsDisplayBufferTest {
     @Test
     void testSetChar() {
 
-        FormattedCharsDisplayBuffer charsDisplayBuffer = new FormattedCharsDisplayBuffer(10, 20);
+        FormattedCharsBuffer charsDisplayBuffer = new FormattedCharsBuffer(10, 20);
 
         charsDisplayBuffer.setDefaultFormattedChar(defaultChar);
         assertEquals(defaultChar, charsDisplayBuffer.getFormattedCharAtPosition(0,0));
@@ -124,7 +124,7 @@ class FormattedCharsDisplayBufferTest {
     @Test
     void testDrawLine() {
 
-        FormattedCharsDisplayBuffer charsDisplayBuffer = new FormattedCharsDisplayBuffer(10, 20);
+        FormattedCharsBuffer charsDisplayBuffer = new FormattedCharsBuffer(10, 20);
 
         charsDisplayBuffer.setDefaultFormattedChar(defaultChar);
 
@@ -150,7 +150,7 @@ class FormattedCharsDisplayBufferTest {
     @Test
     void testVerticalLine() {
 
-        FormattedCharsDisplayBuffer charsDisplayBuffer = new FormattedCharsDisplayBuffer(20, 20);
+        FormattedCharsBuffer charsDisplayBuffer = new FormattedCharsBuffer(20, 20);
 
         charsDisplayBuffer.setDefaultFormattedChar(defaultChar);
 

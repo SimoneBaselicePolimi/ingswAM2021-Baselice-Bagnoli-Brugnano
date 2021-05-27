@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.cli;
 
-import it.polimi.ingsw.client.ConsoleWriter;
 import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.client.clientmessage.ClientMessage;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
@@ -15,7 +14,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NewClientManager {
+public class NewCliClientManager {
 
     public static final int MESSAGE_QUEUE_SIZE = 1024;
 
@@ -32,9 +31,11 @@ public class NewClientManager {
     protected CompletableFuture<ServerMessage> serverAnswerable = null;
     protected CompletableFuture<String> userAnswerable = null;
 
+    protected UserIOLogger userIOLogger;
+
 protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<ServerMessage>(MESSAGE_QUEUE_SIZE);
 
-    public NewClientManager(ConsoleWriter consoleWriter, MessageSender serverSender) {
+    public NewCliClientManager(ConsoleWriter consoleWriter, MessageSender serverSender) {
         this.consoleWriter = consoleWriter;
         this.serverSender = serverSender;
         Localization.getLocalizationInstance().setLocalizationLanguage("it");
@@ -50,6 +51,7 @@ protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<Ser
     }
 
     public synchronized void handleUserInput(String input) {
+
         if(userAnswerable != null)
             userAnswerable.complete(input);
         else
@@ -78,7 +80,7 @@ protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<Ser
     }
 
     public void tellUser(String text) {
-        consoleWriter.writeNewLineToConsole(text);
+        userIOLogger.logMessageForUser(text);
     }
 
     public void tellUserLocalized(String requestPlaceholder, Object... args) {
@@ -87,6 +89,14 @@ protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<Ser
 
     public ConsoleWriter getConsoleWriter() {
         return consoleWriter;
+    }
+
+    public UserIOLogger getConsoleIOLogger() {
+        return userIOLogger;
+    }
+
+    public void registerNewUserIOLogger(UserIOLogger userIOLogger) {
+        this.userIOLogger = userIOLogger;
     }
 
     public MessageSender getServerSender() {

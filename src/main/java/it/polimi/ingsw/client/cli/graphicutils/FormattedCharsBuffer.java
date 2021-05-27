@@ -1,11 +1,11 @@
 package it.polimi.ingsw.client.cli.graphicutils;
 
-import it.polimi.ingsw.client.ConsoleWriter;
+import it.polimi.ingsw.client.cli.ConsoleWriter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormattedCharsDisplayBuffer {
+public class FormattedCharsBuffer {
 
     protected static class FormattedCharBlock {
         public final int blockStartIndex;
@@ -36,7 +36,7 @@ public class FormattedCharsDisplayBuffer {
 
     protected List<List<FormattedCharBlock>> rows;
 
-    public FormattedCharsDisplayBuffer(int rowSize, int columnSize) {
+    public FormattedCharsBuffer(int rowSize, int columnSize) {
         this.rowSize = rowSize;
         this.columnSize = columnSize;
 
@@ -147,6 +147,10 @@ public class FormattedCharsDisplayBuffer {
         }
     }
 
+    public void print(ConsoleWriter consoleWriter) {
+        print(consoleWriter, 0, 0, rowSize-1, columnSize-1);
+    }
+
     /**
      * @param consoleWriter
      * @param rowStartIndex (included)
@@ -200,6 +204,22 @@ public class FormattedCharsDisplayBuffer {
         }
         consoleWriter.writeNewLineToConsole(out.toString());
     }
+
+    /**
+     *
+     * @param rowStartIndex (included)
+     * @param colStartIndex (included)
+     * @param rowEndIndex (included)
+     * @param colEndIndex (included)
+     * @return
+     */
+    public FormattedCharsBuffer crop(int rowStartIndex, int colStartIndex, int rowEndIndex, int colEndIndex) {
+        return null;
+    }
+
+    public void drawOnTop(int rowIndex, int colIndex, FormattedCharsBuffer bufferToDraw) {
+
+    };
 
     /**
      * Set the formatted char to use as default for the whole display.
