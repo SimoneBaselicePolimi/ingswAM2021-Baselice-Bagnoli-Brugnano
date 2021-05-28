@@ -16,7 +16,6 @@ public class GameHistoryView extends CliView {
 
     @Override
     protected FormattedCharsBuffer buildMyBuffer() {
-
         //clientManager.getGameHistoryRepresentation()
         return null;
     }
