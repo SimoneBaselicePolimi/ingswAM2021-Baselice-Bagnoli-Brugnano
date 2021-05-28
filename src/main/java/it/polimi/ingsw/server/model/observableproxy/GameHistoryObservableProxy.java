@@ -21,16 +21,6 @@ public class GameHistoryObservableProxy extends ObservableProxy<GameHistory> imp
     }
 
     @Override
-    public ServerGameHistoryRepresentation getServerRepresentation() {
-        return imp.getServerRepresentation();
-    }
-
-    @Override
-    public ServerGameHistoryRepresentation getServerRepresentationForPlayer(Player player) {
-        return imp.getServerRepresentationForPlayer(player);
-    }
-
-    @Override
     public List<GameAction> getGameHistory() {
         return imp.getGameHistory();
     }

@@ -23,15 +23,4 @@ public class GameHistoryImp implements GameHistory {
 		gameActions.add(gameAction);
 	}
 
-	@Override
-	public ServerGameHistoryRepresentation getServerRepresentation() {
-		return new ServerGameHistoryRepresentation(
-			gameActions.stream().map(Representable::getServerRepresentation).collect(Collectors.toList())
-		);
-	}
-
-	@Override
-	public ServerGameHistoryRepresentation getServerRepresentationForPlayer(Player player) {
-		return getServerRepresentation();
-	}
 }

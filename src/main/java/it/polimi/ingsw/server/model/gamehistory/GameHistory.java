@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.Serv
 
 import java.util.List;
 
-public interface GameHistory extends Representable<ServerGameHistoryRepresentation> {
+public interface GameHistory {
     List<GameAction> getGameHistory();
 
     void addAction(GameAction gameAction);

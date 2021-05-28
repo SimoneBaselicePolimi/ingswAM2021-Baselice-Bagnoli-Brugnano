@@ -77,7 +77,7 @@ public class UserConsole extends CliView implements UserIOLogger {
     @Override
     public void logMessageForUser(String text) {
         consoleMessages.add(new IOMessage(text, false));
-        updateView();;
+        updateView();
     }
 
 }

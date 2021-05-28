@@ -49,8 +49,6 @@ public abstract class CliView extends View {
 
     protected int rowSize, columnSize;
 
-    boolean isVisible = true;
-
     public CliView(CliClientManager clientManager, int rowSize, int columnSize) {
         this.clientManager = clientManager;
         this.rowSize = rowSize;
@@ -119,8 +117,5 @@ public abstract class CliView extends View {
         this.columnSize = columnSize;
     }
 
-    public void destroyView() {
-        isVisible = false;
-    }
 
 }
