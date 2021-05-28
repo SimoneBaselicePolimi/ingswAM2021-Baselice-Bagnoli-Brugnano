@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import it.polimi.ingsw.client.cli.Cli;
 import it.polimi.ingsw.client.cli.ConsoleWriter;
-import it.polimi.ingsw.client.cli.NewCliClientManager;
+import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.view.PreGameView;
 import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.logger.LogLevel;
@@ -78,7 +78,7 @@ public class Client {
             }
         };
 
-        NewCliClientManager clientManager = new NewCliClientManager(consoleWriter, messageSender);
+        CliClientManager clientManager = new CliClientManager(consoleWriter, messageSender);
 
         networkLayer.setMessageFromServerProcessingPolicy(messageFromServer -> {
             try {
@@ -96,8 +96,7 @@ public class Client {
 
         networkLayer.start();
 
-
-        new Cli(clientManager).startCli();
+        new PreGameView(clientManager, clientManager.getConsoleDisplayHeight(), clientManager.getConsoleDisplayWidth());
 
         BufferedReader reader = new BufferedReader(
             new InputStreamReader(System.in));

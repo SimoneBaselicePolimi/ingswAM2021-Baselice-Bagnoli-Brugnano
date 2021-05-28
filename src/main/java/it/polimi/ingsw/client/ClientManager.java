@@ -1,25 +1,27 @@
-package it.polimi.ingsw.client.cli;
+package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.client.clientmessage.ClientMessage;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NewCliClientManager {
+public class ClientManager {
 
     public static final int MESSAGE_QUEUE_SIZE = 1024;
 
-    protected ConsoleWriter consoleWriter;
     protected MessageSender serverSender;
+    protected CompletableFuture<ServerMessage> serverAnswerable = null;
+    protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<>(MESSAGE_QUEUE_SIZE);
 
     protected Player player;
 
@@ -27,18 +29,12 @@ public class NewCliClientManager {
 
     protected GameItemsManager gameItemsManager;
     protected ClientGameContextRepresentation gameContextRepresentation;
+    protected ClientGameHistoryRepresentation gameHistoryRepresentation;
 
-    protected CompletableFuture<ServerMessage> serverAnswerable = null;
-    protected CompletableFuture<String> userAnswerable = null;
-
-    protected UserIOLogger userIOLogger;
-
-protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<ServerMessage>(MESSAGE_QUEUE_SIZE);
-
-    public NewCliClientManager(ConsoleWriter consoleWriter, MessageSender serverSender) {
-        this.consoleWriter = consoleWriter;
+    public ClientManager(MessageSender serverSender) {
         this.serverSender = serverSender;
         Localization.getLocalizationInstance().setLocalizationLanguage("it");
+        gameHistoryRepresentation = new ClientGameHistoryRepresentation(new ArrayList<>());
     }
 
     public synchronized void handleServerMessage(ServerMessage serverMessage) {
@@ -50,14 +46,6 @@ protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<Ser
         }
     }
 
-    public synchronized void handleUserInput(String input) {
-
-        if(userAnswerable != null)
-            userAnswerable.complete(input);
-        else
-            tellUserLocalized("client.errors.userInputNotExpected");
-    }
-
     public CompletableFuture<ServerMessage> sendMessageAndGetAnswer(ClientMessage messageToSend) {
         serverAnswerable = new CompletableFuture<>();
         serverSender.sendMessageToServer(messageToSend);
@@ -67,36 +55,6 @@ protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<Ser
     public CompletableFuture<ServerMessage> getNewMessageFromServer() {
         serverAnswerable = new CompletableFuture<>();
         return serverAnswerable;
-    }
-
-    public CompletableFuture<String> askUser(String request) {
-        userAnswerable = new CompletableFuture<>();
-        tellUser(request);
-        return userAnswerable;
-    }
-
-    public CompletableFuture<String> askUserLocalized(String requestPlaceholder, Object... args) {
-        return askUser(Localization.getLocalizationInstance().getString(requestPlaceholder, args));
-    }
-
-    public void tellUser(String text) {
-        userIOLogger.logMessageForUser(text);
-    }
-
-    public void tellUserLocalized(String requestPlaceholder, Object... args) {
-        tellUser(Localization.getLocalizationInstance().getString(requestPlaceholder, args));
-    }
-
-    public ConsoleWriter getConsoleWriter() {
-        return consoleWriter;
-    }
-
-    public UserIOLogger getConsoleIOLogger() {
-        return userIOLogger;
-    }
-
-    public void registerNewUserIOLogger(UserIOLogger userIOLogger) {
-        this.userIOLogger = userIOLogger;
     }
 
     public MessageSender getServerSender() {
@@ -129,6 +87,10 @@ protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<Ser
 
     public ClientGameContextRepresentation getGameContextRepresentation() {
         return gameContextRepresentation;
+    }
+
+    public ClientGameHistoryRepresentation getGameHistoryRepresentation() {
+        return gameHistoryRepresentation;
     }
 
     public void setGameItemsManager(GameItemsManager gameItemsManager) {

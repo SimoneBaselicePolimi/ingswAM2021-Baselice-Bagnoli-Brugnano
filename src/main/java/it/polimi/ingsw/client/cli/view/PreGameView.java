@@ -1,6 +1,9 @@
-package it.polimi.ingsw.client.cli;
+package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.ServerMessageUtils;
+import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.UnexpectedServerMessage;
+import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
 import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage;
 import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
@@ -12,12 +15,72 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Cli {
+public class PreGameView extends CliView {
 
-    CliClientManager clientManager;
+    public PreGameView(CliClientManager clientManager, int rowSize, int columnSize) {
+        super(clientManager, rowSize, columnSize);
 
-    public Cli(CliClientManager clientManager) {
-        this.clientManager = clientManager;
+        GridView bordersContainer =
+            new GridView(clientManager, 1, 1, 1, rowSize, columnSize);
+        addChildView(bordersContainer, 0, 0);
+
+        UserConsole consoleView = new UserConsole(clientManager);
+        bordersContainer.setView(0, 0, consoleView);
+        clientManager.setNewUserIOLogger(consoleView);
+
+
+        startPreGameSetup();
+
+    }
+
+    protected void startPreGameSetup() {
+        registerPlayerNameAndGetNextMessage()
+            .thenCompose(serverMessage ->
+                ServerMessageUtils.ifMessageTypeCompute(serverMessage,
+                    PlayerCanCreateNewLobbyServerMessage.class,
+                    this::createLobbyAndGetEnteredLobbyServerMessage
+                ).elseIfMessageTypeCompute(
+                    NewPlayerEnteredNewGameLobbyServerMessage.class,
+                    CompletableFuture::completedFuture
+                ).elseCompute(message -> {
+                    clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");
+                    return CompletableFuture.failedFuture(new UnexpectedServerMessage());
+                }).apply()
+            ).thenCompose(lobbyMessage -> {
+            clientManager.setGameItemsManager(new GameItemsManager());
+            clientManager.addEntryToDeserializationContextMap("gameItemsManager", clientManager.getGameItemsManager());
+            return handleLobbyMessagesUntilGameInitialization(lobbyMessage);
+        }).thenCompose(gameInitializationStartedServerMessage ->
+            clientManager.sendMessageAndGetAnswer(new GetInitialGameRepresentationClientMessage())
+        ).thenCompose(serverMessage ->
+            ServerMessageUtils.ifMessageTypeCompute(serverMessage,
+                GameInitialRepresentationServerMessage.class,
+                representationServerMessage -> {
+                    clientManager.setGameContextRepresentation(representationServerMessage.gameContextRepresentation);
+                    clientManager.tellUserLocalized("client.cli.setup.notifyRepresentationDownloaded");
+                    return clientManager.sendMessageAndGetAnswer(new ReadyToStartGameClientMessage());
+                }
+            ).elseCompute(message -> {
+                clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");
+                return CompletableFuture.failedFuture(new UnexpectedServerMessage());
+            }).apply()
+        ).thenCompose(serverMessage -> ServerMessageUtils.ifMessageTypeCompute(
+            serverMessage,
+            InitialChoicesServerMessage.class,
+            initialChoicesServerMessage -> {
+                clientManager.tellUserLocalized("client.cli.setup.notifySetupIsStarting");
+                this.destroyView();
+                new GameView(
+                    clientManager,
+                    clientManager.getConsoleDisplayHeight(),
+                    clientManager.getConsoleDisplayWidth()
+                );
+                return CompletableFuture.completedFuture(null);
+            }).elseCompute(message -> {
+                clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");
+                return CompletableFuture.failedFuture(new UnexpectedServerMessage());
+            }).apply()
+        );
     }
 
     CompletableFuture<ServerMessage> registerPlayerNameAndGetNextMessage() {
@@ -112,50 +175,6 @@ public class Cli {
                     CompletableFuture::completedFuture
                 ).apply()
             );
-    }
-
-    public void startCli() {
-        registerPlayerNameAndGetNextMessage()
-        .thenCompose(serverMessage ->
-            ServerMessageUtils.ifMessageTypeCompute(serverMessage,
-                PlayerCanCreateNewLobbyServerMessage.class,
-                this::createLobbyAndGetEnteredLobbyServerMessage
-            ).elseIfMessageTypeCompute(
-                NewPlayerEnteredNewGameLobbyServerMessage.class,
-                CompletableFuture::completedFuture
-            ).elseCompute(message -> {
-                clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");
-                return CompletableFuture.failedFuture(new UnexpectedServerMessage());
-            }).apply()
-        ).thenCompose(lobbyMessage -> {
-            clientManager.setGameItemsManager(new GameItemsManager());
-            clientManager.addEntryToDeserializationContextMap("gameItemsManager", clientManager.getGameItemsManager());
-            return handleLobbyMessagesUntilGameInitialization(lobbyMessage);
-        }).thenCompose(gameInitializationStartedServerMessage ->
-            clientManager.sendMessageAndGetAnswer(new GetInitialGameRepresentationClientMessage())
-        ).thenCompose(serverMessage ->
-            ServerMessageUtils.ifMessageTypeCompute(serverMessage,
-                GameInitialRepresentationServerMessage.class,
-                representationServerMessage -> {
-                    clientManager.setGameContextRepresentation(representationServerMessage.gameContextRepresentation);
-                    clientManager.tellUserLocalized("client.cli.setup.notifyRepresentationDownloaded");
-                    return clientManager.sendMessageAndGetAnswer(new ReadyToStartGameClientMessage());
-                }
-            ).elseCompute(message -> {
-                clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");
-                return CompletableFuture.failedFuture(new UnexpectedServerMessage());
-            }).apply()
-        ).thenCompose(serverMessage -> ServerMessageUtils.ifMessageTypeCompute(
-            serverMessage,
-            InitialChoicesServerMessage.class,
-            initialChoicesServerMessage -> {
-                clientManager.tellUserLocalized("client.cli.setup.notifySetupIsStarting");
-                return CompletableFuture.completedFuture(null);
-            }).elseCompute(message -> {
-                clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");
-                return CompletableFuture.failedFuture(new UnexpectedServerMessage());
-            }).apply()
-        );
     }
 
 }

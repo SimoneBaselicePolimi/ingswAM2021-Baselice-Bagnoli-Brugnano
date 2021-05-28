@@ -1,12 +1,12 @@
 package it.polimi.ingsw.client.gameupdatehandler;
 
+import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.client.gameupdate.ClientLeaderCardCanBeActivatedUpdate;
-import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 
 public class LeaderCardCanBeActivatedUpdateHandler extends GameUpdateHandler<ClientLeaderCardCanBeActivatedUpdate>{
 
     @Override
-    public void handleGameUpdate(ClientLeaderCardCanBeActivatedUpdate update, ClientGameContextRepresentation gameContextRepresentation) {
+    public void handleGameUpdate(ClientLeaderCardCanBeActivatedUpdate update, ClientManager clientManager) {
         update.leaderCard.setCanBeActivated(update.canBeActivated);
     }
 

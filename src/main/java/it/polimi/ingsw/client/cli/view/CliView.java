@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.cli.view;
 
-import it.polimi.ingsw.client.cli.NewCliClientManager;
+import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.view.View;
 
@@ -42,20 +42,28 @@ public abstract class CliView extends View {
 
     }
 
-    NewCliClientManager clientManager;
+    CliClientManager clientManager;
 
     protected CliView parent = null;
     protected List<ChildCliView> children = new ArrayList<>();
 
     protected int rowSize, columnSize;
 
-    public CliView(NewCliClientManager clientManager, int rowSize, int columnSize) {
+    boolean isVisible = true;
+
+    public CliView(CliClientManager clientManager, int rowSize, int columnSize) {
         this.clientManager = clientManager;
         this.rowSize = rowSize;
         this.columnSize = columnSize;
     }
 
-    public void setViewAsChild(CliView childView, int childViewRowStartIndex, int childViewColStartIndex) {
+    public CliView(CliClientManager clientManager) {
+        this.clientManager = clientManager;
+        this.rowSize = 0;
+        this.columnSize = 0;
+    }
+
+    public void addChildView(CliView childView, int childViewRowStartIndex, int childViewColStartIndex) {
         children.add(new ChildCliView(childView, childViewRowStartIndex, childViewColStartIndex));
         childView.parent = this;
     }
@@ -69,21 +77,27 @@ public abstract class CliView extends View {
     }
 
     public void print() {
-        getContentAsFormattedCharsBuffer().print(clientManager.getConsoleWriter());
+        if(isVisible)
+            getContentAsFormattedCharsBuffer().print(clientManager.getConsoleWriter());
     }
 
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
-        FormattedCharsBuffer buffer = buildMyBuffer();
-        for(ChildCliView child : children)
-            buffer.drawOnTop(
-                child.getRowStartIndex(),
-                child.getColStartIndex(),
-                child.getView().getContentAsFormattedCharsBuffer()
-            );
-        return buffer;
+        if(isVisible) {
+            FormattedCharsBuffer buffer = buildMyBuffer();
+            for (ChildCliView child : children)
+                buffer.drawOnTop(
+                    child.getRowStartIndex(),
+                    child.getColStartIndex(),
+                    child.getView().getContentAsFormattedCharsBuffer()
+                );
+            return buffer;
+        } else
+            return new FormattedCharsBuffer(rowSize, columnSize);
     }
 
-    protected abstract FormattedCharsBuffer buildMyBuffer();
+    protected FormattedCharsBuffer buildMyBuffer() {
+        return new FormattedCharsBuffer(rowSize, columnSize);
+    }
 
     public boolean isTopLevelView() {
         return parent == null;
@@ -103,6 +117,10 @@ public abstract class CliView extends View {
 
     public void setColumnSize(int columnSize) {
         this.columnSize = columnSize;
+    }
+
+    public void destroyView() {
+        isVisible = false;
     }
 
 }

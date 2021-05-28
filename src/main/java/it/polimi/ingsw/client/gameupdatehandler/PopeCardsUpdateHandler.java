@@ -1,11 +1,11 @@
 package it.polimi.ingsw.client.gameupdatehandler;
 
+import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.client.gameupdate.ClientPopeCardsUpdate;
-import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 
-    public class PopeCardsUpdateHandler extends GameUpdateHandler<ClientPopeCardsUpdate>{
+public class PopeCardsUpdateHandler extends GameUpdateHandler<ClientPopeCardsUpdate>{
     @Override
-    public void handleGameUpdate(ClientPopeCardsUpdate update, ClientGameContextRepresentation gameContextRepresentation) {
-        gameContextRepresentation.getFaithPath().setPopeFavorCards(update.faithPopeCardsStates);
+    public void handleGameUpdate(ClientPopeCardsUpdate update, ClientManager clientManager) {
+        clientManager.getGameContextRepresentation().getFaithPath().setPopeFavorCards(update.faithPopeCardsStates);
     }
 }

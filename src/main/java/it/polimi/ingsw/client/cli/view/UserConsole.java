@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.UserIOLogger;
-import it.polimi.ingsw.client.cli.NewCliClientManager;
+import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.CliColour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
@@ -23,7 +23,11 @@ public class UserConsole extends CliView implements UserIOLogger {
 
     }
 
-    public UserConsole(NewCliClientManager clientManager, int rowSize, int columnSize) {
+    public UserConsole(CliClientManager clientManager) {
+        super(clientManager);
+    }
+
+    public UserConsole(CliClientManager clientManager, int rowSize, int columnSize) {
         super(clientManager, rowSize, columnSize);
     }
 
@@ -67,11 +71,13 @@ public class UserConsole extends CliView implements UserIOLogger {
     @Override
     public void logMessageFromUser(String text) {
         consoleMessages.add(new IOMessage(text, true));
+        updateView();
     }
 
     @Override
     public void logMessageForUser(String text) {
         consoleMessages.add(new IOMessage(text, false));
+        updateView();;
     }
 
 }

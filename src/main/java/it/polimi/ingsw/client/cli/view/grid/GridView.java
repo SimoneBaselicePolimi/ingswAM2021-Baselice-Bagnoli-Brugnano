@@ -1,6 +1,7 @@
-package it.polimi.ingsw.client.cli.graphicutils;
+package it.polimi.ingsw.client.cli.view.grid;
 
-import it.polimi.ingsw.client.cli.NewCliClientManager;
+import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.CliView;
 
 import java.util.HashMap;
@@ -8,45 +9,23 @@ import java.util.Map;
 
 public class GridView extends CliView {
 
-    public abstract static class BorderStyle {
-
-        protected abstract FormattedCharsBuffer createEmptyBufferWithBorders(GridView gridView);
-    }
-
-    static class SingleCharBorderStyle extends BorderStyle {
-
-        FormattedChar borderChar;
-
-        public SingleCharBorderStyle(FormattedChar borderChar) {
-            this.borderChar = borderChar;
-        }
-
-        @Override
-        protected FormattedCharsBuffer createEmptyBufferWithBorders(GridView gridView) {
-            FormattedCharsBuffer gridBuffer = new FormattedCharsBuffer(gridView.rowSize, gridView.columnSize);
-            return gridBuffer;
-        }
-
-    }
-
-    static class LineBorderStyle extends BorderStyle {
-
-        @Override
-        protected FormattedCharsBuffer createEmptyBufferWithBorders(GridView gridView) {
-            FormattedCharsBuffer gridBuffer = new FormattedCharsBuffer(gridView.rowSize, gridView.columnSize);
-            return gridBuffer;
-        }
-
-    }
-
-    protected final int numOfRows, numOfColumns;
-    protected int borderSize;
-    protected final int[] rowsWeight, colsWeight;
+    final int numOfRows, numOfColumns;
+    int borderSize;
+    final int[] rowsWeight, colsWeight;
 
     Map<Integer, Map<Integer, CliView>> viewsInGrid;
 
-
     BorderStyle borderStyle;
+
+
+    public GridView(
+        CliClientManager clientManager,
+        int numOfRows,
+        int numOfColumns,
+        int borderSize
+    ) {
+        this(clientManager, numOfRows, numOfColumns, borderSize, 0, 0);
+    }
 
     /**
      *
@@ -54,7 +33,7 @@ public class GridView extends CliView {
      * and setColSize() to obtain a custom table layout.
      */
     public GridView(
-        NewCliClientManager clientManager,
+        CliClientManager clientManager,
         int numOfRows,
         int numOfColumns,
         int borderSize,
@@ -111,7 +90,7 @@ public class GridView extends CliView {
     }
 
     public void setView(int rowIndex, int colIndex, CliView view) {
-        setViewAsChild(view, 0, 0);
+        addChildView(view, 0, 0);
         viewsInGrid.get(rowIndex).put(colIndex, view);
     }
 
