@@ -63,30 +63,69 @@ public class GridView extends CliView {
 
     }
 
-    protected int getRowStartIndexForView(int viewRowIndex, int viewColIndex) {
+    int rowUnitWeight;
+    int columnUnitWeight;
+    /**
+     *
+     * @param viewRowIndex
+     * @return (included)
+     */
+    protected int getRowStartIndex(int viewRowIndex) {
+        checkIndexesBounds(viewRowIndex, 0);
         int borderTotalSize = borderSize*(numOfRows+1);
         int viewTotalSize = rowSize - borderTotalSize;
-        return 0;
+        int sumWeights = 0;
+        for(int row = 0; row < numOfRows; row++)
+            sumWeights += rowsWeight[row];
+        rowUnitWeight = viewTotalSize/sumWeights;
+        int sumUpperRowsSize = 0;
+        for(int r = 0; r < viewRowIndex; r++)
+            sumUpperRowsSize += rowUnitWeight * rowsWeight[r];
+        return (viewRowIndex+1)*borderSize + sumUpperRowsSize;
     }
 
-    protected int getRowEndIndexForView(int viewRowIndex, int viewColIndex) {
-        return 0;
-
+    /**
+     *
+     * @param viewRowIndex
+     * @return (included)
+     */
+    protected int getRowEndIndex(int viewRowIndex) {
+        return getRowStartIndex(viewRowIndex) + rowUnitWeight *rowsWeight[viewRowIndex];
     }
 
-    protected int getColStartIndexForView(int viewRowIndex, int viewColIndex) {
+    /**
+     *
+     * @param viewColIndex
+     * @return (included)
+     */
+    protected int getColStartIndex(int viewColIndex) {
+        checkIndexesBounds(0, viewColIndex);
         int borderTotalSize = borderSize*(numOfColumns+1);
-        return 0;
-
+        int viewTotalSize = columnSize - borderTotalSize;
+        int sumWeights = 0;
+        for(int column = 0; column < numOfColumns; column++)
+            sumWeights += colsWeight[column];
+        columnUnitWeight = viewTotalSize/sumWeights;
+        int sumUpperColumnsSize = 0;
+        for(int c = 0; c < viewColIndex; c++)
+            sumUpperColumnsSize += columnUnitWeight * colsWeight[c];
+        return (viewColIndex+1)*borderSize + sumUpperColumnsSize;
     }
 
-    protected int getColEndIndexForView(int viewRowIndex, int viewColIndex) {
-        return 0;
-
+    /**
+     *
+     * @param viewColIndex
+     * @return (included)
+     */
+    protected int getColEndIndex(int viewColIndex) {
+        return getColStartIndex(viewColIndex) + columnUnitWeight *colsWeight[viewColIndex];
     }
 
     protected void checkIndexesBounds(int rowIndex, int colIndex) {
-
+        if(rowIndex < 0 || rowIndex >= numOfRows)
+            throw new IndexOutOfBoundsException();
+        if(colIndex < 0 || colIndex >= numOfColumns)
+            throw new IndexOutOfBoundsException();
     }
 
     public void setView(int rowIndex, int colIndex, CliView view) {
@@ -115,10 +154,10 @@ public class GridView extends CliView {
            for(int colIndex = 0; colIndex < numOfColumns; colIndex++) {
                if(viewsInGrid.get(rowIndex).containsKey(colIndex)) {
 
-                   int viewRowStartIndex = getRowStartIndexForView(rowIndex, colIndex);
-                   int viewRowEndIndex = getRowEndIndexForView(rowIndex, colIndex);
-                   int viewColStartIndex = getColStartIndexForView(rowIndex, colIndex);
-                   int viewColEndIndex = getColEndIndexForView(rowIndex, colIndex);
+                   int viewRowStartIndex = getRowStartIndex(rowIndex);
+                   int viewRowEndIndex = getRowEndIndex(rowIndex);
+                   int viewColStartIndex = getColStartIndex(colIndex);
+                   int viewColEndIndex = getColEndIndex(colIndex);
 
                    CliView view = viewsInGrid.get(rowIndex).get(colIndex);
                    view.setRowSize(viewRowEndIndex - viewRowStartIndex);
