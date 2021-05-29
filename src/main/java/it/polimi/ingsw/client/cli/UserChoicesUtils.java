@@ -1,15 +1,15 @@
 package it.polimi.ingsw.client.cli;
 
-import it.polimi.ingsw.client.servermessage.ServerMessage;
+import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.localization.Localization;
 
 import java.util.*;
-import java.util.function.Function;
+import java.util.concurrent.CompletableFuture;
 
 public class UserChoicesUtils {
 
-    public static PossibleUserChoices makeUserChoose() {
-        return new PossibleUserChoices();
+    public static PossibleUserChoices makeUserChoose(CliClientManager clientManager) {
+        return new PossibleUserChoices(clientManager);
     }
 
     public static class PossibleUserChoices {
@@ -26,9 +26,11 @@ public class UserChoicesUtils {
 
         }
 
+        protected final CliClientManager clientManager;
         protected List<UserChoice> choices;
 
-        PossibleUserChoices() {
+        PossibleUserChoices(CliClientManager clientManager) {
+            this.clientManager = clientManager;
             choices = new ArrayList<>();
         }
 
@@ -42,8 +44,22 @@ public class UserChoicesUtils {
             return addUserChoice(computation, Localization.getLocalizationInstance().getString(requestPlaceholder, args));
         }
 
-        public void apply() {
-            //TODO
+        public CompletableFuture<Void> apply() {
+            clientManager.tellUserLocalized("client.cli.game.possibleUserChoices");
+            for(int i = 0; i < choices.size(); i++)
+                clientManager.tellUser(String.format("%d) %s", i+1, choices.get(i).description));
+            return clientManager.askUserLocalized("client.cli.game.makeChoice")
+                .thenCompose(input -> {
+                    int num = Integer.parseInt(input);
+                    if(num < 1 || num > choices.size()) {
+                        clientManager.tellUserLocalized("client.cli.game.invalidChoice");
+                        return apply();
+                    } else {
+                        choices.get(num).computation.run();
+                        return CompletableFuture.completedFuture(null);
+                    }
+                });
         }
+
     }
 }

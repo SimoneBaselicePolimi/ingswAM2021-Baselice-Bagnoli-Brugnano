@@ -16,6 +16,11 @@ client:
       notifyRepresentationDownloaded: "[Info partita scaricate dal server]"
       notifyGameStarted: "Il gioco è iniziato"
       notifySetupIsStarting: "Inizia il setup del gioco!"
+    game:
+      possibleUserChoices: "Puoi eseguire le seguenti azioni: "
+      makeChoice: "Inserisci il numero corrispondente alla tua scelta: "
+      invalidChoice: "Scelta non valida"
+
 
 resources:
   coins:
