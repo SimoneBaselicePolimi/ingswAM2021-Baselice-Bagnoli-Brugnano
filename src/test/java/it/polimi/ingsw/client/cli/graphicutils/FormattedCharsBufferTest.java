@@ -181,4 +181,39 @@ class FormattedCharsBufferTest {
 
     }
 
+    @Test
+    void testDrawOnTop() {
+        FormattedCharsBuffer outer = new FormattedCharsBuffer(10, 10);
+        outer.setDefaultFormattedChar(defaultChar);
+        outer.drawHorizontalLine(4, 0, 9, char2);
+        outer.drawVerticalLine(0, 9, 4, char2);
+        assertEquals(defaultChar, outer.getFormattedCharAtPosition(0,0));
+        assertEquals(char2, outer.getFormattedCharAtPosition(4,2));
+        assertEquals(char2, outer.getFormattedCharAtPosition(2,4));
+
+        FormattedCharsBuffer inner = new FormattedCharsBuffer(6, 6);
+        inner.setDefaultFormattedChar(char1);
+        assertEquals(defaultChar, outer.getFormattedCharAtPosition(0,0));
+
+        outer.drawOnTop(2, 2, inner);
+        assertEquals(defaultChar, outer.getFormattedCharAtPosition(0,0));
+        assertEquals(char2, outer.getFormattedCharAtPosition(4,1));
+        assertEquals(char1, outer.getFormattedCharAtPosition(4,2));
+        assertEquals(char1, outer.getFormattedCharAtPosition(4,7));
+        assertEquals(char2, outer.getFormattedCharAtPosition(4,8));
+
+        assertEquals(char1, outer.getFormattedCharAtPosition(2,7));
+        assertEquals(defaultChar, outer.getFormattedCharAtPosition(2,8));
+        assertEquals(defaultChar, outer.getFormattedCharAtPosition(2,9));
+
+        assertEquals(char2, outer.getFormattedCharAtPosition(1,3));
+        assertEquals(char1, outer.getFormattedCharAtPosition(2,3));
+
+        assertEquals(char2, outer.getFormattedCharAtPosition(1,4));
+        assertEquals(char1, outer.getFormattedCharAtPosition(2,4));
+        assertEquals(char1, outer.getFormattedCharAtPosition(1,7));
+        assertEquals(char2, outer.getFormattedCharAtPosition(2,8));
+
+    }
+
 }
