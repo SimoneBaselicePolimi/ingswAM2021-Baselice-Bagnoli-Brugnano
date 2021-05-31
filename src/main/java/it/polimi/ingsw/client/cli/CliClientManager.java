@@ -20,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CliClientManager extends ClientManager {
 
 
-    protected static final int DEFAULT_CONSOLE_DISPLAY_WIDTH = 100;
-    protected static final int DEFAULT_CONSOLE_DISPLAY_HEIGHT = 40;
+    protected static final int DEFAULT_CONSOLE_DISPLAY_WIDTH = 150;
+    protected static final int DEFAULT_CONSOLE_DISPLAY_HEIGHT = 30;
 
     protected ConsoleWriter consoleWriter;
 
@@ -39,7 +39,7 @@ public class CliClientManager extends ClientManager {
     }
 
     public synchronized void handleUserInput(String input) {
-
+        userIOLogger.logMessageFromUser(input);
         if(userAnswerable != null)
             userAnswerable.complete(input);
         else

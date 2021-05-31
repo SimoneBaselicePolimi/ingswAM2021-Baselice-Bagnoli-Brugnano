@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
+@Deprecated
 public class Cli {
 
     CliClientManager clientManager;

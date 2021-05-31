@@ -75,8 +75,10 @@ public abstract class CliView extends View {
     }
 
     public void print() {
-        if(isVisible)
+        if(isVisible) {
+            cleanConsole();
             getContentAsFormattedCharsBuffer().print(clientManager.getConsoleWriter());
+        }
     }
 
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
@@ -117,5 +119,14 @@ public abstract class CliView extends View {
         this.columnSize = columnSize;
     }
 
+    protected void cleanConsole() {
+        clientManager.getConsoleWriter().writeToConsole(System.lineSeparator().repeat(columnSize*2));
+    }
+
+    @Override
+    public void destroyView() {
+        super.destroyView();
+        children.forEach(child -> child.getView().destroyView());
+    }
 
 }

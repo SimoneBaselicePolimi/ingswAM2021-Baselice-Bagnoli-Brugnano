@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.cli.view;
 
+import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
@@ -19,6 +20,8 @@ public class MarketView extends CliView{
     }
 
     void startMarketDialog() {
+
+        //if(clientManager.getGameState().equals(GameState.GAME_SETUP))
 
         UserChoicesUtils.makeUserChoose(clientManager)
             .addUserChoice(

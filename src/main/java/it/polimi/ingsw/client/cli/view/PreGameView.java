@@ -70,11 +70,12 @@ public class PreGameView extends CliView {
             initialChoicesServerMessage -> {
                 clientManager.tellUserLocalized("client.cli.setup.notifySetupIsStarting");
                 this.destroyView();
-                new GameView(
+                GameView gameView = new GameView(
                     clientManager,
                     clientManager.getConsoleDisplayHeight(),
                     clientManager.getConsoleDisplayWidth()
                 );
+                gameView.print();
                 return CompletableFuture.completedFuture(null);
             }).elseCompute(message -> {
                 clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");

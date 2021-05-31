@@ -17,7 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientManager {
 
-
     public static final int MESSAGE_QUEUE_SIZE = 1024;
 
     protected MessageSender serverSender;
