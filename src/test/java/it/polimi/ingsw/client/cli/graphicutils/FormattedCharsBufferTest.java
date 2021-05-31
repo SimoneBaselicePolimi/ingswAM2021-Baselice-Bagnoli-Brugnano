@@ -206,13 +206,42 @@ class FormattedCharsBufferTest {
         assertEquals(defaultChar, outer.getFormattedCharAtPosition(2,8));
         assertEquals(defaultChar, outer.getFormattedCharAtPosition(2,9));
 
-        assertEquals(char2, outer.getFormattedCharAtPosition(1,3));
+        assertEquals(defaultChar, outer.getFormattedCharAtPosition(1,3));
         assertEquals(char1, outer.getFormattedCharAtPosition(2,3));
 
         assertEquals(char2, outer.getFormattedCharAtPosition(1,4));
         assertEquals(char1, outer.getFormattedCharAtPosition(2,4));
-        assertEquals(char1, outer.getFormattedCharAtPosition(1,7));
-        assertEquals(char2, outer.getFormattedCharAtPosition(2,8));
+        assertEquals(char1, outer.getFormattedCharAtPosition(7,4));
+        assertEquals(char2, outer.getFormattedCharAtPosition(8,4));
+
+    }
+
+    @Test
+    void testCrop() {
+        FormattedCharsBuffer buffer = new FormattedCharsBuffer(10, 10);
+        buffer.setDefaultFormattedChar(defaultChar);
+        buffer.setFormattedCharAtPosition(4, 4, char1);
+        assertEquals(defaultChar, buffer.getFormattedCharAtPosition(0,0));
+        assertEquals(char1, buffer.getFormattedCharAtPosition(4,4));
+
+        buffer = buffer.crop(0, 1, 9, 9);
+        assertEquals(defaultChar, buffer.getFormattedCharAtPosition(0,0));
+        assertEquals(defaultChar, buffer.getFormattedCharAtPosition(4,4));
+        assertEquals(char1, buffer.getFormattedCharAtPosition(4,3));
+
+        buffer = buffer.crop(1, 0, 9, 8);
+        assertEquals(defaultChar, buffer.getFormattedCharAtPosition(4,3));
+        assertEquals(char1, buffer.getFormattedCharAtPosition(3,3));
+
+        buffer = buffer.crop(3, 3, 8, 8);
+        assertEquals(defaultChar, buffer.getFormattedCharAtPosition(3,3));
+        assertEquals(char1, buffer.getFormattedCharAtPosition(0,0));
+
+        buffer = buffer.crop(0, 0, 2, 2);
+        assertEquals(defaultChar, buffer.getFormattedCharAtPosition(2,2));
+        assertEquals(char1, buffer.getFormattedCharAtPosition(0,0));
+        assertEquals(3, buffer.getRowSize());
+        assertEquals(3, buffer.columnSize);
 
     }
 

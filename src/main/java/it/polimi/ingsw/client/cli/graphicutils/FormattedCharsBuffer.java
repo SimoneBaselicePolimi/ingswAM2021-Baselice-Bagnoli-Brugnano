@@ -215,16 +215,35 @@ public class FormattedCharsBuffer {
      * @return
      */
     public FormattedCharsBuffer crop(int rowStartIndex, int colStartIndex, int rowEndIndex, int colEndIndex) {
-        return null;
+        FormattedCharsBuffer croppedBuffer = new FormattedCharsBuffer(
+            rowEndIndex - rowStartIndex + 1,
+            colEndIndex - colStartIndex + 1
+        );
+        for (int r = 0; r < rowEndIndex - rowStartIndex + 1; r++) {
+            List<FormattedCharBlock> row = rows.get(r + rowStartIndex);
+            FormattedCharBlockInBlockList startBlock = getBlockForIndex(row, colStartIndex, 0, row.size());
+            List<FormattedCharBlock> rowInCroppedBuffer = croppedBuffer.rows.get(r);
+            rowInCroppedBuffer.clear();
+            rowInCroppedBuffer.add(new FormattedCharBlock(0, startBlock.block.formattedChar));
+            int blockIndex = startBlock.blockPositionInBlockList + 1;
+            while (blockIndex < row.size() && row.get(blockIndex).blockStartIndex < colEndIndex - colStartIndex + 1) {
+                rowInCroppedBuffer.add(new FormattedCharBlock(
+                    row.get(blockIndex).blockStartIndex-colStartIndex,
+                    row.get(blockIndex).formattedChar
+                ));
+                blockIndex++;
+            }
+        }
+        return croppedBuffer;
     }
 
     public void drawOnTop(int rowIndex, int colIndex, FormattedCharsBuffer bufferToDraw) {
-        checkIndexesBounds(rowIndex+bufferToDraw.rowSize-1, colIndex+bufferToDraw.columnSize-1);
-        for(int r = rowIndex; r < r + bufferToDraw.rowSize; r++) {
-            List<FormattedCharBlock> row = bufferToDraw.rows.get(r);
-            FormattedCharBlockInBlockList blockStart = getBlockForIndex(row, colIndex, 0, columnSize-1);
+        checkIndexesBounds(rowIndex + bufferToDraw.rowSize - 1, colIndex+bufferToDraw.columnSize - 1);
+        for(int r = rowIndex; r < rowIndex + bufferToDraw.rowSize; r++) {
+            List<FormattedCharBlock> row = rows.get(r);
+            FormattedCharBlockInBlockList blockStart = getBlockForIndex(row, colIndex, 0, row.size());
             FormattedCharBlockInBlockList blockEnd =
-                getBlockForIndex(row, colIndex+bufferToDraw.columnSize-1, 0, columnSize-1);
+                getBlockForIndex(row, colIndex+bufferToDraw.columnSize-1, 0, row.size());
             row.removeIf(b ->
                 b.blockStartIndex > blockStart.block.blockStartIndex &&
                 b.blockStartIndex <= blockEnd.block.blockStartIndex
@@ -235,7 +254,7 @@ public class FormattedCharsBuffer {
             );
             row.addAll(
                 blockStart.blockPositionInBlockList+1,
-                bufferToDraw.rows.get(r).stream()
+                bufferToDraw.rows.get(r - rowIndex).stream()
                     .map(b -> new FormattedCharBlock(b.blockStartIndex + colIndex, b.formattedChar))
                     .collect(Collectors.toList())
             );
@@ -278,6 +297,14 @@ public class FormattedCharsBuffer {
             throw new IndexOutOfBoundsException();
     }
 
+    /**
+     *
+     * @param row
+     * @param index
+     * @param rangeBegin (included)
+     * @param rangeEnd (excluded)
+     * @return
+     */
     protected static FormattedCharBlockInBlockList getBlockForIndex(List<FormattedCharBlock> row, int index, int rangeBegin, int rangeEnd) {
         int middleRange = (rangeBegin+rangeEnd)/2;
         if(rangeBegin == rangeEnd - 1)

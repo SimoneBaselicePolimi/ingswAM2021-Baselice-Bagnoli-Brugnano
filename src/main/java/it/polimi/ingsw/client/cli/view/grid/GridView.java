@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.cli.view.grid;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.CliView;
 
@@ -16,8 +17,7 @@ public class GridView extends CliView {
 
     Map<Integer, Map<Integer, CliView>> viewsInGrid;
 
-    BorderStyle borderStyle;
-
+    BorderStyle borderStyle = new SingleCharBorderStyle(new FormattedChar(' '));
 
     public GridView(
         CliClientManager clientManager,
