@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.cli.ConsoleWriter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FormattedCharsBuffer {
 
@@ -218,7 +219,27 @@ public class FormattedCharsBuffer {
     }
 
     public void drawOnTop(int rowIndex, int colIndex, FormattedCharsBuffer bufferToDraw) {
-
+        checkIndexesBounds(rowIndex+bufferToDraw.rowSize-1, colIndex+bufferToDraw.columnSize-1);
+        for(int r = rowIndex; r < r + bufferToDraw.rowSize; r++) {
+            List<FormattedCharBlock> row = bufferToDraw.rows.get(r);
+            FormattedCharBlockInBlockList blockStart = getBlockForIndex(row, colIndex, 0, columnSize-1);
+            FormattedCharBlockInBlockList blockEnd =
+                getBlockForIndex(row, colIndex+bufferToDraw.columnSize-1, 0, columnSize-1);
+            row.removeIf(b ->
+                b.blockStartIndex > blockStart.block.blockStartIndex &&
+                b.blockStartIndex <= blockEnd.block.blockStartIndex
+            );
+            row.add(
+                blockStart.blockPositionInBlockList+1,
+                new FormattedCharBlock(colIndex + bufferToDraw.columnSize, blockEnd.block.formattedChar)
+            );
+            row.addAll(
+                blockStart.blockPositionInBlockList+1,
+                bufferToDraw.rows.get(r).stream()
+                    .map(b -> new FormattedCharBlock(b.blockStartIndex + colIndex, b.formattedChar))
+                    .collect(Collectors.toList())
+            );
+        }
     };
 
     /**
