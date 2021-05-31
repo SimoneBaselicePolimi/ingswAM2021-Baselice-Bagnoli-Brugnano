@@ -271,6 +271,10 @@ public class FormattedCharsBuffer {
         resetDisplay();
     }
 
+    public FormattedChar getDefaultFormattedChar() {
+        return defaultFormattedChar;
+    }
+
     public int getRowSize() {
         return rowSize;
     }
