@@ -12,6 +12,7 @@ public class GridView extends CliView {
     final int numOfRows, numOfColumns;
     int borderSize;
     final int[] rowsWeight, colsWeight;
+    int rowUnitWeight, columnUnitWeight;
 
     Map<Integer, Map<Integer, CliView>> viewsInGrid;
 
@@ -63,8 +64,6 @@ public class GridView extends CliView {
 
     }
 
-    int rowUnitWeight;
-    int columnUnitWeight;
     /**
      *
      * @param viewRowIndex
@@ -90,7 +89,7 @@ public class GridView extends CliView {
      * @return (included)
      */
     protected int getRowEndIndex(int viewRowIndex) {
-        return getRowStartIndex(viewRowIndex) + rowUnitWeight *rowsWeight[viewRowIndex];
+        return getRowStartIndex(viewRowIndex) + rowUnitWeight*rowsWeight[viewRowIndex] - 1;
     }
 
     /**
@@ -118,7 +117,7 @@ public class GridView extends CliView {
      * @return (included)
      */
     protected int getColEndIndex(int viewColIndex) {
-        return getColStartIndex(viewColIndex) + columnUnitWeight *colsWeight[viewColIndex];
+        return getColStartIndex(viewColIndex) + columnUnitWeight*colsWeight[viewColIndex] - 1;
     }
 
     protected void checkIndexesBounds(int rowIndex, int colIndex) {
@@ -134,7 +133,7 @@ public class GridView extends CliView {
     }
 
     public void setRowWeight(int rowIndex, int weight) {
-        if(rowIndex < 0 || rowIndex >= numOfColumns)
+        if(rowIndex < 0 || rowIndex >= numOfRows)
             throw new IndexOutOfBoundsException();
         rowsWeight[rowIndex] = weight;
     }
@@ -142,7 +141,7 @@ public class GridView extends CliView {
     public void setColWeight(int colIndex, int weight) {
         if(colIndex < 0 || colIndex >= numOfColumns)
             throw new IndexOutOfBoundsException();
-        rowsWeight[colIndex] = weight;
+        colsWeight[colIndex] = weight;
     }
 
     public void setBorderStyle(BorderStyle borderStyle) {
