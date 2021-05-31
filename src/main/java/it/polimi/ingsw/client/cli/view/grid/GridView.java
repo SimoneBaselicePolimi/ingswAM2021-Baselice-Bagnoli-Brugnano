@@ -19,7 +19,6 @@ public class GridView extends CliView {
 
     BorderStyle borderStyle = new SingleCharBorderStyle(new FormattedChar(' '));
 
-
     public GridView(
         CliClientManager clientManager,
         int numOfRows,

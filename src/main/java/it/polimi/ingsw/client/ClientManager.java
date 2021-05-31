@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientManager {
 
+
     public static final int MESSAGE_QUEUE_SIZE = 1024;
 
     protected MessageSender serverSender;
@@ -24,6 +25,8 @@ public class ClientManager {
     protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<>(MESSAGE_QUEUE_SIZE);
 
     protected Player player;
+
+    protected GameState gameState;
 
     protected Map<String, Object> deserializationContextMap = new ConcurrentHashMap<>();
 
@@ -33,6 +36,7 @@ public class ClientManager {
 
     public ClientManager(MessageSender serverSender) {
         this.serverSender = serverSender;
+        gameState = GameState.PLAYER_REGISTRATION_AND_MATCHMAKING;
         Localization.getLocalizationInstance().setLocalizationLanguage("it");
         gameHistoryRepresentation = new ClientGameHistoryRepresentation(new ArrayList<>());
     }
@@ -99,6 +103,14 @@ public class ClientManager {
 
     public void setGameContextRepresentation(ClientGameContextRepresentation gameContextRepresentation) {
         this.gameContextRepresentation = gameContextRepresentation;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
 }
