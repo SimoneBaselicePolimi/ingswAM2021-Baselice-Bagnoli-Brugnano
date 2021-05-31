@@ -20,6 +20,18 @@ client:
       possibleUserChoices: "Puoi eseguire le seguenti azioni: "
       makeChoice: "Inserisci il numero corrispondente alla tua scelta: "
       invalidChoice: "Scelta non valida"
+      returnToMenu: "Torna al menu principale"
+    market:
+      rowChoice: "Prendi riga dal mercato"
+      columnChoice: "Prendi colonna dal mercato"
+      askForRowNumber: "Quale riga del mercato vuoi selezionare?"
+      askForColumnNumber: "Quale colonna del mercato vuoi selezionare?"
+      notifyPlayerRowNumberIsInvalid: "La riga selezionata non è una riga valida del mercato"
+      notifyPlayerColumnNumberIsInvalid: "La colonna selezionata non è una colonna valida del mercato"
+    devCardTable:
+      devCardChoice: "Compra carta sviluppo"
+      askForDevCardChoice: "Quale carta sviluppo vuoi comprare?"
+      askForDeckNumber: "In quale spazio della tua plancia personale vuoi mettere la carta sviluppo?"
 
 
 resources:

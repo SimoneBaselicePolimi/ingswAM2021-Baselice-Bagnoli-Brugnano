@@ -1,13 +1,23 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.UserChoicesUtils;
 
 public class FaithPathView extends CliView{
-    public FaithPathView(CliClientManager clientManager, int rowSize, int columnSize) {
-        super(clientManager, rowSize, columnSize);
+
+    protected GameView gameView;
+
+    public FaithPathView(CliClientManager clientManager, GameView gameView) {
+        super(clientManager);
+        this.gameView = gameView;
+        startFaithPathDialog();
     }
 
-    public FaithPathView(CliClientManager clientManager) {
-        super(clientManager);
+    void startFaithPathDialog() {
+        UserChoicesUtils.makeUserChoose(clientManager)
+            .addUserChoice(
+                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                "client.cli.game.returnToMenu"
+            ).apply();
     }
 }

@@ -1,13 +1,27 @@
-package it.polimi.ingsw.client.cli.view;
-
-import it.polimi.ingsw.client.cli.CliClientManager;
-
-public class PlayerDashboardView extends CliView{
-    public PlayerDashboardView(CliClientManager clientManager, int rowSize, int columnSize) {
-        super(clientManager, rowSize, columnSize);
-    }
-
-    public PlayerDashboardView(CliClientManager clientManager) {
-        super(clientManager);
-    }
-}
+//package it.polimi.ingsw.client.cli.view;
+//
+//import it.polimi.ingsw.client.cli.CliClientManager;
+//import it.polimi.ingsw.client.cli.UserChoicesUtils;
+//
+//public class PlayerDashboardView extends CliView{
+//
+//    protected GameView gameView;
+//    public PlayerDashboardView(CliClientManager clientManager, GameView gameView) {
+//        super(clientManager);
+//        this.gameView = gameView;
+//        startPlayerDashBoardDialog();
+//    }
+//
+//    void startPlayerDashBoardDialog() {
+//        UserChoicesUtils.makeUserChoose(clientManager)
+//            .addUserChoice(
+//                () -> clientManager.askUserLocalized("client.cli.devCardTable.askForDevCardChoice")
+//                    .thenCompose(input -> )
+//                "client.cli.devCardTable.devCardChoice"
+//            )
+//            .addUserChoice(
+//                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+//                "client.cli.game.returnToMenu"
+//            ).apply();
+//    }
+//}

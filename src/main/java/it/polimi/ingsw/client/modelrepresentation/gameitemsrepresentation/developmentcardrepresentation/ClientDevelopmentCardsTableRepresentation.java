@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardCol
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
 import java.util.Map;
+import java.util.Set;
 
 public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentation {
 
