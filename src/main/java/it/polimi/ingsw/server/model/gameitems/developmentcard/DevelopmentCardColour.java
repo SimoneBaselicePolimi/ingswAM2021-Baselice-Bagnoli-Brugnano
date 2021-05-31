@@ -12,12 +12,12 @@ import java.util.Map;
  * This enumeration lists all the Development Card Colours present in the Game.
  */
 public enum DevelopmentCardColour {
-	@JsonProperty("GREEN") GREEN("developmentCard.colours.green"),
-	@JsonProperty("BLUE") BLUE(""),
-	@JsonProperty("YELLOW") YELLOW(""),
-	@JsonProperty("PURPLE") PURPLE("");
+	@JsonProperty("GREEN") GREEN("developmentCards.colours.green"),
+	@JsonProperty("BLUE") BLUE("developmentCards.colours.blue"),
+	@JsonProperty("YELLOW") YELLOW("developmentCards.colours.yellow"),
+	@JsonProperty("PURPLE") PURPLE("developmentCards.colours.purple");
 
-	static DevelopmentCardColour getColourFromLocalizedName(String colour) {
+	public static DevelopmentCardColour getColourFromLocalizedName(String colour) {
 	    for(DevelopmentCardColour c : DevelopmentCardColour.values())
 	    	if(c.getColourNameLocalized().equals(colour.toLowerCase(Locale.ROOT)))
 	    		return c;

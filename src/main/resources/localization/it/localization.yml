@@ -30,9 +30,12 @@ client:
       notifyPlayerColumnNumberIsInvalid: "La colonna selezionata non è una colonna valida del mercato"
     devCardTable:
       devCardChoice: "Compra carta sviluppo"
-      askForDevCardChoice: "Quale carta sviluppo vuoi comprare?"
+      askForDevCardColourChoice: "Inserisci il colore della carta sviluppo che vuoi comprare:"
+      askForDevCardLevelChoice: "Inserisci il livello della carta sviluppo che vuoi comprare:"
       askForDeckNumber: "In quale spazio della tua plancia personale vuoi mettere la carta sviluppo?"
-
+      notifyPlayerDevCardColourIsInvalid: "Il colore selezionato non è valido"
+      notifyPlayerDevCardLevelIsInvalid: "Il livello selezionato non è valido"
+      notifyPlayerDeckIsEmpty: "Il mazzo selezionato è vuoto"
 
 resources:
   coins:
@@ -48,6 +51,13 @@ resources:
     singular: pietra
     plural: pietre
   finalMessage: Il gioco è iniziato
+
+developmentCards:
+  colours:
+    yellow: "giallo"
+    green: "verde"
+    purple: "viola"
+    blue: "blu"
 
 gameHistory:
 
