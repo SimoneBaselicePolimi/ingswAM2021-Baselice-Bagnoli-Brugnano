@@ -36,6 +36,10 @@ client:
       notifyPlayerDevCardColourIsInvalid: "Il colore selezionato non è valido"
       notifyPlayerDevCardLevelIsInvalid: "Il livello selezionato non è valido"
       notifyPlayerDeckIsEmpty: "Il mazzo selezionato è vuoto"
+    playerDashboard:
+      activateProduction: "Attiva produzioni"
+      leaderCardList: "Guarda carte leader"
+
 
 resources:
   coins:

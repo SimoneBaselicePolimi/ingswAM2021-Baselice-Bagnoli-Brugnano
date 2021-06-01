@@ -7,9 +7,12 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardst
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ClientPlayerContextRepresentation extends ClientRepresentation {
     private final Player player;
@@ -99,5 +102,4 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     public void setNumberOfLeaderCardsThePlayerOwns(int numberOfLeaderCardsThePlayerOwns) {
         this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
     }
-
 }

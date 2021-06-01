@@ -9,10 +9,9 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.develo
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
 import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +20,10 @@ import java.util.concurrent.CompletableFuture;
 public class DevCardTableView extends CliView{
 
     protected GameView gameView;
+    protected DevelopmentCardColour colour;
+    protected DevelopmentCardLevel level;
+    protected int deckNumber;
+
     ClientDevelopmentCardsTableRepresentation table = clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
     Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>> oneLevelCards;
     Player activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
@@ -35,6 +38,18 @@ public class DevCardTableView extends CliView{
     void startDevCardTableDialog() {
         UserChoicesUtils.makeUserChoose(clientManager)
             .addUserChoice(
+                () -> askPlayerForDevCardLevelChoice()
+                    .thenCompose(developmentCard ->
+                        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                            new DevelopmentActionClientRequest(
+                                activePlayer,
+                                developmentCard,
+                                deckNumber
+                            )
+                    ))),
+                "client.cli.devCardTable.devCardChoice"
+            )
+            .addUserChoice(
                 () -> gameView.setMainContentView(new MainMenuView(clientManager)),
                 "client.cli.game.returnToMenu"
             ).apply();
@@ -44,8 +59,9 @@ public class DevCardTableView extends CliView{
         return clientManager.askUserLocalized("client.cli.devCardTable.askForDevCardLevelChoice")
             .thenCompose(levelInput -> {
                 int intLevelInput = Integer.parseInt(levelInput);
-                if (DevelopmentCardLevel.forValue(intLevelInput) != null)
-                    return askPlayerForDevCardColourChoice(DevelopmentCardLevel.forValue(intLevelInput));
+                this.level = DevelopmentCardLevel.forValue(intLevelInput);
+                if (level != null)
+                    return askPlayerForDevCardColourChoice();
                 else {
                     clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerDevCardLevelIsInvalid");
                     return askPlayerForDevCardLevelChoice();
@@ -53,41 +69,50 @@ public class DevCardTableView extends CliView{
             });
     }
 
-    CompletableFuture<Integer> askPlayerForDevCardColourChoice(DevelopmentCardLevel level) {
+    CompletableFuture<Integer> askPlayerForDevCardColourChoice() {
         return clientManager.askUserLocalized("client.cli.devCardTable.askForDevCardColourChoice")
             .thenCompose(colourInput -> {
-                DevelopmentCardColour colour = DevelopmentCardColour.getColourFromLocalizedName(colourInput);
+                this.colour = DevelopmentCardColour.getColourFromLocalizedName(colourInput);
                 if (colour != null) {
                     oneLevelCards = new HashMap<>(table.getCards().get(level));
                     if (oneLevelCards.get(colour) != null)
-                        return checkThePlayerHasNecessaryResources(level, colour);
+                        return checkThePlayerHasNecessaryResources();
                     else
                         clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerDeckIsEmpty");
                         return askPlayerForDevCardLevelChoice();
                 }
                 else {
                     clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerDevCardColourIsInvalid");
-                    return askPlayerForDevCardColourChoice(level);
+                    return askPlayerForDevCardColourChoice();
                 }
             });
     }
 
     //TODO
-    private CompletableFuture<Integer> checkThePlayerHasNecessaryResources(
-        DevelopmentCardLevel level,
-        DevelopmentCardColour colour
-    ){
+    private CompletableFuture<Integer> checkThePlayerHasNecessaryResources(){
+        playerContextActivePlayer.
         return null;
     }
+    //Map<ResourceType, Integer> playerResources = playerContext.getAllResources();
+    //        for (ResourceType resourceType : requestToValidate.developmentCard.getPurchaseCost().keySet()) {
+    //            if (!playerResources.containsKey(resourceType)
+    //                || playerResources.get(resourceType) < requestToValidate.developmentCard.getPurchaseCost().get(resourceType)
+    //            )
+    //                return createInvalidRequestServerMessage(
+    //                    "The player does not have the resources needed to obtain the development card"
+    //                );
+    //        }
 
     //TODO
 //    CompletableFuture<Integer> askPlayerForDeckNumber(){
 //        return clientManager.askUserLocalized("client.cli.devCardTable.askForDeckNumber")
 //            .thenCompose(input -> {
 //                int intInput = Integer.parseInt(input);
+//                this.deckNumber = intInput;
 //                if(playerContextActivePlayer
 //            });
 //    }
+
 
 }
 
