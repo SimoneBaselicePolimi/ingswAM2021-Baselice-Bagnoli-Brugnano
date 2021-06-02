@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class LeaderCardListView extends CliView {
     protected List<List<ClientLeaderCardRepresentation>> pages;
     protected int currentPageIndex;
     protected boolean enumerateCards;
-    protected Map<ClientLeaderCardRepresentation, Boolean> selectedCard;
+    protected Map<ClientLeaderCardRepresentation, Boolean> selectedCard = new HashMap<>();
 
     public LeaderCardListView(
         List<ClientLeaderCardRepresentation> cardsToView,

@@ -22,7 +22,8 @@ public class GameSetupChoicesView extends CliView {
     protected LabelView cardsLeftToChooseLabel;
     protected LeaderCardListView cardListView;
 
-    int cardsToChoose;
+    List<ClientLeaderCardRepresentation> alreadySelectedCards = new ArrayList<>();
+    int cardsLeftToChoose;
 
     public GameSetupChoicesView(
         List<ClientLeaderCardRepresentation> leaderCardsToChooseFrom,
@@ -32,7 +33,7 @@ public class GameSetupChoicesView extends CliView {
     ) {
         super(clientManager);
         this.gameView = gameView;
-        cardsToChoose = numberOfLeaderCardsToChoose;
+        cardsLeftToChoose = numberOfLeaderCardsToChoose;
 
         container = new GridView(clientManager, 3, 1, 1);
         addChildView(container, 0,0);
@@ -65,29 +66,27 @@ public class GameSetupChoicesView extends CliView {
 
     @Override
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
-        if(cardsToChoose > 1)
-            cardsLeftToChooseLabel.setText(FormattedChar.convertStringToFormattedCharList(
-                Localization.getLocalizationInstance().getString(
-                    "client.cli.gameSetup.leaderCardsToChooseInfo.plural",
-                    cardsToChoose
-                ),
-                CliColour.WHITE,
-                CliColour.BLACK,
-                false,
-                true,
-                false
-            ));
+
+        String localizedText;
+        if(cardsLeftToChoose > 1)
+            localizedText = Localization.getLocalizationInstance().getString(
+                "client.cli.gameSetup.leaderCardsToChooseInfo.plural",
+                cardsLeftToChoose
+            );
         else
-            cardsLeftToChooseLabel.setText(FormattedChar.convertStringToFormattedCharList(
-                Localization.getLocalizationInstance().getString(
-                    "client.cli.gameSetup.leaderCardsToChooseInfo.singular"
-                ),
-                CliColour.WHITE,
-                CliColour.BLACK,
-                false,
-                true,
-                false
-            ));
+            localizedText = Localization.getLocalizationInstance().getString(
+                "client.cli.gameSetup.leaderCardsToChooseInfo.singular"
+            );
+
+        cardsLeftToChooseLabel.setText(FormattedChar.convertStringToFormattedCharList(
+            localizedText,
+            CliColour.WHITE,
+            CliColour.BLACK,
+            false,
+            true,
+            false
+        ));
+
         return super.getContentAsFormattedCharsBuffer();
     }
 
@@ -126,11 +125,8 @@ public class GameSetupChoicesView extends CliView {
             ).apply();
     }
 
-    CompletableFuture<List<ClientLeaderCardRepresentation>> selectCards(
-        List<ClientLeaderCardRepresentation> alreadySelectedCards,
-        int cardsLeftToSelect
-    ) {
-        if(cardsLeftToSelect == 0) {
+    CompletableFuture<List<ClientLeaderCardRepresentation>> selectCards() {
+        if(cardsLeftToChoose == 0) {
             return CompletableFuture.completedFuture(alreadySelectedCards);
         } else {
             return clientManager.askUserLocalized("client.cli.gameSetup.leaderCardsDialog.choose")
@@ -138,14 +134,16 @@ public class GameSetupChoicesView extends CliView {
                         int intInput = parseInt(input);
                         cardListView.selectCard(intInput);
                         alreadySelectedCards.add(cardListView.getLeaderCardViewByNumber(intInput));
-                        return selectCards(alreadySelectedCards, cardsLeftToSelect - 1);
+                        cardsLeftToChoose--;
+                        updateView();
+                        return selectCards();
                     }
                 );
         }
     }
 
     void startLeaderCardChoiceDialog() {
-       selectCards(new ArrayList<>(), cardsToChoose)
+    selectCards()
 //           .thenCompose(chosenCards ->
 //
 //           )
