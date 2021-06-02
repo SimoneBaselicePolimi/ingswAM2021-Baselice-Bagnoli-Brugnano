@@ -3,11 +3,12 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
-import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -23,6 +24,7 @@ public class DevCardTableView extends CliView{
     protected DevelopmentCardColour colour;
     protected DevelopmentCardLevel level;
     protected int deckNumber;
+    protected ClientDevelopmentCardRepresentation developmentCard;
 
     ClientDevelopmentCardsTableRepresentation table = clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
     Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>> oneLevelCards;
@@ -36,23 +38,34 @@ public class DevCardTableView extends CliView{
     }
 
     void startDevCardTableDialog() {
-        UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoice(
-                () -> askPlayerForDevCardLevelChoice()
-                    .thenCompose(developmentCard ->
-                        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-                            new DevelopmentActionClientRequest(
-                                activePlayer,
-                                developmentCard,
-                                deckNumber
-                            )
-                    ))),
-                "client.cli.devCardTable.devCardChoice"
-            )
-            .addUserChoice(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                "client.cli.game.returnToMenu"
-            ).apply();
+
+        if (clientManager.getPlayer().equals(activePlayer)) {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> askPlayerForDevCardLevelChoice()
+                        .thenCompose(input ->
+                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                                new DevelopmentActionClientRequest(
+                                    activePlayer,
+                                    developmentCard,
+                                    deckNumber
+                                )
+                            ))),
+                    "client.cli.devCardTable.devCardChoice"
+                )
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
+                ).apply();
+        }
+
+        else{
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
+                ).apply();
+        }
     }
 
     CompletableFuture<Integer> askPlayerForDevCardLevelChoice (){
@@ -75,8 +88,10 @@ public class DevCardTableView extends CliView{
                 this.colour = DevelopmentCardColour.getColourFromLocalizedName(colourInput);
                 if (colour != null) {
                     oneLevelCards = new HashMap<>(table.getCards().get(level));
-                    if (oneLevelCards.get(colour) != null)
+                    if (oneLevelCards.get(colour) != null) {
+                        developmentCard = oneLevelCards.get(colour).cardOnTop;
                         return checkThePlayerHasNecessaryResources();
+                    }
                     else
                         clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerDeckIsEmpty");
                         return askPlayerForDevCardLevelChoice();
@@ -103,16 +118,22 @@ public class DevCardTableView extends CliView{
     //                );
     //        }
 
-    //TODO
-//    CompletableFuture<Integer> askPlayerForDeckNumber(){
-//        return clientManager.askUserLocalized("client.cli.devCardTable.askForDeckNumber")
-//            .thenCompose(input -> {
-//                int intInput = Integer.parseInt(input);
-//                this.deckNumber = intInput;
-//                if(playerContextActivePlayer
-//            });
-//    }
-
-
+    CompletableFuture<Integer> askPlayerForDeckNumber() {
+        return clientManager.askUserLocalized("client.cli.devCardTable.askForDeckNumber")
+            .thenCompose(input -> {
+                int intInput = Integer.parseInt(input);
+                this.deckNumber = intInput;
+                ClientPlayerOwnedDevelopmentCardDeckRepresentation playerDeck = playerContextActivePlayer.getDevelopmentCardDecks().get(deckNumber);
+                if (!playerDeck.getCardDeck().isEmpty() && playerDeck.getCardDeck().peek().getLevel().toValue() < developmentCard.getLevel().toValue())
+                    return CompletableFuture.completedFuture(intInput);
+                else {
+                    clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerDeckNumberIsInvalid");
+                    // if I ask him again for the deckNumber the game could be stopped:
+                    // the player might not have valid spaces on which to place the card.
+                    // I have to ask him for the level again.
+                    return askPlayerForDevCardLevelChoice();
+                }
+            });
+    }
 }
 

@@ -36,9 +36,12 @@ client:
       notifyPlayerDevCardColourIsInvalid: "Il colore selezionato non è valido"
       notifyPlayerDevCardLevelIsInvalid: "Il livello selezionato non è valido"
       notifyPlayerDeckIsEmpty: "Il mazzo selezionato è vuoto"
+      notifyPlayerDeckNumberIsInvalid: "Non puoi mettere la carta sviluppo in questo spazio della tua plancia personale"
     playerDashboard:
       activateProduction: "Attiva produzioni"
       leaderCardList: "Guarda carte leader"
+      askPlayerForProductionsChoice: "Quali produzioni vuoi attivare?"
+      notifyPlayerProductionsAreInvalid: "Le produzioni selezionate non sono attivabili"
 
 
 resources:

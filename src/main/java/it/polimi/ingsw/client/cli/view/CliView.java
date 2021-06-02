@@ -2,12 +2,15 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
+import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.server.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CliView extends View {
+
 
     protected static class ChildCliView {
 

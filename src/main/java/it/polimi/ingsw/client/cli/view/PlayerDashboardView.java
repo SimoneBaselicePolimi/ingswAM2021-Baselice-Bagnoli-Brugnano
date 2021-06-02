@@ -3,9 +3,10 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
-import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
@@ -18,9 +19,8 @@ public class PlayerDashboardView extends CliView{
 
     Player activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
     ClientPlayerContextRepresentation playerContextActivePlayer = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
-    //TODO
-    //ClientProductionRepresentation?? La client request vuole una production reale
-    protected Set<Production> productions;
+
+    protected Set<ClientProductionRepresentation> productions;
     protected Map<ResourceType, Integer> starResourceCost;
     protected Map<ResourceType, Integer> starResourceReward;
 
@@ -32,31 +32,57 @@ public class PlayerDashboardView extends CliView{
     }
 
     void startPlayerDashBoardDialog() {
-        UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoice(
-                () -> askPlayerForProductions()
-                    .thenCompose(input ->
-                        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-                            new ProductionActionClientRequest(
-                                activePlayer,
-                                productions,
-                                starResourceCost,
-                                starResourceReward
-                            )
-                    ))),
-                "client.cli.playerDashboard.activateProduction"
-            )
-            .addUserChoice(
-                () -> gameView.setMainContentView(new LeaderCardListView()),
-                "client.cli.playerDashboard.leaderCardList"
-            )
-            .addUserChoice(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                "client.cli.game.returnToMenu"
-            ).apply();
+
+        if (clientManager.getPlayer().equals(activePlayer)) {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> askPlayerForProductions()
+                        .thenCompose(input ->
+                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                                new ProductionActionClientRequest(
+                                    activePlayer,
+                                    productions,
+                                    starResourceCost,
+                                    starResourceReward
+                                )
+                            ))),
+                    "client.cli.playerDashboard.activateProduction"
+                )
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new LeaderCardsInDashBoardView(clientManager, clientManager.getPlayer())),
+                    "client.cli.playerDashboard.leaderCardList"
+                )
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
+                ).apply();
+        }
+
+        else {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new LeaderCardsInDashBoardView(clientManager, clientManager.getPlayer())),
+                    "client.cli.playerDashboard.leaderCardList"
+                )
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
+                ).apply();
+        }
     }
 
     CompletableFuture<Integer> askPlayerForProductions () {
+        return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForProductionsChoice")
+            .thenCompose(input -> {
+
+                if()
+                    return askPlayerForStarResourceCost();
+                else{
+                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionsAreInvalid");
+                    return askPlayerForProductions();
+                }
+
+            }
         return askPlayerForStarResourceCost();
     }
 
