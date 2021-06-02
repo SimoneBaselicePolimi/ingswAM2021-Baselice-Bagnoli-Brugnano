@@ -30,9 +30,9 @@ public class GameSetupChoicesView extends CliView {
         this.gameView = gameView;
         cardsLeftToChoose = numberOfLeaderCardsToChoose;
 
-        container = new GridView(clientManager, 4, 1, 1);
+        container = new GridView(clientManager, 3, 1, 1);
         addChildView(container, 0,0);
-        container.setRowWeight(3, 7);
+        container.setRowWeight(2, 10);
 
         container.setView(
             0,
@@ -51,10 +51,10 @@ public class GameSetupChoicesView extends CliView {
         );
 
         cardsLeftToChooseLabel = new LabelView(List.of(), clientManager);
-        container.setView(2, 0, cardsLeftToChooseLabel);
+        container.setView(1, 0, cardsLeftToChooseLabel);
 
         cardListView = new LeaderCardListView(leaderCardsToChooseFrom, true, clientManager);
-        container.setView(3, 0, cardListView);
+        container.setView(2, 0, cardListView);
 
         startDialog();
     }
@@ -123,6 +123,7 @@ public class GameSetupChoicesView extends CliView {
     }
 
     void startLeaderCardChoiceDialog() {
+        clientManager.tellUser("wdwwddwddd");
 
     }
 

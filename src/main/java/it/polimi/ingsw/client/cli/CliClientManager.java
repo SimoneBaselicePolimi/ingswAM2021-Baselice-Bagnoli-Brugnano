@@ -39,7 +39,6 @@ public class CliClientManager extends ClientManager {
     }
 
     public synchronized void handleUserInput(String input) {
-        userIOLogger.logMessageFromUser(input);
         if(userAnswerable != null)
             userAnswerable.complete(input);
         else

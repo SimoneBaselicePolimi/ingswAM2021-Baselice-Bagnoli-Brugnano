@@ -53,19 +53,19 @@ public class UserConsole extends CliView implements UserIOLogger {
         }
         FormattedCharsBuffer textBuffer = FormattedCharsBufferUtils.createBufferForText(
             text,
-            columnSize,
+            columnSize-2,
             FormattedCharsBufferUtils.HorizontalAlignment.LEFT
         );
-        if(textBuffer.getRowSize() > rowSize) {
-            return textBuffer.crop(
-                textBuffer.getRowSize()-rowSize,
+        if(textBuffer.getRowSize() > rowSize)
+            textBuffer = textBuffer.crop(
+                textBuffer.getRowSize() - rowSize,
                 0,
                 textBuffer.getRowSize()-1,
-                columnSize
+                columnSize - 1 - 2
             );
-        } else {
-            return textBuffer;
-        }
+        FormattedCharsBuffer buffer = new FormattedCharsBuffer(rowSize, columnSize);
+        buffer.drawOnTop(0, 1, textBuffer);
+        return buffer;
     }
 
     @Override

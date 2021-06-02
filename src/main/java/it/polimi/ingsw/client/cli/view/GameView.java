@@ -31,7 +31,9 @@ public class GameView extends CliView {
 
         upperRowGrid.setView(0, 1, new GameHistoryView(clientManager));
 
-        bottomRowGrid.setView(0, 0, new UserConsole(clientManager));
+        UserConsole console = new UserConsole(clientManager);
+        bottomRowGrid.setView(0, 0, console);
+        clientManager.setNewUserIOLogger(console);
 
     }
 
@@ -41,6 +43,7 @@ public class GameView extends CliView {
         }
         currentContentView = contentView;
         upperRowGrid.setView(0, 0, contentView);
+        updateView();
     }
 
 

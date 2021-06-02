@@ -90,7 +90,7 @@ public class PreGameView extends CliView {
                     clientManager,
                     gameView
                 ));
-                gameView.print();
+                //gameView.print();
                 return CompletableFuture.completedFuture(null);
             }).elseCompute(message -> {
                 clientManager.tellUserLocalized("client.errors.unexpectedServerMessage");

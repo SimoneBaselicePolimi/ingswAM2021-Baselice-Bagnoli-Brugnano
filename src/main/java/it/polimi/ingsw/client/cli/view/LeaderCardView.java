@@ -8,8 +8,8 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leader
 
 public class LeaderCardView extends CliView {
 
-    public static int LEADER_CARD_ROW_SIZE = 7;
-    public static int LEADER_CARD_COL_SIZE = 12;
+    public static int LEADER_CARD_ROW_SIZE = 8;
+    public static int LEADER_CARD_COL_SIZE = 18;
 
     protected ClientLeaderCardRepresentation card;
 

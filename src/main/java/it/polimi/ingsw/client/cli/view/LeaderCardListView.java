@@ -24,11 +24,9 @@ public class LeaderCardListView extends CliView {
         int rowSize,
         int columnSize
     ) {
-        super(clientManager, rowSize, columnSize);
-        this.cardsToView = cardsToView;
-        this.enumerateCards = enumerateCards;
-
-        setPage(0);
+        this(cardsToView, enumerateCards, clientManager);
+        this.rowSize = rowSize;
+        this.columnSize = columnSize;
     }
 
     public LeaderCardListView(
@@ -37,6 +35,10 @@ public class LeaderCardListView extends CliView {
         CliClientManager clientManager
     ) {
         super(clientManager);
+        this.cardsToView = cardsToView;
+        this.enumerateCards = enumerateCards;
+
+        currentPageIndex = 0;
     }
 
     public void setPage(int pageIndex) {
@@ -51,8 +53,8 @@ public class LeaderCardListView extends CliView {
             1,
             page.size(),
             SPACE_BETWEEN_CARDS,
-            containerColSize,
-            containerRowSize
+            containerRowSize,
+            containerColSize
         );
         for (int i = 0; i < page.size(); i++) {
             container.setView(0, i, new LeaderCardView(clientManager, page.get(i)));
@@ -61,7 +63,7 @@ public class LeaderCardListView extends CliView {
     }
 
     protected void computePages() {
-        int maxPageSize = (rowSize-SPACE_BETWEEN_CARDS)/(LeaderCardView.LEADER_CARD_COL_SIZE+SPACE_BETWEEN_CARDS);
+        int maxPageSize = (columnSize-SPACE_BETWEEN_CARDS)/(LeaderCardView.LEADER_CARD_COL_SIZE+SPACE_BETWEEN_CARDS);
         pages = new ArrayList<>();
         List<ClientLeaderCardRepresentation> currentPage = new ArrayList<>();
         for(ClientLeaderCardRepresentation card : cardsToView) {
@@ -88,6 +90,12 @@ public class LeaderCardListView extends CliView {
             children.clear();
         }
         addChildView(container, rowIndex, colIndex);
+    }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+        setPage(currentPageIndex);
+        return super.getContentAsFormattedCharsBuffer();
     }
 
 }
