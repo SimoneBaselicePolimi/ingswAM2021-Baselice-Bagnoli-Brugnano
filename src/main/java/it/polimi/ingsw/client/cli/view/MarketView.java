@@ -4,14 +4,18 @@ import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
-import it.polimi.ingsw.network.clientrequest.MarketActionFetchColumnClientRequest;
-import it.polimi.ingsw.network.clientrequest.MarketActionFetchRowClientRequest;
+import it.polimi.ingsw.client.clientrequest.MarketActionFetchColumnClientRequest;
+import it.polimi.ingsw.client.clientrequest.MarketActionFetchRowClientRequest;
+import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
+import it.polimi.ingsw.server.model.Player;
 
 import java.util.concurrent.CompletableFuture;
 
 public class MarketView extends CliView{
 
     protected GameView gameView;
+    Player activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
+    ClientPlayerContextRepresentation playerContextActivePlayer = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
 
     public MarketView(CliClientManager clientManager, GameView gameView) {
         super(clientManager);
@@ -23,31 +27,41 @@ public class MarketView extends CliView{
 
         //if(clientManager.getGameState().equals(GameState.GAME_SETUP))
 
-        UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoice(
-                () -> askPlayerForRowNumber()
-                    .thenCompose(rowNumber ->
-                        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-                            new MarketActionFetchRowClientRequest(
-                                clientManager.getGameContextRepresentation().getActivePlayer(),
-                                rowNumber
-                            )
-                    ))),
-                "client.cli.market.rowChoice"
-            ).addUserChoice(
-                () -> askPlayerForColumnNumber()
-                    .thenCompose(columnNumber ->
-                        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-                            new MarketActionFetchColumnClientRequest(
-                                clientManager.getGameContextRepresentation().getActivePlayer(),
-                                columnNumber
-                            )
-                    ))),
-                "client.cli.market.columnChoice"
-            ).addUserChoice(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                "client.cli.game.returnToMenu"
+        if (clientManager.getPlayer().equals(activePlayer)) {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> askPlayerForRowNumber()
+                        .thenCompose(rowNumber ->
+                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                                new MarketActionFetchRowClientRequest(
+                                    clientManager.getGameContextRepresentation().getActivePlayer(),
+                                    rowNumber
+                                )
+                        ))),
+                    "client.cli.market.rowChoice"
+                ).addUserChoice(
+                    () -> askPlayerForColumnNumber()
+                        .thenCompose(columnNumber ->
+                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                                new MarketActionFetchColumnClientRequest(
+                                    clientManager.getGameContextRepresentation().getActivePlayer(),
+                                    columnNumber
+                                )
+                         ))),
+                    "client.cli.market.columnChoice"
+                ).addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
             ).apply();
+        }
+
+        else{
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
+                ).apply();
+        }
     }
 
     CompletableFuture<Integer> askPlayerForRowNumber (){
