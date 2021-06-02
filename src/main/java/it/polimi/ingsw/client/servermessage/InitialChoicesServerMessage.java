@@ -12,15 +12,18 @@ public class InitialChoicesServerMessage extends GameUpdateServerMessage {
     @SerializeAsSetOfIds
     public final Set<ClientLeaderCardRepresentation> leaderCardsGivenToThePlayer;
 
+    public final int numberOfLeaderCardsToKeep;
     public final int numberOfStarResources;
 
     public InitialChoicesServerMessage(
         @JsonProperty("gameUpdates") Set<ClientGameUpdate> gameUpdates,
         @JsonProperty("leaderCardsGivenToThePlayer") Set<ClientLeaderCardRepresentation> leaderCardsGivenToThePlayer,
+        @JsonProperty("numberOfLeaderCardsToKeep") int numberOfLeaderCardsToKeep,
         @JsonProperty("numberOfStarResources") int numberOfStarResources
     ) {
         super(gameUpdates);
         this.leaderCardsGivenToThePlayer = leaderCardsGivenToThePlayer;
+        this.numberOfLeaderCardsToKeep = numberOfLeaderCardsToKeep;
         this.numberOfStarResources = numberOfStarResources;
     }
 }

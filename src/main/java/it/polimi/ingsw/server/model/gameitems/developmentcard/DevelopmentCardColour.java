@@ -3,10 +3,8 @@ package it.polimi.ingsw.server.model.gameitems.developmentcard;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.localization.Localization;
-import it.polimi.ingsw.localization.LocalizationUtils;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * This enumeration lists all the Development Card Colours present in the Game.

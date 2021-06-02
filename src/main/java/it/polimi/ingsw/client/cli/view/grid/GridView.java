@@ -159,8 +159,8 @@ public class GridView extends CliView {
                    int viewColEndIndex = getColEndIndex(colIndex);
 
                    CliView view = viewsInGrid.get(rowIndex).get(colIndex);
-                   view.setRowSize(viewRowEndIndex - viewRowStartIndex);
-                   view.setColumnSize(viewColEndIndex - viewColStartIndex);
+                   view.setRowSize(viewRowEndIndex - viewRowStartIndex + 1);
+                   view.setColumnSize(viewColEndIndex - viewColStartIndex + 1);
 
                    ChildCliView childCliView = children.stream().filter(c -> c.getView() == view).findAny().get();
                    children.set(

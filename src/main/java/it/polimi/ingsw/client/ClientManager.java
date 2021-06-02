@@ -23,7 +23,7 @@ public class ClientManager {
     protected CompletableFuture<ServerMessage> serverAnswerable = null;
     protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<>(MESSAGE_QUEUE_SIZE);
 
-    protected Player player;
+    protected Player myPlayer;
 
     protected GameState gameState;
 
@@ -64,12 +64,12 @@ public class ClientManager {
         return serverSender;
     }
 
-    public Player getPlayer() {
-        return player;
+    public Player getMyPlayer() {
+        return myPlayer;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setMyPlayer(Player myPlayer) {
+        this.myPlayer = myPlayer;
     }
 
     public void addEntryToDeserializationContextMap(String key, Object value) {

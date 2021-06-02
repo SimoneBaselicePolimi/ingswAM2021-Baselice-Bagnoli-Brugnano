@@ -15,7 +15,8 @@ public class FormattedChar {
     public static final String RGB_BG_COLOR_CODE_PREFIX = "48;2";
 
     public static final String BOLD_CODE = "1";
-    public static final String DISABLE_BOLD_CODE = "21";
+    public static final String DISABLE_BOLD_CODE = "21;24"; //Minor: weirdly disabling bold using code 21 actives
+    // underline, thus we also need code 24 to deactivate underline
 
     public static final String ITALIC_CODE = "3";
     public static final String DISABLE_ITALIC_CODE = "23";

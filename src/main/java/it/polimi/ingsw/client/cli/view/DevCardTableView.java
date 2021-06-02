@@ -36,23 +36,23 @@ public class DevCardTableView extends CliView{
     }
 
     void startDevCardTableDialog() {
-        UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoice(
-                () -> askPlayerForDevCardLevelChoice()
-                    .thenCompose(developmentCard ->
-                        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-                            new DevelopmentActionClientRequest(
-                                activePlayer,
-                                developmentCard,
-                                deckNumber
-                            )
-                    ))),
-                "client.cli.devCardTable.devCardChoice"
-            )
-            .addUserChoice(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                "client.cli.game.returnToMenu"
-            ).apply();
+//        UserChoicesUtils.makeUserChoose(clientManager)
+//            .addUserChoice(
+//                () -> askPlayerForDevCardLevelChoice()
+//                    .thenCompose(developmentCard ->
+//                        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+//                            new DevelopmentActionClientRequest(
+//                                activePlayer,
+//                                developmentCard,
+//                                deckNumber
+//                            )
+//                    ))),
+//                "client.cli.devCardTable.devCardChoice"
+//            )
+//            .addUserChoice(
+//                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+//                "client.cli.game.returnToMenu"
+//            ).apply();
     }
 
     CompletableFuture<Integer> askPlayerForDevCardLevelChoice (){
@@ -90,7 +90,7 @@ public class DevCardTableView extends CliView{
 
     //TODO
     private CompletableFuture<Integer> checkThePlayerHasNecessaryResources(){
-        playerContextActivePlayer.
+        //playerContextActivePlayer.
         return null;
     }
     //Map<ResourceType, Integer> playerResources = playerContext.getAllResources();

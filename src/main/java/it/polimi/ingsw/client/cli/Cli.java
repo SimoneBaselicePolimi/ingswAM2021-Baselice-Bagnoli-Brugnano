@@ -41,13 +41,13 @@ public class Cli {
                 ).elseIfMessageTypeCompute(
                     PlayerCanCreateNewLobbyServerMessage.class,
                     message -> {
-                        clientManager.setPlayer(new Player(newPlayerName.get()));
+                        clientManager.setMyPlayer(new Player(newPlayerName.get()));
                         return CompletableFuture.completedFuture(message);
                     }
                 ).elseIfMessageTypeCompute(
                     NewPlayerEnteredNewGameLobbyServerMessage.class,
                     message -> {
-                        clientManager.setPlayer(new Player(newPlayerName.get()));
+                        clientManager.setMyPlayer(new Player(newPlayerName.get()));
                         return CompletableFuture.completedFuture(message);
                     }
                 ).elseCompute(
@@ -90,7 +90,7 @@ public class Cli {
         NewPlayerEnteredNewGameLobbyServerMessage message
     ) {
         message.playersInLobby.forEach(player -> clientManager.getGameItemsManager().addItem(player));
-        if(!clientManager.getPlayer().equals(message.newPlayer))
+        if(!clientManager.getMyPlayer().equals(message.newPlayer))
             clientManager.tellUserLocalized(
                 "client.cli.setup.notifyPlayerEnteredInLobby",
                 message.newPlayer

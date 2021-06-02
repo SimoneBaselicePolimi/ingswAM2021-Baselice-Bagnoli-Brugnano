@@ -20,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CliClientManager extends ClientManager {
 
 
-    protected static final int DEFAULT_CONSOLE_DISPLAY_WIDTH = 150;
-    protected static final int DEFAULT_CONSOLE_DISPLAY_HEIGHT = 30;
+    protected static final int DEFAULT_CONSOLE_DISPLAY_WIDTH = 147;
+    protected static final int DEFAULT_CONSOLE_DISPLAY_HEIGHT = 32;
 
     protected ConsoleWriter consoleWriter;
 

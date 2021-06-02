@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.cli.view.grid;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 
-class LineBorderStyle extends BorderStyle {
+public class LineBorderStyle extends BorderStyle {
 
     FormattedChar horizontalChar = new FormattedChar('-');
     FormattedChar verticalChar = new FormattedChar('|');

@@ -158,6 +158,7 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 				player ->  new InitialChoicesServerMessage(
 					gameManager.getAllGameUpdates(),
 					leaderCardsGivenToThePlayers.get(player),
+                    numberOfLeadersCardsThePlayerKeeps,
 					numOfStarResourcesGivenToThePlayers.get(player)
 				)
 			));

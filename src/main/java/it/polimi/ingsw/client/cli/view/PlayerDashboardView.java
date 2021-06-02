@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
-import it.polimi.ingsw.network.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.network.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.Production;
@@ -46,10 +45,12 @@ public class PlayerDashboardView extends CliView{
                     ))),
                 "client.cli.playerDashboard.activateProduction"
             )
-            .addUserChoice(
-                () -> gameView.setMainContentView(new LeaderCardListView()),
-                "client.cli.playerDashboard.leaderCardList"
-            )
+//            .addUserChoice(
+//                () -> gameView.setMainContentView(new LeaderCardListView(
+//                    clientManager.getGameContextRepresentation().getPlayerContext(clientManager.getMyPlayer())
+//                )),
+//                "client.cli.playerDashboard.leaderCardList"
+//            )
             .addUserChoice(
                 () -> gameView.setMainContentView(new MainMenuView(clientManager)),
                 "client.cli.game.returnToMenu"

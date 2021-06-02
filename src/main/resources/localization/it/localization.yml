@@ -16,11 +16,27 @@ client:
       notifyRepresentationDownloaded: "[Info partita scaricate dal server]"
       notifyGameStarted: "Il gioco è iniziato"
       notifySetupIsStarting: "Inizia il setup del gioco!"
+    gameSetup:
+      gameSetupInfo: "PRE PARTITA"
+      leaderCardsToChooseInfo:
+        singular: "Devi ancora scegliere una carta leader"
+        plural: "Devi ancora scegliere %s carte leader"
+      chooseLeaderCards: "Scegli le tue carte leader"
+      leaderCardsDialog:
+        choose: "Scegli una carta leader: (inserisci il numero corrispondente)"
+        invalid: "Numero non valido. Inserisci il numero di una carta leader esistente"
+        alreadyChoosen: "Hai già scelto questa carta leader"
     game:
       possibleUserChoices: "Puoi eseguire le seguenti azioni: "
       makeChoice: "Inserisci il numero corrispondente alla tua scelta: "
       invalidChoice: "Scelta non valida"
       returnToMenu: "Torna al menu principale"
+    mainMenuActions:
+      openMarket: "Apri il mercato"
+      openDevCardsTable: "Apri il tavolo delle carte sviluppo"
+      openFaithPath: "Apri il percorso fede"
+      openPersonalDashboard: "Apri la tua plancia di gioco"
+      openDifferentPlayerDashboard: "Gaurda la dashboard di un altro giocatore"
     market:
       rowChoice: "Prendi riga dal mercato"
       columnChoice: "Prendi colonna dal mercato"

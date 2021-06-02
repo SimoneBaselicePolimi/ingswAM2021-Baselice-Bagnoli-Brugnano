@@ -10,11 +10,11 @@ import java.util.List;
 
 public class LeaderCardListView extends CliView {
 
-
     public static final int SPACE_BETWEEN_CARDS = 2;
 
     protected List<ClientLeaderCardRepresentation> cardsToView;
     protected List<List<ClientLeaderCardRepresentation>> pages;
+    protected int currentPageIndex;
     protected boolean enumerateCards;
 
     public LeaderCardListView(
@@ -27,17 +27,8 @@ public class LeaderCardListView extends CliView {
         super(clientManager, rowSize, columnSize);
         this.cardsToView = cardsToView;
         this.enumerateCards = enumerateCards;
-        int maxPageSize = (rowSize-SPACE_BETWEEN_CARDS)/(LeaderCardView.LEADER_CARD_COL_SIZE+SPACE_BETWEEN_CARDS);
-        pages = new ArrayList<>();
-        List<ClientLeaderCardRepresentation> currentPage = new ArrayList<>();
-        for(ClientLeaderCardRepresentation card : cardsToView) {
-            if (currentPage.size() >= maxPageSize) {
-                pages.add(currentPage);
-                currentPage = new ArrayList<>();
-            }
-            currentPage.add(card);
-        }
-        pages.add(currentPage);
+
+        setPage(0);
     }
 
     public LeaderCardListView(
@@ -46,11 +37,11 @@ public class LeaderCardListView extends CliView {
         CliClientManager clientManager
     ) {
         super(clientManager);
-        this.cardsToView = cardsToView;
-        this.enumerateCards = enumerateCards;
     }
 
     public void setPage(int pageIndex) {
+        currentPageIndex = pageIndex;
+        computePages();
         List<ClientLeaderCardRepresentation> page = pages.get(pageIndex);
         int containerColSize =
             SPACE_BETWEEN_CARDS + page.size()*(LeaderCardView.LEADER_CARD_COL_SIZE + SPACE_BETWEEN_CARDS);
@@ -67,6 +58,24 @@ public class LeaderCardListView extends CliView {
             container.setView(0, i, new LeaderCardView(clientManager, page.get(i)));
         }
         setCardsContainer(container, (rowSize-containerRowSize)/2, 0);
+    }
+
+    protected void computePages() {
+        int maxPageSize = (rowSize-SPACE_BETWEEN_CARDS)/(LeaderCardView.LEADER_CARD_COL_SIZE+SPACE_BETWEEN_CARDS);
+        pages = new ArrayList<>();
+        List<ClientLeaderCardRepresentation> currentPage = new ArrayList<>();
+        for(ClientLeaderCardRepresentation card : cardsToView) {
+            if (currentPage.size() >= maxPageSize) {
+                pages.add(currentPage);
+                currentPage = new ArrayList<>();
+            }
+            currentPage.add(card);
+        }
+        pages.add(currentPage);
+    }
+
+    public ClientLeaderCardRepresentation getLeaderCardByNumber(int enumerationNumber) {
+        return cardsToView.get(enumerationNumber-1);
     }
 
     protected GridView getCardsContainer() {

@@ -3,7 +3,10 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UnexpectedServerMessage;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
+import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
+import it.polimi.ingsw.client.cli.view.grid.SingleCharBorderStyle;
 import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
 import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage;
 import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
@@ -12,6 +15,7 @@ import it.polimi.ingsw.client.servermessage.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -21,13 +25,18 @@ public class PreGameView extends CliView {
         super(clientManager, rowSize, columnSize);
 
         GridView bordersContainer =
-            new GridView(clientManager, 1, 1, 1, rowSize, columnSize);
-        addChildView(bordersContainer, 0, 0);
+            new GridView(clientManager, 1, 1, 1, rowSize, columnSize-2);
+        bordersContainer.setBorderStyle(new LineBorderStyle());
+
+        GridView innerBordersContainer = new GridView(clientManager, 1, 1, 1);
+        innerBordersContainer.setBorderStyle(new SingleCharBorderStyle(new FormattedChar( ' ')));
+
+        addChildView(bordersContainer, 0, 1);
+        bordersContainer.setView(0,0, innerBordersContainer);
 
         UserConsole consoleView = new UserConsole(clientManager);
-        bordersContainer.setView(0, 0, consoleView);
+        innerBordersContainer.setView(0, 0, consoleView);
         clientManager.setNewUserIOLogger(consoleView);
-
 
         startPreGameSetup();
 
@@ -75,6 +84,12 @@ public class PreGameView extends CliView {
                     clientManager.getConsoleDisplayHeight(),
                     clientManager.getConsoleDisplayWidth()
                 );
+                gameView.setMainContentView(new GameSetupChoicesView(
+                    new ArrayList<>(initialChoicesServerMessage.leaderCardsGivenToThePlayer),
+                    initialChoicesServerMessage.numberOfLeaderCardsToKeep,
+                    clientManager,
+                    gameView
+                ));
                 gameView.print();
                 return CompletableFuture.completedFuture(null);
             }).elseCompute(message -> {
@@ -104,13 +119,13 @@ public class PreGameView extends CliView {
                 ).elseIfMessageTypeCompute(
                     PlayerCanCreateNewLobbyServerMessage.class,
                     message -> {
-                        clientManager.setPlayer(new Player(newPlayerName.get()));
+                        clientManager.setMyPlayer(new Player(newPlayerName.get()));
                         return CompletableFuture.completedFuture(message);
                     }
                 ).elseIfMessageTypeCompute(
                     NewPlayerEnteredNewGameLobbyServerMessage.class,
                     message -> {
-                        clientManager.setPlayer(new Player(newPlayerName.get()));
+                        clientManager.setMyPlayer(new Player(newPlayerName.get()));
                         return CompletableFuture.completedFuture(message);
                     }
                 ).elseCompute(
@@ -153,7 +168,7 @@ public class PreGameView extends CliView {
         NewPlayerEnteredNewGameLobbyServerMessage message
     ) {
         message.playersInLobby.forEach(player -> clientManager.getGameItemsManager().addItem(player));
-        if(!clientManager.getPlayer().equals(message.newPlayer))
+        if(!clientManager.getMyPlayer().equals(message.newPlayer))
             clientManager.tellUserLocalized(
                 "client.cli.setup.notifyPlayerEnteredInLobby",
                 message.newPlayer

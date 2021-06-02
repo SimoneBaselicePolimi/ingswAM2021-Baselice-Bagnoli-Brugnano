@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.cli.view.grid;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 
-class SingleCharBorderStyle extends BorderStyle {
+public class SingleCharBorderStyle extends BorderStyle {
 
     FormattedChar borderChar;
 
