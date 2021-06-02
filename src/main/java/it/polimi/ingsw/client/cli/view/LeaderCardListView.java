@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leader
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LeaderCardListView extends CliView {
 
@@ -16,6 +17,7 @@ public class LeaderCardListView extends CliView {
     protected List<List<ClientLeaderCardRepresentation>> pages;
     protected int currentPageIndex;
     protected boolean enumerateCards;
+    protected Map<ClientLeaderCardRepresentation, Boolean> selectedCard;
 
     public LeaderCardListView(
         List<ClientLeaderCardRepresentation> cardsToView,
@@ -27,6 +29,8 @@ public class LeaderCardListView extends CliView {
         this(cardsToView, enumerateCards, clientManager);
         this.rowSize = rowSize;
         this.columnSize = columnSize;
+        cardsToView.forEach( card -> selectedCard.put(card, false));
+        currentPageIndex = 0;
     }
 
     public LeaderCardListView(
@@ -37,7 +41,7 @@ public class LeaderCardListView extends CliView {
         super(clientManager);
         this.cardsToView = cardsToView;
         this.enumerateCards = enumerateCards;
-
+        cardsToView.forEach( card -> selectedCard.put(card, false));
         currentPageIndex = 0;
     }
 
@@ -57,7 +61,9 @@ public class LeaderCardListView extends CliView {
             containerColSize
         );
         for (int i = 0; i < page.size(); i++) {
-            container.setView(0, i, new LeaderCardView(clientManager, page.get(i)));
+            ClientLeaderCardRepresentation leaderCard = page.get(i);
+            LeaderCardView leaderCardView = new LeaderCardView(clientManager, leaderCard, selectedCard.get(leaderCard));
+            container.setView(0, i, leaderCardView);
         }
         setCardsContainer(container, (rowSize-containerRowSize)/2, 0);
     }
@@ -76,7 +82,7 @@ public class LeaderCardListView extends CliView {
         pages.add(currentPage);
     }
 
-    public ClientLeaderCardRepresentation getLeaderCardByNumber(int enumerationNumber) {
+    public ClientLeaderCardRepresentation getLeaderCardViewByNumber(int enumerationNumber) {
         return cardsToView.get(enumerationNumber-1);
     }
 
@@ -96,6 +102,16 @@ public class LeaderCardListView extends CliView {
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
         setPage(currentPageIndex);
         return super.getContentAsFormattedCharsBuffer();
+    }
+
+    public void selectCard(int cardNumber) {
+        selectedCard.put(getLeaderCardViewByNumber(cardNumber), true);
+        updateView();
+    }
+
+    public void deselectCard(int cardNumber) {
+        selectedCard.put(getLeaderCardViewByNumber(cardNumber), false);
+        updateView();
     }
 
 }

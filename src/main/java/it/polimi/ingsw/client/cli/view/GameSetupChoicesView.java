@@ -9,7 +9,11 @@ import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.localization.Localization;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import static java.lang.Integer.parseInt;
 
 public class GameSetupChoicesView extends CliView {
 
@@ -18,7 +22,7 @@ public class GameSetupChoicesView extends CliView {
     protected LabelView cardsLeftToChooseLabel;
     protected LeaderCardListView cardListView;
 
-    int cardsLeftToChoose;
+    int cardsToChoose;
 
     public GameSetupChoicesView(
         List<ClientLeaderCardRepresentation> leaderCardsToChooseFrom,
@@ -28,7 +32,7 @@ public class GameSetupChoicesView extends CliView {
     ) {
         super(clientManager);
         this.gameView = gameView;
-        cardsLeftToChoose = numberOfLeaderCardsToChoose;
+        cardsToChoose = numberOfLeaderCardsToChoose;
 
         container = new GridView(clientManager, 3, 1, 1);
         addChildView(container, 0,0);
@@ -61,11 +65,11 @@ public class GameSetupChoicesView extends CliView {
 
     @Override
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
-        if(cardsLeftToChoose > 1)
+        if(cardsToChoose > 1)
             cardsLeftToChooseLabel.setText(FormattedChar.convertStringToFormattedCharList(
                 Localization.getLocalizationInstance().getString(
                     "client.cli.gameSetup.leaderCardsToChooseInfo.plural",
-                    cardsLeftToChoose
+                    cardsToChoose
                 ),
                 CliColour.WHITE,
                 CliColour.BLACK,
@@ -122,10 +126,30 @@ public class GameSetupChoicesView extends CliView {
             ).apply();
     }
 
-    void startLeaderCardChoiceDialog() {
-        clientManager.tellUser("wdwwddwddd");
-
+    CompletableFuture<List<ClientLeaderCardRepresentation>> selectCards(
+        List<ClientLeaderCardRepresentation> alreadySelectedCards,
+        int cardsLeftToSelect
+    ) {
+        if(cardsLeftToSelect == 0) {
+            return CompletableFuture.completedFuture(alreadySelectedCards);
+        } else {
+            return clientManager.askUserLocalized("client.cli.gameSetup.leaderCardsDialog.choose")
+                .thenCompose(input -> {
+                        int intInput = parseInt(input);
+                        cardListView.selectCard(intInput);
+                        alreadySelectedCards.add(cardListView.getLeaderCardViewByNumber(intInput));
+                        return selectCards(alreadySelectedCards, cardsLeftToSelect - 1);
+                    }
+                );
+        }
     }
 
+    void startLeaderCardChoiceDialog() {
+       selectCards(new ArrayList<>(), cardsToChoose)
+//           .thenCompose(chosenCards ->
+//
+//           )
+        ;
+    }
 
 }
