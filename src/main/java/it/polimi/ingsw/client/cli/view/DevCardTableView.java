@@ -1,9 +1,6 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
-import it.polimi.ingsw.client.cli.UserChoicesUtils;
-import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
-import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
@@ -12,7 +9,6 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.develo
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,33 +35,33 @@ public class DevCardTableView extends CliView{
 
     void startDevCardTableDialog() {
 
-        if (clientManager.getPlayer().equals(activePlayer)) {
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
-                    () -> askPlayerForDevCardLevelChoice()
-                        .thenCompose(input ->
-                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-                                new DevelopmentActionClientRequest(
-                                    activePlayer,
-                                    developmentCard,
-                                    deckNumber
-                                )
-                            ))),
-                    "client.cli.devCardTable.devCardChoice"
-                )
-                .addUserChoice(
-                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                    "client.cli.game.returnToMenu"
-                ).apply();
-        }
-
-        else{
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
-                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                    "client.cli.game.returnToMenu"
-                ).apply();
-        }
+//        if (clientManager.getPlayer().equals(activePlayer)) {
+//            UserChoicesUtils.makeUserChoose(clientManager)
+//                .addUserChoice(
+//                    () -> askPlayerForDevCardLevelChoice()
+//                        .thenCompose(input ->
+//                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+//                                new DevelopmentActionClientRequest(
+//                                    activePlayer,
+//                                    developmentCard,
+//                                    deckNumber
+//                                )
+//                            ))),
+//                    "client.cli.devCardTable.devCardChoice"
+//                )
+//                .addUserChoice(
+//                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+//                    "client.cli.game.returnToMenu"
+//                ).apply();
+//        }
+//
+//        else{
+//            UserChoicesUtils.makeUserChoose(clientManager)
+//                .addUserChoice(
+//                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+//                    "client.cli.game.returnToMenu"
+//                ).apply();
+//        }
     }
 
     CompletableFuture<Integer> askPlayerForDevCardLevelChoice (){
@@ -105,7 +101,7 @@ public class DevCardTableView extends CliView{
 
     //TODO
     private CompletableFuture<Integer> checkThePlayerHasNecessaryResources(){
-        playerContextActivePlayer.
+        //playerContextActivePlayer.
         return null;
     }
     //Map<ResourceType, Integer> playerResources = playerContext.getAllResources();
