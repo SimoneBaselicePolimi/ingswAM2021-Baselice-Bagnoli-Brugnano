@@ -25,7 +25,7 @@ client:
       leaderCardsDialog:
         choose: "Scegli una carta leader: (inserisci il numero corrispondente)"
         invalid: "Numero non valido. Inserisci il numero di una carta leader esistente"
-        alreadyChoosen: "Hai già scelto questa carta leader"
+        alreadyChosen: "Hai già scelto questa carta leader"
     game:
       possibleUserChoices: "Puoi eseguire le seguenti azioni: "
       makeChoice: "Inserisci il numero corrispondente alla tua scelta: "
@@ -59,6 +59,12 @@ client:
       askPlayerForProductionsChoice: "Quali produzioni vuoi attivare?"
       notifyPlayerProductionsAreInvalid: "Le produzioni selezionate non sono attivabili"
 
+leaderCards:
+  requirements:
+    colourAndLevel: "%d carte %s di livello %d"
+    colour: "%d carte %s"
+    resourceNumber: "%d %s"
+  victoryPoints: "+ %d punti"
 
 resources:
   coins:

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 public class ClientResourceNumberRequirementRepresentation extends ClientLeaderCardRequirementRepresentation {
@@ -29,4 +29,14 @@ public class ClientResourceNumberRequirementRepresentation extends ClientLeaderC
     public int getResourceNumber() {
         return resourceNumber;
     }
+
+    @Override
+    public String getDescription() {
+        return Localization.getLocalizationInstance().getString(
+            "leaderCards.requirements.resourceNumber",
+            resourceNumber,
+            resourceNumber == 1 ? resourceType.getLocalizedNameSingular() : resourceType.getLocalizedNamePlural()
+        );
+    }
+
 }

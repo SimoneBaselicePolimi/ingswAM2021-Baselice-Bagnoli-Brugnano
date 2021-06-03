@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 
 public class ClientDevelopmentCardColourRequirementRepresentation extends ClientLeaderCardRequirementRepresentation {
@@ -27,5 +28,14 @@ public class ClientDevelopmentCardColourRequirementRepresentation extends Client
 
     public int getNumberOfCards() {
         return numberOfCards;
+    }
+
+    @Override
+    public String getDescription() {
+        return Localization.getLocalizationInstance().getString(
+            "leaderCards.requirements.colour",
+            numberOfCards,
+            cardColour.getColourNameLocalized()
+        );
     }
 }

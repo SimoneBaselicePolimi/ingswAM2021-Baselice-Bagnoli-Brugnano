@@ -30,7 +30,7 @@ public class LeaderCardListView extends CliView {
         this(cardsToView, enumerateCards, clientManager);
         this.rowSize = rowSize;
         this.columnSize = columnSize;
-        cardsToView.forEach( card -> selectedCard.put(card, false));
+        cardsToView.forEach(card -> selectedCard.put(card, false));
         currentPageIndex = 0;
     }
 
@@ -42,7 +42,7 @@ public class LeaderCardListView extends CliView {
         super(clientManager);
         this.cardsToView = cardsToView;
         this.enumerateCards = enumerateCards;
-        cardsToView.forEach( card -> selectedCard.put(card, false));
+        cardsToView.forEach(card -> selectedCard.put(card, false));
         currentPageIndex = 0;
     }
 
@@ -63,7 +63,12 @@ public class LeaderCardListView extends CliView {
         );
         for (int i = 0; i < page.size(); i++) {
             ClientLeaderCardRepresentation leaderCard = page.get(i);
-            LeaderCardView leaderCardView = new LeaderCardView(clientManager, leaderCard, selectedCard.get(leaderCard));
+            LeaderCardView leaderCardView = new LeaderCardView(
+                clientManager,
+                leaderCard,
+                selectedCard.get(leaderCard),
+                getNumberForLeaderCardRepresentation(leaderCard)
+            );
             container.setView(0, i, leaderCardView);
         }
         setCardsContainer(container, (rowSize-containerRowSize)/2, 0);
@@ -83,8 +88,12 @@ public class LeaderCardListView extends CliView {
         pages.add(currentPage);
     }
 
-    public ClientLeaderCardRepresentation getLeaderCardViewByNumber(int enumerationNumber) {
+    public ClientLeaderCardRepresentation getLeaderCardRepresentationByNumber(int enumerationNumber) {
         return cardsToView.get(enumerationNumber-1);
+    }
+
+    public int getNumberForLeaderCardRepresentation(ClientLeaderCardRepresentation leaderCard) {
+        return cardsToView.indexOf(leaderCard) + 1;
     }
 
     protected GridView getCardsContainer() {
@@ -106,12 +115,12 @@ public class LeaderCardListView extends CliView {
     }
 
     public void selectCard(int cardNumber) {
-        selectedCard.put(getLeaderCardViewByNumber(cardNumber), true);
+        selectedCard.put(getLeaderCardRepresentationByNumber(cardNumber), true);
         updateView();
     }
 
     public void deselectCard(int cardNumber) {
-        selectedCard.put(getLeaderCardViewByNumber(cardNumber), false);
+        selectedCard.put(getLeaderCardRepresentationByNumber(cardNumber), false);
         updateView();
     }
 

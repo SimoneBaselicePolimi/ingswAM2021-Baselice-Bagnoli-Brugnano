@@ -16,6 +16,15 @@ public class FormattedCharsBufferUtils {
         int bufferColSize,
         HorizontalAlignment horizontalAlignment
     ) {
+        return createBufferForText(text, bufferColSize, horizontalAlignment, new FormattedChar(' '));
+    }
+
+    public static FormattedCharsBuffer createBufferForText(
+        List<FormattedChar> text,
+        int bufferColSize,
+        HorizontalAlignment horizontalAlignment,
+        FormattedChar backgroundChar
+    ) {
 
         List<Integer> newLineIndexes = new ArrayList<>();
         for (int i = 0; i < text.size(); i++)
@@ -60,6 +69,7 @@ public class FormattedCharsBufferUtils {
         }
 
         FormattedCharsBuffer textBuffer = new FormattedCharsBuffer(normalizedRows.size(), bufferColSize);
+        textBuffer.setDefaultFormattedChar(backgroundChar);
         for (int r = 0; r < normalizedRows.size(); r++) {
             for (int i = 0; i < normalizedRows.get(r).size(); i++) {
                 int colIndex;

@@ -1,15 +1,28 @@
 package it.polimi.ingsw.client.cli.view.grid;
 
+import it.polimi.ingsw.client.cli.graphicutils.CliColour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 
 public class LineBorderStyle extends BorderStyle {
 
-    FormattedChar horizontalChar = new FormattedChar('-');
-    FormattedChar verticalChar = new FormattedChar('|');
-    FormattedChar angularChar = new FormattedChar('+');
+    FormattedChar horizontalChar;
+    FormattedChar verticalChar;
+    FormattedChar angularChar;
 
     FormattedCharsBuffer gridBuffer;
+
+    public LineBorderStyle() {
+        horizontalChar = new FormattedChar('-');
+        verticalChar = new FormattedChar('|');
+        angularChar = new FormattedChar('+');
+    }
+
+    public LineBorderStyle(CliColour colour) {
+        horizontalChar = new FormattedChar('-', colour, CliColour.BLACK);
+        verticalChar = new FormattedChar('|', colour, CliColour.BLACK);
+        angularChar = new FormattedChar('+', colour, CliColour.BLACK);
+    }
 
     @Override
     protected FormattedCharsBuffer createEmptyBufferWithBorders(GridView gridView) {
