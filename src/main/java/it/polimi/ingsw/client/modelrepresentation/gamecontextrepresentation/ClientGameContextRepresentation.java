@@ -1,13 +1,12 @@
 package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.utils.serialization.annotations.SerializeAsMapWithIdKey;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class ClientGameContextRepresentation extends ClientRepresentation {
     @SerializeIdOnly
     private Player activePlayer;
 
-    @SerializeAsMapWithIdKey
+    //@SerializeAsMapWithIdKey
     private final Map<Player, ClientPlayerContextRepresentation> playerContexts;
 
     public ClientGameContextRepresentation(

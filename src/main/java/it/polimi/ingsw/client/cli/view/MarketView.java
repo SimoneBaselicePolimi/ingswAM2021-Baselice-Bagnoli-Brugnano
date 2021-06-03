@@ -25,13 +25,17 @@ public class MarketView extends CliView{
     protected ClientMarketRepresentation marketRepresentation;
 
     protected GameView gameView;
-    Player activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
-    ClientPlayerContextRepresentation playerContextActivePlayer = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+    Player activePlayer;
+    ClientPlayerContextRepresentation activePlayerContext;
 
     public MarketView(CliClientManager clientManager, GameView gameView) {
         super(clientManager);
         this.gameView = gameView;
+
         startMarketDialog();
+
+        activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
+        activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
 
         outerGrid = new GridView(clientManager, 1, 2, 0);
         addChildView(outerGrid, 0, 0);

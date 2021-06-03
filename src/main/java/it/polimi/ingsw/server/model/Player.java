@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 
+import java.util.Objects;
+
 public class Player implements IdentifiableItem {
 
 	public final String playerName;
@@ -41,4 +43,16 @@ public class Player implements IdentifiableItem {
 		return playerName;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Player player = (Player) o;
+		return playerName.equals(player.playerName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(playerName);
+	}
 }
