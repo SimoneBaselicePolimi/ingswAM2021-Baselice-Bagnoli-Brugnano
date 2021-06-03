@@ -1,6 +1,10 @@
 package it.polimi.ingsw.client.cli.view;
 
+import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
@@ -35,33 +39,34 @@ public class DevCardTableView extends CliView{
 
     void startDevCardTableDialog() {
 
-//        if (clientManager.getPlayer().equals(activePlayer)) {
-//            UserChoicesUtils.makeUserChoose(clientManager)
-//                .addUserChoice(
-//                    () -> askPlayerForDevCardLevelChoice()
-//                        .thenCompose(input ->
-//                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-//                                new DevelopmentActionClientRequest(
-//                                    activePlayer,
-//                                    developmentCard,
-//                                    deckNumber
-//                                )
-//                            ))),
-//                    "client.cli.devCardTable.devCardChoice"
-//                )
-//                .addUserChoice(
-//                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-//                    "client.cli.game.returnToMenu"
-//                ).apply();
-//        }
-//
-//        else{
-//            UserChoicesUtils.makeUserChoose(clientManager)
-//                .addUserChoice(
-//                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-//                    "client.cli.game.returnToMenu"
-//                ).apply();
-//        }
+        //game setup or my Player is not the active player
+        if(clientManager.getGameState().equals(GameState.GAME_SETUP) || !clientManager.getMyPlayer().equals(activePlayer)){
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
+                ).apply();
+        }
+        //game started and my player is the active player
+        else{
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> askPlayerForDevCardLevelChoice()
+                        .thenCompose(input ->
+                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                                new DevelopmentActionClientRequest(
+                                    activePlayer,
+                                    developmentCard,
+                                    deckNumber
+                                )
+                            ))),
+                    "client.cli.devCardTable.devCardChoice"
+                )
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
+                ).apply();
+        }
     }
 
     CompletableFuture<Integer> askPlayerForDevCardLevelChoice (){
@@ -99,20 +104,14 @@ public class DevCardTableView extends CliView{
             });
     }
 
-    //TODO
     private CompletableFuture<Integer> checkThePlayerHasNecessaryResources(){
-        //playerContextActivePlayer.
-        return null;
+        if (table.isCardPurchasable(developmentCard))
+            return askPlayerForDeckNumber();
+        else {
+            clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerHeDoesNotHaveNeededResources");
+            return askPlayerForDevCardLevelChoice();
+        }
     }
-    //Map<ResourceType, Integer> playerResources = playerContext.getAllResources();
-    //        for (ResourceType resourceType : requestToValidate.developmentCard.getPurchaseCost().keySet()) {
-    //            if (!playerResources.containsKey(resourceType)
-    //                || playerResources.get(resourceType) < requestToValidate.developmentCard.getPurchaseCost().get(resourceType)
-    //            )
-    //                return createInvalidRequestServerMessage(
-    //                    "The player does not have the resources needed to obtain the development card"
-    //                );
-    //        }
 
     CompletableFuture<Integer> askPlayerForDeckNumber() {
         return clientManager.askUserLocalized("client.cli.devCardTable.askForDeckNumber")

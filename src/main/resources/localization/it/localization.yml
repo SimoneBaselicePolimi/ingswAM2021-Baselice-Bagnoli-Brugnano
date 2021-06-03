@@ -53,6 +53,7 @@ client:
       notifyPlayerDevCardLevelIsInvalid: "Il livello selezionato non è valido"
       notifyPlayerDeckIsEmpty: "Il mazzo selezionato è vuoto"
       notifyPlayerDeckNumberIsInvalid: "Non puoi mettere la carta sviluppo in questo spazio della tua plancia personale"
+      notifyPlayerHeDoesNotHaveNeededResources: "Non possiedi le risorse necessarie per comprare la carta sviluppo selezionata"
     playerDashboard:
       activateProduction: "Attiva produzioni"
       leaderCardList: "Guarda carte leader"
