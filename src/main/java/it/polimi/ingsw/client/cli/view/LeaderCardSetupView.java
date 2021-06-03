@@ -7,11 +7,15 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
+import it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage;
 import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
 
@@ -22,18 +26,20 @@ public class LeaderCardSetupView extends CliView {
     protected LabelView titleView;
     protected LeaderCardListView cardListView;
 
+    protected InitialChoicesServerMessage initialChoicesServerMessage;
+
     List<ClientLeaderCardRepresentation> alreadySelectedCards = new ArrayList<>();
     int cardsLeftToChoose;
 
     public LeaderCardSetupView(
-        List<ClientLeaderCardRepresentation> leaderCardsToChooseFrom,
-        int numberOfLeaderCardsToChoose,
+        InitialChoicesServerMessage initialChoicesServerMessage,
         CliClientManager clientManager,
         GameView gameView
     ) {
         super(clientManager);
         this.gameView = gameView;
-        cardsLeftToChoose = numberOfLeaderCardsToChoose;
+        this.initialChoicesServerMessage = initialChoicesServerMessage;
+        cardsLeftToChoose = initialChoicesServerMessage.numberOfLeaderCardsToKeep;
 
         container = new GridView(clientManager, 2, 1, 1);
         addChildView(container, 0,0);
@@ -42,7 +48,11 @@ public class LeaderCardSetupView extends CliView {
         titleView = new LabelView(List.of(), clientManager);
         container.setView(0,0, titleView);
 
-        cardListView = new LeaderCardListView(leaderCardsToChooseFrom, true, clientManager);
+        cardListView = new LeaderCardListView(
+            new ArrayList<>(initialChoicesServerMessage.leaderCardsGivenToThePlayer),
+            true,
+            clientManager
+        );
         container.setView(1, 0, cardListView);
 
         startDialog();
@@ -147,11 +157,20 @@ public class LeaderCardSetupView extends CliView {
     }
 
     void startLeaderCardChoiceDialog() {
-    selectCards()
-//           .thenCompose(chosenCards ->
-//
-//           )
-        ;
+        selectCards()
+           .thenCompose(chosenCards -> {
+               ResourcesChoiceView resourcesChoiceView = new ResourcesChoiceView(
+                   initialChoicesServerMessage.numberOfStarResources,
+                   Arrays.stream(ResourceType.values()).collect(Collectors.toSet()),
+                   clientManager,
+                   Localization.getLocalizationInstance().getString("client.cli.gameSetup.gameSetupInfo")
+               );
+               gameView.setMainContentView(resourcesChoiceView);
+               resourcesChoiceView.setOnAllChoicesDoneCallback(resourcesChosen -> {
+                   ;
+               });
+               return CompletableFuture.completedFuture(null);
+           });
     }
 
 }

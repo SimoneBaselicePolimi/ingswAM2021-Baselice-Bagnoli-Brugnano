@@ -85,8 +85,7 @@ public class PreGameView extends CliView {
                     clientManager.getConsoleDisplayWidth()
                 );
                 gameView.setMainContentView(new LeaderCardSetupView(
-                    new ArrayList<>(initialChoicesServerMessage.leaderCardsGivenToThePlayer),
-                    initialChoicesServerMessage.numberOfLeaderCardsToKeep,
+                    initialChoicesServerMessage,
                     clientManager,
                     gameView
                 ));
