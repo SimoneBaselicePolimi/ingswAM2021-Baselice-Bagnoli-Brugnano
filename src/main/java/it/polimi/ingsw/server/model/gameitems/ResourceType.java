@@ -1,8 +1,11 @@
 package it.polimi.ingsw.server.model.gameitems;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -21,12 +24,21 @@ public enum ResourceType {
         ResourceType.STONES, "resources.stones"
     );
 
+    @JsonIgnore
     public String getLocalizedNameSingular() {
         return Localization.getLocalizationInstance().getString(RESOURCELOC.get(this) + ".singular");
     }
 
+    @JsonIgnore
     public String getLocalizedNamePlural() {
         return Localization.getLocalizationInstance().getString(RESOURCELOC.get(this) + ".plural");
     }
 
+    public static ResourceType getResourceTypeFromLocalizedName(String resourceType) {
+        for(ResourceType r : ResourceType.values())
+            if(r.getLocalizedNameSingular().equals(resourceType.toLowerCase(Locale.ROOT))
+                || r.getLocalizedNamePlural().equals(resourceType.toLowerCase(Locale.ROOT)))
+                return r;
+        return null;
+    }
 }

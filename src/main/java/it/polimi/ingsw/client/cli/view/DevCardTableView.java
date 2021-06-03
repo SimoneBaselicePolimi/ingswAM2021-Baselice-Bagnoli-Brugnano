@@ -47,6 +47,7 @@ public class DevCardTableView extends CliView{
                     "client.cli.game.returnToMenu"
                 ).apply();
         }
+
         //game started and my player is the active player
         else{
             UserChoicesUtils.makeUserChoose(clientManager)

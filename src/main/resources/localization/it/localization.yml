@@ -57,8 +57,18 @@ client:
     playerDashboard:
       activateProduction: "Attiva produzioni"
       leaderCardList: "Guarda carte leader"
+      activateBaseProduction: "Attiva produzione base"
+      activateDashboardProductions: "Attiva produzioni presenti sulla mia plancia personale"
+      activateLeaderCardsProduction: "Attiva produzioni delle carte leader"
+      endProductionsActivation: "Termina fase di attivazione delle produzioni"
       askPlayerForProductionsChoice: "Quali produzioni vuoi attivare?"
       notifyPlayerProductionsAreInvalid: "Le produzioni selezionate non sono attivabili"
+      notifyPlayerNumberOfResourcesLeftToPay: "Ti restano ancora %s risorse da pagare. Inserisci numero e tipo di risorse con le quali vuoi pagare la produzione:"
+      notifyPlayerNumberOfResourcesLeftToObtain: "Ti restano ancora %s risorse da ottenere. Inserisci numero e tipo di risorse che vuoi ottenere dalla produzione:"
+      notifyPlayerResourcesAreInvalid: "Le risorse che hai indicato non sono valide"
+      notifyPlayerProductionIsNotActivable: "La produzione selezionata non può essere attivata"
+      notifyPlayerDeckNumberIsInvalid: "Il mazzo selezionato non è valido"
+      notifyPlayerProductionNumberIsInvalid: "La produzione selezionata non è valida"
 
 leaderCards:
   requirements:
@@ -79,25 +89,25 @@ cards:
   plural: "carte"
 
 resources:
-  singular: risorsa
-  plural: risorse
+  singular: "risorsa"
+  plural: "risorse"
   coins:
-    singular: moneta
-    plural: monete
+    singular: "moneta"
+    plural: "monete"
   servants:
-    singular: servitore
-    plural: servitori
+    singular: "servitore"
+    plural: "servitori"
   shields:
-    singular: scudo
-    plural: scudi
+    singular: "scudo"
+    plural: "scudi"
   stones:
-    singular: pietra
-    plural: pietre
-  finalMessage: Il gioco è iniziato
+    singular: "pietra"
+    plural: "pietre"
+  finalMessage: "Il gioco è iniziato"
 
 resourceStorages:
-  singular: magazzino
-  plural: magazzini
+  singular: "magazzino"
+  plural: "magazzini"
   rules:
     maxResourceNumber: ">> max %d %s"
     sameResource: ">> unico tipo di risorsa"
@@ -122,34 +132,34 @@ gameHistory:
 
   faithPath:
     faithPoints:
-      singular: punto fede
-      plural: punti fede
+      singular: "punto fede"
+      plural: "punti fede"
     playerMove:
-      singular: Il giocatore %s si è mosso sul tracciato fede di 1 passo
-      plural: Il giocatore %s si è mosso sul tracciato fede di %s passi
-    vaticanReport: E' avvenuto un rapporto in Vaticano
-    lastPositionReached: Il giocatore %s ha raggiunto l'ultima casella del tracciato fede
+      singular: "Il giocatore %s si è mosso sul tracciato fede di 1 passo"
+      plural: "Il giocatore %s si è mosso sul tracciato fede di %s passi"
+    vaticanReport: "E' avvenuto un rapporto in Vaticano"
+    lastPositionReached: "Il giocatore %s ha raggiunto l'ultima casella del tracciato fede"
 
   leaderCard:
-    activateCard: Il giocatore %s ha attivato la carta leader %s
-    discardCard: Il giocatore %s ha scartato la carta leader %s
+    activateCard: "Il giocatore %s ha attivato la carta leader %s"
+    discardCard: "Il giocatore %s ha scartato la carta leader %s"
 
   gameState:
     setup:
-      initialMessage: La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali
-      choiceMessage: Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono:\n%s
+      initialMessage: "La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali"
+      choiceMessage: "Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono:\n%s"
 
   mainTurn:
-    initialMessage: Inizia il turno del giocatore %s
-    developmentAction: Il giocatore %s ha comprato la carta sviluppo %s
-    obtainedMarblesMarketAction: Il giocatore %s ha ottenuto le seguenti biglie %s
-    productionAction: Il giocaorre %s ha attivato le produzioni %s
+    initialMessage: "Inizia il turno del giocatore %s"
+    developmentAction: "Il giocatore %s ha comprato la carta sviluppo %s"
+    obtainedMarblesMarketAction: "Il giocatore %s ha ottenuto le seguenti biglie %s"
+    productionAction: "Il giocaorre %s ha attivato le produzioni %s"
 
   postTurn:
-    finalMessage: E' concluso il turno del giocatore %s
+    finalMessage: "E' concluso il turno del giocatore %s"
 
   manageResourcesFromMarketTurn:
-    obtainedResourcesMarketMessage: Il giocatore %s ha ottenuto le seguenti risorse %s
+    obtainedResourcesMarketMessage: "Il giocatore %s ha ottenuto le seguenti risorse %s"
     discardedResourcesMarketAction:
-      singular: Il giocatore %s ha scartato 1 risorsa
-      plural: Il giocatore %s ha scartato %s risorse
+      singular: "Il giocatore %s ha scartato 1 risorsa"
+      plural: "Il giocatore %s ha scartato %s risorse"
