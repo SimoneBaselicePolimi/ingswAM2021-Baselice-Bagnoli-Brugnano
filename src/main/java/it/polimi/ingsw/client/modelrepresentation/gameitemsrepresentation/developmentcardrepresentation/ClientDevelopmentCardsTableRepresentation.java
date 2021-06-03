@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardst
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentat
      * Map that contains the cards in each deck, along with their colour and level
      */
     private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>>> cards;
+    private Set<ClientDevelopmentCardRepresentation> purchasableCards = new HashSet<>();
 
     /**
      * DevelopmentCardsTableRepresentation constructor
@@ -34,5 +36,9 @@ public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentat
 
     public void setCards(Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>>> cards) {
         this.cards = cards;
+    }
+
+    public boolean isCardPurchasable(ClientDevelopmentCardRepresentation card) {
+        return purchasableCards.contains(card);
     }
 }
