@@ -23,6 +23,7 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -184,9 +185,10 @@ public class GameContextBuilder {
 		String marbleID,
 		Optional<ResourceType> resourceType,
 		int faithPoints,
-		boolean isSpecialMarble
+		boolean isSpecialMarble,
+		List<Colour> marbleColour
 	) {
-		return new MarbleColour(marbleID, gameItemsManager, resourceType, faithPoints, isSpecialMarble);
+		return new MarbleColour(marbleID, gameItemsManager, resourceType, faithPoints, isSpecialMarble, marbleColour);
 	}
 
 	public Market initializeMarket(int nRows, int nColumns, Map<MarbleColour,Integer> marbles)
@@ -205,7 +207,8 @@ public class GameContextBuilder {
 					Optional.of(marbleConf.marbleConfig.resourceType) :
 					Optional.empty(),
 				marbleConf.marbleConfig.numberOfFaithPoints,
-				marbleConf.marbleConfig.isSpecial
+				marbleConf.marbleConfig.isSpecial,
+				marbleConf.marbleConfig.marbleColour
 			);
 			marbles.put(marbleColour, marbleConf.numberOfMarbles);
 		}

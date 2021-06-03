@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
-import it.polimi.ingsw.client.cli.graphicutils.CliColour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;

@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
-import it.polimi.ingsw.client.cli.graphicutils.CliColour;
+import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
@@ -53,8 +53,8 @@ public class LeaderCardSetupView extends CliView {
 
         List<FormattedChar> gameSetupInfo = FormattedChar.convertStringToFormattedCharList(
             Localization.getLocalizationInstance().getString("client.cli.gameSetup.gameSetupInfo") + ": ",
-            CliColour.WHITE,
-            CliColour.BLACK,
+            Colour.WHITE,
+            Colour.BLACK,
             true,
             false,
             false
@@ -73,8 +73,8 @@ public class LeaderCardSetupView extends CliView {
 
         List<FormattedChar> leaderCardsToChooseInfo = FormattedChar.convertStringToFormattedCharList(
             localizedText,
-            CliColour.WHITE,
-            CliColour.BLACK,
+            Colour.WHITE,
+            Colour.BLACK,
             false,
             true,
             false

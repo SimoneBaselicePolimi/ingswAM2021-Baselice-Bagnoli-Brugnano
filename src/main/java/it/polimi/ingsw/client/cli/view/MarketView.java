@@ -3,15 +3,26 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.utils.Colour;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
+import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.MarketActionFetchColumnClientRequest;
 import it.polimi.ingsw.client.clientrequest.MarketActionFetchRowClientRequest;
+import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.server.model.Player;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class MarketView extends CliView{
+
+    public static final int MARKET_ROW_SIZE = 14;
+    public static final int MARKET_COL_SIZE = 30;
+
+    protected GridView outerGrid;
+    protected ClientMarketRepresentation marketRepresentation;
 
     protected GameView gameView;
     Player activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
@@ -21,6 +32,29 @@ public class MarketView extends CliView{
         super(clientManager);
         this.gameView = gameView;
         startMarketDialog();
+
+        outerGrid = new GridView(clientManager, 1, 2, 0);
+        addChildView(outerGrid, 0, 0);
+
+        GridView marketGrid = new GridView(clientManager, 3, 4, 1);
+        outerGrid.setView(0, 0, marketGrid);
+
+        for(int r=0; r<marketGrid.getViewRowSize(); r++)
+            for(int c=0; c<marketGrid.getViewColumnSize(); c++) {
+                LabelView cellView = new LabelView(
+                    List.of(new FormattedChar(
+                        ' ',
+                        Colour.WHITE,
+                        marketRepresentation.getMatrix()[r][c].getMarbleColour().get(0) //TODO check other colours
+                        )
+                    ),
+                    clientManager
+                );
+                marketGrid.setView(r, c, cellView);
+            }
+
+        GridView legendGrid = new GridView(clientManager, 1, 1, 1);
+        outerGrid.setView(1,0, legendGrid);
     }
 
     void startMarketDialog() {
@@ -88,5 +122,17 @@ public class MarketView extends CliView{
                     return askPlayerForColumnNumber();
                 }
             });
+    }
+
+    @Override
+    public void setRowSize(int rowSize) {
+        outerGrid.setRowSize(rowSize);
+        super.setRowSize(rowSize);
+    }
+
+    @Override
+    public void setColumnSize(int columnSize) {
+        outerGrid.setColumnSize(columnSize);
+        super.setColumnSize(columnSize);
     }
 }

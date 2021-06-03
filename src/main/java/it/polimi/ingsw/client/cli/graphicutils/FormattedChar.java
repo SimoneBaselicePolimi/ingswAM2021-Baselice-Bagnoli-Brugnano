@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.cli.graphicutils;
 
+import it.polimi.ingsw.utils.Colour;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,8 +27,8 @@ public class FormattedChar {
     public static final String DISABLE_UNDERLINE_CODE = "24";
 
     public final char character;
-    public final CliColour foregroundColour;
-    public final CliColour backgroundColour;
+    public final Colour foregroundColour;
+    public final Colour backgroundColour;
     public final boolean isBold;
     public final boolean isItalic;
     public final boolean isUnderlined;
@@ -38,21 +40,21 @@ public class FormattedChar {
     public FormattedChar(
         char character
     ) {
-        this(character, CliColour.WHITE, CliColour.BLACK);
+        this(character, Colour.WHITE, Colour.BLACK);
     }
 
     public FormattedChar(
         char character,
-        CliColour foregroundColour,
-        CliColour backgroundColour
+        Colour foregroundColour,
+        Colour backgroundColour
     ) {
         this(character, foregroundColour, backgroundColour, false, false);
     }
 
     public FormattedChar(
         char character,
-        CliColour foregroundColour,
-        CliColour backgroundColour,
+        Colour foregroundColour,
+        Colour backgroundColour,
         boolean isBold,
         boolean isUnderlined
     ) {
@@ -61,8 +63,8 @@ public class FormattedChar {
 
     public FormattedChar(
         char character,
-        CliColour foregroundColour,
-        CliColour backgroundColour,
+        Colour foregroundColour,
+        Colour backgroundColour,
         boolean isBold,
         boolean isItalic,
         boolean isUnderlined
@@ -86,8 +88,8 @@ public class FormattedChar {
 
     public static List<FormattedChar> convertStringToFormattedCharList(
         String text,
-        CliColour foregroundColour,
-        CliColour backgroundColour
+        Colour foregroundColour,
+        Colour backgroundColour
     ) {
         return text.chars()
             .mapToObj(c -> new FormattedChar((char)c, foregroundColour, backgroundColour))
@@ -96,8 +98,8 @@ public class FormattedChar {
 
     public static List<FormattedChar> convertStringToFormattedCharList(
         String text,
-        CliColour foregroundColour,
-        CliColour backgroundColour,
+        Colour foregroundColour,
+        Colour backgroundColour,
         boolean isBold,
         boolean isItalic,
         boolean isUnderlined

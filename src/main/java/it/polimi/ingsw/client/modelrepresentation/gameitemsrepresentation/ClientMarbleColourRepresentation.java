@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.utils.Colour;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ClientMarbleColourRepresentation extends ClientRegisteredIdentifiableItemRepresentation {
@@ -26,6 +28,11 @@ public class ClientMarbleColourRepresentation extends ClientRegisteredIdentifiab
     private final boolean isSpecialMarble;
 
     /**
+     * Marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
+     */
+    private final List<Colour> marbleColour;
+
+    /**
      * MarbleColourRepresentation constructor.
      * @param itemID ID which identifies this specific Marble
      * @param gameItemsManager a reference to gameItemsManager is needed to register the new MarbleColour object
@@ -33,19 +40,21 @@ public class ClientMarbleColourRepresentation extends ClientRegisteredIdentifiab
      * @param resourceType optional type of resource obtainable with this Marble
      * @param faithPoints number of faith points obtainable by this Marble
      * @param isSpecialMarble boolean which states if this Marble can be transformed into a generic type of resource
-     * by activating a special Leader card power
+     * @param marbleColour marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
      */
     public ClientMarbleColourRepresentation(
         @JsonProperty("itemID") String itemID,
         @JacksonInject("gameItemsManager") GameItemsManager gameItemsManager,
         @JsonProperty("resourceType") Optional<ResourceType> resourceType,
         @JsonProperty("faithPoints") int faithPoints,
-        @JsonProperty("isSpecialMarble") boolean isSpecialMarble
+        @JsonProperty("isSpecialMarble") boolean isSpecialMarble,
+        @JsonProperty("marbleColour") List<Colour> marbleColour
     ) {
         super(itemID, gameItemsManager);
         this.resourceType = resourceType;
         this.faithPoints = faithPoints;
         this.isSpecialMarble = isSpecialMarble;
+        this.marbleColour = marbleColour;
     }
 
     public Optional<ResourceType> getResourceType() {
@@ -59,4 +68,9 @@ public class ClientMarbleColourRepresentation extends ClientRegisteredIdentifiab
     public boolean isSpecialMarble() {
         return isSpecialMarble;
     }
+
+    public List<Colour> getMarbleColour() {
+        return marbleColour;
+    }
+
 }

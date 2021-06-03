@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
-import it.polimi.ingsw.client.cli.graphicutils.CliColour;
+import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
@@ -16,8 +16,8 @@ import it.polimi.ingsw.localization.Localization;
 
 public class LeaderCardView extends CliView {
 
-    public static int LEADER_CARD_ROW_SIZE = 14;
-    public static int LEADER_CARD_COL_SIZE = 24;
+    public static final int LEADER_CARD_ROW_SIZE = 14;
+    public static final int LEADER_CARD_COL_SIZE = 24;
 
     protected boolean isSelected = false;
 
@@ -40,7 +40,7 @@ public class LeaderCardView extends CliView {
         this.numberOfCard = numberOfCard;
 
         cardGrid = new GridView(clientManager, 1, 1, 1, LEADER_CARD_ROW_SIZE, LEADER_CARD_COL_SIZE);
-        cardGrid.setBorderStyle(new LineBorderStyle(CliColour.GREY));
+        cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREY));
         addChildView(cardGrid, 0, 0);
         cardText = new LabelView(FormattedChar.convertStringToFormattedCharList(getLeaderCardDescription()), clientManager);
         cardGrid.setView(0, 0, cardText);
@@ -50,7 +50,7 @@ public class LeaderCardView extends CliView {
     protected FormattedCharsBuffer buildMyBuffer() {
         FormattedCharsBuffer buffer = new FormattedCharsBuffer(LEADER_CARD_ROW_SIZE, LEADER_CARD_COL_SIZE);
         if(isSelected)
-            cardGrid.setBorderStyle(new LineBorderStyle(CliColour.GREEN));
+            cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREEN));
         return buffer;
     }
 
