@@ -2,6 +2,7 @@ package it.polimi.ingsw.configfile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class MarketConfig {
     /**
      * This class indicates which type of Coloured Marbles fill the Market matrix and their quantities.
      */
-    public static class  MarbleConfigAndNumber {
+    public static class MarbleConfigAndNumber {
 
         /**
          * Configuration of a Coloured Marble
@@ -101,6 +102,11 @@ public class MarketConfig {
             public final String marbleID;
 
             /**
+             * Marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
+             */
+            public final List<Colour> marbleColour;
+
+            /**
              * Optional type of Resource obtainable with this Marble
              */
             public final ResourceType resourceType;
@@ -119,18 +125,20 @@ public class MarketConfig {
             /**
              * MarbleConfig constructor.
              * @param marbleID unique ID which identifies this specific Marble
+             * @param marbleColour marble colour specified as a list of RGB colour codes
              * @param resourceType optional type of Resource obtainable with this Marble
              * @param numberOfFaithPoints number of Faith Points given to the Player who owns this Marble
              * @param isSpecial true if the Marble can be transformed into a generic type of Resource by activating the
-             *                  Special Marble Substitution power of a Leader Card, false otherwise
              */
             public MarbleConfig(
                 @JsonProperty("marbleID") String marbleID,
+                @JsonProperty("marbleColour") List<Colour> marbleColour,
                 @JsonProperty("resourceType") ResourceType resourceType,
                 @JsonProperty("numberOfFaithPoints") int numberOfFaithPoints,
                 @JsonProperty("isSpecial") boolean isSpecial
             ) {
                 this.marbleID = marbleID;
+                this.marbleColour = marbleColour;
                 this.resourceType = resourceType;
                 this.numberOfFaithPoints = numberOfFaithPoints;
                 this.isSpecial = isSpecial;

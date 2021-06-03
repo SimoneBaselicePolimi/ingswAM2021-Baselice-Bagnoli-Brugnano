@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class ClientCardDeckRepresentation<C> extends ClientRegisteredIdentifiableItemRepresentation {
@@ -37,4 +39,9 @@ public class ClientCardDeckRepresentation<C> extends ClientRegisteredIdentifiabl
     public void setCardDeck(Stack<C> cardDeck) {
         this.cardDeck = cardDeck;
     }
+
+    public C peek() throws EmptyStackException {
+        return cardDeck.peek();
+    }
+
 }

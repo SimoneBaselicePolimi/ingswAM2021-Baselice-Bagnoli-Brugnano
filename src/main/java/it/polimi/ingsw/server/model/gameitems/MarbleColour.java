@@ -3,7 +3,9 @@ package it.polimi.ingsw.server.model.gameitems;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
+import it.polimi.ingsw.utils.Colour;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,6 +30,11 @@ public class MarbleColour extends RegisteredIdentifiableItem implements Represen
 	private boolean isSpecialMarble;
 
 	/**
+	 * Marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
+	 */
+	private List<Colour> marbleColour;
+
+	/**
 	 * Class constructor.
 	 * @param marbleID ID which identifies this specific Marble
 	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new MarbleColour object
@@ -48,6 +55,32 @@ public class MarbleColour extends RegisteredIdentifiableItem implements Represen
 		this.resourceType = resourceType;
 		this.faithPoints = faithPoints;
 		this.isSpecialMarble = isSpecialMarble;
+	}
+
+	/**
+	 * Class constructor.
+	 * @param marbleID ID which identifies this specific Marble
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new MarbleColour object
+	 *                          (see {@link RegisteredIdentifiableItem})
+	 * @param resourceType optional type of resource obtainable with this Marble
+	 * @param faithPoints number of faith points obtainable by this Marble
+	 * @param isSpecialMarble boolean which states if this Marble can be transformed into a generic type of resource
+	 *                        by activating a special Leader card power
+	 * @param marbleColour marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
+	 */
+	public MarbleColour(
+		String marbleID,
+		GameItemsManager gameItemsManager,
+		Optional<ResourceType> resourceType,
+		int faithPoints,
+		boolean isSpecialMarble,
+		List<Colour> marbleColour
+	) {
+		super(marbleID, gameItemsManager);
+		this.resourceType = resourceType;
+		this.faithPoints = faithPoints;
+		this.isSpecialMarble = isSpecialMarble;
+		this.marbleColour = marbleColour;
 	}
 
 	/**
@@ -78,7 +111,7 @@ public class MarbleColour extends RegisteredIdentifiableItem implements Represen
 
 	@Override
 	public ServerMarbleColourRepresentation getServerRepresentation() {
-		return new ServerMarbleColourRepresentation(itemID, resourceType, faithPoints, isSpecialMarble);
+		return new ServerMarbleColourRepresentation(itemID, resourceType, faithPoints, isSpecialMarble, marbleColour);
 	}
 
 	@Override

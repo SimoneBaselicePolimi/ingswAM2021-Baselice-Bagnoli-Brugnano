@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -42,4 +43,14 @@ public class ClientDevelopmentCardCostDiscountRepresentation extends ClientRegis
     public int getAmountToDiscount() {
         return amountToDiscount;
     }
+
+    public String getDescription() {
+        return Localization.getLocalizationInstance().getString(
+            "leaderCards.specialPowers.developmentCardCostDiscount",
+            amountToDiscount,
+            amountToDiscount == 1 ? resourceType.getLocalizedNameSingular()
+                : resourceType.getLocalizedNamePlural()
+            );
+    }
+
 }

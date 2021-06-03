@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.modelrepresentation.storagerepresentation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ClientDifferentResourceTypesInDifferentStoragesRuleRepresentation extends ClientResourceStorageRuleRepresentation {
 
@@ -20,4 +21,10 @@ public class ClientDifferentResourceTypesInDifferentStoragesRuleRepresentation e
 	public List<ClientResourceStorageRepresentation> getStorages() {
 		return storages;
 	}
+
+	@Override
+	public Optional<String> getDescription() {
+		return Optional.empty();
+	}
+
 }

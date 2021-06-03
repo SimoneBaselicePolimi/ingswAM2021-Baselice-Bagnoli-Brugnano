@@ -44,7 +44,9 @@ public class ClientDevelopmentCardColourAndLevelRequirementRepresentation extend
         return Localization.getLocalizationInstance().getString(
             "leaderCards.requirements.colourAndLevel",
             numberOfCards,
-            cardColour.getColourNameLocalized(),
+            numberOfCards == 1 ? Localization.getLocalizationInstance().getString("cards.singular")
+                : Localization.getLocalizationInstance().getString("cards.plural"),
+            numberOfCards == 1 ? cardColour.getColourNameLocalizedSingular() : cardColour.getColourNameLocalizedPlural(),
             cardLevel.toValue()
         );
     }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.cli.graphicutils;
 
+import it.polimi.ingsw.utils.Colour;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,21 +12,21 @@ class FormattedCharsBufferTest {
 
     FormattedChar defaultChar = new FormattedChar(
         ' ',
-        CliColour.WHITE, CliColour.BLACK,
+        Colour.WHITE, Colour.BLACK,
         true,
         false,
         false
     );
     FormattedChar char1 = new FormattedChar(
         'x',
-        CliColour.WHITE, CliColour.BLACK,
+        Colour.WHITE, Colour.BLACK,
         false,
         false,
         false
     );
     FormattedChar char2 = new FormattedChar(
         ' ',
-        CliColour.WHITE, CliColour.BLACK,
+        Colour.WHITE, Colour.BLACK,
         false,
         false,
         false

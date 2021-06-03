@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.cli.view.grid;
 
-import it.polimi.ingsw.client.cli.graphicutils.CliColour;
+import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 
@@ -18,10 +18,10 @@ public class LineBorderStyle extends BorderStyle {
         angularChar = new FormattedChar('+');
     }
 
-    public LineBorderStyle(CliColour colour) {
-        horizontalChar = new FormattedChar('-', colour, CliColour.BLACK);
-        verticalChar = new FormattedChar('|', colour, CliColour.BLACK);
-        angularChar = new FormattedChar('+', colour, CliColour.BLACK);
+    public LineBorderStyle(Colour colour) {
+        horizontalChar = new FormattedChar('-', colour, Colour.BLACK);
+        verticalChar = new FormattedChar('|', colour, Colour.BLACK);
+        angularChar = new FormattedChar('+', colour, Colour.BLACK);
     }
 
     @Override

@@ -3,12 +3,14 @@ package it.polimi.ingsw.client.modelrepresentation.storagerepresentation;
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ClientResourceStorageRepresentation extends ClientRegisteredIdentifiableItemRepresentation {
 
@@ -44,4 +46,18 @@ public class ClientResourceStorageRepresentation extends ClientRegisteredIdentif
     public void setResources(Map<ResourceType, Integer> resources) {
         this.resources = new HashMap<>(resources);
     }
+
+    public String getDescription() {
+        StringBuilder storageDescription = new StringBuilder();
+        storageDescription.append("\n");
+        getRules().stream().map(ClientResourceStorageRuleRepresentation::getDescription)
+            .filter(Optional::isPresent)
+            .forEach(r -> storageDescription.append(r.get()).append("\n"));
+
+        return Localization.getLocalizationInstance().getString(
+            "leaderCards.specialPowers.storage",
+            storageDescription.toString()
+        );
+    }
+
 }

@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.UserIOLogger;
 import it.polimi.ingsw.client.cli.CliClientManager;
-import it.polimi.ingsw.client.cli.graphicutils.CliColour;
+import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
@@ -39,10 +39,10 @@ public class UserConsole extends CliView implements UserIOLogger {
         for(IOMessage message : consoleMessages) {
             if(message.isUserInput) {
                 text.addAll(
-                    FormattedChar.convertStringToFormattedCharList(" > ", CliColour.GREEN, CliColour.BLACK)
+                    FormattedChar.convertStringToFormattedCharList(" > ", Colour.GREEN, Colour.BLACK)
                 );
                 text.addAll(
-                    FormattedChar.convertStringToFormattedCharList(message.message, CliColour.GREEN, CliColour.BLACK)
+                    FormattedChar.convertStringToFormattedCharList(message.message, Colour.GREEN, Colour.BLACK)
                 );
             } else {
                 text.addAll(

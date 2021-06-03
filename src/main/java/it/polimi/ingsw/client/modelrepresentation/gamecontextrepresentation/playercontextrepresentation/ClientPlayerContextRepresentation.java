@@ -4,9 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.*;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gameitems.Production;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.List;
@@ -101,5 +107,36 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
 
     public void setNumberOfLeaderCardsThePlayerOwns(int numberOfLeaderCardsThePlayerOwns) {
         this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
+    }
+
+    public Set<ClientLeaderCardRepresentation> getActiveLeaderCards() {
+        return leaderCardsPlayerOwns.stream()
+            .filter(leaderCard -> leaderCard.getState() == LeaderCardState.ACTIVE)
+            .collect(Collectors.toSet());
+    }
+
+    public Set<ClientProductionRepresentation> getActiveLeaderCardsProductions() {
+        return getActiveLeaderCards().stream()
+            .flatMap(leaderCard -> leaderCard.getProductions().stream())
+            .collect(Collectors.toSet());
+    }
+
+    public Set<ClientDevelopmentCardRepresentation> getDevelopmentCardsOnTop() {
+        return developmentCardDecks.stream().map(ClientPlayerOwnedDevelopmentCardDeckRepresentation::peek).collect(Collectors.toSet());
+    }
+
+    public Set<ClientProductionRepresentation> getActiveDevelopmentCardsProductions(){
+        return getDevelopmentCardsOnTop().stream()
+            .map(ClientDevelopmentCardRepresentation::getProduction)
+            .collect(Collectors.toSet());
+    }
+
+
+    public Set<ClientProductionRepresentation> getActiveProductions() {
+        return Stream.concat(Stream.concat(
+            baseProductions.stream(),
+            getActiveLeaderCardsProductions().stream()),
+            getActiveDevelopmentCardsProductions().stream()
+        ).collect(Collectors.toSet());
     }
 }
