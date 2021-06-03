@@ -6,8 +6,12 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientDevelopmentCardCostDiscountRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientWhiteMarbleSubstitutionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.localization.Localization;
 
 public class LeaderCardView extends CliView {
@@ -61,13 +65,45 @@ public class LeaderCardView extends CliView {
     }
 
     protected String getLeaderCardDescription() {
-        return "Leader Card " + numberOfCard + "\n" +
-            "Requisiti: \n" +
-            card.getRequirements().stream()
-                .map(ClientLeaderCardRequirementRepresentation::getDescription)
-                .reduce(" ", (a,r) -> a + "- " + r + "\n")
-            +
-        Localization.getLocalizationInstance().getString("leaderCards.victoryPoints", card.getVictoryPoints());
+        StringBuilder descriptionBuilder = new StringBuilder();
+        descriptionBuilder.append("LEADER CARD ").append(numberOfCard).append("\n");
+        descriptionBuilder.append(
+            Localization.getLocalizationInstance().getString("leaderCards.requirements.requirements")
+        );
+        descriptionBuilder.append("\n");
+        card.getRequirements().stream()
+            .map(ClientLeaderCardRequirementRepresentation::getDescription)
+            .forEach(r -> descriptionBuilder.append("- ").append(r).append("\n"));
+        descriptionBuilder.append(getSpecialPowersDescription());
+        descriptionBuilder.append("\n");
+        descriptionBuilder.append(
+            Localization.getLocalizationInstance().getString("leaderCards.victoryPoints", card.getVictoryPoints())
+        );
+        return descriptionBuilder.toString();
+    }
+
+    protected String getSpecialPowersDescription() {
+
+        StringBuilder specialPowerDescriptionBuilder = new StringBuilder();
+
+        specialPowerDescriptionBuilder.append(
+            Localization.getLocalizationInstance().getString("leaderCards.specialPowers.specialPowers")
+        );
+        specialPowerDescriptionBuilder.append("\n");
+
+        card.getCardCostDiscounts().stream().map(ClientDevelopmentCardCostDiscountRepresentation::getDescription)
+            .forEach(d -> specialPowerDescriptionBuilder.append("> ").append(d).append("\n"));
+
+        card.getWhiteMarbleSubstitutions().stream().map(ClientWhiteMarbleSubstitutionRepresentation::getDescription)
+            .forEach(d -> specialPowerDescriptionBuilder.append("> ").append(d).append("\n"));
+
+        card.getProductions().stream().map(ClientProductionRepresentation::getDescription)
+            .forEach(d -> specialPowerDescriptionBuilder.append("> ").append(d).append("\n"));
+
+        card.getResourceStorages().stream().map(ClientResourceStorageRepresentation::getDescription)
+            .forEach(d -> specialPowerDescriptionBuilder.append("> ").append(d).append("\n"));
+
+        return specialPowerDescriptionBuilder.toString();
     }
 
 }

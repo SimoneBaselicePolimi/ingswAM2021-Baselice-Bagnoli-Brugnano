@@ -19,4 +19,21 @@ public class LocalizationUtils {
         }
         return s.toString();
     }
+
+    public static String getResourcesListAsCompactString(Map<ResourceType, Integer> resources){
+        StringBuilder s = new StringBuilder();
+        for (ResourceType resourceType : resources.keySet()) {
+            if(!s.toString().isEmpty())
+                s.append(", ");
+            String resourceName = resources.get(resourceType) == 1 ?
+                resourceType.getLocalizedNameSingular() : resourceType.getLocalizedNamePlural();
+            s.append(String.format(
+                "%s %s",
+                resources.get(resourceType),
+                resourceName
+            ));
+        }
+        return s.toString();
+    }
+
 }

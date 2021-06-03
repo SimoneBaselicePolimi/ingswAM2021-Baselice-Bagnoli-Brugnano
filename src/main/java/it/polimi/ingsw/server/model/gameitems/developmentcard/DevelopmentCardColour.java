@@ -17,7 +17,7 @@ public enum DevelopmentCardColour {
 
 	public static DevelopmentCardColour getColourFromLocalizedName(String colour) {
 	    for(DevelopmentCardColour c : DevelopmentCardColour.values())
-	    	if(c.getColourNameLocalized().equals(colour.toLowerCase(Locale.ROOT)))
+	    	if(c.getColourNameLocalizedSingular().equals(colour.toLowerCase(Locale.ROOT)))
 	    		return c;
 	    return null;
 	}
@@ -29,8 +29,13 @@ public enum DevelopmentCardColour {
 	}
 
 	@JsonIgnore
-	public String getColourNameLocalized() {
-		return Localization.getLocalizationInstance().getString(localizationPath);
+	public String getColourNameLocalizedSingular() {
+		return Localization.getLocalizationInstance().getString(localizationPath + ".singular");
+	}
+
+	@JsonIgnore
+	public String getColourNameLocalizedPlural() {
+		return Localization.getLocalizationInstance().getString(localizationPath + ".plural");
 	}
 
 }

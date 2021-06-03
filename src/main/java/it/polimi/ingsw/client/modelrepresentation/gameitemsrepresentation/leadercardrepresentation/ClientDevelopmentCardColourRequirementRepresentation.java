@@ -35,7 +35,9 @@ public class ClientDevelopmentCardColourRequirementRepresentation extends Client
         return Localization.getLocalizationInstance().getString(
             "leaderCards.requirements.colour",
             numberOfCards,
-            cardColour.getColourNameLocalized()
+            numberOfCards == 1 ? Localization.getLocalizationInstance().getString("cards.singular")
+                : Localization.getLocalizationInstance().getString("cards.plural"),
+            numberOfCards == 1 ? cardColour.getColourNameLocalizedSingular() : cardColour.getColourNameLocalizedPlural()
         );
     }
 }

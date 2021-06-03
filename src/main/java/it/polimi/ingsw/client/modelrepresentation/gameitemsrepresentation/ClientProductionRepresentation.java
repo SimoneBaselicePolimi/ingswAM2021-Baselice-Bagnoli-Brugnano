@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
@@ -82,4 +84,47 @@ public class ClientProductionRepresentation extends ClientRegisteredIdentifiable
     public int getFaithReward() {
         return faithReward;
     }
+
+    public String getDescription() {
+        StringBuilder costs = new StringBuilder();
+        costs.append(LocalizationUtils.getResourcesListAsCompactString(getResourceCost()));
+        if(starResourceCost > 0)
+            costs.append(getStarResourcesDescription(starResourceCost));
+
+        StringBuilder rewards = new StringBuilder();
+        rewards.append(LocalizationUtils.getResourcesListAsCompactString(getResourceReward()));
+        if(!getResourceReward().isEmpty() && (starResourceReward>0 || faithReward>0))
+            rewards.append(", ");
+        if(starResourceReward > 0) {
+            rewards.append(getStarResourcesDescription(starResourceReward));
+            if(faithReward > 0)
+                rewards.append(", ");
+                rewards.append(getFaithPointsDescription(faithReward));
+        }
+        else if(faithReward > 0)
+            rewards.append(getFaithPointsDescription(faithReward));
+
+        return Localization.getLocalizationInstance().getString(
+            "leaderCards.specialPowers.production",
+            costs.toString(),
+            rewards.toString()
+        );
+    }
+
+    protected String getStarResourcesDescription(int numberOfStarResources) {
+        return numberOfStarResources + " " +
+            ( numberOfStarResources == 1 ?
+                Localization.getLocalizationInstance().getString("resources.singular")
+                : Localization.getLocalizationInstance().getString("resources.plural")) +
+            " a scelta";
+    }
+
+    protected String getFaithPointsDescription(int numberOfFaithPoints) {
+        return faithReward + " " +
+            (faithReward == 1 ?
+                    Localization.getLocalizationInstance().getString("gameHistory.faithPath.faithPoints.singular")
+                    : Localization.getLocalizationInstance().getString("gameHistory.faithPath.faithPoints.plural")
+            );
+    }
+
 }

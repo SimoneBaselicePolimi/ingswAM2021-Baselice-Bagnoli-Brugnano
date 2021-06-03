@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 
+import java.util.Optional;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "ruleType")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ClientDifferentResourceTypesInDifferentStoragesRuleRepresentation.class, name = "DifferentResourceTypesInDifferentStoragesRuleRepresentation"),
@@ -12,5 +14,7 @@ import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
     @JsonSubTypes.Type(value = ClientSpecificResourceTypeRuleRepresentation.class, name = "SpecificResourceTypeRuleRepresentation")
 })
 public abstract class ClientResourceStorageRuleRepresentation extends ClientRepresentation {
+
+    public abstract Optional<String> getDescription();
 
 }

@@ -61,12 +61,25 @@ client:
 
 leaderCards:
   requirements:
-    colourAndLevel: "%d carte %s di livello %d"
-    colour: "%d carte %s"
+    requirements: "Requisiti: "
+    colourAndLevel: "%d %s %s liv. %d"
+    colour: "%d %s %s"
     resourceNumber: "%d %s"
-  victoryPoints: "+ %d punti"
+  specialPowers:
+    specialPowers: "Poteri speciali: "
+    developmentCardCostDiscount: "Sconto carta sviluppo: %d %s"
+    storage: "Magazzino extra: %s"
+    marbleSubstitution: "Sostituzione biglia bianca: 1 %s"
+    production: "Produzione: %s --> %s"
+  victoryPoints: "+ %d punti vittoria"
+
+cards:
+  singular: "carta"
+  plural: "carte"
 
 resources:
+  singular: risorsa
+  plural: risorse
   coins:
     singular: moneta
     plural: monete
@@ -81,16 +94,35 @@ resources:
     plural: pietre
   finalMessage: Il gioco è iniziato
 
+resourceStorages:
+  singular: magazzino
+  plural: magazzini
+  rules:
+    maxResourceNumber: ">> max %d %s"
+    sameResource: ">> unico tipo di risorsa"
+    specificResourceNumber: ">> solo %s"
+
 developmentCards:
   colours:
-    yellow: "giallo"
-    green: "verde"
-    purple: "viola"
-    blue: "blu"
+    yellow:
+      singular: "gialla"
+      plural: "gialle"
+    green:
+      singular: "verde"
+      plural: "verdi"
+    purple:
+      singular: "viola"
+      plural: "viola"
+    blue:
+      singular: "blu"
+      plural: "blu"
 
 gameHistory:
 
   faithPath:
+    faithPoints:
+      singular: punto fede
+      plural: punti fede
     playerMove:
       singular: Il giocatore %s si è mosso sul tracciato fede di 1 passo
       plural: Il giocatore %s si è mosso sul tracciato fede di %s passi
