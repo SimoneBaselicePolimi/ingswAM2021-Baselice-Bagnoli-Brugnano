@@ -85,7 +85,7 @@ public class Client {
                 ServerMessage deserializedMessage = SerializationHelper.deserializeYamlFromBytes(
                     messageFromServer.value,
                     ServerMessage.class,
-                    clientManager.getDeserializationContextMap()
+                    clientManager.getContextInfoMap()
                 );
                 clientManager.handleServerMessage(deserializedMessage);
             } catch (IOException e) {

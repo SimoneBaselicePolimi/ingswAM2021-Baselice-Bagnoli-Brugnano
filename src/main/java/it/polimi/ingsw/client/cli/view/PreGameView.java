@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.cli.view;
 
+import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UnexpectedServerMessage;
@@ -15,7 +16,6 @@ import it.polimi.ingsw.client.servermessage.*;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -57,7 +57,7 @@ public class PreGameView extends CliView {
                 }).apply()
             ).thenCompose(lobbyMessage -> {
             clientManager.setGameItemsManager(new GameItemsManager());
-            clientManager.addEntryToDeserializationContextMap("gameItemsManager", clientManager.getGameItemsManager());
+            clientManager.addEntryToContextInfoMap("gameItemsManager", clientManager.getGameItemsManager());
             return handleLobbyMessagesUntilGameInitialization(lobbyMessage);
         }).thenCompose(gameInitializationStartedServerMessage ->
             clientManager.sendMessageAndGetAnswer(new GetInitialGameRepresentationClientMessage())
@@ -77,6 +77,8 @@ public class PreGameView extends CliView {
             serverMessage,
             InitialChoicesServerMessage.class,
             initialChoicesServerMessage -> {
+                clientManager.addEntryToContextInfoMap("initialChoicesServerMessage", initialChoicesServerMessage);
+                clientManager.setGameState(GameState.GAME_SETUP);
                 clientManager.tellUserLocalized("client.cli.setup.notifySetupIsStarting");
                 this.destroyView();
                 GameView gameView = new GameView(
@@ -85,7 +87,6 @@ public class PreGameView extends CliView {
                     clientManager.getConsoleDisplayWidth()
                 );
                 gameView.setMainContentView(new LeaderCardSetupView(
-                    initialChoicesServerMessage,
                     clientManager,
                     gameView
                 ));

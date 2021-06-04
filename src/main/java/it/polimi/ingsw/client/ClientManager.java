@@ -27,7 +27,7 @@ public class ClientManager {
 
     protected GameState gameState;
 
-    protected Map<String, Object> deserializationContextMap = new ConcurrentHashMap<>();
+    protected Map<String, Object> contextInfoMap = new ConcurrentHashMap<>();
 
     protected GameItemsManager gameItemsManager;
     protected ClientGameContextRepresentation gameContextRepresentation;
@@ -72,16 +72,16 @@ public class ClientManager {
         this.myPlayer = myPlayer;
     }
 
-    public void addEntryToDeserializationContextMap(String key, Object value) {
-        deserializationContextMap.put(key, value);
+    public void addEntryToContextInfoMap(String key, Object value) {
+        contextInfoMap.put(key, value);
     }
 
-    public Map<String, Object> getDeserializationContextMap() {
-        return deserializationContextMap;
+    public Map<String, Object> getContextInfoMap() {
+        return contextInfoMap;
     }
 
-    public void removeEntryFromDeserializationContextMap(String key) {
-        deserializationContextMap.remove(key);
+    public void removeEntryFromContextInfoMap(String key) {
+        contextInfoMap.remove(key);
     }
 
     public GameItemsManager getGameItemsManager() {

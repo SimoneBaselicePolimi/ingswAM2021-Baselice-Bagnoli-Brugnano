@@ -32,13 +32,13 @@ public class LeaderCardSetupView extends CliView {
     int cardsLeftToChoose;
 
     public LeaderCardSetupView(
-        InitialChoicesServerMessage initialChoicesServerMessage,
         CliClientManager clientManager,
         GameView gameView
     ) {
         super(clientManager);
         this.gameView = gameView;
-        this.initialChoicesServerMessage = initialChoicesServerMessage;
+        this.initialChoicesServerMessage =
+            (InitialChoicesServerMessage) clientManager.getContextInfoMap().get("initialChoicesServerMessage");
         cardsLeftToChoose = initialChoicesServerMessage.numberOfLeaderCardsToKeep;
 
         container = new GridView(clientManager, 2, 1, 1);

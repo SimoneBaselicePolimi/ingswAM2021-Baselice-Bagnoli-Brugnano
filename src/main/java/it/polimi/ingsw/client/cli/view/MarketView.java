@@ -77,22 +77,16 @@ public class MarketView extends CliView{
         if(clientManager.getGameState().equals(GameState.GAME_SETUP)){
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoiceLocalized(
-                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager)),
+                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
                     "client.cli.game.returnToSetupView"
                 ).apply();
-        }
-
-        //game started and my Player is not the active player
-        if(!clientManager.getMyPlayer().equals(activePlayer)){
+        } else if(!clientManager.getMyPlayer().equals(activePlayer)){ //game started and my Player is not the active player
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoiceLocalized(
                     () -> gameView.setMainContentView(new MainMenuView(clientManager)),
                     "client.cli.game.returnToMenu"
                 ).apply();
-        }
-
-        //game started and my player is the active player
-        else{
+        } else { //game started and my player is the active player
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoiceLocalized(
                     () -> askPlayerForRowNumber()

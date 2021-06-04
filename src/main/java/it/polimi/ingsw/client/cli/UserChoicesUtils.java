@@ -55,6 +55,7 @@ public class UserChoicesUtils {
                         clientManager.tellUserLocalized("client.cli.game.invalidChoice");
                         return apply();
                     } else {
+                        clientManager.tellUser("");
                         choices.get(num-1).computation.run();
                         return CompletableFuture.completedFuture(null);
                     }
