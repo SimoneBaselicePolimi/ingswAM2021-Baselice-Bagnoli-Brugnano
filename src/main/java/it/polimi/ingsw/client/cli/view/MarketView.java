@@ -3,6 +3,8 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
+import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
@@ -13,7 +15,7 @@ import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.mark
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.server.model.Player;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class MarketView extends CliView{
@@ -36,29 +38,37 @@ public class MarketView extends CliView{
 
         activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
         activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+        marketRepresentation = clientManager.getGameContextRepresentation().getMarket();
 
-        outerGrid = new GridView(clientManager, 1, 2, 0);
+        outerGrid = new GridView(clientManager, 1, 2, 1);
         addChildView(outerGrid, 0, 0);
 
-        GridView marketGrid = new GridView(clientManager, 3, 4, 1);
+        GridView marketGrid = new GridView(
+            clientManager,
+            marketRepresentation.getNumberOfRows(),
+            marketRepresentation.getNumberOfColumns(),
+            1
+        );
+        marketGrid.setBorderStyle(new LineBorderStyle());
         outerGrid.setView(0, 0, marketGrid);
 
-        for(int r=0; r<marketGrid.getViewRowSize(); r++)
-            for(int c=0; c<marketGrid.getViewColumnSize(); c++) {
-                LabelView cellView = new LabelView(
-                    List.of(new FormattedChar(
+        for(int r=0; r<marketRepresentation.getNumberOfRows(); r++)
+            for(int c=0; c<marketRepresentation.getNumberOfColumns(); c++) {
+                LabelView cellView = new LabelView(new ArrayList<>(), clientManager);
+                cellView.setBackgroundChar(
+                    new FormattedChar(
                         ' ',
                         Colour.WHITE,
-                        marketRepresentation.getMatrix()[r][c].getMarbleColour().get(0) //TODO check other colours
-                        )
-                    ),
-                    clientManager
+                        marketRepresentation.getMatrix()[r][c].getMarbleColour().get(0)
+                    )
                 );
                 marketGrid.setView(r, c, cellView);
             }
 
         GridView legendGrid = new GridView(clientManager, 1, 1, 1);
-        outerGrid.setView(1,0, legendGrid);
+        outerGrid.setView(0,1, legendGrid);
+         //TODO check other colours
+
     }
 
     void startMarketDialog() {
@@ -116,7 +126,7 @@ public class MarketView extends CliView{
         return clientManager.askUserLocalized("client.cli.market.askForRowNumber")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
-                if (intInput >= 0 || intInput < clientManager.getGameContextRepresentation().getMarket().getnRows())
+                if (intInput >= 0 || intInput < clientManager.getGameContextRepresentation().getMarket().getNumberOfRows())
                     return CompletableFuture.completedFuture(intInput);
                 else {
                     clientManager.tellUserLocalized("client.cli.market.notifyPlayerRowNumberIsInvalid");
@@ -129,7 +139,7 @@ public class MarketView extends CliView{
         return clientManager.askUserLocalized("client.cli.market.askForColumnNumber")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
-                if (intInput >= 0 || intInput < clientManager.getGameContextRepresentation().getMarket().getnColumns())
+                if (intInput >= 0 || intInput < clientManager.getGameContextRepresentation().getMarket().getNumberOfColumns())
                     return CompletableFuture.completedFuture(intInput);
                 else {
                     clientManager.tellUserLocalized("client.cli.market.notifyPlayerColumnNumberIsInvalid");
@@ -149,4 +159,10 @@ public class MarketView extends CliView{
         outerGrid.setColumnSize(columnSize);
         super.setColumnSize(columnSize);
     }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+        return super.getContentAsFormattedCharsBuffer();
+    }
+
 }

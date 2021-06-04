@@ -53,11 +53,11 @@ public class ClientMarketRepresentation extends ClientRepresentation {
         return outMarble;
     }
 
-    public int getnRows() {
+    public int getNumberOfRows() {
         return nRows;
     }
 
-    public int getnColumns() {
+    public int getNumberOfColumns() {
         return nColumns;
     }
 
