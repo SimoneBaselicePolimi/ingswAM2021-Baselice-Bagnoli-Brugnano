@@ -3,27 +3,27 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
-import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
-import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
-import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
+import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.MarketActionFetchColumnClientRequest;
 import it.polimi.ingsw.client.clientrequest.MarketActionFetchRowClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class MarketView extends CliView{
 
-    public static final int MARKET_ROW_SIZE = 14;
-    public static final int MARKET_COL_SIZE = 30;
-
     protected GridView outerGrid;
+    protected GridView marketGrid;
+    protected GridView legendGrid;
+
     protected ClientMarketRepresentation marketRepresentation;
 
     protected GameView gameView;
@@ -43,32 +43,46 @@ public class MarketView extends CliView{
         outerGrid = new GridView(clientManager, 1, 2, 1);
         addChildView(outerGrid, 0, 0);
 
-        GridView marketGrid = new GridView(
+        marketGrid = new GridView(
             clientManager,
             marketRepresentation.getNumberOfRows(),
-            marketRepresentation.getNumberOfColumns(),
-            1
+            marketRepresentation.getNumberOfColumns() + 1,
+            0
         );
-        marketGrid.setBorderStyle(new LineBorderStyle());
         outerGrid.setView(0, 0, marketGrid);
 
         for(int r=0; r<marketRepresentation.getNumberOfRows(); r++)
             for(int c=0; c<marketRepresentation.getNumberOfColumns(); c++) {
+                GridView cellGrid = new GridView(clientManager, 1,1, 1);
+                cellGrid.setBorderStyle(new LineBorderStyle());
+                marketGrid.setView(r, c, cellGrid);
                 LabelView cellView = new LabelView(new ArrayList<>(), clientManager);
                 cellView.setBackgroundChar(
                     new FormattedChar(
                         ' ',
                         Colour.WHITE,
-                        marketRepresentation.getMatrix()[r][c].getMarbleColour().get(0)
+                        marketRepresentation.getMatrix()[r][c].getMarbleColour().get(0)      //TODO check other colours
                     )
                 );
-                marketGrid.setView(r, c, cellView);
+                cellGrid.setView(0, 0, cellView);
             }
 
-        GridView legendGrid = new GridView(clientManager, 1, 1, 1);
-        outerGrid.setView(0,1, legendGrid);
-         //TODO check other colours
+        GridView outMarbleGrid = new GridView(clientManager, 1, 1, 1);
+        outMarbleGrid.setBorderStyle(new LineBorderStyle());
+        marketGrid.setView(0, marketRepresentation.getNumberOfColumns(), outMarbleGrid);
+        LabelView outMarbleView = new LabelView(new ArrayList<>(), clientManager);
+        outMarbleView.setBackgroundChar(
+            new FormattedChar(
+                ' ',
+                Colour.WHITE,
+                marketRepresentation.getOutMarble().getMarbleColour().get(0)       //TODO check other colours
+            )
+        );
+        outMarbleGrid.setView(0,0, outMarbleView);
 
+        legendGrid = new GridView(clientManager, 1, 1, 1);
+        legendGrid.setBorderStyle(new LineBorderStyle());
+        outerGrid.setView(0, 1, legendGrid);
     }
 
     void startMarketDialog() {
