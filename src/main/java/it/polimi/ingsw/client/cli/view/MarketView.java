@@ -63,10 +63,19 @@ public class MarketView extends CliView{
 
     void startMarketDialog() {
 
-        //game setup or my Player is not the active player
-        if(clientManager.getGameState().equals(GameState.GAME_SETUP) || !clientManager.getMyPlayer().equals(activePlayer)){
+        //game setup
+        if(clientManager.getGameState().equals(GameState.GAME_SETUP)){
             UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
+                .addUserChoiceLocalized(
+                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager)),
+                    "client.cli.game.returnToSetupView"
+                ).apply();
+        }
+
+        //game started and my Player is not the active player
+        if(!clientManager.getMyPlayer().equals(activePlayer)){
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoiceLocalized(
                     () -> gameView.setMainContentView(new MainMenuView(clientManager)),
                     "client.cli.game.returnToMenu"
                 ).apply();
@@ -75,7 +84,7 @@ public class MarketView extends CliView{
         //game started and my player is the active player
         else{
             UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
+                .addUserChoiceLocalized(
                     () -> askPlayerForRowNumber()
                         .thenCompose(rowNumber ->
                             clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
@@ -85,7 +94,7 @@ public class MarketView extends CliView{
                                 )
                             ))),
                     "client.cli.market.rowChoice"
-                ).addUserChoice(
+                ).addUserChoiceLocalized(
                 () -> askPlayerForColumnNumber()
                     .thenCompose(columnNumber ->
                         clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
@@ -95,7 +104,7 @@ public class MarketView extends CliView{
                             )
                         ))),
                 "client.cli.market.columnChoice"
-            ).addUserChoice(
+            ).addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new MainMenuView(clientManager)),
                 "client.cli.game.returnToMenu"
             ).apply();

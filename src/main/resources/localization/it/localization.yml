@@ -31,6 +31,7 @@ client:
       makeChoice: "Inserisci il numero corrispondente alla tua scelta: "
       invalidChoice: "Scelta non valida"
       returnToMenu: "Torna al menu principale"
+      returnToSetupView: "Torna alla fase di setup"
     mainMenuActions:
       openMarket: "Apri il mercato"
       openDevCardsTable: "Apri il tavolo delle carte sviluppo"
