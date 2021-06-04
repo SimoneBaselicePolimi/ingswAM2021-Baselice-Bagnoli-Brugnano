@@ -12,17 +12,23 @@ import it.polimi.ingsw.client.clientrequest.MarketActionFetchColumnClientRequest
 import it.polimi.ingsw.client.clientrequest.MarketActionFetchRowClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation;
+import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class MarketView extends CliView{
 
     protected GridView outerGrid;
     protected GridView marketGrid;
-    protected GridView legendGrid;
+    protected GridView legendContainerGrid;
 
     protected ClientMarketRepresentation marketRepresentation;
 
@@ -80,9 +86,37 @@ public class MarketView extends CliView{
         );
         outMarbleGrid.setView(0,0, outMarbleView);
 
-        legendGrid = new GridView(clientManager, 1, 1, 1);
-        legendGrid.setBorderStyle(new LineBorderStyle());
-        outerGrid.setView(0, 1, legendGrid);
+//        legendContainerGrid = new GridView(clientManager, 1, 1, 1);
+//        legendContainerGrid.setBorderStyle(new LineBorderStyle());
+//        outerGrid.setView(0, 1, legendContainerGrid);
+
+        Set<ClientMarbleColourRepresentation> differentMarbleColours = new HashSet<>(
+            clientManager.getGameItemsManager().getAllItemsOfType(ClientMarbleColourRepresentation.class)
+        );
+
+        GridView legend = new GridView(clientManager, differentMarbleColours.size(), 2, 1);
+        legend.setBorderStyle(new LineBorderStyle());
+        legend.setColWeight(1, 3);
+        outerGrid.setView(0,1, legend);
+
+        int numOfRow = 0;
+        for(ClientMarbleColourRepresentation marble : differentMarbleColours) {
+            Colour colour = marble.getMarbleColour().get(0);
+            LabelView legendCell = new LabelView(new ArrayList<>(), clientManager);
+            legendCell.setBackgroundChar(new FormattedChar(
+                ' ',
+                Colour.WHITE,
+                new Colour(colour.r, colour.g, colour.b)
+            ));
+            legend.setView(numOfRow, 0, legendCell);
+            LabelView marbleDescriptionCell = new LabelView(
+                FormattedChar.convertStringToFormattedCharList(getMarbleDescription(marble)),
+                clientManager
+            );
+            legend.setView(numOfRow, 1, marbleDescriptionCell);
+            numOfRow++;
+        }
+
     }
 
     void startMarketDialog() {
@@ -173,4 +207,34 @@ public class MarketView extends CliView{
         return super.getContentAsFormattedCharsBuffer();
     }
 
+    private String getMarbleDescription(ClientMarbleColourRepresentation marble) {
+        StringBuilder descriptionBuilder = new StringBuilder();
+        if(marble.getResourceType().isPresent()) {
+            descriptionBuilder.append(
+                LocalizationUtils.getResourcesListAsCompactString(
+                    Map.of(marble.getResourceType().get(), 1)
+                )
+            );
+            if(marble.getFaithPoints()>0 || marble.isSpecialMarble())
+                descriptionBuilder.append(", ");
+            else
+                return descriptionBuilder.toString();
+        }
+        if(marble.getFaithPoints()>0) {
+            descriptionBuilder.append(marble.getFaithPoints());
+            descriptionBuilder.append(" ");
+            descriptionBuilder.append(
+                marble.getFaithPoints() == 1 ?
+                    Localization.getLocalizationInstance().getString("gameHistory.faithPath.faithPoints.singular")
+                : Localization.getLocalizationInstance().getString("gameHistory.faithPath.faithPoints.plural")
+            );
+            if(marble.isSpecialMarble())
+                descriptionBuilder.append(", ");
+        }
+        if(marble.isSpecialMarble())
+            descriptionBuilder.append(
+                Localization.getLocalizationInstance().getString("marbles.special")
+            );
+        return descriptionBuilder.toString();
+    }
 }

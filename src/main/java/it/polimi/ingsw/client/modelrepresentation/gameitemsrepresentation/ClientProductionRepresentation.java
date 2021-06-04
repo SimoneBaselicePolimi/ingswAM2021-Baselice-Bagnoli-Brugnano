@@ -108,7 +108,7 @@ public class ClientProductionRepresentation extends ClientRegisteredIdentifiable
             "leaderCards.specialPowers.production",
             costs.toString(),
             rewards.toString()
-        );
+        ) + "\n";
     }
 
     protected String getStarResourcesDescription(int numberOfStarResources) {
