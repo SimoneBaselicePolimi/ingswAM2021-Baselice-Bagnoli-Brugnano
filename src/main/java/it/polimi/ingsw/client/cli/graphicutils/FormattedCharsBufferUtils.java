@@ -42,6 +42,8 @@ public class FormattedCharsBufferUtils {
         List<List<FormattedChar>> normalizedRows = new ArrayList<>();
         for(List<FormattedChar> row : rows) {
             List<FormattedChar> rowSectionToNormalize = row;
+            if(rowSectionToNormalize.isEmpty())
+                normalizedRows.add(rowSectionToNormalize); //Add intentional empty lines
             while (!rowSectionToNormalize.isEmpty()) {
                 if (rowSectionToNormalize.size() <= bufferColSize) {
                     normalizedRows.add(rowSectionToNormalize);
