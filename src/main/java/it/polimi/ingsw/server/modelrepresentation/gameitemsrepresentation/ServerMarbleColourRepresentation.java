@@ -27,7 +27,7 @@ public class ServerMarbleColourRepresentation extends ServerRegisteredIdentifiab
     /**
      * Marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
      */
-    private final List<Colour> marbleColour;
+    public final List<Colour> marbleColour;
 
     /**
      * MarbleColourRepresentation constructor.

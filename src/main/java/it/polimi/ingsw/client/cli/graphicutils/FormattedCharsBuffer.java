@@ -238,6 +238,8 @@ public class FormattedCharsBuffer {
     }
 
     public void drawOnTop(int rowIndex, int colIndex, FormattedCharsBuffer bufferToDraw) {
+        if(bufferToDraw.getRowSize() == 0 || bufferToDraw.getColumnSize() == 0)
+            return;
         checkIndexesBounds(rowIndex + bufferToDraw.rowSize - 1, colIndex+bufferToDraw.columnSize - 1);
         for(int r = rowIndex; r < rowIndex + bufferToDraw.rowSize; r++) {
             List<FormattedCharBlock> row = rows.get(r);

@@ -42,8 +42,9 @@ public class LabelView extends CliView {
         FormattedCharsBuffer textBuffer =
             FormattedCharsBufferUtils.createBufferForText(text, columnSize, horizontalAlignment, backgroundChar);
         if(textBuffer.getRowSize() > rowSize)
-            textBuffer = textBuffer.crop(0, 0, columnSize, rowSize);
-        backgroundBuffer.drawOnTop(0, 0, textBuffer);
+            textBuffer = textBuffer.crop(0, 0, rowSize-1, columnSize-1);
+        if(textBuffer.getRowSize() > 0)
+            backgroundBuffer.drawOnTop(0, 0, textBuffer);
         return backgroundBuffer;
     }
 
