@@ -66,7 +66,8 @@ public class LeaderCardView extends CliView {
 
     protected String getLeaderCardDescription() {
         StringBuilder descriptionBuilder = new StringBuilder();
-        descriptionBuilder.append("LEADER CARD ").append(numberOfCard).append("\n\n");
+        descriptionBuilder.append(Localization.getLocalizationInstance().getString("leaderCards.name"))
+            .append(" ").append(numberOfCard).append("\n\n");
         descriptionBuilder.append(
             Localization.getLocalizationInstance().getString("leaderCards.requirements.requirements")
         );
