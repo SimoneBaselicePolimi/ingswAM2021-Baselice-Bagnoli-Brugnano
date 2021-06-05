@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathRepresentation;
@@ -26,9 +27,10 @@ public class FaithPathView extends CliView{
     protected LabelView vaticanReportCellView;
     protected GridView playerInfoView;
     protected GridView popeCardGrid;
-    protected List<GridView> popeFavorCardStateGridList;
+    protected List<GridView> popeFavorCardStateGridList = new ArrayList<>();
     protected LabelView popeCardStateLabel;
-    protected List<LabelView> popeFavorCardStateLabelList;
+    protected List<LabelView> popeFavorCardStateLabelList = new ArrayList<>();
+    protected GridView playerPositionsGrid;
     protected LabelView playerPositions;
 
     protected ClientFaithPathRepresentation faithPathRepresentation;
@@ -58,12 +60,12 @@ public class FaithPathView extends CliView{
             clientManager,
             1,
             faithPathRepresentation.getPopeFavorCards().get(myPlayer).size() + 1,
-            0
+            1
         );
         playerInfoView.setColWeight(faithPathRepresentation.getPopeFavorCards().get(myPlayer).size(), 2);
         outerGrid.setView(1, 0, playerInfoView);
 
-        for (int colIndex = 1; colIndex < faithPathRepresentation.getPopeFavorCards().get(myPlayer).size(); colIndex++) {
+        for (int colIndex = 0; colIndex < faithPathRepresentation.getPopeFavorCards().get(myPlayer).size(); colIndex++) {
             popeCardGrid = new GridView(clientManager, 1, 1, 1);
             popeFavorCardStateGridList.add(popeCardGrid);
             playerInfoView.setView(0, colIndex, popeCardGrid);
@@ -73,12 +75,16 @@ public class FaithPathView extends CliView{
             popeCardGrid.setView(0, 0, popeCardStateLabel);
         }
 
-        playerPositions = new LabelView(new ArrayList<>(), clientManager);
+        playerPositionsGrid = new GridView(clientManager, 1, 1, 1);
         playerInfoView.setView(
             0,
             faithPathRepresentation.getPopeFavorCards().get(myPlayer).size(),
-            playerPositions
+            playerPositionsGrid
         );
+
+        playerPositions = new LabelView(new ArrayList<>(), clientManager);
+        playerPositions.setHorizontalAlignment(FormattedCharsBufferUtils.HorizontalAlignment.CENTER);
+        playerPositionsGrid.setView(0, 0, playerPositions);
 
         setFaithPathViewBackground();
     }
@@ -146,7 +152,7 @@ public class FaithPathView extends CliView{
             positionOfPlayers.append(
                 Localization.getLocalizationInstance().getString("gameHistory.faithPath.position")
             );
-            positionOfPlayers.append(faithPathRepresentation.getFaithPositions().get(player));
+            positionOfPlayers.append(" ").append(faithPathRepresentation.getFaithPositions().get(player));
             positionOfPlayers.append("\n");
         }
         return positionOfPlayers.toString();

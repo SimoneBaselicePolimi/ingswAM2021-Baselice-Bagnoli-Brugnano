@@ -34,6 +34,12 @@ public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentat
         return cards;
     }
 
+    public ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation> getDeck(
+        DevelopmentCardLevel deckLevel, DevelopmentCardColour deckColour
+    ) {
+        return cards.get(deckLevel).get(deckColour);
+    }
+
     public void setCards(Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>>> cards) {
         this.cards = cards;
     }

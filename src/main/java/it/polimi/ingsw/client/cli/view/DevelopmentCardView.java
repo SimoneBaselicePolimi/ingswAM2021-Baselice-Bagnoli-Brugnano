@@ -2,17 +2,20 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
+import it.polimi.ingsw.utils.Colour;
 
 public class DevelopmentCardView extends CliView {
 
     protected ClientDevelopmentCardRepresentation card;
     protected LabelView cardText;
     protected GridView cardGrid;
+    protected Colour borderColour = Colour.WHITE;
 
     public DevelopmentCardView(CliClientManager clientManager, ClientDevelopmentCardRepresentation card) {
         super(clientManager);
@@ -38,6 +41,16 @@ public class DevelopmentCardView extends CliView {
             "\n\n" +
             "> " + card.getProduction().getDescription() + "\n" +
             Localization.getLocalizationInstance().getString("leaderCards.victoryPoints", card.getVictoryPoints());
+    }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+        cardGrid.setBorderStyle(new LineBorderStyle(borderColour));
+        return super.getContentAsFormattedCharsBuffer();
+    }
+
+    public void setCardBorderColour(Colour colour) {
+        borderColour = colour;
     }
 
 }
