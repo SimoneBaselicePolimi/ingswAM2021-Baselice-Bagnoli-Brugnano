@@ -79,6 +79,7 @@ client:
       conversions: "Puoi convertire una risorsa in: %s"
 
 leaderCards:
+  name: "LEADER CARD"
   requirements:
     requirements: "Requisiti: "
     colourAndLevel: "%d %s %s liv. %d"
@@ -125,6 +126,7 @@ resourceStorages:
     specificResourceNumber: ">> solo %s"
 
 developmentCards:
+  name: "DEVELOPMENT CARD"
   colours:
     yellow:
       singular: "gialla"
@@ -152,6 +154,8 @@ gameHistory:
       singular: "Il giocatore %s si è mosso sul tracciato fede di 1 passo"
       plural: "Il giocatore %s si è mosso sul tracciato fede di %s passi"
     vaticanReport: "E' avvenuto un rapporto in Vaticano"
+    popeFavorCards:
+      "TESSERA FAVORE PAPALE"
     lastPositionReached: "Il giocatore %s ha raggiunto l'ultima casella del tracciato fede"
 
   leaderCard:

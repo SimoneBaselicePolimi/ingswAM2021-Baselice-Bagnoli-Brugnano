@@ -26,7 +26,10 @@ public class FaithPathView extends CliView{
     protected LabelView vaticanReportCellView;
     protected GridView playerInfoView;
     protected GridView popeCardGrid;
-    protected List<GridView> popeFavorCardStateList;
+    protected List<GridView> popeFavorCardStateGridList;
+    protected LabelView popeCardStateLabel;
+    protected List<LabelView> popeFavorCardStateLabelList;
+    protected LabelView playerPositions;
 
     protected ClientFaithPathRepresentation faithPathRepresentation;
 
@@ -54,42 +57,102 @@ public class FaithPathView extends CliView{
         playerInfoView = new GridView(
             clientManager,
             1,
-            faithPathRepresentation.getPopeFavorCards().get(myPlayer).size() + 1, //TODO
+            faithPathRepresentation.getPopeFavorCards().get(myPlayer).size() + 1,
             0
         );
         playerInfoView.setColWeight(faithPathRepresentation.getPopeFavorCards().get(myPlayer).size(), 2);
         outerGrid.setView(1, 0, playerInfoView);
 
-        int colIndex = 1;
-        for (PopeFavorCardState popeFavorCardState : faithPathRepresentation.getPopeFavorCards().get(myPlayer)) {
+        for (int colIndex = 1; colIndex < faithPathRepresentation.getPopeFavorCards().get(myPlayer).size(); colIndex++) {
             popeCardGrid = new GridView(clientManager, 1, 1, 1);
-            popeFavorCardStateList.add(popeCardGrid);
+            popeFavorCardStateGridList.add(popeCardGrid);
             playerInfoView.setView(0, colIndex, popeCardGrid);
 
-            LabelView popeCardState = new LabelView(
-                FormattedChar.convertStringToFormattedCharList(
-                    popeFavorCardState.toString(),
-                    Colour.WHITE,
-                    Colour.BLACK
-                ),
-                clientManager
-            );
-            popeCardGrid.setView(0, 0, popeCardState);
-            colIndex++;
+            popeCardStateLabel = new LabelView(new ArrayList<>(0),clientManager);
+            popeFavorCardStateLabelList.add(popeCardStateLabel);
+            popeCardGrid.setView(0, 0, popeCardStateLabel);
         }
 
-        LabelView playerPositions = new LabelView(
-            FormattedChar.convertStringToFormattedCharList(
-                getPositionOfPlayersAsString(playersInOrder)
-            ),
-            clientManager
-        );
+        playerPositions = new LabelView(new ArrayList<>(), clientManager);
         playerInfoView.setView(
             0,
             faithPathRepresentation.getPopeFavorCards().get(myPlayer).size(),
             playerPositions
         );
 
+        setFaithPathViewBackground();
+    }
+
+    void startFaithPathDialog() {
+        if(clientManager.getGameState().equals(GameState.GAME_SETUP)) {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoiceLocalized(
+                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
+                    "client.cli.game.returnToSetupView"
+                ).apply();
+        } else {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoice(
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    "client.cli.game.returnToMenu"
+                ).apply();
+        }
+    }
+
+    @Override
+    public void setRowSize(int rowSize) {
+        outerGrid.setRowSize(rowSize);
+        super.setRowSize(rowSize);
+    }
+
+    @Override
+    public void setColumnSize(int columnSize) {
+        outerGrid.setColumnSize(columnSize);
+        super.setColumnSize(columnSize);
+    }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+        for(int i = 0; i < popeFavorCardStateGridList.size(); i++) {
+            PopeFavorCardState popeFavorCardState = faithPathRepresentation.getPopeFavorCards().get(myPlayer).get(i);
+
+            if (popeFavorCardState == PopeFavorCardState.ACTIVE)
+                popeFavorCardStateGridList.get(i).setBorderStyle(new LineBorderStyle(Colour.GREEN));
+            else if (popeFavorCardState == PopeFavorCardState.DISCARDED)
+                popeFavorCardStateGridList.get(i).setBorderStyle(new LineBorderStyle(Colour.RED));
+            else
+                popeFavorCardStateGridList.get(i).setBorderStyle(new LineBorderStyle(Colour.WHITE));
+
+            popeFavorCardStateLabelList.get(i).setText(
+                FormattedChar.convertStringToFormattedCharList(
+                Localization.getLocalizationInstance().getString("gameHistory.faithPath.popeFavorCards")
+                    + " " + (i+1) + "\n" + popeFavorCardState.toString(),
+                Colour.WHITE,
+                Colour.BLACK)
+            );
+        }
+
+        playerPositions.setText(
+            FormattedChar.convertStringToFormattedCharList(getPositionOfPlayersAsString(playersInOrder))
+        );
+
+        return super.getContentAsFormattedCharsBuffer();
+    }
+
+    private String getPositionOfPlayersAsString(List<Player> playersInOrder) {
+        StringBuilder positionOfPlayers = new StringBuilder();
+        for(Player player : playersInOrder) {
+            positionOfPlayers.append(player.playerName).append(": ");
+            positionOfPlayers.append(
+                Localization.getLocalizationInstance().getString("gameHistory.faithPath.position")
+            );
+            positionOfPlayers.append(faithPathRepresentation.getFaithPositions().get(player));
+            positionOfPlayers.append("\n");
+        }
+        return positionOfPlayers.toString();
+    }
+
+    private void setFaithPathViewBackground() {
         int cell = 0;
         for (ClientVaticanReportSectionRepresentation vaticanReportSection : faithPathRepresentation.getVaticanReportSections()) {
             while (cell < faithPathRepresentation.getFaithPathLength()) {
@@ -126,61 +189,6 @@ public class FaithPathView extends CliView{
                 }
             }
         }
-    }
-
-    private String getPositionOfPlayersAsString(List<Player> playersInOrder) {
-        StringBuilder positionOfPlayers = new StringBuilder();
-        for(Player player : playersInOrder) {
-            positionOfPlayers.append(player.playerName).append(": ");
-            positionOfPlayers.append(
-                Localization.getLocalizationInstance().getString("gameHistory.faithPath.position")
-            );
-            positionOfPlayers.append(faithPathRepresentation.getFaithPositions().get(player));
-            positionOfPlayers.append("\n");
-        }
-        return positionOfPlayers.toString();
-    }
-
-    void startFaithPathDialog() {
-        if(clientManager.getGameState().equals(GameState.GAME_SETUP)) {
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoiceLocalized(
-                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
-                    "client.cli.game.returnToSetupView"
-                ).apply();
-        }else {
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
-                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                    "client.cli.game.returnToMenu"
-                ).apply();
-        }
-    }
-
-    @Override
-    public void setRowSize(int rowSize) {
-        outerGrid.setRowSize(rowSize);
-        super.setRowSize(rowSize);
-    }
-
-    @Override
-    public void setColumnSize(int columnSize) {
-        outerGrid.setColumnSize(columnSize);
-        super.setColumnSize(columnSize);
-    }
-
-    @Override
-    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
-        for (int i=0; i<popeFavorCardStateList.size(); i++) {
-            PopeFavorCardState popeFavorCardState = faithPathRepresentation.getPopeFavorCards().get(myPlayer).get(i);
-            if (popeFavorCardState == PopeFavorCardState.ACTIVE)
-                popeFavorCardStateList.get(i).setBorderStyle(new LineBorderStyle(Colour.GREEN));
-            else if (popeFavorCardState == PopeFavorCardState.DISCARDED)
-                popeFavorCardStateList.get(i).setBorderStyle(new LineBorderStyle(Colour.RED));
-            else
-                popeFavorCardStateList.get(i).setBorderStyle(new LineBorderStyle(Colour.WHITE));
-        }
-        return super.getContentAsFormattedCharsBuffer();
     }
 
 }

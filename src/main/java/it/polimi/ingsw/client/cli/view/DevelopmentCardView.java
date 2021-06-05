@@ -28,7 +28,8 @@ public class DevelopmentCardView extends CliView {
     }
 
     protected String getDevelopmentCardDescription() {
-        return "DEVELOPMENT CARD " +
+        return Localization.getLocalizationInstance().getString("developmentCards.name") +
+            " " +
             Localization.getLocalizationInstance().getString("developmentCards.level") +
             " " + card.getLevel().toValue() +
             "\n\n" +
