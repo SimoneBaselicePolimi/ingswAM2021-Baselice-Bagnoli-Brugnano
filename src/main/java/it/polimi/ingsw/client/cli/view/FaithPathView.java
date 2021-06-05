@@ -50,6 +50,7 @@ public class FaithPathView extends CliView{
         playersInOrder = clientManager.getGameContextRepresentation().getPlayersOrder();
 
         outerGrid = new GridView(clientManager, 2, 1, 1);
+        outerGrid.setRowWeight(1, 2);
         addChildView(outerGrid, 0, 0);
 
         faithPathGrid = new GridView(clientManager, 1, faithPathRepresentation.getFaithPathLength(), 1);
@@ -131,11 +132,12 @@ public class FaithPathView extends CliView{
 
             popeFavorCardStateLabelList.get(i).setText(
                 FormattedChar.convertStringToFormattedCharList(
-                Localization.getLocalizationInstance().getString("gameHistory.faithPath.popeFavorCards")
-                    + " " + (i+1) + "\n" + popeFavorCardState.toString(),
+                Localization.getLocalizationInstance().getString("gameHistory.faithPath.popeFavorCards.name")
+                    + " " + (i+1) + "\n" + getPopeFavorCardsStateForEachPlayer(popeFavorCardState),
                 Colour.WHITE,
                 Colour.BLACK)
             );
+            popeFavorCardStateLabelList.get(i).setHorizontalAlignment(FormattedCharsBufferUtils.HorizontalAlignment.CENTER);
         }
 
         playerPositions.setText(
@@ -143,6 +145,15 @@ public class FaithPathView extends CliView{
         );
 
         return super.getContentAsFormattedCharsBuffer();
+    }
+
+    private String getPopeFavorCardsStateForEachPlayer(PopeFavorCardState popeFavorCardState) {
+        StringBuilder cardStates = new StringBuilder();
+        for(Player player : playersInOrder) {
+            cardStates.append("\n").append(player.playerName).append(": ")
+                .append(popeFavorCardState.getLocalizedName());
+        }
+        return cardStates.toString();
     }
 
     private String getPositionOfPlayersAsString(List<Player> playersInOrder) {

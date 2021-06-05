@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.model.gameitems;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.localization.Localization;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 
 import java.util.Locale;
 import java.util.Map;
@@ -12,6 +11,7 @@ import java.util.Map;
  * This enumeration lists all the Resource types used in the Game.
  */
 public enum ResourceType {
+
     @JsonProperty("COINS") COINS,
     @JsonProperty("STONES") STONES,
     @JsonProperty("SERVANTS") SERVANTS,
