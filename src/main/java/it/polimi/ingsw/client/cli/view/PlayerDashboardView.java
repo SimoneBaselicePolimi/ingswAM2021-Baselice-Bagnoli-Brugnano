@@ -200,12 +200,12 @@ public class PlayerDashboardView extends CliView{
             activePlayerContext.getTotalResourcesOwnedByThePlayer())
         ) {
             clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerHeDoesNotHaveNeededResources");
-            return askPlayerForTypeOfProductions();
-        }
-        else {
             productions.clear();
             starResourcesCost.clear();
             starResourcesReward.clear();
+            return askPlayerForTypeOfProductions();
+        }
+        else {
             return askPlayerForStarResourceReward();
         }
     }
