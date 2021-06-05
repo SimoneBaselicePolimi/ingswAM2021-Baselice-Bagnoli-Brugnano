@@ -30,7 +30,7 @@ public class ClientWhiteMarbleSubstitutionRepresentation extends ClientRegistere
         return Localization.getLocalizationInstance().getString(
             "leaderCards.specialPowers.marbleSubstitution",
             resourceTypeToSubstitute.getLocalizedNameSingular()
-        );
+        ) + "\n";
     }
 
 }

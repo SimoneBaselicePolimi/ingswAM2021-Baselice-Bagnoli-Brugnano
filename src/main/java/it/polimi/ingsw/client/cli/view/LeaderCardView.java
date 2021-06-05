@@ -66,7 +66,7 @@ public class LeaderCardView extends CliView {
 
     protected String getLeaderCardDescription() {
         StringBuilder descriptionBuilder = new StringBuilder();
-        descriptionBuilder.append("LEADER CARD ").append(numberOfCard).append("\n");
+        descriptionBuilder.append("LEADER CARD ").append(numberOfCard).append("\n\n");
         descriptionBuilder.append(
             Localization.getLocalizationInstance().getString("leaderCards.requirements.requirements")
         );
@@ -74,8 +74,8 @@ public class LeaderCardView extends CliView {
         card.getRequirements().stream()
             .map(ClientLeaderCardRequirementRepresentation::getDescription)
             .forEach(r -> descriptionBuilder.append("- ").append(r).append("\n"));
-        descriptionBuilder.append(getSpecialPowersDescription());
         descriptionBuilder.append("\n");
+        descriptionBuilder.append(getSpecialPowersDescription());
         descriptionBuilder.append(
             Localization.getLocalizationInstance().getString("leaderCards.victoryPoints", card.getVictoryPoints())
         );

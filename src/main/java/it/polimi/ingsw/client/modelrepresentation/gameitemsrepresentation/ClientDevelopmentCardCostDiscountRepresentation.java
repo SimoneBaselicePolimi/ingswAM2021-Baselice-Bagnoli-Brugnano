@@ -50,7 +50,7 @@ public class ClientDevelopmentCardCostDiscountRepresentation extends ClientRegis
             amountToDiscount,
             amountToDiscount == 1 ? resourceType.getLocalizedNameSingular()
                 : resourceType.getLocalizedNamePlural()
-            );
+            ) + "\n";
     }
 
 }

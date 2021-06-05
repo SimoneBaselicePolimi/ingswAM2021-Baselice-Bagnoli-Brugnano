@@ -96,6 +96,10 @@ cards:
   singular: "carta"
   plural: "carte"
 
+marbles:
+  special: "biglia speciale"
+
+
 resources:
   singular: "risorsa"
   plural: "risorse"
