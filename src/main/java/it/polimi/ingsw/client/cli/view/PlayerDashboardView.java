@@ -36,10 +36,10 @@ public class PlayerDashboardView extends CliView{
         activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
         activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
 
-        startPlayerDashBoardDialog();
+        startPlayerDashboardDialog();
     }
 
-    void startPlayerDashBoardDialog() {
+    void startPlayerDashboardDialog() {
 
         //game setup
         if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
@@ -86,10 +86,10 @@ public class PlayerDashboardView extends CliView{
         }
     }
 
-    CompletableFuture<Integer> askPlayerForTypeOfProductions() {
-        UserChoicesUtils.makeUserChoose(clientManager)
+    CompletableFuture<Void> askPlayerForTypeOfProductions() {
+        return UserChoicesUtils.makeUserChoose(clientManager)
             .addUserChoice(
-                () -> askPlayerForBaseProduction(),
+                () ->  askPlayerForBaseProduction(),
                 "client.cli.playerDashboard.activateBaseProduction"
             )
             .addUserChoice(
@@ -104,32 +104,29 @@ public class PlayerDashboardView extends CliView{
                 () -> sumResources(),
                 "client.cli.playerDashboard.endProductionsActivation"
             ).apply();
-        return null;
     }
 
-    CompletableFuture<Integer> askPlayerForDashboardProductions () {
+    CompletableFuture<Void> askPlayerForDashboardProductions () {
         Set<ClientProductionRepresentation> productionsThePlayerCanActivate = activePlayerContext.getActiveProductions();
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForDevProductionsChoice")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
                 if(intInput > 0 && intInput <= activePlayerContext.getDevelopmentCardDecks().size()) {
-                    productions.add(activePlayerContext.getDevelopmentCardDecks().get(intInput).peek().getProduction());
+                    productions.add(activePlayerContext.getDevelopmentCardDecks().get(intInput-1).peek().getProduction());
                     return askPlayerForTypeOfProductions();
-                }
-
-                else{
+                } else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
                     return askPlayerForTypeOfProductions();
                 }
             });
     }
 
-    CompletableFuture<Integer> askPlayerForBaseProduction() {
+    CompletableFuture<Void> askPlayerForBaseProduction() {
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForBaseProductionChoice")
             .thenCompose(input -> {
                     int intInput = Integer.parseInt(input);
                     if(intInput > 0 && intInput<activePlayerContext.getBaseProductions().size()) {
-                        productions.add(new ArrayList<ClientProductionRepresentation>(activePlayerContext.getBaseProductions()).get(intInput));
+                        productions.add(new ArrayList<ClientProductionRepresentation>(activePlayerContext.getBaseProductions()).get(intInput-1));
                         return askPlayerForTypeOfProductions();
                     }
                     else {
@@ -139,12 +136,12 @@ public class PlayerDashboardView extends CliView{
             });
     }
 
-    CompletableFuture<Integer> askPlayerForLeaderCardsProduction () {
+    CompletableFuture<Void> askPlayerForLeaderCardsProduction () {
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForLeaderProductionsChoice")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
                 if (intInput > 0 && intInput < activePlayerContext.getActiveLeaderCardsProductions().size()) {
-                    productions.add(new ArrayList<ClientProductionRepresentation>(activePlayerContext.getActiveLeaderCardsProductions()).get(intInput));
+                    productions.add(new ArrayList<ClientProductionRepresentation>(activePlayerContext.getActiveLeaderCardsProductions()).get(intInput-1));
                     return askPlayerForTypeOfProductions();
                 } else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
@@ -153,7 +150,7 @@ public class PlayerDashboardView extends CliView{
             });
     }
 
-    private CompletableFuture<Integer> sumResources(){
+    private CompletableFuture<Void> sumResources(){
         for (ClientProductionRepresentation production : productions) {
             if (production.getStarResourceCost() != 0)
                 numOfStarResourcesLeftToPay += production.getStarResourceCost();
@@ -168,7 +165,7 @@ public class PlayerDashboardView extends CliView{
     }
 
 
-    CompletableFuture<Integer> askPlayerForStarResourcesCost() {
+    CompletableFuture<Void> askPlayerForStarResourcesCost() {
         if(numOfStarResourcesLeftToPay != 0){
             return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToPay", numOfStarResourcesLeftToPay)
                 .thenCompose(resources -> {
@@ -189,7 +186,7 @@ public class PlayerDashboardView extends CliView{
         return checkIfThePlayerHasNecessaryResources();
     }
 
-    CompletableFuture<Integer> checkIfThePlayerHasNecessaryResources() {
+    CompletableFuture<Void> checkIfThePlayerHasNecessaryResources() {
         Map<ResourceType, Integer> totalResourcesCost = ResourceUtils.sum(
             totalNonStarResourcesCost,
             starResourcesCost
@@ -210,7 +207,7 @@ public class PlayerDashboardView extends CliView{
         }
     }
 
-    CompletableFuture<Integer> askPlayerForStarResourceReward() {
+    CompletableFuture<Void> askPlayerForStarResourceReward() {
 
         if(numOfStarResourcesLeftToObtain != 0){
             return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToObtain", numOfStarResourcesLeftToObtain)
@@ -228,6 +225,6 @@ public class PlayerDashboardView extends CliView{
                 });
         }
 
-        return CompletableFuture.completedFuture(1);
+        return CompletableFuture.completedFuture(null);
     }
 }
