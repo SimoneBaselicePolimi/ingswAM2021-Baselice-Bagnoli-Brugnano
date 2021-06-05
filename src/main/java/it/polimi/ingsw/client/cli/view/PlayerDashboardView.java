@@ -8,45 +8,47 @@ import it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
+import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 public class PlayerDashboardView extends CliView{
 
-    Player activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
-    ClientPlayerContextRepresentation playerContextActivePlayer = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+    Player activePlayer;
+    ClientPlayerContextRepresentation activePlayerContext;
 
-    private int numberOfResourcesLeftToPay = 0;
-    private int numberOfResourcesLeftToObtain = 0;
-    private int totalStarResourcesCost = 0;
-    private int totalStarResourcesRewards = 0;
+    private int numOfStarResourcesLeftToPay = 0;
+    private int numOfStarResourcesLeftToObtain = 0;
+    private Map<ResourceType, Integer> totalNonStarResourcesCost = new HashMap<>();
 
-    protected Set<ClientProductionRepresentation> productionsWithStarCost;
-    protected Set<ClientProductionRepresentation> productionsWithStarReward;
     protected Set<ClientProductionRepresentation> productions;
-    protected Set<ClientProductionRepresentation> finalProductions;
-    protected Map<ResourceType, Integer> starResourceCost;
-    protected Map<ResourceType, Integer> starResourceReward;
+    protected Map<ResourceType, Integer> starResourcesCost = new HashMap<>();
+    protected Map<ResourceType, Integer> starResourcesReward = new HashMap<>();
 
     protected GameView gameView;
     public PlayerDashboardView(CliClientManager clientManager, GameView gameView) {
+
         super(clientManager);
         this.gameView = gameView;
+
+        activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
+        activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+
         startPlayerDashBoardDialog();
     }
 
     void startPlayerDashBoardDialog() {
 
-        //game setup or my Player is not the active player
-        if(clientManager.getGameState().equals(GameState.GAME_SETUP) || !clientManager.getMyPlayer().equals(activePlayer)){
+        //game setup
+        if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoiceLocalized(
+                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
+                    "client.cli.game.returnToSetupView"
+                ).apply();
+        } else if(!clientManager.getMyPlayer().equals(activePlayer)) {//game setup or my Player is not the active player
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoice(
                     () -> gameView.setMainContentView(new LeaderCardsInDashBoardView(clientManager, clientManager.getMyPlayer())),
@@ -57,9 +59,7 @@ public class PlayerDashboardView extends CliView{
                     "client.cli.game.returnToMenu"
                 ).apply();
         }
-
         //game started and my player is the active player
-
         else {
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoice(
@@ -68,9 +68,9 @@ public class PlayerDashboardView extends CliView{
                             clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
                                 new ProductionActionClientRequest(
                                     activePlayer,
-                                    finalProductions,
-                                    starResourceCost,
-                                    starResourceReward
+                                    productions,
+                                    starResourcesCost,
+                                    starResourcesReward
                                 )
                             ))),
                     "client.cli.playerDashboard.activateProduction"
@@ -101,103 +101,125 @@ public class PlayerDashboardView extends CliView{
                 "client.cli.playerDashboard.activateLeaderCardsProduction"
             )
             .addUserChoice(
-                () -> CompletableFuture.completedFuture(1),
+                () -> sumResources(),
                 "client.cli.playerDashboard.endProductionsActivation"
             ).apply();
         return null;
     }
 
     CompletableFuture<Integer> askPlayerForDashboardProductions () {
-        Set<ClientProductionRepresentation> productionsThePlayerCanActivate = playerContextActivePlayer.getActiveProductions();
-        return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForProductionsChoice")
+        Set<ClientProductionRepresentation> productionsThePlayerCanActivate = activePlayerContext.getActiveProductions();
+        return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForDevProductionsChoice")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
-                if(intInput > 0 && intInput <= playerContextActivePlayer.getDevelopmentCardDecks().size()){
-                    ClientProductionRepresentation production = playerContextActivePlayer.getDevelopmentCardDecks().get(intInput).peek().getProduction();
-                    if (productionsThePlayerCanActivate.contains(production)) {
-                        productions.add(production);
-                        return checkThePlayerHasNecessaryResources();
-                    }
-                    else{
-                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionIsNotActivable");
-                        return askPlayerForTypeOfProductions();
-                    }
-                }
-                else{
-                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerDeckNumberIsInvalid");
+                if(intInput > 0 && intInput <= activePlayerContext.getDevelopmentCardDecks().size()) {
+                    productions.add(activePlayerContext.getDevelopmentCardDecks().get(intInput).peek().getProduction());
                     return askPlayerForTypeOfProductions();
                 }
-            });
-    }
 
-    CompletableFuture<Integer> askPlayerForBaseProduction() {
-        productions.addAll(playerContextActivePlayer.getBaseProductions());
-        return checkThePlayerHasNecessaryResources();
-    }
-
-    CompletableFuture<Integer> askPlayerForLeaderCardsProduction () {
-        Set<ClientProductionRepresentation> productionsThePlayerCanActivate = playerContextActivePlayer.getActiveProductions();
-        return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForProductionsChoice")
-            .thenCompose(input ->{
-                int intInput = Integer.parseInt(input);
-                if (intInput > 0 && intInput < playerContextActivePlayer.getActiveLeaderCardsProductions().size()){
-                    ClientProductionRepresentation production = new ArrayList<ClientProductionRepresentation>(playerContextActivePlayer.getActiveLeaderCardsProductions()).get(intInput);
-                    if(productionsThePlayerCanActivate.contains(production)){
-                        productions.add(production);
-                        return checkThePlayerHasNecessaryResources();
-                    }
-                    else{
-                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionIsNotActivable");
-                        return askPlayerForTypeOfProductions();
-                    }
-                }
-                else {
+                else{
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
                     return askPlayerForTypeOfProductions();
                 }
             });
     }
 
-    private CompletableFuture<Integer> checkThePlayerHasNecessaryResources(){
-        for(ClientProductionRepresentation production : productions) {
-            if (production.getStarResourceCost() != 0)
-                totalStarResourcesCost += production.getStarResourceCost();
-            if (production.getStarResourceReward() != 0)
-                totalStarResourcesRewards += production.getStarResourceReward();
-        }
-        numberOfResourcesLeftToPay = totalStarResourcesCost;
-        numberOfResourcesLeftToObtain = totalStarResourcesRewards;
-        return null;
+    CompletableFuture<Integer> askPlayerForBaseProduction() {
+        return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForBaseProductionChoice")
+            .thenCompose(input -> {
+                    int intInput = Integer.parseInt(input);
+                    if(intInput > 0 && intInput<activePlayerContext.getBaseProductions().size()) {
+                        productions.add(new ArrayList<ClientProductionRepresentation>(activePlayerContext.getBaseProductions()).get(intInput));
+                        return askPlayerForTypeOfProductions();
+                    }
+                    else {
+                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
+                        return askPlayerForTypeOfProductions();
+                    }
+            });
     }
 
-    CompletableFuture<Integer> askPlayerForStarResourceCost() {
-        if(numberOfResourcesLeftToPay != 0){
-            return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToPay", numberOfResourcesLeftToPay)
+    CompletableFuture<Integer> askPlayerForLeaderCardsProduction () {
+        return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForLeaderProductionsChoice")
+            .thenCompose(input -> {
+                int intInput = Integer.parseInt(input);
+                if (intInput > 0 && intInput < activePlayerContext.getActiveLeaderCardsProductions().size()) {
+                    productions.add(new ArrayList<ClientProductionRepresentation>(activePlayerContext.getActiveLeaderCardsProductions()).get(intInput));
+                    return askPlayerForTypeOfProductions();
+                } else {
+                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
+                    return askPlayerForTypeOfProductions();
+                }
+            });
+    }
+
+    private CompletableFuture<Integer> sumResources(){
+        for (ClientProductionRepresentation production : productions) {
+            if (production.getStarResourceCost() != 0)
+                numOfStarResourcesLeftToPay += production.getStarResourceCost();
+            if (production.getStarResourceReward() != 0)
+                numOfStarResourcesLeftToObtain += production.getStarResourceReward();
+            totalNonStarResourcesCost = ResourceUtils.sum(
+                totalNonStarResourcesCost,
+                production.getResourceCost()
+            );
+        }
+        return askPlayerForStarResourcesCost();
+    }
+
+
+    CompletableFuture<Integer> askPlayerForStarResourcesCost() {
+        if(numOfStarResourcesLeftToPay != 0){
+            return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToPay", numOfStarResourcesLeftToPay)
                 .thenCompose(resources -> {
-                    int numOfResourceType = Integer.parseInt(resources.substring(0, 1));
-                    ResourceType resourceType = ResourceType.getResourceTypeFromLocalizedName(resources.substring(2));
-                    if(resourceType != null && numOfResourceType > 0 && numberOfResourcesLeftToPay >= numOfResourceType) {
-                        numberOfResourcesLeftToPay -= numOfResourceType;
-                        starResourceCost.put(resourceType, numOfResourceType);
-                        return askPlayerForStarResourceCost();
-                    } else {
+                    int numOfResourceTypeCost = Integer.parseInt(resources.substring(0, 1));
+                    ResourceType resourceTypeCost = ResourceType.getResourceTypeFromLocalizedName(resources.substring(2));
+                    if(resourceTypeCost != null && numOfResourceTypeCost > 0 && numOfStarResourcesLeftToPay >= numOfResourceTypeCost) {
+                        numOfStarResourcesLeftToPay -= numOfResourceTypeCost;
+                        starResourcesCost.put(resourceTypeCost, numOfResourceTypeCost);
+                        return askPlayerForStarResourcesCost();
+                    }
+
+                    else {
                         clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
-                        return askPlayerForStarResourceCost();
+                        return askPlayerForStarResourcesCost();
                     }
                 });
         }
-        return askPlayerForStarResourceReward();
+        return checkIfThePlayerHasNecessaryResources();
+    }
+
+    CompletableFuture<Integer> checkIfThePlayerHasNecessaryResources() {
+        Map<ResourceType, Integer> totalResourcesCost = ResourceUtils.sum(
+            totalNonStarResourcesCost,
+            starResourcesCost
+        );
+
+        if (!ResourceUtils.areResourcesAContainedInB(
+            totalResourcesCost,
+            activePlayerContext.getTotalResourcesOwnedByThePlayer())
+        ) {
+            clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerHeDoesNotHaveNeededResources");
+            productions.clear();
+            starResourcesCost.clear();
+            starResourcesReward.clear();
+            return askPlayerForTypeOfProductions();
+        }
+        else {
+            return askPlayerForStarResourceReward();
+        }
     }
 
     CompletableFuture<Integer> askPlayerForStarResourceReward() {
-        if(numberOfResourcesLeftToObtain != 0){
-            return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToObtain", numberOfResourcesLeftToObtain)
+
+        if(numOfStarResourcesLeftToObtain != 0){
+            return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToObtain", numOfStarResourcesLeftToObtain)
                 .thenCompose(resources ->{
                     int numOfResourceType = Integer.parseInt(resources.substring(0, 1));
                     ResourceType resourceType = ResourceType.getResourceTypeFromLocalizedName(resources.substring(2));
-                    if(resourceType != null && numOfResourceType > 0 && numberOfResourcesLeftToObtain >= numOfResourceType) {
-                        numberOfResourcesLeftToObtain -= numOfResourceType;
-                        starResourceReward.put(resourceType, numOfResourceType);
+                    if(resourceType != null && numOfResourceType > 0 && numOfStarResourcesLeftToObtain >= numOfResourceType) {
+                        numOfStarResourcesLeftToObtain -= numOfResourceType;
+                        starResourcesReward.put(resourceType, numOfResourceType);
                         return askPlayerForStarResourceReward();
                     } else {
                         clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
@@ -205,8 +227,7 @@ public class PlayerDashboardView extends CliView{
                     }
                 });
         }
-        productions.addAll(productions);
-        productions.clear();
-        return askPlayerForTypeOfProductions();
+
+        return CompletableFuture.completedFuture(1);
     }
 }

@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
-import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
@@ -55,8 +54,17 @@ public class DevCardTableView extends CliView{
 
     void startDevCardTableDialog() {
 
-        //game setup or my Player is not the active player
-        if(clientManager.getGameState().equals(GameState.GAME_SETUP) || !clientManager.getMyPlayer().equals(activePlayer)){
+        activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
+        activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+
+        //game setup
+        if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoiceLocalized(
+                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
+                    "client.cli.game.returnToSetupView"
+                ).apply();
+        } else if(!clientManager.getMyPlayer().equals(activePlayer)) { //game started and my player is not the active player
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoice(
                     () -> gameView.setMainContentView(new MainMenuView(clientManager)),
@@ -65,7 +73,7 @@ public class DevCardTableView extends CliView{
         }
 
         //game started and my player is the active player
-        else{
+        } else{
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoice(
                     () -> askPlayerForDevCardLevelChoice()
@@ -135,7 +143,7 @@ public class DevCardTableView extends CliView{
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
                 this.deckNumber = intInput;
-                ClientPlayerOwnedDevelopmentCardDeckRepresentation playerDeck = playerContextActivePlayer.getDevelopmentCardDecks().get(deckNumber);
+                ClientPlayerOwnedDevelopmentCardDeckRepresentation playerDeck = activePlayerContext.getDevelopmentCardDecks().get(deckNumber);
                 if (!playerDeck.getCardDeck().isEmpty() && playerDeck.getCardDeck().peek().getLevel().toValue() < developmentCard.getLevel().toValue())
                     return CompletableFuture.completedFuture(intInput);
                 else {
