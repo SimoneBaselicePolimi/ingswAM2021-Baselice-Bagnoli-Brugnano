@@ -28,8 +28,8 @@ public class DevCardTableView extends CliView{
 
     ClientDevelopmentCardsTableRepresentation table = clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
     Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>> oneLevelCards;
-    Player activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
-    ClientPlayerContextRepresentation playerContextActivePlayer = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+    Player activePlayer;
+    ClientPlayerContextRepresentation activePlayerContext;
 
     public DevCardTableView(CliClientManager clientManager, GameView gameView) {
         super(clientManager);
@@ -39,17 +39,25 @@ public class DevCardTableView extends CliView{
 
     void startDevCardTableDialog() {
 
-        //game setup or my Player is not the active player
-        if(clientManager.getGameState().equals(GameState.GAME_SETUP) || !clientManager.getMyPlayer().equals(activePlayer)){
+        activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
+        activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+
+        //game setup
+        if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
+            UserChoicesUtils.makeUserChoose(clientManager)
+                .addUserChoiceLocalized(
+                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
+                    "client.cli.game.returnToSetupView"
+                ).apply();
+        } else if(!clientManager.getMyPlayer().equals(activePlayer)) { //game started and my player is not the active player
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoice(
                     () -> gameView.setMainContentView(new MainMenuView(clientManager)),
                     "client.cli.game.returnToMenu"
                 ).apply();
-        }
 
         //game started and my player is the active player
-        else{
+        } else{
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoice(
                     () -> askPlayerForDevCardLevelChoice()
@@ -119,7 +127,7 @@ public class DevCardTableView extends CliView{
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
                 this.deckNumber = intInput;
-                ClientPlayerOwnedDevelopmentCardDeckRepresentation playerDeck = playerContextActivePlayer.getDevelopmentCardDecks().get(deckNumber);
+                ClientPlayerOwnedDevelopmentCardDeckRepresentation playerDeck = activePlayerContext.getDevelopmentCardDecks().get(deckNumber);
                 if (!playerDeck.getCardDeck().isEmpty() && playerDeck.getCardDeck().peek().getLevel().toValue() < developmentCard.getLevel().toValue())
                     return CompletableFuture.completedFuture(intInput);
                 else {
