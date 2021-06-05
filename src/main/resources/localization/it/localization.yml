@@ -157,7 +157,11 @@ gameHistory:
       plural: "Il giocatore %s si è mosso sul tracciato fede di %s passi"
     vaticanReport: "E' avvenuto un rapporto in Vaticano"
     popeFavorCards:
-      "TESSERA FAVORE PAPALE"
+      name: "TESSERA FAVORE PAPALE"
+      states:
+        active: "attiva"
+        discarded: "scartata"
+        hidden: "coperta"
     lastPositionReached: "Il giocatore %s ha raggiunto l'ultima casella del tracciato fede"
 
   leaderCard:
