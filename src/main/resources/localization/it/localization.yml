@@ -45,6 +45,8 @@ client:
       askForColumnNumber: "Quale colonna del mercato vuoi selezionare?"
       notifyPlayerRowNumberIsInvalid: "La riga selezionata non è una riga valida del mercato"
       notifyPlayerColumnNumberIsInvalid: "La colonna selezionata non è una colonna valida del mercato"
+    devCard:
+      deckTitle: "Carte nel mazzo: %s "
     devCardTable:
       devCardChoice: "Compra carta sviluppo"
       askForDevCardColourChoice: "Inserisci il colore della carta sviluppo che vuoi comprare:"

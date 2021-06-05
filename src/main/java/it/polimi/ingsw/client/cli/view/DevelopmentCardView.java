@@ -17,8 +17,13 @@ public class DevelopmentCardView extends CliView {
     protected GridView cardGrid;
     protected Colour borderColour = Colour.WHITE;
 
-    public DevelopmentCardView(CliClientManager clientManager, ClientDevelopmentCardRepresentation card) {
-        super(clientManager);
+    public DevelopmentCardView(
+        ClientDevelopmentCardRepresentation card,
+        CliClientManager clientManager,
+        int rowSize,
+        int columnSize
+    ) {
+        super(clientManager, rowSize, columnSize);
         this.card = card;
 
         cardGrid = new GridView(clientManager, 1, 1, 1);
@@ -28,6 +33,10 @@ public class DevelopmentCardView extends CliView {
             FormattedChar.convertStringToFormattedCharList(getDevelopmentCardDescription()), clientManager
         );
         cardGrid.setView(0, 0, cardText);
+    }
+
+    public DevelopmentCardView(ClientDevelopmentCardRepresentation card, CliClientManager clientManager) {
+        this(card, clientManager, 0, 0);
     }
 
     protected String getDevelopmentCardDescription() {
