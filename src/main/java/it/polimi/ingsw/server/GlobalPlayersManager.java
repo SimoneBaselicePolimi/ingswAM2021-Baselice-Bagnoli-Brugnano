@@ -29,7 +29,7 @@ public class GlobalPlayersManager {
 
         if(isPlayerNameAlreadyInUse(playerName))
             throw new PlayerNameAlreadyInUseException(String.format(
-                "A player has alreayd been registered with the name %s",
+                "A player has already been registered with the name %s",
                 playerName
             ));
 

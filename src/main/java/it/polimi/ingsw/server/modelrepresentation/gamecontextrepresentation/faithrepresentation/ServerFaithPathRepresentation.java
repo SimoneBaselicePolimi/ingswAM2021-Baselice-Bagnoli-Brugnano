@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
 import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
+import it.polimi.ingsw.utils.serialization.annotations.SerializeAsMapWithIdKey;
 
 import java.util.List;
 import java.util.Map;
@@ -28,16 +29,19 @@ public class ServerFaithPathRepresentation extends ServerRepresentation {
     /**
      * Position of each Player in the Faith Track
      */
+    @SerializeAsMapWithIdKey
     public final Map<Player, Integer> faithPositions;
 
     /**
      * State of the Pope's Favor cards of each Player
      */
+    @SerializeAsMapWithIdKey
     public final Map<Player, List<PopeFavorCardState>> popeFavorCards;
 
     /**
      * Victory points scored by each Player
      */
+    @SerializeAsMapWithIdKey
     public final Map<Player, Integer> victoryPoints;
 
     public ServerFaithPathRepresentation(

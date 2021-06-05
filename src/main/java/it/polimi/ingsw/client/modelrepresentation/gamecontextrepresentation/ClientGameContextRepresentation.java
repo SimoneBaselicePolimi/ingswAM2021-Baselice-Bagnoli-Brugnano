@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.mark
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.utils.serialization.annotations.SerializeAsMapWithIdKey;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class ClientGameContextRepresentation extends ClientRepresentation {
     @SerializeIdOnly
     private Player activePlayer;
 
-    //@SerializeAsMapWithIdKey
+    @SerializeAsMapWithIdKey
     private final Map<Player, ClientPlayerContextRepresentation> playerContexts;
 
     public ClientGameContextRepresentation(

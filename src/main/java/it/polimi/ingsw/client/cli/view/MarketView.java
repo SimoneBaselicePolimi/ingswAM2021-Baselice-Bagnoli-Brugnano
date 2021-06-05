@@ -28,7 +28,7 @@ public class MarketView extends CliView{
 
     protected GridView outerGrid;
     protected GridView marketGrid;
-    protected GridView legendContainerGrid;
+    protected GridView legend;
 
     protected ClientMarketRepresentation marketRepresentation;
 
@@ -86,15 +86,11 @@ public class MarketView extends CliView{
         );
         outMarbleGrid.setView(0,0, outMarbleView);
 
-//        legendContainerGrid = new GridView(clientManager, 1, 1, 1);
-//        legendContainerGrid.setBorderStyle(new LineBorderStyle());
-//        outerGrid.setView(0, 1, legendContainerGrid);
-
         Set<ClientMarbleColourRepresentation> differentMarbleColours = new HashSet<>(
             clientManager.getGameItemsManager().getAllItemsOfType(ClientMarbleColourRepresentation.class)
         );
 
-        GridView legend = new GridView(clientManager, differentMarbleColours.size(), 2, 1);
+        legend = new GridView(clientManager, differentMarbleColours.size(), 2, 1);
         legend.setBorderStyle(new LineBorderStyle());
         legend.setColWeight(1, 3);
         outerGrid.setView(0,1, legend);

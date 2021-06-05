@@ -99,7 +99,6 @@ cards:
 marbles:
   special: "biglia speciale"
 
-
 resources:
   singular: "risorsa"
   plural: "risorse"
@@ -139,10 +138,13 @@ developmentCards:
     blue:
       singular: "blu"
       plural: "blu"
+  level: "liv."
+  cost: "Costo:"
 
 gameHistory:
 
   faithPath:
+    position: "posizione"
     faithPoints:
       singular: "punto fede"
       plural: "punti fede"

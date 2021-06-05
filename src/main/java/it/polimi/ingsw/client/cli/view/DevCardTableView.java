@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
@@ -26,15 +27,30 @@ public class DevCardTableView extends CliView{
     protected int deckNumber;
     protected ClientDevelopmentCardRepresentation developmentCard;
 
-    ClientDevelopmentCardsTableRepresentation table = clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
-    Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>> oneLevelCards;
-    Player activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
-    ClientPlayerContextRepresentation playerContextActivePlayer = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+    protected ClientDevelopmentCardsTableRepresentation table;
+    protected Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>> oneLevelCards;
+    protected Player activePlayer;
+    protected ClientPlayerContextRepresentation playerContextActivePlayer;
+
+    protected GridView developmentCardTableGrid;
 
     public DevCardTableView(CliClientManager clientManager, GameView gameView) {
         super(clientManager);
         this.gameView = gameView;
+
+        table = clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
+        activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
+        playerContextActivePlayer = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+
         startDevCardTableDialog();
+
+        developmentCardTableGrid = new GridView(
+            clientManager,
+            table.getCards().size(),
+            table.getCards().get(DevelopmentCardLevel.FIRST_LEVEL).size(),
+            0
+        );
+
     }
 
     void startDevCardTableDialog() {

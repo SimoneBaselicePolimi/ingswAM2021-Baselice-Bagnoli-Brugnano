@@ -1,12 +1,17 @@
 package it.polimi.ingsw.utils.serialization.deserializers;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.BeanProperty;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -40,7 +45,7 @@ public class MapWithIdKeyDeserializer<K extends IdentifiableItem, V>  extends Js
     public Map<K, V> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
         GameItemsManager manager = (GameItemsManager) deserializationContext.getAttribute("gameItemsManager");
-        Map<String, V> mapWithIdKey = jsonParser.readValueAs(Map.class);
+        Map<String, V> mapWithIdKey = jsonParser.readValueAs(new TypeReference<HashMap<String, V>>() {});
         return mapWithIdKey.entrySet().stream().collect(Collectors.toMap(
             (e) -> manager.getItem(typeOfKey, e.getKey()),
             Map.Entry::getValue

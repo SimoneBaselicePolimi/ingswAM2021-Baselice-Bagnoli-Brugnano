@@ -28,6 +28,7 @@ public class Player implements IdentifiableItem {
 	}
 
 	@Override
+	@JsonIgnore
 	public String toString() {
 		return String.format("[Player: %s]", playerName);
 	}

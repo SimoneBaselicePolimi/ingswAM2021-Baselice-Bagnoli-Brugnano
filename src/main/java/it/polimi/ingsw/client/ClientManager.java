@@ -23,6 +23,7 @@ public class ClientManager {
     protected CompletableFuture<ServerMessage> serverAnswerable = null;
     protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<>(MESSAGE_QUEUE_SIZE);
 
+    //TODO mai inizializzato
     protected Player myPlayer;
 
     protected GameState gameState;
