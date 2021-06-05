@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
@@ -29,7 +30,7 @@ public class DevCardTableView extends CliView{
     protected ClientDevelopmentCardsTableRepresentation table;
     protected Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>> oneLevelCards;
     protected Player activePlayer;
-    protected ClientPlayerContextRepresentation playerContextActivePlayer;
+    protected ClientPlayerContextRepresentation activePlayerContext;
 
     protected GridView developmentCardTableGrid;
 
@@ -39,7 +40,7 @@ public class DevCardTableView extends CliView{
 
         table = clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
         activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
-        playerContextActivePlayer = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+        activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
 
         startDevCardTableDialog();
 
@@ -73,7 +74,7 @@ public class DevCardTableView extends CliView{
         }
 
         //game started and my player is the active player
-        } else{
+        else {
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoice(
                     () -> askPlayerForDevCardLevelChoice()
