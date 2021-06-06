@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.clientmessage.ClientMessage;
+import it.polimi.ingsw.client.gameupdate.ClientGameUpdate;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
@@ -11,6 +12,7 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,6 +61,10 @@ public class ClientManager {
     public CompletableFuture<ServerMessage> getNewMessageFromServer() {
         serverAnswerable = new CompletableFuture<>();
         return serverAnswerable;
+    }
+
+    public void handleGameUpdates(Set<ClientGameUpdate> gameUpdates) {
+        gameUpdates.forEach(update -> update.getHandler().handleGameUpdate(update, this));
     }
 
     public MessageSender getServerSender() {
