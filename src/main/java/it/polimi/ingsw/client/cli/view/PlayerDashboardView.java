@@ -3,15 +3,7 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
-import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
-import it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
-
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 public class PlayerDashboardView extends AbstractPlayerDashboardView {
 

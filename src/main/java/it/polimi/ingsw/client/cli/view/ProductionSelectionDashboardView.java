@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.cli.view;
 
-import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
@@ -79,12 +78,12 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
     }
 
     CompletableFuture<Void> askPlayerForDashboardProductions () {
-        Set<ClientProductionRepresentation> productionsThePlayerCanActivate = activePlayerContext.getActiveProductions();
+        Set<ClientProductionRepresentation> productionsThePlayerCanActivate = dashboardPlayerContext.getActiveProductions();
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForDevProductionsChoice")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
-                if(intInput > 0 && intInput <= activePlayerContext.getDevelopmentCardDecks().size()) {
-                    productions.add(activePlayerContext.getDevelopmentCardDecks().get(intInput-1).peek().getProduction());
+                if(intInput > 0 && intInput <= dashboardPlayerContext.getDevelopmentCardDecks().size()) {
+                    productions.add(dashboardPlayerContext.getDevelopmentCardDecks().get(intInput-1).peek().getProduction());
                     return askPlayerForTypeOfProductions();
                 } else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
@@ -97,8 +96,8 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForBaseProductionChoice")
             .thenCompose(input -> {
                     int intInput = Integer.parseInt(input);
-                    if(intInput > 0 && intInput<activePlayerContext.getBaseProductions().size()) {
-                        productions.add(new ArrayList<ClientProductionRepresentation>(activePlayerContext.getBaseProductions()).get(intInput-1));
+                    if(intInput > 0 && intInput< dashboardPlayerContext.getBaseProductions().size()) {
+                        productions.add(new ArrayList<ClientProductionRepresentation>(dashboardPlayerContext.getBaseProductions()).get(intInput-1));
                         return askPlayerForTypeOfProductions();
                     }
                     else {
@@ -112,8 +111,8 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForLeaderProductionsChoice")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
-                if (intInput > 0 && intInput < activePlayerContext.getActiveLeaderCardsProductions().size()) {
-                    productions.add(new ArrayList<ClientProductionRepresentation>(activePlayerContext.getActiveLeaderCardsProductions()).get(intInput-1));
+                if (intInput > 0 && intInput < dashboardPlayerContext.getActiveLeaderCardsProductions().size()) {
+                    productions.add(new ArrayList<ClientProductionRepresentation>(dashboardPlayerContext.getActiveLeaderCardsProductions()).get(intInput-1));
                     return askPlayerForTypeOfProductions();
                 } else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
@@ -166,7 +165,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
         if (!ResourceUtils.areResourcesAContainedInB(
             totalResourcesCost,
-            activePlayerContext.getTotalResourcesOwnedByThePlayer())
+            dashboardPlayerContext.getTotalResourcesOwnedByThePlayer())
         ) {
             clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerHeDoesNotHaveNeededResources");
             productions.clear();

@@ -123,11 +123,12 @@ public class LeaderCardSetupView extends CliView {
                 () -> gameView.setMainContentView(new FaithPathView(clientManager, gameView)),
                 "client.cli.mainMenuActions.openFaithPath"
             ).addUserChoiceLocalized(
-                () -> gameView.setMainContentView(new PlayerDashboardView(clientManager, gameView)),
+                () -> gameView.setMainContentView(new PlayerDashboardView(clientManager.getMyPlayer(), clientManager, gameView)),
                 "client.cli.mainMenuActions.openPersonalDashboard"
-            ).addUserChoiceLocalized(
-                () -> gameView.setMainContentView(new PlayerDashboardView(clientManager, gameView)),
-                "client.cli.mainMenuActions.openDifferentPlayerDashboard"
+            //TODO OOO
+//            ).addUserChoiceLocalized(
+//                () -> gameView.setMainContentView(new PlayerDashboardView(clientManager, gameView)),
+//                "client.cli.mainMenuActions.openDifferentPlayerDashboard"
             ).apply();
     }
 
