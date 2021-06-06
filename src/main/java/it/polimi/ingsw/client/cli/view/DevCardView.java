@@ -10,33 +10,30 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.utils.Colour;
 
-public class DevelopmentCardView extends CliView {
+public class DevCardView extends CliView {
+
+    public static final int DEV_CARD_ROW_SIZE = 16;
+    public static final int DEV_CARD_COL_SIZE = 30;
 
     protected ClientDevelopmentCardRepresentation card;
     protected LabelView cardText;
     protected GridView cardGrid;
     protected Colour borderColour = Colour.WHITE;
 
-    public DevelopmentCardView(
+    public DevCardView(
         ClientDevelopmentCardRepresentation card,
-        CliClientManager clientManager,
-        int rowSize,
-        int columnSize
+        CliClientManager clientManager
     ) {
-        super(clientManager, rowSize, columnSize);
+        super(clientManager, DEV_CARD_ROW_SIZE, DEV_CARD_COL_SIZE);
         this.card = card;
 
-        cardGrid = new GridView(clientManager, 1, 1, 1);
+        cardGrid = new GridView(clientManager, 1, 1, 1, DEV_CARD_ROW_SIZE, DEV_CARD_COL_SIZE);
         cardGrid.setBorderStyle(new LineBorderStyle());
         addChildView(cardGrid, 0, 0);
         cardText = new LabelView(
             FormattedChar.convertStringToFormattedCharList(getDevelopmentCardDescription()), clientManager
         );
         cardGrid.setView(0, 0, cardText);
-    }
-
-    public DevelopmentCardView(ClientDevelopmentCardRepresentation card, CliClientManager clientManager) {
-        this(card, clientManager, 0, 0);
     }
 
     protected String getDevelopmentCardDescription() {

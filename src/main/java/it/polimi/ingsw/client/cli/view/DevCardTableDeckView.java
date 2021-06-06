@@ -20,18 +20,16 @@ public class DevCardTableDeckView extends CliView {
 
     LabelView deckLabel;
 
-    DevelopmentCardView cardView;
+    DevCardView cardView;
 
     ClientDevelopmentCardRepresentation card;
 
     public DevCardTableDeckView(
         DevelopmentCardColour cardColour,
         DevelopmentCardLevel cardLevel,
-        CliClientManager clientManager,
-        int rowSize,
-        int columnSize
+        CliClientManager clientManager
     ) {
-        super(clientManager, rowSize, columnSize);
+        super(clientManager, DevCardView.DEV_CARD_ROW_SIZE+1, DevCardView.DEV_CARD_COL_SIZE);
         this.cardColour = cardColour;
         this.cardLevel = cardLevel;
         this.cardDeck = clientManager.getGameContextRepresentation()
@@ -39,6 +37,7 @@ public class DevCardTableDeckView extends CliView {
 
         deckLabel = new LabelView(new ArrayList<>(), clientManager);
 
+        createNewDevCardAndDeckLabel();
     }
 
     @Override
@@ -51,34 +50,35 @@ public class DevCardTableDeckView extends CliView {
             )
         ));
 
-        //check if teh card on top of the deck has changed
-        if(!cardDeck.cardOnTop.equals(card)) {
+        //check if the card on top of the deck has changed
+        if(!cardDeck.cardOnTop.equals(card))
+            createNewDevCardAndDeckLabel(); //Draw new card
 
-            //Remove and destroy old card if present
-            if (cardView != null) {
-                cardView.destroyView();
-            }
-
-            children.clear();
-
-            addChildView(deckLabel, rowSize-1, 0);
-            deckLabel.setRowSize(1);
-            deckLabel.setColumnSize(columnSize);
-
-            if (cardDeck.getNumberOfCardsInDeck() > 0) {
-                card = cardDeck.getCardOnTop();
-                cardView = new DevelopmentCardView(card, clientManager, rowSize-1, columnSize);
-                addChildView(cardView, 0, 0);
-            } else {
-                //TODO
-            }
-
-        }
         return super.getContentAsFormattedCharsBuffer();
     }
 
-    public DevCardTableDeckView(DevelopmentCardColour cardColour, DevelopmentCardLevel cardLevel, CliClientManager clientManager) {
-        this(cardColour, cardLevel, clientManager, 0, 0);
+    protected void createNewDevCardAndDeckLabel() {
+
+        //Remove and destroy old card if present
+        if (cardView != null) {
+            cardView.destroyView();
+        }
+
+        children.clear();
+
+        addChildView(deckLabel, rowSize-1, 0);
+        deckLabel.setRowSize(1);
+        deckLabel.setColumnSize(columnSize);
+
+        if (cardDeck.getNumberOfCardsInDeck() > 0) {
+            card = cardDeck.getCardOnTop();
+            cardView = new DevCardView(card, clientManager);
+            addChildView(cardView, 0, 0);
+        } else {
+            card = null;
+            //TODO
+        }
+
     }
 
 }

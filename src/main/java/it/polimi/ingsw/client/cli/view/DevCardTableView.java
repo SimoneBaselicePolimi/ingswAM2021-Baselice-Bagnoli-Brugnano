@@ -15,17 +15,21 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 public class DevCardTableView extends CliView{
+
+    public static final int SPACE_BETWEEN_CARDS = 2;
 
     protected GameView gameView;
     protected DevelopmentCardColour colour;
     protected DevelopmentCardLevel level;
     protected int deckNumber;
     protected ClientDevelopmentCardRepresentation developmentCard;
+
+    protected DevelopmentCardLevel visibleCardsLevel;
 
     protected ClientDevelopmentCardsTableRepresentation table;
     protected Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>> oneLevelCards;
@@ -42,57 +46,98 @@ public class DevCardTableView extends CliView{
         activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
         activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
 
+        setVisibleCards(DevelopmentCardLevel.FIRST_LEVEL);
         startDevCardTableDialog();
+    }
+
+    protected void setVisibleCards(DevelopmentCardLevel cardLevel) {
+        visibleCardsLevel = cardLevel;
+        List<ClientDevelopmentCardRepresentation> visibleCards = table.getCards().get(cardLevel).values().stream()
+            .map(ClientCoveredCardsDeckRepresentation::getCardOnTop)
+            .collect(Collectors.toList());
+
+        if(developmentCardTableGrid != null) {
+            developmentCardTableGrid.destroyView();
+            children.clear();
+        }
+
+        int gridRowSize = 2*SPACE_BETWEEN_CARDS + DevCardView.DEV_CARD_ROW_SIZE;
+        int gridColSize =
+            SPACE_BETWEEN_CARDS + visibleCards.size()*(DevCardView.DEV_CARD_COL_SIZE + SPACE_BETWEEN_CARDS);
 
         developmentCardTableGrid = new GridView(
             clientManager,
-            table.getCards().size(),
-            table.getCards().get(DevelopmentCardLevel.FIRST_LEVEL).size(),
-            0
+            1,
+            visibleCards.size(),
+            SPACE_BETWEEN_CARDS,
+            gridRowSize,
+            gridColSize
         );
+
+        addChildView(developmentCardTableGrid, 0, 0);
+
+        for (int i = 0; i < visibleCards.size(); i++) {
+            developmentCardTableGrid.setView(
+                0,
+                i,
+                new DevCardTableDeckView(visibleCards.get(i).getColour(), visibleCardsLevel, clientManager)
+            );
+        }
 
     }
 
     void startDevCardTableDialog() {
 
-        activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
-        activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
+        UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
 
-        //game setup
+        //Change visible cards
+        for (
+            DevelopmentCardLevel level : Arrays.stream(DevelopmentCardLevel.values())
+                .filter(l -> !l.equals(visibleCardsLevel))
+                .collect(Collectors.toList())
+        ) {
+            choices.addUserChoiceLocalized(
+                () -> {
+                    setVisibleCards(level);
+                    updateView();
+                    startDevCardTableDialog();
+                },
+                "client.cli.devCardTable.viewCardOfLevel",
+                level.toValue()
+            );
+        }
+
+        //Game started, my player is the active player and he has not done a main action yet
+        if(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION)) {
+            choices.addUserChoiceLocalized(
+                () -> askPlayerForDevCardLevelChoice()
+                    .thenCompose(input ->
+                        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                            new DevelopmentActionClientRequest(
+                                activePlayer,
+                                developmentCard,
+                                deckNumber
+                            )
+                        )
+                    )),
+                "client.cli.devCardTable.devCardChoice",
+                visibleCardsLevel.toValue()
+            );
+        }
+
         if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoiceLocalized(
-                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
-                    "client.cli.game.returnToSetupView"
-                ).apply();
-        } else if(!clientManager.getMyPlayer().equals(activePlayer)) { //game started and my player is not the active player
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
-                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                    "client.cli.game.returnToMenu"
-                ).apply();
+            choices.addUserChoiceLocalized(
+                () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
+                "client.cli.game.returnToSetupView"
+            );
+        } else {
+            choices.addUserChoiceLocalized(
+                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                "client.cli.game.returnToMenu"
+            );
         }
 
-        //game started and my player is the active player
-        else {
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
-                    () -> askPlayerForDevCardLevelChoice()
-                        .thenCompose(input ->
-                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-                                new DevelopmentActionClientRequest(
-                                    activePlayer,
-                                    developmentCard,
-                                    deckNumber
-                                )
-                            ))),
-                    "client.cli.devCardTable.devCardChoice"
-                )
-                .addUserChoice(
-                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                    "client.cli.game.returnToMenu"
-                ).apply();
-        }
+        choices.apply();
     }
 
     CompletableFuture<Integer> askPlayerForDevCardLevelChoice (){
@@ -156,5 +201,5 @@ public class DevCardTableView extends CliView{
                 }
             });
     }
-}
 
+}

@@ -48,7 +48,8 @@ client:
     devCard:
       deckTitle: "Carte nel mazzo: %s "
     devCardTable:
-      devCardChoice: "Compra carta sviluppo"
+      devCardChoice: "Compra carta sviluppo di livello %s"
+      viewCardOfLevel: "Vedi carte di livello %s"
       askForDevCardColourChoice: "Inserisci il colore della carta sviluppo che vuoi comprare:"
       askForDevCardLevelChoice: "Inserisci il livello della carta sviluppo che vuoi comprare:"
       askForDeckNumber: "In quale spazio della tua plancia personale vuoi mettere la carta sviluppo?"
