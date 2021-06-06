@@ -16,8 +16,8 @@ import it.polimi.ingsw.localization.Localization;
 
 public class LeaderCardView extends CliView {
 
-    public static final int LEADER_CARD_ROW_SIZE = 14;
-    public static final int LEADER_CARD_COL_SIZE = 24;
+    public static final int LEADER_CARD_ROW_SIZE = 16;
+    public static final int LEADER_CARD_COL_SIZE = 30;
 
     protected boolean isSelected = false;
 

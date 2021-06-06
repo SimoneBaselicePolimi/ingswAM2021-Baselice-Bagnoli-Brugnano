@@ -43,7 +43,7 @@ public class LeaderCardSetupView extends CliView {
 
         container = new GridView(clientManager, 2, 1, 1);
         addChildView(container, 0,0);
-        container.setRowWeight(1, 14);
+        container.setRowWeight(1, 16);
 
         titleView = new LabelView(List.of(), clientManager);
         container.setView(0,0, titleView);
