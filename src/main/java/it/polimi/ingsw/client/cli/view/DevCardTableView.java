@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
@@ -59,9 +60,9 @@ public class DevCardTableView extends CliView{
             children.clear();
         }
 
-        int gridRowSize = 2*SPACE_BETWEEN_CARDS + DevCardView.DEV_CARD_ROW_SIZE;
-        int gridColSize =
-            SPACE_BETWEEN_CARDS + visibleCards.size()*(DevCardView.DEV_CARD_COL_SIZE + SPACE_BETWEEN_CARDS);
+        int gridRowSize = 2*SPACE_BETWEEN_CARDS + DevCardTableDeckView.DEV_CARD_DECK_ROW_SIZE;
+        int gridColSize = SPACE_BETWEEN_CARDS +
+            visibleCards.size()*(DevCardTableDeckView.DEV_CARD_DECK_COL_SIZE + SPACE_BETWEEN_CARDS);
 
         developmentCardTableGrid = new GridView(
             clientManager,
@@ -231,6 +232,11 @@ public class DevCardTableView extends CliView{
                 return CompletableFuture.completedFuture(null);
             }).apply()
         );
+    }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+        return super.getContentAsFormattedCharsBuffer();
     }
 
 }

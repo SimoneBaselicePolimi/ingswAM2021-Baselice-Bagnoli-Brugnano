@@ -13,6 +13,9 @@ import java.util.ArrayList;
 
 public class DevCardTableDeckView extends CliView {
 
+    public static final int DEV_CARD_DECK_ROW_SIZE = DevCardView.DEV_CARD_ROW_SIZE+1;
+    public static final int DEV_CARD_DECK_COL_SIZE = DevCardView.DEV_CARD_COL_SIZE;
+
     public final DevelopmentCardColour cardColour;
     public final DevelopmentCardLevel cardLevel;
 
@@ -29,7 +32,7 @@ public class DevCardTableDeckView extends CliView {
         DevelopmentCardLevel cardLevel,
         CliClientManager clientManager
     ) {
-        super(clientManager, DevCardView.DEV_CARD_ROW_SIZE+1, DevCardView.DEV_CARD_COL_SIZE);
+        super(clientManager, DEV_CARD_DECK_ROW_SIZE, DEV_CARD_DECK_COL_SIZE);
         this.cardColour = cardColour;
         this.cardLevel = cardLevel;
         this.cardDeck = clientManager.getGameContextRepresentation()
