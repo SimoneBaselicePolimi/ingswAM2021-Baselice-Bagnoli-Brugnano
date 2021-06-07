@@ -28,7 +28,6 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
     protected Map<ResourceType, Integer> resourcesLeftToThePlayer;
 
-    protected GameView gameView;
 
     public ProductionSelectionDashboardView(
         List<ClientProductionRepresentation> alreadySelectedProductions,
