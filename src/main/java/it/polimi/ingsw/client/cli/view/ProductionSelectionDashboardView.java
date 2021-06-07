@@ -121,7 +121,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
                 if(intInput > 0 && intInput <= dashboardPlayerContext.getBaseProductions().size()) {
-                    ClientProductionRepresentation production = new ArrayList<ClientProductionRepresentation>(dashboardPlayerContext.getBaseProductions()).get(intInput-1);
+                    ClientProductionRepresentation production = baseProductions.get(intInput-1);
                     return checkIfThePlayerHasNecessaryResources(production);
                 }
                 else {
