@@ -30,7 +30,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
     protected Map<ResourceType, Integer> starResourcesReward = new HashMap<>();
 
     protected Map<ResourceType, Integer> resourcesThePlayerOwns = new HashMap<>();
-    protected Map<ResourceType, Integer> resourcesLeft = new HashMap<>();
+    protected Map<ResourceType, Integer> resourcesLeft;
 
     protected GameView gameView;
 
@@ -51,7 +51,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
     void startProdSelectionDialog() {
 
         resourcesThePlayerOwns = activePlayerContext.getTotalResourcesOwnedByThePlayer();
-        resourcesLeft = resourcesThePlayerOwns;
+        resourcesLeft = new HashMap<>(resourcesThePlayerOwns);
         UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
         if (clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION)) {
             choices.addUserChoiceLocalized(
@@ -132,6 +132,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 //                "client.cli.playerDashboard.activateLeaderCardsProduction"
 //            )
             .addUserChoice(
+                //TODO
                 () -> gameView.setMainContentView(new LeaderCardsInDashBoardView(clientManager, clientManager.getMyPlayer())),
                 "client.cli.playerDashboard.leaderCardList"
             ).apply();
@@ -156,7 +157,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForBaseProductionChoice")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
-                if(intInput > 0 && intInput<activePlayerContext.getBaseProductions().size()) {
+                if(intInput > 0 && intInput <= activePlayerContext.getBaseProductions().size()) {
                     ClientProductionRepresentation production = new ArrayList<ClientProductionRepresentation>(activePlayerContext.getBaseProductions()).get(intInput-1);
                     return checkIfThePlayerHasNecessaryResources(production);
                 }
@@ -169,15 +170,15 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
     CompletableFuture<Void> checkIfThePlayerHasNecessaryResources(ClientProductionRepresentation production) {
 
+        numOfStarResourcesLeftToPay = production.getStarResourceReward();
+        numOfStarResourcesLeftToObtain = production.getStarResourceReward();
         int totalResourcesCost = production.getResourceCost().values().stream().reduce(0, Integer::sum);
         if ((ResourceUtils.areResourcesAContainedInB(
             production.getResourceCost(),
             resourcesLeft)
-        ) && totalResourcesCost >= resourcesLeft.values().stream().reduce(0, Integer::sum)) {
+        ) && totalResourcesCost + numOfStarResourcesLeftToPay >= resourcesLeft.values().stream().reduce(0, Integer::sum)) {
             productions.add(production);
             resourcesLeft = ResourceUtils.difference(resourcesLeft, production.getResourceCost());
-            numOfStarResourcesLeftToObtain = production.getStarResourceReward();
-            numOfStarResourcesLeftToPay = production.getStarResourceCost();
             return askPlayerForStarResourcesCost();
         } else {
             clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
@@ -208,6 +209,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                     ResourceType resourceTypeCost = ResourceType.getResourceTypeFromLocalizedName(resources.substring(2));
                     if(resourceTypeCost != null && numOfResourceTypeCost > 0 && numOfStarResourcesLeftToPay >= numOfResourceTypeCost) {
                         numOfStarResourcesLeftToPay -= numOfResourceTypeCost;
+                        resourcesLeft = ResourceUtils.difference(resourcesLeft, Map.of(resourceTypeCost, numOfResourceTypeCost));
                         starResourcesCost.put(resourceTypeCost, numOfResourceTypeCost);
                         return askPlayerForStarResourcesCost();
                     }
