@@ -11,6 +11,7 @@ import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientRe
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         this.gameView = gameView;
 
         activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
+
         dashboardPlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(dashboardPlayer);
 
         playerDecks = dashboardPlayerContext.getDevelopmentCardDecks();

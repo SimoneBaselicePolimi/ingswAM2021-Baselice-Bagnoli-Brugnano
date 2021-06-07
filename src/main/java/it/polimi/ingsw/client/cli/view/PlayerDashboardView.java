@@ -5,6 +5,10 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.server.model.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
+
 public class PlayerDashboardView extends AbstractPlayerDashboardView {
 
 
@@ -15,26 +19,44 @@ public class PlayerDashboardView extends AbstractPlayerDashboardView {
 
     void startPlayerDashboardDialog() {
 
-        //game setup
-        if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoiceLocalized(
-                    () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
-                    "client.cli.game.returnToSetupView"
-                ).apply();
-        } else if (!clientManager.getMyPlayer().equals(activePlayer)) {//game setup or my Player is not the active player
-            UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
-                    () -> gameView.setMainContentView(new LeaderCardsInDashBoardView(
-                        clientManager,
-                        clientManager.getMyPlayer()
-                    )),
-                    "client.cli.playerDashboard.leaderCardList"
-                )
-                .addUserChoice(
-                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
-                    "client.cli.game.returnToMenu"
-                ).apply();
+        UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
+        if (clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION)) {
+            choices.addUserChoiceLocalized(
+                () -> gameView.setMainContentView(new ProductionSelectionDashboardView(
+                    new ArrayList<>(),
+                    clientManager.getGameContextRepresentation().getPlayerContext(activePlayer).getTotalResourcesOwnedByThePlayer(),
+                    clientManager,
+                    gameView
+                )),
+                "client.cli.playerDashboard.activateProduction"
+            );
+            choices.addUserChoiceLocalized(
+                () -> gameView.setMainContentView(new LeaderCardsInDashBoardView(clientManager, clientManager.getMyPlayer())),
+                "client.cli.playerDashboard.leaderCardList"
+            );
+            choices.addUserChoiceLocalized(
+                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                "client.cli.game.returnToMenu"
+            );
         }
+
+        if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
+            choices.addUserChoiceLocalized(
+                () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
+                "client.cli.game.returnToSetupView"
+            );
+
+        } else {
+            choices.addUserChoiceLocalized(
+                () -> gameView.setMainContentView(new LeaderCardsInDashBoardView(clientManager, clientManager.getMyPlayer())),
+                "client.cli.playerDashboard.leaderCardList"
+            );
+            choices.addUserChoice(
+                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                "client.cli.game.returnToMenu"
+            );
+        }
+
+        choices.apply();
     }
 }
