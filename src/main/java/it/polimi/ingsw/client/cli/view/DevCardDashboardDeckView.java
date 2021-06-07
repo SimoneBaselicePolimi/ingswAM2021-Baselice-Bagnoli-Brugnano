@@ -58,8 +58,9 @@ public class DevCardDashboardDeckView extends CliView {
             description.append(deckNum+1).append(": ");
             for (ClientDevelopmentCardRepresentation card : cardDeck.getCardDeck()) {
                 if (!card.equals(cardDeck.peek())) {
-                    description.append(card.getColour().getColourNameLocalizedSingular())
-                        .append("(+").append(card.getVictoryPoints()).append(") ");
+                    description.append("[")
+                        .append(card.getColour().getColourNameLocalizedSingular())
+                        .append(", ").append(card.getVictoryPoints()).append("] ");
                 }
             }
         }

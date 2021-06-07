@@ -4,9 +4,11 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
+import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -21,10 +23,10 @@ public class ResourcesChoiceView extends CliView {
     protected int numberOfResourcesLeftToChoose;
     protected Map<ResourceType, Integer> alreadyChosenResources;
 
-
     GridView outerContainer, innerContainer;
 
     LabelView titleLabel, leftLabel, rightLabel;
+    GridView leftLabelBorder, rightLabelBorder;
 
     protected Consumer<Map<ResourceType, Integer>> onAllChoicesDone = s -> {};
 
@@ -48,19 +50,25 @@ public class ResourcesChoiceView extends CliView {
         outerContainer.setRowWeight(1, 3);
         addChildView(outerContainer, 0, 0);
 
-
         titleLabel = new LabelView(FormattedChar.convertStringToFormattedCharList(""), clientManager);
         outerContainer.setView(0, 0, titleLabel);
 
-        innerContainer = new GridView(clientManager, 1, 2, 1);
+        innerContainer = new GridView(clientManager, 1, 2, 3);
         outerContainer.setView(1, 0, innerContainer);
 
+        leftLabelBorder = new GridView(clientManager, 1, 1, 1);
+        leftLabelBorder.setBorderStyle(new LineBorderStyle());
+        innerContainer.setView(0, 0, leftLabelBorder);
+
         leftLabel = new LabelView(new ArrayList<>(), clientManager);
-        innerContainer.setView(0, 0, leftLabel);
+        leftLabelBorder.setView(0, 0, leftLabel);
+
+        rightLabelBorder = new GridView(clientManager, 1, 1, 1);
+        rightLabelBorder.setBorderStyle(new LineBorderStyle());
+        innerContainer.setView(0, 1, rightLabelBorder);
 
         rightLabel = new LabelView(new ArrayList<>(), clientManager);
-        innerContainer.setView(0, 1, rightLabel);
-
+        rightLabelBorder.setView(0, 0, rightLabel);
     }
 
     @Override
@@ -97,37 +105,57 @@ public class ResourcesChoiceView extends CliView {
     }
 
     @Override
-    protected FormattedCharsBuffer buildMyBuffer() {
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
 
-        List<FormattedChar> titleText = FormattedChar.convertStringToFormattedCharList("");
+        List<FormattedChar> titleText = FormattedChar.convertStringToFormattedCharList(
+            title + ": ",
+            Colour.WHITE,
+            Colour.BLACK,
+            true,
+            false,
+            false
+        );
 
-        String leftText = new StringBuilder().append(
-            numberOfResourcesLeftToChoose == 1 ?
-                Localization.getLocalizationInstance().getString("client.cli.resourcesChoice.info.singular")
-            :
-                Localization.getLocalizationInstance().getString(
-                    "client.cli.resourcesChoice.info.plural",
-                    numberOfResourcesLeftToChoose
-                )
-        ).append(
-            "\n"
-        ).append(
+        String localizedText;
+        if (numberOfResourcesLeftToChoose > 1) {
+            localizedText = Localization.getLocalizationInstance().getString(
+                "client.cli.resourcesChoice.info.plural",
+                numberOfResourcesLeftToChoose
+            );
+        } else {
+            localizedText = Localization.getLocalizationInstance().getString(
+                "client.cli.resourcesChoice.info.singular"
+            );
+        }
+
+        List<FormattedChar> resourcesToChooseInfo = FormattedChar.convertStringToFormattedCharList(
+            localizedText,
+            Colour.WHITE,
+            Colour.BLACK,
+            false,
+            true,
+            false
+        );
+
+        titleText.addAll(resourcesToChooseInfo);
+
+        titleLabel.setText(titleText);
+
+        leftLabel.setText(FormattedChar.convertStringToFormattedCharList(
             Localization.getLocalizationInstance().getString(
                 "client.cli.resourcesChoice.conversions",
                 possibleChoices.stream()
                     .map(ResourceType::getLocalizedNameSingular)
-                    .reduce("", (a, t) -> a.equals("") ? t : a + ", " + t)
+                    .reduce("", (a, t) -> a + "\n" + "- " + t)
             )
-        ).toString();
-
-        leftLabel.setText(FormattedChar.convertStringToFormattedCharList(leftText));
+        ));
 
         rightLabel.setText(FormattedChar.convertStringToFormattedCharList(
             Localization.getLocalizationInstance().getString("client.cli.resourcesChoice.obtained") +
                 "\n" + LocalizationUtils.getResourcesListAsString(alreadyChosenResources)
         ));
 
-        return super.buildMyBuffer();
+        return super.getContentAsFormattedCharsBuffer();
     }
 
     protected void startDialog() {
