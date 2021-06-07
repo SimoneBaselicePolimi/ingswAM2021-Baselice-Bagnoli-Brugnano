@@ -5,7 +5,6 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
-import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 
 import java.util.ArrayList;
@@ -56,13 +55,12 @@ public class DevCardDashboardDeckView extends CliView {
     private String getCoveredCardsDescription() {
         StringBuilder description = new StringBuilder();
         if(!cardDeck.getCardDeck().empty()) {
-            description.append(
-                Localization.getLocalizationInstance().getString("client.cli.devCard.coveredDeckInDashboard")
-            );
+            description.append(deckNum+1).append(": ");
             for (ClientDevelopmentCardRepresentation card : cardDeck.getCardDeck()) {
-                if (!card.equals(cardDeck.peek())) {             //TODO come faccio a escludere la carta in cima? qui potrebbe non essere aggiornata
-                    description.append(card.getColour().getColourNameLocalizedSingular())
-                        .append(" (").append(card.getVictoryPoints()).append("); ");
+                if (!card.equals(cardDeck.peek())) {
+                    description.append("[")
+                        .append(card.getColour().getColourNameLocalizedSingular())
+                        .append(", ").append(card.getVictoryPoints()).append("] ");
                 }
             }
         }
