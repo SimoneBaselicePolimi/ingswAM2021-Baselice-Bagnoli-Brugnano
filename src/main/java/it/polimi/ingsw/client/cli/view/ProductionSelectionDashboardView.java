@@ -19,15 +19,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class ProductionSelectionDashboardView extends AbstractPlayerDashboardView {
 
-    private int numOfStarResourcesLeftToPay = 0;
-    private int numOfStarResourcesLeftToObtain = 0;
-
     protected List<ClientProductionRepresentation> alreadySelectedProductions;
+    protected Map<ResourceType, Integer> resourcesLeftToThePlayer;
+
     protected Map<ResourceType, Integer> starResourcesCost = new HashMap<>();
     protected Map<ResourceType, Integer> starResourcesReward = new HashMap<>();
 
-    protected Map<ResourceType, Integer> resourcesLeftToThePlayer;
-
+    protected GameView gameView;
 
     public ProductionSelectionDashboardView(
         List<ClientProductionRepresentation> alreadySelectedProductions,
@@ -132,17 +130,20 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
     CompletableFuture<Void> checkIfThePlayerHasNecessaryResources(ClientProductionRepresentation production) {
 
-        numOfStarResourcesLeftToPay = production.getStarResourceCost();
-        numOfStarResourcesLeftToObtain = production.getStarResourceReward();
+        int numOfStarResourcesLeftToPay = production.getStarResourceCost();
+        int numOfStarResourcesLeftToObtain = production.getStarResourceReward();
 
         int totalResourcesCost = production.getResourceCost().values().stream().reduce(0, Integer::sum);
         if ((ResourceUtils.areResourcesAContainedInB(production.getResourceCost(), resourcesLeftToThePlayer))
             && totalResourcesCost + numOfStarResourcesLeftToPay
             >= resourcesLeftToThePlayer.values().stream().reduce(0, Integer::sum)) {
 
-            alreadySelectedProductions.add(production);
             resourcesLeftToThePlayer = ResourceUtils.difference(resourcesLeftToThePlayer, production.getResourceCost());
-            return askPlayerForStarResourcesCost();
+            return askPlayerForStarResourcesCost(
+                production,
+                numOfStarResourcesLeftToPay,
+                numOfStarResourcesLeftToObtain
+            );
 
         } else {
             clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerHeDoesNotHaveNeededResources");
@@ -165,47 +166,88 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 //            });
 //    }
 
-    CompletableFuture<Void> askPlayerForStarResourcesCost() {
+    CompletableFuture<Void> askPlayerForStarResourcesCost(
+        ClientProductionRepresentation production,
+        int numOfStarResourcesLeftToPay,
+        int numOfStarResourcesLeftToObtain
+    ) {
 
         if(numOfStarResourcesLeftToPay != 0){
             return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToPay", numOfStarResourcesLeftToPay)
                 .thenCompose(resources -> {
-                    int numOfResourceTypeCost = Integer.parseInt(resources.substring(0, 1));
-                    ResourceType resourceTypeCost = ResourceType.getResourceTypeFromLocalizedName(resources.substring(2));
-                    if(resourceTypeCost != null && numOfResourceTypeCost > 0 && numOfStarResourcesLeftToPay >= numOfResourceTypeCost) {
-                        numOfStarResourcesLeftToPay -= numOfResourceTypeCost;
-                        resourcesLeftToThePlayer = ResourceUtils.difference(resourcesLeftToThePlayer, Map.of(resourceTypeCost, numOfResourceTypeCost));
-                        starResourcesCost.put(resourceTypeCost, numOfResourceTypeCost);
-                        return askPlayerForStarResourcesCost();
+
+                    if(resources.matches("\\G\\d+\\s+\\w+\\s*$")) {
+                        int numOfResources = Integer.parseInt(resources.split("\\s+")[0]);
+                        ResourceType resourceType =
+                            ResourceType.getResourceTypeFromLocalizedName(resources.split("\\s+")[1]);
+                        if (
+                            resourceType != null &&
+                                numOfResources > 0 &&
+                                numOfStarResourcesLeftToPay >= numOfResources &&
+                                ResourceUtils.areResourcesAContainedInB(
+                                    Map.of(resourceType, numOfResources),
+                                    resourcesLeftToThePlayer
+                                )
+                        ) {
+                            resourcesLeftToThePlayer = ResourceUtils.difference(
+                                resourcesLeftToThePlayer,
+                                Map.of(resourceType, numOfResources)
+                            );
+                            starResourcesCost.put(resourceType, numOfResources);
+                            return askPlayerForStarResourcesCost(
+                                production,
+                                numOfStarResourcesLeftToPay - numOfResources,
+                                numOfStarResourcesLeftToObtain
+                            );
+                        }
+
                     }
 
-                    else {
-                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
-                        return askPlayerForStarResourcesCost();
-                    }
+                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
+                    return askPlayerForStarResourcesCost(
+                        production,
+                        numOfStarResourcesLeftToPay,
+                        numOfStarResourcesLeftToObtain
+                    );
+
                 });
         }
-        return askPlayerForStarResourceReward();
+        return askPlayerForStarResourceReward(production, numOfStarResourcesLeftToObtain);
     }
 
-    CompletableFuture<Void> askPlayerForStarResourceReward() {
+    CompletableFuture<Void> askPlayerForStarResourceReward(
+        ClientProductionRepresentation production,
+        int numOfStarResourcesLeftToObtain
+    ) {
 
         if(numOfStarResourcesLeftToObtain != 0){
             return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToObtain", numOfStarResourcesLeftToObtain)
                 .thenCompose(resources -> {
-                    int numOfResourceType = Integer.parseInt(resources.substring(0, 1));
-                    ResourceType resourceType = ResourceType.getResourceTypeFromLocalizedName(resources.substring(2));
-                    if(resourceType != null && numOfResourceType > 0 && numOfStarResourcesLeftToObtain >= numOfResourceType) {
-                        numOfStarResourcesLeftToObtain -= numOfResourceType;
-                        starResourcesReward.put(resourceType, numOfResourceType);
-                        return askPlayerForStarResourceReward();
-                    } else {
-                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
-                        return askPlayerForStarResourceReward();
+
+                    if(resources.matches("\\G\\d+\\s+\\w+\\s*$")) {
+                        int numOfResources = Integer.parseInt(resources.split("\\s+")[0]);
+                        ResourceType resourceType = ResourceType.getResourceTypeFromLocalizedName(resources.split("\\s+")[1]);
+                        if(resourceType != null && numOfResources > 0 && numOfStarResourcesLeftToObtain >= numOfResources) {
+                            starResourcesReward.put(resourceType, numOfResources);
+                            return askPlayerForStarResourceReward(
+                                production,
+                                numOfStarResourcesLeftToObtain - numOfResources
+                            );
+                        }
                     }
+
+                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
+                    return askPlayerForStarResourceReward(
+                        production,
+                        numOfStarResourcesLeftToObtain
+                    );
+
                 });
         }
+
+        alreadySelectedProductions.add(production);
         return askPlayerForProduction();
+
     }
 
     CompletableFuture<Void> sendPlayerChoiceToServer(){
