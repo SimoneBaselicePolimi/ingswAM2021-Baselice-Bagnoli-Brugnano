@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
-import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
@@ -13,6 +12,8 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leader
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
+import it.polimi.ingsw.utils.Colour;
 
 public class LeaderCardView extends CliView {
 
@@ -40,7 +41,6 @@ public class LeaderCardView extends CliView {
         this.numberOfCard = numberOfCard;
 
         cardGrid = new GridView(clientManager, 1, 1, 1, LEADER_CARD_ROW_SIZE, LEADER_CARD_COL_SIZE);
-        cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREY));
         addChildView(cardGrid, 0, 0);
         cardText = new LabelView(FormattedChar.convertStringToFormattedCharList(getLeaderCardDescription()), clientManager);
         cardGrid.setView(0, 0, cardText);
@@ -107,4 +107,16 @@ public class LeaderCardView extends CliView {
         return specialPowerDescriptionBuilder.toString();
     }
 
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+
+        if (card.getState().equals(LeaderCardState.ACTIVE))
+            cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREEN));
+        else if (card.getState().equals(LeaderCardState.DISCARDED))
+            cardGrid.setBorderStyle(new LineBorderStyle(Colour.RED));
+        else
+            cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREY));
+
+        return super.getContentAsFormattedCharsBuffer();
+    }
 }

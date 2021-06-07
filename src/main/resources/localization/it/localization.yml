@@ -47,6 +47,7 @@ client:
       notifyPlayerColumnNumberIsInvalid: "La colonna selezionata non è una colonna valida del mercato"
     devCard:
       deckTitle: "Carte nel mazzo: %s "
+      coveredDeckInDashboard: "Sotto: "
     devCardTable:
       devCardChoice: "Compra carta sviluppo di livello %s"
       viewCardOfLevel: "Vedi carte di livello %s"
@@ -84,7 +85,7 @@ client:
       conversions: "Puoi convertire una risorsa in: %s"
 
 leaderCards:
-  name: "LEADER CARD"
+  name: "CARTA LEADER"
   requirements:
     requirements: "Requisiti: "
     colourAndLevel: "%d %s %s liv. %d"
@@ -131,7 +132,7 @@ resourceStorages:
     specificResourceNumber: ">> solo %s"
 
 developmentCards:
-  name: "DEVELOPMENT CARD"
+  name: "CARTA SVILUPPO"
   colours:
     yellow:
       singular: "gialla"
@@ -147,6 +148,12 @@ developmentCards:
       plural: "blu"
   level: "liv."
   cost: "Costo:"
+
+dashboard:
+  baseProductions: "PRODUZIONE BASE"
+  shelf: "MAGAZZINO"
+  infiniteChest: "FORZIERE"
+  leaderStorages: "DEPOSITO SPECIALE LEADER"
 
 gameHistory:
 

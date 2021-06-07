@@ -12,8 +12,8 @@ import it.polimi.ingsw.utils.Colour;
 
 public class DevCardView extends CliView {
 
-    public static final int DEV_CARD_ROW_SIZE = 16;
-    public static final int DEV_CARD_COL_SIZE = 30;
+    public static final int DEV_CARD_ROW_SIZE = 15;
+    public static final int DEV_CARD_COL_SIZE = 27;
 
     protected ClientDevelopmentCardRepresentation card;
     protected LabelView cardText;
@@ -41,11 +41,12 @@ public class DevCardView extends CliView {
             " " +
             Localization.getLocalizationInstance().getString("developmentCards.level") +
             " " + card.getLevel().toValue() +
+            "\n" + card.getColour().getColourNameLocalizedSingular() +
             "\n\n" +
             Localization.getLocalizationInstance().getString("developmentCards.cost") +
             " " + LocalizationUtils.getResourcesListAsCompactString(card.getPurchaseCost()) +
             "\n\n" +
-            "> " + card.getProduction().getDescription() + "\n" +
+            card.getProduction().getDescription() + "\n" +
             Localization.getLocalizationInstance().getString("leaderCards.victoryPoints", card.getVictoryPoints());
     }
 

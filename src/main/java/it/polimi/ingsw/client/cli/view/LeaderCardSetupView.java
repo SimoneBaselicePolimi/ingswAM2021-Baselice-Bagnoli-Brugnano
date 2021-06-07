@@ -125,7 +125,7 @@ public class LeaderCardSetupView extends CliView {
             ).addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new PlayerDashboardView(clientManager.getMyPlayer(), clientManager, gameView)),
                 "client.cli.mainMenuActions.openPersonalDashboard"
-            //TODO OOO
+            //TODO chiedere al player quale dashboard diversa dalla sua vuole vedere
 //            ).addUserChoiceLocalized(
 //                () -> gameView.setMainContentView(new PlayerDashboardView(clientManager, gameView)),
 //                "client.cli.mainMenuActions.openDifferentPlayerDashboard"

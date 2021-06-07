@@ -97,9 +97,10 @@ public class ClientProductionRepresentation extends ClientRegisteredIdentifiable
             rewards.append(", ");
         if(starResourceReward > 0) {
             rewards.append(getStarResourcesDescription(starResourceReward));
-            if(faithReward > 0)
+            if(faithReward > 0) {
                 rewards.append(", ");
                 rewards.append(getFaithPointsDescription(faithReward));
+            }
         }
         else if(faithReward > 0)
             rewards.append(getFaithPointsDescription(faithReward));
