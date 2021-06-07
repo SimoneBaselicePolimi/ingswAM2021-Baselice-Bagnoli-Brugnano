@@ -68,6 +68,8 @@ client:
       activateDashboardProductions: "Attiva produzioni presenti sulla mia plancia personale"
       activateLeaderCardsProduction: "Attiva produzioni delle carte leader"
       endProductionsActivation: "Termina fase di attivazione delle produzioni"
+      activateNewProduction : "Attiva una nuova produzione"
+      cancelSelectedProductions: "Annulla tutte le produzioni selezionate"
       askPlayerForDevProductionsChoice: "Scegli la produzione che vuoi attivare tra quelle presenti negli slot della tua plancia personale:"
       askPlayerForLeaderProductionsChoice: "Scegli la produzione che vuoi attivare tra quelle delle tue carte leader attive:"
       askPlayerForBaseProductionChoice: "Scegli la produzione base che vuoi attivare"
