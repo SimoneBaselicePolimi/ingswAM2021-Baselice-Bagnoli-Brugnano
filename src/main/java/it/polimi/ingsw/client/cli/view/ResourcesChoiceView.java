@@ -124,7 +124,7 @@ public class ResourcesChoiceView extends CliView {
         );
 
         String localizedText;
-        if (numberOfResourcesLeftToChoose > 1) {
+        if (numberOfResourcesLeftToChoose != 1) {
             localizedText = Localization.getLocalizationInstance().getString(
                 "client.cli.resourcesChoice.info.plural",
                 numberOfResourcesLeftToChoose
