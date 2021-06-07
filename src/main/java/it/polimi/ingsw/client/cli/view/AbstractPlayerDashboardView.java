@@ -12,19 +12,23 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class AbstractPlayerDashboardView extends CliView{
 
     public final static int SPACE_BETWEEN_DECKS = 2;
 
-    Player dashboardPlayer, activePlayer;
-    ClientPlayerContextRepresentation dashboardPlayerContext;
-    List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> playerDecks;
+    protected List<ClientResourceStorageRepresentation> shelves;
+    protected List<ClientResourceStorageRepresentation> leaderStoragesFromActiveCards;
+    protected List<ClientProductionRepresentation> baseProductions;
 
-    GridView storagesAndBaseProdGrid, devCardDecksGrid;
+    protected Player dashboardPlayer, activePlayer;
+    protected ClientPlayerContextRepresentation dashboardPlayerContext;
+    protected List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> playerDecks;
+
+    protected GridView storagesAndBaseProdGrid, devCardDecksGrid;
 
     protected GameView gameView;
 
@@ -52,12 +56,11 @@ public abstract class AbstractPlayerDashboardView extends CliView{
             devCardDecksGrid.setView(0, i, new DevCardDashboardDeckView(dashboardPlayer, i, clientManager));
         }
 
-        Set<ClientResourceStorageRepresentation> shelves = dashboardPlayerContext.getShelves();
+        shelves = new ArrayList<>(dashboardPlayerContext.getShelves());
         ClientResourceStorageRepresentation infiniteChest = dashboardPlayerContext.getInfiniteChest();
-        Set<ClientResourceStorageRepresentation> leaderStoragesFromActiveCards =
-            dashboardPlayerContext.getActiveLeaderCards().stream()
+        leaderStoragesFromActiveCards = dashboardPlayerContext.getActiveLeaderCards().stream()
                 .flatMap(leaderCard -> leaderCard.getResourceStorages().stream())
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
         GridView storagesGrid = new GridView(
             clientManager,
@@ -104,9 +107,11 @@ public abstract class AbstractPlayerDashboardView extends CliView{
             l++;
         }
 
+        baseProductions = new ArrayList<>(dashboardPlayerContext.getBaseProductions());
+
         GridView baseProductionGrid = new GridView(
             clientManager,
-            dashboardPlayerContext.getBaseProductions().size(),
+            baseProductions.size(),
             1,
             1
         );
@@ -114,7 +119,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         storagesAndBaseProdGrid.setView(1, 0, baseProductionGrid);
 
         int r = 0;
-        for(ClientProductionRepresentation baseProduction : dashboardPlayerContext.getBaseProductions()) {
+        for(ClientProductionRepresentation baseProduction : baseProductions) {
             LabelView baseProductionLabel = new LabelView(
                 FormattedChar.convertStringToFormattedCharList(
                     Localization.getLocalizationInstance().getString("dashboard.baseProductions")
@@ -127,7 +132,6 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         }
 
         buildChildGrids();
-
     }
 
     public AbstractPlayerDashboardView(

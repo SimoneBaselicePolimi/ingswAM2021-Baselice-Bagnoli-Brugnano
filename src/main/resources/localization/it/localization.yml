@@ -47,7 +47,6 @@ client:
       notifyPlayerColumnNumberIsInvalid: "La colonna selezionata non è una colonna valida del mercato"
     devCard:
       deckTitle: "Carte nel mazzo: %s "
-      coveredDeckInDashboard: "Sotto: "
     devCardTable:
       devCardChoice: "Compra carta sviluppo di livello %s"
       viewCardOfLevel: "Vedi carte di livello %s"
