@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
@@ -60,6 +61,11 @@ public class ResourcesChoiceView extends CliView {
 
         rightLabel = new LabelView(new ArrayList<>(), clientManager);
         innerContainer.setView(0, 1, rightLabel);
+
+        if(numberOfResourcesLeftToChoose == 0)
+            onAllChoicesDone.accept(alreadyChosenResources);
+        else
+            startDialog();
 
     }
 
@@ -131,6 +137,25 @@ public class ResourcesChoiceView extends CliView {
     }
 
     protected void startDialog() {
+
+        if(possibleChoices.size() > 1) {
+
+            UserChoicesUtils.PossibleUserChoices userChoices = UserChoicesUtils.makeUserChoose(clientManager);
+
+            for (ResourceType t : possibleChoices)
+                userChoices.addUserChoiceLocalized(
+                    () -> {
+                        addNewChoice(t);
+                        if (numberOfResourcesLeftToChoose > 0)
+                            startDialog();
+                    },
+                    "client.cli.resourcesChoice.choiceMenu",
+                    t.getLocalizedNameSingular()
+                );
+
+            userChoices.apply();
+
+        }
 
     }
 

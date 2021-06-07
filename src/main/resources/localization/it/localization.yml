@@ -85,6 +85,7 @@ client:
         singular: "Devi ancora scegliere una risorsa"
         plural: "Devi ancora scegliere %s risorse"
       conversions: "Puoi convertire una risorsa in: %s"
+      choiceMenu: "Ottieni una risorsa di tipo %s"
 
 leaderCards:
   name: "CARTA LEADER"
