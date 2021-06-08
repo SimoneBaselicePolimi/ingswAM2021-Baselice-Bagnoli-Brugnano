@@ -4,17 +4,22 @@ import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
+import it.polimi.ingsw.client.cli.view.grid.GridView;
+import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest;
-import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
+import it.polimi.ingsw.utils.Colour;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class ProductionSelectionDashboardView extends AbstractPlayerDashboardView {
@@ -46,7 +51,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
         return UserChoicesUtils.makeUserChoose(clientManager)
             .addUserChoice(
-                () -> askPlayerForTypeOfProductions(),
+                this::askPlayerForTypeOfProductions,
                 "client.cli.playerDashboard.activateNewProduction"
             )
             .addUserChoice(
@@ -75,14 +80,14 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
     }
 
     CompletableFuture<Void> askPlayerForTypeOfProductions() {
-
+        //TODO add return to menu option
         return UserChoicesUtils.makeUserChoose(clientManager)
             .addUserChoice(
-                () ->  askPlayerForBaseProduction(),
+                this::askPlayerForBaseProduction,
                 "client.cli.playerDashboard.activateBaseProduction"
             )
             .addUserChoice(
-                () -> askPlayerForDashboardProductions(),
+                this::askPlayerForDashboardProductions,
                 "client.cli.playerDashboard.activateDashboardProductions"
             )
 //            .addUserChoice(
@@ -90,8 +95,9 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 //                "client.cli.playerDashboard.activateLeaderCardsProduction"
 //            )
             .addUserChoice(
-                //TODO
-                () -> gameView.setMainContentView(new LeaderCardsInDashBoardView(clientManager, clientManager.getMyPlayer())),
+                () -> gameView.setMainContentView(new ProductionSelectionLeaderCardView(
+                    alreadySelectedProductions, resourcesLeftToThePlayer, clientManager, gameView
+                )),
                 "client.cli.playerDashboard.leaderCardList"
             ).apply();
     }
@@ -101,9 +107,14 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForDevProductionsChoice")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
-                if (intInput > 0 && intInput <= dashboardPlayerContext.getDevelopmentCardDecks().size()) {
-                    ClientProductionRepresentation production = dashboardPlayerContext.getDevelopmentCardDecks().get(intInput - 1).peek().getProduction();
-                    return checkIfThePlayerHasNecessaryResources(production);
+                if(intInput > 0 && intInput <= dashboardPlayerContext.getDevelopmentCardDecks().size()) {
+                    ClientProductionRepresentation production = dashboardPlayerContext.getDevelopmentCardDecks()
+                        .get(intInput - 1).peek().getProduction();
+                    if(alreadySelectedProductions.contains(production)) {
+                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionAlreadyChosen");
+                        return askPlayerForTypeOfProductions();
+                    }
+                    return checkAndRemoveResourcesCost(production);
                 }
                 else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
@@ -119,7 +130,11 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 int intInput = Integer.parseInt(input);
                 if(intInput > 0 && intInput <= dashboardPlayerContext.getBaseProductions().size()) {
                     ClientProductionRepresentation production = baseProductions.get(intInput-1);
-                    return checkIfThePlayerHasNecessaryResources(production);
+                    if(alreadySelectedProductions.contains(production)) {
+                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionAlreadyChosen");
+                        return askPlayerForTypeOfProductions();
+                    }
+                    return checkAndRemoveResourcesCost(production);
                 }
                 else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
@@ -128,28 +143,28 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
             });
     }
 
-    CompletableFuture<Void> checkIfThePlayerHasNecessaryResources(ClientProductionRepresentation production) {
-
-        int numOfStarResourcesLeftToPay = production.getStarResourceCost();
-        int numOfStarResourcesLeftToObtain = production.getStarResourceReward();
-
-        int totalResourcesCost = production.getResourceCost().values().stream().reduce(0, Integer::sum);
-        if ((ResourceUtils.areResourcesAContainedInB(production.getResourceCost(), resourcesLeftToThePlayer))
-            && totalResourcesCost + numOfStarResourcesLeftToPay
-            >= resourcesLeftToThePlayer.values().stream().reduce(0, Integer::sum)) {
-
+    CompletableFuture<Void> checkAndRemoveResourcesCost(ClientProductionRepresentation production) {
+        if (checkIfThePlayerHasNecessaryResources(production)) {
             resourcesLeftToThePlayer = ResourceUtils.difference(resourcesLeftToThePlayer, production.getResourceCost());
             return askPlayerForStarResourcesCost(
                 production,
-                numOfStarResourcesLeftToPay,
-                numOfStarResourcesLeftToObtain
+                production.getStarResourceCost(),
+                production.getStarResourceReward()
             );
-
         } else {
-            clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerHeDoesNotHaveNeededResources");
+            clientManager.tellUserLocalized(
+                "client.cli.playerDashboard.notifyPlayerHeDoesNotHaveNeededResources"
+            );
             return CompletableFuture.failedFuture(new IllegalAccessException());
         }
+    }
 
+    protected boolean checkIfThePlayerHasNecessaryResources(ClientProductionRepresentation production) {
+        int numOfStarResources = production.getStarResourceCost();
+        int totalResourcesCost = production.getResourceCost().values().stream().reduce(0, Integer::sum);
+        return (ResourceUtils.areResourcesAContainedInB(production.getResourceCost(), resourcesLeftToThePlayer))
+            && (totalResourcesCost + numOfStarResources
+            >= resourcesLeftToThePlayer.values().stream().reduce(0, Integer::sum));
     }
 
 //    CompletableFuture<Void> askPlayerForLeaderCardsProduction() {
@@ -288,4 +303,32 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 }).apply()
         );
     }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+
+        for (DevCardDashboardDeckView cardDeckView : devCardDashboardDeckViewList) {
+            ClientProductionRepresentation production = cardDeckView.cardView.card.getProduction();
+            if(alreadySelectedProductions.contains(production))
+                cardDeckView.cardView.cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREEN));
+            else if (checkIfThePlayerHasNecessaryResources(production))
+                cardDeckView.cardView.cardGrid.setBorderStyle(new LineBorderStyle(Colour.YELLOW));
+            else
+                cardDeckView.cardView.cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREY));
+        }
+
+        for (int p = 0; p < baseProductions.size(); p++) {
+            ClientProductionRepresentation productionRepresentation = baseProductions.get(p);
+            GridView productionGrid = baseProductionGridLists.get(p);
+            if(alreadySelectedProductions.contains(productionRepresentation))
+                productionGrid.setBorderStyle(new LineBorderStyle(Colour.GREEN));
+            else if (checkIfThePlayerHasNecessaryResources(productionRepresentation))
+                productionGrid.setBorderStyle(new LineBorderStyle(Colour.YELLOW));
+            else
+                productionGrid.setBorderStyle(new LineBorderStyle(Colour.GREY));
+        }
+
+        return super.getContentAsFormattedCharsBuffer();
+    }
+
 }

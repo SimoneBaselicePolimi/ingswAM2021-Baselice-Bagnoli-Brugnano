@@ -11,7 +11,6 @@ import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientRe
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +29,9 @@ public abstract class AbstractPlayerDashboardView extends CliView{
     protected List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> playerDecks;
 
     protected GridView storagesAndBaseProdGrid, devCardDecksGrid;
+    protected DevCardDashboardDeckView devCardDashboardDeckView;
+    protected List<DevCardDashboardDeckView> devCardDashboardDeckViewList = new ArrayList<>();
+    protected List<GridView> baseProductionGridLists = new ArrayList<>();
 
     protected GameView gameView;
 
@@ -55,7 +57,9 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         storagesAndBaseProdGrid.setRowWeight(0, 2);
 
         for (int i = 0; i < playerDecks.size(); i++) {
-            devCardDecksGrid.setView(0, i, new DevCardDashboardDeckView(dashboardPlayer, i, clientManager));
+            devCardDashboardDeckView = new DevCardDashboardDeckView(dashboardPlayer, i, clientManager);
+            devCardDashboardDeckViewList.add(devCardDashboardDeckView);
+            devCardDecksGrid.setView(0, i, devCardDashboardDeckView);
         }
 
         shelves = new ArrayList<>(dashboardPlayerContext.getShelves());
@@ -115,13 +119,17 @@ public abstract class AbstractPlayerDashboardView extends CliView{
             clientManager,
             baseProductions.size(),
             1,
-            1
+            0
         );
-        baseProductionGrid.setBorderStyle(new LineBorderStyle());
         storagesAndBaseProdGrid.setView(1, 0, baseProductionGrid);
 
         int r = 0;
         for(ClientProductionRepresentation baseProduction : baseProductions) {
+            GridView baseProductionBorder = new GridView(clientManager, 1, 1, 1);
+            baseProductionGridLists.add(baseProductionBorder);
+            baseProductionBorder.setBorderStyle(new LineBorderStyle());
+            baseProductionGrid.setView(r, 0, baseProductionBorder);
+
             LabelView baseProductionLabel = new LabelView(
                 FormattedChar.convertStringToFormattedCharList(
                     Localization.getLocalizationInstance().getString("dashboard.baseProductions")
@@ -129,7 +137,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
                 ),
                 clientManager
             );
-            baseProductionGrid.setView(r, 0, baseProductionLabel);
+            baseProductionBorder.setView(0, 0, baseProductionLabel);
             r++;
         }
 

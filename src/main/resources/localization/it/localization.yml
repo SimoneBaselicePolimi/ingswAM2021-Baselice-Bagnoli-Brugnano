@@ -76,6 +76,7 @@ client:
       notifyPlayerNumberOfResourcesLeftToObtain: "Ti restano ancora %s risorse da ottenere. Inserisci numero e tipo di risorse che vuoi ottenere dalla produzione:"
       notifyPlayerResourcesAreInvalid: "Le risorse che hai indicato non sono valide"
       notifyPlayerProductionNumberIsInvalid: "La produzione selezionata non è valida"
+      notifyPlayerProductionAlreadyChosen: "Hai già scelto questa produzione"
       notifyPlayerHeDoesNotHaveNeededResources: "Non possiedi le risorse necessarie per attivare la produzione selezionata"
     resourcesChoice:
       title: "Scegli quali risorse ottenere"

@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
         CliClientManager clientManager,
         GameView gameView
      ) {
-        super(clientManager);
+        super(clientManager.getMyPlayer(), clientManager, gameView);
 
         this.alreadySelectedProductions = alreadySelectedProductions;
         this.resourcesLeftToThePlayer = resourcesLeftToThePlayer;
@@ -37,7 +36,12 @@ public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
                 if (intInput > 0 && intInput < leaderCardsPlayerContext.getActiveLeaderCardsProductions().size()) {
-                    ClientProductionRepresentation production = new ArrayList<ClientProductionRepresentation>(leaderCardsPlayerContext.getActiveLeaderCardsProductions()).get(intInput-1);
+                    //TODO ask the user which production he wants to activate from that leader card (there can be more than one)
+                    ClientProductionRepresentation production = new ArrayList<>(leaderCardsPlayerContext.getActiveLeaderCardsProductions()).get(intInput-1);
+                    if(alreadySelectedProductions.contains(production)) {
+                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionAlreadyChosen");
+                        return askPlayerForLeaderCardsProduction();
+                    }
                     return checkIfThePlayerHasNecessaryResources(production);
                 } else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
@@ -46,6 +50,7 @@ public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
             });
     }
 
+    //TODO this method in ProductionSelectionDashboardView has changed (split in two different methods)
     CompletableFuture<Void> checkIfThePlayerHasNecessaryResources(ClientProductionRepresentation production){
         return null;
     }
