@@ -54,6 +54,7 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
     public Set<ServerGameUpdate> getUpdates() {
         if(hasSomethingChanged) {
             hasSomethingChanged = false;
+            //TODO we want to send changes on every deck on table
             return Set.of(new ServerShuffledDevelopmentCardDeckOnTableUpdate(
                 imp.getDeckByLevelAndColour(level, colour),
                 imp.getDeckByLevelAndColour(level, colour).peek(),

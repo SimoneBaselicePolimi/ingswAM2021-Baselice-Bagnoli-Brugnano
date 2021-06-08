@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 
 import java.util.EmptyStackException;
 import java.util.Stack;
@@ -15,7 +14,7 @@ public class ClientCardDeckRepresentation<C> extends ClientRegisteredIdentifiabl
     /**
      * Stack of generics which represents the Card Deck
      */
-    protected Stack<C> cardDeck = new Stack<>();
+    protected Stack<C> cardDeck;
 
     /**
      * CardDeckRepresentation constructor.
@@ -42,6 +41,10 @@ public class ClientCardDeckRepresentation<C> extends ClientRegisteredIdentifiabl
 
     public C peek() throws EmptyStackException {
         return cardDeck.peek();
+    }
+
+    public int numberOfCardsInDeck() {
+        return cardDeck.size();
     }
 
 }

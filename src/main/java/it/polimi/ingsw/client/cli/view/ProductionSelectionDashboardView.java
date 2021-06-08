@@ -307,15 +307,18 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
     @Override
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
 
-        for (DevCardDashboardDeckView cardDeckView : devCardDashboardDeckViewList) {
-            ClientProductionRepresentation production = cardDeckView.cardView.card.getProduction();
-            if(alreadySelectedProductions.contains(production))
-                cardDeckView.cardView.cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREEN));
-            else if (checkIfThePlayerHasNecessaryResources(production))
-                cardDeckView.cardView.cardGrid.setBorderStyle(new LineBorderStyle(Colour.YELLOW));
-            else
-                cardDeckView.cardView.cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREY));
-        }
+        devCardDashboardDeckViewList.stream()
+            .filter( d -> d.getCardDeck().numberOfCardsInDeck()>0)
+            .forEach(cardDeckView -> {
+                ClientProductionRepresentation production = cardDeckView.getCardOnTop().getProduction();
+
+                if(alreadySelectedProductions.contains(production))
+                    cardDeckView.setCardBorderColour(Colour.GREEN);
+                else if (checkIfThePlayerHasNecessaryResources(production))
+                    cardDeckView.setCardBorderColour(Colour.YELLOW);
+                else
+                    cardDeckView.setCardBorderColour(Colour.GREY);
+            });
 
         for (int p = 0; p < baseProductions.size(); p++) {
             ClientProductionRepresentation productionRepresentation = baseProductions.get(p);

@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
-import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
@@ -10,6 +9,7 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leader
 import it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +29,7 @@ public class LeaderCardSetupView extends CliView {
     protected InitialChoicesServerMessage initialChoicesServerMessage;
 
     List<ClientLeaderCardRepresentation> alreadySelectedCards = new ArrayList<>();
+
     int cardsLeftToChoose;
 
     public LeaderCardSetupView(
@@ -53,6 +54,9 @@ public class LeaderCardSetupView extends CliView {
             true,
             clientManager
         );
+        for(int l=0; l<initialChoicesServerMessage.leaderCardsGivenToThePlayer.size(); l++) {
+            cardListView.getLeaderCardViewByNumber(l).setBorderColour(Colour.GREY, false);
+        }
         container.setView(1, 0, cardListView);
 
         startDialog();
@@ -143,12 +147,12 @@ public class LeaderCardSetupView extends CliView {
                             clientManager.tellUserLocalized("client.cli.gameSetup.leaderCardsDialog.invalid");
                             return selectCards();
                         }
-                        if(cardListView.selectedCard.get(cardListView.getLeaderCardRepresentationByNumber(intInput))) {
+                        if(alreadySelectedCards.contains(cardListView.getLeaderCardRepresentationByNumber(intInput))) {
                             clientManager.tellUserLocalized("client.cli.gameSetup.leaderCardsDialog.alreadyChosen");
                             return selectCards();
                         }
-                        cardListView.selectCard(intInput);
                         alreadySelectedCards.add(cardListView.getLeaderCardRepresentationByNumber(intInput));
+                        cardListView.getLeaderCardViewByNumber(intInput).setBorderColour(Colour.GREEN, false);
                         cardsLeftToChoose--;
                         updateView();
                         return selectCards();

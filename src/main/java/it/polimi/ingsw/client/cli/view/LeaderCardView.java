@@ -15,12 +15,22 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.utils.Colour;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class LeaderCardView extends CliView {
 
     public static final int LEADER_CARD_ROW_SIZE = 16;
     public static final int LEADER_CARD_COL_SIZE = 30;
 
-    protected boolean isSelected = false;
+    public static final Colour defaultProductionColour = Colour.WHITE;
+
+    protected boolean isBorderColourBasedOnState;
+
+    protected Colour borderColour = Colour.WHITE;
 
     protected ClientLeaderCardRepresentation card;
     protected LabelView cardText;
@@ -28,94 +38,127 @@ public class LeaderCardView extends CliView {
 
     protected int numberOfCard;
 
+    protected Map<ClientProductionRepresentation, Colour> productionsColourMap;
+
     public LeaderCardView(CliClientManager clientManager, ClientLeaderCardRepresentation card, int numberOfCard) {
-        super(clientManager, LEADER_CARD_ROW_SIZE, LEADER_CARD_COL_SIZE);
-        this.card = card;
-        this.numberOfCard = numberOfCard;
+        this(clientManager, card, false, numberOfCard);
     }
 
-    public LeaderCardView(CliClientManager clientManager, ClientLeaderCardRepresentation card, boolean isSelected, int numberOfCard) {
+    public LeaderCardView(CliClientManager clientManager, ClientLeaderCardRepresentation card, Colour borderColour, int numberOfCard) {
+        this(clientManager, card, false, numberOfCard);
+        this.borderColour = borderColour;
+    }
+
+    public LeaderCardView(CliClientManager clientManager, ClientLeaderCardRepresentation card, boolean isBorderColourBasedOnState, int numberOfCard) {
         super(clientManager, LEADER_CARD_ROW_SIZE, LEADER_CARD_COL_SIZE);
         this.card = card;
-        this.isSelected = isSelected;
+        this.isBorderColourBasedOnState = isBorderColourBasedOnState;
         this.numberOfCard = numberOfCard;
+
+        productionsColourMap = card.getProductions().stream().collect(Collectors.toMap(
+            p -> p,
+            p -> defaultProductionColour
+        ));
 
         cardGrid = new GridView(clientManager, 1, 1, 1, LEADER_CARD_ROW_SIZE, LEADER_CARD_COL_SIZE);
         addChildView(cardGrid, 0, 0);
-        cardText = new LabelView(FormattedChar.convertStringToFormattedCharList(getLeaderCardDescription()), clientManager);
+        cardText = new LabelView(new ArrayList<>(), clientManager);
         cardGrid.setView(0, 0, cardText);
     }
 
-    @Override
-    protected FormattedCharsBuffer buildMyBuffer() {
-        FormattedCharsBuffer buffer = new FormattedCharsBuffer(LEADER_CARD_ROW_SIZE, LEADER_CARD_COL_SIZE);
-        if(isSelected)
-            cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREEN));
-        return buffer;
+    public void setProductionColour(ClientProductionRepresentation production, Colour colour) {
+        productionsColourMap.put(production, colour);
     }
 
-    public void selectCard(int cardNumber) {
-        isSelected = true;
-        updateView();
+    public void setBorderColour(Colour borderColour, boolean updateView) {
+        this.borderColour = borderColour;
+        isBorderColourBasedOnState = false;
+        if(updateView)
+            updateView();
     }
 
-    public void deselectCard(int cardNumber) {
-        isSelected = false;
-        updateView();
+    public void setBorderColourBasedOnState(boolean borderColourBasedOnState, boolean updateView) {
+        this.isBorderColourBasedOnState = borderColourBasedOnState;
+        if(updateView)
+            updateView();
     }
 
-    protected String getLeaderCardDescription() {
-        StringBuilder descriptionBuilder = new StringBuilder();
-        descriptionBuilder.append(Localization.getLocalizationInstance().getString("leaderCards.name"))
+    protected List<FormattedChar> getLeaderCardDescription() {
+        StringBuilder firstSectionDescriptionBuilder = new StringBuilder();
+        firstSectionDescriptionBuilder.append(Localization.getLocalizationInstance().getString("leaderCards.name"))
             .append(" ").append(numberOfCard).append("\n\n");
-        descriptionBuilder.append(
+        firstSectionDescriptionBuilder.append(
             Localization.getLocalizationInstance().getString("leaderCards.requirements.requirements")
         );
-        descriptionBuilder.append("\n");
+        firstSectionDescriptionBuilder.append("\n");
         card.getRequirements().stream()
             .map(ClientLeaderCardRequirementRepresentation::getDescription)
-            .forEach(r -> descriptionBuilder.append("- ").append(r).append("\n"));
-        descriptionBuilder.append("\n");
-        descriptionBuilder.append(getSpecialPowersDescription());
-        descriptionBuilder.append(
-            Localization.getLocalizationInstance().getString("leaderCards.victoryPoints", card.getVictoryPoints())
+            .forEach(r -> firstSectionDescriptionBuilder.append("- ").append(r).append("\n"));
+        firstSectionDescriptionBuilder.append("\n");
+
+        String lastSectionDescription = Localization.getLocalizationInstance().getString(
+            "leaderCards.victoryPoints", card.getVictoryPoints()
         );
-        return descriptionBuilder.toString();
+
+        return Stream.concat(
+            Stream.concat(
+                FormattedChar.convertStringToFormattedCharList(firstSectionDescriptionBuilder.toString()).stream(),
+                getSpecialPowersDescription().stream()
+            ), FormattedChar.convertStringToFormattedCharList(lastSectionDescription).stream()
+        ).collect(Collectors.toList());
+
     }
 
-    protected String getSpecialPowersDescription() {
+    protected List<FormattedChar> getSpecialPowersDescription() {
 
-        StringBuilder specialPowerDescriptionBuilder = new StringBuilder();
+        List<FormattedChar> specialPowerDescription = new ArrayList<>();
 
-        specialPowerDescriptionBuilder.append(
+        specialPowerDescription.addAll(FormattedChar.convertStringToFormattedCharList(
             Localization.getLocalizationInstance().getString("leaderCards.specialPowers.specialPowers")
-        );
-        specialPowerDescriptionBuilder.append("\n");
+        ));
+        specialPowerDescription.addAll(FormattedChar.convertStringToFormattedCharList("\n"));
 
         card.getCardCostDiscounts().stream().map(ClientDevelopmentCardCostDiscountRepresentation::getDescription)
-            .forEach(d -> specialPowerDescriptionBuilder.append("> ").append(d).append("\n"));
+            .forEach(d ->
+                specialPowerDescription.addAll(FormattedChar.convertStringToFormattedCharList(("> " + d + "\n")))
+            );
 
         card.getWhiteMarbleSubstitutions().stream().map(ClientWhiteMarbleSubstitutionRepresentation::getDescription)
-            .forEach(d -> specialPowerDescriptionBuilder.append("> ").append(d).append("\n"));
+            .forEach(d ->
+                specialPowerDescription.addAll(FormattedChar.convertStringToFormattedCharList(("> " + d + "\n")))
+            );
 
-        card.getProductions().stream().map(ClientProductionRepresentation::getDescription)
-            .forEach(d -> specialPowerDescriptionBuilder.append("> ").append(d).append("\n"));
+        card.getProductions().forEach(p -> specialPowerDescription.addAll(
+            FormattedChar.convertStringToFormattedCharList(
+                ("> " + p.getDescription() + "\n"),
+                productionsColourMap.get(p),
+                Colour.BLACK
+            )
+        ));
 
         card.getResourceStorages().stream().map(ClientResourceStorageRepresentation::getDescription)
-            .forEach(d -> specialPowerDescriptionBuilder.append("> ").append(d).append("\n"));
+            .forEach(d ->
+                specialPowerDescription.addAll(FormattedChar.convertStringToFormattedCharList(("> " + d + "\n")))
+            );
 
-        return specialPowerDescriptionBuilder.toString();
+        return specialPowerDescription;
     }
 
     @Override
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
 
-        if (card.getState().equals(LeaderCardState.ACTIVE))
-            cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREEN));
-        else if (card.getState().equals(LeaderCardState.DISCARDED))
-            cardGrid.setBorderStyle(new LineBorderStyle(Colour.RED));
-        else
-            cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREY));
+        cardText.setText(getLeaderCardDescription());
+
+        if(isBorderColourBasedOnState) {
+            if (card.getState().equals(LeaderCardState.ACTIVE))
+                cardGrid.setBorderStyle(new LineBorderStyle(Colour.WHITE));
+            else if (card.getState().equals(LeaderCardState.DISCARDED))
+                cardGrid.setBorderStyle(new LineBorderStyle(Colour.RED));
+            else
+                cardGrid.setBorderStyle(new LineBorderStyle(Colour.GREY));
+        } else {
+            cardGrid.setBorderStyle(new LineBorderStyle(borderColour));
+        }
 
         return super.getContentAsFormattedCharsBuffer();
     }

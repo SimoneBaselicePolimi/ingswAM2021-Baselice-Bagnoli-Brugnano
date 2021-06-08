@@ -18,19 +18,21 @@ public class LeaderCardListView extends CliView {
     protected List<List<ClientLeaderCardRepresentation>> pages;
     protected int currentPageIndex;
     protected boolean enumerateCards;
-    protected Map<ClientLeaderCardRepresentation, Boolean> selectedCard = new HashMap<>();
+    protected boolean cardsBorderColourBasedOnState;
+
+    protected Map<ClientLeaderCardRepresentation, LeaderCardView> cardRepresentationToViewMap = new HashMap<>();
+
 
     public LeaderCardListView(
         List<ClientLeaderCardRepresentation> cardsToView,
         boolean enumerateCards,
-        CliClientManager clientManager,
-        int rowSize,
-        int columnSize
+        boolean cardsBorderColourBasedOnState,
+        CliClientManager clientManager
     ) {
-        this(cardsToView, enumerateCards, clientManager);
-        this.rowSize = rowSize;
-        this.columnSize = columnSize;
-        cardsToView.forEach(card -> selectedCard.put(card, false));
+        super(clientManager);
+        this.cardsToView = cardsToView;
+        this.enumerateCards = enumerateCards;
+        this.cardsBorderColourBasedOnState = cardsBorderColourBasedOnState;
         currentPageIndex = 0;
     }
 
@@ -39,12 +41,33 @@ public class LeaderCardListView extends CliView {
         boolean enumerateCards,
         CliClientManager clientManager
     ) {
-        super(clientManager);
-        this.cardsToView = cardsToView;
-        this.enumerateCards = enumerateCards;
-        cardsToView.forEach(card -> selectedCard.put(card, false));
-        currentPageIndex = 0;
+        this(cardsToView, enumerateCards, false, clientManager);
     }
+
+    public LeaderCardListView(
+        List<ClientLeaderCardRepresentation> cardsToView,
+        boolean enumerateCards,
+        CliClientManager clientManager,
+        int rowSize,
+        int columnSize
+    ) {
+        this(cardsToView, enumerateCards, false, clientManager, rowSize, columnSize);
+    }
+
+    public LeaderCardListView(
+        List<ClientLeaderCardRepresentation> cardsToView,
+        boolean enumerateCards,
+        boolean cardsBorderColourBasedOnState,
+        CliClientManager clientManager,
+        int rowSize,
+        int columnSize
+    ) {
+        this(cardsToView, enumerateCards, cardsBorderColourBasedOnState, clientManager);
+        this.rowSize = rowSize;
+        this.columnSize = columnSize;
+    }
+
+
 
     public void setPage(int pageIndex) {
         currentPageIndex = pageIndex;
@@ -66,9 +89,10 @@ public class LeaderCardListView extends CliView {
             LeaderCardView leaderCardView = new LeaderCardView(
                 clientManager,
                 leaderCard,
-                selectedCard.get(leaderCard),
+                cardsBorderColourBasedOnState,
                 getNumberForLeaderCardRepresentation(leaderCard)
             );
+            cardRepresentationToViewMap.put(leaderCard, leaderCardView);
             container.setView(0, i, leaderCardView);
         }
         setCardsContainer(container, (rowSize-containerRowSize)/2, 0);
@@ -92,6 +116,10 @@ public class LeaderCardListView extends CliView {
         return cardsToView.get(enumerationNumber-1);
     }
 
+    public LeaderCardView getLeaderCardViewByNumber(int enumerationNumber) {
+        return cardRepresentationToViewMap.get(getLeaderCardRepresentationByNumber(enumerationNumber));
+    }
+
     public int getNumberForLeaderCardRepresentation(ClientLeaderCardRepresentation leaderCard) {
         return cardsToView.indexOf(leaderCard) + 1;
     }
@@ -112,16 +140,6 @@ public class LeaderCardListView extends CliView {
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
         setPage(currentPageIndex);
         return super.getContentAsFormattedCharsBuffer();
-    }
-
-    public void selectCard(int cardNumber) {
-        selectedCard.put(getLeaderCardRepresentationByNumber(cardNumber), true);
-        updateView();
-    }
-
-    public void deselectCard(int cardNumber) {
-        selectedCard.put(getLeaderCardRepresentationByNumber(cardNumber), false);
-        updateView();
     }
 
 }

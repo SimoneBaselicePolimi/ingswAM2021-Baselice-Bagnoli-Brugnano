@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.develo
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
 
@@ -82,6 +83,14 @@ public class DevCardTableDeckView extends CliView {
             //TODO
         }
 
+    }
+
+    public void setCardBorderColour(Colour colour) {
+        cardView.setCardBorderColour(colour);
+    }
+
+    public ClientDevelopmentCardRepresentation getCardOnTop() {
+        return card;
     }
 
 }

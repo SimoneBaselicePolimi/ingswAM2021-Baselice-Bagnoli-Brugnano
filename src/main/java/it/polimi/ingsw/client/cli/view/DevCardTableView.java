@@ -18,6 +18,7 @@ import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -36,6 +37,8 @@ public class DevCardTableView extends CliView{
     protected ClientPlayerContextRepresentation activePlayerContext;
 
     protected GridView developmentCardTableGrid;
+
+    protected List<DevCardTableDeckView> cardTableDeckViewList;
 
     public DevCardTableView(CliClientManager clientManager, GameView gameView) {
         super(clientManager);
@@ -75,12 +78,13 @@ public class DevCardTableView extends CliView{
 
         addChildView(developmentCardTableGrid, 0, 0);
 
+        cardTableDeckViewList = new ArrayList<>();
         for (int i = 0; i < visibleCards.size(); i++) {
-            developmentCardTableGrid.setView(
-                0,
-                i,
-                new DevCardTableDeckView(visibleCards.get(i).getColour(), visibleCardsLevel, clientManager)
+            DevCardTableDeckView deckView = new DevCardTableDeckView(
+                visibleCards.get(i).getColour(), visibleCardsLevel, clientManager
             );
+            developmentCardTableGrid.setView(0, i, deckView);
+            cardTableDeckViewList.add(deckView);
         }
 
     }
@@ -236,6 +240,14 @@ public class DevCardTableView extends CliView{
 
     @Override
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+        
+        cardTableDeckViewList.forEach(d -> {
+            if(table.isCardPurchasable(d.getCardOnTop()))
+                d.setCardBorderColour(Colour.YELLOW);
+            else
+                d.setCardBorderColour(Colour.GREY);
+        });
+
         return super.getContentAsFormattedCharsBuffer();
     }
 

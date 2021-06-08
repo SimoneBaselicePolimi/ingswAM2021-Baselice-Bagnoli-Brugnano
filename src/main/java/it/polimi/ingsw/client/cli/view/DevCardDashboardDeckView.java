@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
 
@@ -91,4 +92,15 @@ public class DevCardDashboardDeckView extends CliView {
 
     }
 
+    public void setCardBorderColour(Colour colour) {
+        cardView.setCardBorderColour(colour);
+    }
+
+    public ClientDevelopmentCardRepresentation getCardOnTop() {
+        return card;
+    }
+
+    public ClientPlayerOwnedDevelopmentCardDeckRepresentation getCardDeck() {
+        return cardDeck;
+    }
 }

@@ -54,4 +54,5 @@ public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
     CompletableFuture<Void> checkIfThePlayerHasNecessaryResources(ClientProductionRepresentation production){
         return null;
     }
+
 }
