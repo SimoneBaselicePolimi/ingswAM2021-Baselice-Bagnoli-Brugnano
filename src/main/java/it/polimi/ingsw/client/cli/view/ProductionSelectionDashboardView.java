@@ -76,7 +76,11 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 "client.cli.playerDashboard.activateBaseProduction"
             )
             .addUserChoice(
-                this::askPlayerForDashboardProductions,
+                () -> askPlayerForDashboardProductions()
+                    .exceptionally(e -> {
+                        askPlayerForProduction();
+                        return null;
+                    }),
                 "client.cli.playerDashboard.activateDashboardProductions"
             )
 //            .addUserChoice(
@@ -101,7 +105,8 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 if(intInput > 0 && intInput <= dashboardPlayerContext.getDevelopmentCardDecks().size()) {
                     ClientProductionRepresentation production = dashboardPlayerContext.getDevelopmentCardDecks()
                         .get(intInput - 1).peek().getProduction();
-                    return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager);
+                    return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager)
+                        .thenCompose(n -> askPlayerForProduction());
                 }
                 else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
@@ -117,7 +122,8 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 int intInput = Integer.parseInt(input);
                 if(intInput > 0 && intInput <= dashboardPlayerContext.getBaseProductions().size()) {
                     ClientProductionRepresentation production = baseProductions.get(intInput-1);
-                    return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager);
+                    return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager)
+                        .thenCompose(n -> askPlayerForProduction());
                 }
                 else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");

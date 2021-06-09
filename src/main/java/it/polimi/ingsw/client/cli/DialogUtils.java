@@ -22,13 +22,15 @@ public class DialogUtils {
             return CompletableFuture.failedFuture(new IllegalAccessException());
         } else {
             return checkAndRemoveResourcesCost(
-
+                selectedProduction,
+                prodInfo,
+                clientManager
             );
         }
 
     }
 
-    protected boolean checkIfThePlayerHasNecessaryResources(
+    static boolean checkIfThePlayerHasNecessaryResources(
         ClientProductionRepresentation production,
         ProductionsSelectionInfo prodInfo
     ) {
@@ -67,7 +69,7 @@ public class DialogUtils {
         }
     }
 
-    CompletableFuture<Void> askPlayerForStarResourcesCost(
+    static CompletableFuture<Void> askPlayerForStarResourcesCost(
         ClientProductionRepresentation production,
         int numOfStarResourcesLeftToPay,
         ProductionsSelectionInfo prodInfo,
@@ -119,13 +121,20 @@ public class DialogUtils {
 
                 });
         } else {
-            return askPlayerForStarResourceReward(production, production.getStarResourceReward());
+            return askPlayerForStarResourceReward(
+                production,
+                production.getStarResourceReward(),
+                prodInfo,
+                clientManager
+            );
         }
     }
 
-    CompletableFuture<Void> askPlayerForStarResourceReward(
+    static CompletableFuture<Void> askPlayerForStarResourceReward(
         ClientProductionRepresentation production,
-        int numOfStarResourcesLeftToObtain
+        int numOfStarResourcesLeftToObtain,
+        ProductionsSelectionInfo prodInfo,
+        CliClientManager clientManager
     ) {
 
         if(numOfStarResourcesLeftToObtain != 0){
@@ -136,10 +145,12 @@ public class DialogUtils {
                         int numOfResources = Integer.parseInt(resources.split("\\s+")[0]);
                         ResourceType resourceType = ResourceType.getResourceTypeFromLocalizedName(resources.split("\\s+")[1]);
                         if(resourceType != null && numOfResources > 0 && numOfStarResourcesLeftToObtain >= numOfResources) {
-                            starResourcesReward.put(resourceType, numOfResources);
+                            prodInfo.getTotalStarResourcesProductionReward().put(resourceType, numOfResources);
                             return askPlayerForStarResourceReward(
                                 production,
-                                numOfStarResourcesLeftToObtain - numOfResources
+                                numOfStarResourcesLeftToObtain - numOfResources,
+                                prodInfo,
+                                clientManager
                             );
                         }
                     }
@@ -147,14 +158,16 @@ public class DialogUtils {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
                     return askPlayerForStarResourceReward(
                         production,
-                        numOfStarResourcesLeftToObtain
+                        numOfStarResourcesLeftToObtain,
+                        prodInfo,
+                        clientManager
                     );
 
                 });
+        } else {
+            prodInfo.addNewSelectedProduction(production);
+            return CompletableFuture.completedFuture(null);
         }
-
-        alreadySelectedProductions.add(production);
-        return askPlayerForProduction();
 
     }
 
