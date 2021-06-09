@@ -4,16 +4,16 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.DialogUtils;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
-//TODO
 public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboardView{
 
     protected Map<ResourceType, Integer> resourcesInTemporaryStorage;
@@ -30,6 +30,8 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
     ) {
         super(clientManager.getMyPlayer(), clientManager, gameView, rowSize, columnSize);
         this.resourcesInTemporaryStorage = resourcesInTemporaryStorage;
+
+        arrangeResourcesDialog();
     }
 
     public ResourcesRepositioningDashboardView(
@@ -79,34 +81,100 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                 () -> onPositioningDone.accept(storagesModified, resourcesInTemporaryStorage),
                 "client.cli.resourcesRepositioning.repositioningDone"
             ).apply();
-
     }
 
     protected void putResourcesInStorageDialog() {
 
-//        DialogUtils.askPlayerForResourcesTypeAndNumber(clientManager)
-//            .thenCompose(resourceTypeAndNumEntry -> {
-//                ResourceType resourceType = resourceTypeAndNumEntry.getKey();
-//                int numOfResources = resourceTypeAndNumEntry.getValue();
-//                UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose();
-//
-//                for (ClientResourceStorageRepresentation s : ?) {
-//                    choices.addUserChoiceLocalized(
-//                        () -> {
-//                            s.setResources(ResourceUtils.sum(s.getResources(), Map.of(resourceType, numOfResources)));
-//                            arrangeResourcesDialog();
-//                        },
-//                        "client.cli.resourcesRepositioning.specifyInWhichStorage",
-//                        NOME???
-//                    )
-//                }
-//
-//                choices.apply();
-//        }
+        DialogUtils.askPlayerForResourcesTypeAndNumber(clientManager)
+            .thenCompose(resourceTypeAndNumEntry -> {
+                ResourceType resourceType = resourceTypeAndNumEntry.getKey();
+                int numOfResources = resourceTypeAndNumEntry.getValue();
+                UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
 
+                for (ClientResourceStorageRepresentation s : shelves) {
+                    choices.addUserChoiceLocalized(
+                        () -> {
+                            s.setResources(ResourceUtils.sum(s.getResources(), Map.of(resourceType, numOfResources)));
+                            resourcesInTemporaryStorage = ResourceUtils.difference(
+                                resourcesInTemporaryStorage,
+                                Map.of(resourceType, numOfResources)
+                            );
+                            storagesModified.add(s);
+                            arrangeResourcesDialog();
+                        },
+                        "client.cli.resourcesRepositioning.specifyInWhichStorage",
+                        Localization.getLocalizationInstance().getString("dashboard.shelf")
+                            + (shelves.indexOf(s) + 1)
+                    );
+                }
+
+                for(ClientResourceStorageRepresentation ls : leaderStoragesFromActiveCards) {
+                    choices.addUserChoiceLocalized(
+                        () -> {
+                            ls.setResources(ResourceUtils.sum(ls.getResources(), Map.of(resourceType, numOfResources)));
+                            resourcesInTemporaryStorage = ResourceUtils.difference(
+                                resourcesInTemporaryStorage,
+                                Map.of(resourceType, numOfResources)
+                            );
+                            storagesModified.add(ls);
+                            arrangeResourcesDialog();
+                        },
+                        "client.cli.resourcesRepositioning.specifyInWhichStorage",
+                        Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
+                            + (shelves.size() + leaderStoragesFromActiveCards.indexOf(ls) + 1)
+                    );
+                }
+
+                choices.apply();
+                return CompletableFuture.completedFuture(null);
+        });
     }
 
     protected void takeResourcesFromStorageDialog() {
+
+        DialogUtils.askPlayerForResourcesTypeAndNumber(clientManager)
+            .thenCompose(resourceTypeAndNumEntry -> {
+                ResourceType resourceType = resourceTypeAndNumEntry.getKey();
+                int numOfResources = resourceTypeAndNumEntry.getValue();
+                UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
+
+                for (ClientResourceStorageRepresentation s : shelves) {
+                    choices.addUserChoiceLocalized(
+                        () -> {
+                            s.setResources(ResourceUtils.difference(s.getResources(), Map.of(resourceType, numOfResources)));
+                            resourcesInTemporaryStorage = ResourceUtils.sum(
+                                resourcesInTemporaryStorage,
+                                Map.of(resourceType, numOfResources)
+                            );
+                            storagesModified.add(s);
+                            arrangeResourcesDialog();
+                        },
+                        "client.cli.resourcesRepositioning.specifyInWhichStorage",
+                        Localization.getLocalizationInstance().getString("dashboard.shelf")
+                            + (shelves.indexOf(s) + 1)
+                    );
+                }
+
+                for(ClientResourceStorageRepresentation ls : leaderStoragesFromActiveCards) {
+                    choices.addUserChoiceLocalized(
+                        () -> {
+                            ls.setResources(ResourceUtils.difference(ls.getResources(), Map.of(resourceType, numOfResources)));
+                            resourcesInTemporaryStorage = ResourceUtils.sum(
+                                resourcesInTemporaryStorage,
+                                Map.of(resourceType, numOfResources)
+                            );
+                            storagesModified.add(ls);
+                            arrangeResourcesDialog();
+                        },
+                        "client.cli.resourcesRepositioning.specifyInWhichStorage",
+                        Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
+                            + (shelves.size() + leaderStoragesFromActiveCards.indexOf(ls) + 1)
+                    );
+                }
+
+                choices.apply();
+                return CompletableFuture.completedFuture(null);
+            });
 
     }
 }

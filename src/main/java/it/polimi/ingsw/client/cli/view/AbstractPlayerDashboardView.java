@@ -77,18 +77,16 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         storagesGrid.setBorderStyle(new LineBorderStyle());
         storagesAndBaseProdGrid.setView(0, 0, storagesGrid);
 
-        int s = 0;
         for(ClientResourceStorageRepresentation shelf : shelves) {
             LabelView shelfLabel = new LabelView(
                 FormattedChar.convertStringToFormattedCharList(
                     Localization.getLocalizationInstance().getString("dashboard.shelf")
-                        + " " + (s+1) + ": "
+                        + (shelves.indexOf(shelf)+1) + ": "
                         + LocalizationUtils.getResourcesListAsCompactString(shelf.getResources())
                 ),
                 clientManager
             );
-            storagesGrid.setView(s, 0, shelfLabel);
-            s++;
+            storagesGrid.setView(shelves.indexOf(shelf), 0, shelfLabel);
         }
 
         LabelView infiniteChestLabel = new LabelView(
@@ -100,17 +98,20 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         );
         storagesGrid.setView(shelves.size(), 0, infiniteChestLabel);
 
-        int l = 1;
         for(ClientResourceStorageRepresentation leaderStorage : leaderStoragesFromActiveCards) {
             LabelView leaderLabel = new LabelView(
                 FormattedChar.convertStringToFormattedCharList(
                     Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
-                        + l + ": " + LocalizationUtils.getResourcesListAsCompactString(leaderStorage.getResources())
+                        + (leaderStoragesFromActiveCards.indexOf(leaderStorage)+1) + ": "
+                        + LocalizationUtils.getResourcesListAsCompactString(leaderStorage.getResources())
                 ),
                 clientManager
             );
-            storagesGrid.setView(shelves.size() + l, 0, leaderLabel);
-            l++;
+            storagesGrid.setView(
+                shelves.size() + (leaderStoragesFromActiveCards.indexOf(leaderStorage)+1),
+                0,
+                leaderLabel
+            );
         }
 
         baseProductions = new ArrayList<>(dashboardPlayerContext.getBaseProductions());

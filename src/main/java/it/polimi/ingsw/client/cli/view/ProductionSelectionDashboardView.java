@@ -14,15 +14,10 @@ import it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.utils.Colour;
 
-import java.awt.*;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class ProductionSelectionDashboardView extends AbstractPlayerDashboardView {
@@ -90,7 +85,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 )),
                 "client.cli.playerDashboard.leaderCardList"
             ).addUserChoice(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                 "client.cli.game.returnToMenu"
             ).apply();
     }
