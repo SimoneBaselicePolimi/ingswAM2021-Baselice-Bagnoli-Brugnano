@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.ProductionsSelectionInfo;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.server.model.Player;
 
@@ -20,8 +21,10 @@ public class PlayerDashboardView extends AbstractPlayerDashboardView {
         if (clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION)) {
             choices.addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new ProductionSelectionDashboardView(
-                    new ArrayList<>(),
-                    clientManager.getGameContextRepresentation().getPlayerContext(activePlayer).getTotalResourcesOwnedByThePlayer(),
+                    new ProductionsSelectionInfo(
+                        clientManager.getGameContextRepresentation()
+                            .getPlayerContext(activePlayer).getTotalResourcesOwnedByThePlayer()
+                    ),
                     clientManager,
                     gameView
                 )),
