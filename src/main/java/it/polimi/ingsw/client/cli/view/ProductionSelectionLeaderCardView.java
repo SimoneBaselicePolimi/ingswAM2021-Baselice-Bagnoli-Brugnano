@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.ProductionsSelectionInfo;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -11,22 +12,17 @@ import java.util.concurrent.CompletableFuture;
 
 public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
 
-    protected List<ClientProductionRepresentation> alreadySelectedProductions;
-
-    protected Map<ResourceType, Integer> resourcesLeftToThePlayer;
+    protected ProductionsSelectionInfo selectionInfo;
 
     protected GameView gameView;
 
     public ProductionSelectionLeaderCardView(
-        List<ClientProductionRepresentation> alreadySelectedProductions,
-        Map<ResourceType, Integer> resourcesLeftToThePlayer,
+        ProductionsSelectionInfo selectionInfo,
         CliClientManager clientManager,
         GameView gameView
      ) {
         super(clientManager.getMyPlayer(), clientManager, gameView);
-
-        this.alreadySelectedProductions = alreadySelectedProductions;
-        this.resourcesLeftToThePlayer = resourcesLeftToThePlayer;
+        this.selectionInfo = selectionInfo;
 
         askPlayerForLeaderCardsProduction();
     }
