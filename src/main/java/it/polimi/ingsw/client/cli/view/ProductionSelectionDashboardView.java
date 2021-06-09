@@ -65,7 +65,6 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
     }
 
     CompletableFuture<Void> askPlayerForTypeOfProductions() {
-        //TODO add return to menu option
         return UserChoicesUtils.makeUserChoose(clientManager)
             .addUserChoice(
                 () -> askPlayerForBaseProduction()
@@ -79,10 +78,6 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 this::askPlayerForDashboardProductions,
                 "client.cli.playerDashboard.activateDashboardProductions"
             )
-//            .addUserChoice(
-//                () -> askPlayerForLeaderCardsProduction(),
-//                "client.cli.playerDashboard.activateLeaderCardsProduction"
-//            )
             .addUserChoice(
                 () -> gameView.setMainContentView(new ProductionSelectionLeaderCardView(
                     selectionInfo,
@@ -90,6 +85,9 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                     gameView
                 )),
                 "client.cli.playerDashboard.leaderCardList"
+            ).addUserChoice(
+                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                "client.cli.game.returnToMenu"
             ).apply();
     }
 

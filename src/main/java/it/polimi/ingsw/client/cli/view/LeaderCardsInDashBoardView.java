@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.server.model.Player;
 
@@ -20,6 +21,7 @@ public class LeaderCardsInDashBoardView extends AbstractLeaderCardView{
     }
 
     void startLeaderCardsInDashboardDialog() {
+
     }
 
 }

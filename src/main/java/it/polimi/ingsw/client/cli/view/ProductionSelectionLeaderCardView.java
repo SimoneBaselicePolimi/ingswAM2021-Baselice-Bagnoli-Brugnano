@@ -1,13 +1,14 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.DialogUtils;
 import it.polimi.ingsw.client.cli.ProductionsSelectionInfo;
+import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 import java.util.concurrent.CompletableFuture;
 
 public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
@@ -28,17 +29,40 @@ public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
     }
 
     CompletableFuture<Void> askPlayerForLeaderCardsProduction() {
+
+        return UserChoicesUtils.makeUserChoose(clientManager)
+            .addUserChoice(
+                () -> askPlayerForLeaderCard()
+                    .exceptionally(e -> {
+                        askPlayerForLeaderCard();
+                        return null;
+                    }),
+                "client.cli.playerDashboard.activateNewLeaderCardProduction"
+            )
+
+            .addUserChoice(
+                () -> gameView.setMainContentView(new ProductionSelectionDashboardView(
+                    selectionInfo,
+                    clientManager,
+                    gameView
+                )),
+                "client.cli.playerDashboard.returnToProductionActivation"
+            ).apply();
+    }
+
+    CompletableFuture<Void> askPlayerForLeaderCard(){
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForLeaderProductionsChoice")
             .thenCompose(input -> {
                 int intInput = Integer.parseInt(input);
-                if (intInput > 0 && intInput < leaderCardsPlayerContext.getActiveLeaderCardsProductions().size()) {
-                    //TODO ask the user which production he wants to activate from that leader card (there can be more than one)
-                    ClientProductionRepresentation production = new ArrayList<>(leaderCardsPlayerContext.getActiveLeaderCardsProductions()).get(intInput-1);
-                    if(alreadySelectedProductions.contains(production)) {
-                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionAlreadyChosen");
+                if (intInput > 0 && intInput <= leaderCardList.size()) {
+                    if(leaderCardList.get(intInput - 1).getState().equals(LeaderCardState.ACTIVE)) {
+                        ClientLeaderCardRepresentation selectedLeaderCard = leaderCardList.get(intInput - 1);
+                        return askPlayerForTypeOfLeaderCardsProduction(selectedLeaderCard);
+                    }
+                    else {
+                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerLeaderCardIsNotActive");
                         return askPlayerForLeaderCardsProduction();
                     }
-                    return checkIfThePlayerHasNecessaryResources(production);
                 } else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
                     return askPlayerForLeaderCardsProduction();
@@ -46,9 +70,18 @@ public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
             });
     }
 
-    //TODO this method in ProductionSelectionDashboardView has changed (split in two different methods)
-    CompletableFuture<Void> checkIfThePlayerHasNecessaryResources(ClientProductionRepresentation production){
-        return null;
+    CompletableFuture<Void> askPlayerForTypeOfLeaderCardsProduction(ClientLeaderCardRepresentation selectedLeaderCard){
+        return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForTypeOfLeaderProductionsChoice")
+            .thenCompose(input -> {
+                int intInput = Integer.parseInt(input);
+                if (intInput > 0 && intInput >= selectedLeaderCard.getProductions().size()){
+                    ClientProductionRepresentation production = selectedLeaderCard.getProductions().get(intInput - 1);
+                    return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager);
+                }
+                else {
+                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
+                    return askPlayerForTypeOfLeaderCardsProduction(selectedLeaderCard);
+                }
+            });
     }
-
 }
