@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
@@ -18,7 +19,9 @@ public abstract class ClientRequest {
 	@SerializeIdOnly
 	public final Player player;
 
-	public ClientRequest(Player player) {
+	public ClientRequest(
+		@JsonProperty("player") Player player
+	) {
 		this.player = player;
 	}
 

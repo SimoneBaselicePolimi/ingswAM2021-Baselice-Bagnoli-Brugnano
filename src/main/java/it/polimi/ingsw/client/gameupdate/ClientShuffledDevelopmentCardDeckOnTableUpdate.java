@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gameupdate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
 import it.polimi.ingsw.client.gameupdatehandler.ShuffledDevelopmentCardDeckOnTableUpdateHandler;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
@@ -17,9 +18,9 @@ public class ClientShuffledDevelopmentCardDeckOnTableUpdate extends ClientGameUp
     public final int numberOfCardsInDeck;
 
     public ClientShuffledDevelopmentCardDeckOnTableUpdate(
-        ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation> deck,
-        ClientDevelopmentCardRepresentation cardOnTop,
-        int numberOfCardsInDeck
+        @JsonProperty("deck") ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation> deck,
+        @JsonProperty("cardOnTop") ClientDevelopmentCardRepresentation cardOnTop,
+        @JsonProperty("numberOfCardsInDeck") int numberOfCardsInDeck
     ) {
         this.deck = deck;
         this.cardOnTop = cardOnTop;

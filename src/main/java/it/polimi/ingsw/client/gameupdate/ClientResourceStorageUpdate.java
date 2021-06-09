@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gameupdate;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
 import it.polimi.ingsw.client.gameupdatehandler.ResourceStorageUpdateHandler;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
@@ -15,6 +16,14 @@ public class ClientResourceStorageUpdate extends ClientGameUpdate {
 	public ClientResourceStorageRepresentation storage;
 
 	public Map<ResourceType, Integer> resourcesInStorage;
+
+	public ClientResourceStorageUpdate(
+		@JsonProperty("storage") ClientResourceStorageRepresentation storage,
+		@JsonProperty("resourcesInStorage") Map<ResourceType, Integer> resourcesInStorage
+	) {
+		this.storage = storage;
+		this.resourcesInStorage = resourcesInStorage;
+	}
 
 	@Override
 	public GameUpdateHandler getHandler() {

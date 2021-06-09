@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gameupdate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
 import it.polimi.ingsw.client.gameupdatehandler.LeaderCardCanBeActivatedUpdateHandler;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
@@ -12,7 +13,10 @@ public class ClientLeaderCardCanBeActivatedUpdate extends ClientGameUpdate {
 
 	public final boolean canBeActivated;
 
-	public ClientLeaderCardCanBeActivatedUpdate(ClientLeaderCardRepresentation leaderCard, boolean canBeActivated) {
+	public ClientLeaderCardCanBeActivatedUpdate(
+		@JsonProperty("leaderCard") ClientLeaderCardRepresentation leaderCard,
+		@JsonProperty("canBeActivated") boolean canBeActivated
+	) {
 		this.leaderCard = leaderCard;
 		this.canBeActivated = canBeActivated;
 	}

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gameupdate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
 import it.polimi.ingsw.client.gameupdatehandler.PlayerOwnedDevelopmentCardDeckUpdateHandler;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
@@ -16,8 +17,8 @@ public class ClientPlayerOwnedDevelopmentCardDeckUpdate extends ClientGameUpdate
 	public final Stack<ClientDevelopmentCardRepresentation> developmentCardsDeck;
 
     public ClientPlayerOwnedDevelopmentCardDeckUpdate(
-        ClientPlayerOwnedDevelopmentCardDeckRepresentation deck,
-        Stack<ClientDevelopmentCardRepresentation> developmentCardsDeck
+        @JsonProperty("deck") ClientPlayerOwnedDevelopmentCardDeckRepresentation deck,
+        @JsonProperty("developmentCardsDeck") Stack<ClientDevelopmentCardRepresentation> developmentCardsDeck
     ) {
         this.deck = deck;
         this.developmentCardsDeck = developmentCardsDeck;

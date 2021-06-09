@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gameupdate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
 import it.polimi.ingsw.client.gameupdatehandler.LeaderCardStateUpdateHandler;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
@@ -13,7 +14,10 @@ public class ClientLeaderCardStateUpdate extends ClientGameUpdate {
 
 	public final LeaderCardState leaderCardState;
 
-	public ClientLeaderCardStateUpdate(ClientLeaderCardRepresentation leaderCard, LeaderCardState leaderCardState) {
+	public ClientLeaderCardStateUpdate(
+		@JsonProperty("leaderCard") ClientLeaderCardRepresentation leaderCard,
+		@JsonProperty("leaderCardState") LeaderCardState leaderCardState
+	) {
 		this.leaderCard = leaderCard;
 		this.leaderCardState = leaderCardState;
 	}

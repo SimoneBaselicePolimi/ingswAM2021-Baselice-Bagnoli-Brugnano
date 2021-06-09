@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.network.clientrequest.validator.ActivateLeaderCardClientRequestValidator;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
@@ -25,8 +26,8 @@ public class ActivateLeaderCardClientRequest extends ClientRequest {
      * @param leaderCardThePlayerWantsToActivate chosen leader card to be activated
      */
     public ActivateLeaderCardClientRequest(
-        Player player,
-        LeaderCard leaderCardThePlayerWantsToActivate
+        @JsonProperty("player") Player player,
+        @JsonProperty("leaderCardThePlayerWantsToActivate") LeaderCard leaderCardThePlayerWantsToActivate
     ) {
         super(player);
         this.leaderCardThePlayerWantsToActivate = leaderCardThePlayerWantsToActivate;
