@@ -3,9 +3,11 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.server.model.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AbstractLeaderCardView extends CliView{
 
@@ -15,6 +17,8 @@ public class AbstractLeaderCardView extends CliView{
     protected GameView gameView;
     protected GridView container;
     protected LeaderCardListView cardListView;
+
+    protected List<ClientLeaderCardRepresentation> leaderCardList;
 
     public AbstractLeaderCardView(
         Player leaderCardsPlayer,
@@ -34,18 +38,16 @@ public class AbstractLeaderCardView extends CliView{
         addChildView(container, 0,0);
 
         if(leaderCardsPlayer.equals(clientManager.getMyPlayer())) {
-            cardListView = new LeaderCardListView(
-                new ArrayList<>(leaderCardsPlayerContext.getLeaderCardsPlayerOwns()),
-                true,
-                clientManager
-            );
+            leaderCardList = new ArrayList<>(leaderCardsPlayerContext.getLeaderCardsPlayerOwns());
         } else {
-            cardListView = new LeaderCardListView(
-                new ArrayList<>(leaderCardsPlayerContext.getActiveLeaderCards()),
-                true,
-                clientManager
-            );
+            leaderCardList = new ArrayList<>(leaderCardsPlayerContext.getActiveLeaderCards());
         }
+
+        cardListView = new LeaderCardListView(
+            leaderCardList,
+            true,
+            clientManager
+        );
 
         container.setView(0, 0, cardListView);
     }

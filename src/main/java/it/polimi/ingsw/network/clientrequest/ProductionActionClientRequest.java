@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.network.clientrequest.validator.ProductionActionClientRequestValidator;
 import it.polimi.ingsw.server.model.Player;
@@ -19,10 +20,10 @@ public class ProductionActionClientRequest extends ClientRequest {
     public final Map<ResourceType, Integer> starResourceReward;
 
     public ProductionActionClientRequest(
-        Player player,
-        Set<Production> productions,
-        Map<ResourceType, Integer> starResourceCost,
-        Map<ResourceType, Integer> starResourceReward
+        @JsonProperty("player") Player player,
+        @JsonProperty("productions") Set<Production> productions,
+        @JsonProperty("starResourceCost") Map<ResourceType, Integer> starResourceCost,
+        @JsonProperty("starResourceReward") Map<ResourceType, Integer> starResourceReward
     ) {
         super(player);
         this.productions = productions;

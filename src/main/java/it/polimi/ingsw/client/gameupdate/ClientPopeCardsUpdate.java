@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gameupdate;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
 import it.polimi.ingsw.client.gameupdatehandler.PopeCardsUpdateHandler;
 import it.polimi.ingsw.server.model.Player;
@@ -15,7 +16,9 @@ public class ClientPopeCardsUpdate extends ClientGameUpdate {
 	@SerializeAsMapWithIdKey
 	public final Map<Player, List<PopeFavorCardState>> faithPopeCardsStates;
 
-	public ClientPopeCardsUpdate(Map<Player, List<PopeFavorCardState>> faithPopeCardsStates) {
+	public ClientPopeCardsUpdate(
+		@JsonProperty("faithPopeCardsStates") Map<Player, List<PopeFavorCardState>> faithPopeCardsStates
+	) {
 		this.faithPopeCardsStates = faithPopeCardsStates;
 	}
 

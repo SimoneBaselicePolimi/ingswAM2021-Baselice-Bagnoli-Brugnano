@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.network.clientrequest.validator.MarketActionFetchRowClientRequestValidator;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
@@ -13,7 +14,10 @@ import java.util.Map;
 public class MarketActionFetchRowClientRequest extends ClientRequest {
     public final int row;
 
-    public MarketActionFetchRowClientRequest(Player player, int row) {
+    public MarketActionFetchRowClientRequest(
+        @JsonProperty("player") Player player,
+        @JsonProperty("row") int row
+    ) {
         super(player);
         this.row = row;
     }

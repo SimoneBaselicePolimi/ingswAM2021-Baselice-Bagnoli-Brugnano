@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.network.clientrequest.validator.DiscardLeaderCardClientRequestValidator;
 import it.polimi.ingsw.server.model.Player;
@@ -17,8 +18,8 @@ public class DiscardLeaderCardClientRequest extends ClientRequest {
     public final LeaderCard leaderCardThePlayerWantsToDiscard;
 
     public DiscardLeaderCardClientRequest(
-        Player player,
-        LeaderCard leaderCardThePlayerWantsToDiscard
+        @JsonProperty("player") Player player,
+        @JsonProperty("leaderCardThePlayerWantsToDiscard") LeaderCard leaderCardThePlayerWantsToDiscard
     ) {
         super(player);
         this.leaderCardThePlayerWantsToDiscard = leaderCardThePlayerWantsToDiscard;

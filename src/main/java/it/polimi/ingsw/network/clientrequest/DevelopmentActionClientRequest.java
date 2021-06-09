@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.clientrequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.network.clientrequest.validator.DevelopmentActionClientRequestValidator;
 import it.polimi.ingsw.server.model.Player;
@@ -16,7 +17,11 @@ public class DevelopmentActionClientRequest extends ClientRequest {
     public final DevelopmentCard developmentCard;
     public final int deckNumber;
 
-    public DevelopmentActionClientRequest(Player player, DevelopmentCard developmentCard, int deckNumber) {
+    public DevelopmentActionClientRequest(
+        @JsonProperty("player") Player player,
+        @JsonProperty("developmentCard") DevelopmentCard developmentCard,
+        @JsonProperty("deckNumber") int deckNumber
+    ) {
         super(player);
         this.developmentCard = developmentCard;
         this.deckNumber = deckNumber;
