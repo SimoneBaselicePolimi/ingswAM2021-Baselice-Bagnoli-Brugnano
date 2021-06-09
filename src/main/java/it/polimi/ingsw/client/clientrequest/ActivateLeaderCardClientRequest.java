@@ -1,16 +1,8 @@
 package it.polimi.ingsw.client.clientrequest;
 
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
-import it.polimi.ingsw.network.clientrequest.validator.ActivateLeaderCardClientRequestValidator;
-import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
-import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeAsSetOfIds;
-
-import java.util.Map;
 
 /**
  * Class representing the player's request to activate a leader card he holds in his hand

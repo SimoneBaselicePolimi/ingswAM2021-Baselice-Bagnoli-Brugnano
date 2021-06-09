@@ -60,7 +60,7 @@ public class LeaderCardSetupView extends CliView {
             true,
             clientManager
         );
-        for(int l=0; l<initialChoicesServerMessage.leaderCardsGivenToThePlayer.size(); l++) {
+        for(int l=1; l<=initialChoicesServerMessage.leaderCardsGivenToThePlayer.size(); l++) {
             cardListView.getLeaderCardViewByNumber(l).setBorderColour(Colour.GREY, false);
         }
         container.setView(1, 0, cardListView);
@@ -174,26 +174,28 @@ public class LeaderCardSetupView extends CliView {
                    initialChoicesServerMessage.numberOfStarResources,
                    Arrays.stream(ResourceType.values()).collect(Collectors.toSet()),
                    clientManager,
-                   Localization.getLocalizationInstance().getString("client.cli.gameSetup.gameSetupInfo")
+                   Localization.getLocalizationInstance().getString("client.cli.gameSetup.gameSetupInfo"),
+                   resourcesChosen -> onAllChoicesDone(resourcesChosen, chosenCards)
                );
                gameView.setMainContentView(resourcesChoiceView);
-               resourcesChoiceView.setOnAllChoicesDoneCallback(resourcesChosen -> {
-                  ResourcesRepositioningDashboardView resRepositioningView = new ResourcesRepositioningDashboardView(
-                      resourcesChosen,
-                      clientManager,
-                      gameView
-                  );
-                  gameView.setMainContentView(resRepositioningView);
-                  resRepositioningView.setOnPositioningDoneCallback( (storagesModified, resourcesLeftInTempStorage) ->
-                      sendInitialChoicesToServer(
-                          new HashSet<>(chosenCards),
-                          storagesModified.stream()
-                              .collect(Collectors.toMap(s -> s, ClientResourceStorageRepresentation::getResources))
-                      )
-                  );
-               });
                return CompletableFuture.completedFuture(null);
            });
+    }
+
+    void onAllChoicesDone(Map<ResourceType, Integer> resourcesChosen, List<ClientLeaderCardRepresentation> chosenCards) {
+        ResourcesRepositioningDashboardView resRepositioningView = new ResourcesRepositioningDashboardView(
+            resourcesChosen,
+            clientManager,
+            gameView
+        );
+        gameView.setMainContentView(resRepositioningView);
+        resRepositioningView.setOnPositioningDoneCallback( (storagesModified, resourcesLeftInTempStorage) ->
+            sendInitialChoicesToServer(
+                new HashSet<>(chosenCards),
+                storagesModified.stream()
+                    .collect(Collectors.toMap(s -> s, ClientResourceStorageRepresentation::getResources))
+            )
+        );
     }
 
 

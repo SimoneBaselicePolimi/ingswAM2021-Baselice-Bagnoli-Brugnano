@@ -35,6 +35,7 @@ public class ResourcesChoiceView extends CliView {
         int numberOfResourcesToChoose,
         Set<ResourceType> possibleChoices,
         String title,
+        Consumer<Map<ResourceType, Integer>> onAllChoicesDone,
         CliClientManager clientManager,
         int rowSize,
         int columnSize
@@ -43,6 +44,7 @@ public class ResourcesChoiceView extends CliView {
         this.numberOfResourcesToChoose = numberOfResourcesToChoose;
         this.possibleChoices = possibleChoices;
         this.title = title;
+        this.onAllChoicesDone = onAllChoicesDone;
 
         numberOfResourcesLeftToChoose = numberOfResourcesToChoose;
         alreadyChosenResources = new HashMap<>();
@@ -94,9 +96,10 @@ public class ResourcesChoiceView extends CliView {
         int numberOfResourcesToChoose,
         Set<ResourceType> possibleChoices,
         CliClientManager clientManager,
-        String title
+        String title,
+        Consumer<Map<ResourceType, Integer>> onAllChoicesDone
     ) {
-        this(numberOfResourcesToChoose, possibleChoices, title, clientManager, 0, 0);
+        this(numberOfResourcesToChoose, possibleChoices, title, onAllChoicesDone, clientManager, 0, 0);
     }
 
     public void addNewChoice(ResourceType resourceType) {
@@ -105,10 +108,6 @@ public class ResourcesChoiceView extends CliView {
        updateView();
        if(numberOfResourcesLeftToChoose == 0)
            onAllChoicesDone.accept(alreadyChosenResources);
-    }
-
-    public void setOnAllChoicesDoneCallback(Consumer<Map<ResourceType, Integer>> onAllChoicesDone) {
-        this.onAllChoicesDone = onAllChoicesDone;
     }
 
     @Override
@@ -184,6 +183,8 @@ public class ResourcesChoiceView extends CliView {
 
             userChoices.apply();
 
+        } else {
+            onAllChoicesDone.accept(Map.of(possibleChoices.iterator().next(), numberOfResourcesToChoose));
         }
 
     }

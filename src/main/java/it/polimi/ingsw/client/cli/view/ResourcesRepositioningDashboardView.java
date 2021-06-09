@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.cli.DialogUtils;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboardView{
 
@@ -70,6 +72,15 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
     }
 
     protected void arrangeResourcesDialog() {
+        if(resourcesInTemporaryStorage.values().stream().mapToInt(n -> n).sum() > 0)
+            clientManager.tellUserLocalized(
+                "client.cli.resourcesRepositioning.temporaryResourcesInfo",
+                LocalizationUtils.getResourcesListAsCompactString(resourcesInTemporaryStorage)
+            );
+        else
+            clientManager.tellUserLocalized(
+                "client.cli.resourcesRepositioning.absentTemporaryResourcesInfo"
+            );
         UserChoicesUtils.makeUserChoose(clientManager)
             .addUserChoiceLocalized(
                 this::putResourcesInStorageDialog,

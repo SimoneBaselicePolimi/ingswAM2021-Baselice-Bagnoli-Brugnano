@@ -49,6 +49,8 @@ client:
       notifyPlayerRowNumberIsInvalid: "La riga selezionata non è una riga valida del mercato"
       notifyPlayerColumnNumberIsInvalid: "La colonna selezionata non è una colonna valida del mercato"
     resourcesRepositioning:
+      temporaryResourcesInfo: "Devi ancora posizionare le seguenti risorse: %s"
+      absentTemporaryResourcesInfo: "Non hai risorse da posizionare"
       putResourcesInStorage: "Inserisci le risorse in un deposito"
       removeResourcesFromStorage: "Prendi le risorse da un deposito"
       repositioningDone: "Conferma posizionamento"

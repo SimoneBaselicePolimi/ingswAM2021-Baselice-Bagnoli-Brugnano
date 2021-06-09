@@ -1,16 +1,8 @@
 package it.polimi.ingsw.client.clientrequest;
 
-import it.polimi.ingsw.network.clientrequest.validator.ClientRequestValidator;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
-import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
-import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
-import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
-
-import java.util.Map;
 
 //TODO rename ClientRequest in PlayerRequest
 public abstract class ClientRequest {
@@ -18,7 +10,7 @@ public abstract class ClientRequest {
 	@SerializeIdOnly
 	public final Player player;
 
-	public ClientRequest(Player player) {
+	public ClientRequest(@JsonProperty("player") Player player) {
 		this.player = player;
 	}
 

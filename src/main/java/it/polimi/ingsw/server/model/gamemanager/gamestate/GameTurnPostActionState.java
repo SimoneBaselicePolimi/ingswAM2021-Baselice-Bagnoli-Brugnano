@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
-import it.polimi.ingsw.network.clientrequest.EndTurnClientRequest;
+import it.polimi.ingsw.server.controller.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.EndTurnServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;

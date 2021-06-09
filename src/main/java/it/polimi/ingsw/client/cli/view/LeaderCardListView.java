@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class LeaderCardListView extends CliView {
 
@@ -20,7 +22,7 @@ public class LeaderCardListView extends CliView {
     protected boolean enumerateCards;
     protected boolean cardsBorderColourBasedOnState;
 
-    protected Map<ClientLeaderCardRepresentation, LeaderCardView> cardRepresentationToViewMap = new HashMap<>();
+    protected Map<ClientLeaderCardRepresentation, LeaderCardView> cardRepresentationToViewMap;
 
 
     public LeaderCardListView(
@@ -33,6 +35,17 @@ public class LeaderCardListView extends CliView {
         this.cardsToView = cardsToView;
         this.enumerateCards = enumerateCards;
         this.cardsBorderColourBasedOnState = cardsBorderColourBasedOnState;
+
+        cardRepresentationToViewMap = cardsToView.stream().collect(Collectors.toMap(
+            c -> c,
+            c -> new LeaderCardView(
+                clientManager,
+                c,
+                cardsBorderColourBasedOnState,
+                getNumberForLeaderCardRepresentation(c)
+            )
+        ));
+
         currentPageIndex = 0;
     }
 
@@ -86,14 +99,7 @@ public class LeaderCardListView extends CliView {
         );
         for (int i = 0; i < page.size(); i++) {
             ClientLeaderCardRepresentation leaderCard = page.get(i);
-            LeaderCardView leaderCardView = new LeaderCardView(
-                clientManager,
-                leaderCard,
-                cardsBorderColourBasedOnState,
-                getNumberForLeaderCardRepresentation(leaderCard)
-            );
-            cardRepresentationToViewMap.put(leaderCard, leaderCardView);
-            container.setView(0, i, leaderCardView);
+            container.setView(0, i, cardRepresentationToViewMap.get(leaderCard));
         }
         setCardsContainer(container, (rowSize-containerRowSize)/2, 0);
     }
@@ -130,6 +136,7 @@ public class LeaderCardListView extends CliView {
 
     protected void setCardsContainer(GridView container, int rowIndex, int colIndex) {
         if(getCardsContainer() != null) {
+            getCardsContainer().children.clear();
             getCardsContainer().destroyView();
             children.clear();
         }

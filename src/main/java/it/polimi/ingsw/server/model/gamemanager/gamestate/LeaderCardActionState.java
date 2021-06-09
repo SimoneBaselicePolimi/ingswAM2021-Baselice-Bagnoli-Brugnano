@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
-import it.polimi.ingsw.network.clientrequest.ActivateLeaderCardClientRequest;
-import it.polimi.ingsw.network.clientrequest.DiscardLeaderCardClientRequest;
+import it.polimi.ingsw.server.controller.clientrequest.ActivateLeaderCardClientRequest;
+import it.polimi.ingsw.server.controller.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.ActivateLeaderCardsAction;
