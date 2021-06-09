@@ -150,7 +150,7 @@ public class DevCardTableView extends CliView{
             );
         } else {
             choices.addUserChoiceLocalized(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                 "client.cli.game.returnToMenu"
             );
         }

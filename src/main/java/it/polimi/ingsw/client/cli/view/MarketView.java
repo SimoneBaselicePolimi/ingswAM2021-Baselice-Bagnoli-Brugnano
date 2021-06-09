@@ -127,7 +127,7 @@ public class MarketView extends CliView{
         } else if(!clientManager.getMyPlayer().equals(activePlayer)){ //game started and my Player is not the active player
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoiceLocalized(
-                    () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                    () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                     "client.cli.game.returnToMenu"
                 ).apply();
         } else { //game started and my player is the active player
@@ -153,7 +153,7 @@ public class MarketView extends CliView{
                         ))),
                 "client.cli.market.columnChoice"
             ).addUserChoiceLocalized(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                 "client.cli.game.returnToMenu"
             ).apply();
         }

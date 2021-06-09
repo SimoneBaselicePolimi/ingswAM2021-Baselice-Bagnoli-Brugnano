@@ -1,12 +1,11 @@
 package it.polimi.ingsw.client.cli;
 
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
-import it.polimi.ingsw.server.model.gameitems.Production;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -29,6 +28,52 @@ public class DialogUtils {
         }
 
     }
+
+    public static CompletableFuture<Map.Entry<ResourceType, Integer>> askPlayerForResourcesTypeAndNumber(
+        CliClientManager clientManager,
+        String customAskForResourceTypeAndNumberMessage
+    ) {
+        return clientManager.askUserLocalized(customAskForResourceTypeAndNumberMessage)
+            .thenCompose(input -> {
+                if(input.matches("\\G\\d+\\s+\\w+\\s*$")) {
+                    int numOfResources = Integer.parseInt(input.split("\\s+")[0]);
+                    ResourceType resourceType =
+                        ResourceType.getResourceTypeFromLocalizedName(input.split("\\s+")[1]);
+                    if (resourceType != null && numOfResources > 0)
+                        return CompletableFuture.completedFuture(new AbstractMap.SimpleEntry<>(
+                            resourceType,
+                            numOfResources
+                        ));
+                }
+                clientManager.tellUserLocalized("client.cli.resourcesChoiceDialog.invalidChoice");
+                return askPlayerForResourcesTypeAndNumber(clientManager, customAskForResourceTypeAndNumberMessage);
+            });
+    }
+
+    public static CompletableFuture<Map.Entry<ResourceType, Integer>> askPlayerForResourcesTypeAndNumber(
+        CliClientManager clientManager
+    ) {
+        return askPlayerForResourcesTypeAndNumber(
+            clientManager,
+            Localization.getLocalizationInstance().getString(
+                "client.cli.resourcesChoiceDialog.specifyResources"
+            )
+        );
+    }
+
+    public static CompletableFuture<Map.Entry<ResourceType, Integer>> askPlayerForResourcesTypeAndNumberLocalized(
+        CliClientManager clientManager,
+        String customAskForResourceTypeAndNumberMessagePlaceholder,
+        Object... args
+    ) {
+        return askPlayerForResourcesTypeAndNumber(
+            clientManager,
+            Localization.getLocalizationInstance().getString(customAskForResourceTypeAndNumberMessagePlaceholder, args)
+        );
+    }
+
+
+
 
     static boolean checkIfThePlayerHasNecessaryResources(
         ClientProductionRepresentation production,
@@ -77,40 +122,37 @@ public class DialogUtils {
     ) {
 
         if(numOfStarResourcesLeftToPay != 0){
-            return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToPay", numOfStarResourcesLeftToPay)
-                .thenCompose(resources -> {
+            return DialogUtils.askPlayerForResourcesTypeAndNumberLocalized(
+                clientManager,
+                "client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToPay",
+                numOfStarResourcesLeftToPay
+            ).thenCompose(resourceTypeAndNumEntry -> {
 
-                    if(resources.matches("\\G\\d+\\s+\\w+\\s*$")) {
-                        int numOfResources = Integer.parseInt(resources.split("\\s+")[0]);
-                        ResourceType resourceType =
-                            ResourceType.getResourceTypeFromLocalizedName(resources.split("\\s+")[1]);
-                        if (
-                            resourceType != null &&
-                                numOfResources > 0 &&
-                                numOfStarResourcesLeftToPay >= numOfResources &&
-                                ResourceUtils.areResourcesAContainedInB(
-                                    Map.of(resourceType, numOfResources),
-                                    prodInfo.getResourcesLeftToThePlayer()
-                                )
-                        ) {
-                            prodInfo.setResourcesLeftToThePlayer(ResourceUtils.difference(
-                                prodInfo.getResourcesLeftToThePlayer(),
-                                Map.of(resourceType, numOfResources)
-                            ));
-                            prodInfo.setTotalStarResourcesProductionCost(ResourceUtils.sum(
-                                prodInfo.getTotalStarResourcesProductionCost(),
-                                Map.of(resourceType, numOfResources)
-                            ));
-                            return askPlayerForStarResourcesCost(
-                                production,
-                                numOfStarResourcesLeftToPay - numOfResources,
-                                prodInfo,
-                                clientManager
-                            );
-                        }
+                ResourceType resourceType = resourceTypeAndNumEntry.getKey();
+                int numOfResources = resourceTypeAndNumEntry.getValue();
 
-                    }
-
+                if (
+                    numOfStarResourcesLeftToPay >= numOfResources &&
+                    ResourceUtils.areResourcesAContainedInB(
+                        Map.of(resourceType, numOfResources),
+                        prodInfo.getResourcesLeftToThePlayer()
+                    )
+                ) {
+                    prodInfo.setResourcesLeftToThePlayer(ResourceUtils.difference(
+                        prodInfo.getResourcesLeftToThePlayer(),
+                        Map.of(resourceType, numOfResources)
+                    ));
+                    prodInfo.setTotalStarResourcesProductionCost(ResourceUtils.sum(
+                        prodInfo.getTotalStarResourcesProductionCost(),
+                        Map.of(resourceType, numOfResources)
+                    ));
+                    return askPlayerForStarResourcesCost(
+                        production,
+                        numOfStarResourcesLeftToPay - numOfResources,
+                        prodInfo,
+                        clientManager
+                    );
+                } else {
                     clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
                     return askPlayerForStarResourcesCost(
                         production,
@@ -118,8 +160,9 @@ public class DialogUtils {
                         prodInfo,
                         clientManager
                     );
+                }
 
-                });
+            });
         } else {
             return askPlayerForStarResourceReward(
                 production,
@@ -138,32 +181,34 @@ public class DialogUtils {
     ) {
 
         if(numOfStarResourcesLeftToObtain != 0){
-            return clientManager.askUserLocalized("client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToObtain", numOfStarResourcesLeftToObtain)
-                .thenCompose(resources -> {
+            return DialogUtils.askPlayerForResourcesTypeAndNumberLocalized(
+                clientManager,
+                "client.cli.playerDashboard.notifyPlayerNumberOfResourcesLeftToObtain",
+                numOfStarResourcesLeftToObtain
+            ).thenCompose(resourceTypeAndNumEntry -> {
 
-                    if(resources.matches("\\G\\d+\\s+\\w+\\s*$")) {
-                        int numOfResources = Integer.parseInt(resources.split("\\s+")[0]);
-                        ResourceType resourceType = ResourceType.getResourceTypeFromLocalizedName(resources.split("\\s+")[1]);
-                        if(resourceType != null && numOfResources > 0 && numOfStarResourcesLeftToObtain >= numOfResources) {
-                            prodInfo.getTotalStarResourcesProductionReward().put(resourceType, numOfResources);
-                            return askPlayerForStarResourceReward(
-                                production,
-                                numOfStarResourcesLeftToObtain - numOfResources,
-                                prodInfo,
-                                clientManager
-                            );
-                        }
+                ResourceType resourceType = resourceTypeAndNumEntry.getKey();
+                int numOfResources = resourceTypeAndNumEntry.getValue();
+
+                    if(numOfStarResourcesLeftToObtain >= numOfResources) {
+                        prodInfo.getTotalStarResourcesProductionReward().put(resourceType, numOfResources);
+                        return askPlayerForStarResourceReward(
+                            production,
+                            numOfStarResourcesLeftToObtain - numOfResources,
+                            prodInfo,
+                            clientManager
+                        );
+                    } else {
+                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
+                        return askPlayerForStarResourceReward(
+                            production,
+                            numOfStarResourcesLeftToObtain,
+                            prodInfo,
+                            clientManager
+                        );
                     }
 
-                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerResourcesAreInvalid");
-                    return askPlayerForStarResourceReward(
-                        production,
-                        numOfStarResourcesLeftToObtain,
-                        prodInfo,
-                        clientManager
-                    );
-
-                });
+            });
         } else {
             prodInfo.addNewSelectedProduction(production);
             return CompletableFuture.completedFuture(null);

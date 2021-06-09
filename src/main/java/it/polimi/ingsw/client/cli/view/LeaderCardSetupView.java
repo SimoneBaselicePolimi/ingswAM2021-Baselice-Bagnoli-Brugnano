@@ -1,20 +1,26 @@
 package it.polimi.ingsw.client.cli.view;
 
+import it.polimi.ingsw.client.GameState;
+import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
+import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.InitialChoicesClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
+import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage;
+import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.utils.Colour;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
@@ -172,10 +178,57 @@ public class LeaderCardSetupView extends CliView {
                );
                gameView.setMainContentView(resourcesChoiceView);
                resourcesChoiceView.setOnAllChoicesDoneCallback(resourcesChosen -> {
-                   ;
+                  ResourcesRepositioningDashboardView resRepositioningView = new ResourcesRepositioningDashboardView(
+                      resourcesChosen,
+                      clientManager,
+                      gameView
+                  );
+                  gameView.setMainContentView(resRepositioningView);
+                  resRepositioningView.setOnPositioningDoneCallback( (storagesModified, resourcesLeftInTempStorage) ->
+                      sendInitialChoicesToServer(
+                          new HashSet<>(chosenCards),
+                          storagesModified.stream()
+                              .collect(Collectors.toMap(s -> s, ClientResourceStorageRepresentation::getResources))
+                      )
+                  );
                });
                return CompletableFuture.completedFuture(null);
            });
+    }
+
+
+    CompletableFuture<Void> sendInitialChoicesToServer(
+        Set<ClientLeaderCardRepresentation> leaderCardsChosenByThePlayer,
+        Map<ClientResourceStorageRepresentation, Map<ResourceType, Integer>> chosenResourcesToAddByStorage
+    ){
+        return clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+            new InitialChoicesClientRequest(
+                clientManager.getMyPlayer(),
+                leaderCardsChosenByThePlayer,
+                chosenResourcesToAddByStorage
+            )
+        )).thenCompose(serverMessage ->
+            ServerMessageUtils.ifMessageTypeCompute(
+                serverMessage,
+                GameUpdateServerMessage.class,
+                message -> {
+                    clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
+                    clientManager.handleGameUpdates(message.gameUpdates);
+                    gameView.setMainContentView(new MainMenuView(clientManager, gameView));
+                    return CompletableFuture.<Void>completedFuture(null);
+                }
+            ).elseIfMessageTypeCompute(
+                InvalidRequestServerMessage.class,
+                message -> {
+                    clientManager.tellUser(message.errorMessage);
+                    gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView));
+                    return CompletableFuture.completedFuture(null);
+                }
+            ).elseCompute(message -> {
+                gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView));
+                return CompletableFuture.completedFuture(null);
+            }).apply()
+        );
     }
 
 }

@@ -32,6 +32,9 @@ client:
       invalidChoice: "Scelta non valida"
       returnToMenu: "Torna al menu principale"
       returnToSetupView: "Torna alla fase di setup"
+    resourcesChoiceDialog:
+      specifyResources: "Inserisci numero e tipo di risorse: "
+      invalidChoice: "Scelta non valida. Formato: '{numRisorse} {tipo}'"
     mainMenuActions:
       openMarket: "Apri il mercato"
       openDevCardsTable: "Apri il tavolo delle carte sviluppo"
@@ -45,6 +48,14 @@ client:
       askForColumnNumber: "Quale colonna del mercato vuoi selezionare?"
       notifyPlayerRowNumberIsInvalid: "La riga selezionata non è una riga valida del mercato"
       notifyPlayerColumnNumberIsInvalid: "La colonna selezionata non è una colonna valida del mercato"
+    resourcesRepositioning:
+      putResourcesInStorage: "Inserisci le risorse in un deposito"
+      removeResourcesFromStorage: "Prendi le risorse da un deposito"
+      repositioningDone: "Conferma posizionamento"
+      specifyInWhichStorage: "Inserisci le risorse in %s"
+      specifyForWhichStorage: "Prendi le risorse da %s"
+      notEhoughResourcesInTempStorage: "Non hai abbastanza risorse da posizionare"
+      notEhoughResourcesInStorage: "Non hai abbastanza risorse nel deposito"
     devCard:
       deckTitle: "Carte nel mazzo: %s "
     devCardTable:

@@ -6,8 +6,6 @@ import it.polimi.ingsw.client.cli.ProductionsSelectionInfo;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.server.model.Player;
 
-import java.util.ArrayList;
-
 public class PlayerDashboardView extends AbstractPlayerDashboardView {
 
     public PlayerDashboardView(Player dashboardPlayer, CliClientManager clientManager, GameView gameView) {
@@ -37,7 +35,7 @@ public class PlayerDashboardView extends AbstractPlayerDashboardView {
                 "client.cli.playerDashboard.leaderCardList"
             );
             choices.addUserChoiceLocalized(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                 "client.cli.game.returnToMenu"
             );
         }
@@ -56,7 +54,7 @@ public class PlayerDashboardView extends AbstractPlayerDashboardView {
                 "client.cli.playerDashboard.leaderCardList"
             );
             choices.addUserChoice(
-                () -> gameView.setMainContentView(new MainMenuView(clientManager)),
+                () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                 "client.cli.game.returnToMenu"
             );
         }
