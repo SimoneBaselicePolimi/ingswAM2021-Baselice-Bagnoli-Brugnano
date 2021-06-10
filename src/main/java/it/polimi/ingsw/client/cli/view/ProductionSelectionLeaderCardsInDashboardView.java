@@ -4,10 +4,11 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.DialogUtils;
 import it.polimi.ingsw.client.cli.ProductionsSelectionInfo;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
-
+import it.polimi.ingsw.utils.Colour;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -31,7 +32,7 @@ public class ProductionSelectionLeaderCardsInDashboardView extends AbstractPlaye
     CompletableFuture<Void> askPlayerForLeaderCardsProduction() {
 
         return UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoice(
+            .addUserChoiceLocalized(
                 () -> askPlayerForLeaderCard()
                     .exceptionally(e -> {
                         askPlayerForLeaderCard();
@@ -40,7 +41,7 @@ public class ProductionSelectionLeaderCardsInDashboardView extends AbstractPlaye
                 "client.cli.playerDashboard.activateNewLeaderCardProduction"
             )
 
-            .addUserChoice(
+            .addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new ProductionSelectionDashboardView(
                     selectionInfo,
                     clientManager,
@@ -84,4 +85,28 @@ public class ProductionSelectionLeaderCardsInDashboardView extends AbstractPlaye
                 }
             });
     }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+
+        for (ClientLeaderCardRepresentation card : leaderCardList) {
+            LeaderCardView cardView = cardListView.getLeaderCardViewByLeaderCardRepresentation(card);
+            if (card.getState().equals(LeaderCardState.ACTIVE)) {
+                cardView.setBorderColour(Colour.GREEN, false);
+                for (ClientProductionRepresentation production : card.getProductions()) {
+                    if (selectionInfo.getAlreadySelectedProductions().contains(production))
+                        cardView.setProductionColour(production, Colour.GREEN);
+                    else if (DialogUtils.checkIfThePlayerHasNecessaryResources(production, selectionInfo))
+                        cardView.setProductionColour(production, Colour.YELLOW);
+                    else
+                        cardView.setProductionColour(production, Colour.GREY);
+                }
+            } else if (card.getState().equals(LeaderCardState.DISCARDED))
+                cardView.setBorderColour(Colour.RED, false);
+            else
+                cardView.setBorderColour(Colour.GREY, false);
+        }
+        return super.getContentAsFormattedCharsBuffer();
+    }
+
 }

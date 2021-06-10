@@ -6,10 +6,8 @@ import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class LeaderCardListView extends CliView {
@@ -80,8 +78,6 @@ public class LeaderCardListView extends CliView {
         this.columnSize = columnSize;
     }
 
-
-
     public void setPage(int pageIndex) {
         currentPageIndex = pageIndex;
         computePages();
@@ -128,6 +124,10 @@ public class LeaderCardListView extends CliView {
 
     public int getNumberForLeaderCardRepresentation(ClientLeaderCardRepresentation leaderCard) {
         return cardsToView.indexOf(leaderCard) + 1;
+    }
+
+    public LeaderCardView getLeaderCardViewByLeaderCardRepresentation(ClientLeaderCardRepresentation leaderCard) {
+        return cardRepresentationToViewMap.get(leaderCard);
     }
 
     protected GridView getCardsContainer() {

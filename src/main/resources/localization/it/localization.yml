@@ -94,6 +94,9 @@ client:
       notifyPlayerProductionAlreadyChosen: "Hai già scelto questa produzione"
       notifyPlayerHeDoesNotHaveNeededResources: "Non possiedi le risorse necessarie per attivare la produzione selezionata"
       returnToProductionActivation: "Torna al menu di attivazione delle produzioni"
+      activateNewLeaderCard: "Attiva una carta leader"
+      canNotActivateNewLeaderCard: "Nessuna delle tue carte leader può essere attivata"
+      selectLeaderCardToActivate: "Attiva la carta %s"
     resourcesChoice:
       title: "Scegli quali risorse ottenere"
       obtained: "Risorse già ottenute: "

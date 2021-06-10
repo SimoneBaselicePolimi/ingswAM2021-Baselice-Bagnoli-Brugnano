@@ -94,7 +94,7 @@ public class ClientLeaderCardRepresentation extends ClientRegisteredIdentifiable
         return victoryPoints;
     }
 
-    public boolean isCanBeActivated() {
+    public boolean canBeActivated() {
         return canBeActivated;
     }
 

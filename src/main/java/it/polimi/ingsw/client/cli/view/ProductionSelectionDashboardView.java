@@ -41,15 +41,15 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
     CompletableFuture<Void> askPlayerForProduction(){
 
         return UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoice(
+            .addUserChoiceLocalized(
                 this::askPlayerForTypeOfProductions,
                 "client.cli.playerDashboard.activateNewProduction"
             )
-            .addUserChoice(
+            .addUserChoiceLocalized(
                 this::sendPlayerChoiceToServer,
                 "client.cli.playerDashboard.endProductionsActivation"
             )
-            .addUserChoice(
+            .addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new PlayerDashboardView(
                     activePlayer,
                     clientManager,
@@ -61,7 +61,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
     CompletableFuture<Void> askPlayerForTypeOfProductions() {
         return UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoice(
+            .addUserChoiceLocalized(
                 () -> askPlayerForBaseProduction()
                     .exceptionally(e -> {
                         askPlayerForProduction();
@@ -69,7 +69,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                     }),
                 "client.cli.playerDashboard.activateBaseProduction"
             )
-            .addUserChoice(
+            .addUserChoiceLocalized(
                 () -> askPlayerForDashboardProductions()
                     .exceptionally(e -> {
                         askPlayerForProduction();
@@ -77,14 +77,14 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                     }),
                 "client.cli.playerDashboard.activateDashboardProductions"
             )
-            .addUserChoice(
+            .addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new ProductionSelectionLeaderCardsInDashboardView(
                     selectionInfo,
                     clientManager,
                     gameView
                 )),
                 "client.cli.playerDashboard.leaderCardList"
-            ).addUserChoice(
+            ).addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                 "client.cli.game.returnToMenu"
             ).apply();
