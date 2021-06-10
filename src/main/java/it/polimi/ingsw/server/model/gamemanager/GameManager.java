@@ -76,6 +76,8 @@ public class GameManager {
 		this.gameHistory = new GameHistoryNotifier();
 		this.gameRules = readGameRulesFromFiles(gameRulesPath);
 
+		players.forEach(p -> gameItemsManager.addItem(p));
+
 		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(players, gameRules, gameItemsManager, gameHistory);
 		this.gameContext = contextBuilder.buildGameContext();
 
@@ -142,10 +144,10 @@ public class GameManager {
 
 	@SuppressWarnings("unchecked")
 	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request)
-		throws ResourceStorageRuleViolationException,
-		LeaderCardRequirementsNotSatisfiedException,
-		ForbiddenPushOnTopException,
-		NotEnoughResourcesException {
+			throws ResourceStorageRuleViolationException,
+			LeaderCardRequirementsNotSatisfiedException,
+			ForbiddenPushOnTopException,
+			NotEnoughResourcesException {
 		ClientRequestValidator validator = request.getValidator();
 		Optional<InvalidRequestServerMessage> error = validator.getErrorMessage(request, this);
 		if(error.isPresent())
