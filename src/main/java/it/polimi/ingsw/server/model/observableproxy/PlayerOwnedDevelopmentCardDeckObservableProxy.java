@@ -54,6 +54,7 @@ public class PlayerOwnedDevelopmentCardDeckObservableProxy extends ObservablePro
 
     @Override
     public DevelopmentCard pop() throws EmptyStackException {
+        hasSomethingChanged = true;
         return imp.pop();
     }
 

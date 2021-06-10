@@ -3,12 +3,12 @@ package it.polimi.ingsw.server.model.gamemanager;
 import it.polimi.ingsw.configfile.GameRules;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
+import it.polimi.ingsw.server.controller.GameController;
+import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.controller.clientrequest.ClientRequest;
 import it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
-import it.polimi.ingsw.server.controller.GameController;
-import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.*;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
@@ -18,8 +18,8 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
-import it.polimi.ingsw.server.model.notifier.GameHistoryNotifier;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.observableproxy.GameHistoryObservableProxy;
 import it.polimi.ingsw.server.model.observableproxy.ObservableProxy;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
@@ -73,10 +73,10 @@ public class GameManager {
 		this.players = players;
 		this.controller = controller;
 		this.gameItemsManager = new GameItemsManager();
-		this.gameHistory = new GameHistoryNotifier();
+		this.gameHistory = new GameHistoryObservableProxy(new GameHistoryImp(), this);
 		this.gameRules = readGameRulesFromFiles(gameRulesPath);
 
-		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(players, gameRules, gameItemsManager, gameHistory);
+		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(this, players, gameRules, gameItemsManager, gameHistory);
 		this.gameContext = contextBuilder.buildGameContext();
 
 	}

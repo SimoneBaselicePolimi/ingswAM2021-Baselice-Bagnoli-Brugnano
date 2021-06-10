@@ -1,15 +1,18 @@
 package it.polimi.ingsw.server.model.notifier.gameupdate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.server.model.Player;
 
-// TODO add as @JsonTypeInfo in ServerGameUpdate and create new corresponding class client side
 public class ServerTempStarResourcesUpdate extends ServerGameUpdate{
 
+    public final Player player;
     public final int tempStarResources;
 
     public ServerTempStarResourcesUpdate(
+        @JsonProperty("player") Player player,
         @JsonProperty("tempStarResources") int tempStarResources
     ) {
+        this.player = player;
         this.tempStarResources = tempStarResources;
     }
 }

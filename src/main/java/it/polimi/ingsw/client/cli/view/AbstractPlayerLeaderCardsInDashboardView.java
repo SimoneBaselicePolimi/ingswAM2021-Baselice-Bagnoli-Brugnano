@@ -9,7 +9,7 @@ import it.polimi.ingsw.server.model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractLeaderCardView extends CliView{
+public class AbstractPlayerLeaderCardsInDashboardView extends CliView{
 
     protected Player leaderCardsPlayer, activePlayer;
     protected ClientPlayerContextRepresentation leaderCardsPlayerContext;
@@ -20,7 +20,7 @@ public class AbstractLeaderCardView extends CliView{
 
     protected List<ClientLeaderCardRepresentation> leaderCardList;
 
-    public AbstractLeaderCardView(
+    public AbstractPlayerLeaderCardsInDashboardView(
         Player leaderCardsPlayer,
         CliClientManager clientManager,
         GameView gameView,
@@ -52,7 +52,7 @@ public class AbstractLeaderCardView extends CliView{
         container.setView(0, 0, cardListView);
     }
 
-    public AbstractLeaderCardView(
+    public AbstractPlayerLeaderCardsInDashboardView(
         Player leaderCardsPlayer,
         CliClientManager clientManager,
         GameView gameView

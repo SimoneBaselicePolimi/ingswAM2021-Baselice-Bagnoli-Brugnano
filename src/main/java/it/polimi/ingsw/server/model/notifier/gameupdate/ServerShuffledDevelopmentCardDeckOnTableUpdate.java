@@ -6,6 +6,8 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.utils.serialization.annotations.*;
 
+import java.util.Objects;
+
 public class ServerShuffledDevelopmentCardDeckOnTableUpdate extends ServerGameUpdate {
 
     @SerializeIdOnly
@@ -24,6 +26,19 @@ public class ServerShuffledDevelopmentCardDeckOnTableUpdate extends ServerGameUp
         this.deck = deck;
         this.cardOnTop = cardOnTop;
         this.numberOfCardsInDeck = numberOfCardsInDeck;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ServerShuffledDevelopmentCardDeckOnTableUpdate that = (ServerShuffledDevelopmentCardDeckOnTableUpdate) o;
+        return deck.equals(that.deck);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deck);
     }
 
 }
