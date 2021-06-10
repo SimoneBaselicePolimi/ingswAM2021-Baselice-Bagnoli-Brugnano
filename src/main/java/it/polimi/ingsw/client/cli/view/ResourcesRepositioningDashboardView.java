@@ -14,10 +14,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
 
 public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboardView{
 
+    protected final boolean playerCanLeaveResourcesInTempStorage;
     protected Map<ResourceType, Integer> resourcesInTemporaryStorage;
     protected Set<ClientResourceStorageRepresentation> storagesModified = new HashSet<>();
     protected BiConsumer<Set<ClientResourceStorageRepresentation>, Map<ResourceType, Integer>> onPositioningDone =
@@ -25,15 +25,39 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
 
     public ResourcesRepositioningDashboardView(
         Map<ResourceType, Integer> resourcesInTemporaryStorage,
-        CliClientManager clientManager,
+        boolean playerCanLeaveResourcesInTempStorage, CliClientManager clientManager,
         GameView gameView,
         int rowSize,
         int columnSize
     ) {
         super(clientManager.getMyPlayer(), clientManager, gameView, rowSize, columnSize);
         this.resourcesInTemporaryStorage = resourcesInTemporaryStorage;
+        this.playerCanLeaveResourcesInTempStorage = playerCanLeaveResourcesInTempStorage;
 
         arrangeResourcesDialog();
+    }
+
+    public ResourcesRepositioningDashboardView(
+        Map<ResourceType, Integer> resourcesInTemporaryStorage,
+        boolean playerCanLeaveResourcesInTempStorage,
+        BiConsumer<Set<ClientResourceStorageRepresentation>, Map<ResourceType, Integer>> onPositioningDone,
+        CliClientManager clientManager,
+        GameView gameView,
+        int rowSize,
+        int columnSize
+    ) {
+        this(resourcesInTemporaryStorage,
+            playerCanLeaveResourcesInTempStorage,
+            clientManager, gameView, rowSize, columnSize);
+        this.onPositioningDone = onPositioningDone;
+    }
+
+    public ResourcesRepositioningDashboardView(
+        Map<ResourceType, Integer> resourcesInTemporaryStorage,
+        boolean playerCanLeaveResourcesInTempStorage, CliClientManager clientManager,
+        GameView gameView
+    ) {
+        this(resourcesInTemporaryStorage, playerCanLeaveResourcesInTempStorage, clientManager, gameView, 0, 0);
     }
 
     public ResourcesRepositioningDashboardView(
@@ -41,28 +65,11 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
         BiConsumer<Set<ClientResourceStorageRepresentation>, Map<ResourceType, Integer>> onPositioningDone,
         CliClientManager clientManager,
         GameView gameView,
-        int rowSize,
-        int columnSize
+        boolean playerCanLeaveResourcesInTempStorage
     ) {
-        this(resourcesInTemporaryStorage, clientManager, gameView, rowSize, columnSize);
-        this.onPositioningDone = onPositioningDone;
-    }
-
-    public ResourcesRepositioningDashboardView(
-        Map<ResourceType, Integer> resourcesInTemporaryStorage,
-        CliClientManager clientManager,
-        GameView gameView
-    ) {
-        this(resourcesInTemporaryStorage, clientManager, gameView, 0, 0);
-    }
-
-    public ResourcesRepositioningDashboardView(
-        Map<ResourceType, Integer> resourcesInTemporaryStorage,
-        BiConsumer<Set<ClientResourceStorageRepresentation>, Map<ResourceType, Integer>> onPositioningDone,
-        CliClientManager clientManager,
-        GameView gameView
-    ) {
-        this(resourcesInTemporaryStorage, onPositioningDone, clientManager, gameView, 0, 0);
+        this(resourcesInTemporaryStorage,
+            playerCanLeaveResourcesInTempStorage,
+            onPositioningDone, clientManager, gameView, 0, 0);
     }
 
     public void setOnPositioningDoneCallback(
@@ -81,17 +88,29 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
             clientManager.tellUserLocalized(
                 "client.cli.resourcesRepositioning.absentTemporaryResourcesInfo"
             );
-        UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoiceLocalized(
-                this::putResourcesInStorageDialog,
-                "client.cli.resourcesRepositioning.putResourcesInStorage"
-            ).addUserChoiceLocalized(
-                this::takeResourcesFromStorageDialog,
-                "client.cli.resourcesRepositioning.removeResourcesFromStorage"
-            ).addUserChoiceLocalized(
+
+        UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
+
+        choices.addUserChoiceLocalized(
+            this::putResourcesInStorageDialog,
+            "client.cli.resourcesRepositioning.putResourcesInStorage"
+        ).addUserChoiceLocalized(
+            this::takeResourcesFromStorageDialog,
+            "client.cli.resourcesRepositioning.removeResourcesFromStorage"
+        );
+
+        if(
+            playerCanLeaveResourcesInTempStorage ||
+            resourcesInTemporaryStorage.values().stream().mapToInt(n -> n).sum() == 0
+        ) {
+           choices.addUserChoiceLocalized(
                 () -> onPositioningDone.accept(storagesModified, resourcesInTemporaryStorage),
                 "client.cli.resourcesRepositioning.repositioningDone"
-            ).apply();
+            );
+        }
+
+        choices.apply();
+
     }
 
     protected void putResourcesInStorageDialog() {
