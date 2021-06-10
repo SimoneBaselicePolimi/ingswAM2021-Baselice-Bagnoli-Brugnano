@@ -8,7 +8,9 @@ public class CreateNewLobbyClientMessage extends ClientMessage {
 
     public final int lobbySize;
 
-    public CreateNewLobbyClientMessage(@JsonProperty("lobbySize") int lobbySize) {
+    public CreateNewLobbyClientMessage(
+        @JsonProperty("lobbySize") int lobbySize
+    ) {
         this.lobbySize = lobbySize;
     }
 

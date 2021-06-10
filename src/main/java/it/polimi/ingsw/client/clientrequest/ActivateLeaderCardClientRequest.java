@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.clientrequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeAsSetOfIds;
@@ -18,8 +19,8 @@ public class ActivateLeaderCardClientRequest extends ClientRequest {
      * @param leaderCardThePlayerWantsToActivate chosen leader card to be activated
      */
     public ActivateLeaderCardClientRequest(
-        Player player,
-        ClientLeaderCardRepresentation leaderCardThePlayerWantsToActivate
+        @JsonProperty("player") Player player,
+        @JsonProperty("leaderCardThePlayerWantsToActivate") ClientLeaderCardRepresentation leaderCardThePlayerWantsToActivate
     ) {
         super(player);
         this.leaderCardThePlayerWantsToActivate = leaderCardThePlayerWantsToActivate;

@@ -81,7 +81,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
             LabelView shelfLabel = new LabelView(
                 FormattedChar.convertStringToFormattedCharList(
                     Localization.getLocalizationInstance().getString("dashboard.shelf")
-                        + (shelves.indexOf(shelf)+1) + ": "
+                        + " " + (shelves.indexOf(shelf)+1) + ": "
                         + LocalizationUtils.getResourcesListAsCompactString(shelf.getResources())
                 ),
                 clientManager
@@ -102,7 +102,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
             LabelView leaderLabel = new LabelView(
                 FormattedChar.convertStringToFormattedCharList(
                     Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
-                        + (leaderStoragesFromActiveCards.indexOf(leaderStorage)+1) + ": "
+                        + " " + (leaderStoragesFromActiveCards.indexOf(leaderStorage)+1) + ": "
                         + LocalizationUtils.getResourcesListAsCompactString(leaderStorage.getResources())
                 ),
                 clientManager

@@ -8,7 +8,9 @@ public class RegisterPlayerNameClientMessage extends ClientMessage {
 
     public final String playerName;
 
-    public RegisterPlayerNameClientMessage(@JsonProperty("playerName") String playerName) {
+    public RegisterPlayerNameClientMessage(
+        @JsonProperty("playerName") String playerName
+    ) {
         this.playerName = playerName;
     }
 

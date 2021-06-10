@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.clientrequest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.server.model.Player;
@@ -19,9 +20,9 @@ public class InitialChoicesClientRequest extends ClientRequest {
 	public final Map<ClientResourceStorageRepresentation, Map<ResourceType, Integer>> chosenResourcesToAddByStorage;
 
 	public InitialChoicesClientRequest(
-		Player player,
-		Set<ClientLeaderCardRepresentation> leaderCardsChosenByThePlayer,
-		Map<ClientResourceStorageRepresentation, Map<ResourceType, Integer>> chosenResourcesToAddByStorage
+		@JsonProperty("player") Player player,
+		@JsonProperty("leaderCardsChosenByThePlayer") Set<ClientLeaderCardRepresentation> leaderCardsChosenByThePlayer,
+		@JsonProperty("chosenResourcesToAddByStorage") Map<ClientResourceStorageRepresentation, Map<ResourceType, Integer>> chosenResourcesToAddByStorage
 	) {
 		super(player);
 		this.leaderCardsChosenByThePlayer = leaderCardsChosenByThePlayer;

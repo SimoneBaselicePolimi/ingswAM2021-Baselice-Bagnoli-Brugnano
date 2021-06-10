@@ -121,7 +121,6 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public Map<ResourceType, Integer> getTemporaryStorageResources() {
-        haveTempStarResourcesChanged = true;
         return imp.getTemporaryStorageResources();
     }
 

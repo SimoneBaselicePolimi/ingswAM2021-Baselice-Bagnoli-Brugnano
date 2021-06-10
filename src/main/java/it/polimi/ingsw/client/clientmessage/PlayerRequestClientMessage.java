@@ -9,7 +9,9 @@ public class PlayerRequestClientMessage extends ClientMessage {
 
     public final ClientRequest request;
 
-    public PlayerRequestClientMessage(@JsonProperty("request") ClientRequest request) {
+    public PlayerRequestClientMessage(
+        @JsonProperty("request") ClientRequest request
+    ) {
         this.request = request;
     }
 
