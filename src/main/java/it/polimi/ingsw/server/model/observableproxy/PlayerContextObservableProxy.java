@@ -21,12 +21,8 @@ import java.util.Set;
 
 public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext> implements PlayerContext {
 
-    protected int deckNumber;
     protected boolean haveLeaderCardsChanged = false;
-    protected boolean haveTemporaryStorageResourcesChanged = false;
     protected boolean haveTempStarResourcesChanged = false;
-    protected boolean haveResourcesInStorageChanged = false;
-    protected boolean hasDevelopmentCardDeckChanged = false;
 
     public PlayerContextObservableProxy(PlayerContext imp, GameManager gameManager) {
         super(imp, gameManager);
@@ -115,7 +111,6 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void setTemporaryStorageResources(Map<ResourceType, Integer> resources) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
-        haveTemporaryStorageResourcesChanged = true;
         imp.setTemporaryStorageResources(resources);
     }
 
@@ -126,7 +121,6 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public Map<ResourceType, Integer> clearTemporaryStorageResources() throws NotEnoughResourcesException {
-        haveTemporaryStorageResourcesChanged = true;
         return imp.clearTemporaryStorageResources();
     }
 
@@ -152,7 +146,6 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void removeResourcesBasedOnResourcesStoragesPriority(Map<ResourceType, Integer> resourcesToRemove) throws NotEnoughResourcesException {
-        haveResourcesInStorageChanged = false;
         imp.removeResourcesBasedOnResourcesStoragesPriority(resourcesToRemove);
     }
 
@@ -163,8 +156,6 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void addDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException, ForbiddenPushOnTopException {
-        this.deckNumber = deckNumber;
-        hasDevelopmentCardDeckChanged = true;
         imp.addDevelopmentCard(card, deckNumber);
     }
 
@@ -188,33 +179,9 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
         Set<ServerGameUpdate> updates = new HashSet<>();
 
-        if (haveTemporaryStorageResourcesChanged) {
-            haveTemporaryStorageResourcesChanged = false;
-            updates.add(new ServerResourceStorageUpdate(
-                imp.getTemporaryStorage(),
-                imp.getTemporaryStorage().peekResources())
-            );
-        }
-
         if (haveTempStarResourcesChanged) {
             haveTempStarResourcesChanged = false;
-            updates.add(new ServerTempStarResourcesUpdate(imp.getTempStarResources()));
-        }
-
-        if (haveResourcesInStorageChanged) {
-            haveResourcesInStorageChanged = false;
-            for (ResourceStorage storage : imp.getResourceStoragesForResourcesFromMarket()) {
-                updates.add(new ServerResourceStorageUpdate(storage, storage.peekResources()));
-            }
-            updates.add(new ServerResourceStorageUpdate(imp.getInfiniteChest(), imp.getInfiniteChest().peekResources()));
-        }
-
-        if (hasDevelopmentCardDeckChanged) {
-            hasDevelopmentCardDeckChanged = false;
-            updates.add(new ServerPlayerOwnedDevelopmentCardDeckUpdate(
-                imp.getDeck(deckNumber),
-                imp.getDeck(deckNumber).peekAll()
-            ));
+            updates.add(new ServerTempStarResourcesUpdate(getPlayer(), imp.getTempStarResources()));
         }
 
         if (haveLeaderCardsChanged) {
@@ -224,6 +191,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
                 imp.getLeaderCards()
             ));
         }
+
         return updates;
     }
 

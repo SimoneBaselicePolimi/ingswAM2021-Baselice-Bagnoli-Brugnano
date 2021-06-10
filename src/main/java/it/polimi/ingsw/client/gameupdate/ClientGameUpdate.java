@@ -18,7 +18,8 @@ import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
     @JsonSubTypes.Type(value = ClientPopeCardsUpdate.class, name = "PopeCardsUpdate"),
     @JsonSubTypes.Type(value = ClientResourceStorageUpdate.class, name = "ResourceStorageUpdate"),
     @JsonSubTypes.Type(value = ClientResourcesUpdate.class, name = "ResourcesUpdate"),
-    @JsonSubTypes.Type(value = ClientShuffledDevelopmentCardDeckOnTableUpdate.class, name = "ShuffledDevelopmentCardDeckOnTableUpdate")
+    @JsonSubTypes.Type(value = ClientShuffledDevelopmentCardDeckOnTableUpdate.class, name = "ShuffledDevelopmentCardDeckOnTableUpdate"),
+    @JsonSubTypes.Type(value = ClientTempStarResourcesUpdate.class, name = "TempStarResourcesUpdate")
 })
 public abstract class ClientGameUpdate {
 

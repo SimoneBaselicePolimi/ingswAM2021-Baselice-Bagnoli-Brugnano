@@ -11,13 +11,13 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ProductionSelectionLeaderCardView extends AbstractLeaderCardView{
+public class ProductionSelectionLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsInDashboardView {
 
     protected ProductionsSelectionInfo selectionInfo;
 
     protected GameView gameView;
 
-    public ProductionSelectionLeaderCardView(
+    public ProductionSelectionLeaderCardsInDashboardView(
         ProductionsSelectionInfo selectionInfo,
         CliClientManager clientManager,
         GameView gameView

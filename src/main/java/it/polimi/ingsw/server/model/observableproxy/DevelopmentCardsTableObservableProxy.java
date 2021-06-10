@@ -19,9 +19,7 @@ import java.util.Set;
 
 public class DevelopmentCardsTableObservableProxy extends ObservableProxy<DevelopmentCardsTable> implements DevelopmentCardsTable {
 
-    protected boolean hasSomethingChanged = false;
-    protected DevelopmentCardLevel level;
-    protected DevelopmentCardColour colour;
+    protected Set<ServerShuffledDevelopmentCardDeckOnTableUpdate> newUpdates = new HashSet<>();
 
     public DevelopmentCardsTableObservableProxy(DevelopmentCardsTable imp, GameManager gameManager) {
         super(imp, gameManager);
@@ -34,9 +32,13 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
 
     @Override
     public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) {
-        hasSomethingChanged = true;
-        this.level = level;
-        this.colour = colour;
+        newUpdates.add(
+            new ServerShuffledDevelopmentCardDeckOnTableUpdate(
+                imp.getDeckByLevelAndColour(level, colour),
+                imp.getDeckByLevelAndColour(level, colour).peek(),
+                imp.getDeckByLevelAndColour(level, colour).peekAll().size()
+            )
+        );
         return imp.popCard(level, colour);
     }
 
@@ -52,18 +54,9 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
 
     @Override
     public Set<ServerGameUpdate> getUpdates() {
-        if(hasSomethingChanged) {
-            hasSomethingChanged = false;
-            //TODO we want to send changes on every deck on table
-            return Set.of(new ServerShuffledDevelopmentCardDeckOnTableUpdate(
-                imp.getDeckByLevelAndColour(level, colour),
-                imp.getDeckByLevelAndColour(level, colour).peek(),
-                imp.getDeckByLevelAndColour(level, colour).peekAll().size()
-                )
-            );
-        }
-        else
-            return new HashSet<>();
+        Set<ServerGameUpdate> updates = new HashSet<>(newUpdates);
+        newUpdates.clear();
+        return updates;
     }
 
     @Override

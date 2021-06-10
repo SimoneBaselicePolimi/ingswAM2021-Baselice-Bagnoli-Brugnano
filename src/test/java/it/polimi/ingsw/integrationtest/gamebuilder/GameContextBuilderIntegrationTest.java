@@ -20,6 +20,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardCol
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gameitems.leadercard.*;
+import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.MaxResourceNumberRule;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.SpecificResourceTypeRule;
@@ -28,6 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
@@ -41,6 +43,9 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class GameContextBuilderIntegrationTest {
+
+    @Mock
+    GameManager gameManager;
 
     static final String CONFIG_RULES_PATH = "testConfigFiles/StandardGameRules";
 
@@ -183,7 +188,7 @@ public class GameContextBuilderIntegrationTest {
 
         gameRules = FileManager.getFileManagerInstance().getGameRules(CONFIG_RULES_PATH);
 
-        gameContextBuilder = spy(new ObservableGameContextBuilder(players, gameRules, gameItemsManager, gameHistory));
+        gameContextBuilder = spy(new ObservableGameContextBuilder(gameManager, players, gameRules, gameItemsManager, gameHistory));
         gameContext = gameContextBuilder.buildGameContext();
     }
 

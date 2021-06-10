@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
 import java.util.Map;
 
+@Deprecated
 public class ClientResourcesUpdate extends ClientGameUpdate{
 
     public Map<ResourceType, Integer> resources;

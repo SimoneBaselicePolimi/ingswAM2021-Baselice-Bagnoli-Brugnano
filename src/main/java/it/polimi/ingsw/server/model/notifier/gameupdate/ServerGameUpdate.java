@@ -17,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = ServerPopeCardsUpdate.class, name = "PopeCardsUpdate"),
     @JsonSubTypes.Type(value = ServerResourceStorageUpdate.class, name = "ResourceStorageUpdate"),
     @JsonSubTypes.Type(value = ServerResourcesUpdate.class, name = "ResourcesUpdate"),
-    @JsonSubTypes.Type(value = ServerShuffledDevelopmentCardDeckOnTableUpdate.class, name = "ShuffledDevelopmentCardDeckOnTableUpdate")
+    @JsonSubTypes.Type(value = ServerShuffledDevelopmentCardDeckOnTableUpdate.class, name = "ShuffledDevelopmentCardDeckOnTableUpdate"),
+    @JsonSubTypes.Type(value = ServerTempStarResourcesUpdate.class, name = "TempStarResourcesUpdate")
 })
 public class ServerGameUpdate {
 

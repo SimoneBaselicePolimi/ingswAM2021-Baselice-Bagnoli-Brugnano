@@ -2,7 +2,6 @@ package it.polimi.ingsw.server.model.observableproxy;
 
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
-import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
@@ -16,7 +15,7 @@ public class MarketObservableProxy extends ObservableProxy<Market> implements Ma
 
     protected boolean hasSomethingChanged = false;
 
-    public MarketObservableProxy(MarketImp marketImp, GameManager gameManager) {
+    public MarketObservableProxy(Market marketImp, GameManager gameManager) {
         super(marketImp, gameManager);
     }
 

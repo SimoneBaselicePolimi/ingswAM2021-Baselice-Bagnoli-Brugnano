@@ -78,7 +78,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 "client.cli.playerDashboard.activateDashboardProductions"
             )
             .addUserChoice(
-                () -> gameView.setMainContentView(new ProductionSelectionLeaderCardView(
+                () -> gameView.setMainContentView(new ProductionSelectionLeaderCardsInDashboardView(
                     selectionInfo,
                     clientManager,
                     gameView

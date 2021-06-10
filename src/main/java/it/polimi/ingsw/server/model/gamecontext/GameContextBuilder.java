@@ -21,7 +21,7 @@ import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
-import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
+import it.polimi.ingsw.server.model.storage.ResourceStorageBuilder;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 import it.polimi.ingsw.utils.Colour;
 
@@ -123,21 +123,13 @@ public class GameContextBuilder {
 
 		List<PlayerOwnedDevelopmentCardDeck> decks = new ArrayList<>();
 		for(int i=0; i<gameInfoConfig.numberOfPlayerOwnedDevelopmentCardDecks; i++) {
-			decks.add(
-				new PlayerOwnedDevelopmentCardDeckImp(
-						generatePlayerOwnedDevCardDeckID(i+1),
-						gameItemsManager
-				)
-			);
+			String idDeck = generatePlayerOwnedDevCardDeckID(i+1);
+			decks.add(initializePlayerOwnedDevelopmentCardDeck(idDeck));
 		}
 
-		ResourceStorage infiniteChest = new ResourceStorageImp(
-			"InfChest_ID", gameItemsManager, new ArrayList<>()
-		);
+		ResourceStorage infiniteChest = initializeResourceStorage("InfChest_ID", new ArrayList<>());
 
-		ResourceStorage temporaryStorage = new ResourceStorageImp(
-			"TempStorage_ID", gameItemsManager, new ArrayList<>()
-		);
+		ResourceStorage temporaryStorage = initializeResourceStorage("TempStorage_ID", new ArrayList<>());
 
 		Set<Production> baseProductions = new HashSet<>();
 		for(ProductionConfig basicProductionConfig : gameInfoConfig.basicProductionPower) {
@@ -155,6 +147,10 @@ public class GameContextBuilder {
 			);
 	}
 
+	public PlayerOwnedDevelopmentCardDeck initializePlayerOwnedDevelopmentCardDeck(String idDeck) {
+		return new PlayerOwnedDevelopmentCardDeckImp(idDeck, gameItemsManager);
+	}
+
 	protected String generatePlayerOwnedDevCardDeckID(int num) {
 		return "PlayerDevCardDeck_ID_" + num;
 	}
@@ -168,7 +164,9 @@ public class GameContextBuilder {
 		String resourceStorageID,
 		List<ResourceStorageRule> rules
 	) {
-		return new ResourceStorageImp(resourceStorageID, gameItemsManager, rules);
+		ResourceStorageBuilder builder = initializeResourceStorageBuilder();
+		rules.forEach(builder::addRule);
+		return builder.createResourceStorage(resourceStorageID);
 	}
 
 	protected ResourceStorage buildResourceStorage(ResourceStorageConfig resourceStorageConf) {
@@ -443,6 +441,10 @@ public class GameContextBuilder {
 			cardCostDiscountConfig.resourceType,
 			cardCostDiscountConfig.amountToDiscount
 		);
+	}
+
+	public ResourceStorageBuilder initializeResourceStorageBuilder() {
+		return new ResourceStorageBuilder(gameItemsManager);
 	}
 
 }
