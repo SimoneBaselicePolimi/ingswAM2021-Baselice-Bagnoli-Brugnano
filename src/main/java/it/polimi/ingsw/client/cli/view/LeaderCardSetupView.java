@@ -20,7 +20,6 @@ import it.polimi.ingsw.utils.Colour;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
@@ -185,6 +184,7 @@ public class LeaderCardSetupView extends CliView {
     void onAllChoicesDone(Map<ResourceType, Integer> resourcesChosen, List<ClientLeaderCardRepresentation> chosenCards) {
         ResourcesRepositioningDashboardView resRepositioningView = new ResourcesRepositioningDashboardView(
             resourcesChosen,
+            false,
             clientManager,
             gameView
         );
