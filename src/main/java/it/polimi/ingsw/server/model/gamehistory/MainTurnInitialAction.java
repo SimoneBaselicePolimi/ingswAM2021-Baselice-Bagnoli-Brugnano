@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
@@ -8,7 +9,7 @@ import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.Serv
 public class MainTurnInitialAction extends GameAction{
     private final Player player;
 
-    public MainTurnInitialAction(Player player) {
+    public MainTurnInitialAction(@JsonProperty("player") Player player) {
         this.player = player;
     }
 

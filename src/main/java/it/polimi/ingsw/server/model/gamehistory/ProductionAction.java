@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.Production;
@@ -13,7 +14,10 @@ public class ProductionAction extends GameAction {
     private final Player player;
     public final Set<Production> productions;
 
-    public ProductionAction(Player player, Set<Production> productions) {
+    public ProductionAction(
+        @JsonProperty("player") Player player,
+        @JsonProperty("productions") Set<Production> productions
+    ) {
         this.player = player;
         this.productions = productions;
     }

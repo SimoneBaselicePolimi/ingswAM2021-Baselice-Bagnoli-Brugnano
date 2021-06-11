@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerDiscardedResourcesMarketActionRepresentation;
@@ -10,8 +11,8 @@ public class DiscardedResourcesMarketAction extends GameAction {
     private final int numberOfResourcesDiscarded;
 
     public DiscardedResourcesMarketAction(
-        Player player,
-        int numberOfResourcesDiscarded
+        @JsonProperty("player") Player player,
+        @JsonProperty("numberOfResourcesDiscarded") int numberOfResourcesDiscarded
     ) {
         this.player = player;
         this.numberOfResourcesDiscarded = numberOfResourcesDiscarded;
