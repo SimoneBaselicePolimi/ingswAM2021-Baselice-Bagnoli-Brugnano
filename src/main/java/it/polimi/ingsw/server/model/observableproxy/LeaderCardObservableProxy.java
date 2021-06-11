@@ -21,12 +21,12 @@ import java.util.Set;
 
 public class LeaderCardObservableProxy extends ObservableProxy<LeaderCard> implements LeaderCard{
 
+    protected boolean firstUpdateDone = false;
     protected boolean wereRequirementsSatisfied;
     protected boolean hasLeaderCardStateChanged = false;
 
     public LeaderCardObservableProxy(LeaderCard imp, GameManager gameManager) {
         super(imp, gameManager);
-        wereRequirementsSatisfied = areRequirementsSatisfiedIfCardLinkedToPlayerContext();
     }
 
     @Override
@@ -87,10 +87,11 @@ public class LeaderCardObservableProxy extends ObservableProxy<LeaderCard> imple
         Set<ServerGameUpdate> updates = new HashSet<>();
 
         boolean areRequirementsSatisfied = areRequirementsSatisfiedIfCardLinkedToPlayerContext();
-        if(wereRequirementsSatisfied != areRequirementsSatisfied) {
+        if(!firstUpdateDone || wereRequirementsSatisfied != areRequirementsSatisfied) {
             wereRequirementsSatisfied = areRequirementsSatisfied;
             updates.add(new ServerLeaderCardCanBeActivatedUpdate(imp, areRequirementsSatisfied));
         }
+        firstUpdateDone = true;
 
         if(hasLeaderCardStateChanged){
             hasLeaderCardStateChanged = false;

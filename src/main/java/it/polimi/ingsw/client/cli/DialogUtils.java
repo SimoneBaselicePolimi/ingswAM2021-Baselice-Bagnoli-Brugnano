@@ -72,10 +72,7 @@ public class DialogUtils {
         );
     }
 
-
-
-
-    static boolean checkIfThePlayerHasNecessaryResources(
+    public static boolean checkIfThePlayerHasNecessaryResources(
         ClientProductionRepresentation production,
         ProductionsSelectionInfo prodInfo
     ) {

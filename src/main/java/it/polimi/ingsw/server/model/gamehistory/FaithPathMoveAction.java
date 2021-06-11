@@ -3,8 +3,6 @@ package it.polimi.ingsw.server.model.gamehistory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathMoveActionRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
 
 public class FaithPathMoveAction extends GameAction {
     private final Player player;
@@ -18,6 +16,7 @@ public class FaithPathMoveAction extends GameAction {
         this.steps = steps;
     }
 
+    @JsonIgnore
     @Override
     public String getActionMessage() {
         if (steps == 1)
@@ -33,13 +32,4 @@ public class FaithPathMoveAction extends GameAction {
             );
     }
 
-    @Override
-    public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerFaithPathMoveActionRepresentation(player, steps);
-    }
-
-    @Override
-    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
-        return getServerRepresentation();
-    }
 }

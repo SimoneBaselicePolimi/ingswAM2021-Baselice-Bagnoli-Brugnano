@@ -2,9 +2,9 @@ package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.fai
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 
-public class ServerFaithPathMoveActionRepresentation extends ServerGameActionRepresentation {
+public class ServerFaithPathMoveActionRepresentation extends ServerRepresentation {
 
     public final Player player;
     public final int steps;

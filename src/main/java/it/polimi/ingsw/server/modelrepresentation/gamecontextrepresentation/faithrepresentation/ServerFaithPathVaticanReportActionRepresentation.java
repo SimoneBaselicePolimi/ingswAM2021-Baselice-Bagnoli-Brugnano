@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation;
 
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.ServerRepresentation;
 
-public class ServerFaithPathVaticanReportActionRepresentation extends ServerGameActionRepresentation {
+public class ServerFaithPathVaticanReportActionRepresentation extends ServerRepresentation {
 
 }
