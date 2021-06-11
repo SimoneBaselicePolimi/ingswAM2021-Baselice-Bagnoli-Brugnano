@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class LeaderCardObservableProxy extends ObservableProxy<LeaderCard> implements LeaderCard{
+public class LeaderCardObservableProxy extends ObservableProxyForIdentifiableItem<LeaderCard> implements LeaderCard{
 
     protected boolean firstUpdateDone = false;
     protected boolean wereRequirementsSatisfied;

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.observableproxy;
 
+import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 

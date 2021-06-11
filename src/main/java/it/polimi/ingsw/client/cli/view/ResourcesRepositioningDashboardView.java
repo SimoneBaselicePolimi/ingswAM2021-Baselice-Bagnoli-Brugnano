@@ -122,8 +122,8 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                 int numOfResources = resourceTypeAndNumEntry.getValue();
                 if(!ResourceUtils.areResourcesAContainedInB(
                     Map.of(resourceType, numOfResources),
-                    resourcesInTemporaryStorage)
-                ) {
+                    resourcesInTemporaryStorage
+                )) {
                     arrangeResourcesDialog();
                     return CompletableFuture.completedFuture(null);
                 }
@@ -167,6 +167,7 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                 choices.apply();
                 return CompletableFuture.completedFuture(null);
         });
+        var t = 1+1;
     }
 
     protected void takeResourcesFromStorageDialog() {

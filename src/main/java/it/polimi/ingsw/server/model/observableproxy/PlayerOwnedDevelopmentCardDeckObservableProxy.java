@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PlayerOwnedDevelopmentCardDeckObservableProxy extends ObservableProxy<PlayerOwnedDevelopmentCardDeck> implements PlayerOwnedDevelopmentCardDeck {
+public class PlayerOwnedDevelopmentCardDeckObservableProxy extends ObservableProxyForIdentifiableItem<PlayerOwnedDevelopmentCardDeck> implements PlayerOwnedDevelopmentCardDeck {
 
     protected boolean hasSomethingChanged = false;
 

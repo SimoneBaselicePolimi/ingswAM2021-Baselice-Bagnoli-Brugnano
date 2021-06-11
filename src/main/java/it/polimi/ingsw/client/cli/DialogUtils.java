@@ -33,7 +33,7 @@ public class DialogUtils {
         CliClientManager clientManager,
         String customAskForResourceTypeAndNumberMessage
     ) {
-        return clientManager.askUserLocalized(customAskForResourceTypeAndNumberMessage)
+        return clientManager.askUser(customAskForResourceTypeAndNumberMessage)
             .thenCompose(input -> {
                 if(input.matches("\\G\\d+\\s+\\w+\\s*$")) {
                     int numOfResources = Integer.parseInt(input.split("\\s+")[0]);

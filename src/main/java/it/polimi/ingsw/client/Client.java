@@ -28,27 +28,17 @@ public class Client {
     private static final int TCP_SERVER_PORT = 11056;
     private static final String TCP_SERVER_ADDRESS = "localhost";
 
+    protected BufferedReader userInputReader;
+    protected ConsoleWriter consoleWriter;
 
-
-    public static void main( String[] args ) {
-
-        try {
-            startClient();
-        } catch (IOException | ClientNotConnectedException e) {
-            e.printStackTrace();
-        }
-
-
+    public Client(BufferedReader userInputReader, ConsoleWriter consoleWriter) {
+        this.userInputReader = userInputReader;
+        this.consoleWriter = consoleWriter;
     }
 
-    public static void startClient() throws IOException, ClientNotConnectedException {
-
-        ClientNetworkLayer networkLayer = new ClientNetworkLayer(
-            TCP_SERVER_ADDRESS,
-            TCP_SERVER_PORT
-        );
-
-        ConsoleWriter consoleWriter = new ConsoleWriter() {
+    public Client() {
+        this.userInputReader = new BufferedReader(new InputStreamReader(System.in));
+        this.consoleWriter = new ConsoleWriter() {
             @Override
             public void writeToConsole(String text) {
                 System.out.print(text);
@@ -59,6 +49,25 @@ public class Client {
                 System.out.println(line);
             }
         };
+    }
+
+    public static void main( String[] args ) {
+
+        try {
+            new Client().startClient();
+        } catch (IOException | ClientNotConnectedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void startClient() throws IOException, ClientNotConnectedException {
+
+        ClientNetworkLayer networkLayer = new ClientNetworkLayer(
+            TCP_SERVER_ADDRESS,
+            TCP_SERVER_PORT
+        );
 
         MessageSender messageSender = messageForServer -> {
             try {
@@ -98,15 +107,19 @@ public class Client {
 
         new PreGameView(clientManager, clientManager.getConsoleDisplayHeight(), clientManager.getConsoleDisplayWidth());
 
-        BufferedReader reader = new BufferedReader(
-            new InputStreamReader(System.in));
+
         while (true) {
-            String input = reader.readLine();
+            String input = getUserInputBlocking();
             clientManager.handleUserInput(input);
         }
 
     }
 
+    protected String getUserInputBlocking() throws IOException {
+        return userInputReader.readLine();
+    }
+
+    @Deprecated
     public void startTestClient() throws IOException {
         SocketChannel socketChannel = SocketChannel.open();
         socketChannel.connect(new InetSocketAddress("localhost", 11056));

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ResourceStorageObservableProxy extends ObservableProxy<ResourceStorage> implements ResourceStorage {
+public class ResourceStorageObservableProxy extends ObservableProxyForIdentifiableItem<ResourceStorage> implements ResourceStorage {
 
     protected boolean haveResourcesInStorageChanged = false;
 
