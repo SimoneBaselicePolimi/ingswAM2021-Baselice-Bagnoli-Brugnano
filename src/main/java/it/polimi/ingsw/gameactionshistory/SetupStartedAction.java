@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.model.gamehistory;
+package it.polimi.ingsw.gameactionshistory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.polimi.ingsw.localization.Localization;

@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.DialogUtils;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
@@ -119,6 +120,14 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
             .thenCompose(resourceTypeAndNumEntry -> {
                 ResourceType resourceType = resourceTypeAndNumEntry.getKey();
                 int numOfResources = resourceTypeAndNumEntry.getValue();
+                if(!ResourceUtils.areResourcesAContainedInB(
+                    Map.of(resourceType, numOfResources),
+                    resourcesInTemporaryStorage)
+                ) {
+                    arrangeResourcesDialog();
+                    return CompletableFuture.completedFuture(null);
+                }
+
                 UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
 
                 for (ClientResourceStorageRepresentation s : shelves) {
@@ -206,5 +215,10 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                 return CompletableFuture.completedFuture(null);
             });
 
+    }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+        return super.getContentAsFormattedCharsBuffer();
     }
 }

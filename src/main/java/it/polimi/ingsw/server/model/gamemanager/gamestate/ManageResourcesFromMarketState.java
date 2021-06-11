@@ -1,9 +1,10 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
+import it.polimi.ingsw.gameactionshistory.DiscardedResourcesMarketAction;
+import it.polimi.ingsw.gameactionshistory.ObtainedResourcesMarketAction;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.controller.clientrequest.ManageResourcesFromMarketClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.gamehistory.*;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;

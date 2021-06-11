@@ -5,13 +5,11 @@ import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerActivePlayerUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerMarketUpdate;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.ServerGameContextRepresentation;
 
 import java.util.HashSet;
@@ -28,12 +26,12 @@ public class GameContextObservableProxy extends ObservableProxy<GameContext> imp
 
     @Override
     public ServerGameContextRepresentation getServerRepresentation() {
-        return null;
+        return imp.getServerRepresentation();
     }
 
     @Override
     public ServerGameContextRepresentation getServerRepresentationForPlayer(Player player) {
-        return null;
+        return imp.getServerRepresentationForPlayer(player);
     }
 
     @Override

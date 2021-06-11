@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.gameupdate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.gameupdatehandler.GameHistoryUpdateHandler;
 import it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler;
-import it.polimi.ingsw.server.model.gamehistory.GameAction;
+import it.polimi.ingsw.gameactionshistory.GameAction;
 
 import java.util.List;
 

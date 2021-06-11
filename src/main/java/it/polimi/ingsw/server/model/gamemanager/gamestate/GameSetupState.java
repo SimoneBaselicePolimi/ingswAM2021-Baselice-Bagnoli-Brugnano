@@ -7,8 +7,8 @@ import it.polimi.ingsw.server.controller.servermessage.InitialChoicesServerMessa
 import it.polimi.ingsw.server.controller.servermessage.PostGameSetupServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamehistory.SetupChoiceAction;
-import it.polimi.ingsw.server.model.gamehistory.SetupStartedAction;
+import it.polimi.ingsw.gameactionshistory.SetupChoiceAction;
+import it.polimi.ingsw.gameactionshistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;

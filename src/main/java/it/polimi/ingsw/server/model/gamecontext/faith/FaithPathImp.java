@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
+import it.polimi.ingsw.gameactionshistory.FaithPathLastPositionReachedAction;
+import it.polimi.ingsw.gameactionshistory.FaithPathMoveAction;
+import it.polimi.ingsw.gameactionshistory.FaithPathVaticanReportAction;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.*;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathRepresentation;
@@ -171,30 +174,33 @@ public class FaithPathImp implements FaithPath {
 	 */
 	@Override
 	public FaithPathEvent move(Player player, int steps) {
-		faithPositions.put(player, Math.min(faithPositions.get(player) + steps, faithPathLength - 1));
+		if(steps>0) {
+			faithPositions.put(player, Math.min(faithPositions.get(player) + steps, faithPathLength - 1));
 
-		gameHistory.addAction(
-			new FaithPathMoveAction(player, steps)
-		);
+			gameHistory.addAction(
+				new FaithPathMoveAction(player, steps)
+			);
 
-		boolean vaticanReport = false;
-		int numSection = 0;
-		for (VaticanReportSection section : vaticanReportSections) {
-			if (getPlayerFaithPosition(player) >= section.getPopeSpacePos() &&
+			boolean vaticanReport = false;
+			int numSection = 0;
+			for (VaticanReportSection section : vaticanReportSections) {
+				if (getPlayerFaithPosition(player) >= section.getPopeSpacePos() &&
 					popeFavorCards.get(player).get(numSection) == PopeFavorCardState.HIDDEN) {
-				vaticanReport = true;
+					vaticanReport = true;
 
-				gameHistory.addAction(new FaithPathVaticanReportAction());
+					gameHistory.addAction(new FaithPathVaticanReportAction());
 
-				for(Player p : popeFavorCards.keySet())
-					turnPopeFavorCard(p, section, numSection);
+					for (Player p : popeFavorCards.keySet())
+						turnPopeFavorCard(p, section, numSection);
+				}
+				numSection++;
 			}
-			numSection++;
+			boolean lastPositionReached = lastPositionHasBeenReached();
+			if (lastPositionReached)
+				gameHistory.addAction(new FaithPathLastPositionReachedAction(player));
+			return new FaithPathEvent(lastPositionReached, vaticanReport);
 		}
-		boolean lastPositionReached = lastPositionHasBeenReached();
-		if (lastPositionReached)
-			gameHistory.addAction(new FaithPathLastPositionReachedAction(player));
-		return new FaithPathEvent(lastPositionReached, vaticanReport);
+		return new FaithPathEvent(lastPositionHasBeenReached(), false);
 	}
 
 	/**

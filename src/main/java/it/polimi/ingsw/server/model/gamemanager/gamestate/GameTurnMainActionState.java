@@ -1,5 +1,9 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
+import it.polimi.ingsw.gameactionshistory.DevelopmentAction;
+import it.polimi.ingsw.gameactionshistory.MainTurnInitialAction;
+import it.polimi.ingsw.gameactionshistory.ObtainedMarblesMarketAction;
+import it.polimi.ingsw.gameactionshistory.ProductionAction;
 import it.polimi.ingsw.server.controller.clientrequest.*;
 import it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
@@ -7,7 +11,6 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gamehistory.*;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
@@ -171,7 +174,7 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 		playerContext.setTempStarResources(numberOfStarResources);
 
 		gameManager.getGameHistory().addAction(
-			new ObtainedMarblesMarketAction (activePlayer, marblesThePlayerGets)
+			new ObtainedMarblesMarketAction(activePlayer, marblesThePlayerGets)
 		);
 
 		hasPlayerDoneMarketAction = true;

@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.utils.serialization.annotations.*;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public class InitialChoicesClientRequest extends ClientRequest {
 	) {
 		super(player);
 		this.leaderCardsChosenByThePlayer = leaderCardsChosenByThePlayer;
-		this.chosenResourcesToAddByStorage = chosenResourcesToAddByStorage;
+		this.chosenResourcesToAddByStorage = chosenResourcesToAddByStorage == null ? new HashMap<>() : chosenResourcesToAddByStorage;
 	}
 
 	@SuppressWarnings("unchecked")

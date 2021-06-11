@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.controller.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.EndTurnServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamehistory.PostTurnFinalAction;
+import it.polimi.ingsw.gameactionshistory.PostTurnFinalAction;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
 

@@ -19,7 +19,7 @@ public class FaithPathObservableProxy extends ObservableProxy<FaithPath> impleme
 
     protected boolean hasThePlayerMoved = false;
     protected FaithPathEvent faithPathEvent;
-    protected Player player;
+    protected Set<Player> playersMoved = new HashSet<>();
 
     public FaithPathObservableProxy(FaithPath imp, GameManager gameManager) {
         super(imp, gameManager);
@@ -62,9 +62,11 @@ public class FaithPathObservableProxy extends ObservableProxy<FaithPath> impleme
 
     @Override
     public FaithPathEvent move(Player player, int steps) {
-        hasThePlayerMoved = true;
+        if(steps > 0) {
+            hasThePlayerMoved = true;
+            playersMoved.add(player);
+        }
         faithPathEvent = imp.move(player, steps);
-        this.player = player;
         return faithPathEvent;
     }
 
@@ -73,7 +75,8 @@ public class FaithPathObservableProxy extends ObservableProxy<FaithPath> impleme
         Set<ServerGameUpdate> updates = new HashSet<>();
         if(hasThePlayerMoved) {
             hasThePlayerMoved = false;
-            updates.add(new ServerFaithUpdate(player, imp.getPlayerFaithPosition(player)));
+            playersMoved.forEach(p -> updates.add(new ServerFaithUpdate(p, imp.getPlayerFaithPosition(p))));
+            playersMoved.clear();
             if (faithPathEvent.hasVaticanMeetingHappened())
                 updates.add(new ServerPopeCardsUpdate(imp.getPopeFavorCardsState()));
         }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.polimi.ingsw.gameactionshistory.GameAction;
 
 import java.util.ArrayList;
 import java.util.List;

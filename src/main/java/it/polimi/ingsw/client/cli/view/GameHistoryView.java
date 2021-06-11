@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
-import it.polimi.ingsw.server.model.gamehistory.GameAction;
+import it.polimi.ingsw.gameactionshistory.GameAction;
 
 import java.util.ArrayList;
 import java.util.List;
