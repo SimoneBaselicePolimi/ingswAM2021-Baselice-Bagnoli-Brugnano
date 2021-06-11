@@ -1,10 +1,9 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerActivateLeaderCardsActionRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
 
 public class ActivateLeaderCardsAction extends GameAction {
     private final Player player;
@@ -15,6 +14,7 @@ public class ActivateLeaderCardsAction extends GameAction {
         this.leaderCard = leaderCard;
     }
 
+    @JsonIgnore
     @Override
     public String getActionMessage() {
         return Localization.getLocalizationInstance().getString(
@@ -24,15 +24,4 @@ public class ActivateLeaderCardsAction extends GameAction {
         );
     }
 
-    @Override
-    public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerActivateLeaderCardsActionRepresentation(
-            player,
-            leaderCard.getServerRepresentation());
-    }
-
-    @Override
-    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
-        return getServerRepresentation();
-    }
 }

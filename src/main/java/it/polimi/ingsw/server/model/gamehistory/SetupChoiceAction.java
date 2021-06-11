@@ -1,11 +1,10 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerSetupChoiceActionRepresentation;
 
 import java.util.Map;
 
@@ -18,6 +17,7 @@ public class SetupChoiceAction extends GameAction{
         this.initialResources = initialResources;
     }
 
+    @JsonIgnore
     @Override
     public String getActionMessage() {
         return Localization.getLocalizationInstance().getString(
@@ -27,13 +27,4 @@ public class SetupChoiceAction extends GameAction{
         );
     }
 
-    @Override
-    public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerSetupChoiceActionRepresentation(player, initialResources);
-    }
-
-    @Override
-    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
-        return getServerRepresentation();
-    }
 }

@@ -1,12 +1,10 @@
 package it.polimi.ingsw.server.model.observableproxy;
 
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.GameAction;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameHistoryUpdate;
 import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameHistoryRepresentation;
 
 import java.util.HashSet;
 import java.util.List;

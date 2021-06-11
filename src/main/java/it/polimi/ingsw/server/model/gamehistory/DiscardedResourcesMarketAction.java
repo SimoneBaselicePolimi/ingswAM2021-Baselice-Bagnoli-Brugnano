@@ -1,9 +1,8 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerDiscardedResourcesMarketActionRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.ServerGameActionRepresentation;
 
 public class DiscardedResourcesMarketAction extends GameAction {
     private final Player player;
@@ -17,6 +16,7 @@ public class DiscardedResourcesMarketAction extends GameAction {
         this.numberOfResourcesDiscarded = numberOfResourcesDiscarded;
     }
 
+    @JsonIgnore
     @Override
     public String getActionMessage() {
         if (numberOfResourcesDiscarded == 1)
@@ -32,16 +32,4 @@ public class DiscardedResourcesMarketAction extends GameAction {
             );
     }
 
-    @Override
-    public ServerGameActionRepresentation getServerRepresentation() {
-        return new ServerDiscardedResourcesMarketActionRepresentation(
-            player,
-            numberOfResourcesDiscarded
-        );
-    }
-
-    @Override
-    public ServerGameActionRepresentation getServerRepresentationForPlayer(Player player) {
-        return getServerRepresentation();
-    }
 }
