@@ -17,8 +17,7 @@ import java.util.Set;
 
 public class FaithPathObservableProxy extends ObservableProxy<FaithPath> implements FaithPath {
 
-    protected boolean hasThePlayerMoved = false;
-    protected FaithPathEvent faithPathEvent;
+    protected boolean hasVaticanMeetingHappened;
     protected Set<Player> playersMoved = new HashSet<>();
 
     public FaithPathObservableProxy(FaithPath imp, GameManager gameManager) {
@@ -63,22 +62,22 @@ public class FaithPathObservableProxy extends ObservableProxy<FaithPath> impleme
     @Override
     public FaithPathEvent move(Player player, int steps) {
         if(steps > 0) {
-            hasThePlayerMoved = true;
             playersMoved.add(player);
         }
-        faithPathEvent = imp.move(player, steps);
+        FaithPathEvent faithPathEvent = imp.move(player, steps);
+        if (faithPathEvent.hasVaticanMeetingHappened())
+            hasVaticanMeetingHappened = true;
         return faithPathEvent;
     }
 
     @Override
     public Set<ServerGameUpdate> getUpdates() {
         Set<ServerGameUpdate> updates = new HashSet<>();
-        if(hasThePlayerMoved) {
-            hasThePlayerMoved = false;
-            playersMoved.forEach(p -> updates.add(new ServerFaithUpdate(p, imp.getPlayerFaithPosition(p))));
-            playersMoved.clear();
-            if (faithPathEvent.hasVaticanMeetingHappened())
-                updates.add(new ServerPopeCardsUpdate(imp.getPopeFavorCardsState()));
+        playersMoved.forEach(p -> updates.add(new ServerFaithUpdate(p, imp.getPlayerFaithPosition(p))));
+        playersMoved.clear();
+        if (hasVaticanMeetingHappened) {
+            updates.add(new ServerPopeCardsUpdate(imp.getPopeFavorCardsState()));
+            hasVaticanMeetingHappened = false;
         }
         return updates;
     }
