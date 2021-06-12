@@ -142,7 +142,14 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                 for (ClientResourceStorageRepresentation s : shelves) {
                     choices.addUserChoiceLocalized(
                         () -> {
-                            putResourceInStorage(resourceType, numOfResources, s);
+                            if(s.getRuleErrorMessagesIfPresent(Map.of(resourceType, numOfResources)).isPresent()) {
+                                clientManager.tellUser(
+                                    s.getRuleErrorMessagesIfPresent(Map.of(resourceType, numOfResources)).get()
+                                );
+                            }
+                            else {
+                                putResourceInStorage(resourceType, numOfResources, s);
+                            }
                             arrangeResourcesDialog();
                         },
                         "client.cli.resourcesRepositioning.specifyInWhichStorage",
@@ -154,8 +161,14 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                 for(ClientResourceStorageRepresentation ls : leaderStoragesFromActiveCards) {
                     choices.addUserChoiceLocalized(
                         () -> {
-                            putResourceInStorage(resourceType, numOfResources, ls);
-                            arrangeResourcesDialog();
+                            if(ls.getRuleErrorMessagesIfPresent(Map.of(resourceType, numOfResources)).isPresent()) {
+                                clientManager.tellUser(
+                                    ls.getRuleErrorMessagesIfPresent(Map.of(resourceType, numOfResources)).get()
+                                );
+                            }
+                            else {
+                                putResourceInStorage(resourceType, numOfResources, ls);
+                            }                            arrangeResourcesDialog();
                         },
                         "client.cli.resourcesRepositioning.specifyInWhichStorage",
                         Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
@@ -182,7 +195,7 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                             takeResourcesFromStorage(resourceType, numOfResources, s);
                             arrangeResourcesDialog();
                         },
-                        "client.cli.resourcesRepositioning.specifyInWhichStorage",
+                        "client.cli.resourcesRepositioning.specifyForWhichStorage",
                         Localization.getLocalizationInstance().getString("dashboard.shelf")
                             + " " + (shelves.indexOf(s) + 1)
                     );
@@ -194,7 +207,7 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                             takeResourcesFromStorage(resourceType, numOfResources, ls);
                             arrangeResourcesDialog();
                         },
-                        "client.cli.resourcesRepositioning.specifyInWhichStorage",
+                        "client.cli.resourcesRepositioning.specifyForWhichStorage",
                         Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
                             + " " + (shelves.size() + leaderStoragesFromActiveCards.indexOf(ls) + 1)
                     );
@@ -210,10 +223,12 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
         int numOfResources,
         ClientResourceStorageRepresentation storage
     ) {
-        storage.setResources(ResourceUtils.sum(storage.getResources(), Map.of(resourceType, numOfResources)));
+        Map<ResourceType,Integer> newResources= Map.of(resourceType, numOfResources);
+        storage.getRules().forEach(r -> r.getErrorMessageIfPresent(storage, newResources));
+        storage.setResources(ResourceUtils.sum(storage.getResources(), newResources));
         resourcesInTemporaryStorage = ResourceUtils.difference(
             resourcesInTemporaryStorage,
-            Map.of(resourceType, numOfResources)
+            newResources
         );
         storagesModified.add(storage);
     }
@@ -223,20 +238,15 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
         int numOfResources,
         ClientResourceStorageRepresentation storage
     ) {
-        if(!ResourceUtils.areResourcesAContainedInB(Map.of(resourceType, numOfResources), storage.getResources())) {
+        Map<ResourceType,Integer> resourcesFromStorage= Map.of(resourceType, numOfResources);
+        if(!ResourceUtils.areResourcesAContainedInB(resourcesFromStorage, storage.getResources())) {
             clientManager.tellUserLocalized(
                 "client.cli.resourcesRepositioning.notEnoughResourcesInStorage"
             );
         }
         else {
-            storage.setResources(ResourceUtils.difference(
-                storage.getResources(),
-                Map.of(resourceType, numOfResources)
-            ));
-            resourcesInTemporaryStorage = ResourceUtils.sum(
-                resourcesInTemporaryStorage,
-                Map.of(resourceType, numOfResources)
-            );
+            storage.setResources(ResourceUtils.difference(storage.getResources(), resourcesFromStorage));
+            resourcesInTemporaryStorage = ResourceUtils.sum(resourcesInTemporaryStorage, resourcesFromStorage);
             storagesModified.add(storage);
         }
     }

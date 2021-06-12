@@ -1,21 +1,17 @@
 package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.client.modelrepresentation.*;
+import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
-import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +28,8 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     private List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks;
     private final Set<ClientProductionRepresentation> baseProductions;
     private int numberOfLeaderCardsThePlayerOwns;
-    private Map<ResourceType, Integer> totalResourcesOwnedByThePlayer;
+    //TODO update this map
+    private Map<ResourceType, Integer> totalResourcesOwnedByThePlayer = new HashMap<>();
 
     public ClientPlayerContextRepresentation(
         @JsonProperty("player") Player player,
@@ -43,8 +40,7 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         @JsonProperty("leaderCardsPlayerOwns") Set<ClientLeaderCardRepresentation> leaderCardsPlayerOwns,
         @JsonProperty("developmentCardDecks") List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
         @JsonProperty("baseProductions") Set<ClientProductionRepresentation> baseProductions,
-        @JsonProperty("numberOfLeaderCardsThePlayerOwns") int numberOfLeaderCardsThePlayerOwns,
-        @JsonProperty("totalResourcesOwnedByThePlayer") Map<ResourceType, Integer> totalResourcesOwnedByThePlayer
+        @JsonProperty("numberOfLeaderCardsThePlayerOwns") int numberOfLeaderCardsThePlayerOwns
     ) {
         this.player = player;
         this.shelves = shelves;
@@ -55,7 +51,6 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         this.developmentCardDecks = developmentCardDecks;
         this.baseProductions = baseProductions;
         this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
-        this.totalResourcesOwnedByThePlayer = totalResourcesOwnedByThePlayer;
     }
 
     public Player getPlayer() {

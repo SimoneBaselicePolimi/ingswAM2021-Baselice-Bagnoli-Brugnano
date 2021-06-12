@@ -1,5 +1,11 @@
 client:
 
+  mainMenu:
+    gameTitle: "MAESTRI DEL RINASCIMENTO"
+    players: "Giocatori: "
+    resources: "Risorse: "
+    faithPositions: "Posizione sul tracciato fede: "
+
   errors:
     unexpectedServerMessage: "Errore inaspettato! [Il server ha inviato un messaggio inaspettato]"
     userInputNotExpected: "Aspetta, operazione in corso..."
@@ -58,6 +64,11 @@ client:
       specifyForWhichStorage: "Prendi le risorse da %s"
       notEnoughResourcesInTempStorage: "Non hai abbastanza risorse da posizionare"
       notEnoughResourcesInStorage: "Non hai abbastanza risorse nel deposito"
+      checkRuleErrorMessage:
+        maxNumberRule: "Nel deposito selezionato il numero massimo di risorse è: %d"
+        sameResourceType: "Nel deposito selezionato tutte le risorse devono essere di un unico tipo"
+        specificResourceType: "Nel deposito selezionato tutte le risorse devono essere del tipo: %s"
+        differentResourceTypeInDifferentStorages: "Non puoi inserire risorse dello stesso tipo in magazzini diversi"
     devCard:
       deckTitle: "Carte nel mazzo: %s "
     devCardTable:

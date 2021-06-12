@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
@@ -21,6 +22,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
     public final static int SPACE_BETWEEN_DECKS = 2;
 
     protected List<ClientResourceStorageRepresentation> shelves;
+    protected ClientResourceStorageRepresentation infiniteChest;
     protected List<ClientResourceStorageRepresentation> leaderStoragesFromActiveCards;
     protected List<ClientProductionRepresentation> baseProductions;
 
@@ -47,10 +49,59 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         this.gameView = gameView;
 
         activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
-
         dashboardPlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(dashboardPlayer);
-
         playerDecks = dashboardPlayerContext.getDevelopmentCardDecks();
+
+        shelves = new ArrayList<>(dashboardPlayerContext.getShelves());
+        infiniteChest = dashboardPlayerContext.getInfiniteChest();
+        leaderStoragesFromActiveCards = dashboardPlayerContext.getActiveLeaderCards().stream()
+            .flatMap(leaderCard -> leaderCard.getResourceStorages().stream())
+            .collect(Collectors.toList());
+
+        shelves.forEach(this::subscribeToRepresentation);
+        subscribeToRepresentation(infiniteChest);
+        leaderStoragesFromActiveCards.forEach(this::subscribeToRepresentation);
+    }
+
+    public AbstractPlayerDashboardView(
+        Player dashboardPlayer,
+        CliClientManager clientManager,
+        GameView gameView
+    ) {
+        this(dashboardPlayer, clientManager, gameView, 0, 0);
+    }
+
+    void buildChildGrids() {
+
+        children.clear();
+
+        int colSizeDevCardDeckGrid = SPACE_BETWEEN_DECKS +
+            playerDecks.size()*(SPACE_BETWEEN_DECKS + DevCardDashboardDeckView.DEV_CARD_DECK_COL_SIZE);
+        int rowSizeDevCardDeckGrid = 2*SPACE_BETWEEN_DECKS + DevCardDashboardDeckView.DEV_CARD_DECK_ROW_SIZE;
+        int colSizeStoragesAndBaseProdGrid = columnSize - colSizeDevCardDeckGrid;
+
+        addChildView(devCardDecksGrid, 0, 0);
+        devCardDecksGrid.setRowSize(rowSizeDevCardDeckGrid);
+        devCardDecksGrid.setColumnSize(colSizeDevCardDeckGrid);
+
+        addChildView(storagesAndBaseProdGrid, 0, colSizeDevCardDeckGrid);
+        storagesAndBaseProdGrid.setRowSize(rowSize);
+        storagesAndBaseProdGrid.setColumnSize(colSizeStoragesAndBaseProdGrid);
+
+    }
+
+    @Override
+    public void setRowSize(int rowSize) {
+        super.setRowSize(rowSize);
+    }
+
+    @Override
+    public void setColumnSize(int columnSize) {
+        super.setColumnSize(columnSize);
+    }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
 
         devCardDecksGrid = new GridView(clientManager, 1, playerDecks.size(), SPACE_BETWEEN_DECKS);
         storagesAndBaseProdGrid = new GridView(clientManager,2, 1, 0);
@@ -61,16 +112,6 @@ public abstract class AbstractPlayerDashboardView extends CliView{
             devCardDashboardDeckViewList.add(devCardDashboardDeckView);
             devCardDecksGrid.setView(0, i, devCardDashboardDeckView);
         }
-
-        shelves = new ArrayList<>(dashboardPlayerContext.getShelves());
-        ClientResourceStorageRepresentation infiniteChest = dashboardPlayerContext.getInfiniteChest();
-        leaderStoragesFromActiveCards = dashboardPlayerContext.getActiveLeaderCards().stream()
-                .flatMap(leaderCard -> leaderCard.getResourceStorages().stream())
-                .collect(Collectors.toList());
-
-        shelves.forEach(this::subscribeToRepresentation);
-        subscribeToRepresentation(infiniteChest);
-        leaderStoragesFromActiveCards.forEach(this::subscribeToRepresentation);
 
         GridView storagesGrid = new GridView(
             clientManager,
@@ -138,7 +179,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
             LabelView baseProductionLabel = new LabelView(
                 FormattedChar.convertStringToFormattedCharList(
                     Localization.getLocalizationInstance().getString("dashboard.baseProductions")
-                    + " " + (r+1) + "\n" + baseProduction.getDescription()
+                        + " " + (r+1) + "\n" + baseProduction.getDescription()
                 ),
                 clientManager
             );
@@ -147,45 +188,8 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         }
 
         buildChildGrids();
-    }
 
-    public AbstractPlayerDashboardView(
-        Player dashboardPlayer,
-        CliClientManager clientManager,
-        GameView gameView
-    ) {
-        this(dashboardPlayer, clientManager, gameView, 0, 0);
-    }
-
-    void buildChildGrids() {
-
-        children.clear();
-
-        int colSizeDevCardDeckGrid = SPACE_BETWEEN_DECKS +
-            playerDecks.size()*(SPACE_BETWEEN_DECKS + DevCardDashboardDeckView.DEV_CARD_DECK_COL_SIZE);
-        int rowSizeDevCardDeckGrid = 2*SPACE_BETWEEN_DECKS + DevCardDashboardDeckView.DEV_CARD_DECK_ROW_SIZE;
-        int colSizeStoragesAndBaseProdGrid = columnSize - colSizeDevCardDeckGrid;
-
-        addChildView(devCardDecksGrid, 0, 0);
-        devCardDecksGrid.setRowSize(rowSizeDevCardDeckGrid);
-        devCardDecksGrid.setColumnSize(colSizeDevCardDeckGrid);
-
-        addChildView(storagesAndBaseProdGrid, 0, colSizeDevCardDeckGrid);
-        storagesAndBaseProdGrid.setRowSize(rowSize);
-        storagesAndBaseProdGrid.setColumnSize(colSizeStoragesAndBaseProdGrid);
-
-    }
-
-    @Override
-    public void setRowSize(int rowSize) {
-        super.setRowSize(rowSize);
-        buildChildGrids();
-    }
-
-    @Override
-    public void setColumnSize(int columnSize) {
-        super.setColumnSize(columnSize);
-        buildChildGrids();
+        return super.getContentAsFormattedCharsBuffer();
     }
 
 }
