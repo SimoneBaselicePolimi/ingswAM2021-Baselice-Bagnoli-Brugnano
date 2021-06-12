@@ -68,6 +68,10 @@ public abstract class AbstractPlayerDashboardView extends CliView{
                 .flatMap(leaderCard -> leaderCard.getResourceStorages().stream())
                 .collect(Collectors.toList());
 
+        shelves.forEach(this::subscribeToRepresentation);
+        subscribeToRepresentation(infiniteChest);
+        leaderStoragesFromActiveCards.forEach(this::subscribeToRepresentation);
+
         GridView storagesGrid = new GridView(
             clientManager,
             shelves.size() + leaderStoragesFromActiveCards.size() + 1,

@@ -36,6 +36,9 @@ public class DevCardDashboardDeckView extends CliView {
         this.player = player;
         this.cardDeck = clientManager.getGameContextRepresentation()
             .getPlayerContext(player).getDevelopmentCardDecks().get(deckNumber);
+
+        subscribeToRepresentation(this.cardDeck);
+
         deckLabel = new LabelView(new ArrayList<>(), clientManager);
 
         createNewDevCardAndDeckLabel();

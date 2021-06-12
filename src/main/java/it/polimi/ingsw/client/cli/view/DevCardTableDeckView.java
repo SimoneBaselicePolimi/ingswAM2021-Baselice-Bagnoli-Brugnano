@@ -39,6 +39,8 @@ public class DevCardTableDeckView extends CliView {
         this.cardDeck = clientManager.getGameContextRepresentation()
             .getDevelopmentCardsTable().getDeck(cardLevel, cardColour);
 
+        subscribeToRepresentation(cardDeck);
+
         deckLabel = new LabelView(new ArrayList<>(), clientManager);
 
         createNewDevCardAndDeckLabel();

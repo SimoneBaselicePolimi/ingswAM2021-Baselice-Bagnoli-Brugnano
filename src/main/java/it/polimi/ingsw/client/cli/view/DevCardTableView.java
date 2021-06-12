@@ -48,6 +48,8 @@ public class DevCardTableView extends CliView{
         activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
         activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
 
+        subscribeToRepresentation(table);
+
         setVisibleCards(DevelopmentCardLevel.FIRST_LEVEL);
         startDevCardTableDialog();
     }

@@ -42,9 +42,9 @@ public class FaithPathView extends CliView{
         super(clientManager);
         this.gameView = gameView;
 
-        startFaithPathDialog();
-
         faithPathRepresentation = clientManager.getGameContextRepresentation().getFaithPath();
+
+        subscribeToRepresentation(faithPathRepresentation);
 
         myPlayer = clientManager.getMyPlayer();
         playersInOrder = clientManager.getGameContextRepresentation().getPlayersOrder();
@@ -88,6 +88,8 @@ public class FaithPathView extends CliView{
         playerPositionsGrid.setView(0, 0, playerPositions);
 
         setFaithPathViewBackground();
+
+        startFaithPathDialog();
     }
 
     void startFaithPathDialog() {

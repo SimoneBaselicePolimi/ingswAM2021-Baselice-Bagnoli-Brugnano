@@ -55,6 +55,8 @@ public class LeaderCardView extends CliView {
         this.isBorderColourBasedOnState = isBorderColourBasedOnState;
         this.numberOfCard = numberOfCard;
 
+        subscribeToRepresentation(card);
+
         productionsColourMap = card.getProductions().stream().collect(Collectors.toMap(
             p -> p,
             p -> defaultProductionColour
