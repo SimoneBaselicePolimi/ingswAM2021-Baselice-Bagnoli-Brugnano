@@ -56,8 +56,8 @@ client:
       repositioningDone: "Conferma posizionamento"
       specifyInWhichStorage: "Inserisci le risorse in %s"
       specifyForWhichStorage: "Prendi le risorse da %s"
-      notEhoughResourcesInTempStorage: "Non hai abbastanza risorse da posizionare"
-      notEhoughResourcesInStorage: "Non hai abbastanza risorse nel deposito"
+      notEnoughResourcesInTempStorage: "Non hai abbastanza risorse da posizionare"
+      notEnoughResourcesInStorage: "Non hai abbastanza risorse nel deposito"
     devCard:
       deckTitle: "Carte nel mazzo: %s "
     devCardTable:
