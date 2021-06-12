@@ -3,7 +3,6 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.DialogUtils;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
-import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
@@ -58,7 +57,14 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
         boolean playerCanLeaveResourcesInTempStorage, CliClientManager clientManager,
         GameView gameView
     ) {
-        this(resourcesInTemporaryStorage, playerCanLeaveResourcesInTempStorage, clientManager, gameView, 0, 0);
+        this(
+            resourcesInTemporaryStorage,
+            playerCanLeaveResourcesInTempStorage,
+            clientManager,
+            gameView,
+            0,
+            0
+        );
     }
 
     public ResourcesRepositioningDashboardView(
@@ -124,6 +130,9 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                     Map.of(resourceType, numOfResources),
                     resourcesInTemporaryStorage
                 )) {
+                    clientManager.tellUserLocalized(
+                        "client.cli.resourcesRepositioning.notEnoughResourcesInTempStorage"
+                    );
                     arrangeResourcesDialog();
                     return CompletableFuture.completedFuture(null);
                 }
@@ -133,41 +142,30 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                 for (ClientResourceStorageRepresentation s : shelves) {
                     choices.addUserChoiceLocalized(
                         () -> {
-                            s.setResources(ResourceUtils.sum(s.getResources(), Map.of(resourceType, numOfResources)));
-                            resourcesInTemporaryStorage = ResourceUtils.difference(
-                                resourcesInTemporaryStorage,
-                                Map.of(resourceType, numOfResources)
-                            );
-                            storagesModified.add(s);
+                            putResourceInStorage(resourceType, numOfResources, s);
                             arrangeResourcesDialog();
                         },
                         "client.cli.resourcesRepositioning.specifyInWhichStorage",
                         Localization.getLocalizationInstance().getString("dashboard.shelf")
-                            + (shelves.indexOf(s) + 1)
+                            + " " + (shelves.indexOf(s) + 1)
                     );
                 }
 
                 for(ClientResourceStorageRepresentation ls : leaderStoragesFromActiveCards) {
                     choices.addUserChoiceLocalized(
                         () -> {
-                            ls.setResources(ResourceUtils.sum(ls.getResources(), Map.of(resourceType, numOfResources)));
-                            resourcesInTemporaryStorage = ResourceUtils.difference(
-                                resourcesInTemporaryStorage,
-                                Map.of(resourceType, numOfResources)
-                            );
-                            storagesModified.add(ls);
+                            putResourceInStorage(resourceType, numOfResources, ls);
                             arrangeResourcesDialog();
                         },
                         "client.cli.resourcesRepositioning.specifyInWhichStorage",
                         Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
-                            + (shelves.size() + leaderStoragesFromActiveCards.indexOf(ls) + 1)
+                            + " " + (shelves.size() + leaderStoragesFromActiveCards.indexOf(ls) + 1)
                     );
                 }
 
                 choices.apply();
                 return CompletableFuture.completedFuture(null);
         });
-        var t = 1+1;
     }
 
     protected void takeResourcesFromStorageDialog() {
@@ -181,45 +179,66 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                 for (ClientResourceStorageRepresentation s : shelves) {
                     choices.addUserChoiceLocalized(
                         () -> {
-                            s.setResources(ResourceUtils.difference(s.getResources(), Map.of(resourceType, numOfResources)));
-                            resourcesInTemporaryStorage = ResourceUtils.sum(
-                                resourcesInTemporaryStorage,
-                                Map.of(resourceType, numOfResources)
-                            );
-                            storagesModified.add(s);
+                            takeResourcesFromStorage(resourceType, numOfResources, s);
                             arrangeResourcesDialog();
                         },
                         "client.cli.resourcesRepositioning.specifyInWhichStorage",
                         Localization.getLocalizationInstance().getString("dashboard.shelf")
-                            + (shelves.indexOf(s) + 1)
+                            + " " + (shelves.indexOf(s) + 1)
                     );
                 }
 
                 for(ClientResourceStorageRepresentation ls : leaderStoragesFromActiveCards) {
                     choices.addUserChoiceLocalized(
                         () -> {
-                            ls.setResources(ResourceUtils.difference(ls.getResources(), Map.of(resourceType, numOfResources)));
-                            resourcesInTemporaryStorage = ResourceUtils.sum(
-                                resourcesInTemporaryStorage,
-                                Map.of(resourceType, numOfResources)
-                            );
-                            storagesModified.add(ls);
+                            takeResourcesFromStorage(resourceType, numOfResources, ls);
                             arrangeResourcesDialog();
                         },
                         "client.cli.resourcesRepositioning.specifyInWhichStorage",
                         Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
-                            + (shelves.size() + leaderStoragesFromActiveCards.indexOf(ls) + 1)
+                            + " " + (shelves.size() + leaderStoragesFromActiveCards.indexOf(ls) + 1)
                     );
                 }
 
                 choices.apply();
                 return CompletableFuture.completedFuture(null);
             });
-
     }
 
-    @Override
-    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
-        return super.getContentAsFormattedCharsBuffer();
+    protected void putResourceInStorage(
+        ResourceType resourceType,
+        int numOfResources,
+        ClientResourceStorageRepresentation storage
+    ) {
+        storage.setResources(ResourceUtils.sum(storage.getResources(), Map.of(resourceType, numOfResources)));
+        resourcesInTemporaryStorage = ResourceUtils.difference(
+            resourcesInTemporaryStorage,
+            Map.of(resourceType, numOfResources)
+        );
+        storagesModified.add(storage);
     }
+
+    protected void takeResourcesFromStorage(
+        ResourceType resourceType,
+        int numOfResources,
+        ClientResourceStorageRepresentation storage
+    ) {
+        if(!ResourceUtils.areResourcesAContainedInB(Map.of(resourceType, numOfResources), storage.getResources())) {
+            clientManager.tellUserLocalized(
+                "client.cli.resourcesRepositioning.notEnoughResourcesInStorage"
+            );
+        }
+        else {
+            storage.setResources(ResourceUtils.difference(
+                storage.getResources(),
+                Map.of(resourceType, numOfResources)
+            ));
+            resourcesInTemporaryStorage = ResourceUtils.sum(
+                resourcesInTemporaryStorage,
+                Map.of(resourceType, numOfResources)
+            );
+            storagesModified.add(storage);
+        }
+    }
+
 }
