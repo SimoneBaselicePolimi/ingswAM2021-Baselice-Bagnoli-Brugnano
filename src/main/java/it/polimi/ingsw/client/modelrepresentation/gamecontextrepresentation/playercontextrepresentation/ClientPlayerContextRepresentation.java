@@ -28,7 +28,6 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     private List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks;
     private final Set<ClientProductionRepresentation> baseProductions;
     private int numberOfLeaderCardsThePlayerOwns;
-    //TODO update this map
     private Map<ResourceType, Integer> totalResourcesOwnedByThePlayer = new HashMap<>();
 
     public ClientPlayerContextRepresentation(
@@ -142,6 +141,11 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
 
     public Map<ResourceType, Integer> getTotalResourcesOwnedByThePlayer() {
         return totalResourcesOwnedByThePlayer;
+    }
+
+    public void setTotalResourcesOwnedByThePlayer(Map<ResourceType, Integer> totalResourcesOwnedByThePlayer) {
+        this.totalResourcesOwnedByThePlayer = totalResourcesOwnedByThePlayer;
+        notifyViews();
     }
 
 }

@@ -15,6 +15,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,8 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     protected boolean haveLeaderCardsChanged = false;
     protected boolean haveTempStarResourcesChanged = false;
+
+    protected Map<ResourceType, Integer> totalResources = new HashMap<>();
 
     public PlayerContextObservableProxy(PlayerContext imp, GameManager gameManager) {
         super(imp, gameManager);
@@ -190,6 +193,11 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
                 imp.getPlayer(),
                 imp.getLeaderCards()
             ));
+        }
+
+        if(!totalResources.equals(imp.getAllResources())) {
+            totalResources = new HashMap<>(imp.getAllResources());
+            updates.add(new ServerTotalResourcesUpdate(imp.getPlayer(), totalResources));
         }
 
         return updates;

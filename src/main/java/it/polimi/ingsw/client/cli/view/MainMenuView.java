@@ -48,6 +48,11 @@ public class MainMenuView extends CliView{
         playersInfo = new LabelView(new ArrayList<>(), clientManager);
         playersGrid.setView(0, 0, playersInfo);
 
+        clientManager.getGameContextRepresentation().getPlayersOrder().forEach( p -> {
+            subscribeToRepresentation(clientManager.getGameContextRepresentation().getPlayerContext(p));
+            subscribeToRepresentation(clientManager.getGameContextRepresentation().getFaithPath());
+        });
+
     }
 
     public MainMenuView(CliClientManager clientManager, GameView gameView) {
