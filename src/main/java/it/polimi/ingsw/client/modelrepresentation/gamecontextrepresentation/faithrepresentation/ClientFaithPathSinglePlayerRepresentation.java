@@ -33,5 +33,6 @@ public class ClientFaithPathSinglePlayerRepresentation extends ClientFaithPathRe
 
     public void setBlackCrossFaithPosition(int blackCrossFaithPosition) {
         this.blackCrossFaithPosition = blackCrossFaithPosition;
+        notifyViews();
     }
 }

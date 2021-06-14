@@ -7,8 +7,8 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardCol
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerShuffledDevelopmentCardDeckOnTableUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerShuffledDevelopmentCardDeckOnTableUpdate;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation;
 

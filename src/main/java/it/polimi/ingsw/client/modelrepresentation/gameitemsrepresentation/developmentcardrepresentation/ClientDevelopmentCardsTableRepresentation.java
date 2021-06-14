@@ -42,6 +42,11 @@ public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentat
 
     public void setCards(Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>>> cards) {
         this.cards = cards;
+        notifyViews();
+    }
+
+    public void setPurchasableCards(Set<ClientDevelopmentCardRepresentation> purchasableCards) {
+        this.purchasableCards = new HashSet<>(purchasableCards);
     }
 
     public boolean isCardPurchasable(ClientDevelopmentCardRepresentation card) {

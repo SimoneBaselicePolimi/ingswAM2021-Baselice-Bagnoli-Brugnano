@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.gameactionshistory.PostTurnFinalAction;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
 
 import java.util.Map;
 import java.util.Set;

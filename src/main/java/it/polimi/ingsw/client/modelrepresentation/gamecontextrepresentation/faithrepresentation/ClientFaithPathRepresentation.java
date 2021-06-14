@@ -86,13 +86,16 @@ public class ClientFaithPathRepresentation extends ClientRepresentation {
 
     public void setFaithPositions(Map<Player, Integer> faithPositions) {
         this.faithPositions = faithPositions;
+        notifyViews();
     }
 
     public void setPopeFavorCards(Map<Player, List<PopeFavorCardState>> popeFavorCards) {
         this.popeFavorCards = popeFavorCards;
+        notifyViews();
     }
 
     public void setVictoryPoints(Map<Player, Integer> victoryPoints) {
         this.victoryPoints = victoryPoints;
+        notifyViews();
     }
 }

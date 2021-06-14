@@ -21,10 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LeaderCardView extends CliView {
-
-    public static final int LEADER_CARD_ROW_SIZE = 16;
-    public static final int LEADER_CARD_COL_SIZE = 30;
+public class LeaderCardView extends AbstractLeaderCardView {
 
     public static final Colour defaultProductionColour = Colour.WHITE;
 
@@ -50,7 +47,7 @@ public class LeaderCardView extends CliView {
     }
 
     public LeaderCardView(CliClientManager clientManager, ClientLeaderCardRepresentation card, boolean isBorderColourBasedOnState, int numberOfCard) {
-        super(clientManager, LEADER_CARD_ROW_SIZE, LEADER_CARD_COL_SIZE);
+        super(clientManager);
         this.card = card;
         this.isBorderColourBasedOnState = isBorderColourBasedOnState;
         this.numberOfCard = numberOfCard;
@@ -68,10 +65,12 @@ public class LeaderCardView extends CliView {
         cardGrid.setView(0, 0, cardText);
     }
 
+    @Override
     public void setProductionColour(ClientProductionRepresentation production, Colour colour) {
         productionsColourMap.put(production, colour);
     }
 
+    @Override
     public void setBorderColour(Colour borderColour, boolean updateView) {
         this.borderColour = borderColour;
         isBorderColourBasedOnState = false;
@@ -79,6 +78,7 @@ public class LeaderCardView extends CliView {
             updateView();
     }
 
+    @Override
     public void setBorderColourBasedOnState(boolean borderColourBasedOnState, boolean updateView) {
         this.isBorderColourBasedOnState = borderColourBasedOnState;
         if(updateView)

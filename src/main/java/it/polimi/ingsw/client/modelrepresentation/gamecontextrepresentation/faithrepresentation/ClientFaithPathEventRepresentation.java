@@ -38,9 +38,11 @@ public class ClientFaithPathEventRepresentation extends ClientRepresentation {
 
     public void setEndReached(boolean endReached) {
         this.endReached = endReached;
+        notifyViews();
     }
 
     public void setVaticanMeeting(boolean vaticanMeeting) {
         this.vaticanMeeting = vaticanMeeting;
+        notifyViews();
     }
 }

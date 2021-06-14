@@ -20,7 +20,7 @@ public class LeaderCardListView extends CliView {
     protected boolean enumerateCards;
     protected boolean cardsBorderColourBasedOnState;
 
-    protected Map<ClientLeaderCardRepresentation, LeaderCardView> cardRepresentationToViewMap;
+    protected Map<ClientLeaderCardRepresentation, AbstractLeaderCardView> cardRepresentationToViewMap;
 
 
     public LeaderCardListView(
@@ -83,8 +83,8 @@ public class LeaderCardListView extends CliView {
         computePages();
         List<ClientLeaderCardRepresentation> page = pages.get(pageIndex);
         int containerColSize =
-            SPACE_BETWEEN_CARDS + page.size()*(LeaderCardView.LEADER_CARD_COL_SIZE + SPACE_BETWEEN_CARDS);
-        int containerRowSize = 2*SPACE_BETWEEN_CARDS + LeaderCardView.LEADER_CARD_ROW_SIZE;
+            SPACE_BETWEEN_CARDS + page.size()*(AbstractLeaderCardView.LEADER_CARD_COL_SIZE + SPACE_BETWEEN_CARDS);
+        int containerRowSize = 2*SPACE_BETWEEN_CARDS + AbstractLeaderCardView.LEADER_CARD_ROW_SIZE;
         GridView container = new GridView(
             clientManager,
             1,
@@ -101,7 +101,7 @@ public class LeaderCardListView extends CliView {
     }
 
     protected void computePages() {
-        int maxPageSize = (columnSize-SPACE_BETWEEN_CARDS)/(LeaderCardView.LEADER_CARD_COL_SIZE+SPACE_BETWEEN_CARDS);
+        int maxPageSize = (columnSize-SPACE_BETWEEN_CARDS)/(AbstractLeaderCardView.LEADER_CARD_COL_SIZE+SPACE_BETWEEN_CARDS);
         pages = new ArrayList<>();
         List<ClientLeaderCardRepresentation> currentPage = new ArrayList<>();
         for(ClientLeaderCardRepresentation card : cardsToView) {
@@ -118,7 +118,7 @@ public class LeaderCardListView extends CliView {
         return cardsToView.get(enumerationNumber-1);
     }
 
-    public LeaderCardView getLeaderCardViewByNumber(int enumerationNumber) {
+    public AbstractLeaderCardView getLeaderCardViewByNumber(int enumerationNumber) {
         return cardRepresentationToViewMap.get(getLeaderCardRepresentationByNumber(enumerationNumber));
     }
 
@@ -126,7 +126,7 @@ public class LeaderCardListView extends CliView {
         return cardsToView.indexOf(leaderCard) + 1;
     }
 
-    public LeaderCardView getLeaderCardViewByLeaderCardRepresentation(ClientLeaderCardRepresentation leaderCard) {
+    public AbstractLeaderCardView getLeaderCardViewByLeaderCardRepresentation(ClientLeaderCardRepresentation leaderCard) {
         return cardRepresentationToViewMap.get(leaderCard);
     }
 

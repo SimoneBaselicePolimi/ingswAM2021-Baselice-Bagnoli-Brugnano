@@ -3,12 +3,14 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.utils.Colour;
@@ -87,8 +89,25 @@ public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsI
     @Override
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
 
+        if(leaderCardsPlayer.equals(clientManager.getMyPlayer())) {
+            descriptionView.setText(FormattedChar.convertStringToFormattedCharList(
+                Localization.getLocalizationInstance().getString(
+                    "client.cli.playerDashboard.lookAtLeaderCardsOfMyPlayer"
+                )
+            ));
+        } else {
+            descriptionView.setText(FormattedChar.convertStringToFormattedCharList(
+                Localization.getLocalizationInstance().getString(
+                    "client.cli.playerDashboard.lookAtLeaderCardsOfAnotherPlayer",
+                    leaderCardsPlayer.playerName,
+                    leaderCardsPlayerContext.getNumberOfLeaderCardsThePlayerOwns()
+                        - leaderCardsPlayerContext.getLeaderCardsPlayerOwns().size()
+                )
+            ));
+        }
+
         for (ClientLeaderCardRepresentation card : leaderCardList) {
-            LeaderCardView cardView = cardListView.getLeaderCardViewByLeaderCardRepresentation(card);
+            AbstractLeaderCardView cardView = cardListView.getLeaderCardViewByLeaderCardRepresentation(card);
             if (card.getState().equals(LeaderCardState.ACTIVE))
                 cardView.setBorderColour(Colour.GREEN, false);
             else if (card.getState().equals(LeaderCardState.DISCARDED))
@@ -101,4 +120,5 @@ public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsI
 
         return super.getContentAsFormattedCharsBuffer();
     }
+
 }

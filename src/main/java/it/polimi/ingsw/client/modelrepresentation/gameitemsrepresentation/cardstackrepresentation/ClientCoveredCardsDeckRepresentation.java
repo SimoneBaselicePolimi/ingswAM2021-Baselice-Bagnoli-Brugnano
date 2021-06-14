@@ -36,9 +36,11 @@ public class ClientCoveredCardsDeckRepresentation<C extends ClientRepresentation
 
     public void setCardOnTop(C cardOnTop) {
         this.cardOnTop = cardOnTop;
+        notifyViews();
     }
 
     public void setNumberOfCardsInDeck(int numberOfCardsInDeck) {
         this.numberOfCardsInDeck = numberOfCardsInDeck;
+        notifyViews();
     }
 }

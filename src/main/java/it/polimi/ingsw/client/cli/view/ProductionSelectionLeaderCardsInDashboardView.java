@@ -90,7 +90,7 @@ public class ProductionSelectionLeaderCardsInDashboardView extends AbstractPlaye
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
 
         for (ClientLeaderCardRepresentation card : leaderCardList) {
-            LeaderCardView cardView = cardListView.getLeaderCardViewByLeaderCardRepresentation(card);
+            AbstractLeaderCardView cardView = cardListView.getLeaderCardViewByLeaderCardRepresentation(card);
             if (card.getState().equals(LeaderCardState.ACTIVE)) {
                 cardView.setBorderColour(Colour.GREEN, false);
                 for (ClientProductionRepresentation production : card.getProductions()) {

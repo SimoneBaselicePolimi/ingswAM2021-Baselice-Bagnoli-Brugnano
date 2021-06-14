@@ -3,9 +3,9 @@ package it.polimi.ingsw.server.model.observableproxy;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.*;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerBlackCrossFaithUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerPopeCardsUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerBlackCrossFaithUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerPopeCardsUpdate;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathSinglePlayerRepresentation;
 
 import java.util.HashSet;

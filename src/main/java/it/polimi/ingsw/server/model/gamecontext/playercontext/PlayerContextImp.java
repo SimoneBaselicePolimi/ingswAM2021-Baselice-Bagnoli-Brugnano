@@ -415,7 +415,20 @@ public class PlayerContextImp implements PlayerContext {
 	 */
 	@Override
 	public Set<DevelopmentCard> getDevelopmentCardsOnTop() {
-		return developmentCardDecks.stream().map(PlayerOwnedDevelopmentCardDeck::peek).collect(Collectors.toSet());
+		return developmentCardDecks.stream()
+			.filter(d -> !d.isEmpty())
+			.map(PlayerOwnedDevelopmentCardDeck::peek)
+			.collect(Collectors.toSet());
+	}
+
+	@Override
+	public Set<DevelopmentCard> getPurchasableDevelopmentCards() {
+		return getDevelopmentCardsOnTop().stream()
+			.filter(c ->
+				developmentCardDecks.stream()
+					.anyMatch(d -> canAddDevelopmentCard(c, developmentCardDecks.indexOf(d))) &&
+				ResourceUtils.areResourcesAContainedInB(c.getPurchaseCost(), getAllResources())
+			).collect(Collectors.toSet());
 	}
 
 	@Override

@@ -45,6 +45,7 @@ public class ClientResourceStorageRepresentation extends ClientRegisteredIdentif
 
     public void setResources(Map<ResourceType, Integer> resources) {
         this.resources = new HashMap<>(resources);
+        notifyViews();
     }
 
     public Optional<String> getRuleErrorMessagesIfPresent(Map<ResourceType,Integer> newResources) {
