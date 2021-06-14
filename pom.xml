@@ -59,12 +59,46 @@
       <artifactId>mockito-core</artifactId>
       <version>3.6.28</version>
     </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>16</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>16</version>
+    </dependency>
 
   </dependencies>
+
+
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+        <plugin>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-maven-plugin</artifactId>
+          <version>0.0.6</version>
+          <executions>
+            <execution>
+              <id>run</id>
+              <configuration>
+                <mainClass>it.polimi.ingsw.client.gui.HelloFX</mainClass>
+              </configuration>
+            </execution>
+            <execution>
+              <id>debug</id>
+              <configuration>
+                <mainClass>it.polimi.ingsw.client.gui.HelloFX</mainClass>
+                <options>
+                  <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:8000</option>
+                </options>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>

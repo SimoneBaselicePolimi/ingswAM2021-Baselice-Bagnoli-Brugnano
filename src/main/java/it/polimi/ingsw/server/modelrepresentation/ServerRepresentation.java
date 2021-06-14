@@ -1,5 +1,22 @@
 package it.polimi.ingsw.server.modelrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.ServerGameContextRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.*;
+import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation.ServerMarketRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.*;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCardDeckRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerDevelopmentCardColourAndLevelRequirementRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerDevelopmentCardColourRequirementRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.*;
+
 //@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "RepresentationType")
 //@JsonSubTypes({
 //    @JsonSubTypes.Type(value = ServerFaithPathEventRepresentation.class, name = "FaithPathEventRepresentation"),

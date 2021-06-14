@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.PlayerRegistration">
+   <children>
+      <VBox prefHeight="466.0" prefWidth="616.0" style="-fx-border-width: 20;">
+         <Label fx:id="testLabel" text="Ciaooo" />
+         <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="617.0" text="Button" />
+      </VBox>
+   </children>
+</AnchorPane>
