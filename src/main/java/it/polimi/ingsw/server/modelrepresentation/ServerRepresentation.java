@@ -6,7 +6,6 @@ import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.Serv
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.*;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation.ServerMarketRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gamehistoryrepresentation.*;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.*;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCardDeckRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation;
