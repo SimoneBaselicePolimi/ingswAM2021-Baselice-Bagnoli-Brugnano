@@ -13,6 +13,8 @@ public class FileManager {
 
 	protected static FileManager instance;
 
+	public static final String FXML_PATH = "gui/fx";
+
 	public static final String LOCALIZATION_PATH = "localization/%s/localization.yml";
 
 	public static final String DEFAULT_RULES_PATH =  "GameRulesConfig/StandardGameRules";
@@ -93,6 +95,10 @@ public class FileManager {
 
 	protected InputStream getGameRulesFile(String gameRulesPath, String fileName) {
 		return classloader.getResourceAsStream(Path.of(gameRulesPath, fileName).toString());
+	}
+
+	public InputStream loadFileFXML(String resourcePath) {
+		return classloader.getResourceAsStream(Path.of(FXML_PATH, resourcePath).toString());
 	}
 
 	protected Map<String, Object> loadLocalization(String localization) throws IOException {
