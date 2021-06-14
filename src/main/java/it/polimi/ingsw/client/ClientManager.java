@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.clientmessage.ClientMessage;
 import it.polimi.ingsw.client.gameupdate.ClientGameUpdate;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation;
+import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
@@ -11,21 +12,15 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientManager {
 
-    public static final int MESSAGE_QUEUE_SIZE = 1024;
-
     protected MessageSender serverSender;
     protected CompletableFuture<ServerMessage> serverAnswerable = null;
-    protected Queue<ServerMessage> messagesToHandleFifo = new ArrayBlockingQueue<>(MESSAGE_QUEUE_SIZE);
 
-    //TODO mai inizializzato
     protected Player myPlayer;
 
     protected GameState gameState;
@@ -44,11 +39,17 @@ public class ClientManager {
     }
 
     public synchronized void handleServerMessage(ServerMessage serverMessage) {
-        messagesToHandleFifo.add(serverMessage);
-        if(serverAnswerable != null) {
-            serverAnswerable.complete(messagesToHandleFifo.poll());
+        if(serverAnswerable != null && !serverAnswerable.isDone()) {
+            serverAnswerable.complete(serverMessage);
         } else {
-            //TODO
+            ServerMessageUtils.ifMessageTypeCompute(
+                serverMessage,
+                GameUpdateServerMessage.class,
+                message -> {
+                    handleGameUpdates(message.gameUpdates);
+                    return null;
+                }
+            ).apply();
         }
     }
 

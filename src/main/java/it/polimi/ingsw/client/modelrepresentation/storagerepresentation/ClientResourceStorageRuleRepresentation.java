@@ -3,7 +3,9 @@ package it.polimi.ingsw.client.modelrepresentation.storagerepresentation;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
+import java.util.Map;
 import java.util.Optional;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "ruleType")
@@ -16,5 +18,6 @@ import java.util.Optional;
 public abstract class ClientResourceStorageRuleRepresentation extends ClientRepresentation {
 
     public abstract Optional<String> getDescription();
+    public abstract Optional<String> getErrorMessageIfPresent(ClientResourceStorageRepresentation storage, Map<ResourceType,Integer> newResources);
 
 }

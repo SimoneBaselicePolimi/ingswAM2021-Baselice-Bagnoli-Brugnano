@@ -47,6 +47,19 @@ public class ClientResourceStorageRepresentation extends ClientRegisteredIdentif
         this.resources = new HashMap<>(resources);
     }
 
+    public Optional<String> getRuleErrorMessagesIfPresent(Map<ResourceType,Integer> newResources) {
+        StringBuilder errorMessagesBuilder = new StringBuilder();
+
+        getRules().stream()
+            .map(r -> r.getErrorMessageIfPresent(this, newResources))
+            .filter(Optional::isPresent)
+            .forEach(d -> errorMessagesBuilder.append(d.get()).append("\n"));
+
+        if(errorMessagesBuilder.toString().isEmpty())
+            return Optional.empty();
+        return Optional.of(errorMessagesBuilder.toString());
+    }
+
     public String getDescription() {
         StringBuilder storageDescription = new StringBuilder();
         storageDescription.append("\n");
