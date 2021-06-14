@@ -90,22 +90,27 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
 
     public void setShelves(Set<ClientResourceStorageRepresentation> shelves) {
         this.shelves = shelves;
+        notifyViews();
     }
 
     public void setTempStarResources(int tempStarResources) {
         this.tempStarResources = tempStarResources;
+        notifyViews();
     }
 
     public void setLeaderCardsPlayerOwns(Set<ClientLeaderCardRepresentation> leaderCardsPlayerOwns) {
         this.leaderCardsPlayerOwns = leaderCardsPlayerOwns;
+        notifyViews();
     }
 
     public void setDevelopmentCardDecks(List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks) {
         this.developmentCardDecks = developmentCardDecks;
+        notifyViews();
     }
 
     public void setNumberOfLeaderCardsThePlayerOwns(int numberOfLeaderCardsThePlayerOwns) {
         this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
+        notifyViews();
     }
 
     public Set<ClientLeaderCardRepresentation> getActiveLeaderCards() {
@@ -129,7 +134,6 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
             .map(ClientDevelopmentCardRepresentation::getProduction)
             .collect(Collectors.toSet());
     }
-
 
     public Set<ClientProductionRepresentation> getActiveProductions() {
         return Stream.concat(Stream.concat(

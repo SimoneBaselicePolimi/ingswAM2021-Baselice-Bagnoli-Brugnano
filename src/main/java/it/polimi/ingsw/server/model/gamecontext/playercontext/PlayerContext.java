@@ -229,4 +229,6 @@ public interface PlayerContext extends Representable<ServerPlayerContextRepresen
      * @return returns all the development cards owned by the player that are on top of the relative deck
      */
     Set<DevelopmentCard> getDevelopmentCardsOnTop();
+
+    Set<DevelopmentCard> getPurchasableDevelopmentCards();
 }

@@ -9,7 +9,7 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCa
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.*;
+import it.polimi.ingsw.server.model.gameupdate.*;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext> implements PlayerContext {
 
@@ -178,6 +179,11 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
     }
 
     @Override
+    public Set<DevelopmentCard> getPurchasableDevelopmentCards() {
+        return imp.getPurchasableDevelopmentCards();
+    }
+
+    @Override
     public Set<ServerGameUpdate> getUpdates() {
 
         Set<ServerGameUpdate> updates = new HashSet<>();
@@ -198,6 +204,10 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
         if(!totalResources.equals(imp.getAllResources())) {
             totalResources = new HashMap<>(imp.getAllResources());
             updates.add(new ServerTotalResourcesUpdate(imp.getPlayer(), totalResources));
+            updates.add(new ServerPurchasableDevelopmentCardsUpdate(
+                getPurchasableDevelopmentCards().stream()
+                    .map(DevelopmentCard::getServerRepresentation).collect(Collectors.toSet())
+            ));
         }
 
         return updates;

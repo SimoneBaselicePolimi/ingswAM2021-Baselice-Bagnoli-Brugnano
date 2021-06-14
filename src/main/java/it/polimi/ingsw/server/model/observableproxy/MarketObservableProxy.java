@@ -4,8 +4,8 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gameitems.MarbleColour;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerMarketUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerMarketUpdate;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation.ServerMarketRepresentation;
 
 import java.util.HashSet;

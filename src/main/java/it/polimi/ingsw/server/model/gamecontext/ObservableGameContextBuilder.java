@@ -21,7 +21,6 @@ import it.polimi.ingsw.server.model.observableproxy.*;
 import it.polimi.ingsw.server.model.storage.ObservableResourcesStorageBuilder;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageBuilder;
-import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
 
 import java.util.List;
 import java.util.Map;
@@ -82,17 +81,6 @@ public class ObservableGameContextBuilder extends GameContextBuilder{
 	) {
 		return new PlayerContextObservableProxy(
 			super.initializePlayerContext(player, shelves, decks, infiniteChest, temporaryStorage, baseProductions),
-			gameManager
-		);
-	}
-
-	@Override
-	public ResourceStorage initializeResourceStorage(
-		String resourceStorageID,
-		List<ResourceStorageRule> rules
-	) {
-		return new ResourceStorageObservableProxy(
-			super.initializeResourceStorage(resourceStorageID, rules),
 			gameManager
 		);
 	}

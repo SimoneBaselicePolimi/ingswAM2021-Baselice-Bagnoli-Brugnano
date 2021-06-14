@@ -127,9 +127,11 @@ public class GameContextBuilder {
 			decks.add(initializePlayerOwnedDevelopmentCardDeck(idDeck));
 		}
 
-		ResourceStorage infiniteChest = initializeResourceStorage("InfChest_ID", new ArrayList<>());
+		ResourceStorage infiniteChest = initializeResourceStorageBuilder()
+			.createResourceStorage("InfChest_ID");
 
-		ResourceStorage temporaryStorage = initializeResourceStorage("TempStorage_ID", new ArrayList<>());
+		ResourceStorage temporaryStorage = initializeResourceStorageBuilder()
+			.createResourceStorage("TempStorage_ID");
 
 		Set<Production> baseProductions = new HashSet<>();
 		for(ProductionConfig basicProductionConfig : gameInfoConfig.basicProductionPower) {
@@ -160,15 +162,6 @@ public class GameContextBuilder {
 		return "ResourceStorage_ID_" + numResourceStorageID;
 	}
 
-	public ResourceStorage initializeResourceStorage(
-		String resourceStorageID,
-		List<ResourceStorageRule> rules
-	) {
-		ResourceStorageBuilder builder = initializeResourceStorageBuilder();
-		rules.forEach(builder::addRule);
-		return builder.createResourceStorage(resourceStorageID);
-	}
-
 	protected ResourceStorage buildResourceStorage(ResourceStorageConfig resourceStorageConf) {
 		String resourceStorageID = generateResourceStorageID();
 
@@ -176,7 +169,9 @@ public class GameContextBuilder {
 			.map(ResourceStorageConfig.StorageConfig.RuleConfig::createRule)
 			.collect(Collectors.toList());
 
-		return initializeResourceStorage(resourceStorageID, rules);
+		ResourceStorageBuilder builder = initializeResourceStorageBuilder();
+		rules.forEach(builder::addRule);
+		return builder.createResourceStorage(resourceStorageID);
 	}
 
 	public MarbleColour initializeMarbleColour(

@@ -8,8 +8,8 @@ import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerActivePlayerUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerActivePlayerUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.ServerGameContextRepresentation;
 
 import java.util.HashSet;

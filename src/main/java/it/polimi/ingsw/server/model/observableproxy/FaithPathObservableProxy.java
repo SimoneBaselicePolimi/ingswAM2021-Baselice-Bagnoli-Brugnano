@@ -5,9 +5,9 @@ import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathEvent;
 import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerFaithUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerPopeCardsUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerFaithUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerPopeCardsUpdate;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathRepresentation;
 
 import java.util.HashSet;

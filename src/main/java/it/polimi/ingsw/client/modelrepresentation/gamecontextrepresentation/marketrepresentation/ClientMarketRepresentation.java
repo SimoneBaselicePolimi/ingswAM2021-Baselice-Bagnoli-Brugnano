@@ -63,10 +63,12 @@ public class ClientMarketRepresentation extends ClientRepresentation {
 
     public void setMatrix(ClientMarbleColourRepresentation[][] matrix) {
         this.matrix = matrix;
+        notifyViews();
     }
 
     public void setOutMarble(ClientMarbleColourRepresentation outMarble) {
         this.outMarble = outMarble;
+        notifyViews();
     }
 
 }

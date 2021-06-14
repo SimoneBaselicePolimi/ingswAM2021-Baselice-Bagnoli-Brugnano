@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.model.notifier.gameupdate;
+package it.polimi.ingsw.server.model.gameupdate;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;

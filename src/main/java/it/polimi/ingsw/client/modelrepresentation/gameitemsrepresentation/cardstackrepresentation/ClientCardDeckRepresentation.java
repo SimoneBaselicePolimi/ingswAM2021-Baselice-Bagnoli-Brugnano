@@ -37,6 +37,7 @@ public class ClientCardDeckRepresentation<C> extends ClientRegisteredIdentifiabl
 
     public void setCardDeck(Stack<C> cardDeck) {
         this.cardDeck = cardDeck;
+        notifyViews();
     }
 
     public C peek() throws EmptyStackException {

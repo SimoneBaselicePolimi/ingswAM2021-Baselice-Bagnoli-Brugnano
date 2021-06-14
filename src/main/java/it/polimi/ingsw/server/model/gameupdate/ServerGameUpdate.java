@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.model.notifier.gameupdate;
+package it.polimi.ingsw.server.model.gameupdate;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = ServerMarketUpdate.class, name = "MarketUpdate"),
     @JsonSubTypes.Type(value = ServerPlayerOwnedDevelopmentCardDeckUpdate.class, name = "PlayerOwnedDevelopmentCardDeckUpdate"),
     @JsonSubTypes.Type(value = ServerPopeCardsUpdate.class, name = "PopeCardsUpdate"),
+    @JsonSubTypes.Type(value = ServerPurchasableDevelopmentCardsUpdate.class, name = "PurchasableDevelopmentCardsUpdate"),
     @JsonSubTypes.Type(value = ServerResourceStorageUpdate.class, name = "ResourceStorageUpdate"),
     @JsonSubTypes.Type(value = ServerTotalResourcesUpdate.class, name = "TotalResourcesUpdate"),
     @JsonSubTypes.Type(value = ServerShuffledDevelopmentCardDeckOnTableUpdate.class, name = "ShuffledDevelopmentCardDeckOnTableUpdate"),

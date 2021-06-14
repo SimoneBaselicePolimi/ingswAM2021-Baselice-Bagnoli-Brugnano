@@ -108,6 +108,8 @@ client:
       activateNewLeaderCard: "Attiva una carta leader"
       canNotActivateNewLeaderCard: "Nessuna delle tue carte leader può essere attivata"
       selectLeaderCardToActivate: "Attiva la carta %s"
+      lookAtLeaderCardsOfMyPlayer: "Possiedi le seguenti carte leader:"
+      lookAtLeaderCardsOfAnotherPlayer: "Il giocatore %s possiede le seguenti carte. Inoltre, possiede %d carte nascoste"
     resourcesChoice:
       title: "Scegli quali risorse ottenere"
       obtained: "Risorse già ottenute: "

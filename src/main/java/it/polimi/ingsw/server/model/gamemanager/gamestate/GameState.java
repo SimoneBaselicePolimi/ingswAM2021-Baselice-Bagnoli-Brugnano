@@ -8,7 +8,7 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 

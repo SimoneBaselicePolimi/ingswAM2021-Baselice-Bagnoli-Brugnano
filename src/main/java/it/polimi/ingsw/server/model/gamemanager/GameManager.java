@@ -18,7 +18,7 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
-import it.polimi.ingsw.server.model.notifier.gameupdate.ServerGameUpdate;
+import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
 import it.polimi.ingsw.server.model.observableproxy.GameHistoryObservableProxy;
 import it.polimi.ingsw.server.model.observableproxy.ObservableProxy;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;

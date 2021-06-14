@@ -23,10 +23,12 @@ public class ClientGameHistoryRepresentation extends ClientRepresentation {
 
     public void setGameActions(List<GameAction> gameActions) {
         this.gameActions = new ArrayList<>(gameActions);
+        notifyViews();
     }
 
     public void addGameAction(GameAction gameAction) {
         this.gameActions.add(gameAction);
+        notifyViews();
     }
 
 }

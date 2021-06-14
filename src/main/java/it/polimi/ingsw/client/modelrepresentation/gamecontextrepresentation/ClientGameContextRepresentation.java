@@ -70,5 +70,6 @@ public class ClientGameContextRepresentation extends ClientRepresentation {
 
     public void setActivePlayer(Player activePlayer) {
         this.activePlayer = activePlayer;
+        notifyViews();
     }
 }
