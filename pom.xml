@@ -85,13 +85,13 @@
             <execution>
               <id>run</id>
               <configuration>
-                <mainClass>it.polimi.ingsw.client.gui.HelloFX</mainClass>
+                <mainClass>it.polimi.ingsw.client.gui.GuiClient</mainClass>
               </configuration>
             </execution>
             <execution>
               <id>debug</id>
               <configuration>
-                <mainClass>it.polimi.ingsw.client.gui.HelloFX</mainClass>
+                <mainClass>it.polimi.ingsw.client.gui.GuiClient</mainClass>
                 <options>
                   <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:8000</option>
                 </options>

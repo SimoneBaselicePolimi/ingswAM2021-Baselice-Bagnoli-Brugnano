@@ -21,8 +21,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 
-public class
-Client {
+public class Client {
 
     protected static final ProjectLogger logger = ProjectLogger.getLogger();
 

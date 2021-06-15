@@ -11,6 +11,11 @@ client:
     userInputNotExpected: "Aspetta, operazione in corso..."
 
   gui:
+    playerRegistration:
+      titleLabel: "MAESTRI DEL RINASCIMENTO"
+      descLabel: "Nome del giocatore"
+      errorLabel: "Nome già in uso"
+      confirmButton: "Conferma"
     testLoc: "test localizeeeed"
 
   cli:
