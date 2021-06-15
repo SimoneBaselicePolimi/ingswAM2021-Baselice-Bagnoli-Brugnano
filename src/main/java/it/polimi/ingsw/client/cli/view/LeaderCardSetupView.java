@@ -33,9 +33,9 @@ public class LeaderCardSetupView extends CliView {
 
     protected InitialChoicesServerMessage initialChoicesServerMessage;
 
-    List<ClientLeaderCardRepresentation> alreadySelectedCards = new ArrayList<>();
+    protected List<ClientLeaderCardRepresentation> alreadySelectedCards = new ArrayList<>();
 
-    int cardsLeftToChoose;
+    protected int cardsLeftToChoose;
 
     public LeaderCardSetupView(
         CliClientManager clientManager,
@@ -134,10 +134,6 @@ public class LeaderCardSetupView extends CliView {
             ).addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new PlayerDashboardView(clientManager.getMyPlayer(), clientManager, gameView)),
                 "client.cli.mainMenuActions.openPersonalDashboard"
-            //TODO chiedere al player quale dashboard diversa dalla sua vuole vedere
-//            ).addUserChoiceLocalized(
-//                () -> gameView.setMainContentView(new PlayerDashboardView(clientManager, gameView)),
-//                "client.cli.mainMenuActions.openDifferentPlayerDashboard"
             ).apply();
     }
 
@@ -196,6 +192,10 @@ public class LeaderCardSetupView extends CliView {
                     .collect(Collectors.toMap(s -> s, ClientResourceStorageRepresentation::getResources))
             )
         );
+        if(clientManager.getMyPlayer().equals(clientManager.getGameContextRepresentation().getActivePlayer()))
+            clientManager.setGameState(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION);
+        else
+            clientManager.setGameState(GameState.ANOTHER_PLAYER_TURN);
     }
 
 

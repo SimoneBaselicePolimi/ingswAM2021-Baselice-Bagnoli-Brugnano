@@ -101,7 +101,7 @@ public class FaithPathView extends CliView{
                 ).apply();
         } else {
             UserChoicesUtils.makeUserChoose(clientManager)
-                .addUserChoice(
+                .addUserChoiceLocalized(
                     () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                     "client.cli.game.returnToMenu"
                 ).apply();

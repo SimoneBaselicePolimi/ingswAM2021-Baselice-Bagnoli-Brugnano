@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
@@ -48,15 +49,49 @@ public class MainMenuView extends CliView{
         playersInfo = new LabelView(new ArrayList<>(), clientManager);
         playersGrid.setView(0, 0, playersInfo);
 
-        clientManager.getGameContextRepresentation().getPlayersOrder().forEach( p -> {
+        clientManager.getGameContextRepresentation().getPlayersOrder().forEach(p -> {
             subscribeToRepresentation(clientManager.getGameContextRepresentation().getPlayerContext(p));
             subscribeToRepresentation(clientManager.getGameContextRepresentation().getFaithPath());
         });
+
+        startMainMenuDialog();
 
     }
 
     public MainMenuView(CliClientManager clientManager, GameView gameView) {
         this(clientManager, gameView, 0, 0);
+    }
+
+    void startMainMenuDialog() {
+        UserChoicesUtils.makeUserChoose(clientManager)
+            .addUserChoiceLocalized(
+            () -> gameView.setMainContentView(new MarketView(clientManager, gameView)),
+            "client.cli.mainMenuActions.openMarket"
+        ).addUserChoiceLocalized(
+            () -> gameView.setMainContentView(new DevCardTableView(clientManager, gameView)),
+            "client.cli.mainMenuActions.openDevCardsTable"
+        ).addUserChoiceLocalized(
+            () -> gameView.setMainContentView(new FaithPathView(clientManager, gameView)),
+            "client.cli.mainMenuActions.openFaithPath"
+        ).addUserChoiceLocalized(
+            () -> gameView.setMainContentView(new PlayerDashboardView(clientManager.getMyPlayer(), clientManager, gameView)),
+            "client.cli.mainMenuActions.openPersonalDashboard"
+        ).addUserChoiceLocalized(
+            this::askThePlayerToOpenTheDashboardOf,
+            "client.cli.mainMenuActions.openDifferentPlayerDashboard"
+        ).apply();
+    }
+
+    protected void askThePlayerToOpenTheDashboardOf() {
+        clientManager.getGameContextRepresentation().getPlayersOrder().stream()
+            .filter(player -> !player.equals(clientManager.getMyPlayer()))
+            .forEach(anotherPlayer ->
+                UserChoicesUtils.makeUserChoose(clientManager).addUserChoiceLocalized(
+                    () -> gameView.setMainContentView(new PlayerDashboardView(anotherPlayer, clientManager, gameView)),
+                    "client.cli.mainMenuActions.openDashboardOfPlayerName",
+                    anotherPlayer.playerName
+                ).apply()
+            );
     }
 
     @Override
@@ -75,7 +110,10 @@ public class MainMenuView extends CliView{
                         + "\n\n",
                         clientManager.getGameContextRepresentation().getActivePlayer().equals(p) ?
                             Colour.GREEN : Colour.WHITE,
-                        Colour.BLACK
+                        Colour.BLACK,
+                        false,
+                        p.equals(clientManager.getMyPlayer()),
+                        false
                     ).stream()
                 ).collect(Collectors.toList())
         );

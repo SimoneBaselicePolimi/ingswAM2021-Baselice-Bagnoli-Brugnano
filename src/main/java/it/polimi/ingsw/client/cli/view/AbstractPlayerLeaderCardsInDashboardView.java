@@ -36,18 +36,15 @@ public class AbstractPlayerLeaderCardsInDashboardView extends CliView{
         leaderCardsPlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(leaderCardsPlayer);
 
         container = new GridView(clientManager, 2, 1, 1);
+        container.setRowWeight(1, 4);
         addChildView(container, 0,0);
 
-        cardListView = new LeaderCardListView(
-            new ArrayList<>(leaderCardsPlayerContext.getLeaderCardsPlayerOwns()),
-            true,
-            clientManager
-        );
-
-        container.setView(0, 0, cardListView);
-
         descriptionView = new LabelView(new ArrayList<>(), clientManager);
-        container.setView(1, 0, descriptionView);
+        container.setView(0, 0, descriptionView);
+
+        leaderCardList = new ArrayList<>(leaderCardsPlayerContext.getLeaderCardsPlayerOwns());
+        cardListView = new LeaderCardListView(leaderCardList, true, clientManager);
+        container.setView(1, 0, cardListView);
     }
 
     public AbstractPlayerLeaderCardsInDashboardView(
