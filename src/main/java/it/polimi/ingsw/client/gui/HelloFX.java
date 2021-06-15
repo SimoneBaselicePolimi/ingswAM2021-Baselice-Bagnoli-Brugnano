@@ -21,7 +21,7 @@ public class HelloFX extends Application {
         String javafxVersion = System.getProperty("javafx.version");
         Localization.getLocalizationInstance().setLocalizationLanguage("it");
         Parent parent = new FXMLLoader().load(FileManager.getFileManagerInstance().loadFileFXML("PlayerRegistration.fxml"));
-        Scene scene = new Scene(new StackPane(parent), 640, 480);
+        Scene scene = new Scene(new StackPane(parent), 1920, 1080);
         stage.setScene(scene);
         stage.show();
     }
