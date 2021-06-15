@@ -17,6 +17,12 @@ client:
       errorLabel: "Nome già in uso"
       confirmButton: "Conferma"
     testLoc: "test localizeeeed"
+    numberOfPlayers:
+      descLabel: "Numero di giocatori"
+      errorLabel: "Numero di giocatori non valido"
+      confirmButton: "Conferma"
+    preGame:
+      numOfPlayers: "%d/%d giocatori"
 
   cli:
     setup:

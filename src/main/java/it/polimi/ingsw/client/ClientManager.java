@@ -84,6 +84,10 @@ public class ClientManager {
         contextInfoMap.put(key, value);
     }
 
+    public Object getEntryInContextInfoMap(String key) {
+        return contextInfoMap.get(key);
+    }
+
     public Map<String, Object> getContextInfoMap() {
         return contextInfoMap;
     }

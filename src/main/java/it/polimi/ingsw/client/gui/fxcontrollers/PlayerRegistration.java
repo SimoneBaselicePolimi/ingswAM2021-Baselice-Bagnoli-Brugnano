@@ -57,7 +57,7 @@ public class PlayerRegistration extends AbstractController {
             .thenCompose(
                 serverMessage -> ServerMessageUtils.ifMessageTypeCompute(
                     serverMessage,
-                    PlayerNameAlreadyExistsServerMessage .class,
+                    PlayerNameAlreadyExistsServerMessage.class,
                     message -> {
                         errorLabel.setVisible(true);
                         return CompletableFuture.completedFuture(null);
@@ -66,14 +66,17 @@ public class PlayerRegistration extends AbstractController {
                     PlayerCanCreateNewLobbyServerMessage.class,
                     message -> {
                         clientManager.setMyPlayer(new Player(nameField.getText()));
-                        clientManager.loadScene("preGame.fxml");
+                        clientManager.addEntryToContextInfoMap("maxLobbySize", message.maxLobbySize);
+                        clientManager.addEntryToContextInfoMap("isSinglePlayerEnabled", message.singlePlayerEnabled);
+                        clientManager.loadScene("NumberOfPlayers.fxml");
                         return CompletableFuture.completedFuture(message);
                     }
                 ).elseIfMessageTypeCompute(
                     NewPlayerEnteredNewGameLobbyServerMessage.class,
                     message -> {
                         clientManager.setMyPlayer(new Player(nameField.getText()));
-                        clientManager.loadScene("preGame.fxml");
+                        clientManager.addEntryToContextInfoMap("newPlayerEnteredMessage", message);
+                        clientManager.loadScene("Lobby.fxml");
                         return CompletableFuture.completedFuture(message);
                     }
                 ).elseCompute(
