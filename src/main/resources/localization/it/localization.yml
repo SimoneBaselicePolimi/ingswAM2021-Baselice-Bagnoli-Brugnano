@@ -54,7 +54,8 @@ client:
       openDevCardsTable: "Apri il tavolo delle carte sviluppo"
       openFaithPath: "Apri il percorso fede"
       openPersonalDashboard: "Apri la tua plancia di gioco"
-      openDifferentPlayerDashboard: "Guarda la plancia di un altro giocatore"
+      openDifferentPlayerDashboard: "Apri la plancia di un altro giocatore"
+      openDashboardOfPlayerName: "Guarda la plancia di: %s"
     market:
       rowChoice: "Prendi riga dal mercato"
       columnChoice: "Prendi colonna dal mercato"

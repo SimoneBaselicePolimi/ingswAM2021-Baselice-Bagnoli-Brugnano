@@ -40,8 +40,6 @@ public class MarketView extends CliView{
         super(clientManager);
         this.gameView = gameView;
 
-        startMarketDialog();
-
         activePlayer = clientManager.getGameContextRepresentation().getActivePlayer();
         activePlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(activePlayer);
         marketRepresentation = clientManager.getGameContextRepresentation().getMarket();
@@ -112,6 +110,8 @@ public class MarketView extends CliView{
             legend.setView(numOfRow, 1, marbleDescriptionCell);
             numOfRow++;
         }
+
+        startMarketDialog();
 
     }
 

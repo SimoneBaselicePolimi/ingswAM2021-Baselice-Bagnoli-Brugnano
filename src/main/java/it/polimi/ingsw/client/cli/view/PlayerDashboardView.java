@@ -30,7 +30,7 @@ public class PlayerDashboardView extends AbstractPlayerDashboardView {
             );
             choices.addUserChoiceLocalized(
                 () -> gameView.setMainContentView(
-                    new PlayerLeaderCardsInDashboardView(clientManager, clientManager.getMyPlayer(), gameView)
+                    new PlayerLeaderCardsInDashboardView(clientManager, dashboardPlayer, gameView)
                 ),
                 "client.cli.playerDashboard.leaderCardList"
             );
@@ -49,11 +49,11 @@ public class PlayerDashboardView extends AbstractPlayerDashboardView {
         } else {
             choices.addUserChoiceLocalized(
                 () -> gameView.setMainContentView(
-                    new PlayerLeaderCardsInDashboardView(clientManager, clientManager.getMyPlayer(), gameView)
+                    new PlayerLeaderCardsInDashboardView(clientManager, dashboardPlayer, gameView)
                 ),
                 "client.cli.playerDashboard.leaderCardList"
             );
-            choices.addUserChoice(
+            choices.addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                 "client.cli.game.returnToMenu"
             );
