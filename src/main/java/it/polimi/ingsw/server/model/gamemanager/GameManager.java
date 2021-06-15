@@ -143,17 +143,20 @@ public class GameManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<Player, ServerMessage> handleClientRequest(ClientRequest request)
+	public void handleClientRequest(ClientRequest request)
 			throws ResourceStorageRuleViolationException,
 			LeaderCardRequirementsNotSatisfiedException,
 			ForbiddenPushOnTopException,
 			NotEnoughResourcesException {
 		ClientRequestValidator validator = request.getValidator();
 		Optional<InvalidRequestServerMessage> error = validator.getErrorMessage(request, this);
-		if(error.isPresent())
-			return Map.of(request.player, error.get());
-		else
-			return request.callHandler(currentState);
+		if(error.isPresent()) {
+			controller.sendMessagesToClients(Map.of(request.player, error.get()));
+		} else {
+			controller.sendMessagesToClients(request.callHandler(currentState));
+			if(currentState.isStateDone())
+				changeState();
+		}
 	}
 
 	private GameRules readGameRulesFromFiles(String gameRulesPath) throws InvalidGameRules {

@@ -91,10 +91,7 @@ public class GameController extends ClientHandler {
                 );
             else {
                 try {
-                    Map<Player, ServerMessage> answers = gameManager.handleClientRequest(request.request);
-                    answers.forEach( (player, answerMessage) ->
-                        sendMessage(answerMessage, playersManager.getClientForPlayer(player))
-                    );
+                    gameManager.handleClientRequest(request.request);
                 } catch (ResourceStorageRuleViolationException | LeaderCardRequirementsNotSatisfiedException | NotEnoughResourcesException | ForbiddenPushOnTopException e) {
                     new InvalidRequestServerMessage("Invalid request. Unexpected error");
                 }
