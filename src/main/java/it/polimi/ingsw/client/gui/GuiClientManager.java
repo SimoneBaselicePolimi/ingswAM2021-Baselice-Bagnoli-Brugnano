@@ -54,12 +54,13 @@ public class GuiClientManager extends ClientManager {
                 parent = new FXMLLoader().load(
                     FileManager.getFileManagerInstance().loadFileFXML(path)
                 );
+                Scene scene = new Scene(new StackPane(parent), WINDOW_WIDTH, WINDOW_HEIGHT);
+                mainStage.setScene(scene);
+                mainStage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Scene scene = new Scene(new StackPane(parent), WINDOW_WIDTH, WINDOW_HEIGHT);
-            mainStage.setScene(scene);
-            mainStage.show();
+
         });
     }
 

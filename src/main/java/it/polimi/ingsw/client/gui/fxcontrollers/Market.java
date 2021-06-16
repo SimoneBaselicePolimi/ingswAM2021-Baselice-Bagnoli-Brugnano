@@ -1,4 +1,4 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
-public class Market {
+public class Market extends AbstractController{
 }

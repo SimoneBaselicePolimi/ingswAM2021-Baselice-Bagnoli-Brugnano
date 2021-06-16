@@ -26,9 +26,6 @@ public class NumberOfPlayers extends AbstractController{
     Label descLabel;
 
     @FXML
-    TextField nameField;
-
-    @FXML
     Button confirmButton;
 
     @FXML
@@ -62,7 +59,6 @@ public class NumberOfPlayers extends AbstractController{
                     serverMessage,
                     NewPlayerEnteredNewGameLobbyServerMessage.class,
                     message -> {
-                        clientManager.addEntryToContextInfoMap("lobbySize", message.lobbySize);
                         clientManager.addEntryToContextInfoMap("newPlayerEnteredMessage", message);
                         clientManager.loadScene("Lobby.fxml");
                         return CompletableFuture.completedFuture(message);

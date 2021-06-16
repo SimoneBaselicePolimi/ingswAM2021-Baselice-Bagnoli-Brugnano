@@ -85,5 +85,4 @@ public class PlayerRegistration extends AbstractController {
             );
 
     }
-
 }

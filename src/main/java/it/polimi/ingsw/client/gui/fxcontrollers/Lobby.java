@@ -1,14 +1,21 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
+import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
+import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage;
 import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
 import it.polimi.ingsw.client.servermessage.*;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
-import java.awt.*;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
 public class Lobby extends AbstractController {
@@ -22,10 +29,6 @@ public class Lobby extends AbstractController {
     @FXML
     Label currentPlayersInLobby;
 
-    @FXML
-    Button startGameButton;
-
-    StringBuilder msg = new StringBuilder();
 
     public Lobby() {
 
@@ -34,37 +37,89 @@ public class Lobby extends AbstractController {
     @FXML
     private void initialize() {
 
-        startGameButton.setVisible(false);
-
-        NewPlayerEnteredNewGameLobbyServerMessage message = (NewPlayerEnteredNewGameLobbyServerMessage)clientManager.getEntryInContextInfoMap("newPlayerEnteredMessage");
+        NewPlayerEnteredNewGameLobbyServerMessage message = (NewPlayerEnteredNewGameLobbyServerMessage) clientManager.getEntryInContextInfoMap("newPlayerEnteredMessage");
         titleLabel.setText(Localization.getLocalizationInstance().getString("client.gui.playerRegistration.titleLabel"));
-        numOfPlayerLabel.setText(Localization.getLocalizationInstance().getString(
-            "client.gui.preGame.numOfPlayers",
-            message.lobbySize,
-            message.playersInLobby.size()
-        ));
 
-        for(Player player : message.playersInLobby){
-            msg.append(player.getName());
-            msg.append(",\n");
-        }
-        currentPlayersInLobby.setText(msg.toString());
 
-        if(message.playersInLobby.equals(message.lobbySize))
-            startGameButton.setVisible(true);
+        updateLobby(message);
+
+
     }
 
-    @FXML
-    private void onStartGameButtonPressed(){
+    private void updateLobby(NewPlayerEnteredNewGameLobbyServerMessage newMessage) {
 
-        clientManager.sendMessageAndGetAnswer(new ReadyToStartGameClientMessage())
+        StringBuilder msg = new StringBuilder();
+        for (Player player : newMessage.playersInLobby) {
+            msg.append(" - ");
+            msg.append(player.getName());
+            msg.append("\n");
+        }
+
+        Platform.runLater(() -> {
+            numOfPlayerLabel.setText(Localization.getLocalizationInstance().getString(
+                "client.gui.preGame.numOfPlayers",
+                newMessage.playersInLobby.size(),
+                newMessage.lobbySize
+            ));
+            currentPlayersInLobby.setText(msg.toString());
+
+            if (newMessage.playersInLobby.size() == newMessage.lobbySize) {
+                try {
+                    completePreGameSetup(newMessage.playersInLobby);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                clientManager.getNewMessageFromServer()
+                    .thenCompose(serverMessage ->
+                        ServerMessageUtils.ifMessageTypeCompute(
+                            serverMessage,
+                            NewPlayerEnteredNewGameLobbyServerMessage.class,
+                            message -> {
+                                updateLobby(message);
+                                return CompletableFuture.completedFuture(null);
+                            }
+                        ).elseCompute(
+                            m -> CompletableFuture.failedFuture(new Exception("Ooops"))
+                        ).apply()
+                    );
+            }
+
+        });
+    }
+
+
+    private void completePreGameSetup(List<Player> players) throws InterruptedException {
+
+        Thread.sleep(new Random().nextInt(2000)); //TODO
+
+        clientManager.setGameItemsManager(new GameItemsManager());
+        clientManager.addEntryToContextInfoMap("gameItemsManager", clientManager.getGameItemsManager());
+        players.forEach(player -> clientManager.getGameItemsManager().addItem(player));
+
+        clientManager.sendMessageAndGetAnswer(new GetInitialGameRepresentationClientMessage())
             .thenCompose(
                 serverMessage -> ServerMessageUtils.ifMessageTypeCompute(
                     serverMessage,
                     GameInitialRepresentationServerMessage.class,
-                    message -> {
-                        clientManager.loadScene("InitialLeaderCardChoices.fxml");
-                        return CompletableFuture.completedFuture(message);
+                    representationServerMessage -> {
+                        clientManager.setGameContextRepresentation(representationServerMessage.gameContextRepresentation);
+                        return clientManager.sendMessageAndGetAnswer(new ReadyToStartGameClientMessage())
+                            .thenCompose(serverMessage2 ->
+                                ServerMessageUtils.ifMessageTypeCompute(
+                                    serverMessage2,
+                                    InitialChoicesServerMessage.class,
+                                    initialChoicesServerMessage -> {
+                                        clientManager.addEntryToContextInfoMap("initialChoicesMessage", serverMessage2);
+                                        clientManager.setGameState(GameState.GAME_SETUP);
+                                        clientManager.handleGameUpdates(initialChoicesServerMessage.gameUpdates);
+                                        clientManager.loadScene("LeaderCardsSetup.fxml");
+                                        return CompletableFuture.completedFuture(null);
+                                    }
+                                ).elseCompute(
+                                    m2 -> CompletableFuture.failedFuture(new Exception())
+                                ).apply()
+                            );
                     }
                 ).elseCompute(
                     m -> CompletableFuture.failedFuture(new Exception("Ooops"))
