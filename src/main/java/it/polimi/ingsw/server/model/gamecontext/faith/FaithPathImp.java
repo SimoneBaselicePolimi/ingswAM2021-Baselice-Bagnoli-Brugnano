@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
-import it.polimi.ingsw.gameactionshistory.FaithPathLastPositionReachedAction;
-import it.polimi.ingsw.gameactionshistory.FaithPathMoveAction;
-import it.polimi.ingsw.gameactionshistory.FaithPathVaticanReportAction;
+import it.polimi.ingsw.server.gameactionshistory.FaithPathLastPositionReachedAction;
+import it.polimi.ingsw.server.gameactionshistory.FaithPathMoveAction;
+import it.polimi.ingsw.server.gameactionshistory.FaithPathVaticanReportAction;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.*;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathRepresentation;

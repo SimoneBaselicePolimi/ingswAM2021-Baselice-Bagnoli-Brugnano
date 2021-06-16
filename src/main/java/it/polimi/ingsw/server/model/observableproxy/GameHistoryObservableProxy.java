@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.observableproxy;
 
-import it.polimi.ingsw.gameactionshistory.GameAction;
+import it.polimi.ingsw.server.gameactionshistory.GameAction;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameupdate.ServerGameHistoryUpdate;

@@ -90,6 +90,7 @@ public class PreGameView extends CliView {
                     clientManager,
                     gameView
                 ));
+                clientManager.handleGameUpdates(initialChoicesServerMessage.gameUpdates);
                 //gameView.print();
                 return CompletableFuture.completedFuture(null);
             }).elseCompute(message -> {

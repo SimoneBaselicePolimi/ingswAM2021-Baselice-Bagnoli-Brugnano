@@ -1,12 +1,15 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
-import it.polimi.ingsw.gameactionshistory.DevelopmentAction;
-import it.polimi.ingsw.gameactionshistory.MainTurnInitialAction;
-import it.polimi.ingsw.gameactionshistory.ObtainedMarblesMarketAction;
-import it.polimi.ingsw.gameactionshistory.ProductionAction;
-import it.polimi.ingsw.server.controller.clientrequest.*;
+import it.polimi.ingsw.server.controller.clientrequest.DevelopmentActionClientRequest;
+import it.polimi.ingsw.server.controller.clientrequest.MarketActionFetchColumnClientRequest;
+import it.polimi.ingsw.server.controller.clientrequest.MarketActionFetchRowClientRequest;
+import it.polimi.ingsw.server.controller.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.server.gameactionshistory.DevelopmentAction;
+import it.polimi.ingsw.server.gameactionshistory.MainTurnInitialAction;
+import it.polimi.ingsw.server.gameactionshistory.ObtainedMarblesMarketAction;
+import it.polimi.ingsw.server.gameactionshistory.ProductionAction;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
@@ -20,10 +23,14 @@ import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 /**
  * This class represents the main phase of the game.
@@ -174,7 +181,12 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 		playerContext.setTempStarResources(numberOfStarResources);
 
 		gameManager.getGameHistory().addAction(
-			new ObtainedMarblesMarketAction(activePlayer, marblesThePlayerGets)
+			new ObtainedMarblesMarketAction(
+				activePlayer,
+				Arrays.stream(marblesThePlayerGets).collect(groupingBy(
+					Function.identity(),
+					Collectors.mapping(m -> 1, Collectors.reducing(0, Integer::sum))
+				)))
 		);
 
 		hasPlayerDoneMarketAction = true;

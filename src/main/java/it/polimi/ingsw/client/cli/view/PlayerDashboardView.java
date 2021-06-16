@@ -16,7 +16,8 @@ public class PlayerDashboardView extends AbstractPlayerDashboardView {
     void startPlayerDashboardDialog() {
 
         UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
-        if (clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION)) {
+        if (dashboardPlayer.equals(clientManager.getMyPlayer())
+            && clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION)) {
             choices.addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new ProductionSelectionDashboardView(
                     new ProductionsSelectionInfo(
@@ -38,9 +39,7 @@ public class PlayerDashboardView extends AbstractPlayerDashboardView {
                 () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
                 "client.cli.game.returnToMenu"
             );
-        }
-
-        if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
+        } else if (clientManager.getGameState().equals(GameState.GAME_SETUP)) {
             choices.addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
                 "client.cli.game.returnToSetupView"

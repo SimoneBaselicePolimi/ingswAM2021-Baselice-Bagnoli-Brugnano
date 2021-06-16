@@ -26,6 +26,10 @@ public class ClientWhiteMarbleSubstitutionRepresentation extends ClientRegistere
         this.resourceTypeToSubstitute = resourceTypeToSubstitute;
     }
 
+    public ResourceType getResourceTypeToSubstitute() {
+        return resourceTypeToSubstitute;
+    }
+
     public String getDescription() {
         return Localization.getLocalizationInstance().getString(
             "leaderCards.specialPowers.marbleSubstitution",

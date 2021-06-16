@@ -31,7 +31,7 @@ public class InitialChoicesClientRequest extends ClientRequest {
 	) {
 		super(player);
 		this.leaderCardsChosenByThePlayer = leaderCardsChosenByThePlayer;
-		this.chosenResourcesToAddByStorage = chosenResourcesToAddByStorage == null ? new HashMap<>() : chosenResourcesToAddByStorage;
+		this.chosenResourcesToAddByStorage = (chosenResourcesToAddByStorage == null) ? new HashMap<>() : chosenResourcesToAddByStorage;
 	}
 
 	@SuppressWarnings("unchecked")

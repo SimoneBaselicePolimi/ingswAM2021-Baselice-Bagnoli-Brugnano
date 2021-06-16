@@ -25,7 +25,8 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
 
     public ResourcesRepositioningDashboardView(
         Map<ResourceType, Integer> resourcesInTemporaryStorage,
-        boolean playerCanLeaveResourcesInTempStorage, CliClientManager clientManager,
+        boolean playerCanLeaveResourcesInTempStorage,
+        CliClientManager clientManager,
         GameView gameView,
         int rowSize,
         int columnSize
@@ -54,7 +55,8 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
 
     public ResourcesRepositioningDashboardView(
         Map<ResourceType, Integer> resourcesInTemporaryStorage,
-        boolean playerCanLeaveResourcesInTempStorage, CliClientManager clientManager,
+        boolean playerCanLeaveResourcesInTempStorage,
+        CliClientManager clientManager,
         GameView gameView
     ) {
         this(
@@ -86,22 +88,24 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
     }
 
     protected void arrangeResourcesDialog() {
-        if(resourcesInTemporaryStorage.values().stream().mapToInt(n -> n).sum() > 0)
+        UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
+
+        if(resourcesInTemporaryStorage.values().stream().mapToInt(n -> n).sum() > 0) {
             clientManager.tellUserLocalized(
                 "client.cli.resourcesRepositioning.temporaryResourcesInfo",
                 LocalizationUtils.getResourcesListAsCompactString(resourcesInTemporaryStorage)
             );
-        else
+            choices.addUserChoiceLocalized(
+                this::putResourcesInStorageDialog,
+                "client.cli.resourcesRepositioning.putResourcesInStorage"
+            );
+        } else {
             clientManager.tellUserLocalized(
                 "client.cli.resourcesRepositioning.absentTemporaryResourcesInfo"
             );
-
-        UserChoicesUtils.PossibleUserChoices choices = UserChoicesUtils.makeUserChoose(clientManager);
+        }
 
         choices.addUserChoiceLocalized(
-            this::putResourcesInStorageDialog,
-            "client.cli.resourcesRepositioning.putResourcesInStorage"
-        ).addUserChoiceLocalized(
             this::takeResourcesFromStorageDialog,
             "client.cli.resourcesRepositioning.removeResourcesFromStorage"
         );

@@ -34,6 +34,9 @@ public class LeaderCardListView extends CliView {
         this.enumerateCards = enumerateCards;
         this.cardsBorderColourBasedOnState = cardsBorderColourBasedOnState;
 
+        if(cardsToView.size()==0)
+            destroyView();
+
         cardRepresentationToViewMap = cardsToView.stream().collect(Collectors.toMap(
             c -> c,
             c -> new LeaderCardView(

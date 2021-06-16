@@ -4,8 +4,8 @@ import it.polimi.ingsw.server.controller.clientrequest.ActivateLeaderCardClientR
 import it.polimi.ingsw.server.controller.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.gameactionshistory.ActivateLeaderCardsAction;
-import it.polimi.ingsw.gameactionshistory.DiscardLeaderCardsAction;
+import it.polimi.ingsw.server.gameactionshistory.ActivateLeaderCardsAction;
+import it.polimi.ingsw.server.gameactionshistory.DiscardLeaderCardsAction;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
