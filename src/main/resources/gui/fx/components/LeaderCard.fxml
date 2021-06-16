@@ -12,5 +12,13 @@
          <font>
             <Font size="18.0" />
          </font></Label>
+      <GridPane fx:id="bordersGrid" prefHeight="227.0" prefWidth="150.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="NEVER" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="NEVER" />
+        </rowConstraints>
+      </GridPane>
    </children>
 </fx:root>

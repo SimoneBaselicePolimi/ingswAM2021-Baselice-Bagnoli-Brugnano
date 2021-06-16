@@ -44,6 +44,7 @@ public class NumberOfPlayers extends AbstractController{
         int lobbyMinSize = isSinglePlayerEnabled ? 1 : 2;
         int lobbyMaxSize = (int) clientManager.getEntryInContextInfoMap("maxLobbySize");
 
+        choiceBox.setValue(lobbyMinSize);
         for (int i = lobbyMinSize; i <= lobbyMaxSize; i++)
             choiceBox.getItems().add(i);
     }

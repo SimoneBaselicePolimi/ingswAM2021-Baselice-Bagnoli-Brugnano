@@ -23,6 +23,9 @@ client:
       confirmButton: "Conferma"
     preGame:
       numOfPlayers: "%d/%d giocatori"
+    leaderCardsSetup:
+      selection: "Seleziona %d carte leader"
+      confirmButton: "Conferma la selezione delle carte leader"
 
   cli:
     setup:

@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="576.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.LeaderCardsSetup">
    <children>
-      <HBox fx:id="cardsContainer" prefHeight="400" prefWidth="1024" />
+      <GridPane alignment="CENTER" prefHeight="576" prefWidth="1024">
+      <columnConstraints>
+         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="50" />
+         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="900" />
+         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="50" />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints minHeight="10" prefHeight="30.0" vgrow="ALWAYS" />
+         <RowConstraints minHeight="400.0" prefHeight="400.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+      </rowConstraints>
+      <HBox fx:id="cardsContainer" prefHeight="400" prefWidth="1024" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="confirmButton" layoutX="724.0" layoutY="496.0" mnemonicParsing="false" onMouseClicked="#onConfirmButtonPressed" prefHeight="29.0" prefWidth="277.0" text="PConferma la selezione delle carte leader" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <font>
+               <Font size="14.0" />
+            </font></Button>
+         <Label fx:id="cardsSelection" text="SELEZIONA 924 CARTE LEADER" GridPane.columnIndex="1">
+            <font>
+               <Font size="22.0" />
+            </font>
+         </Label>
+      </GridPane>
    </children>
 </AnchorPane>

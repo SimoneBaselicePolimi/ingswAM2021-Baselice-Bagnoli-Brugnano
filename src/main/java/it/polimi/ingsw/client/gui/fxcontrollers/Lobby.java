@@ -110,7 +110,7 @@ public class Lobby extends AbstractController {
                                     serverMessage2,
                                     InitialChoicesServerMessage.class,
                                     initialChoicesServerMessage -> {
-                                        clientManager.addEntryToContextInfoMap("initialChoicesMessage", serverMessage2);
+                                        clientManager.addEntryToContextInfoMap("initialChoicesServerMessage", serverMessage2);
                                         clientManager.setGameState(GameState.GAME_SETUP);
                                         clientManager.handleGameUpdates(initialChoicesServerMessage.gameUpdates);
                                         clientManager.loadScene("LeaderCardsSetup.fxml");

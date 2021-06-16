@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
+import com.sun.prism.paint.Color;
+import com.sun.prism.paint.Paint;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
@@ -7,7 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
 
@@ -15,6 +17,11 @@ public class LeaderCard extends AnchorPane {
 
     @FXML
     Label contentLabel;
+
+    @FXML
+    GridPane bordersGrid;
+
+    boolean areBordersVisible;
 
 //    @FXML
 //    ImageView backgroundImg;
@@ -40,7 +47,18 @@ public class LeaderCard extends AnchorPane {
 
     public void select() {
         System.out.print("Selezionata carta: " + card.getItemID());
+
+        if (areBordersVisible) {
+            bordersGrid.setStyle("-fx-border-width: 0;");
+            areBordersVisible = false;
+        }
+        else {
+            bordersGrid.setStyle("-fx-border-color:#ff0000; -fx-border-width: 3; -fx-border-style: solid;");
+            bordersGrid.toFront();
+            areBordersVisible = true;
+        }
     }
+
 
     @FXML
     private void initialize() {
@@ -53,5 +71,6 @@ public class LeaderCard extends AnchorPane {
         this.getChildren().add(img);
         contentLabel.setText(card.getItemID() + "\n" + card.getVictoryPoints() + "\n" + card.getState().name());
         contentLabel.toFront();
+        areBordersVisible = false;
     }
 }
