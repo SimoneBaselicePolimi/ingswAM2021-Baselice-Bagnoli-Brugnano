@@ -12,6 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LeaderCard extends AnchorPane {
 
@@ -21,7 +23,6 @@ public class LeaderCard extends AnchorPane {
     @FXML
     GridPane bordersGrid;
 
-    boolean areBordersVisible;
 
 //    @FXML
 //    ImageView backgroundImg;
@@ -47,16 +48,13 @@ public class LeaderCard extends AnchorPane {
 
     public void select() {
         System.out.print("Selezionata carta: " + card.getItemID());
+        bordersGrid.setStyle("-fx-border-color:#ff0000; -fx-border-width: 3; -fx-border-style: solid;");
+        bordersGrid.toFront();
+    }
 
-        if (areBordersVisible) {
-            bordersGrid.setStyle("-fx-border-width: 0;");
-            areBordersVisible = false;
-        }
-        else {
-            bordersGrid.setStyle("-fx-border-color:#ff0000; -fx-border-width: 3; -fx-border-style: solid;");
-            bordersGrid.toFront();
-            areBordersVisible = true;
-        }
+    public void deselect(){
+        System.out.print("Deselezionata carta: " + card.getItemID());
+        bordersGrid.setStyle("-fx-border-width: 0;");
     }
 
 
@@ -71,6 +69,5 @@ public class LeaderCard extends AnchorPane {
         this.getChildren().add(img);
         contentLabel.setText(card.getItemID() + "\n" + card.getVictoryPoints() + "\n" + card.getState().name());
         contentLabel.toFront();
-        areBordersVisible = false;
     }
 }

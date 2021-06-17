@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage
 import it.polimi.ingsw.client.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -47,6 +48,7 @@ public class NumberOfPlayers extends AbstractController{
         choiceBox.setValue(lobbyMinSize);
         for (int i = lobbyMinSize; i <= lobbyMaxSize; i++)
             choiceBox.getItems().add(i);
+
     }
 
     @FXML

@@ -15,9 +15,9 @@
       <rowConstraints>
          <RowConstraints minHeight="10" prefHeight="30.0" vgrow="ALWAYS" />
          <RowConstraints minHeight="400.0" prefHeight="400.0" vgrow="SOMETIMES" />
-         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+         <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
       </rowConstraints>
-      <HBox fx:id="cardsContainer" prefHeight="400" prefWidth="1024" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <HBox fx:id="cardsContainer" prefHeight="400" prefWidth="924.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button fx:id="confirmButton" layoutX="724.0" layoutY="496.0" mnemonicParsing="false" onMouseClicked="#onConfirmButtonPressed" prefHeight="29.0" prefWidth="277.0" text="PConferma la selezione delle carte leader" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <font>
                <Font size="14.0" />
