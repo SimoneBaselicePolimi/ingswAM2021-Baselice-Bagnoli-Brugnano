@@ -7,8 +7,8 @@ import it.polimi.ingsw.server.controller.servermessage.InitialChoicesServerMessa
 import it.polimi.ingsw.server.controller.servermessage.PostGameSetupServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.gameactionshistory.SetupChoiceAction;
-import it.polimi.ingsw.gameactionshistory.SetupStartedAction;
+import it.polimi.ingsw.server.gameactionshistory.SetupChoiceAction;
+import it.polimi.ingsw.server.gameactionshistory.SetupStartedAction;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
@@ -152,11 +152,13 @@ public class GameSetupState extends GameState<InitialChoicesServerMessage, PostG
 	@Override
 	public Map<Player, InitialChoicesServerMessage> getInitialServerMessage() {
 		gameManager.getGameHistory().addAction(new SetupStartedAction());
+		Set<ServerGameUpdate> updates = gameManager.getAllGameUpdates();
+
 		return gameManager.getPlayers().stream()
 			.collect(
 				Collectors.toMap(Function.identity(),
 				player ->  new InitialChoicesServerMessage(
-					gameManager.getAllGameUpdates(),
+					updates,
 					leaderCardsGivenToThePlayers.get(player),
                     numberOfLeadersCardsThePlayerKeeps,
 					numOfStarResourcesGivenToThePlayers.get(player)

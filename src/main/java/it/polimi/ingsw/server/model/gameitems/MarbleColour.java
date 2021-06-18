@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.gameitems;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
@@ -104,16 +106,18 @@ public class MarbleColour extends RegisteredIdentifiableItem implements Represen
 	 * a special Leader card power.
 	 * @return true if this is special Marble, false otherwise
 	 */
+	@JsonGetter("isSpecialMarble")
 	public boolean isSpecialMarble() {
 		return isSpecialMarble;
 	}
 
-
+	@JsonIgnore
 	@Override
 	public ServerMarbleColourRepresentation getServerRepresentation() {
 		return new ServerMarbleColourRepresentation(itemID, resourceType, faithPoints, isSpecialMarble, marbleColour);
 	}
 
+	@JsonIgnore
 	@Override
 	public ServerMarbleColourRepresentation getServerRepresentationForPlayer(Player player) {
 		return getServerRepresentation();

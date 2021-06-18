@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 
 public class ClientRegisteredIdentifiableItemRepresentation extends ClientRepresentation implements IdentifiableItem {
+
     protected final String itemID;
 
     protected ClientRegisteredIdentifiableItemRepresentation(

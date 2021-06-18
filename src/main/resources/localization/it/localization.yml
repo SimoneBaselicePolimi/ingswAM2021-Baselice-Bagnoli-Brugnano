@@ -23,6 +23,16 @@ client:
       confirmButton: "Conferma"
     preGame:
       numOfPlayers: "%d/%d giocatori"
+    leaderCardsSetup:
+      selection: "Seleziona %d carte leader"
+      confirmButton: "Conferma la selezione delle carte leader"
+    resourcesChoice:
+      titleLabel: "Seleziona %d risorse"
+      confirmButton: "Conferma la selezione delle risorse iniziali"
+      coins: "Monete"
+      stones: "Pietre"
+      servants: "Servitori"
+      shields: "Scudi"
 
   cli:
     setup:
@@ -124,7 +134,7 @@ client:
       canNotActivateNewLeaderCard: "Nessuna delle tue carte leader può essere attivata"
       selectLeaderCardToActivate: "Attiva la carta %s"
       lookAtLeaderCardsOfMyPlayer: "Possiedi le seguenti carte leader:"
-      lookAtLeaderCardsOfAnotherPlayer: "Il giocatore %s possiede le seguenti carte. Inoltre, possiede %d carte nascoste"
+      lookAtLeaderCardsOfAnotherPlayer: "Il giocatore %s possiede %d carte nascoste"
     resourcesChoice:
       title: "Scegli quali risorse ottenere"
       obtained: "Risorse già ottenute: "
@@ -133,6 +143,7 @@ client:
         plural: "Devi ancora scegliere %s risorse"
       conversions: "Puoi convertire una risorsa in: %s"
       choiceMenu: "Ottieni una risorsa di tipo %s"
+      specialMarbleSubstitutions: "SOSTITUZIONE BIGLIE BIANCHE"
 
 leaderCards:
   name: "CARTA LEADER"
@@ -225,25 +236,23 @@ gameHistory:
     lastPositionReached: "Il giocatore %s ha raggiunto l'ultima casella del tracciato fede"
 
   leaderCard:
-    activateCard: "Il giocatore %s ha attivato la carta leader %s"
-    discardCard: "Il giocatore %s ha scartato la carta leader %s"
+    activateCard: "Il giocatore %s ha attivato una carta leader"
+    discardCard: "Il giocatore %s ha scartato una carta leader"
 
   gameState:
     setup:
       initialMessage: "La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali"
-      choiceMessage: "Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono:\n%s"
-
-  mainTurn:
-    initialMessage: "Inizia il turno del giocatore %s"
-    developmentAction: "Il giocatore %s ha comprato la carta sviluppo %s"
-    obtainedMarblesMarketAction: "Il giocatore %s ha ottenuto le seguenti biglie %s"
-    productionAction: "Il giocaorre %s ha attivato le produzioni %s"
-
-  postTurn:
-    finalMessage: "E' concluso il turno del giocatore %s"
-
-  manageResourcesFromMarketTurn:
-    obtainedResourcesMarketMessage: "Il giocatore %s ha ottenuto le seguenti risorse %s"
-    discardedResourcesMarketAction:
-      singular: "Il giocatore %s ha scartato 1 risorsa"
-      plural: "Il giocatore %s ha scartato %s risorse"
+      choiceMessageWithInitialResources: "Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono: %s"
+      choiceMessageWithoutInitialResources: "Il giocatore %s ha scelto le sue carte leader.\nNon ha risorse iniziali."
+    mainTurn:
+      initialMessage: "Inizia il turno del giocatore %s"
+      developmentAction: "Il giocatore %s ha comprato una carta sviluppo"
+      obtainedMarblesMarketAction: "Il giocatore %s ha ottenuto le seguenti biglie:"
+      productionAction: "Il giocatore %s ha attivato delle produzioni"
+    postTurn:
+      finalMessage: "Si è concluso il turno del giocatore %s"
+    manageResourcesFromMarketTurn:
+      obtainedResourcesMarketMessage: "Il giocatore %s ha ottenuto le seguenti risorse %s"
+      discardedResourcesMarketAction:
+        singular: "Il giocatore %s ha scartato 1 risorsa"
+        plural: "Il giocatore %s ha scartato %s risorse"

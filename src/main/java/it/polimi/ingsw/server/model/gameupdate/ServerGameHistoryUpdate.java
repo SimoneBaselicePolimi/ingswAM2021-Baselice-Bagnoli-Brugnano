@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.gameupdate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.polimi.ingsw.gameactionshistory.GameAction;
+import it.polimi.ingsw.server.gameactionshistory.GameAction;
 
 import java.util.List;
 

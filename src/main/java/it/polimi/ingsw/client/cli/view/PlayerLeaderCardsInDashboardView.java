@@ -19,8 +19,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsInDashboardView {
 
-    protected GameView gameView;
-
     protected Player player;
     protected ClientPlayerContextRepresentation playerContext;
 
@@ -34,7 +32,8 @@ public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsI
     void startLeaderCardsInDashboardDialog() {
         UserChoicesUtils.PossibleUserChoices userChoices = UserChoicesUtils.makeUserChoose(clientManager);
 
-        if(player.equals(clientManager.getMyPlayer())) {
+        if(player.equals(clientManager.getMyPlayer())
+            && player.equals(clientManager.getGameContextRepresentation().getActivePlayer())) {
             userChoices.addUserChoiceLocalized(
                 this::activateNewLeaderCard,
                 "client.cli.playerDashboard.activateNewLeaderCard"
@@ -100,7 +99,7 @@ public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsI
                 Localization.getLocalizationInstance().getString(
                     "client.cli.playerDashboard.lookAtLeaderCardsOfAnotherPlayer",
                     leaderCardsPlayer.playerName,
-                    leaderCardsPlayerContext.getNumberOfLeaderCardsThePlayerOwns()
+                    leaderCardsPlayerContext.getNumberOfLeaderCardsGivenToThePlayer()
                         - leaderCardsPlayerContext.getLeaderCardsPlayerOwns().size()
                 )
             ));

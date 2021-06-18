@@ -2,31 +2,30 @@ package it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
-import it.polimi.ingsw.gameactionshistory.GameAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientGameHistoryRepresentation extends ClientRepresentation {
 
-    private List<GameAction> gameActions;
+    private List<ClientGameActionRepresentation> gameActions;
 
     public ClientGameHistoryRepresentation(
-        @JsonProperty("gameActions") List<GameAction> gameActions
+        @JsonProperty("gameActions") List<ClientGameActionRepresentation> gameActions
     ) {
         this.gameActions = gameActions;
     }
 
-    public List<GameAction> getGameActions() {
+    public List<ClientGameActionRepresentation> getGameActions() {
         return new ArrayList<>(gameActions);
     }
 
-    public void setGameActions(List<GameAction> gameActions) {
+    public void setGameActions(List<ClientGameActionRepresentation> gameActions) {
         this.gameActions = new ArrayList<>(gameActions);
         notifyViews();
     }
 
-    public void addGameAction(GameAction gameAction) {
+    public void addGameAction(ClientGameActionRepresentation gameAction) {
         this.gameActions.add(gameAction);
         notifyViews();
     }

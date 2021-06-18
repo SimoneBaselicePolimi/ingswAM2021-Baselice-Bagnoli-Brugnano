@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
-import it.polimi.ingsw.gameactionshistory.*;
+import it.polimi.ingsw.server.gameactionshistory.*;
 import it.polimi.ingsw.server.controller.clientrequest.*;
 import it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;

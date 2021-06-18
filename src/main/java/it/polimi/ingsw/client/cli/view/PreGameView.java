@@ -56,9 +56,9 @@ public class PreGameView extends CliView {
                     return CompletableFuture.failedFuture(new UnexpectedServerMessage());
                 }).apply()
             ).thenCompose(lobbyMessage -> {
-            clientManager.setGameItemsManager(new GameItemsManager());
-            clientManager.addEntryToContextInfoMap("gameItemsManager", clientManager.getGameItemsManager());
-            return handleLobbyMessagesUntilGameInitialization(lobbyMessage);
+                clientManager.setGameItemsManager(new GameItemsManager());
+                clientManager.addEntryToContextInfoMap("gameItemsManager", clientManager.getGameItemsManager());
+                return handleLobbyMessagesUntilGameInitialization(lobbyMessage);
         }).thenCompose(gameInitializationStartedServerMessage ->
             clientManager.sendMessageAndGetAnswer(new GetInitialGameRepresentationClientMessage())
         ).thenCompose(serverMessage ->
@@ -90,6 +90,7 @@ public class PreGameView extends CliView {
                     clientManager,
                     gameView
                 ));
+                clientManager.handleGameUpdates(initialChoicesServerMessage.gameUpdates);
                 //gameView.print();
                 return CompletableFuture.completedFuture(null);
             }).elseCompute(message -> {

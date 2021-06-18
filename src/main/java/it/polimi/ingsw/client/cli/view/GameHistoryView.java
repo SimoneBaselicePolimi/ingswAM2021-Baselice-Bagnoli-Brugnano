@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
-import it.polimi.ingsw.gameactionshistory.GameAction;
+import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +22,11 @@ public class GameHistoryView extends CliView {
 
     @Override
     protected FormattedCharsBuffer buildMyBuffer() {
-        List<GameAction> gameActions = clientManager.getGameHistoryRepresentation().getGameActions();
-        List<String> gameActionsMessages = new ArrayList<>();
+        List<ClientGameActionRepresentation> gameActions = clientManager.getGameHistoryRepresentation().getGameActions();
         List<FormattedChar> text = new ArrayList<>();
-        for(GameAction gameAction : gameActions)
-            gameActionsMessages.add(gameAction.getActionMessage());
-        for(String gameActionMessage : gameActionsMessages) {
-            text.addAll(
-                FormattedChar.convertStringToFormattedCharList(" - ")
-            );
-            text.addAll(
-                FormattedChar.convertStringToFormattedCharList(gameActionMessage)
-            );
+        for(ClientGameActionRepresentation gameAction : gameActions) {
+            text.addAll(FormattedChar.convertStringToFormattedCharList(" - "));
+            text.addAll(gameAction.getActionMessage());
             text.add(new FormattedChar('\n'));
         }
 

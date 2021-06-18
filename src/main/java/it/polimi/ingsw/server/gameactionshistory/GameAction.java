@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gameactionshistory;
+package it.polimi.ingsw.server.gameactionshistory;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -21,5 +21,4 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = SetupStartedAction.class, name = "SetupStartedAction")
 })
 public abstract class GameAction {
-    public abstract String getActionMessage();
 }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model.gamemanager.gamestate;
 
-import it.polimi.ingsw.gameactionshistory.DiscardedResourcesMarketAction;
-import it.polimi.ingsw.gameactionshistory.ObtainedResourcesMarketAction;
+import it.polimi.ingsw.server.gameactionshistory.DiscardedResourcesMarketAction;
+import it.polimi.ingsw.server.gameactionshistory.ObtainedResourcesMarketAction;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.controller.clientrequest.ManageResourcesFromMarketClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;

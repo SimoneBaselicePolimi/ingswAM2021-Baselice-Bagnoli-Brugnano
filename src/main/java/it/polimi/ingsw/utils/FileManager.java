@@ -14,6 +14,8 @@ public class FileManager {
 	protected static FileManager instance;
 
 	public static final String FXML_PATH = "gui/fx";
+	public static final String FXML_IMG = "img";
+
 
 	public static final String LOCALIZATION_PATH = "localization/%s/localization.yml";
 
@@ -99,6 +101,10 @@ public class FileManager {
 
 	public InputStream loadFileFXML(String resourcePath) {
 		return classloader.getResourceAsStream(Path.of(FXML_PATH, resourcePath).toString());
+	}
+
+	public InputStream loadFXImage(String resourcePath) {
+		return classloader.getResourceAsStream(Path.of(FXML_PATH, FXML_IMG, resourcePath).toString());
 	}
 
 	protected Map<String, Object> loadLocalization(String localization) throws IOException {

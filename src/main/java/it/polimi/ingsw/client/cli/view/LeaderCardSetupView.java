@@ -47,6 +47,12 @@ public class LeaderCardSetupView extends CliView {
             (InitialChoicesServerMessage) clientManager.getContextInfoMap().get("initialChoicesServerMessage");
         cardsLeftToChoose = initialChoicesServerMessage.numberOfLeaderCardsToKeep;
 
+        clientManager.getGameContextRepresentation().getPlayersOrder().stream()
+            .map(p -> clientManager.getGameContextRepresentation().getPlayerContext(p))
+            .forEach(c -> c.setNumberOfLeaderCardsGivenToThePlayer(
+                initialChoicesServerMessage.numberOfLeaderCardsToKeep
+            ));
+
         container = new GridView(clientManager, 2, 1, 1);
         addChildView(container, 0,0);
         container.setRowWeight(1, 16);
@@ -192,10 +198,6 @@ public class LeaderCardSetupView extends CliView {
                     .collect(Collectors.toMap(s -> s, ClientResourceStorageRepresentation::getResources))
             )
         );
-        if(clientManager.getMyPlayer().equals(clientManager.getGameContextRepresentation().getActivePlayer()))
-            clientManager.setGameState(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION);
-        else
-            clientManager.setGameState(GameState.ANOTHER_PLAYER_TURN);
     }
 
 
@@ -214,7 +216,10 @@ public class LeaderCardSetupView extends CliView {
                 serverMessage,
                 GameUpdateServerMessage.class,
                 message -> {
-                    clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
+                    if(clientManager.getMyPlayer().equals(clientManager.getGameContextRepresentation().getActivePlayer()))
+                        clientManager.setGameState(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION);
+                    else
+                        clientManager.setGameState(GameState.ANOTHER_PLAYER_TURN);
                     clientManager.handleGameUpdates(message.gameUpdates);
                     gameView.setMainContentView(new MainMenuView(clientManager, gameView));
                     return CompletableFuture.<Void>completedFuture(null);

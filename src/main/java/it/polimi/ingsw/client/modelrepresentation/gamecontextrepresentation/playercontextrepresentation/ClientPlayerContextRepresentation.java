@@ -27,7 +27,7 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     private Set<ClientLeaderCardRepresentation> leaderCardsPlayerOwns;
     private List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks;
     private final Set<ClientProductionRepresentation> baseProductions;
-    private int numberOfLeaderCardsThePlayerOwns;
+    private int numberOfLeaderCardsGivenToThePlayer;
     private Map<ResourceType, Integer> totalResourcesOwnedByThePlayer = new HashMap<>();
 
     public ClientPlayerContextRepresentation(
@@ -39,7 +39,7 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         @JsonProperty("leaderCardsPlayerOwns") Set<ClientLeaderCardRepresentation> leaderCardsPlayerOwns,
         @JsonProperty("developmentCardDecks") List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> developmentCardDecks,
         @JsonProperty("baseProductions") Set<ClientProductionRepresentation> baseProductions,
-        @JsonProperty("numberOfLeaderCardsThePlayerOwns") int numberOfLeaderCardsThePlayerOwns
+        @JsonProperty("numberOfLeaderCardsThePlayerOwns") int numberOfLeaderCardsGivenToThePlayer
     ) {
         this.player = player;
         this.shelves = shelves;
@@ -49,7 +49,7 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         this.leaderCardsPlayerOwns = leaderCardsPlayerOwns;
         this.developmentCardDecks = developmentCardDecks;
         this.baseProductions = baseProductions;
-        this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
+        this.numberOfLeaderCardsGivenToThePlayer = numberOfLeaderCardsGivenToThePlayer;
     }
 
     public Player getPlayer() {
@@ -84,8 +84,8 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         return baseProductions;
     }
 
-    public int getNumberOfLeaderCardsThePlayerOwns() {
-        return numberOfLeaderCardsThePlayerOwns;
+    public int getNumberOfLeaderCardsGivenToThePlayer() {
+        return numberOfLeaderCardsGivenToThePlayer;
     }
 
     public void setShelves(Set<ClientResourceStorageRepresentation> shelves) {
@@ -108,8 +108,8 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         notifyViews();
     }
 
-    public void setNumberOfLeaderCardsThePlayerOwns(int numberOfLeaderCardsThePlayerOwns) {
-        this.numberOfLeaderCardsThePlayerOwns = numberOfLeaderCardsThePlayerOwns;
+    public void setNumberOfLeaderCardsGivenToThePlayer(int numberOfLeaderCardsGivenToThePlayer) {
+        this.numberOfLeaderCardsGivenToThePlayer = numberOfLeaderCardsGivenToThePlayer;
         notifyViews();
     }
 
