@@ -9,6 +9,41 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.Market"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="576" prefWidth="1024">
+
+    <GridPane prefHeight="576" prefWidth="1024">
+        <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="60" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="SOMETIMES" prefHeight="100" />
+                <RowConstraints vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+
+            <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+        </GridPane>
+
+
+<!--        custom scene:          -->
+
+
+
+    </GridPane>
+
+
 
 </AnchorPane>

@@ -7,11 +7,40 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.Table">
    <children>
-      <Label layoutX="669.0" layoutY="67.0" text="MAESTRI DEL RINASCIMENTO">
-         <font>
-            <Font name="System Bold" size="46.0" />
-         </font>
-      </Label>
-      <TextField layoutX="894.0" layoutY="346.0" />
+
+
+      <GridPane prefHeight="576" prefWidth="1024">
+         <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="60" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+         </rowConstraints>
+
+         <GridPane>
+            <columnConstraints>
+               <ColumnConstraints halignment="LEFT" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints vgrow="ALWAYS"/>
+               <RowConstraints vgrow="SOMETIMES"/>
+               <RowConstraints vgrow="SOMETIMES" prefHeight="100" />
+               <RowConstraints vgrow="SOMETIMES"/>
+               <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+
+            <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+         </GridPane>
+
+
+         <!--        custom scene components:          -->
+
+
+
+      </GridPane>
+
    </children>
 </AnchorPane>

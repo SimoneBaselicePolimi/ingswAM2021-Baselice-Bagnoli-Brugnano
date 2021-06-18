@@ -1,4 +1,12 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
-public class Market {
+import javafx.scene.layout.GridPane;
+
+public class Market extends GameScene {
+
+
+    public Market() {
+        super(0);
+    }
+
 }

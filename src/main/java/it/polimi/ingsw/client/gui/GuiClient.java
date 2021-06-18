@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.ConsoleWriter;
 import it.polimi.ingsw.client.cli.view.PreGameView;
+import it.polimi.ingsw.client.gui.fxcontrollers.GameSceneSelector;
 import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
@@ -27,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class GuiClient extends Application {
 
@@ -52,6 +54,12 @@ public class GuiClient extends Application {
     public void start(Stage stage) throws IOException {
         clientManager.setMainStage(stage);
         clientManager.loadScene("PlayerRegistration.fxml");
+
+        //clientManager.loadScene("market.fxml");
+
+
+
+
     }
 
     public static void startClient() throws IOException, ClientNotConnectedException {

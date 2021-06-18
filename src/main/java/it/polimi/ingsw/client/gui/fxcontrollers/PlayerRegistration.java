@@ -41,6 +41,7 @@ public class PlayerRegistration extends AbstractController {
 
     @FXML
     private void initialize() {
+
         titleLabel.setText(Localization.getLocalizationInstance().getString("client.gui.playerRegistration.titleLabel"));
         descLabel.setText(Localization.getLocalizationInstance().getString("client.gui.playerRegistration.descLabel"));
         errorLabel.setText(Localization.getLocalizationInstance().getString("client.gui.playerRegistration.errorLabel"));
