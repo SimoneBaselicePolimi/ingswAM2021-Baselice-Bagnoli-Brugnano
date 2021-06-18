@@ -83,7 +83,7 @@ public class DialogUtils {
                 production.getResourceCost(),
                 prodInfo.getResourcesLeftToThePlayer())
             ) && (
-                totalResourcesCost + numOfStarResources >=
+                totalResourcesCost + numOfStarResources <=
                     prodInfo.getResourcesLeftToThePlayer().values().stream().reduce(0, Integer::sum)
             );
     }

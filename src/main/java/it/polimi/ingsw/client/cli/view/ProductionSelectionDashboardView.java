@@ -33,30 +33,35 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
     ) {
         super(clientManager.getMyPlayer(), clientManager, gameView);
         this.selectionInfo = selectionInfo;
+        this.gameView = gameView;
 
         askPlayerForProduction();
     }
 
-
     CompletableFuture<Void> askPlayerForProduction(){
+        UserChoicesUtils.PossibleUserChoices userChoices = UserChoicesUtils.makeUserChoose(clientManager);
 
-        return UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoiceLocalized(
-                this::askPlayerForTypeOfProductions,
-                "client.cli.playerDashboard.activateNewProduction"
-            )
-            .addUserChoiceLocalized(
+        userChoices.addUserChoiceLocalized(
+            this::askPlayerForTypeOfProductions,
+            "client.cli.playerDashboard.activateNewProduction"
+        );
+
+        if(selectionInfo.getAlreadySelectedProductions().size() > 0)
+            userChoices.addUserChoiceLocalized(
                 this::sendPlayerChoiceToServer,
                 "client.cli.playerDashboard.endProductionsActivation"
-            )
-            .addUserChoiceLocalized(
-                () -> gameView.setMainContentView(new PlayerDashboardView(
-                    activePlayer,
-                    clientManager,
-                    gameView
-                )),
-                "client.cli.playerDashboard.cancelSelectedProductions"
-            ).apply();
+            );
+
+        userChoices.addUserChoiceLocalized(
+            () -> gameView.setMainContentView(new PlayerDashboardView(
+                activePlayer,
+                clientManager,
+                gameView
+            )),
+            "client.cli.playerDashboard.cancelSelectedProductions"
+        );
+
+        return userChoices.apply();
     }
 
     CompletableFuture<Void> askPlayerForTypeOfProductions() {
@@ -78,11 +83,13 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
                 "client.cli.playerDashboard.activateDashboardProductions"
             )
             .addUserChoiceLocalized(
-                () -> gameView.setMainContentView(new ProductionSelectionLeaderCardsInDashboardView(
+                () -> {
+                    gameView.setMainContentView(new ProductionSelectionLeaderCardsInDashboardView(
                     selectionInfo,
                     clientManager,
                     gameView
-                )),
+                ));
+                },
                 "client.cli.playerDashboard.leaderCardList"
             ).addUserChoiceLocalized(
                 () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
@@ -94,15 +101,22 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForDevProductionsChoice")
             .thenCompose(input -> {
-                int intInput = Integer.parseInt(input);
-                if(intInput > 0 && intInput <= dashboardPlayerContext.getDevelopmentCardDecks().size()) {
-                    ClientProductionRepresentation production = dashboardPlayerContext.getDevelopmentCardDecks()
-                        .get(intInput - 1).peek().getProduction();
-                    return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager)
-                        .thenCompose(n -> askPlayerForProduction());
-                }
-                else {
-                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
+                if (input.matches("\\G\\s*\\d+\\s*$")) {
+                    int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
+                    if (intInput > 0
+                        && intInput <= dashboardPlayerContext.getDevelopmentCardDecks().size()
+                        && dashboardPlayerContext.getDevelopmentCardDecks().get(intInput - 1).numberOfCardsInDeck() > 0
+                    ) {
+                        ClientProductionRepresentation production = dashboardPlayerContext.getDevelopmentCardDecks()
+                            .get(intInput - 1).peek().getProduction();
+                        return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager)
+                            .thenCompose(n -> askPlayerForProduction());
+                    } else {
+                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
+                        return askPlayerForTypeOfProductions();
+                    }
+                } else {
+                    clientManager.tellUserLocalized("client.errors.invalidInput");
                     return askPlayerForDashboardProductions();
                 }
             });
@@ -112,14 +126,18 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
         return clientManager.askUserLocalized("client.cli.playerDashboard.askPlayerForBaseProductionChoice")
             .thenCompose(input -> {
-                int intInput = Integer.parseInt(input);
-                if(intInput > 0 && intInput <= dashboardPlayerContext.getBaseProductions().size()) {
-                    ClientProductionRepresentation production = baseProductions.get(intInput-1);
-                    return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager)
-                        .thenCompose(n -> askPlayerForProduction());
-                }
-                else {
-                    clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
+                if (input.matches("\\G\\s*\\d+\\s*$")) {
+                    int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
+                    if (intInput > 0 && intInput <= dashboardPlayerContext.getBaseProductions().size()) {
+                        ClientProductionRepresentation production = baseProductions.get(intInput - 1);
+                        return DialogUtils.onSelectedProductionDialog(production, selectionInfo, clientManager)
+                            .thenCompose(n -> askPlayerForProduction());
+                    } else {
+                        clientManager.tellUserLocalized("client.cli.playerDashboard.notifyPlayerProductionNumberIsInvalid");
+                        return askPlayerForTypeOfProductions();
+                    }
+                } else {
+                    clientManager.tellUserLocalized("client.errors.invalidInput");
                     return askPlayerForBaseProduction();
                 }
             });
@@ -133,7 +151,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
             selectionInfo.getResourcesLeftToThePlayer()
         ))
             && (totalResourcesCost + numOfStarResources
-            >= selectionInfo.getResourcesLeftToThePlayer().values().stream().reduce(0, Integer::sum));
+            <= selectionInfo.getResourcesLeftToThePlayer().values().stream().reduce(0, Integer::sum));
     }
 
     CompletableFuture<Void> sendPlayerChoiceToServer(){
@@ -198,7 +216,7 @@ public class ProductionSelectionDashboardView extends AbstractPlayerDashboardVie
 
         for (int p = 0; p < baseProductions.size(); p++) {
             ClientProductionRepresentation productionRepresentation = baseProductions.get(p);
-            GridView productionGrid = baseProductionGridLists.get(p);
+            GridView productionGrid = baseProductionBorderLists.get(p);
             if(selectionInfo.getAlreadySelectedProductions().contains(productionRepresentation))
                 productionGrid.setBorderStyle(new LineBorderStyle(Colour.GREEN));
             else if (checkIfThePlayerHasNecessaryResources(productionRepresentation))

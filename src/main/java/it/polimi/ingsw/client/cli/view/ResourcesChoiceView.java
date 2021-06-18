@@ -46,6 +46,9 @@ public class ResourcesChoiceView extends CliView {
         this.title = title;
         this.onAllChoicesDone = onAllChoicesDone;
 
+        if(possibleChoices.size() <= 1 || numberOfResourcesToChoose == 0)
+            throw new IllegalArgumentException();
+
         numberOfResourcesLeftToChoose = numberOfResourcesToChoose;
         alreadyChosenResources = new HashMap<>();
 
@@ -73,10 +76,7 @@ public class ResourcesChoiceView extends CliView {
         rightLabel = new LabelView(new ArrayList<>(), clientManager);
         rightLabelBorder.setView(0, 0, rightLabel);
 
-        if(numberOfResourcesLeftToChoose == 0)
-            onAllChoicesDone.accept(alreadyChosenResources);
-        else
-            startDialog();
+        startDialog();
 
     }
 
@@ -102,7 +102,7 @@ public class ResourcesChoiceView extends CliView {
         this(numberOfResourcesToChoose, possibleChoices, title, onAllChoicesDone, clientManager, 0, 0);
     }
 
-    public void addNewChoice(ResourceType resourceType) {
+    protected void addNewChoice(ResourceType resourceType) {
        numberOfResourcesLeftToChoose--;
        alreadyChosenResources.compute(resourceType, (t, v) -> v == null ? 1 : v+1);
        updateView();
@@ -165,28 +165,20 @@ public class ResourcesChoiceView extends CliView {
     }
 
     protected void startDialog() {
+        UserChoicesUtils.PossibleUserChoices userChoices = UserChoicesUtils.makeUserChoose(clientManager);
 
-        if(possibleChoices.size() > 1) {
+        for (ResourceType t : possibleChoices)
+            userChoices.addUserChoiceLocalized(
+                () -> {
+                    addNewChoice(t);
+                    if (numberOfResourcesLeftToChoose > 0)
+                        startDialog();
+                },
+                "client.cli.resourcesChoice.choiceMenu",
+                t.getLocalizedNameSingular()
+            );
 
-            UserChoicesUtils.PossibleUserChoices userChoices = UserChoicesUtils.makeUserChoose(clientManager);
-
-            for (ResourceType t : possibleChoices)
-                userChoices.addUserChoiceLocalized(
-                    () -> {
-                        addNewChoice(t);
-                        if (numberOfResourcesLeftToChoose > 0)
-                            startDialog();
-                    },
-                    "client.cli.resourcesChoice.choiceMenu",
-                    t.getLocalizedNameSingular()
-                );
-
-            userChoices.apply();
-
-        } else {
-            onAllChoicesDone.accept(Map.of(possibleChoices.iterator().next(), numberOfResourcesToChoose));
-        }
-
+        userChoices.apply();
     }
 
 }

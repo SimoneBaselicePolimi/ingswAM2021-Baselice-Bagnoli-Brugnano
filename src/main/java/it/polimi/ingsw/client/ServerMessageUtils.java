@@ -2,9 +2,9 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.servermessage.ServerMessage;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 
 public class ServerMessageUtils {
@@ -35,12 +35,12 @@ public class ServerMessageUtils {
         }
 
         final ServerMessage message;
-        final Set<TypeBasedComputation<? extends ServerMessage>> typeBasedComputation;
+        final List<TypeBasedComputation<? extends ServerMessage>> typeBasedComputation;
         final TypeBasedComputation<ServerMessage> genericTypeComputation;
 
         ServerMessageTypeDependentComputation(ServerMessage message) {
             this.message = message;
-            typeBasedComputation = new HashSet<>();
+            typeBasedComputation = new ArrayList<>();
             genericTypeComputation = new TypeBasedComputation<>(ServerMessage.class, m -> null);
         }
 
@@ -88,7 +88,7 @@ public class ServerMessageUtils {
 
         public T apply() {
             Optional<TypeBasedComputation<? extends ServerMessage>> compForType = typeBasedComputation.stream()
-                .filter(c -> c.messageType.equals(message.getClass()))
+                .filter(c -> c.messageType.isAssignableFrom(message.getClass()))
                 .findAny();
             if(compForType.isPresent())
                 return compForType.get().applyComp(message);

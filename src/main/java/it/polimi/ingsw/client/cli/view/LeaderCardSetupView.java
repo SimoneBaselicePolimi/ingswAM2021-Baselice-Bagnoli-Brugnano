@@ -22,8 +22,6 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import static java.lang.Integer.parseInt;
-
 public class LeaderCardSetupView extends CliView {
 
     protected GameView gameView;
@@ -149,12 +147,13 @@ public class LeaderCardSetupView extends CliView {
         } else {
             return clientManager.askUserLocalized("client.cli.gameSetup.leaderCardsDialog.choose")
                 .thenCompose(input -> {
-                        int intInput = parseInt(input);
-                        if(intInput < 1 || intInput > cardListView.cardsToView.size()) {
+                    if (input.matches("\\G\\s*\\d+\\s*$")) {
+                        int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
+                        if (intInput < 1 || intInput > cardListView.cardsToView.size()) {
                             clientManager.tellUserLocalized("client.cli.gameSetup.leaderCardsDialog.invalid");
                             return selectCards();
                         }
-                        if(alreadySelectedCards.contains(cardListView.getLeaderCardRepresentationByNumber(intInput))) {
+                        if (alreadySelectedCards.contains(cardListView.getLeaderCardRepresentationByNumber(intInput))) {
                             clientManager.tellUserLocalized("client.cli.gameSetup.leaderCardsDialog.alreadyChosen");
                             return selectCards();
                         }
@@ -162,23 +161,29 @@ public class LeaderCardSetupView extends CliView {
                         cardListView.getLeaderCardViewByNumber(intInput).setBorderColour(Colour.GREEN, false);
                         cardsLeftToChoose--;
                         updateView();
-                        return selectCards();
+                    } else {
+                        clientManager.tellUserLocalized("client.errors.invalidInput");
                     }
-                );
+                    return selectCards();
+                });
         }
     }
 
     void startLeaderCardChoiceDialog() {
         selectCards()
            .thenCompose(chosenCards -> {
-               ResourcesChoiceView resourcesChoiceView = new ResourcesChoiceView(
-                   initialChoicesServerMessage.numberOfStarResources,
-                   Arrays.stream(ResourceType.values()).collect(Collectors.toSet()),
-                   clientManager,
-                   Localization.getLocalizationInstance().getString("client.cli.gameSetup.gameSetupInfo"),
-                   resourcesChosen -> onAllChoicesDone(resourcesChosen, chosenCards)
-               );
-               gameView.setMainContentView(resourcesChoiceView);
+               if(initialChoicesServerMessage.numberOfStarResources > 0) {
+                   ResourcesChoiceView resourcesChoiceView = new ResourcesChoiceView(
+                       initialChoicesServerMessage.numberOfStarResources,
+                       Arrays.stream(ResourceType.values()).collect(Collectors.toSet()),
+                       clientManager,
+                       Localization.getLocalizationInstance().getString("client.cli.gameSetup.gameSetupInfo"),
+                       resourcesChosen -> onAllChoicesDone(resourcesChosen, chosenCards)
+                   );
+                   gameView.setMainContentView(resourcesChoiceView);
+               } else {
+                   onAllChoicesDone(new HashMap<>(), chosenCards);
+               }
                return CompletableFuture.completedFuture(null);
            });
     }

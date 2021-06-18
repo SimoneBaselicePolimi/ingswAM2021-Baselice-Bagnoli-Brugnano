@@ -7,32 +7,31 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
+import it.polimi.ingsw.utils.serialization.annotations.SerializeAsMapWithIdKey;
 
 import java.util.Map;
 
 public class ManageResourcesFromMarketClientRequest extends ClientRequest {
 
-    public final Map<ResourceStorage, Map<ResourceType, Integer>> resourcesToAddByStorage;
-
-    public final Map<ResourceStorage, Map<ResourceType, Integer>> starResourcesChosenToAddByStorage;
+    @SerializeAsMapWithIdKey
+    public final Map<ResourceStorage, Map<ResourceType, Integer>> resourcesInModifiedStorages;
 
     public final Map<ResourceType, Integer> resourcesLeftInTemporaryStorage;
 
     public ManageResourcesFromMarketClientRequest(
         @JsonProperty("player") Player player,
-        @JsonProperty("resourcesToAddByStorage") Map<ResourceStorage, Map<ResourceType, Integer>> resourcesToAddByStorage,
-        @JsonProperty("starResourcesChosenToAddByStorage") Map<ResourceStorage, Map<ResourceType, Integer>> starResourcesChosenToAddByStorage,
+        @JsonProperty("resourcesInModifiedStorages") Map<ResourceStorage, Map<ResourceType, Integer>> resourcesInModifiedStorages,
         @JsonProperty("resourcesLeftInTemporaryStorage") Map<ResourceType, Integer> resourcesLeftInTemporaryStorage
     ) {
         super(player);
-        this.resourcesToAddByStorage = resourcesToAddByStorage;
-        this.starResourcesChosenToAddByStorage = starResourcesChosenToAddByStorage;
+        this.resourcesInModifiedStorages = resourcesInModifiedStorages;
         this.resourcesLeftInTemporaryStorage = resourcesLeftInTemporaryStorage;
     }
 
-    public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException {
+    public Map<Player, ServerMessage> callHandler(GameState state) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		return(state.handleRequestManageResourcesFromMarket(this));
 	}
 

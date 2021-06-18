@@ -6,14 +6,11 @@ import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
-import it.polimi.ingsw.server.model.storage.ResourceStorage;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ManageResourcesFromMarketClientRequestValidator extends ClientRequestValidator <ManageResourcesFromMarketClientRequest>{
 
@@ -29,64 +26,73 @@ public class ManageResourcesFromMarketClientRequestValidator extends ClientReque
         ManageResourcesFromMarketClientRequest requestToValidate,
         GameManager gameManager
     ) {
-
+        //TODO
         PlayerContext playerContext = gameManager.getGameContext().getPlayerContext(requestToValidate.player);
         Set<ResourceType> possibleStarMarbleSubstitution = playerContext
             .getActiveLeaderCardsWhiteMarblesMarketSubstitutions();
-        int sumOfStarResources = 0;
-        Map<ResourceStorage, Map<ResourceType, Integer>> totalResources = new HashMap<>();
+
+        Map<ResourceType, Integer> deltaResources = requestToValidate.resourcesInModifiedStorages.entrySet().stream()
+            .map(entry -> {
+                    Map<ResourceType, Integer> oldResources = entry.getKey().peekResources();
+                    Map<ResourceType, Integer> newResources = entry.getValue();
+                    return ResourceUtils.relativeDifference(newResources, oldResources);
+                }
+            ).reduce(new HashMap<>(), ResourceUtils::sum);
+
+        Map<ResourceType, Integer> starResourcesChosen = ResourceUtils.difference(
+            ResourceUtils.sum(deltaResources, requestToValidate.resourcesLeftInTemporaryStorage),
+            playerContext.getTemporaryStorageResources()
+        );
 
         // check if star resources chosen by the player are from those possible to choose
-        for (Map<ResourceType, Integer> starResourcesChosenToAdd : requestToValidate.starResourcesChosenToAddByStorage.values()){
-            for (ResourceType resourceType : starResourcesChosenToAdd.keySet()){
+            for (ResourceType resourceType : starResourcesChosen.keySet()){
                 if (!possibleStarMarbleSubstitution.contains(resourceType)) {
                     return createInvalidRequestServerMessage(
                         "The resource type chosen by the player as star resources substitution " +
                             "is not present among those provided by the special abilities of the active leader cards"
                     );
                 }
-                sumOfStarResources += starResourcesChosenToAdd.get(resourceType);
             }
-        }
 
         // check if the number of star resources is the same as what is expected
-        if (sumOfStarResources != playerContext.getTempStarResources())
+        if (starResourcesChosen.size() != playerContext.getTempStarResources()
+            && !possibleStarMarbleSubstitution.isEmpty())
             return createInvalidRequestServerMessage(
                 "The number of star resources chosen by the player is not the same of the one required. " +
                     "The number of star resources required is %s",
                 playerContext.getTempStarResources()
             );
 
-        // check if the resources the player wants to add in storages are the same as those assigned to him
-        Map<ResourceType, Integer> sumOfResourcesFromThePlayer = ResourceUtils.sum(
-            ResourceUtils.sum(requestToValidate.resourcesToAddByStorage.values()),
-            requestToValidate.resourcesLeftInTemporaryStorage
-        );
-        if(!sumOfResourcesFromThePlayer.equals(playerContext.getTemporaryStorageResources())){
-            return createInvalidRequestServerMessage(
-                "The resources the player wants to add in storage are not present in the group " +
-                    "of resources assigned to him"
-            );
-        }
-
-        // check if the resources the player wants to add in storages meet the requirements of the storages
-        // in which they are to be added
-        Map<ResourceStorage, Map<ResourceType, Integer>> totalResourcesByStorage = Stream.concat(
-            requestToValidate.resourcesToAddByStorage.entrySet().stream(),
-            requestToValidate.starResourcesChosenToAddByStorage.entrySet().stream()
-        ).collect(Collectors.groupingBy(
-            Map.Entry::getKey,
-            Collectors.reducing(new HashMap<>(), Map.Entry::getValue, ResourceUtils::sum))
-        );
-        for (ResourceStorage storage : totalResourcesByStorage.keySet()){
-            if (!storage.canAddResources(totalResourcesByStorage.get(storage))){
-                return createInvalidRequestServerMessage(
-                    "The resources chosen by the player do not check the storage requirements " +
-                        "and therefore cannot be added to the storage %s.",
-                    storage
-                );
-            }
-        }
+//        // check if the resources the player wants to add in storages are the same as those assigned to him
+//        Map<ResourceType, Integer> sumOfResourcesFromThePlayer = ResourceUtils.sum(
+//            ResourceUtils.sum(requestToValidate.resourcesInModifiedStorages.values()),
+//            requestToValidate.resourcesLeftInTemporaryStorage
+//        );
+//        if(!sumOfResourcesFromThePlayer.equals(playerContext.getTemporaryStorageResources())){
+//            return createInvalidRequestServerMessage(
+//                "The resources the player wants to add in storage are not present in the group " +
+//                    "of resources assigned to him"
+//            );
+//        }
+//
+//        // check if the resources the player wants to add in storages meet the requirements of the storages
+//        // in which they are to be added
+//        Map<ResourceStorage, Map<ResourceType, Integer>> totalResourcesByStorage = Stream.concat(
+//            requestToValidate.resourcesInModifiedStorages.entrySet().stream(),
+//            requestToValidate.starResourcesChosenToAddByStorage.entrySet().stream()
+//        ).collect(Collectors.groupingBy(
+//            Map.Entry::getKey,
+//            Collectors.reducing(new HashMap<>(), Map.Entry::getValue, ResourceUtils::sum))
+//        );
+//        for (ResourceStorage storage : totalResourcesByStorage.keySet()){
+//            if (!storage.canAddResources(totalResourcesByStorage.get(storage))){
+//                return createInvalidRequestServerMessage(
+//                    "The resources chosen by the player do not check the storage requirements " +
+//                        "and therefore cannot be added to the storage %s.",
+//                    storage
+//                );
+//            }
+//        }
 
         return Optional.empty();
     }

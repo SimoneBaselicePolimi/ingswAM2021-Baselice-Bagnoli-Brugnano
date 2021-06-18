@@ -138,11 +138,16 @@ public class PreGameView extends CliView {
     CompletableFuture<Integer> askPlayerForLobbySize(int lobbyMinSize, int lobbyMaxSize) {
         return clientManager.askUserLocalized("client.cli.setup.askNumberOfPlayers")
             .thenCompose(input -> {
-                int intInput = Integer.parseInt(input);
-                if (intInput >= lobbyMinSize && intInput <= lobbyMaxSize){
-                    return CompletableFuture.completedFuture(intInput);
+                if (input.matches("\\G\\s*\\d+\\s*$")) {
+                    int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
+                    if (intInput >= lobbyMinSize && intInput <= lobbyMaxSize) {
+                        return CompletableFuture.completedFuture(intInput);
+                    } else {
+                        clientManager.tellUserLocalized("client.cli.setup.notifyPlayerNumberOfPlayersIsInvalid");
+                        return askPlayerForLobbySize(lobbyMinSize, lobbyMaxSize);
+                    }
                 } else {
-                    clientManager.tellUserLocalized("client.cli.setup.notifyPlayerNumberOfPlayersIsInvalid");
+                    clientManager.tellUserLocalized("client.errors.invalidInput");
                     return askPlayerForLobbySize(lobbyMinSize, lobbyMaxSize);
                 }
             });

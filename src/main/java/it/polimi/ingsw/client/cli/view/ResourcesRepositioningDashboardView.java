@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.cli.view;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.DialogUtils;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
+import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
@@ -150,8 +151,7 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                                 clientManager.tellUser(
                                     s.getRuleErrorMessagesIfPresent(Map.of(resourceType, numOfResources)).get()
                                 );
-                            }
-                            else {
+                            } else {
                                 putResourceInStorage(resourceType, numOfResources, s);
                             }
                             arrangeResourcesDialog();
@@ -169,10 +169,10 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
                                 clientManager.tellUser(
                                     ls.getRuleErrorMessagesIfPresent(Map.of(resourceType, numOfResources)).get()
                                 );
-                            }
-                            else {
+                            } else {
                                 putResourceInStorage(resourceType, numOfResources, ls);
-                            }                            arrangeResourcesDialog();
+                            }
+                            arrangeResourcesDialog();
                         },
                         "client.cli.resourcesRepositioning.specifyInWhichStorage",
                         Localization.getLocalizationInstance().getString("dashboard.leaderStorages")
@@ -227,7 +227,7 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
         int numOfResources,
         ClientResourceStorageRepresentation storage
     ) {
-        Map<ResourceType,Integer> newResources= Map.of(resourceType, numOfResources);
+        Map<ResourceType,Integer> newResources = Map.of(resourceType, numOfResources);
         storage.getRules().forEach(r -> r.getErrorMessageIfPresent(storage, newResources));
         storage.setResources(ResourceUtils.sum(storage.getResources(), newResources));
         resourcesInTemporaryStorage = ResourceUtils.difference(
@@ -253,6 +253,11 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
             resourcesInTemporaryStorage = ResourceUtils.sum(resourcesInTemporaryStorage, resourcesFromStorage);
             storagesModified.add(storage);
         }
+    }
+
+    @Override
+    public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
+        return super.getContentAsFormattedCharsBuffer();
     }
 
 }

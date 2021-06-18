@@ -26,7 +26,7 @@ public class GameHistoryView extends CliView {
         List<FormattedChar> text = new ArrayList<>();
         for(ClientGameActionRepresentation gameAction : gameActions) {
             text.addAll(FormattedChar.convertStringToFormattedCharList(" - "));
-            text.addAll(gameAction.getActionMessage());
+            text.addAll(gameAction.getActionMessageForCli());
             text.add(new FormattedChar('\n'));
         }
 

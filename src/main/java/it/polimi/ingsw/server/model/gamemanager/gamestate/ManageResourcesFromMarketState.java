@@ -5,9 +5,9 @@ import it.polimi.ingsw.server.gameactionshistory.ObtainedResourcesMarketAction;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.controller.clientrequest.ManageResourcesFromMarketClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
+import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 
@@ -67,24 +67,22 @@ public class ManageResourcesFromMarketState extends GameState {
 	 */
 	public Map<Player,ServerMessage> handleRequestManageResourcesFromMarket(
 		ManageResourcesFromMarketClientRequest request
-	) throws ResourceStorageRuleViolationException {
+	) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
 		if(!request.player.equals(activePlayer))
 			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
-		for (ResourceStorage storage : request.resourcesToAddByStorage.keySet())
-			storage.addResources(request.resourcesToAddByStorage.get(storage));
-
-		for (ResourceStorage storage : request.starResourcesChosenToAddByStorage.keySet())
-			storage.addResources(request.starResourcesChosenToAddByStorage.get(storage));
-
-		Map<ResourceType, Integer> totalResourcesObtained = ResourceUtils.sum(
-			ResourceUtils.sum(request.resourcesToAddByStorage.values()),
-			ResourceUtils.sum(request.starResourcesChosenToAddByStorage.values())
-		);
+		for (ResourceStorage storage : request.resourcesInModifiedStorages.keySet()) {
+			storage.removeResources(storage.peekResources());
+			storage.addResources(request.resourcesInModifiedStorages.get(storage));
+		}
 
 		gameManager.getGameHistory().addAction(
-			new ObtainedResourcesMarketAction(activePlayer, totalResourcesObtained));
+			new ObtainedResourcesMarketAction(
+				activePlayer,
+				ResourceUtils.sum(request.resourcesInModifiedStorages.values())
+			)
+		);
 
 		int numberOfResourcesLeftInTemporaryStorage = request.resourcesLeftInTemporaryStorage.values().stream()
 			.mapToInt(i -> i)

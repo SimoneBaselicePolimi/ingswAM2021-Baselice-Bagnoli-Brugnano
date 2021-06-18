@@ -3,8 +3,8 @@ package it.polimi.ingsw.server.model.gamemanager.gamestate;
 import it.polimi.ingsw.server.controller.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.EndTurnServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.gameactionshistory.PostTurnFinalAction;
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate;
 
@@ -62,9 +62,11 @@ public class GameTurnPostActionState extends LeaderCardActionState {
 			return createInvalidRequestSenderIsNotActivePlayer(request.player, activePlayer);
 
     	isTurnOver = true;
-		gameManager.getGameHistory().addAction(
-			new PostTurnFinalAction(activePlayer)
-		);
+
+		gameManager.getGameHistory().addAction(new PostTurnFinalAction(activePlayer));
+
+		gameManager.getGameContext().startNextPlayerTurn();
+
 		Set<ServerGameUpdate> updates = gameManager.getAllGameUpdates();
 		return gameManager.getPlayers().stream()
 			.collect(

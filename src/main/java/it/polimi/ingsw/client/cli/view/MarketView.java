@@ -9,25 +9,25 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.ManageResourcesFromMarketClientRequest;
 import it.polimi.ingsw.client.clientrequest.MarketActionFetchColumnClientRequest;
 import it.polimi.ingsw.client.clientrequest.MarketActionFetchRowClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientWhiteMarbleSubstitutionRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.utils.Colour;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -131,7 +131,10 @@ public class MarketView extends CliView{
                     () -> gameView.setMainContentView(new LeaderCardSetupView(clientManager, gameView)),
                     "client.cli.game.returnToSetupView"
                 ).apply();
-        } else if(!clientManager.getMyPlayer().equals(activePlayer)){ //game started and my Player is not the active player
+        } else if(
+            clientManager.getGameState() == GameState.ANOTHER_PLAYER_TURN ||
+            clientManager.getGameState() == GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION
+        ){ //game started and my Player is not the active player
             UserChoicesUtils.makeUserChoose(clientManager)
                 .addUserChoiceLocalized(
                     () -> gameView.setMainContentView(new MainMenuView(clientManager, gameView)),
@@ -147,7 +150,10 @@ public class MarketView extends CliView{
                                     clientManager.getGameContextRepresentation().getActivePlayer(),
                                     rowNumber-1
                                 )
-                            )).thenCompose(this::handleServerAnswer)
+                            )).thenCompose(message -> {
+                                handleMarbleFetchServerAnswer(message);
+                                return CompletableFuture.completedFuture(null);
+                            })
                         ),
                     "client.cli.market.rowChoice"
                 ).addUserChoiceLocalized(() ->
@@ -158,7 +164,10 @@ public class MarketView extends CliView{
                                     clientManager.getGameContextRepresentation().getActivePlayer(),
                                     columnNumber-1
                                 )
-                            )).thenCompose(this::handleServerAnswer)
+                            )).thenCompose(message -> {
+                                handleMarbleFetchServerAnswer(message);
+                                return CompletableFuture.completedFuture(null);
+                            })
                         ),
                 "client.cli.market.columnChoice"
             ).addUserChoiceLocalized(
@@ -168,56 +177,119 @@ public class MarketView extends CliView{
         }
     }
 
-    CompletableFuture<Void> handleServerAnswer(ServerMessage serverMessage) {
-        return ServerMessageUtils.ifMessageTypeCompute(
+    void handleMarbleFetchServerAnswer(ServerMessage serverMessage) {
+        ServerMessageUtils.ifMessageTypeCompute(
             serverMessage,
             GameUpdateServerMessage.class,
             message -> {
                 clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
                 clientManager.handleGameUpdates(message.gameUpdates);
-                gameView.setMainContentView(new ResourcesChoiceView(
-                    activePlayerContext.getTempStarResources(),
-                    activePlayerContext.getActiveLeaderCards().stream()
-                        .flatMap(c -> c.getWhiteMarbleSubstitutions().stream())
-                        .map(ClientWhiteMarbleSubstitutionRepresentation::getResourceTypeToSubstitute)
-                        .collect(Collectors.toSet()),
-                    clientManager,
-                    Localization.getLocalizationInstance().getString(
-                        "client.cli.resourcesChoice.specialMarbleSubstitutions"
-                    ),
-                    resourcesChosen -> gameView.setMainContentView(new ResourcesRepositioningDashboardView(
+                Set<ResourceType> possibleSubstitutions = activePlayerContext.getActiveLeaderCards().stream()
+                    .flatMap(c -> c.getWhiteMarbleSubstitutions().stream())
+                    .map(ClientWhiteMarbleSubstitutionRepresentation::getResourceTypeToSubstitute)
+                    .collect(Collectors.toSet());
+                int numOfTempStarResources = activePlayerContext.getTempStarResources();
+                if(possibleSubstitutions.size() > 1 && numOfTempStarResources > 0) {
+                    gameView.setMainContentView(new ResourcesChoiceView(
+                        numOfTempStarResources,
+                        possibleSubstitutions,
+                        clientManager,
+                        Localization.getLocalizationInstance().getString(
+                            "client.cli.resourcesChoice.specialMarbleSubstitutions"
+                        ),
+                        resourcesChosen -> {
+                            ResourcesRepositioningDashboardView reposView = new ResourcesRepositioningDashboardView(
+                                ResourceUtils.sum(resourcesChosen, activePlayerContext.getTempStorage().getResources()),
+                                true,
+                                clientManager,
+                                gameView
+                            );
+                            gameView.setMainContentView(reposView);
+                            reposView.setOnPositioningDoneCallback(this::sendResourceRepositioningServerMessage);
+                        }
+                    ));
+                } else {
+                    Map<ResourceType, Integer> resourcesChosen;
+                    if(possibleSubstitutions.size() == 1) {
+                        resourcesChosen = Map.of(possibleSubstitutions.iterator().next(), numOfTempStarResources);
+                    } else {
+                        resourcesChosen = new HashMap<>();
+                    }
+                    ResourcesRepositioningDashboardView reposView = new ResourcesRepositioningDashboardView(
                         ResourceUtils.sum(resourcesChosen, activePlayerContext.getTempStorage().getResources()),
                         true,
                         clientManager,
                         gameView
-                        )
-                    )
-                ));
-
-                return CompletableFuture.<Void>completedFuture(null);
+                    );
+                    gameView.setMainContentView(reposView);
+                    reposView.setOnPositioningDoneCallback(this::sendResourceRepositioningServerMessage);
+                }
+                return null;
             }
         ).elseIfMessageTypeCompute(
             InvalidRequestServerMessage.class,
             message -> {
                 clientManager.tellUser(message.errorMessage);
                 gameView.setMainContentView(new MarketView(clientManager, gameView));
-                return CompletableFuture.completedFuture(null);
+                return null;
             }
         ).elseCompute(message -> {
             gameView.setMainContentView(new MarketView(clientManager, gameView));
-            return CompletableFuture.completedFuture(null);
+            return null;
         }).apply();
+    }
+
+    void sendResourceRepositioningServerMessage(
+        Set<ClientResourceStorageRepresentation> modifiedStorages,
+        Map<ResourceType, Integer> resourcesLeftInTempStorage
+    ) {
+        Map<ClientResourceStorageRepresentation, Map<ResourceType, Integer>> resourcesToAddByStorage =
+            modifiedStorages.stream()
+            .collect(Collectors.toMap(s -> s, ClientResourceStorageRepresentation::getResources));
+
+        clientManager.sendMessageAndGetAnswer(
+            new PlayerRequestClientMessage(new ManageResourcesFromMarketClientRequest(
+                clientManager.getMyPlayer(),
+                resourcesToAddByStorage,
+                resourcesLeftInTempStorage
+            ))
+        ).thenCompose(serverMessage ->
+            ServerMessageUtils.ifMessageTypeCompute(
+                serverMessage,
+                GameUpdateServerMessage.class,
+                message -> {
+                    clientManager.handleGameUpdates(message.gameUpdates);
+                    gameView.setMainContentView(new MainMenuView(clientManager, gameView));
+                    return CompletableFuture.completedFuture(null);
+                }
+            ).elseIfMessageTypeCompute(
+                InvalidRequestServerMessage.class,
+                message -> {
+                    clientManager.tellUser(message.errorMessage);
+                    gameView.setMainContentView(new MarketView(clientManager, gameView));
+                    return null;
+                }
+            ).elseCompute(message -> {
+                gameView.setMainContentView(new MarketView(clientManager, gameView));
+                return null;
+            }).apply()
+        );
     }
 
 
     CompletableFuture<Integer> askPlayerForRowNumber (){
         return clientManager.askUserLocalized("client.cli.market.askForRowNumber")
             .thenCompose(input -> {
-                int intInput = Integer.parseInt(input);
-                if (intInput > 0 || intInput <= clientManager.getGameContextRepresentation().getMarket().getNumberOfRows())
-                    return CompletableFuture.completedFuture(intInput);
-                else {
-                    clientManager.tellUserLocalized("client.cli.market.notifyPlayerRowNumberIsInvalid");
+                if (input.matches("\\G\\s*\\d+\\s*$")) {
+                    int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
+                    if (intInput > 0 || intInput <= clientManager.getGameContextRepresentation().getMarket().getNumberOfRows())
+                        return CompletableFuture.completedFuture(intInput);
+                    else {
+                        clientManager.tellUserLocalized("client.cli.market.notifyPlayerRowNumberIsInvalid");
+                        return askPlayerForRowNumber();
+                    }
+                } else {
+                    clientManager.tellUserLocalized("client.errors.invalidInput");
                     return askPlayerForRowNumber();
                 }
             });
@@ -226,11 +298,16 @@ public class MarketView extends CliView{
     CompletableFuture<Integer> askPlayerForColumnNumber (){
         return clientManager.askUserLocalized("client.cli.market.askForColumnNumber")
             .thenCompose(input -> {
-                int intInput = Integer.parseInt(input);
-                if (intInput > 0 || intInput <= clientManager.getGameContextRepresentation().getMarket().getNumberOfColumns())
-                    return CompletableFuture.completedFuture(intInput);
-                else {
-                    clientManager.tellUserLocalized("client.cli.market.notifyPlayerColumnNumberIsInvalid");
+                if (input.matches("\\G\\s*\\d+\\s*$")) {
+                    int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
+                    if (intInput > 0 || intInput <= clientManager.getGameContextRepresentation().getMarket().getNumberOfColumns())
+                        return CompletableFuture.completedFuture(intInput);
+                    else {
+                        clientManager.tellUserLocalized("client.cli.market.notifyPlayerColumnNumberIsInvalid");
+                        return askPlayerForColumnNumber();
+                    }
+                } else {
+                    clientManager.tellUserLocalized("client.errors.invalidInput");
                     return askPlayerForColumnNumber();
                 }
             });

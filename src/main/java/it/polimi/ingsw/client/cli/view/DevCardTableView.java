@@ -201,15 +201,20 @@ public class DevCardTableView extends CliView{
     CompletableFuture<Integer> askPlayerForDeckNumber(int numOfDecksInDashboard, List<Integer> validDecksIndexes) {
         return clientManager.askUserLocalized("client.cli.devCardTable.askForDeckNumber")
             .thenCompose(input -> {
-                int intInput = Integer.parseInt(input);
-                if(intInput < 1 || intInput > numOfDecksInDashboard) {
-                    clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerDeckNumberIsInvalid");
-                    return askPlayerForDeckNumber(numOfDecksInDashboard, validDecksIndexes);
-                } else if (!validDecksIndexes.contains(intInput)) {
-                    clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerCannotAddCardToDeck");
-                    return askPlayerForDeckNumber(numOfDecksInDashboard, validDecksIndexes);
+                if (input.matches("\\G\\s*\\d+\\s*$")) {
+                    int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
+                    if (intInput < 1 || intInput > numOfDecksInDashboard) {
+                        clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerDeckNumberIsInvalid");
+                        return askPlayerForDeckNumber(numOfDecksInDashboard, validDecksIndexes);
+                    } else if (!validDecksIndexes.contains(intInput)) {
+                        clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerCannotAddCardToDeck");
+                        return askPlayerForDeckNumber(numOfDecksInDashboard, validDecksIndexes);
+                    } else {
+                        return CompletableFuture.completedFuture(intInput);
+                    }
                 } else {
-                    return CompletableFuture.completedFuture(intInput);
+                    clientManager.tellUserLocalized("client.errors.invalidInput");
+                    return askPlayerForDeckNumber(numOfDecksInDashboard, validDecksIndexes);
                 }
             });
     }

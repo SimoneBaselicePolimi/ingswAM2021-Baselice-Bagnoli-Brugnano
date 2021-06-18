@@ -2,9 +2,10 @@ package it.polimi.ingsw.server.controller.clientrequest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator;
+import it.polimi.ingsw.server.controller.clientrequest.validator.EndTurnClientRequestValidator;
+import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class EndTurnClientRequest extends ClientRequest {
 
     @Override
     public ClientRequestValidator getValidator() {
-        return null;
+        return new EndTurnClientRequestValidator();
     }
 
 }
