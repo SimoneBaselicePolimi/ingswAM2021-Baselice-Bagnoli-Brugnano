@@ -8,6 +8,7 @@ import it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage
 import it.polimi.ingsw.client.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -24,9 +25,6 @@ public class NumberOfPlayers extends AbstractController{
 
     @FXML
     Label descLabel;
-
-    @FXML
-    TextField nameField;
 
     @FXML
     Button confirmButton;
@@ -47,8 +45,10 @@ public class NumberOfPlayers extends AbstractController{
         int lobbyMinSize = isSinglePlayerEnabled ? 1 : 2;
         int lobbyMaxSize = (int) clientManager.getEntryInContextInfoMap("maxLobbySize");
 
+        choiceBox.setValue(lobbyMinSize);
         for (int i = lobbyMinSize; i <= lobbyMaxSize; i++)
             choiceBox.getItems().add(i);
+
     }
 
     @FXML
@@ -62,7 +62,6 @@ public class NumberOfPlayers extends AbstractController{
                     serverMessage,
                     NewPlayerEnteredNewGameLobbyServerMessage.class,
                     message -> {
-                        clientManager.addEntryToContextInfoMap("lobbySize", message.lobbySize);
                         clientManager.addEntryToContextInfoMap("newPlayerEnteredMessage", message);
                         clientManager.loadScene("Lobby.fxml");
                         return CompletableFuture.completedFuture(message);

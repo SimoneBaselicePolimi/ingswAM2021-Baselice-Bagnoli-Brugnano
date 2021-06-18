@@ -25,6 +25,16 @@ client:
       confirmButton: "Conferma"
     preGame:
       numOfPlayers: "%d/%d giocatori"
+    leaderCardsSetup:
+      selection: "Seleziona %d carte leader"
+      confirmButton: "Conferma la selezione delle carte leader"
+    resourcesChoice:
+      titleLabel: "Seleziona %d risorse"
+      confirmButton: "Conferma la selezione delle risorse iniziali"
+      coins: "Monete"
+      stones: "Pietre"
+      servants: "Servitori"
+      shields: "Scudi"
 
   cli:
     setup:
