@@ -22,9 +22,9 @@
             <font>
                <Font size="14.0" />
             </font></Button>
-         <Label fx:id="cardsSelection" text="SELEZIONA 924 CARTE LEADER" GridPane.columnIndex="1">
+         <Label fx:id="cardsSelection" text="Seleziona 92 carte leader" GridPane.columnIndex="1">
             <font>
-               <Font size="22.0" />
+               <Font size="25.0" />
             </font>
          </Label>
       </GridPane>

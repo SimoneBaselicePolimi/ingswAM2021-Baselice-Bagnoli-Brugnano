@@ -51,27 +51,27 @@ public class LeaderCardsSetup extends AbstractController{
 
         cardsComp.forEach(c -> cardsContainer.getChildren().add(c));
 
-        updateLeaderCardsSetup(cardsComp, message);
+
+        cardsComp.forEach(c -> c.setOnMouseClicked(
+            e -> {
+                if(selectedCards.contains(c)){
+                    c.deselect();
+                    selectedCards.remove(c);
+                }
+                else{
+                    c.select();
+                    selectedCards.add(c);
+                }
+                if(selectedCards.size() == message.numberOfLeaderCardsToKeep)
+                    confirmButton.setVisible(true);
+                else
+                    confirmButton.setVisible(false);
+            }
+        ));
 
 
     }
 
-    private void updateLeaderCardsSetup(List<LeaderCard> cardsComp, InitialChoicesServerMessage message){
-
-        for(LeaderCard card : cardsComp){
-            if(selectedCards.contains(card)){
-                card.setOnMouseClicked(c -> card.deselect());
-                selectedCards.remove(card);
-            }
-            else{
-                card.setOnMouseClicked(c -> card.select());
-                selectedCards.add(card);
-            }
-        }
-
-        if(selectedCards.size() == message.numberOfLeaderCardsToKeep)
-            confirmButton.setVisible(true);
-    }
 
     @FXML
     void onConfirmButtonPressed(){

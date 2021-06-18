@@ -37,6 +37,7 @@ public class NumberOfPlayers extends AbstractController{
     }
     @FXML
     private void initialize() {
+
         titleLabel.setText(Localization.getLocalizationInstance().getString("client.gui.playerRegistration.titleLabel"));
         descLabel.setText(Localization.getLocalizationInstance().getString("client.gui.numberOfPlayers.descLabel"));
         confirmButton.setText(Localization.getLocalizationInstance().getString("client.gui.numberOfPlayers.confirmButton"));

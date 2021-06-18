@@ -47,13 +47,13 @@ public class LeaderCard extends AnchorPane {
     }
 
     public void select() {
-        System.out.print("Selezionata carta: " + card.getItemID());
+        System.out.print("Selezionata carta: " + card.getItemID() + "\n");
         bordersGrid.setStyle("-fx-border-color:#ff0000; -fx-border-width: 3; -fx-border-style: solid;");
         bordersGrid.toFront();
     }
 
     public void deselect(){
-        System.out.print("Deselezionata carta: " + card.getItemID());
+        System.out.print("Deselezionata carta: " + card.getItemID() + "\n");
         bordersGrid.setStyle("-fx-border-width: 0;");
     }
 
