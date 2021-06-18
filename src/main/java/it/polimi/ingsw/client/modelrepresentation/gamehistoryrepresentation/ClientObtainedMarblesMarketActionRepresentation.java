@@ -32,14 +32,23 @@ public class ClientObtainedMarblesMarketActionRepresentation extends ClientGameA
 
     @JsonIgnore
     @Override
-    public List<FormattedChar> getActionMessage() {
+    public List<FormattedChar> getActionMessageForCli() {
         List<FormattedChar> message = new ArrayList<>();
         message.addAll(FormattedChar.convertStringToFormattedCharList(Localization.getLocalizationInstance().getString(
-            "gameHistory.gameState.mainTurn.obtainedMarblesMarketAction",
+            "gameHistory.gameState.mainTurn.obtainedMarblesMarketActionAsList",
             player.getName()
         )));
         message.addAll(LocalizationUtils.getMarblesAsListOfFormattedChar(marbleColours));
         return message;
+    }
+
+    @JsonIgnore
+    @Override
+    public String getActionMessage() {
+        return Localization.getLocalizationInstance().getString(
+            "gameHistory.gameState.mainTurn.obtainedMarblesMarketAction",
+            player.getName()
+        );
     }
 
 }

@@ -8,12 +8,14 @@ import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientMaxResourceNumberRuleRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +34,8 @@ public abstract class AbstractPlayerDashboardView extends CliView{
 
     protected GridView storagesAndBaseProdGrid, devCardDecksGrid;
     protected DevCardDashboardDeckView devCardDashboardDeckView;
-    protected List<DevCardDashboardDeckView> devCardDashboardDeckViewList = new ArrayList<>();
-    protected List<GridView> baseProductionGridLists = new ArrayList<>();
+    protected List<DevCardDashboardDeckView> devCardDashboardDeckViewList;
+    protected List<GridView> baseProductionBorderLists;
 
     protected GameView gameView;
 
@@ -52,15 +54,47 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         dashboardPlayerContext = clientManager.getGameContextRepresentation().getPlayerContext(dashboardPlayer);
         playerDecks = dashboardPlayerContext.getDevelopmentCardDecks();
 
-        shelves = new ArrayList<>(dashboardPlayerContext.getShelves());
+        shelves = dashboardPlayerContext.getShelves().stream()
+            .sorted(
+                Comparator.comparing(
+                    s -> s.getRules().stream()
+                        .filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation)
+                        .findAny(),
+                    Comparator.comparingInt(r ->
+                        r.isPresent() ? ((ClientMaxResourceNumberRuleRepresentation) r.get()).getMaxResources() : 0
+                    )
+                )
+            ).collect(Collectors.toList());
+
         infiniteChest = dashboardPlayerContext.getInfiniteChest();
-        leaderStoragesFromActiveCards = dashboardPlayerContext.getActiveLeaderCards().stream()
-            .flatMap(leaderCard -> leaderCard.getResourceStorages().stream())
-            .collect(Collectors.toList());
+        baseProductions = new ArrayList<>(dashboardPlayerContext.getBaseProductions());
+
+        devCardDashboardDeckViewList = new ArrayList<>();
+        for (int i = 0; i < playerDecks.size(); i++) {
+            devCardDashboardDeckView = new DevCardDashboardDeckView(dashboardPlayer, i, clientManager);
+            devCardDashboardDeckViewList.add(devCardDashboardDeckView);
+        }
+
+        int r=0;
+        baseProductionBorderLists = new ArrayList<>();
+        for(ClientProductionRepresentation baseProduction : baseProductions) {
+            GridView baseProductionBorder = new GridView(clientManager, 1, 1, 1);
+            baseProductionBorderLists.add(baseProductionBorder);
+            baseProductionBorder.setBorderStyle(new LineBorderStyle());
+
+            LabelView baseProductionLabel = new LabelView(
+                FormattedChar.convertStringToFormattedCharList(
+                    Localization.getLocalizationInstance().getString("dashboard.baseProductions")
+                        + " " + (r+1) + "\n" + baseProduction.getDescription()
+                ),
+                clientManager
+            );
+            baseProductionBorder.setView(0, 0, baseProductionLabel);
+            r++;
+        }
 
         shelves.forEach(this::subscribeToRepresentation);
         subscribeToRepresentation(infiniteChest);
-        leaderStoragesFromActiveCards.forEach(this::subscribeToRepresentation);
     }
 
     public AbstractPlayerDashboardView(
@@ -103,13 +137,16 @@ public abstract class AbstractPlayerDashboardView extends CliView{
     @Override
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
 
+        leaderStoragesFromActiveCards = dashboardPlayerContext.getActiveLeaderCards().stream()
+            .flatMap(leaderCard -> leaderCard.getResourceStorages().stream())
+            .collect(Collectors.toList());
+        leaderStoragesFromActiveCards.forEach(this::subscribeToRepresentation);
+
         devCardDecksGrid = new GridView(clientManager, 1, playerDecks.size(), SPACE_BETWEEN_DECKS);
         storagesAndBaseProdGrid = new GridView(clientManager,2, 1, 0);
         storagesAndBaseProdGrid.setRowWeight(0, 2);
 
         for (int i = 0; i < playerDecks.size(); i++) {
-            devCardDashboardDeckView = new DevCardDashboardDeckView(dashboardPlayer, i, clientManager);
-            devCardDashboardDeckViewList.add(devCardDashboardDeckView);
             devCardDecksGrid.setView(0, i, devCardDashboardDeckView);
         }
 
@@ -159,8 +196,6 @@ public abstract class AbstractPlayerDashboardView extends CliView{
             );
         }
 
-        baseProductions = new ArrayList<>(dashboardPlayerContext.getBaseProductions());
-
         GridView baseProductionGrid = new GridView(
             clientManager,
             baseProductions.size(),
@@ -169,22 +204,8 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         );
         storagesAndBaseProdGrid.setView(1, 0, baseProductionGrid);
 
-        int r = 0;
-        for(ClientProductionRepresentation baseProduction : baseProductions) {
-            GridView baseProductionBorder = new GridView(clientManager, 1, 1, 1);
-            baseProductionGridLists.add(baseProductionBorder);
-            baseProductionBorder.setBorderStyle(new LineBorderStyle());
-            baseProductionGrid.setView(r, 0, baseProductionBorder);
-
-            LabelView baseProductionLabel = new LabelView(
-                FormattedChar.convertStringToFormattedCharList(
-                    Localization.getLocalizationInstance().getString("dashboard.baseProductions")
-                        + " " + (r+1) + "\n" + baseProduction.getDescription()
-                ),
-                clientManager
-            );
-            baseProductionBorder.setView(0, 0, baseProductionLabel);
-            r++;
+        for(int r = 0; r< baseProductionBorderLists.size(); r++) {
+            baseProductionGrid.setView(r, 0, baseProductionBorderLists.get(r));
         }
 
         buildChildGrids();

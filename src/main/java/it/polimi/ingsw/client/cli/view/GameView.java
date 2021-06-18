@@ -40,6 +40,7 @@ public class GameView extends CliView {
         if(currentContentView != null) {
             currentContentView.destroyView();
         }
+        upperRowGrid.children.removeIf(c -> c.getView().equals(currentContentView));
         currentContentView = contentView;
         upperRowGrid.setView(0, 0, contentView);
         updateView();

@@ -9,6 +9,8 @@ client:
   errors:
     unexpectedServerMessage: "Errore inaspettato! [Il server ha inviato un messaggio inaspettato]"
     userInputNotExpected: "Aspetta, operazione in corso..."
+    invalidInput: "Input non valido"
+    turnCanNotEndBeforeMainAction: "Non puoi terminare il turno prima di aver compiuto l'azione principale."
 
   gui:
     playerRegistration:
@@ -63,7 +65,7 @@ client:
       returnToMenu: "Torna al menu principale"
       returnToSetupView: "Torna alla fase di setup"
     resourcesChoiceDialog:
-      specifyResources: "Inserisci numero e tipo di risorse: "
+      specifyResources: "Inserisci quantità e tipo di risorse: "
       invalidChoice: "Scelta non valida. Formato: '{numRisorse} {tipo}'"
     mainMenuActions:
       openMarket: "Apri il mercato"
@@ -72,6 +74,7 @@ client:
       openPersonalDashboard: "Apri la tua plancia di gioco"
       openDifferentPlayerDashboard: "Apri la plancia di un altro giocatore"
       openDashboardOfPlayerName: "Guarda la plancia di: %s"
+      endMyTurn: "Termina il turno"
     market:
       rowChoice: "Prendi riga dal mercato"
       columnChoice: "Prendi colonna dal mercato"
@@ -243,16 +246,18 @@ gameHistory:
     setup:
       initialMessage: "La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali"
       choiceMessageWithInitialResources: "Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono: %s"
-      choiceMessageWithoutInitialResources: "Il giocatore %s ha scelto le sue carte leader.\nNon ha risorse iniziali."
+      choiceMessageWithoutInitialResources: "Il giocatore %s ha scelto le sue carte leader.\nNon ha risorse iniziali"
     mainTurn:
       initialMessage: "Inizia il turno del giocatore %s"
       developmentAction: "Il giocatore %s ha comprato una carta sviluppo"
-      obtainedMarblesMarketAction: "Il giocatore %s ha ottenuto le seguenti biglie:"
+      obtainedMarblesMarketActionAsList: "Il giocatore %s ha ottenuto le seguenti biglie:"
+      obtainedMarblesMarketAction: "Il giocatore %s ha ottenuto delle biglie dopo l'azione mercato."
       productionAction: "Il giocatore %s ha attivato delle produzioni"
     postTurn:
       finalMessage: "Si è concluso il turno del giocatore %s"
     manageResourcesFromMarketTurn:
-      obtainedResourcesMarketMessage: "Il giocatore %s ha ottenuto le seguenti risorse %s"
+      obtainedResourcesMarketMessage: "Il giocatore %s ha ottenuto le seguenti risorse: %s"
+      noObtainedResourcesMarketMessage: "Il giocatore %s non ha ottenuto risorse dall'azione mercato"
       discardedResourcesMarketAction:
         singular: "Il giocatore %s ha scartato 1 risorsa"
         plural: "Il giocatore %s ha scartato %s risorse"

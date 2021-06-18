@@ -317,4 +317,18 @@ public class FormattedCharsBuffer {
             return getBlockForIndex(row, index, middleRange, rangeEnd);
     }
 
+
+    public String getPreview() {
+        return rows.stream()
+            .map(r -> {
+                String s = "";
+                for(int i = 0; i < r.size()-1; i++) {
+                    for (int j = 0; j < r.get(i+1).blockStartIndex - r.get(i).blockStartIndex; j++) {
+                        s += r.get(i).formattedChar.character;
+                    }
+                }
+                return s;
+            }).reduce("", (a,s) -> a + "\n" + s);
+    }
+
 }

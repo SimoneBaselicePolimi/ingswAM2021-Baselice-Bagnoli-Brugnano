@@ -9,6 +9,7 @@ public class DiscardedResourcesMarketAction extends GameAction {
     @SerializeIdOnly
     private final Player player;
 
+    @JsonProperty("numberOfResourcesDiscarded")
     private final int numberOfResourcesDiscarded;
 
     public DiscardedResourcesMarketAction(

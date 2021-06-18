@@ -128,10 +128,10 @@ public class GameContextBuilder {
 		}
 
 		ResourceStorage infiniteChest = initializeResourceStorageBuilder()
-			.createResourceStorage("InfChest_ID");
+			.createResourceStorage(generateResourceStorageID());
 
 		ResourceStorage temporaryStorage = initializeResourceStorageBuilder()
-			.createResourceStorage("TempStorage_ID");
+			.createResourceStorage(generateResourceStorageID());
 
 		Set<Production> baseProductions = new HashSet<>();
 		for(ProductionConfig basicProductionConfig : gameInfoConfig.basicProductionPower) {

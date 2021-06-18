@@ -51,8 +51,6 @@ public class ResourceUtils {
         Map<ResourceType, Integer> resourcesA,
         Map<ResourceType, Integer> resourcesB
     ) throws IllegalArgumentException{
-
-        Map<ResourceType, Integer> difference = new HashMap<>();
         for (ResourceType resourceType : resourcesB.keySet()) {
             if (!resourcesA.containsKey(resourceType))
                 throw new IllegalArgumentException(String.format(
@@ -61,9 +59,12 @@ public class ResourceUtils {
                 ));
         }
 
+        Map<ResourceType, Integer> difference = new HashMap<>(resourcesA);
         for (ResourceType resourceType : resourcesB.keySet()){
-            if (resourcesA.get(resourceType) >= resourcesB.get(resourceType))
+            if (resourcesA.get(resourceType) > resourcesB.get(resourceType))
                 difference.put(resourceType, resourcesA.get(resourceType) - resourcesB.get(resourceType));
+            else if(resourcesA.get(resourceType).equals(resourcesB.get(resourceType)))
+                difference.remove(resourceType);
             else
                 throw new IllegalArgumentException(String.format(
                     "The number of resources of type %s in A is smaller than the number in B",
@@ -84,6 +85,17 @@ public class ResourceUtils {
                 Map.Entry::getKey,
                 e -> min(e.getValue(), resourcesB.get(e.getKey()))
             ));
+    }
+
+    public static Map<ResourceType, Integer> negate (Map<ResourceType, Integer> resourcesA) {
+        return resourcesA.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> -e.getValue()));
+    }
+
+    public static Map<ResourceType, Integer> relativeDifference(
+        Map<ResourceType, Integer> resourcesA,
+        Map<ResourceType, Integer> resourcesB
+    ) {
+        return sum(resourcesA, negate(resourcesB));
     }
 
 }

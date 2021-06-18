@@ -152,7 +152,7 @@ public abstract class GameState<I extends ServerMessage, F extends ServerMessage
 	 * by violating a specific rule that the storage implements
 	 */
 	public Map<Player, ServerMessage> handleRequestManageResourcesFromMarket(ManageResourcesFromMarketClientRequest request)
-		throws ResourceStorageRuleViolationException {
+		throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 		return null;
 	}
 

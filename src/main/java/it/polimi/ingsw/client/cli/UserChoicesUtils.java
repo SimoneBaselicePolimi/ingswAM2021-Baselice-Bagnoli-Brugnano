@@ -1,9 +1,9 @@
 package it.polimi.ingsw.client.cli;
 
-import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.localization.Localization;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class UserChoicesUtils {
@@ -50,14 +50,19 @@ public class UserChoicesUtils {
                 clientManager.tellUser(String.format("%d) %s", i+1, choices.get(i).description));
             return clientManager.askUserLocalized("client.cli.game.makeChoice")
                 .thenCompose(input -> {
-                    int num = Integer.parseInt(input);
-                    if(num < 1 || num > choices.size()) {
-                        clientManager.tellUserLocalized("client.cli.game.invalidChoice");
-                        return apply();
+                    if (input.matches("\\G\\s*\\d+\\s*$")) {
+                        int num = Integer.parseInt(input.replaceAll("\\D+",""));
+                        if (num < 1 || num > choices.size()) {
+                            clientManager.tellUserLocalized("client.cli.game.invalidChoice");
+                            return apply();
+                        } else {
+                            clientManager.tellUser("");
+                            choices.get(num - 1).computation.run();
+                            return CompletableFuture.completedFuture(null);
+                        }
                     } else {
-                        clientManager.tellUser("");
-                        choices.get(num-1).computation.run();
-                        return CompletableFuture.completedFuture(null);
+                        clientManager.tellUserLocalized("client.errors.invalidInput");
+                        return apply();
                     }
                 });
         }

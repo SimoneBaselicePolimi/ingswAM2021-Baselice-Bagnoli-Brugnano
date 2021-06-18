@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
@@ -26,6 +27,12 @@ import java.util.List;
 })
 public abstract class ClientGameActionRepresentation extends ClientRepresentation {
 
-    public abstract List<FormattedChar> getActionMessage();
+    @JsonIgnore
+    public abstract String getActionMessage();
+
+    @JsonIgnore
+    public List<FormattedChar> getActionMessageForCli() {
+        return FormattedChar.convertStringToFormattedCharList(getActionMessage());
+    }
 
 }

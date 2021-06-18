@@ -9,6 +9,7 @@ public class FaithPathMoveAction extends GameAction {
     @SerializeIdOnly
     private final Player player;
 
+    @JsonProperty("steps")
     private final int steps;
 
     public FaithPathMoveAction(

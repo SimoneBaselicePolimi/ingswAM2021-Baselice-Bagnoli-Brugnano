@@ -111,6 +111,13 @@ public class MarbleColour extends RegisteredIdentifiableItem implements Represen
 		return isSpecialMarble;
 	}
 
+	/**
+	 * Method to get the marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
+	 */
+	public List<Colour> getMarbleColour() {
+		return marbleColour;
+	}
+
 	@JsonIgnore
 	@Override
 	public ServerMarbleColourRepresentation getServerRepresentation() {

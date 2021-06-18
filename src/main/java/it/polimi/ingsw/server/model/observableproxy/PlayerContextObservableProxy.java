@@ -115,6 +115,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void setTemporaryStorageResources(Map<ResourceType, Integer> resources) throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
+        haveTempStarResourcesChanged = true;
         imp.setTemporaryStorageResources(resources);
     }
 

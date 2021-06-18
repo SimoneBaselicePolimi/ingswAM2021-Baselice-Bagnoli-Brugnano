@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.cli.view;
 
+import it.polimi.ingsw.client.GameState;
+import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
@@ -7,11 +9,16 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
+import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.EndTurnClientRequest;
+import it.polimi.ingsw.client.servermessage.EndTurnServerMessage;
+import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class MainMenuView extends CliView{
@@ -53,9 +60,9 @@ public class MainMenuView extends CliView{
             subscribeToRepresentation(clientManager.getGameContextRepresentation().getPlayerContext(p));
             subscribeToRepresentation(clientManager.getGameContextRepresentation().getFaithPath());
         });
+        subscribeToRepresentation(clientManager.getGameContextRepresentation());
 
         startMainMenuDialog();
-
     }
 
     public MainMenuView(CliClientManager clientManager, GameView gameView) {
@@ -63,8 +70,9 @@ public class MainMenuView extends CliView{
     }
 
     void startMainMenuDialog() {
-        UserChoicesUtils.makeUserChoose(clientManager)
-            .addUserChoiceLocalized(
+        UserChoicesUtils.PossibleUserChoices userChoices = UserChoicesUtils.makeUserChoose(clientManager);
+
+        userChoices.addUserChoiceLocalized(
             () -> gameView.setMainContentView(new MarketView(clientManager, gameView)),
             "client.cli.mainMenuActions.openMarket"
         ).addUserChoiceLocalized(
@@ -79,7 +87,45 @@ public class MainMenuView extends CliView{
         ).addUserChoiceLocalized(
             this::askThePlayerToOpenTheDashboardOf,
             "client.cli.mainMenuActions.openDifferentPlayerDashboard"
-        ).apply();
+        );
+
+        if(clientManager.getGameState() == GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION
+            || clientManager.getGameState() == GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION) {
+            userChoices.addUserChoiceLocalized(this::endMyTurn, "client.cli.mainMenuActions.endMyTurn");
+        }
+
+        userChoices.apply();
+    }
+
+    protected void endMyTurn() {
+        if (clientManager.getGameState() == GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION) {
+            clientManager.sendMessageAndGetAnswer(
+                new PlayerRequestClientMessage(new EndTurnClientRequest(clientManager.getMyPlayer()))
+            ).thenCompose(serverMessage ->
+                ServerMessageUtils.ifMessageTypeCompute(
+                    serverMessage,
+                    EndTurnServerMessage.class,
+                    message -> {
+                        clientManager.handleGameUpdates(message.gameUpdates);
+                        gameView.setMainContentView(new MainMenuView(clientManager, gameView));
+                        return CompletableFuture.completedFuture(null);
+                    }
+                ).elseIfMessageTypeCompute(
+                    InvalidRequestServerMessage.class,
+                    message -> {
+                        clientManager.tellUser(message.errorMessage);
+                        gameView.setMainContentView(new MainMenuView(clientManager, gameView));
+                        return CompletableFuture.completedFuture(null);
+                    }
+                ).elseCompute(message -> {
+                    gameView.setMainContentView(new MainMenuView(clientManager, gameView));
+                    return CompletableFuture.completedFuture(null);
+                }).apply()
+            );
+        } else {
+            clientManager.tellUserLocalized("client.errors.turnCanNotEndBeforeMainAction");
+            startMainMenuDialog();
+        }
     }
 
     protected void askThePlayerToOpenTheDashboardOf() {
