@@ -72,6 +72,13 @@ public class ResourcesChoiceSetup extends AbstractController{
 
         confirmButton.setVisible(false);
 
+        String str[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"};
+
+        choiceBoxCoins.getItems().addAll(FXCollections.observableArrayList(str));
+        choiceBoxShields.getItems().addAll(FXCollections.observableArrayList(str));
+        choiceBoxStones.getItems().addAll(FXCollections.observableArrayList(str));
+        choiceBoxServants.getItems().addAll(FXCollections.observableArrayList(str));
+
         resourcesTitle.setText(Localization.getLocalizationInstance().getString("client.gui.resourcesChoice.titleLabel", message.numberOfStarResources));
         confirmButton.setText(Localization.getLocalizationInstance().getString("client.gui.resourcesChoice.confirmButton"));
         //selectedResources.setText(Localization.getLocalizationInstance().getString("client.gui.resourcesChoice.selectedResources", totalResourcesSelected, message.numberOfStarResources));
@@ -83,46 +90,57 @@ public class ResourcesChoiceSetup extends AbstractController{
         choiceBoxStones.setValue(0);
         choiceBoxServants.setValue(0);
         choiceBoxShields.setValue(0);
-        choiceBoxCoins.getItems().addAll("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14");
-        choiceBoxStones.getItems().addAll("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14");
-        choiceBoxServants.getItems().addAll("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14");
-        choiceBoxShields.getItems().addAll("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14");
 
-
-        updateResourcesChoice(message);
+        updateResourcesChoice(message, str);
     }
 
-    private void updateResourcesChoice(InitialChoicesServerMessage newMessage){
+    private void updateResourcesChoice(InitialChoicesServerMessage newMessage, String[] str){
 
-        choiceBoxCoins.getSelectionModel().selectedIndexProperty().addListener(
-            (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-                coinsCurrentSelected = new_val.intValue();
-            });
+        // add a listener for choiceBoxCoins
+        choiceBoxCoins.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
-//        choiceBoxCoins.setOnAction(event -> {
-//            coinsCurrentSelected = (int) choiceBoxCoins.getValue();
-//        });
-//
-//        choiceBoxStones.setOnAction(event -> {
-//            stonesCurrentSelected = (int) choiceBoxStones.getValue();
-//        });
-//
-//        choiceBoxServants.setOnAction(event -> {
-//            servantsCurrentSelected = (int) choiceBoxServants.getValue();
-//        });
-//
-//        choiceBoxShields.setOnAction(event -> {
-//            shieldsCurrentSelected = (int) choiceBoxShields.getValue();
-//        });
+            // if the item of the list is changed
+            public void changed(ObservableValue ov, Number value, Number new_value)
+            {
+                coinsCurrentSelected = Integer.parseInt(str[new_value.intValue()]);
+            }
+        });
+
+        // add a listener for choiceBoxStones
+        choiceBoxStones.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
+            // if the item of the list is changed
+            public void changed(ObservableValue ov, Number value, Number new_value)
+            {
+                stonesCurrentSelected = Integer.parseInt(str[new_value.intValue()]);
+            }
+        });
+
+        // add a listener for choiceBoxServants
+        choiceBoxServants.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
+            // if the item of the list is changed
+            public void changed(ObservableValue ov, Number value, Number new_value)
+            {
+                servantsCurrentSelected = Integer.parseInt(str[new_value.intValue()]);
+            }
+        });
+
+        // add a listener for choiceBoxShields
+        choiceBoxShields.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+
+            // if the item of the list is changed
+            public void changed(ObservableValue ov, Number value, Number new_value)
+            {
+                shieldsCurrentSelected = Integer.parseInt(str[new_value.intValue()]);
+            }
+        });
 
         totalResourcesSelected = coinsCurrentSelected + stonesCurrentSelected + shieldsCurrentSelected + servantsCurrentSelected;
 
         selectedResources.setText(Localization.getLocalizationInstance().getString("client.gui.resourcesChoice.selectedResources", totalResourcesSelected, newMessage.numberOfStarResources));
 
-        if (totalResourcesSelected == newMessage.numberOfStarResources)
-            confirmButton.setVisible(true);
-        else
-            confirmButton.setVisible(false);
+        confirmButton.setVisible(totalResourcesSelected == newMessage.numberOfStarResources);
 
     }
 
