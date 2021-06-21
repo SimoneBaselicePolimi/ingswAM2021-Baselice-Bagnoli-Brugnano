@@ -17,21 +17,28 @@ public enum ResourceType {
     @JsonProperty("SERVANTS") SERVANTS,
     @JsonProperty("SHIELDS") SHIELDS;
 
-    private final static Map<ResourceType, String> RESOURCELOC = Map.of(
+    private final static Map<ResourceType, String> RESOURCE_LOC = Map.of(
         ResourceType.COINS, "resources.coins",
         ResourceType.SERVANTS, "resources.servants",
         ResourceType.SHIELDS, "resources.shields",
         ResourceType.STONES, "resources.stones"
     );
 
+    private final static Map<ResourceType, String> RESOURCE_IMG = Map.of(
+        ResourceType.COINS, "coin.png",
+        ResourceType.SERVANTS, "servant.png",
+        ResourceType.SHIELDS, "shield.png",
+        ResourceType.STONES, "stone.png"
+    );
+
     @JsonIgnore
     public String getLocalizedNameSingular() {
-        return Localization.getLocalizationInstance().getString(RESOURCELOC.get(this) + ".singular");
+        return Localization.getLocalizationInstance().getString(RESOURCE_LOC.get(this) + ".singular");
     }
 
     @JsonIgnore
     public String getLocalizedNamePlural() {
-        return Localization.getLocalizationInstance().getString(RESOURCELOC.get(this) + ".plural");
+        return Localization.getLocalizationInstance().getString(RESOURCE_LOC.get(this) + ".plural");
     }
 
     public static ResourceType getResourceTypeFromLocalizedName(String resourceType) {
@@ -40,5 +47,10 @@ public enum ResourceType {
                 || r.getLocalizedNamePlural().equals(resourceType.toLowerCase(Locale.ROOT)))
                 return r;
         return null;
+    }
+
+    @JsonIgnore
+    public String getIconPathForResourceType() {
+        return RESOURCE_IMG.get(this);
     }
 }
