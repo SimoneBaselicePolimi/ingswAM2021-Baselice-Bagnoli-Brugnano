@@ -32,7 +32,7 @@ client:
       titleLabel:
         singular: "Seleziona una risorsa"
         plural: "Seleziona %d risorse"
-      confirmButton: "Conferma la selezione delle risorse iniziali"
+      confirmButton: "Conferma"
       selectedResources: "Risorse attualmente selezionate: %d di %d"
       coins: "Monete"
       stones: "Pietre"

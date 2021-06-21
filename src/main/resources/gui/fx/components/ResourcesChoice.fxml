@@ -35,10 +35,12 @@
                </rowConstraints>
            </GridPane>
 
-           <Label fx:id="totalResourcesLabel" text="P res sel 1 of 2" GridPane.columnIndex="0" GridPane.rowIndex="3">
-            <font>
-               <Font name="System Italic" size="15.0" />
-            </font></Label>
+           <HBox fx:id="btnLabelHBox" GridPane.columnIndex="0" GridPane.rowIndex="3" spacing="15" alignment="BOTTOM_CENTER">
+               <Label fx:id="totalResourcesLabel" text="P res sel 1 of 2">
+                   <font> <Font name="System Italic" size="15.0" /> </font>
+               </Label>
+               <Button fx:id="confirmButton" prefHeight="20" text="PConferma"/>
+           </HBox>
 
        </GridPane>
 

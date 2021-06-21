@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableIntegerValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,7 +22,10 @@ import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class ResourcesChoice extends AnchorPane {
 
@@ -36,18 +38,27 @@ public class ResourcesChoice extends AnchorPane {
     @FXML
     Label titleLabel;
 
+    @FXML
+    HBox btnLabelHBox;
+
+    @FXML
+    Button confirmButton;
+
     int numberOfTotalResourcesToChoose;
     final List<ResourceType> possibleChoices;
+    final Consumer<Map<ResourceType, Integer>> onAllChoicesDone;
 
     List<IntegerProperty> selectedResourcesPropByResTypeIndex;
     IntegerProperty numOfResourcesAlreadyChosenProp, numOfResourcesLeftToChooseProp;
 
     public ResourcesChoice(
         int numOfResourcesToChoose,
-        List<ResourceType> possibleChoices
+        List<ResourceType> possibleChoices,
+        Consumer<Map<ResourceType, Integer>> onAllChoicesDone
     ) {
         this.numberOfTotalResourcesToChoose = numOfResourcesToChoose;
         this.possibleChoices = possibleChoices;
+        this.onAllChoicesDone = onAllChoicesDone;
 
         selectedResourcesPropByResTypeIndex = new ArrayList<>();
         possibleChoices.forEach(r -> selectedResourcesPropByResTypeIndex.add(new SimpleIntegerProperty(0)));
@@ -79,6 +90,32 @@ public class ResourcesChoice extends AnchorPane {
     @FXML
     private void initialize() {
 
+        confirmButton.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.resourcesChoice.confirmButton"
+        ));
+        confirmButton.setOnMouseClicked(e -> {
+            Map<ResourceType, Integer> selectedResources = new HashMap<>();
+            for(int i = 0; i < possibleChoices.size(); i++) {
+                int numOfResources = selectedResourcesPropByResTypeIndex.get(i).getValue();
+                if(numOfResources > 0)
+                    selectedResources.put(possibleChoices.get(i), numOfResources);
+            }
+            onAllChoicesDone.accept(selectedResources);
+        });
+        numOfResourcesLeftToChooseProp.addListener( (obv, oldVal, newVal) -> {
+            if(!oldVal.equals(newVal)) {
+                if (newVal.equals(0))
+                    btnLabelHBox.getChildren().add(confirmButton);
+                else
+                    btnLabelHBox.getChildren().remove(confirmButton);
+            }
+        });
+
+        if (numOfResourcesLeftToChooseProp.getValue() == 0 && !btnLabelHBox.getChildren().contains(confirmButton))
+            btnLabelHBox.getChildren().add(confirmButton);
+        else if(numOfResourcesLeftToChooseProp.getValue() > 0)
+            btnLabelHBox.getChildren().remove(confirmButton);
+
         String title;
         if(numberOfTotalResourcesToChoose == 1)
             title = Localization.getLocalizationInstance().getString(
@@ -101,8 +138,6 @@ public class ResourcesChoice extends AnchorPane {
         ));
 
         for(int r = 0; r < possibleChoices.size(); r++) {
-
-            //GridPane resGrid = new GridPane();
 
             final IntegerProperty valProp = selectedResourcesPropByResTypeIndex.get(r);
 
@@ -151,15 +186,6 @@ public class ResourcesChoice extends AnchorPane {
 
             container.getChildren().addAll(decrementBtn, hBoxLabelImg, incrementBtn);
 
-
-//            resGrid.add(decrementBtn, 0, 0);
-//            resGrid.add(valLabel, 1, 0);
-//            resGrid.add(incrementBtn, 2, 0);
-
-            //resGrid.setVgap(20);
-            //resGrid.setHgap(100);
-
-            //container.add(resGrid, 0, r);
         }
     }
 }
