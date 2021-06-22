@@ -2,16 +2,12 @@ package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
 import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
@@ -20,6 +16,12 @@ public class Dashboard extends AnchorPane {
     final Player dashboardPlayer;
     final ClientPlayerContextRepresentation playerContext;
     final GuiClientManager clientManager;
+
+    @FXML
+    VBox storagesContainer;
+
+    @FXML
+    VBox baseProductionsContainer;
 
     public Dashboard(Player dashboardPlayer) {
         this.dashboardPlayer = dashboardPlayer;
@@ -41,8 +43,8 @@ public class Dashboard extends AnchorPane {
 
     }
 
-
     @FXML
     private void initialize() {
+        //storagesContainer.getChildren().addAll();
     }
 }

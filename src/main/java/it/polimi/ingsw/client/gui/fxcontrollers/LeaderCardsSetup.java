@@ -92,7 +92,6 @@ public class LeaderCardsSetup extends AbstractController{
             Scene scene = new Scene(new VBox(20, storageComp, tempStorageComp), 500, 500);
             clientManager.getMainStage().setScene(scene);
             clientManager.getMainStage().show();
-
         });
 
     }

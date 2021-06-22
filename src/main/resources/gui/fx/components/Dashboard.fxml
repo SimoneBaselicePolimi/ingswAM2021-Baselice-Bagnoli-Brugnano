@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-
 <fx:root prefWidth="964" prefHeight="576" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane >
+        <GridPane prefWidth="964" prefHeight="576">
 
+            <columnConstraints>
+                <ColumnConstraints prefWidth="700" halignment="CENTER" hgrow="NEVER"/>
+                <ColumnConstraints prefWidth="250" halignment="CENTER" hgrow="NEVER"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+
+                <columnConstraints>
+                    <ColumnConstraints halignment="CENTER"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                </rowConstraints>
+
+                <HBox fx:id="devCardsContainer" GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="350" alignment="CENTER"/>
+                <HBox fx:id="leaderCardsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="226" alignment="CENTER"/>
+
+            </GridPane>
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="25">
+                <VBox fx:id="storagesContainer" spacing="10" alignment="CENTER"/>
+                <VBox fx:id="baseProductionsContainer" spacing="10" alignment="CENTER"/>
+            </VBox>
 
         </GridPane>
 
