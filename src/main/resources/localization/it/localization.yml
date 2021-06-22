@@ -38,6 +38,8 @@ client:
       stones: "Pietre"
       servants: "Servitori"
       shields: "Scudi"
+    faithPath:
+       playersLabel: "Giocatore %s : "
 
   cli:
     setup:
