@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.modelrepresentation;
 
+import it.polimi.ingsw.client.view.AbstractView;
 import it.polimi.ingsw.client.view.View;
 
 import java.util.HashSet;

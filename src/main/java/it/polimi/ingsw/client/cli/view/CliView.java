@@ -2,15 +2,14 @@ package it.polimi.ingsw.client.cli.view;
 
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
-import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.client.view.AbstractView;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
-import it.polimi.ingsw.server.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CliView extends View {
+public abstract class CliView extends AbstractView {
 
 
     protected static class ChildCliView {

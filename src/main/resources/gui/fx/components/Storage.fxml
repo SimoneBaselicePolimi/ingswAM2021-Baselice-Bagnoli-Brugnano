@@ -43,7 +43,7 @@
             </rowConstraints>
             </GridPane>
 
-            <HBox fx:id="resourcesContainer" alignment="CENTER">
+            <HBox fx:id="resourcesContainer" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="16">
             </HBox>
 
             <HBox fx:id="maxNumberRule" alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
