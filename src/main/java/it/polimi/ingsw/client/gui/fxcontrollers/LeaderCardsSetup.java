@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.gui.fxcontrollers.components.LeaderCard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Storage;
+import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientMaxResourceNumberRuleRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage;
 import it.polimi.ingsw.localization.Localization;
@@ -12,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,6 @@ public class LeaderCardsSetup extends AbstractController{
 
         cardsComp.forEach(c -> cardsContainer.getChildren().add(c));
 
-
         cardsComp.forEach(c -> c.setOnMouseClicked(
             e -> {
                 if(selectedCards.contains(c)){
@@ -70,9 +70,7 @@ public class LeaderCardsSetup extends AbstractController{
             }
         ));
 
-
     }
-
 
     @FXML
     void onConfirmButtonPressed(){
@@ -80,13 +78,18 @@ public class LeaderCardsSetup extends AbstractController{
         clientManager.addEntryToContextInfoMap("selectedLeaderCards", selectedCards);
         //clientManager.loadScene("ResourcesChoiceSetup.fxml");
         Platform.runLater(() -> {
-            ClientResourceStorageRepresentation storage = clientManager.getGameContextRepresentation().getPlayerContext(clientManager.getMyPlayer()).getShelves().iterator().next();
+            ClientResourceStorageRepresentation storage = clientManager.getGameContextRepresentation().getPlayerContext(clientManager.getMyPlayer()).getShelves()
+                .stream().filter(s -> s.getRules().stream().filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation).anyMatch(r -> ((ClientMaxResourceNumberRuleRepresentation)r).getMaxResources()==3))
+                .findAny().get();
+            Storage storageComp = new Storage("MAGAZZINO 3", storage);
             System.out.println(storage.getDescription());
-            storage.setResources(Map.of(ResourceType.STONES, 1));
+            storage.setResources(Map.of(ResourceType.STONES, 3));
 
-            Storage storageComp = new Storage(storage);
-            storageComp.enableResourceRepositioningMode(null);
-            Scene scene = new Scene(new StackPane(storageComp), 500, 500);
+            ClientResourceStorageRepresentation tempStorage = clientManager.getGameContextRepresentation().getPlayerContext(clientManager.getMyPlayer()).getTempStorage();
+            Storage tempStorageComp = new Storage("MAGAZZINO TEMPORANEO", tempStorage);
+
+            storageComp.enableResourceRepositioningMode(tempStorage);
+            Scene scene = new Scene(new VBox(20, storageComp, tempStorageComp), 500, 500);
             clientManager.getMainStage().setScene(scene);
             clientManager.getMainStage().show();
 

@@ -38,6 +38,10 @@ client:
       stones: "Pietre"
       servants: "Servitori"
       shields: "Scudi"
+    repositioningInStorages:
+      rules:
+        info:
+          maxNumber: "MAX %d"
 
   cli:
     setup:

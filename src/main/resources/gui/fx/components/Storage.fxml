@@ -27,7 +27,7 @@
                     <font>
                         <Font name="System Bold" size="19.0" />
                     </font></Label>
-                <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="rulesInfoContainer">
                     <children>
                         <Circle fill="lightskyblue" radius="10" stroke="BLACK" strokeType="INSIDE" />
                         <Label text="?">
@@ -46,8 +46,8 @@
             <HBox fx:id="resourcesContainer" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="16">
             </HBox>
 
-            <HBox fx:id="maxNumberRule" alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
-                <Label text="MAX 2">
+            <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Label fx:id="maxNumberRuleLabel" text="MAX 2">
                 </Label>
             </HBox>
 
