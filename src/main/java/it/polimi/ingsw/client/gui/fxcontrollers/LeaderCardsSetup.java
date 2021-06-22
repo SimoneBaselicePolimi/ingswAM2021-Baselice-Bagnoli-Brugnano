@@ -88,17 +88,17 @@ public class LeaderCardsSetup extends AbstractController{
     void onConfirmButtonPressed(){
 
         clientManager.addEntryToContextInfoMap("selectedLeaderCards", selectedCards);
-        //clientManager.loadScene("ResourcesChoiceSetup.fxml");
-        Platform.runLater(() -> {
-            ClientResourceStorageRepresentation storage = clientManager.getGameContextRepresentation().getPlayerContext(clientManager.getMyPlayer()).getShelves().iterator().next();
-            System.out.println(storage.getDescription());
-            storage.setResources(Map.of(ResourceType.STONES, 1));
-
-            Scene scene = new Scene(new StackPane(new Storage(storage)), 500, 500);
-            clientManager.getMainStage().setScene(scene);
-            clientManager.getMainStage().show();
-
-        });
+        clientManager.loadScene("FaithPath.fxml");
+//        Platform.runLater(() -> {
+//            ClientResourceStorageRepresentation storage = clientManager.getGameContextRepresentation().getPlayerContext(clientManager.getMyPlayer()).getShelves().iterator().next();
+//            System.out.println(storage.getDescription());
+//            storage.setResources(Map.of(ResourceType.STONES, 1));
+//
+//            Scene scene = new Scene(new StackPane(new Storage(storage)), 500, 500);
+//            clientManager.getMainStage().setScene(scene);
+//            clientManager.getMainStage().show();
+//
+//        });
 
     }
 
