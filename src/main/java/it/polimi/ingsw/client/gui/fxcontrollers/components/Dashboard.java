@@ -44,5 +44,9 @@ public class Dashboard extends AnchorPane {
 
     @FXML
     private void initialize() {
+
+
+
     }
+
 }
