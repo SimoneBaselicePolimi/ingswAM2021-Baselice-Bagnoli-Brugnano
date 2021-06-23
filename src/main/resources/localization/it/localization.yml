@@ -40,6 +40,10 @@ client:
       shields: "Scudi"
     faithPath:
        playersLabel: "Giocatore %s : "
+    repositioningInStorages:
+      rules:
+        info:
+          maxNumber: "MAX %d"
 
   cli:
     setup:

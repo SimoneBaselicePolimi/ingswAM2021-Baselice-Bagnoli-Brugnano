@@ -1,18 +1,14 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientMaxResourceNumberRuleRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientSameResourceTypeRuleRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientSpecificResourceTypeRuleRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.*;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ObservableIntegerValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,11 +16,13 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+import javax.tools.Tool;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Stream;
@@ -41,13 +39,27 @@ public class Storage extends AnchorPane implements View {
     final IntegerProperty totalResourcesInStorage;
 
     BooleanProperty isResourceRepositioningModeEnabled;
-    ClientResourceStorageRepresentation targetStorage;
+    ObjectProperty<ClientResourceStorageRepresentation> targetStorageProp = new SimpleObjectProperty<>();
 
+    final String title;
 
     @FXML
     HBox resourcesContainer;
 
-    public Storage(ClientResourceStorageRepresentation storage) {
+    @FXML
+    Label maxNumberRuleLabel;
+
+    @FXML
+    Label titleLabel;
+
+    @FXML
+    Tooltip rulesInfo;
+
+    @FXML
+    StackPane rulesInfoContainer;
+
+    public Storage(String title, ClientResourceStorageRepresentation storage) {
+        this.title = title;
         this.storage = storage;
 
         isResourceRepositioningModeEnabled = new SimpleBooleanProperty(false);
@@ -140,19 +152,22 @@ public class Storage extends AnchorPane implements View {
             BooleanProperty isIncrementButtonEnabled = isIncrementButtonEnabledMap.get(resourceType);
             isIncrementButtonEnabled.bind(Bindings.createBooleanBinding(
                 () -> {
-                    if(!isSectionEnabled.get())
+                    if(!isSectionEnabled.get() || !isSectionVisible.get() || !isResourceRepositioningModeEnabled.get())
                         return false;
                     Optional<Integer> maxResources = storage.getRules().stream()
                         .filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation)
                         .map(r -> ((ClientMaxResourceNumberRuleRepresentation)r).getMaxResources())
                         .findAny();
-                    if(maxResources.isPresent())
-                        return totalResourcesInStorage.get() < maxResources.get();
-                    else
+                    if(maxResources.isPresent() && totalResourcesInStorage.get() == maxResources.get())
+                        return false;
+                    if(targetStorageProp.get().getResources().containsKey(resourceType) && targetStorageProp.get().getResources().get(resourceType) >= 1)
                         return true;
+                    else
+                        return false;
                 },
                 isSectionEnabled,
-                totalResourcesInStorage
+                totalResourcesInStorage,
+                targetStorageProp
             ));
 
             BooleanProperty isDecrementButtonVisible = isDecrementButtonVisibleMap.get(resourceType);
@@ -193,18 +208,39 @@ public class Storage extends AnchorPane implements View {
     }
 
     public void enableResourceRepositioningMode(ClientResourceStorageRepresentation targetStorage) {
-        this.targetStorage = targetStorage;
+        if(targetStorage == null)
+            throw new IllegalArgumentException();
+        targetStorage.subscribe(this);
+        this.targetStorageProp.setValue(targetStorage);
         isResourceRepositioningModeEnabled.setValue(true);
     }
 
     public void disableResourceRepositioningMode() {
+        targetStorageProp.get().unsubscribe(this);
         isResourceRepositioningModeEnabled.setValue(false);
     }
 
     @FXML
     private void initialize() {
 
-        for(ResourceType resourceType : ResourceType.values()) {
+        titleLabel.setText(title);
+
+        rulesInfo.setText(storage.getRulesDescription());
+        if(storage.getRulesDescription().isEmpty())
+            rulesInfoContainer.setVisible(false);
+
+        Optional<ClientMaxResourceNumberRuleRepresentation> maxNumberRule = storage.getRules().stream()
+            .filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation)
+            .map(r -> (ClientMaxResourceNumberRuleRepresentation)r).findAny();
+        if(maxNumberRule.isPresent())
+            maxNumberRuleLabel.setText(Localization.getLocalizationInstance().getString(
+                "client.gui.repositioningInStorages.rules.info.maxNumber",
+                maxNumberRule.get().getMaxResources()
+            ));
+        else
+            maxNumberRuleLabel.setVisible(false);
+
+        for(ResourceType resourceType : resOrder) {
 
             IntegerProperty resNumProp = numOfResourcesByType.get(resourceType);
 
@@ -226,7 +262,7 @@ public class Storage extends AnchorPane implements View {
             HBox innerSectionContainer = new HBox(5);
             innerSectionContainer.setPrefHeight(30);
             innerSectionContainer.setAlignment(Pos.CENTER);
-            innerSectionContainer.disableProperty().bind(isSectionEnabledMap.get(resourceType));
+            innerSectionContainer.disableProperty().bind(isSectionEnabledMap.get(resourceType).not());
             innerSectionContainer.visibleProperty().bind(isSectionVisibleMap.get(resourceType));
 
 
@@ -254,15 +290,31 @@ public class Storage extends AnchorPane implements View {
             incrementButton.setPrefHeight(15);
             incrementButton.setPrefWidth(25);
             incrementButton.setStyle("-fx-shape: \"M -1 0 L 0 -1 L 1 0 z\"");
-            incrementButton.disableProperty().bind(isIncrementButtonEnabledMap.get(resourceType));
+            incrementButton.disableProperty().bind(isIncrementButtonEnabledMap.get(resourceType).not());
             incrementButton.visibleProperty().bind(isIncrementButtonVisibleMap.get(resourceType));
+            incrementButton.setOnMouseClicked(e -> {
+                targetStorageProp.get().setResources(
+                    ResourceUtils.difference(targetStorageProp.get().getResources(), Map.of(resourceType, 1))
+                );
+                storage.setResources(
+                    ResourceUtils.sum(storage.getResources(), Map.of(resourceType, 1))
+                );
+            });
 
             Button decrementButton = new Button();
             decrementButton.setPrefHeight(15);
             decrementButton.setPrefWidth(25);
             decrementButton.setStyle("-fx-shape: \"M -1 0 L 0 1 L 1 0 z\"");
-            decrementButton.disableProperty().bind(isDecrementButtonEnabledMap.get(resourceType));
+            decrementButton.disableProperty().bind(isDecrementButtonEnabledMap.get(resourceType).not());
             decrementButton.visibleProperty().bind(isDecrementButtonVisibleMap.get(resourceType));
+            decrementButton.setOnMouseClicked(e -> {
+                targetStorageProp.get().setResources(
+                    ResourceUtils.sum(targetStorageProp.get().getResources(), Map.of(resourceType, 1))
+                );
+                storage.setResources(
+                    ResourceUtils.difference(storage.getResources(), Map.of(resourceType, 1))
+                );
+            });
 
             GridPane.setConstraints(incrementButton, 0, 0);
             GridPane.setConstraints(innerSectionContainer, 0, 1);
@@ -279,6 +331,9 @@ public class Storage extends AnchorPane implements View {
     @Override
     public void updateView() {
         updateResources();
+        if(isResourceRepositioningModeEnabled.get())
+            targetStorageProp.setValue(targetStorageProp.get());
+
     }
 
     @Override

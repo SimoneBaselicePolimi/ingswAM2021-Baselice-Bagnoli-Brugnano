@@ -61,6 +61,14 @@ public class ClientResourceStorageRepresentation extends ClientRegisteredIdentif
         return Optional.of(errorMessagesBuilder.toString());
     }
 
+    public String getRulesDescription() {
+        return getRules().stream()
+            .map(ClientResourceStorageRuleRepresentation::getDescription)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .reduce("", (a, t) -> a + t + "\n");
+    }
+
     public String getDescription() {
         StringBuilder storageDescription = new StringBuilder();
         storageDescription.append("\n");

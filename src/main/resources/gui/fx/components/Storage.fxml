@@ -5,17 +5,17 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root prefHeight="200" prefWidth="200" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefWidth="200" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane prefHeight="200" prefWidth="200" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 8px; -fx-border-radius: 8;">
+        <GridPane prefWidth="200" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 8px; -fx-border-radius: 8;">
 
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints prefHeight="30" vgrow="ALWAYS" />
-                <RowConstraints prefHeight="80" vgrow="NEVER" />
-                <RowConstraints prefHeight="10" vgrow="NEVER" />
+                <RowConstraints prefHeight="35" vgrow="NEVER" />
+                <RowConstraints />
+                <RowConstraints prefHeight="20" vgrow="NEVER" />
             </rowConstraints>
 
             <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
@@ -27,7 +27,7 @@
                     <font>
                         <Font name="System Bold" size="19.0" />
                     </font></Label>
-                <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="rulesInfoContainer">
                     <children>
                         <Circle fill="lightskyblue" radius="10" stroke="BLACK" strokeType="INSIDE" />
                         <Label text="?">
@@ -46,8 +46,8 @@
             <HBox fx:id="resourcesContainer" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="16">
             </HBox>
 
-            <HBox fx:id="maxNumberRule" alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
-                <Label text="MAX 2">
+            <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Label fx:id="maxNumberRuleLabel" text="MAX 2">
                 </Label>
             </HBox>
 
