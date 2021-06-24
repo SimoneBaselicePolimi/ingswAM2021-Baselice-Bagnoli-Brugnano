@@ -49,6 +49,10 @@ public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentat
         this.purchasableCards = new HashSet<>(purchasableCards);
     }
 
+    public Set<ClientDevelopmentCardRepresentation> getPurchasableCards() {
+        return new HashSet<>(purchasableCards);
+    }
+
     public boolean isCardPurchasable(ClientDevelopmentCardRepresentation card) {
         return purchasableCards.contains(card);
     }

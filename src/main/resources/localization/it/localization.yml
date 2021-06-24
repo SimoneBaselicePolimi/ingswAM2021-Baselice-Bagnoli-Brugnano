@@ -44,6 +44,8 @@ client:
       rules:
         info:
           maxNumber: "MAX %d"
+    devCardTableDeck:
+      deckSize: "Numero di carte nel mazzo: %d"
 
   cli:
     setup:
