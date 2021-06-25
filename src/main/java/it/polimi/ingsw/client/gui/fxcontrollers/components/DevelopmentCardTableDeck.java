@@ -9,10 +9,10 @@ import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;

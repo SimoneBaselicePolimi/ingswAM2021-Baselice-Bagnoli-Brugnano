@@ -97,10 +97,10 @@ public class Table extends GameScene implements View {
     public Table() {
         super(2);
         table =  clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
-        table.setPurchasableCards(Set.of(
-            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
-            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop()
-        ));
+//        table.setPurchasableCards(Set.of(
+//            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
+//            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop()
+//        ));
         this.nRows = DevelopmentCardLevel.values().length;
         this.nColumns = DevelopmentCardColour.values().length;
 
@@ -203,9 +203,9 @@ public class Table extends GameScene implements View {
 
     @Override
     public void updateView() {
-        isMyPlayerTheActivePlayer.setValue(clientManager.getGameContextRepresentation().getActivePlayer().equals(clientManager.getMyPlayer()));
-        purchasableCards.get().clear();
-        purchasableCards.get().addAll(table.getPurchasableCards());
+//        isMyPlayerTheActivePlayer.setValue(clientManager.getGameContextRepresentation().getActivePlayer().equals(clientManager.getMyPlayer()));
+//        purchasableCards.get().clear();
+//        purchasableCards.get().addAll(table.getPurchasableCards());
     }
 
     @Override
