@@ -1,5 +1,9 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
+import it.polimi.ingsw.client.GameState;
+import it.polimi.ingsw.client.ServerMessageUtils;
+import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.client.gameupdate.ClientShuffledDevelopmentCardDeckOnTableUpdate;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardTableDeck;
@@ -7,7 +11,10 @@ import it.polimi.ingsw.client.gui.fxcontrollers.components.LeaderCard;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
+import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
+import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.utils.Colour;
@@ -26,6 +33,7 @@ import javafx.scene.layout.RowConstraints;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 
 public class Table extends GameScene implements View {
@@ -116,6 +124,15 @@ public class Table extends GameScene implements View {
     @FXML
     public void initialize(){
 
+
+        greenLabel.setText(Localization.getLocalizationInstance().getString("client.gui.table.colours.green"));
+        blueLabel.setText(Localization.getLocalizationInstance().getString("client.gui.table.colours.blue"));
+        yellowLabel.setText(Localization.getLocalizationInstance().getString("client.gui.table.colours.yellow"));
+        purpleLabel.setText(Localization.getLocalizationInstance().getString("client.gui.table.colours.purple"));
+        l1Label.setText(Localization.getLocalizationInstance().getString("client.gui.table.levels.first"));
+        l2Label.setText(Localization.getLocalizationInstance().getString("client.gui.table.levels.second"));
+        l3Label.setText(Localization.getLocalizationInstance().getString("client.gui.table.levels.third"));
+
         table.subscribe(this);
         clientManager.getGameContextRepresentation().subscribe(this);
 
@@ -133,9 +150,29 @@ public class Table extends GameScene implements View {
                 DevelopmentCardTableDeck deckComp = new DevelopmentCardTableDeck(
                     deck,
                     (cardRepresentation) -> {
-                        if(isCardPurchaseModeEnabled.get() && purchasableCards.get().contains(cardRepresentation)) {
-                            //TODO send clientRequest
-                        }
+//                        if(isCardPurchaseModeEnabled.get() && purchasableCards.get().contains(cardRepresentation)) {
+//                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+//                                //TODO
+//                                new DevelopmentActionClientRequest(clientManager.getGameContextRepresentation().getActivePlayer(), cardRepresentation, )
+//                            )).thenCompose(serverMessage ->
+//                                ServerMessageUtils.ifMessageTypeCompute(
+//                                    serverMessage,
+//                                    GameUpdateServerMessage.class,
+//                                    message -> {
+//                                        clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
+//                                        clientManager.handleGameUpdates(message.gameUpdates);
+//                                        return CompletableFuture.<Void>completedFuture(null);
+//                                    }
+//                                ).elseIfMessageTypeCompute(
+//                                    InvalidRequestServerMessage.class,
+//                                    message -> {
+//                                        return CompletableFuture.completedFuture(null);
+//                                    }
+//                                ).elseCompute(message -> {
+//                                    return CompletableFuture.completedFuture(null);
+//                                }).apply()
+//                            );
+//                        }
                     }
                 );
                 deckRepresentationToComponent.put(deck, deckComp);
