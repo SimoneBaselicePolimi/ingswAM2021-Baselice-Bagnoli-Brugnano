@@ -129,6 +129,8 @@ public class Table extends GameScene implements View {
         l1Label.setText(Localization.getLocalizationInstance().getString("client.gui.table.levels.first"));
         l2Label.setText(Localization.getLocalizationInstance().getString("client.gui.table.levels.second"));
         l3Label.setText(Localization.getLocalizationInstance().getString("client.gui.table.levels.third"));
+        btnEnterPurchaseMode.setText(Localization.getLocalizationInstance().getString("client.gui.table.buttons.btnEnterPurchaseMode"));
+        btnExitPurchaseMode.setText(Localization.getLocalizationInstance().getString("client.gui.table.buttons.btnExitPurchaseMode"));
 
         table.subscribe(this);
         clientManager.getGameContextRepresentation().subscribe(this);

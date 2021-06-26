@@ -47,6 +47,9 @@ client:
     devCardTableDeck:
       deckSize: "Numero di carte nel mazzo: %d"
     table:
+      buttons:
+        btnEnterPurchaseMode: "Compra carta sviluppo"
+        btnExitPurchaseMode: "Annulla acquisto"
       colours:
         green: "VERDE"
         blue: "BLU"
@@ -56,6 +59,11 @@ client:
         first: "L1"
         second: "L2"
         third: "L3"
+    market:
+      legend: "Legenda"
+      buttons:
+        btnEnterPurchaseMode:""
+        btnExitPurchaseMode:""
 
 
   cli:

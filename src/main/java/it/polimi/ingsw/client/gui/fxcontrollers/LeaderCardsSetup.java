@@ -81,7 +81,7 @@ public class LeaderCardsSetup extends AbstractController{
 //            ClientResourceStorageRepresentation storage = clientManager.getGameContextRepresentation().getPlayerContext(clientManager.getMyPlayer()).getShelves()
 //                .stream().filter(s -> s.getRules().stream().filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation).anyMatch(r -> ((ClientMaxResourceNumberRuleRepresentation)r).getMaxResources()==3))
 //                .findAny().get();
-//            Storage storageComp = new Storage("MAGAZZINO 3", storage);
+//            Storage storageComp = new \Storage("MAGAZZINO 3", storage);
 //            System.out.println(storage.getDescription());
 //            storage.setResources(Map.of(ResourceType.STONES, 3));
 //
