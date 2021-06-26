@@ -7,33 +7,33 @@
 
 <fx:root prefWidth="200" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane prefWidth="200" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 8px; -fx-border-radius: 8;">
+        <GridPane prefWidth="200" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
 
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints prefHeight="35" vgrow="NEVER" />
-                <RowConstraints />
                 <RowConstraints prefHeight="20" vgrow="NEVER" />
+                <RowConstraints />
+                <RowConstraints valignment="BOTTOM" />
             </rowConstraints>
 
             <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
                 <columnConstraints>
                     <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
-                    <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
+                    <ColumnConstraints halignment="RIGHT" prefWidth="15"/>
                 </columnConstraints>
                 <Label fx:id="titleLabel" text="PMagazzino 1" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font name="System Bold" size="16.0" />
                     </font></Label>
-                <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="rulesInfoContainer">
+                <StackPane fx:id="rulesInfoContainer" GridPane.columnIndex="1" GridPane.rowIndex="0">
                     <children>
-                        <Circle fill="lightskyblue" radius="10" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="lightskyblue" radius="8.5" stroke="BLACK" strokeType="INSIDE" />
                         <Label text="?">
                             <tooltip><Tooltip fx:id="rulesInfo" /></tooltip>
                             <font>
-                                <Font name="System Bold" size="19.0" />
+                                <Font name="System Bold" size="13.0" />
                             </font>
                         </Label>
                     </children>
@@ -43,12 +43,14 @@
             </rowConstraints>
             </GridPane>
 
-            <HBox fx:id="resourcesContainer" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="16">
+            <HBox fx:id="resourcesContainer" alignment="CENTER" spacing="16" GridPane.columnIndex="0" GridPane.rowIndex="1">
             </HBox>
 
             <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2">
                 <Label fx:id="maxNumberRuleLabel" text="MAX 2">
-                </Label>
+               <font>
+                  <Font size="10.0" />
+               </font></Label>
             </HBox>
 
         </GridPane>

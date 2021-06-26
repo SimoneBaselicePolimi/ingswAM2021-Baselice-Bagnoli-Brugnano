@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root prefHeight="105.0" prefWidth="155" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <GridPane prefHeight="105" prefWidth="155" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
+
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints valignment="CENTER" prefHeight="20" />
+            <RowConstraints valignment="CENTER" vgrow="ALWAYS" prefHeight="85" />
+        </rowConstraints>
+
+        <Label text="PProduction" GridPane.columnIndex="0" alignment="TOP_LEFT" prefWidth="140"/>
+        <GridPane prefHeight="90" prefWidth="155" GridPane.rowIndex="1">
+
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                <ColumnConstraints halignment="CENTER" prefWidth="20" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints valignment="CENTER" vgrow="ALWAYS" prefHeight="85" />
+            </rowConstraints>
+
+            <VBox fx:id="costsContainer" GridPane.columnIndex="0" spacing="5" prefHeight="85" alignment="CENTER" ></VBox>
+
+            <Label text="}" textFill="#ddc963" GridPane.columnIndex="1" alignment="CENTER">
+                 <font>
+                    <Font size="56.0" />
+                 </font>
+            </Label>
+
+            <VBox fx:id="rewardsContainer" GridPane.columnIndex="2" spacing="5" prefHeight="85" alignment="CENTER" ></VBox>
+
+        </GridPane>
+
+    </GridPane>
+
+</fx:root>

@@ -5,11 +5,13 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
+import it.polimi.ingsw.server.model.storage.MaxResourceNumberRule;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.beans.value.ObservableIntegerValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
@@ -41,7 +43,13 @@ public class Storage extends AnchorPane implements View {
     BooleanProperty isResourceRepositioningModeEnabled;
     ObjectProperty<ClientResourceStorageRepresentation> targetStorageProp = new SimpleObjectProperty<>();
 
+    MapProperty<ResourceType, Integer> targetStorageMap = new SimpleMapProperty<>(
+        FXCollections.observableMap(new HashMap<>())
+    );
+
     final String title;
+
+    final boolean compactMode;
 
     @FXML
     HBox resourcesContainer;
@@ -59,8 +67,13 @@ public class Storage extends AnchorPane implements View {
     StackPane rulesInfoContainer;
 
     public Storage(String title, ClientResourceStorageRepresentation storage) {
+        this(title, storage, false);
+    }
+
+    public Storage(String title, ClientResourceStorageRepresentation storage, boolean compactMode) {
         this.title = title;
         this.storage = storage;
+        this.compactMode = compactMode;
 
         isResourceRepositioningModeEnabled = new SimpleBooleanProperty(false);
 
@@ -154,20 +167,23 @@ public class Storage extends AnchorPane implements View {
                 () -> {
                     if(!isSectionEnabled.get() || !isSectionVisible.get() || !isResourceRepositioningModeEnabled.get())
                         return false;
-                    Optional<Integer> maxResources = storage.getRules().stream()
-                        .filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation)
-                        .map(r -> ((ClientMaxResourceNumberRuleRepresentation)r).getMaxResources())
-                        .findAny();
-                    if(maxResources.isPresent() && totalResourcesInStorage.get() == maxResources.get())
+//                    Optional<Integer> maxResources = storage.getRules().stream()
+//                        .filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation)
+//                        .map(r -> ((ClientMaxResourceNumberRuleRepresentation)r).getMaxResources())
+//                        .findAny();
+//                    if(maxResources.isPresent() && totalResourcesInStorage.get() == maxResources.get())
+//                        return false;
+                    if(storage.getRuleErrorMessagesIfPresent(Map.of(resourceType, 1)).isPresent())
                         return false;
-                    if(targetStorageProp.get().getResources().containsKey(resourceType) && targetStorageProp.get().getResources().get(resourceType) >= 1)
+                    if(targetStorageMap.get().containsKey(resourceType) && targetStorageMap.get().get(resourceType) >= 1)
                         return true;
                     else
                         return false;
                 },
                 isSectionEnabled,
+                isSectionVisible,
                 totalResourcesInStorage,
-                targetStorageProp
+                targetStorageMap
             ));
 
             BooleanProperty isDecrementButtonVisible = isDecrementButtonVisibleMap.get(resourceType);
@@ -212,11 +228,15 @@ public class Storage extends AnchorPane implements View {
             throw new IllegalArgumentException();
         targetStorage.subscribe(this);
         this.targetStorageProp.setValue(targetStorage);
+        targetStorageMap.clear();
+        targetStorageMap.putAll(targetStorageProp.get().getResources());
+        //targetStorageProp.get().getResources().forEach( (t, v) -> targetStorageMap.put(t, v));
         isResourceRepositioningModeEnabled.setValue(true);
     }
 
     public void disableResourceRepositioningMode() {
         targetStorageProp.get().unsubscribe(this);
+        targetStorageMap.clear();
         isResourceRepositioningModeEnabled.setValue(false);
     }
 
@@ -246,27 +266,21 @@ public class Storage extends AnchorPane implements View {
 
             GridPane sectionGridContainer = new GridPane();
             sectionGridContainer.setPrefWidth(50);
-            sectionGridContainer.setPrefHeight(100);
             sectionGridContainer.setVgap(3);
 
             ColumnConstraints c = new ColumnConstraints();
             c.setHalignment(HPos.CENTER);
             sectionGridContainer.getColumnConstraints().add(c);
 
-            sectionGridContainer.getRowConstraints().addAll(
-                new RowConstraints(25),
-                new RowConstraints(30),
-                new RowConstraints(25)
-            );
 
             HBox innerSectionContainer = new HBox(5);
-            innerSectionContainer.setPrefHeight(30);
+            innerSectionContainer.setPrefHeight(18);
             innerSectionContainer.setAlignment(Pos.CENTER);
             innerSectionContainer.disableProperty().bind(isSectionEnabledMap.get(resourceType).not());
             innerSectionContainer.visibleProperty().bind(isSectionVisibleMap.get(resourceType));
 
-
             Label valLabel = new Label();
+            valLabel.setMaxHeight(18);
             valLabel.setFont(new Font(14));
             valLabel.textProperty().bind(
                 Bindings.createStringBinding(
@@ -279,48 +293,84 @@ public class Storage extends AnchorPane implements View {
             img.setImage(new Image(FileManager.getFileManagerInstance().loadFXImage(
                 resourceType.getIconPathForResourceType()
             )));
-            img.setFitHeight(20);
+            img.setFitHeight(18);
             img.setPreserveRatio(true);
             img.setSmooth(true);
             img.setCache(true);
 
             innerSectionContainer.getChildren().addAll(valLabel, img);
 
-            Button incrementButton = new Button();
-            incrementButton.setPrefHeight(15);
-            incrementButton.setPrefWidth(25);
-            incrementButton.setStyle("-fx-shape: \"M -1 0 L 0 -1 L 1 0 z\"");
-            incrementButton.disableProperty().bind(isIncrementButtonEnabledMap.get(resourceType).not());
-            incrementButton.visibleProperty().bind(isIncrementButtonVisibleMap.get(resourceType));
-            incrementButton.setOnMouseClicked(e -> {
-                targetStorageProp.get().setResources(
-                    ResourceUtils.difference(targetStorageProp.get().getResources(), Map.of(resourceType, 1))
-                );
-                storage.setResources(
-                    ResourceUtils.sum(storage.getResources(), Map.of(resourceType, 1))
-                );
-            });
 
-            Button decrementButton = new Button();
-            decrementButton.setPrefHeight(15);
-            decrementButton.setPrefWidth(25);
-            decrementButton.setStyle("-fx-shape: \"M -1 0 L 0 1 L 1 0 z\"");
-            decrementButton.disableProperty().bind(isDecrementButtonEnabledMap.get(resourceType).not());
-            decrementButton.visibleProperty().bind(isDecrementButtonVisibleMap.get(resourceType));
-            decrementButton.setOnMouseClicked(e -> {
-                targetStorageProp.get().setResources(
-                    ResourceUtils.sum(targetStorageProp.get().getResources(), Map.of(resourceType, 1))
-                );
-                storage.setResources(
-                    ResourceUtils.difference(storage.getResources(), Map.of(resourceType, 1))
-                );
-            });
+            if(compactMode) {
 
-            GridPane.setConstraints(incrementButton, 0, 0);
-            GridPane.setConstraints(innerSectionContainer, 0, 1);
-            GridPane.setConstraints(decrementButton, 0, 2);
+                sectionGridContainer.setPrefHeight(26);
 
-            sectionGridContainer.getChildren().addAll(incrementButton, innerSectionContainer, decrementButton);
+                sectionGridContainer.getRowConstraints().addAll(
+                    new RowConstraints(2),
+                    new RowConstraints(22),
+                    new RowConstraints(2)
+                );
+
+
+                GridPane.setConstraints(innerSectionContainer, 0, 1);
+
+                sectionGridContainer.getChildren().addAll(innerSectionContainer);
+
+            } else {
+
+                sectionGridContainer.setPrefHeight(50);
+
+                sectionGridContainer.getRowConstraints().addAll(
+                    new RowConstraints(3),
+                    new RowConstraints(11),
+                    new RowConstraints(22),
+                    new RowConstraints(11),
+                    new RowConstraints(3)
+                );
+
+                Button incrementButton = new Button();
+                incrementButton.setStyle(
+                    "-fx-shape: \"M -13 0 L 0 -11 L 13 0 z\"; " +
+                        "-fx-scale-shape: false;"
+                );
+                incrementButton.setPrefHeight(11);
+                incrementButton.setPrefWidth(26);
+                incrementButton.disableProperty().bind(isIncrementButtonEnabledMap.get(resourceType).not());
+                incrementButton.visibleProperty().bind(isIncrementButtonVisibleMap.get(resourceType));
+                incrementButton.setOnMouseClicked(e -> {
+                    storage.setResources(
+                        ResourceUtils.sum(storage.getResources(), Map.of(resourceType, 1))
+                    );
+                    targetStorageProp.get().setResources(
+                        ResourceUtils.difference(targetStorageProp.get().getResources(), Map.of(resourceType, 1))
+                    );
+                });
+
+                Button decrementButton = new Button();
+                decrementButton.setStyle(
+                    "-fx-shape: \"M -13 0 L 0 11 L 13 0 z\"; " +
+                        "-fx-scale-shape: false;"
+                );
+                decrementButton.setPrefHeight(11);
+                decrementButton.setPrefWidth(26);
+                decrementButton.disableProperty().bind(isDecrementButtonEnabledMap.get(resourceType).not());
+                decrementButton.visibleProperty().bind(isDecrementButtonVisibleMap.get(resourceType));
+                decrementButton.setOnMouseClicked(e -> {
+                    storage.setResources(
+                        ResourceUtils.difference(storage.getResources(), Map.of(resourceType, 1))
+                    );
+                    targetStorageProp.get().setResources(
+                        ResourceUtils.sum(targetStorageProp.get().getResources(), Map.of(resourceType, 1))
+                    );
+                });
+
+                GridPane.setConstraints(incrementButton, 0, 1);
+                GridPane.setConstraints(innerSectionContainer, 0, 2);
+                GridPane.setConstraints(decrementButton, 0, 3);
+
+                sectionGridContainer.getChildren().addAll(incrementButton, innerSectionContainer, decrementButton);
+
+            }
 
             resourcesContainer.getChildren().add(sectionGridContainer);
 
@@ -331,8 +381,11 @@ public class Storage extends AnchorPane implements View {
     @Override
     public void updateView() {
         updateResources();
-        if(isResourceRepositioningModeEnabled.get())
+        if(isResourceRepositioningModeEnabled.get()) {
             targetStorageProp.setValue(targetStorageProp.get());
+            targetStorageMap.clear();
+            targetStorageMap.putAll(targetStorageProp.get().getResources());
+        }
 
     }
 

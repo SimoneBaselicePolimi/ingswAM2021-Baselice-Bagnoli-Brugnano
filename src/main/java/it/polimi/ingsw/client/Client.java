@@ -87,7 +87,7 @@ public class Client {
             }
         };
 
-        CliClientManager clientManager = new CliClientManager(consoleWriter, messageSender);
+        CliClientManager clientManager = CliClientManager.initializeInstance(consoleWriter, messageSender);
 
         networkLayer.setMessageFromServerProcessingPolicy(messageFromServer -> {
             try {

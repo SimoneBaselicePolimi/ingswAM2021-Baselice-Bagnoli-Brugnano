@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ResourceStorage extends IdentifiableItem, Representable <ServerResourceStorageRepresentation> {
+
     /**
      * Method to add new resources to the storage
      * @param newResources resources to add
@@ -46,4 +47,5 @@ public interface ResourceStorage extends IdentifiableItem, Representable <Server
     Map<ResourceType, Integer> peekResources();
 
     List<ResourceStorageRule> getRules();
+
 }

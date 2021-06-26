@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.cli;
 
 import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.client.MessageSender;
+import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.localization.Localization;
 
 import java.util.concurrent.CompletableFuture;
@@ -20,6 +21,18 @@ public class CliClientManager extends ClientManager {
     protected int consoleDisplayWidth = DEFAULT_CONSOLE_DISPLAY_WIDTH;
     protected int consoleDisplayHeight = DEFAULT_CONSOLE_DISPLAY_HEIGHT;
 
+
+    public static CliClientManager initializeInstance(ConsoleWriter consoleWriter, MessageSender serverSender) {
+        instance = new CliClientManager(consoleWriter, serverSender);
+        return (CliClientManager) instance;
+    }
+
+    public static CliClientManager getInstance() throws NullPointerException {
+        if (instance != null)
+            return (CliClientManager) instance;
+        else
+            throw new NullPointerException();
+    }
 
     public CliClientManager(ConsoleWriter consoleWriter, MessageSender serverSender) {
         super(serverSender);

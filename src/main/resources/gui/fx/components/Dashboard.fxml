@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<fx:root prefWidth="964" prefHeight="576" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root prefHeight="510" prefWidth="964" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane prefWidth="964" prefHeight="576">
+        <GridPane prefHeight="510" prefWidth="964" style="-fx-padding: 4px;">
 
             <columnConstraints>
-                <ColumnConstraints prefWidth="700" halignment="CENTER" hgrow="NEVER"/>
-                <ColumnConstraints prefWidth="250" halignment="CENTER" hgrow="NEVER"/>
+                <ColumnConstraints halignment="CENTER" hgrow="NEVER" prefWidth="700" />
+                <ColumnConstraints halignment="CENTER" hgrow="NEVER" prefWidth="250" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints vgrow="ALWAYS"/>
+                <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
 
             <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
 
                 <columnConstraints>
-                    <ColumnConstraints halignment="CENTER"/>
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints/>
-                    <RowConstraints/>
+                    <RowConstraints prefHeight="240"/>
+                    <RowConstraints vgrow="ALWAYS"/>
                 </rowConstraints>
 
-                <HBox fx:id="devCardsContainer" GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="350" alignment="CENTER"/>
-                <HBox fx:id="leaderCardsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="226" alignment="CENTER"/>
+                <HBox fx:id="devCardsContainer" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+                <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS"/>
+                        <ColumnConstraints halignment="CENTER" prefWidth="200"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS"/>
+                    </rowConstraints>
+
+                    <HBox fx:id="leaderCardsContainer" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color:transparent;">
+                        <content>
+                            <VBox fx:id="baseProductionsContainer" alignment="CENTER" spacing="10" style="-fx-padding: 2px;"  />
+                        </content>
+                    </ScrollPane>
+
+                </GridPane>
 
             </GridPane>
 
-            <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" spacing="25">
-                <VBox fx:id="storagesContainer" spacing="10" alignment="CENTER"/>
-                <VBox fx:id="baseProductionsContainer" spacing="10" alignment="CENTER"/>
-            </VBox>
+            <ScrollPane prefHeight="400" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-background-color:transparent;">
+                <content>
+                    <VBox fx:id="storagesContainer" alignment="CENTER" spacing="10" style="-fx-padding: 2px;" />
+                </content>
+            </ScrollPane>
 
         </GridPane>
 
