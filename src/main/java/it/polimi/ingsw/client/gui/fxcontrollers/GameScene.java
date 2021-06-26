@@ -24,9 +24,9 @@ public class GameScene extends AbstractController {
 
         GameSceneSelector commonComponentsSelector = new GameSceneSelector(
             List.of(
-                new GameSceneSelector.Selection("Market", "market.fxml"),
-                new GameSceneSelector.Selection("FaithPath", "faithPath.fxml"),
-                new GameSceneSelector.Selection("Table", "table.fxml")
+                new GameSceneSelector.Selection("Market", "Market.fxml"),
+                new GameSceneSelector.Selection("FaithPath", "FaithPath.fxml"),
+                new GameSceneSelector.Selection("Table", "Table.fxml")
             ),
             sceneNumber
         );
@@ -35,7 +35,7 @@ public class GameScene extends AbstractController {
 
         GameSceneSelector specificComponentsSelector = new GameSceneSelector(
             List.of(
-                new GameSceneSelector.Selection("dashboard", "playerDashboard.fxml")
+                new GameSceneSelector.Selection("Dashboard", "PlayerDashboard.fxml")
             ),
             sceneNumber,
             commonComponentsSelector.getToggleGroup()

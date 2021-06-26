@@ -35,6 +35,7 @@ public class NumberOfPlayers extends AbstractController{
     public NumberOfPlayers() {
 
     }
+
     @FXML
     private void initialize() {
 

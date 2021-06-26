@@ -4,15 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.Table">
+<AnchorPane prefHeight="576.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.Table">
    <children>
-
 
       <GridPane prefHeight="576" prefWidth="1024">
          <columnConstraints>
             <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="60" />
-            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints vgrow="ALWAYS" />
@@ -20,23 +18,89 @@
 
          <GridPane>
             <columnConstraints>
-               <ColumnConstraints halignment="LEFT" hgrow="ALWAYS"/>
+               <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-               <RowConstraints vgrow="ALWAYS"/>
-               <RowConstraints vgrow="SOMETIMES"/>
-               <RowConstraints vgrow="SOMETIMES" prefHeight="100" />
-               <RowConstraints vgrow="SOMETIMES"/>
-               <RowConstraints vgrow="ALWAYS"/>
+               <RowConstraints vgrow="ALWAYS" />
+               <RowConstraints vgrow="SOMETIMES" />
+               <RowConstraints prefHeight="100" vgrow="SOMETIMES" />
+               <RowConstraints vgrow="SOMETIMES" />
+               <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
 
-            <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+             <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+             <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
          </GridPane>
+          <GridPane prefWidth="928.0" GridPane.columnIndex="1">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="30.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="30.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints vgrow="ALWAYS" />
+                  <RowConstraints prefHeight="50" vgrow="SOMETIMES" />
+              </rowConstraints>
+              <children>
+                  <GridPane fx:id="tableContainer" GridPane.columnIndex="1">
+                      <columnConstraints>
+                          <ColumnConstraints halignment="CENTER" prefWidth="40" />
+                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints prefHeight="40" valignment="CENTER" />
+                          <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                          <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                          <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                      </rowConstraints>
+                      <Label fx:id="greenLabel" text="PVERDE" textFill="#4cdd58" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                         <font>
+                            <Font size="15.0" />
+                         </font>
+                      </Label>
+                      <Label fx:id="blueLabel" text="PBLU" textFill="#1724d3" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="yellowLabel" text="PGIALLO" textFill="#ebdd43" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="purpleLabel" text="PVIOLA" textFill="#bf47dd" GridPane.columnIndex="4" GridPane.rowIndex="0">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="l1Label" text="PL1" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="l2Label" text="PL2" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="l3Label" text="PL3" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </Label>
+                  </GridPane>
+                  <Button fx:id="btnEnterPurchaseMode" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="37.0" prefWidth="173.0" text="PCompra carta sviluppo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="btnExitPurchaseMode" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="37.0" prefWidth="173.0" text="PAnnulla acquisto" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+
+              </children>
+          </GridPane>
 
 
-         <!--        custom scene components:          -->
+          <!--        custom scene components:          -->
 
 
 

@@ -57,6 +57,9 @@ public class LeaderCard extends AnchorPane {
         bordersGrid.setStyle("-fx-border-width: 0;");
     }
 
+    public ClientLeaderCardRepresentation getLeaderCardRepresentation() {
+        return card;
+    }
 
     @FXML
     private void initialize() {

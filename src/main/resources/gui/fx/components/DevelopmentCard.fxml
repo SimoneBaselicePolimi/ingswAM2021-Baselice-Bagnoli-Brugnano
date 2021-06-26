@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<fx:root prefHeight="170.0" prefWidth="190" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <!--      <ImageView fx:id="backgroundImg" fitHeight="227.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">-->
+        <!--         </ImageView>-->
+        <Label fx:id="contentLabel" layoutX="25.0" layoutY="32.0" prefHeight="82.0" prefWidth="100.0" text="Label" textFill="#ff0f0f">
+            <font>
+                <Font size="18.0" />
+            </font></Label>
+        <GridPane fx:id="bordersGrid" prefHeight="170.0" prefWidth="190.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="NEVER" />
+            </rowConstraints>
+        </GridPane>
+    </children>
+</fx:root>

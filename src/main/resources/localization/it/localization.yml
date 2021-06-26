@@ -38,10 +38,25 @@ client:
       stones: "Pietre"
       servants: "Servitori"
       shields: "Scudi"
+    faithPath:
+       playersLabel: "Giocatore %s : "
     repositioningInStorages:
       rules:
         info:
           maxNumber: "MAX %d"
+    devCardTableDeck:
+      deckSize: "Numero di carte nel mazzo: %d"
+    table:
+      colours:
+        green: "VERDE"
+        blue: "BLU"
+        yellow: "GIALLO"
+        purple: "VIOLA"
+      levels:
+        first: "L1"
+        second: "L2"
+        third: "L3"
+
 
   cli:
     setup:

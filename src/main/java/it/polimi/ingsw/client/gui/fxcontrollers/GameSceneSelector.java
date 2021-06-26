@@ -56,6 +56,7 @@ public class GameSceneSelector extends AnchorPane {
     public GameSceneSelector(List<Selection> selections, int activeSelectionIndex, ToggleGroup toggleGroup) {
         this.selections = selections;
         this.activeSelectionIndex = activeSelectionIndex;
+        this.toggleGroup = toggleGroup;
         FXMLLoader fxmlLoader = new FXMLLoader();
 
         fxmlLoader.setRoot(this);
