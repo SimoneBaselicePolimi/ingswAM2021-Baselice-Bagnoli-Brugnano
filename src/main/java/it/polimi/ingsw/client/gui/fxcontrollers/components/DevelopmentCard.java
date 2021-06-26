@@ -49,7 +49,6 @@ public class DevelopmentCard extends AnchorPane {
     }
 
     public void removeBorders(){
-        System.out.print("Deselezionata carta: " + card.getItemID() + "\n");
         bordersGrid.setStyle("-fx-border-width: 0;");
     }
 

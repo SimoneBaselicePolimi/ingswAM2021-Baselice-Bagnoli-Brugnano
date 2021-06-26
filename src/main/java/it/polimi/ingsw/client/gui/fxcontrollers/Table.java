@@ -1,18 +1,10 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.GameState;
-import it.polimi.ingsw.client.ServerMessageUtils;
-import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
-import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
-import it.polimi.ingsw.client.gameupdate.ClientShuffledDevelopmentCardDeckOnTableUpdate;
-import it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardTableDeck;
-import it.polimi.ingsw.client.gui.fxcontrollers.components.LeaderCard;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
-import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
-import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
@@ -23,17 +15,16 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleSetProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 
 public class Table extends GameScene implements View {
@@ -84,9 +75,11 @@ public class Table extends GameScene implements View {
     ClientDevelopmentCardsTableRepresentation table;
 
     BooleanProperty isCardPurchaseModeEnabled =  new SimpleBooleanProperty(false);
-    BooleanProperty isMyPlayerTheActivePlayer = new SimpleBooleanProperty(false);
+    BooleanProperty canMyPlayerDoMainAction = new SimpleBooleanProperty(false);
 
-    SetProperty<ClientDevelopmentCardRepresentation> purchasableCards = new SimpleSetProperty<>();
+    SetProperty<ClientDevelopmentCardRepresentation> purchasableCards = new SimpleSetProperty<>(
+        FXCollections.observableSet(new HashSet<>())
+    );
 
     Map<ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>, DevelopmentCardTableDeck> deckRepresentationToComponent = new HashMap<>();
 
@@ -97,27 +90,31 @@ public class Table extends GameScene implements View {
     public Table() {
         super(2);
         table =  clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
-//        table.setPurchasableCards(Set.of(
-//            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
-//            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop()
-//        ));
+        table.setPurchasableCards(Set.of(
+            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
+            table.getDeck(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop()
+        ));
         this.nRows = DevelopmentCardLevel.values().length;
         this.nColumns = DevelopmentCardColour.values().length;
 
-        isMyPlayerTheActivePlayer.setValue(clientManager.getGameContextRepresentation().getActivePlayer().equals(clientManager.getMyPlayer()));
-
-
-//        new Thread(() -> {
-//            try {
-//                Thread.sleep(10000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            table.setPurchasableCards(Set.of(
-//                table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
-//                table.getDeck(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).getCardOnTop()
-//            ));
-//        }).start();
+        new Thread(() -> {
+            while(true) {
+                table.setPurchasableCards(Set.of(
+                    table.getDeck(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
+                    table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).getCardOnTop()
+                ));
+                try {
+                    Thread.sleep(20000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Carteeeee updated");
+                table.setPurchasableCards(Set.of(
+                    table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
+                    table.getDeck(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).getCardOnTop()
+                ));
+            }
+        }).start();
 
     }
 
@@ -136,7 +133,7 @@ public class Table extends GameScene implements View {
         table.subscribe(this);
         clientManager.getGameContextRepresentation().subscribe(this);
 
-        btnEnterPurchaseMode.visibleProperty().bind(isCardPurchaseModeEnabled.not().and(isMyPlayerTheActivePlayer));
+        btnEnterPurchaseMode.visibleProperty().bind(isCardPurchaseModeEnabled.not().and(canMyPlayerDoMainAction));
         btnEnterPurchaseMode.setOnMouseClicked(e -> isCardPurchaseModeEnabled.setValue(true));
 
         btnExitPurchaseMode.visibleProperty().bind(isCardPurchaseModeEnabled);
@@ -203,9 +200,11 @@ public class Table extends GameScene implements View {
 
     @Override
     public void updateView() {
-//        isMyPlayerTheActivePlayer.setValue(clientManager.getGameContextRepresentation().getActivePlayer().equals(clientManager.getMyPlayer()));
-//        purchasableCards.get().clear();
-//        purchasableCards.get().addAll(table.getPurchasableCards());
+        //canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
+        canMyPlayerDoMainAction.setValue(true);
+        purchasableCards.get().clear();
+        purchasableCards.get().addAll(table.getPurchasableCards());
+
     }
 
     @Override
