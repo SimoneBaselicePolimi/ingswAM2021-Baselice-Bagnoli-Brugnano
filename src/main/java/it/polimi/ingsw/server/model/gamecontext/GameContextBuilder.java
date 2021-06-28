@@ -20,6 +20,7 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.*;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement;
+import it.polimi.ingsw.server.model.storage.DifferentResourceTypesInDifferentStoragesRule;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageBuilder;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRule;
@@ -116,8 +117,14 @@ public class GameContextBuilder {
 		GameInfoConfig gameInfoConfig = gameRules.gameInfoConfig;
 
 		Set<ResourceStorage> shelves = new HashSet<>();
+		DifferentResourceTypesInDifferentStoragesRule differentResourcesInShelvesRule =
+			new DifferentResourceTypesInDifferentStoragesRule();
 		for(ResourceStorageConfig resourceStorageConf : gameInfoConfig.resourceShelves) {
-			ResourceStorage resourceStorage = buildResourceStorage(resourceStorageConf);
+			ResourceStorage resourceStorage;
+			if(gameInfoConfig.differentResourcesInDifferentStorages)
+				resourceStorage = buildResourceStorage(resourceStorageConf, differentResourcesInShelvesRule);
+			else
+				resourceStorage = buildResourceStorage(resourceStorageConf);
 			shelves.add(resourceStorage);
 		}
 
@@ -162,12 +169,18 @@ public class GameContextBuilder {
 		return "ResourceStorage_ID_" + numResourceStorageID;
 	}
 
-	protected ResourceStorage buildResourceStorage(ResourceStorageConfig resourceStorageConf) {
+
+	protected ResourceStorage buildResourceStorage(
+		ResourceStorageConfig resourceStorageConf,
+		ResourceStorageRule ...additionalRules
+	) {
 		String resourceStorageID = generateResourceStorageID();
 
 		List<ResourceStorageRule> rules = resourceStorageConf.storage.rules.stream()
 			.map(ResourceStorageConfig.StorageConfig.RuleConfig::createRule)
 			.collect(Collectors.toList());
+
+		rules.addAll(Arrays.stream(additionalRules).collect(Collectors.toList()));
 
 		ResourceStorageBuilder builder = initializeResourceStorageBuilder();
 		rules.forEach(builder::addRule);

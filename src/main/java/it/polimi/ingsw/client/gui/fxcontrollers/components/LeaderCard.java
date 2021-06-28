@@ -73,4 +73,9 @@ public class LeaderCard extends AnchorPane {
         contentLabel.setText(card.getItemID() + "\n" + card.getVictoryPoints() + "\n" + card.getState().name());
         contentLabel.toFront();
     }
+
+    public ClientLeaderCardRepresentation getLeaderCardRepresentation() {
+        return card;
+    }
+
 }

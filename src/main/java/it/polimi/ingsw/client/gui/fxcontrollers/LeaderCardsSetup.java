@@ -77,6 +77,14 @@ public class LeaderCardsSetup extends AbstractController{
 
         clientManager.addEntryToContextInfoMap("selectedLeaderCards", selectedCards);
         clientManager.loadScene("Table.fxml");
+        
+        //clientManager.addEntryToContextInfoMap(
+          //  "selectedLeaderCards",
+            //selectedCards.stream().map(LeaderCard::getLeaderCardRepresentation).collect(Collectors.toList())
+        //);
+        //clientManager.loadScene("ResourcesChoiceSetup.fxml");
+        
+        
 //        Platform.runLater(() -> {
 //            ClientResourceStorageRepresentation storage = clientManager.getGameContextRepresentation().getPlayerContext(clientManager.getMyPlayer()).getShelves()
 //                .stream().filter(s -> s.getRules().stream().filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation).anyMatch(r -> ((ClientMaxResourceNumberRuleRepresentation)r).getMaxResources()==3))

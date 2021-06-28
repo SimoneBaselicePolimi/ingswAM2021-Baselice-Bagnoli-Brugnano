@@ -90,6 +90,9 @@ public class ResourcesChoice extends AnchorPane {
     @FXML
     private void initialize() {
 
+        if(numberOfTotalResourcesToChoose == 0)
+            onAllChoicesDone.accept(new HashMap<>());
+
         confirmButton.setText(Localization.getLocalizationInstance().getString(
             "client.gui.resourcesChoice.confirmButton"
         ));

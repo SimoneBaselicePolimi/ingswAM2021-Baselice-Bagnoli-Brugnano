@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.clientmessage.ClientMessage;
 import it.polimi.ingsw.client.gameupdate.ClientGameUpdate;
+import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,6 +19,20 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientManager {
+
+    protected static ClientManager instance = null;
+
+    public static ClientManager initializeInstance(MessageSender serverSender) {
+        instance = new ClientManager(serverSender);
+        return instance;
+    }
+
+    public static ClientManager getInstance() throws NullPointerException {
+        if (instance != null)
+            return instance;
+        else
+            throw new NullPointerException();
+    }
 
     protected MessageSender serverSender;
     protected CompletableFuture<ServerMessage> serverAnswerable = null;

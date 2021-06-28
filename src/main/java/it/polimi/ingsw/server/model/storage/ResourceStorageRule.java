@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public abstract class ResourceStorageRule implements Representable<ServerResourceStorageRuleRepresentation> {
 
+	public void initializeRule(ResourceStorage storage) {}
+
 	public abstract boolean checkRule(ResourceStorage storage, Map<ResourceType, Integer> newResources);
 
 }

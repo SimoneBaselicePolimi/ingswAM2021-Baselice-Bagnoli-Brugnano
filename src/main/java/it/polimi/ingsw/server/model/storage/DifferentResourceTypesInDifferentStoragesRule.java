@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.storage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation;
 
@@ -29,6 +30,11 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 	public DifferentResourceTypesInDifferentStoragesRule() {
 	}
 
+	@Override
+	public void initializeRule(ResourceStorage storage) {
+		storages.add(storage);
+	}
+
 	/**
 	 * Method to verify if new resources can be added to the storage
 	 * @param storage on which to verify that the rules are respected
@@ -37,25 +43,23 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 	 */
 	@Override
 	public boolean checkRule(ResourceStorage storage, Map<ResourceType,Integer> newResources) {
-			if (!storages.contains(storage))
-				storages.add(storage);
-			for (ResourceStorage s :  storages){
-				for (ResourceType resourceInStorage: s.peekResources().keySet()) {
-					if (!s.equals(storage)){
-						for (ResourceType resourceType : newResources.keySet()) {
-							if (resourceType.equals(resourceInStorage))
-									return false;
-						}
+		for (ResourceStorage s : storages){
+			for (ResourceType resourceInStorage: s.peekResources().keySet()) {
+				if (!s.equals(storage)){
+					for (ResourceType resourceType : newResources.keySet()) {
+						if (resourceType.equals(resourceInStorage))
+							return false;
 					}
 				}
 			}
-			return true;
+		}
+		return true;
 	}
 
 	@Override
 	public ServerResourceStorageRuleRepresentation getServerRepresentation() {
 		return new ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation(
-			storages.stream().map(Representable::getServerRepresentation).collect(Collectors.toList())
+			storages.stream().map(ResourceStorage::getItemID).collect(Collectors.toList())
 		);
 	}
 

@@ -35,6 +35,7 @@ public class ResourceStorageImp extends RegisteredIdentifiableItem implements Re
 	public ResourceStorageImp(String resourceStorageID, GameItemsManager gameItemsManager, List<ResourceStorageRule> rules){
 		super(resourceStorageID, gameItemsManager, ResourceStorage.class);
 		this.rules = rules;
+		rules.forEach(r -> r.initializeRule(this));
 	}
 
 	/**
