@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 
@@ -46,8 +47,10 @@ public class SpecialMarbleSubstitution {
         specialMarbleIcon.setSmooth(true);
         specialMarbleIcon.setCache(true);
 
-        substitutionContainer.getChildren().add(specialMarbleIcon);
-        substitutionContainer.getChildren().add(new Label(" = "));
+        Label equalsLabel = new Label();
+        equalsLabel.setMaxHeight(20);
+        equalsLabel.setFont(new Font(20));
+        equalsLabel.textProperty().setValue(" = ");
 
         ImageView resourceIcon = new ImageView();
         resourceIcon.setImage(new Image(FileManager.getFileManagerInstance().loadFXImage(
@@ -57,7 +60,8 @@ public class SpecialMarbleSubstitution {
         resourceIcon.setPreserveRatio(true);
         resourceIcon.setSmooth(true);
         resourceIcon.setCache(true);
-        substitutionContainer.getChildren().add(resourceIcon);
+
+        substitutionContainer.getChildren().addAll(specialMarbleIcon, equalsLabel, resourceIcon);
     }
 
 }
