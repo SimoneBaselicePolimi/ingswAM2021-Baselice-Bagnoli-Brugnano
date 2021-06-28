@@ -64,6 +64,13 @@ client:
       buttons:
         btnEnterPurchaseMode: "Compra dal mercato"
         btnExitPurchaseMode: "Annulla acquisto"
+      marbleDescription:
+        marbleResource: "1 %s\n"
+        marbleFaithPoints:
+          singular: "1 punto fede\n"
+          plural: "%d punti fede\n"
+        specialMarble: "Biglia speciale\n"
+
 
 
   cli:
