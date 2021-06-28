@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCardDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.view.View;
@@ -14,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class DevelopmentCardTableDeck extends AnchorPane implements View {
@@ -66,8 +64,8 @@ public class DevelopmentCardTableDeck extends AnchorPane implements View {
         developmentCardComp.setBordersColour(colour);
     }
 
-    public void removeCardBorders(){
-        developmentCardComp.removeBorders();
+    public void setDefaultBordersColour(){
+        developmentCardComp.setDefaultBordersColour();
     }
 
     @Override

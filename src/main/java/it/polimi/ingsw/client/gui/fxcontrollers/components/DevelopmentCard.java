@@ -48,8 +48,13 @@ public class DevelopmentCard extends AnchorPane {
         bordersGrid.toFront();
     }
 
-    public void removeBorders(){
-        bordersGrid.setStyle("-fx-border-width: 0;");
+    public void setDefaultBordersColour(){
+        bordersGrid.setStyle(String.format(
+            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 3; -fx-border-style: solid;",
+            Colour.BLACK.r,
+            Colour.BLACK.g,
+            Colour.BLACK.b
+        ));
     }
 
     public ClientDevelopmentCardRepresentation getLeaderCardRepresentation() {

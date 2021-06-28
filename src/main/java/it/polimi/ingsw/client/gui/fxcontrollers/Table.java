@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
-import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardTableDeck;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
@@ -191,11 +190,11 @@ public class Table extends GameScene implements View {
         deckRepresentationToComponent.forEach( (deckRepresentation, deckComp) -> {
             if(isCardPurchaseModeEnabled.get()) {
                 if (table.isCardPurchasable(deckRepresentation.getCardOnTop()))
-                    deckComp.setCardBordersColour(Colour.GREEN);
+                    deckComp.setCardBordersColour(Colour.YELLOW);
                 else
                     deckComp.setCardBordersColour(Colour.GREY);
             } else {
-                deckComp.removeCardBorders();
+                deckComp.setDefaultBordersColour();
             }
         });
     }

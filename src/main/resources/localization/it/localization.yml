@@ -62,8 +62,8 @@ client:
     market:
       legend: "Legenda"
       buttons:
-        btnEnterPurchaseMode:""
-        btnExitPurchaseMode:""
+        btnEnterPurchaseMode: "Compra dal mercato"
+        btnExitPurchaseMode: "Annulla acquisto"
 
 
   cli:
