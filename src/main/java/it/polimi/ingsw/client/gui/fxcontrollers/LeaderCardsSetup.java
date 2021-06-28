@@ -1,23 +1,16 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.gui.fxcontrollers.components.LeaderCard;
-import it.polimi.ingsw.client.gui.fxcontrollers.components.Storage;
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientMaxResourceNumberRuleRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage;
 import it.polimi.ingsw.localization.Localization;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import javafx.application.Platform;
+import it.polimi.ingsw.utils.Colour;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LeaderCardsSetup extends AbstractController{
@@ -56,11 +49,11 @@ public class LeaderCardsSetup extends AbstractController{
         cardsComp.forEach(c -> c.setOnMouseClicked(
             e -> {
                 if(selectedCards.contains(c)){
-                    c.deselect();
+                    c.setDefaultBorderColour();
                     selectedCards.remove(c);
                 }
                 else{
-                    c.select();
+                    c.setBorderColour(Colour.GREEN);
                     selectedCards.add(c);
                 }
                 if(selectedCards.size() == message.numberOfLeaderCardsToKeep)
