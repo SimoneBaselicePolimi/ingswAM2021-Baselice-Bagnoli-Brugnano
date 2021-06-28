@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="576.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.Table">
+<AnchorPane prefHeight="780" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.Table">
    <children>
 
-      <GridPane prefHeight="576" prefWidth="1024">
+      <GridPane prefHeight="780" prefWidth="1200">
          <columnConstraints>
             <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="60" />
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />

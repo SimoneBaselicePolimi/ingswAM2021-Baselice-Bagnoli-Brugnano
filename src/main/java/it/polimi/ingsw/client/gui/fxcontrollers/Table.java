@@ -125,7 +125,7 @@ public class Table extends GameScene implements View {
         btnExitPurchaseMode.visibleProperty().bind(isCardPurchaseModeEnabled);
         btnExitPurchaseMode.setOnMouseClicked(e -> isCardPurchaseModeEnabled.setValue(false));
 
-        tableContainer.setGridLinesVisible(true);
+        //tableContainer.setGridLinesVisible(true);
 
         for(DevelopmentCardLevel level : DevelopmentCardLevel.values())
             for(DevelopmentCardColour colour : DevelopmentCardColour.values()) {

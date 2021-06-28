@@ -2,7 +2,6 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.client.MessageSender;
-import it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesRepositioning;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,15 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import javax.management.InstanceNotFoundException;
 import java.io.IOException;
 
 public class GuiClientManager extends ClientManager {
 
-    public final double WINDOW_WIDTH = 1024;
+    public final double WINDOW_WIDTH = 1200;
 
-    public final double WINDOW_HEIGHT = 576;
-
+    public final double WINDOW_HEIGHT = 780;
 
     protected Stage mainStage;
 
