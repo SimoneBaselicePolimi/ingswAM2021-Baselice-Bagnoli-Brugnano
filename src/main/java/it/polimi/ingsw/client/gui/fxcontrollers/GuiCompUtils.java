@@ -24,7 +24,6 @@ public class GuiCompUtils {
         ImageView img = new ImageView();
         img.setImage(new Image(FileManager.getFileManagerInstance().loadFXImage(iconPath)));
         img.setFitHeight(height);
-        System.out.println("h" + height);
         img.setPreserveRatio(true);
         img.setSmooth(true);
         img.setCache(true);

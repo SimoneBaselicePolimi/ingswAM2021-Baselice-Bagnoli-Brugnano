@@ -5,9 +5,9 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.PlayerDashboard"
-            prefHeight="576" prefWidth="1024">
+            prefHeight="780" prefWidth="1200">
 
-    <GridPane prefHeight="576" prefWidth="1024">
+    <GridPane prefHeight="780" prefWidth="1200">
         <columnConstraints>
             <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="60" />
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
