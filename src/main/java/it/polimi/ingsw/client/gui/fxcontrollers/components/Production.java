@@ -1,19 +1,13 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
+import it.polimi.ingsw.client.gui.fxcontrollers.GuiCompUtils;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
-import java.awt.*;
 import java.io.IOException;
 
 public class Production extends AnchorPane {
@@ -50,18 +44,21 @@ public class Production extends AnchorPane {
         double containerHeight = 90;
         double spacing = 4;
 
-        int maxNumOfRes = Math.max(
-            production.getResourceCost().size() + production.getStarResourceCost(),
-            production.getResourceReward().size() + production.getStarResourceReward()
+        int maxNumOfResTypes = Math.max(
+            production.getResourceCost().size() +
+                (production.getStarResourceCost() > 0 ? 1 : 0),
+            production.getResourceReward().size() +
+                (production.getStarResourceReward() > 0 ? 1 : 0) +
+                (production.getFaithReward() > 0 ? 1 : 0)
         );
 
         double resBoxHeight = Math.min(
-            (containerHeight - spacing*(maxNumOfRes-1)) / maxNumOfRes,
+            (containerHeight - spacing*(maxNumOfResTypes-1)) / maxNumOfResTypes,
             22
         );
 
         production.getResourceCost().forEach( (resourceType, numOfResources) ->
-            costsContainer.getChildren().add(createResourceLabelAndIcon(
+            costsContainer.getChildren().add(GuiCompUtils.createResourceLabelAndIcon(
                 numOfResources,
                 resourceType.getIconPathForResourceType(),
                 resBoxHeight,
@@ -70,7 +67,7 @@ public class Production extends AnchorPane {
         );
 
         production.getResourceReward().forEach( (resourceType, numOfResources) ->
-            rewardsContainer.getChildren().add(createResourceLabelAndIcon(
+            rewardsContainer.getChildren().add(GuiCompUtils.createResourceLabelAndIcon(
                 numOfResources,
                 resourceType.getIconPathForResourceType(),
                 resBoxHeight,
@@ -79,7 +76,7 @@ public class Production extends AnchorPane {
         );
 
         if(production.getStarResourceCost() > 0)
-            costsContainer.getChildren().add(createResourceLabelAndIcon(
+            costsContainer.getChildren().add(GuiCompUtils.createResourceLabelAndIcon(
                 production.getStarResourceCost(),
                 "starResource.png",
                 resBoxHeight,
@@ -87,37 +84,22 @@ public class Production extends AnchorPane {
             ));
 
         if(production.getStarResourceReward() > 0)
-            rewardsContainer.getChildren().add(createResourceLabelAndIcon(
+            rewardsContainer.getChildren().add(GuiCompUtils.createResourceLabelAndIcon(
                 production.getStarResourceReward(),
                 "starResource.png",
                 resBoxHeight,
                 spacing
             ));
 
+        if(production.getFaithReward() > 0)
+            rewardsContainer.getChildren().add(GuiCompUtils.createResourceLabelAndIcon(
+                production.getFaithReward(),
+                "faith.png",
+                resBoxHeight,
+                spacing
+            ));
+
     }
 
-    HBox createResourceLabelAndIcon(int numOfResources, String iconPath, double height, double spacing) {
-
-        HBox container = new HBox(spacing);
-        container.setPrefHeight(height);
-        container.setAlignment(Pos.CENTER);
-
-        Label valLabel = new Label();
-        valLabel.setMaxHeight(height);
-        valLabel.setFont(new Font(height-4));
-        valLabel.textProperty().setValue(String.valueOf(numOfResources));
-
-        ImageView img = new ImageView();
-        img.setImage(new Image(FileManager.getFileManagerInstance().loadFXImage(iconPath)));
-        img.setFitHeight(height);
-        System.out.println("h" + height);
-        img.setPreserveRatio(true);
-        img.setSmooth(true);
-        img.setCache(true);
-
-        container.getChildren().addAll(valLabel, img);
-
-        return container;
-    }
 
 }

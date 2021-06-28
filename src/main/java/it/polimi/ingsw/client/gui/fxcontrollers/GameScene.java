@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class GameScene extends AbstractController {
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
 
         GameSceneSelector commonComponentsSelector = new GameSceneSelector(
             List.of(
@@ -32,15 +34,18 @@ public class GameScene extends AbstractController {
         );
         commonComponentsContainer.getChildren().add(commonComponentsSelector);
 
+        ToggleGroup toggleGroup = commonComponentsSelector.getToggleGroup();
 
         GameSceneSelector specificComponentsSelector = new GameSceneSelector(
             List.of(
                 new GameSceneSelector.Selection("Dashboard", "PlayerDashboard.fxml")
             ),
             sceneNumber,
-            commonComponentsSelector.getToggleGroup()
+            toggleGroup
         );
         specificComponentsContainer.getChildren().add(specificComponentsSelector);
+
+        toggleGroup.selectToggle(toggleGroup.getToggles().get(sceneNumber));
 
     }
 

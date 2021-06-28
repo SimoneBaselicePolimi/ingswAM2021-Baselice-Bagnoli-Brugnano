@@ -76,8 +76,9 @@ public class LeaderCardsSetup extends AbstractController{
     void onConfirmButtonPressed(){
 
         clientManager.addEntryToContextInfoMap("selectedLeaderCards", selectedCards);
-        clientManager.loadScene("Table.fxml");
-        
+        //clientManager.loadScene("Market.fxml");
+        clientManager.loadScene("FaithPath.fxml");
+
         //clientManager.addEntryToContextInfoMap(
           //  "selectedLeaderCards",
             //selectedCards.stream().map(LeaderCard::getLeaderCardRepresentation).collect(Collectors.toList())

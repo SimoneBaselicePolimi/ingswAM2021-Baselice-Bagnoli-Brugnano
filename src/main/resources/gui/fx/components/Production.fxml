@@ -4,20 +4,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root prefHeight="105.0" prefWidth="155" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="85.0" maxWidth="155" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
 
-    <GridPane prefHeight="105" prefWidth="155" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
+    <GridPane alignment="CENTER" prefHeight="85" prefWidth="155" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
 
         <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints valignment="CENTER" prefHeight="20" />
-            <RowConstraints valignment="CENTER" vgrow="ALWAYS" prefHeight="85" />
+            <RowConstraints prefHeight="85" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
 
-        <Label text="PProduction" GridPane.columnIndex="0" alignment="TOP_LEFT" prefWidth="140"/>
-        <GridPane prefHeight="90" prefWidth="155" GridPane.rowIndex="1">
+        <GridPane prefHeight="90" prefWidth="155" GridPane.rowIndex="0">
 
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
@@ -25,18 +23,20 @@
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints valignment="CENTER" vgrow="ALWAYS" prefHeight="85" />
+                <RowConstraints prefHeight="85" valignment="CENTER" vgrow="ALWAYS" />
             </rowConstraints>
 
-            <VBox fx:id="costsContainer" GridPane.columnIndex="0" spacing="5" prefHeight="85" alignment="CENTER" ></VBox>
+            <VBox fx:id="costsContainer" alignment="CENTER" prefHeight="85" spacing="5" GridPane.columnIndex="0" />
 
-            <Label text="}" textFill="#ddc963" GridPane.columnIndex="1" alignment="CENTER">
-                 <font>
-                    <Font size="56.0" />
-                 </font>
-            </Label>
+            <AnchorPane GridPane.columnIndex="1">
+                <Label AnchorPane.topAnchor="-4.5" alignment="CENTER" text="}" textAlignment="CENTER" textFill="#ddc963">
+                     <font>
+                        <Font size="60.0" />
+                     </font>
+                </Label>
+            </AnchorPane>
 
-            <VBox fx:id="rewardsContainer" GridPane.columnIndex="2" spacing="5" prefHeight="85" alignment="CENTER" ></VBox>
+            <VBox fx:id="rewardsContainer" alignment="CENTER" prefHeight="85" spacing="5" GridPane.columnIndex="2" />
 
         </GridPane>
 

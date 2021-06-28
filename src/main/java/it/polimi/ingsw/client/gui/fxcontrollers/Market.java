@@ -1,13 +1,12 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.GameState;
+import javafx.fxml.FXML;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.localization.Localization;
-import it.polimi.ingsw.utils.Colour;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
@@ -20,7 +19,7 @@ public class Market extends GameScene implements View {
     @FXML
     public Button btnEnterPurchaseMode;
 
-    @FXML 
+    @FXML
     public Button btnExitPurchaseMode;
 
     @FXML
@@ -45,7 +44,9 @@ public class Market extends GameScene implements View {
     }
 
     @FXML
-    public void initialize(){
+    @Override
+    protected void initialize() {
+        super.initialize();
 
         legendLabel.setText(Localization.getLocalizationInstance().getString("client.gui.table.colours.green"));
 
@@ -64,7 +65,7 @@ public class Market extends GameScene implements View {
             colConst.setPercentWidth(100.0 / nColumns);
             marketContainer.getColumnConstraints().add(colConst);
 
-            Button columnSelection = new Button ("↓");
+            Button columnSelection = new Button("↓");
             columnSelection.setPrefWidth(50);
             columnSelection.setPrefHeight(30);
             columnSelection.setOnMouseClicked(e -> selectMarketLine());
@@ -73,11 +74,12 @@ public class Market extends GameScene implements View {
             marketContainer.getChildren().add(columnSelection);
 
         }
+
         for (int row = 0; row < nRows; row++) {
             RowConstraints rowConst = new RowConstraints();
             rowConst.setPercentHeight(100.0 / nRows);
             marketContainer.getRowConstraints().add(rowConst);
-            
+
             Button rowSelection = new Button("→");
             rowSelection.setPrefWidth(50);
             rowSelection.setPrefHeight(30);

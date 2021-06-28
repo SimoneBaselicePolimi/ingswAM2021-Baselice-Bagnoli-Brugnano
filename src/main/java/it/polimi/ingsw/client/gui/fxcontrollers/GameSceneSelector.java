@@ -6,6 +6,7 @@ import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameSceneSelector extends AnchorPane {
@@ -53,6 +55,8 @@ public class GameSceneSelector extends AnchorPane {
     final List<Selection> selections;
     int activeSelectionIndex;
 
+    List<Button> menuButtons;
+
     public GameSceneSelector(List<Selection> selections, int activeSelectionIndex, ToggleGroup toggleGroup) {
         this.selections = selections;
         this.activeSelectionIndex = activeSelectionIndex;
@@ -71,6 +75,8 @@ public class GameSceneSelector extends AnchorPane {
         }
 
         clientManager = GuiClientManager.getInstance();
+
+        menuButtons = new ArrayList<>();
 
     }
 
@@ -104,7 +110,7 @@ public class GameSceneSelector extends AnchorPane {
             container.getChildren().add(button);
         }
 
-        toggleGroup.selectToggle(toggleGroup.getToggles().get(activeSelectionIndex));
+        //toggleGroup.selectToggle(toggleGroup.getToggles().get(activeSelectionIndex));
 
     }
 

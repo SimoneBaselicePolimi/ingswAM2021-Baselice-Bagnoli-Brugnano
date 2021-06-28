@@ -3,6 +3,9 @@ package it.polimi.ingsw.client.gui.fxcontrollers.components;
 import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.server.model.Player;
@@ -29,6 +32,9 @@ public class Dashboard extends AnchorPane {
     @FXML
     VBox baseProductionsContainer;
 
+    @FXML
+    HBox devCardsContainer;
+
     Map<ClientResourceStorageRepresentation, Storage> storageRepresentationToComp;
     public final boolean enableRepositioning;
 
@@ -53,6 +59,21 @@ public class Dashboard extends AnchorPane {
 
         playerContext.getTempStorage().setResources(new HashMap<>(Map.of(ResourceType.COINS, 5)));
 
+        playerContext.getDevelopmentCardDecks().get(0).getCardDeck().add(
+            clientManager.getGameContextRepresentation().getDevelopmentCardsTable().getDeck(
+                DevelopmentCardLevel.FIRST_LEVEL,
+                DevelopmentCardColour.BLUE
+            ).getCardOnTop()
+        );
+        playerContext.getDevelopmentCardDecks().get(0).getCardDeck().add(
+            clientManager.getGameContextRepresentation().getDevelopmentCardsTable().getDeck(
+                DevelopmentCardLevel.SECOND_LEVEL,
+                DevelopmentCardColour.BLUE
+            ).getCardOnTop()
+        );
+        playerContext.getDevelopmentCardDecks().get(0).setCardDeck(playerContext.getDevelopmentCardDecks().get(0).getCardDeck());
+
+
     }
 
     @FXML
@@ -73,9 +94,15 @@ public class Dashboard extends AnchorPane {
         Storage infiniteChestComp = new Storage("Infinite Chest", playerContext.getInfiniteChest());
         storageRepresentationToComp.put(playerContext.getInfiniteChest(), infiniteChestComp);
         storagesContainer.getChildren().add(infiniteChestComp);
+
+        playerContext.getDevelopmentCardDecks().forEach(d -> devCardsContainer.getChildren().add(
+            new DevelopmentCardDashboardDeck(d)
+        ));
+
     }
 
     public Set<Storage> getAllStoragesComp() {
         return new HashSet<>(storageRepresentationToComp.values());
     }
+
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
+import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardTableDeck;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
@@ -88,6 +89,7 @@ public class Table extends GameScene implements View {
 
     public Table() {
         super(2);
+
         table =  clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
         table.setPurchasableCards(Set.of(
             table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
@@ -96,30 +98,13 @@ public class Table extends GameScene implements View {
         this.nRows = DevelopmentCardLevel.values().length;
         this.nColumns = DevelopmentCardColour.values().length;
 
-        new Thread(() -> {
-            while(true) {
-                table.setPurchasableCards(Set.of(
-                    table.getDeck(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
-                    table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN).getCardOnTop()
-                ));
-                try {
-                    Thread.sleep(20000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Carteeeee updated");
-                table.setPurchasableCards(Set.of(
-                    table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
-                    table.getDeck(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).getCardOnTop()
-                ));
-            }
-        }).start();
-
     }
 
     @FXML
-    public void initialize(){
+    @Override
+    protected void initialize(){
 
+        super.initialize();
 
         greenLabel.setText(Localization.getLocalizationInstance().getString("client.gui.table.colours.green"));
         blueLabel.setText(Localization.getLocalizationInstance().getString("client.gui.table.colours.blue"));
@@ -201,11 +186,9 @@ public class Table extends GameScene implements View {
 
     @Override
     public void updateView() {
-        //canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
-        canMyPlayerDoMainAction.setValue(true);
+        canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
         purchasableCards.get().clear();
         purchasableCards.get().addAll(table.getPurchasableCards());
-
     }
 
     @Override

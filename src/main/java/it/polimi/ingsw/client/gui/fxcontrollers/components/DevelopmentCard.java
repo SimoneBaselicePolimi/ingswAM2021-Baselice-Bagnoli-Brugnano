@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
+import it.polimi.ingsw.client.gui.fxcontrollers.GuiCompUtils;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.utils.Colour;
@@ -9,15 +10,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+
 import java.io.IOException;
 
 public class DevelopmentCard extends AnchorPane {
 
     @FXML
-    Label contentLabel;
+    GridPane container;
 
     @FXML
-    GridPane bordersGrid;
+    Label titleLabel;
+
+    @FXML
+    HBox purchaseCostContainer;
+
+    @FXML
+    Label purchaseCostLabel;
+
+    @FXML
+    Label levelColourLabel;
 
     ClientDevelopmentCardRepresentation card;
 
@@ -39,26 +51,45 @@ public class DevelopmentCard extends AnchorPane {
     }
 
     public void setBordersColour(Colour colour){
-        bordersGrid.setStyle(String.format(
-            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 3; -fx-border-style: solid;",
+        container.setStyle(String.format(
+            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;",
             colour.r,
             colour.g,
             colour.b
         ));
-        bordersGrid.toFront();
+        container.toFront();
     }
 
     public void setDefaultBordersColour(){
-        bordersGrid.setStyle(String.format(
-            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 3; -fx-border-style: solid;",
-            Colour.BLACK.r,
-            Colour.BLACK.g,
-            Colour.BLACK.b
-        ));
+        container.setStyle(
+            "-fx-border-color: black; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;"
+        );
     }
 
     public ClientDevelopmentCardRepresentation getLeaderCardRepresentation() {
         return card;
+    }
+
+    @FXML
+    private void initialize() {
+
+        Production cardProdComp = new Production(card.getProduction());
+        GridPane.setColumnIndex(cardProdComp, 0);
+        GridPane.setRowIndex(cardProdComp, 2);
+        container.getChildren().add(cardProdComp);
+
+        card.getPurchaseCost().forEach( (resType, numOfRes) -> purchaseCostContainer.getChildren().add(
+            GuiCompUtils.createResourceLabelAndIcon(numOfRes, resType.getIconPathForResourceType(), 15, 4)
+        ));
+
+        levelColourLabel.setText(String.valueOf(card.getLevel().toValue()));
+        levelColourLabel.setStyle(String.format(
+            "-fx-background-color: \"#%02X%02X%02X\"",
+            card.getColour().getUIColour().r,
+            card.getColour().getUIColour().g,
+            card.getColour().getUIColour().b
+        ));
+
     }
 
 }

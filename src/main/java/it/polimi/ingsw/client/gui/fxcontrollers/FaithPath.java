@@ -39,7 +39,9 @@ public class FaithPath extends GameScene {
     }
 
     @FXML
-    private void initialize() {
+    @Override
+    protected void initialize() {
+        super.initialize();
 
         //faithPath section
         for (int c = 0; c < faithPathLength; c++) {

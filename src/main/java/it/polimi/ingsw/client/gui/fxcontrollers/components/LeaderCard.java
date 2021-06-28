@@ -74,8 +74,4 @@ public class LeaderCard extends AnchorPane {
         contentLabel.toFront();
     }
 
-    public ClientLeaderCardRepresentation getLeaderCardRepresentation() {
-        return card;
-    }
-
 }
