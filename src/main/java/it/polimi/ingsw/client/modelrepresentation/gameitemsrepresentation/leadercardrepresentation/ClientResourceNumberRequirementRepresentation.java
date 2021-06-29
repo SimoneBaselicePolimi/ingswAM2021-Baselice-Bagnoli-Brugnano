@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.client.gui.fxcontrollers.components.NumOfResourcesRequirement;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 
@@ -37,6 +38,11 @@ public class ClientResourceNumberRequirementRepresentation extends ClientLeaderC
             resourceNumber,
             resourceNumber == 1 ? resourceType.getLocalizedNameSingular() : resourceType.getLocalizedNamePlural()
         );
+    }
+
+    @Override
+    public NumOfResourcesRequirement buildGuiComponent() {
+        return new NumOfResourcesRequirement(this);
     }
 
 }

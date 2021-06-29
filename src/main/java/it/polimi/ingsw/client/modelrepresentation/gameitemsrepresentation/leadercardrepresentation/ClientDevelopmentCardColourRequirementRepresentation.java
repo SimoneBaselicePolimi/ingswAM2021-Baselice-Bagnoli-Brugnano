@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.client.gui.fxcontrollers.components.ColourRequirement;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 
@@ -39,5 +40,10 @@ public class ClientDevelopmentCardColourRequirementRepresentation extends Client
                 : Localization.getLocalizationInstance().getString("cards.plural"),
             numberOfCards == 1 ? cardColour.getColourNameLocalizedSingular() : cardColour.getColourNameLocalizedPlural()
         );
+    }
+
+    @Override
+    public ColourRequirement buildGuiComponent() {
+        return new ColourRequirement(this);
     }
 }
