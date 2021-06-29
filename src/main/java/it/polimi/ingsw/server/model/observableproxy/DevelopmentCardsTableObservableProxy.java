@@ -54,6 +54,7 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
 
     @Override
     public Set<ServerGameUpdate> getUpdates() {
+
         Set<ServerGameUpdate> updates = new HashSet<>(newUpdates);
         newUpdates.clear();
         return updates;

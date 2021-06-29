@@ -122,7 +122,7 @@ public class Lobby extends AbstractController {
                                         clientManager.addEntryToContextInfoMap("initialChoicesServerMessage", serverMessage2);
                                         clientManager.setGameState(GameState.GAME_SETUP);
                                         clientManager.handleGameUpdates(initialChoicesServerMessage.gameUpdates);
-                                        clientManager.loadScene("LeaderCardsSetup.fxml");
+                                        clientManager.loadScene("FaithPath.fxml");
                                         return CompletableFuture.completedFuture(null);
                                     }
                                 ).elseCompute(

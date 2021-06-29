@@ -71,8 +71,6 @@ client:
           plural: "%d punti fede\n"
         specialMarble: "Biglia speciale\n"
 
-
-
   cli:
     setup:
       askPlayerName: "Nome del giocatore: "

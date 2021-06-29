@@ -1,11 +1,14 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +19,7 @@ public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentat
      * Map that contains the cards in each deck, along with their colour and level
      */
     private Map<DevelopmentCardLevel, Map<DevelopmentCardColour, ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>>> cards;
-    private Set<ClientDevelopmentCardRepresentation> purchasableCards = new HashSet<>();
+    private final Map<Player, Set<ClientDevelopmentCardRepresentation>> purchasableCards = new HashMap<>();
 
     /**
      * DevelopmentCardsTableRepresentation constructor
@@ -45,16 +48,21 @@ public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentat
         notifyViews();
     }
 
-    public void setPurchasableCards(Set<ClientDevelopmentCardRepresentation> purchasableCards) {
-        this.purchasableCards = new HashSet<>(purchasableCards);
+    public void setPurchasableCardsForPlayer(Player player, Set<ClientDevelopmentCardRepresentation> purchasableCards) {
+        this.purchasableCards.put(player, new HashSet<>(purchasableCards));
         notifyViews();
     }
 
-    public Set<ClientDevelopmentCardRepresentation> getPurchasableCards() {
-        return new HashSet<>(purchasableCards);
+    public Map<Player, Set<ClientDevelopmentCardRepresentation>> getAllPurchasableCards() {
+        return new HashMap<>(purchasableCards);
     }
 
-    public boolean isCardPurchasable(ClientDevelopmentCardRepresentation card) {
-        return purchasableCards.contains(card);
+    public Set<ClientDevelopmentCardRepresentation> getAllPurchasableCardsForMyPlayer() {
+        return new HashSet<>(purchasableCards.getOrDefault(ClientManager.getInstance().getMyPlayer(), new HashSet<>()));
+
+    }
+
+    public boolean isCardPurchasableByMyPlayer(ClientDevelopmentCardRepresentation card) {
+        return purchasableCards.getOrDefault(ClientManager.getInstance().getMyPlayer(), new HashSet<>()).contains(card);
     }
 }

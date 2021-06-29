@@ -91,10 +91,10 @@ public class Table extends GameScene implements View {
         super(2);
 
         table =  clientManager.getGameContextRepresentation().getDevelopmentCardsTable();
-        table.setPurchasableCards(Set.of(
-            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
-            table.getDeck(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop()
-        ));
+//        table.setPurchasableCards(Set.of(
+//            table.getDeck(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop(),
+//            table.getDeck(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE).getCardOnTop()
+//        ));
         this.nRows = DevelopmentCardLevel.values().length;
         this.nColumns = DevelopmentCardColour.values().length;
 
@@ -174,7 +174,7 @@ public class Table extends GameScene implements View {
     void updateCardsColour() {
         deckRepresentationToComponent.forEach( (deckRepresentation, deckComp) -> {
             if(isCardPurchaseModeEnabled.get()) {
-                if (table.isCardPurchasable(deckRepresentation.getCardOnTop()))
+                if (table.isCardPurchasableByMyPlayer(deckRepresentation.getCardOnTop()))
                     deckComp.setCardBordersColour(Colour.YELLOW);
                 else
                     deckComp.setCardBordersColour(Colour.GREY);
@@ -188,7 +188,7 @@ public class Table extends GameScene implements View {
     public void updateView() {
         canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
         purchasableCards.get().clear();
-        purchasableCards.get().addAll(table.getPurchasableCards());
+        purchasableCards.get().addAll(table.getAllPurchasableCardsForMyPlayer());
     }
 
     @Override

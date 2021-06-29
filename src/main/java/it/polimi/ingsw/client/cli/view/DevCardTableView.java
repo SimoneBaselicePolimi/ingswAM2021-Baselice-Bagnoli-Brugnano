@@ -170,7 +170,7 @@ public class DevCardTableView extends CliView{
                         ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>
                     > oneLevelCards = table.getCards().get(visibleCardsLevel);
                     if (oneLevelCards.containsKey(colour) && oneLevelCards.get(colour).numberOfCardsInDeck > 0) {
-                        if(table.isCardPurchasable(oneLevelCards.get(colour).cardOnTop))
+                        if(table.isCardPurchasableByMyPlayer(oneLevelCards.get(colour).cardOnTop))
                             return CompletableFuture.completedFuture(oneLevelCards.get(colour).cardOnTop);
                         else {
                             clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerHeDoesNotHaveNeededResources");
@@ -249,7 +249,7 @@ public class DevCardTableView extends CliView{
     public FormattedCharsBuffer getContentAsFormattedCharsBuffer() {
         
         cardTableDeckViewList.forEach(d -> {
-            if(table.isCardPurchasable(d.getCardOnTop()))
+            if(table.isCardPurchasableByMyPlayer(d.getCardOnTop()))
                 d.setCardBorderColour(Colour.YELLOW);
             else
                 d.setCardBorderColour(Colour.GREY);

@@ -7,7 +7,10 @@ public class PurchasableDevelopmentCardsUpdateHandler extends GameUpdateHandler<
 
     @Override
     public void handleGameUpdate(ClientPurchasableDevelopmentCardsUpdate update, ClientManager clientManager) {
-        clientManager.getGameContextRepresentation().getDevelopmentCardsTable().setPurchasableCards(update.purchasableDevelopmentCards);
+        clientManager.getGameContextRepresentation().getDevelopmentCardsTable().setPurchasableCardsForPlayer(
+            update.player,
+            update.purchasableDevelopmentCards
+        );
     }
 
 }

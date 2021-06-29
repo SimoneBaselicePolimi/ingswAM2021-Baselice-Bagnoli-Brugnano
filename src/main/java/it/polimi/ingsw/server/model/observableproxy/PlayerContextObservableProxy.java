@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
 public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext> implements PlayerContext {
 
     protected boolean haveLeaderCardsChanged = false;
+    protected boolean haveDevCardsChanged = false;
     protected boolean haveTempStarResourcesChanged = false;
+
 
     protected Map<ResourceType, Integer> totalResources = new HashMap<>();
 
@@ -161,6 +163,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
 
     @Override
     public void addDevelopmentCard(DevelopmentCard card, int deckNumber) throws IllegalArgumentException, ForbiddenPushOnTopException {
+        haveDevCardsChanged = true;
         imp.addDevelopmentCard(card, deckNumber);
     }
 
@@ -205,11 +208,17 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
         if(!totalResources.equals(imp.getAllResources())) {
             totalResources = new HashMap<>(imp.getAllResources());
             updates.add(new ServerTotalResourcesUpdate(imp.getPlayer(), totalResources));
-            updates.add(new ServerPurchasableDevelopmentCardsUpdate(
-                getPurchasableDevelopmentCards().stream()
-                    .map(DevelopmentCard::getServerRepresentation).collect(Collectors.toSet())
-            ));
         }
+
+        if(!totalResources.equals(imp.getAllResources()) || haveDevCardsChanged) {
+            updates.add(
+                new ServerPurchasableDevelopmentCardsUpdate(
+                    imp.getPlayer(),
+                    getPurchasableDevelopmentCards()
+                )
+            );
+        }
+        haveDevCardsChanged = false;
 
         return updates;
     }

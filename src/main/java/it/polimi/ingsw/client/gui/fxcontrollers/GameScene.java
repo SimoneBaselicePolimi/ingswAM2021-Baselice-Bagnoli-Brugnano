@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
-import javafx.application.Platform;
+import it.polimi.ingsw.client.GameState;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -36,10 +36,20 @@ public class GameScene extends AbstractController {
 
         ToggleGroup toggleGroup = commonComponentsSelector.getToggleGroup();
 
+
+        List<GameSceneSelector.Selection> availableScenes;
+
+        if(clientManager.getGameState().equals(GameState.GAME_SETUP))
+            availableScenes =  List.of(
+                new GameSceneSelector.Selection("Begin setup", "LeaderCardsSetup.fxml")
+            );
+        else
+            availableScenes = List.of(
+                    new GameSceneSelector.Selection("Dashboard", "PlayerDashboard.fxml")
+            );
+
         GameSceneSelector specificComponentsSelector = new GameSceneSelector(
-            List.of(
-                new GameSceneSelector.Selection("Dashboard", "PlayerDashboard.fxml")
-            ),
+            availableScenes,
             sceneNumber,
             toggleGroup
         );
