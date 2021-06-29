@@ -48,18 +48,21 @@ public class LeaderCardsSetup extends AbstractController{
 
         cardsComp.forEach(c -> c.setOnMouseClicked(
             e -> {
+
                 if(selectedCards.contains(c)){
                     c.setDefaultBorderColour();
                     selectedCards.remove(c);
                 }
-                else{
+                else if(selectedCards.size() < message.numberOfLeaderCardsToKeep) {
                     c.setBorderColour(Colour.GREEN);
                     selectedCards.add(c);
                 }
+
                 if(selectedCards.size() == message.numberOfLeaderCardsToKeep)
                     confirmButton.setVisible(true);
                 else
                     confirmButton.setVisible(false);
+
             }
         ));
 

@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server.network;
 
+import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.server.controller.Client;
 
 import java.io.IOException;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -69,8 +71,12 @@ public class SocketConnectionsProcessor implements Runnable {
 
             clientConnections.put(newConnection.getClient(), newConnection);
 
-            SelectionKey key = newSocket.register(this.readSelector, SelectionKey.OP_READ);
-            key.attach(newConnection);
+            try {
+                newSocket.register(this.readSelector, SelectionKey.OP_READ, newConnection);
+            } catch (Exception c) {
+                ProjectLogger.getLogger().log(c);
+                throw c;
+            }
 
             inboundMessagesProcessor.processNewClientConnection(newConnection.getClient(), networkLayer);
 

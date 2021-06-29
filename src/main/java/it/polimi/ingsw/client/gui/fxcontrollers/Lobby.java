@@ -7,6 +7,8 @@ import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMe
 import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
 import it.polimi.ingsw.client.servermessage.*;
 import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.logger.LogLevel;
+import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import javafx.application.Platform;
@@ -64,11 +66,20 @@ public class Lobby extends AbstractController {
             currentPlayersInLobby.setText(msg.toString());
 
             if (newMessage.playersInLobby.size() == newMessage.lobbySize) {
-                try {
-                    completePreGameSetup(newMessage.playersInLobby);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                clientManager.getNewMessageFromServer()
+                    .thenCompose( serverMessage ->
+                        ServerMessageUtils.ifMessageTypeCompute(
+                            serverMessage,
+                            GameInitializationStartedServerMessage.class,
+                            message -> {
+                                completePreGameSetup(newMessage.playersInLobby);
+                                return CompletableFuture.completedFuture(null);
+                            }
+                        ).elseCompute(message -> {
+                            ProjectLogger.getLogger().log(LogLevel.ERROR, "Unexpected message from server. Message type: %s", message);
+                            return CompletableFuture.failedFuture(new Exception());
+                        }).apply()
+                    );
             } else {
                 clientManager.getNewMessageFromServer()
                     .thenCompose(serverMessage ->
@@ -89,9 +100,7 @@ public class Lobby extends AbstractController {
     }
 
 
-    private void completePreGameSetup(List<Player> players) throws InterruptedException {
-
-        Thread.sleep(new Random().nextInt(2000)); //TODO
+    private void completePreGameSetup(List<Player> players) {
 
         clientManager.setGameItemsManager(new GameItemsManager());
         clientManager.addEntryToContextInfoMap("gameItemsManager", clientManager.getGameItemsManager());

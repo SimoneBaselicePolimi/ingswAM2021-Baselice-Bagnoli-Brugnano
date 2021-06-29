@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.workers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import it.polimi.ingsw.logger.LogLevel;
+import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.network.NetworkProto;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.controller.Client;
@@ -26,34 +28,43 @@ public class YAMLSerializationWorker extends Thread {
     }
 
     public void addMessageToSerialize(ServerMessage serverMessage, Client receiver) {
-        serverMessagesToSerialize.add(serverMessage);
         messageReceivers.put(serverMessage, receiver);
+        serverMessagesToSerialize.add(serverMessage);
     }
 
     @Override
     public void run() {
 
         while (true) {
+
+            ServerMessage messageToSerialize = null;
             try {
-                ServerMessage messageToSerialize = serverMessagesToSerialize.take();
-                byte[] messageContent = SerializationHelper.serializeYamlAsBytes(messageToSerialize);
-                ServerRawMessage serverRawMessage = new ServerRawMessage(
-                    messageReceivers.get(messageToSerialize),
-                    NetworkProto.MESSAGE_FORMAT.YAML,
-                    NetworkProto.MESSAGE_TYPE.GAME_MESSAGE,
-                    messageContent.length,
-                    messageContent
-                );
-                serializedMessageProcessingPolicy.accept(serverRawMessage);
-                messageReceivers.remove(messageToSerialize);
+                messageToSerialize = serverMessagesToSerialize.take();
             } catch (InterruptedException e) {
-                //TODO
-                e.printStackTrace();
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                //TODO
+                ProjectLogger.getLogger().log(e);
             }
 
+            if(messageToSerialize != null) {
+                try {
+                    byte[] messageContent = SerializationHelper.serializeYamlAsBytes(messageToSerialize);
+                    ServerRawMessage serverRawMessage = new ServerRawMessage(
+                        messageReceivers.get(messageToSerialize),
+                        NetworkProto.MESSAGE_FORMAT.YAML,
+                        NetworkProto.MESSAGE_TYPE.GAME_MESSAGE,
+                        messageContent.length,
+                        messageContent
+                    );
+                    serializedMessageProcessingPolicy.accept(serverRawMessage);
+                    messageReceivers.remove(messageToSerialize);
+                } catch (JsonProcessingException e) {
+                    ProjectLogger.getLogger().log(
+                        LogLevel.ERROR,
+                        "Unexpected error while serializing server message: %s",
+                        messageToSerialize
+                    );
+                    ProjectLogger.getLogger().log(e);
+                }
+            }
 
         }
     }
