@@ -4,5 +4,5 @@
 <?import javafx.scene.layout.HBox?>
 
 <fx:root prefHeight="85" prefWidth="155" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
-    <HBox fx:id="discountContainer" alignment="CENTER" spacing="4" />
+    <HBox AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" fx:id="discountContainer" prefWidth="155" prefHeight="85" alignment="CENTER" spacing="4" />
 </fx:root>

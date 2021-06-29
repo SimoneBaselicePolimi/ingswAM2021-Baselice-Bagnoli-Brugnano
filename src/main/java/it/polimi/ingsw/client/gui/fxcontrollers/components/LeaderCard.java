@@ -52,7 +52,7 @@ public class LeaderCard extends AnchorPane {
 
     public void setBorderColour(Colour colour) {
         bordersGrid.setStyle(String.format(
-            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;",
+            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;",
             colour.r,
             colour.g,
             colour.b
