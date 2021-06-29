@@ -40,7 +40,7 @@ public class DevCardCostDiscount extends AnchorPane {
         discountContainer.getChildren().add(GuiCompUtils.createResourceLabelAndIcon(
             - costDiscount.getAmountToDiscount(),
             costDiscount.getResourceType().getIconPathForResourceType(),
-            24,
+            40,
             2
             )
         );

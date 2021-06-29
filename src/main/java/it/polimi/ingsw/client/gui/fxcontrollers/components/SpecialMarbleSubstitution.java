@@ -43,21 +43,21 @@ public class SpecialMarbleSubstitution extends AnchorPane {
         specialMarbleIcon.setImage(new Image(FileManager.getFileManagerInstance().loadFXImage(
             "whiteMarble.png"
         )));
-        specialMarbleIcon.setFitHeight(20);
+        specialMarbleIcon.setFitHeight(40);
         specialMarbleIcon.setPreserveRatio(true);
         specialMarbleIcon.setSmooth(true);
         specialMarbleIcon.setCache(true);
 
         Label equalsLabel = new Label();
-        equalsLabel.setMaxHeight(20);
-        equalsLabel.setFont(new Font(20));
+        equalsLabel.setMaxHeight(40);
+        equalsLabel.setFont(new Font(40));
         equalsLabel.textProperty().setValue(" = ");
 
         ImageView resourceIcon = new ImageView();
         resourceIcon.setImage(new Image(FileManager.getFileManagerInstance().loadFXImage(
             marbleSubstitution.getResourceTypeToSubstitute().getIconPathForResourceType()))
         );
-        resourceIcon.setFitHeight(20);
+        resourceIcon.setFitHeight(40);
         resourceIcon.setPreserveRatio(true);
         resourceIcon.setSmooth(true);
         resourceIcon.setCache(true);
