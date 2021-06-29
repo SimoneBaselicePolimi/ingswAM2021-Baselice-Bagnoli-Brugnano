@@ -13,10 +13,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.awt.*;
@@ -40,6 +37,9 @@ public class Market extends GameScene implements View {
 
     @FXML
     public GridPane legendContainer;
+
+    @FXML
+    public VBox marblesDescription;
 
     ClientMarketRepresentation marketRepresentation;
 
@@ -79,9 +79,10 @@ public class Market extends GameScene implements View {
         marketContainer.getColumnConstraints().clear();
         marketContainer.getRowConstraints().clear();
 
+        marblesDescription.setSpacing(50);
         for (int col = 0; col < marketColumns - 1; col++)
             marketContainer.getColumnConstraints().add(
-                new ColumnConstraints(100)
+                new ColumnConstraints(130)
             );
         marketContainer.getColumnConstraints().add(
             new ColumnConstraints(50)
@@ -89,7 +90,7 @@ public class Market extends GameScene implements View {
 
         for (int row = 0; row < marketRows - 1; row++)
             marketContainer.getRowConstraints().add(
-                new RowConstraints(100)
+                new RowConstraints(130)
             );
         marketContainer.getRowConstraints().add(
             new RowConstraints(50)
@@ -122,20 +123,9 @@ public class Market extends GameScene implements View {
 
         marketContainer.setGridLinesVisible(true);
 
-        int numberOfLineForMarbleColour = -1;
         for(ClientMarbleColourRepresentation marble : differentMarbleColours){
 
-            numberOfLineForMarbleColour++;
-
             legendContainer.getRowConstraints().clear();
-
-            legendContainer.getRowConstraints().add(
-                new RowConstraints(50)
-            );
-
-            VBox textContainer = new VBox();
-
-            legendContainer.getChildren().add(1, textContainer);
 
             if (marble.getResourceType().isPresent()) {
                 Label marbleResource = new Label(
@@ -143,7 +133,7 @@ public class Market extends GameScene implements View {
                         ("client.gui.market.marbleDescription.marbleResource", marble.getResourceType().get())
                 );
                 marbleResource.setFont(new Font(15));
-                textContainer.getChildren().add(marbleResource);
+                marblesDescription.getChildren().add(marbleResource);
             }
 
             if(marble.getFaithPoints() > 0) {
@@ -153,14 +143,14 @@ public class Market extends GameScene implements View {
                             ("client.gui.market.marbleDescription.marbleFaithPoints.singular")
                     );
                     marbleFaithPoints.setFont(new Font(15));
-                    textContainer.getChildren().add(marbleFaithPoints);
+                    marblesDescription.getChildren().add(marbleFaithPoints);
                 } else {
                     Label marbleFaithPoints = new Label(
                         Localization.getLocalizationInstance().getString
                             ("client.gui.market.marbleDescription.marbleFaithPoints.plural", marble.getFaithPoints())
                     );
                     marbleFaithPoints.setFont(new Font(15));
-                    textContainer.getChildren().add(marbleFaithPoints);
+                    marblesDescription.getChildren().add(marbleFaithPoints);
                 }
             }
 
@@ -171,10 +161,9 @@ public class Market extends GameScene implements View {
                         ("client.gui.market.marbleDescription.specialMarble")
                 );
                 specialMarble.setFont(new Font(15));
-                textContainer.getChildren().add(specialMarble);
+                marblesDescription.getChildren().add(specialMarble);
             }
         }
-
         updateView();
     }
 
