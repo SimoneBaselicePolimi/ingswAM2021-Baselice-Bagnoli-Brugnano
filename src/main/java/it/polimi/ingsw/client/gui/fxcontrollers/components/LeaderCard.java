@@ -1,21 +1,19 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
-import com.sun.prism.paint.Color;
-import com.sun.prism.paint.Paint;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
-import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LeaderCard extends AnchorPane {
 
@@ -24,6 +22,12 @@ public class LeaderCard extends AnchorPane {
 
     @FXML
     Label title;
+
+    @FXML
+    Label requirementsTitle;
+
+    @FXML
+    Label victoryPointsLabel;
 
     @FXML
     HBox requirementsContainer;
@@ -73,6 +77,24 @@ public class LeaderCard extends AnchorPane {
 
         setDefaultBorderColour();
 
+        title.setText(Localization.getLocalizationInstance().getString("leaderCards.name"));
+        title.setFont(new Font(22));
+
+        requirementsTitle.setText(Localization.getLocalizationInstance().getString(
+            "leaderCards.requirements.requirements"
+        ));
+        requirementsTitle.setFont(new Font(17));
+
+        victoryPointsLabel.setText(Localization.getLocalizationInstance().getString(
+            "leaderCards.victoryPoints",
+            card.getVictoryPoints()
+        ));
+        victoryPointsLabel.setFont(new Font(15));
+
+        card.getRequirements().forEach(r -> {
+            requirementsContainer.getChildren().add(r.buildGuiComponent());
+        });
+
         card.getProductions().forEach(p -> {
             Production prod = new Production(p);
             specialPowersContainer.getChildren().add(prod);
@@ -94,15 +116,6 @@ public class LeaderCard extends AnchorPane {
             specialPowersContainer.getChildren().add(discount);
         });
 
-//        ImageView img = new ImageView();
-//        img.setImage(new Image(FileManager.getFileManagerInstance().loadFXImage("TestLeaderCard.png")));
-//        img.setFitWidth(150);
-//        img.setPreserveRatio(true);
-//        img.setSmooth(true);
-//        img.setCache(true);
-//        this.getChildren().add(img);
-//        contentLabel.setText(card.getItemID() + "\n" + card.getVictoryPoints() + "\n" + card.getState().name());
-//        contentLabel.toFront();
     }
 
 }

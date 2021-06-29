@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leade
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
+import javafx.scene.Node;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "requirementType")
 @JsonSubTypes({
@@ -13,4 +14,6 @@ import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
 public abstract class ClientLeaderCardRequirementRepresentation extends ClientRepresentation {
 
     public abstract String getDescription();
+    public abstract Node buildGuiComponent();
+
 }
