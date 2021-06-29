@@ -107,7 +107,7 @@ client:
     mainMenuActions:
       openMarket: "Apri il mercato"
       openDevCardsTable: "Apri il tavolo delle carte sviluppo"
-      openFaithPath: "Apri il percorso fede"
+      openFaithPath: "Apri il tracciato fede"
       openPersonalDashboard: "Apri la tua plancia di gioco"
       openDifferentPlayerDashboard: "Apri la plancia di un altro giocatore"
       openDashboardOfPlayerName: "Guarda la plancia di: %s"

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.client.gui.fxcontrollers.components.ColourAndLevelRequirement;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
@@ -49,5 +50,10 @@ public class ClientDevelopmentCardColourAndLevelRequirementRepresentation extend
             numberOfCards == 1 ? cardColour.getColourNameLocalizedSingular() : cardColour.getColourNameLocalizedPlural(),
             cardLevel.toValue()
         );
+    }
+
+    @Override
+    public ColourAndLevelRequirement buildGuiComponent() {
+        return new ColourAndLevelRequirement(this);
     }
 }

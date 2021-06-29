@@ -5,12 +5,12 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.Client
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
-public class DevCardCostDiscount {
+public class DevCardCostDiscount extends AnchorPane {
 
     @FXML
     HBox discountContainer;
@@ -37,11 +37,10 @@ public class DevCardCostDiscount {
 
     @FXML
     private void initialize() {
-        discountContainer.getChildren().add(new Label("- "));
         discountContainer.getChildren().add(GuiCompUtils.createResourceLabelAndIcon(
-            costDiscount.getAmountToDiscount(),
+            - costDiscount.getAmountToDiscount(),
             costDiscount.getResourceType().getIconPathForResourceType(),
-            30,
+            40,
             2
             )
         );

@@ -5,6 +5,7 @@ import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.network.NetworkProto;
 import it.polimi.ingsw.server.controller.PlayerRegistrationAndDispatchController;
 import it.polimi.ingsw.server.controller.ServerMessageSender;
+import it.polimi.ingsw.server.controller.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.server.network.*;
 import it.polimi.ingsw.server.workers.YAMLDeserializationWorker;
 import it.polimi.ingsw.server.workers.YAMLSerializationWorker;
@@ -32,11 +33,38 @@ public class Server {
         YAMLSerializationWorker serializationWorker = new YAMLSerializationWorker(networkLayer::sendMessage);
 
         YAMLDeserializationWorker deserializationWorker = new YAMLDeserializationWorker(
-            deserializedClientMessage ->
-                deserializedClientMessage.client.getHandler().addNewMessageToQueue(deserializedClientMessage)
+            deserializedClientMessage -> {
+
+                String messageDescription;
+                if(deserializedClientMessage instanceof PlayerRequestClientMessage)
+                    messageDescription = String.format(
+                        "%s [Player request: %s]",
+                        deserializedClientMessage,
+                        ((PlayerRequestClientMessage)deserializedClientMessage).request
+                    );
+                else
+                    messageDescription = String.valueOf(deserializedClientMessage);
+
+                logger.log(
+                    LogLevel.BORING_INFO,
+                    "A message received from client %s has been deserialized. Message type: %s",
+                    deserializedClientMessage.client.getClientId(),
+                    messageDescription
+                );
+
+                deserializedClientMessage.client.getHandler().addNewMessageToQueue(deserializedClientMessage);
+            }
         );
 
-        ServerMessageSender messageSendingPolicy = serializationWorker::addMessageToSerialize;
+        ServerMessageSender messageSendingPolicy = (serverMessage, receiver) -> {
+            logger.log(
+                LogLevel.BORING_INFO,
+                "Sending message to client %s. Message type: %s",
+                receiver.getClientId(),
+                serverMessage
+            );
+            serializationWorker.addMessageToSerialize(serverMessage, receiver);
+        };
 
         PlayerRegistrationAndDispatchController dispatcherController = new PlayerRegistrationAndDispatchController(
             messageSendingPolicy

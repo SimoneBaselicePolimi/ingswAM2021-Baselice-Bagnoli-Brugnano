@@ -282,7 +282,7 @@ public class MarketView extends CliView{
             .thenCompose(input -> {
                 if (input.matches("\\G\\s*\\d+\\s*$")) {
                     int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
-                    if (intInput > 0 || intInput <= clientManager.getGameContextRepresentation().getMarket().getNumberOfRows())
+                    if (intInput > 0 && intInput <= marketRepresentation.getNumberOfRows())
                         return CompletableFuture.completedFuture(intInput);
                     else {
                         clientManager.tellUserLocalized("client.cli.market.notifyPlayerRowNumberIsInvalid");
@@ -300,7 +300,7 @@ public class MarketView extends CliView{
             .thenCompose(input -> {
                 if (input.matches("\\G\\s*\\d+\\s*$")) {
                     int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
-                    if (intInput > 0 || intInput <= clientManager.getGameContextRepresentation().getMarket().getNumberOfColumns())
+                    if (intInput > 0 && intInput <= marketRepresentation.getNumberOfColumns())
                         return CompletableFuture.completedFuture(intInput);
                     else {
                         clientManager.tellUserLocalized("client.cli.market.notifyPlayerColumnNumberIsInvalid");
