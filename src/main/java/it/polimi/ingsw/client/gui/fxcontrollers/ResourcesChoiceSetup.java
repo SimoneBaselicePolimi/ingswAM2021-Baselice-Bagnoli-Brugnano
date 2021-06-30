@@ -33,8 +33,6 @@ public class ResourcesChoiceSetup extends AbstractController{
     int shieldsCurrentSelected = 0;
 
     public ResourcesChoiceSetup() {
-
-
     }
 
     @FXML

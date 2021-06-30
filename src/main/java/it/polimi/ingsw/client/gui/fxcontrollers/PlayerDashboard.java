@@ -10,7 +10,7 @@ public class PlayerDashboard extends GameScene {
     public AnchorPane dashboardContainer;
 
     public PlayerDashboard() {
-        super(3);
+        super(4);
     }
 
     @FXML

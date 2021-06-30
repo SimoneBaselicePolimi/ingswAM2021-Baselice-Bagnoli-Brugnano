@@ -28,14 +28,14 @@ public class GameScene extends AbstractController {
             List.of(
                 new GameSceneSelector.Selection("Market", "Market.fxml"),
                 new GameSceneSelector.Selection("FaithPath", "FaithPath.fxml"),
-                new GameSceneSelector.Selection("Table", "Table.fxml")
+                new GameSceneSelector.Selection("Table", "Table.fxml"),
+                new GameSceneSelector.Selection("History", "GameHistory.fxml")
             ),
             sceneNumber
         );
         commonComponentsContainer.getChildren().add(commonComponentsSelector);
 
         ToggleGroup toggleGroup = commonComponentsSelector.getToggleGroup();
-
 
         List<GameSceneSelector.Selection> availableScenes;
 
@@ -58,7 +58,5 @@ public class GameScene extends AbstractController {
         toggleGroup.selectToggle(toggleGroup.getToggles().get(sceneNumber));
 
     }
-
-
 
 }
