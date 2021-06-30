@@ -52,8 +52,11 @@ public class MessageWriter {
 
         //Register socket with writeSelector if it has not been registered yet
         if(messagesToSendQueue.isEmpty()) {
-            SelectionKey key = socket.register(writeSelector, SelectionKey.OP_WRITE);
-            key.attach(client);
+            if(socket.keyFor(writeSelector) == null) {
+                socket.register(writeSelector, SelectionKey.OP_WRITE, client);
+            } else {
+                socket.keyFor(writeSelector).interestOps(SelectionKey.OP_WRITE);
+            }
         }
 
         messagesToSendQueue.add(serverMessage);
@@ -109,7 +112,7 @@ public class MessageWriter {
                 }
                 case DEREGISTER_OR_CONTINUE -> {
                     if(messagesToSendQueue.isEmpty()) {
-                        socket.keyFor(writeSelector).cancel();
+                        socket.keyFor(writeSelector).interestOps(0);
                         return;
                     } else {
                         writerState = WriterState.SETUP_FOR_NEXT_MESSAGE;
