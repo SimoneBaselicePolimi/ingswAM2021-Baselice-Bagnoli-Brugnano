@@ -1,21 +1,26 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.GameState;
+import it.polimi.ingsw.client.view.View;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
 
-public class GameScene extends AbstractController {
+public class GameScene extends AbstractController implements View {
 
     @FXML
-    public AnchorPane commonComponentsContainer;
+    AnchorPane commonComponentsContainer;
 
     @FXML
-    public AnchorPane specificComponentsContainer;
+    AnchorPane specificComponentsContainer;
 
     public final int sceneNumber;
+
+    protected BooleanProperty canMyPlayerDoMainAction = new SimpleBooleanProperty(false);
 
     public GameScene(int sceneNumber) {
         this.sceneNumber = sceneNumber;
@@ -23,6 +28,8 @@ public class GameScene extends AbstractController {
 
     @FXML
     protected void initialize() {
+
+        clientManager.getGameContextRepresentation().subscribe(this);
 
         GameSceneSelector commonComponentsSelector = new GameSceneSelector(
             List.of(
@@ -61,5 +68,14 @@ public class GameScene extends AbstractController {
     }
 
 
+    @Override
+    public void updateView() {
+        canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
+    }
+
+    @Override
+    public void destroyView() {
+        clientManager.getGameContextRepresentation().unsubscribe(this);
+    }
 
 }

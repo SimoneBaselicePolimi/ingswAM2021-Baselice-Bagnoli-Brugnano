@@ -341,11 +341,13 @@ public class Market extends GameScene implements View {
 
     @Override
     public void updateView() {
+        super.updateView();
         canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
     }
 
     @Override
     public void destroyView() {
+        super.destroyView();
         marketRepresentation.unsubscribe(this);
         clientManager.getGameContextRepresentation().unsubscribe(this);
     }

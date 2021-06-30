@@ -196,6 +196,7 @@ public class Table extends GameScene implements View {
 
     @Override
     public void updateView() {
+        super.updateView();
         canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
         purchasableCards.get().clear();
         purchasableCards.get().addAll(table.getAllPurchasableCardsForMyPlayer());
@@ -203,6 +204,7 @@ public class Table extends GameScene implements View {
 
     @Override
     public void destroyView() {
+        super.destroyView();
         table.unsubscribe(this);
         clientManager.getGameContextRepresentation().unsubscribe(this);
     }

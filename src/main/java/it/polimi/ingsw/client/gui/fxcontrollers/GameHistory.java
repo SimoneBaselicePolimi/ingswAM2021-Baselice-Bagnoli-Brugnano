@@ -32,6 +32,7 @@ public class GameHistory extends GameScene implements View {
 
     @Override
     public void updateView() {
+        super.updateView();
         Platform.runLater(() -> {
             List<ClientGameActionRepresentation> gameActions = clientManager.getGameHistoryRepresentation().getGameActions();
             historyText.setText(
@@ -45,6 +46,7 @@ public class GameHistory extends GameScene implements View {
 
     @Override
     public void destroyView() {
+        super.destroyView();
         gameHistory.unsubscribe(this);
     }
 
