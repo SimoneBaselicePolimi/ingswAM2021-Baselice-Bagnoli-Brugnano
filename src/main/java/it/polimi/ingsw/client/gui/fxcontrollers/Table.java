@@ -1,10 +1,16 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.GameState;
+import it.polimi.ingsw.client.ServerMessageUtils;
+import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
+import it.polimi.ingsw.client.gui.fxcontrollers.components.DevCardPlacementInDashboard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardTableDeck;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
+import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
+import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
@@ -24,7 +30,7 @@ import javafx.scene.layout.GridPane;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 
 public class Table extends GameScene implements View {
@@ -125,37 +131,41 @@ public class Table extends GameScene implements View {
         btnExitPurchaseMode.visibleProperty().bind(isCardPurchaseModeEnabled);
         btnExitPurchaseMode.setOnMouseClicked(e -> isCardPurchaseModeEnabled.setValue(false));
 
-        //tableContainer.setGridLinesVisible(true);
-
         for(DevelopmentCardLevel level : DevelopmentCardLevel.values())
             for(DevelopmentCardColour colour : DevelopmentCardColour.values()) {
                 ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation> deck = table.getDeck(level, colour);
                 DevelopmentCardTableDeck deckComp = new DevelopmentCardTableDeck(
                     deck,
                     (cardRepresentation) -> {
-//                        if(isCardPurchaseModeEnabled.get() && purchasableCards.get().contains(cardRepresentation)) {
-//                            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
-//                                //TODO
-//                                new DevelopmentActionClientRequest(clientManager.getGameContextRepresentation().getActivePlayer(), cardRepresentation, )
-//                            )).thenCompose(serverMessage ->
-//                                ServerMessageUtils.ifMessageTypeCompute(
-//                                    serverMessage,
-//                                    GameUpdateServerMessage.class,
-//                                    message -> {
-//                                        clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
-//                                        clientManager.handleGameUpdates(message.gameUpdates);
-//                                        return CompletableFuture.<Void>completedFuture(null);
-//                                    }
-//                                ).elseIfMessageTypeCompute(
-//                                    InvalidRequestServerMessage.class,
-//                                    message -> {
-//                                        return CompletableFuture.completedFuture(null);
-//                                    }
-//                                ).elseCompute(message -> {
-//                                    return CompletableFuture.completedFuture(null);
-//                                }).apply()
-//                            );
-//                        }
+                        if(isCardPurchaseModeEnabled.get() && purchasableCards.get().contains(cardRepresentation)) {
+                            clientManager.loadScene(new DevCardPlacementInDashboard(
+                                cardRepresentation,
+                                deckIndex -> {
+                                    clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                                        new DevelopmentActionClientRequest(
+                                            clientManager.getGameContextRepresentation().getActivePlayer(),
+                                            cardRepresentation,
+                                            deckIndex
+                                        )
+                                    )).thenCompose(serverMessage ->
+                                        ServerMessageUtils.ifMessageTypeCompute(
+                                            serverMessage,
+                                            GameUpdateServerMessage.class,
+                                            message -> {
+                                                clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
+                                                clientManager.handleGameUpdates(message.gameUpdates);
+                                                clientManager.loadScene("FaithPath.fxml");
+                                                return CompletableFuture.<Void>completedFuture(null);
+                                            }
+                                        ).elseIfMessageTypeCompute(
+                                            InvalidRequestServerMessage.class,
+                                            message -> CompletableFuture.completedFuture(null)
+                                        ).elseCompute(message -> CompletableFuture.completedFuture(null))
+                                            .apply()
+                                    );
+                                }
+                            ));
+                        }
                     }
                 );
                 deckRepresentationToComponent.put(deck, deckComp);

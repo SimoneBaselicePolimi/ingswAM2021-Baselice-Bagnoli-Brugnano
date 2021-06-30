@@ -25,7 +25,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
 
     protected List<ClientResourceStorageRepresentation> shelves;
     protected ClientResourceStorageRepresentation infiniteChest;
-    protected List<ClientResourceStorageRepresentation> leaderStoragesFromActiveCards;
+    protected List<ClientResourceStorageRepresentation> leaderStoragesFromActiveCards = new ArrayList<>();
     protected List<ClientProductionRepresentation> baseProductions;
 
     protected Player dashboardPlayer, activePlayer;

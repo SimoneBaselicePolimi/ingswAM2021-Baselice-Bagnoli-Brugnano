@@ -3,13 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root prefHeight="720" prefWidth="1000" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="660" prefWidth="1200" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane prefHeight="720" prefWidth="1000" style="-fx-padding: 10px;">
+        <GridPane prefHeight="660" prefWidth="1200" style="-fx-padding: 10px;">
 
             <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" prefWidth="700" />
-                <ColumnConstraints halignment="CENTER" hgrow="NEVER" prefWidth="250" />
+                <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="900" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints vgrow="ALWAYS" />
@@ -21,7 +21,7 @@
                     <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints prefHeight="310"/>
+                    <RowConstraints prefHeight="290"/>
                     <RowConstraints vgrow="ALWAYS"/>
                 </rowConstraints>
 
@@ -37,10 +37,10 @@
                     <ColumnConstraints halignment="LEFT" hgrow="NEVER" prefWidth="700" />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints vgrow="ALWAYS" />
+                    <RowConstraints vgrow="ALWAYS"/>
+                    <RowConstraints prefHeight="5"/>
                     <RowConstraints prefHeight="15"/>
-                    <RowConstraints prefHeight="15"/>
-                    <RowConstraints prefHeight="150" />
+                    <RowConstraints minHeight="115"/>
                 </rowConstraints>
                 <ScrollPane prefHeight="544" prefWidth="250.0" style="-fx-background-color:transparent;" GridPane.rowIndex="0" >
                     <content>

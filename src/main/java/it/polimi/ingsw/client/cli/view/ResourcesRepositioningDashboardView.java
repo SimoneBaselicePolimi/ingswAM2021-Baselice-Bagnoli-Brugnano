@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.cli.view;
 
-import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.DialogUtils;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
@@ -109,8 +108,7 @@ public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboard
 
         if(
             shelves.stream().anyMatch(s -> !s.getResources().isEmpty()) ||
-                (!clientManager.getGameState().equals(GameState.GAME_SETUP) &&
-                    leaderStoragesFromActiveCards.stream().anyMatch(s -> !s.getResources().isEmpty()))
+                leaderStoragesFromActiveCards.stream().anyMatch(s -> !s.getResources().isEmpty())
         ) {
             choices.addUserChoiceLocalized(
                 this::takeResourcesFromStorageDialog,

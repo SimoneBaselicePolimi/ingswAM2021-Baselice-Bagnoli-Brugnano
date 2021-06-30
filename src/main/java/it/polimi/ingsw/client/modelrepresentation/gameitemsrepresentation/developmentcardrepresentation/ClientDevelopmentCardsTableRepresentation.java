@@ -65,4 +65,5 @@ public class ClientDevelopmentCardsTableRepresentation extends ClientRepresentat
     public boolean isCardPurchasableByMyPlayer(ClientDevelopmentCardRepresentation card) {
         return purchasableCards.getOrDefault(ClientManager.getInstance().getMyPlayer(), new HashSet<>()).contains(card);
     }
+
 }

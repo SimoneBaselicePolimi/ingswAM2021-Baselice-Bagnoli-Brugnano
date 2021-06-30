@@ -277,7 +277,7 @@ public class MarketView extends CliView{
     }
 
 
-    CompletableFuture<Integer> askPlayerForRowNumber (){
+    CompletableFuture<Integer> askPlayerForRowNumber() {
         return clientManager.askUserLocalized("client.cli.market.askForRowNumber")
             .thenCompose(input -> {
                 if (input.matches("\\G\\s*\\d+\\s*$")) {
@@ -295,7 +295,7 @@ public class MarketView extends CliView{
             });
     }
 
-    CompletableFuture<Integer> askPlayerForColumnNumber (){
+    CompletableFuture<Integer> askPlayerForColumnNumber() {
         return clientManager.askUserLocalized("client.cli.market.askForColumnNumber")
             .thenCompose(input -> {
                 if (input.matches("\\G\\s*\\d+\\s*$")) {

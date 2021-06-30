@@ -10,7 +10,6 @@ import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
@@ -20,7 +19,10 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardCol
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.utils.Colour;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -122,7 +124,7 @@ public class DevCardTableView extends CliView{
                         return null;
                     });
                     f.thenCompose(card -> {
-                        List<Integer> validDeckIndexesForCard = getPlayerDashboardDecksForCard(card);
+                        List<Integer> validDeckIndexesForCard = activePlayerContext.getPlayerDashboardDecksForCard(card);
 
                         //check that there is at least one deck on the player dashboard where it is possible to add the
                         // selected card
@@ -186,16 +188,6 @@ public class DevCardTableView extends CliView{
                     return askPlayerForDevCard();
                 }
             });
-    }
-
-    List<Integer> getPlayerDashboardDecksForCard(ClientDevelopmentCardRepresentation card) {
-        List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> decks = activePlayerContext.getDevelopmentCardDecks();
-        return decks.stream()
-            .filter(d ->
-                (card.getLevel().equals(DevelopmentCardLevel.FIRST_LEVEL) && d.getCardDeck().isEmpty()) ||
-                d.getCardDeck().peek().getLevel().toValue() == card.getLevel().toValue() - 1
-            ).map(decks::indexOf)
-            .collect(Collectors.toList());
     }
 
     CompletableFuture<Integer> askPlayerForDeckNumber(int numOfDecksInDashboard, List<Integer> validDecksIndexes) {

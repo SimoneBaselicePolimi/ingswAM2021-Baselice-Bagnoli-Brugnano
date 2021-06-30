@@ -1,13 +1,9 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
-
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
-import it.polimi.ingsw.client.cli.view.LeaderCardSetupView;
-import it.polimi.ingsw.client.cli.view.MainMenuView;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.InitialChoicesClientRequest;
-import it.polimi.ingsw.client.gui.fxcontrollers.components.LeaderCard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesChoice;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesRepositioning;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
@@ -62,15 +58,14 @@ public class ResourcesChoiceSetup extends AbstractController{
                     clientManager.loadScene(
                         new ResourcesRepositioning(
                             clientManager.getMyPlayer(),
-                            ( storagesModified, resourcesLeftInTempStorage) ->
+                            false,
+                            (storagesModified, resourcesLeftInTempStorage) ->
                                 sendInitialChoicesToServer(
                                     new HashSet<>(selectedCards),
                                     storagesModified.stream()
                                         .collect(Collectors.toMap(s -> s, ClientResourceStorageRepresentation::getResources))
                                 )
-                        ),
-                        clientManager.WINDOW_WIDTH - 60,
-                        600
+                        )
                     );
                 }
             )
@@ -98,7 +93,7 @@ public class ResourcesChoiceSetup extends AbstractController{
                     else
                         clientManager.setGameState(GameState.ANOTHER_PLAYER_TURN);
                     clientManager.handleGameUpdates(message.gameUpdates);
-                    clientManager.loadScene("Market.fxml");
+                    clientManager.loadScene("FaithPath.fxml");
                     return CompletableFuture.<Void>completedFuture(null);
                 }
             ).elseIfMessageTypeCompute(

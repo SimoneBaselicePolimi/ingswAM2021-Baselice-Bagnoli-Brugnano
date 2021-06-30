@@ -9,6 +9,7 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leader
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 
 import java.util.HashMap;
@@ -150,6 +151,16 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
     public void setTotalResourcesOwnedByThePlayer(Map<ResourceType, Integer> totalResourcesOwnedByThePlayer) {
         this.totalResourcesOwnedByThePlayer = totalResourcesOwnedByThePlayer;
         notifyViews();
+    }
+
+    public List<Integer> getPlayerDashboardDecksForCard(ClientDevelopmentCardRepresentation card) {
+        List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> decks = getDevelopmentCardDecks();
+        return decks.stream()
+            .filter(d ->
+                (card.getLevel().equals(DevelopmentCardLevel.FIRST_LEVEL) && d.getCardDeck().isEmpty()) ||
+                    d.getCardDeck().peek().getLevel().toValue() == card.getLevel().toValue() - 1
+            ).map(decks::indexOf)
+            .collect(Collectors.toList());
     }
 
 }

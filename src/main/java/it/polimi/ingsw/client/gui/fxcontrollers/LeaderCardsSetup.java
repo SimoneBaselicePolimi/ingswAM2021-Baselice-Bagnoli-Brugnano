@@ -71,15 +71,21 @@ public class LeaderCardsSetup extends AbstractController{
     @FXML
     void onConfirmButtonPressed(){
 
-        clientManager.addEntryToContextInfoMap("selectedLeaderCards", selectedCards);
+        clientManager.addEntryToContextInfoMap(
+            "selectedLeaderCards",
+            selectedCards.stream().map(LeaderCard::getLeaderCardRepresentation)
+            .collect(Collectors.toList())
+        );
+
         //clientManager.loadScene("Market.fxml");
-        clientManager.loadScene("FaithPath.fxml");
+       // clientManager.loadScene("FaithPath.fxml");
 
         //clientManager.addEntryToContextInfoMap(
           //  "selectedLeaderCards",
             //selectedCards.stream().map(LeaderCard::getLeaderCardRepresentation).collect(Collectors.toList())
         //);
-        //clientManager.loadScene("ResourcesChoiceSetup.fxml");
+
+        clientManager.loadScene("ResourcesChoiceSetup.fxml");
         
         
 //        Platform.runLater(() -> {

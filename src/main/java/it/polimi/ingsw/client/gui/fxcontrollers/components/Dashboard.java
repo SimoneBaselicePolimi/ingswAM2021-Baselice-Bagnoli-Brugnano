@@ -1,24 +1,18 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
 import it.polimi.ingsw.client.gui.GuiClientManager;
-import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
-import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Dashboard extends AnchorPane {
 
@@ -36,6 +30,7 @@ public class Dashboard extends AnchorPane {
     HBox devCardsContainer;
 
     Map<ClientResourceStorageRepresentation, Storage> storageRepresentationToComp;
+    List<DevelopmentCardDashboardDeck> decksList = new ArrayList<>();
     public final boolean enableRepositioning;
 
     public Dashboard(Player dashboardPlayer, boolean enableRepositioning) {
@@ -57,22 +52,22 @@ public class Dashboard extends AnchorPane {
             throw new RuntimeException(exception);
         }
 
-        playerContext.getTempStorage().setResources(new HashMap<>(Map.of(ResourceType.COINS, 5)));
-
-        playerContext.getDevelopmentCardDecks().get(0).getCardDeck().add(
-            clientManager.getGameContextRepresentation().getDevelopmentCardsTable().getDeck(
-                DevelopmentCardLevel.FIRST_LEVEL,
-                DevelopmentCardColour.BLUE
-            ).getCardOnTop()
-        );
-        playerContext.getDevelopmentCardDecks().get(0).getCardDeck().add(
-            clientManager.getGameContextRepresentation().getDevelopmentCardsTable().getDeck(
-                DevelopmentCardLevel.SECOND_LEVEL,
-                DevelopmentCardColour.BLUE
-            ).getCardOnTop()
-        );
-        playerContext.getDevelopmentCardDecks().get(0).setCardDeck(playerContext.getDevelopmentCardDecks().get(0).getCardDeck());
-
+//        playerContext.getTempStorage().setResources(new HashMap<>(Map.of(ResourceType.COINS, 5)));
+//
+//        playerContext.getDevelopmentCardDecks().get(0).getCardDeck().add(
+//            clientManager.getGameContextRepresentation().getDevelopmentCardsTable().getDeck(
+//                DevelopmentCardLevel.FIRST_LEVEL,
+//                DevelopmentCardColour.BLUE
+//            ).getCardOnTop()
+//        );
+//        playerContext.getDevelopmentCardDecks().get(0).getCardDeck().add(
+//            clientManager.getGameContextRepresentation().getDevelopmentCardsTable().getDeck(
+//                DevelopmentCardLevel.SECOND_LEVEL,
+//                DevelopmentCardColour.BLUE
+//            ).getCardOnTop()
+//        );
+//        playerContext.getDevelopmentCardDecks().get(0).setCardDeck(playerContext.getDevelopmentCardDecks().get(0).getCardDeck());
+//
 
     }
 
@@ -95,10 +90,16 @@ public class Dashboard extends AnchorPane {
         storageRepresentationToComp.put(playerContext.getInfiniteChest(), infiniteChestComp);
         storagesContainer.getChildren().add(infiniteChestComp);
 
-        playerContext.getDevelopmentCardDecks().forEach(d -> devCardsContainer.getChildren().add(
-            new DevelopmentCardDashboardDeck(d)
-        ));
+        playerContext.getDevelopmentCardDecks().forEach(d -> {
+            DevelopmentCardDashboardDeck deck = new DevelopmentCardDashboardDeck(d);
+            devCardsContainer.getChildren().add(deck);
+            decksList.add(deck);
+        });
 
+    }
+
+    public List<DevelopmentCardDashboardDeck> getDevelopmentCardDeckComponents() {
+        return decksList;
     }
 
     public Set<Storage> getAllStoragesComp() {

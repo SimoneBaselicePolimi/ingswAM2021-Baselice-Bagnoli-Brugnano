@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
-import it.polimi.ingsw.utils.Colour;
+import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,10 @@ import java.io.IOException;
 
 public class Marble extends AnchorPane {
 
-    public Marble() {
+    public final ClientMarbleColourRepresentation marble;
+
+    public Marble(ClientMarbleColourRepresentation marble) {
+        this.marble = marble;
 
         FXMLLoader fxmlLoader = new FXMLLoader();
 
@@ -24,7 +27,7 @@ public class Marble extends AnchorPane {
 
         try {
             fxmlLoader.load(
-                FileManager.getFileManagerInstance().loadFileFXML("components/Dashboard.fxml")
+                FileManager.getFileManagerInstance().loadFileFXML("components/Marble.fxml")
             );
         } catch (IOException exception) {
             throw new RuntimeException(exception);
@@ -50,7 +53,11 @@ public class Marble extends AnchorPane {
         lighting.setLight(new Light.Distant(
             45,
             45,
-            Color.color(Colour.GREEN.r, Colour.GREEN.g, Colour.GREEN.b)
+            Color.color(
+                marble.getMarbleColour().get(0).r/255f,
+                marble.getMarbleColour().get(0).g/255f,
+                marble.getMarbleColour().get(0).b/255f
+            )
         ));
 
         img.setEffect(lighting);
