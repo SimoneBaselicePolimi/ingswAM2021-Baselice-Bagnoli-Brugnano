@@ -37,6 +37,7 @@ public class GameHistory extends GameScene implements View {
                 .reduce("", (a, t) -> a + "- " + t + "\n")
         );
         historyText.setFont(new Font(17));
+        historyText.setWrapText(true);
     }
 
     @Override
