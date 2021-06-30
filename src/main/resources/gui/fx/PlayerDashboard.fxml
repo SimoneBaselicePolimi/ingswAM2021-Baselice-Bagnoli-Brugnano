@@ -2,6 +2,7 @@
 
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.Button?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.PlayerDashboard"
@@ -37,10 +38,18 @@
 
         <!--        custom scene components:          -->
 
-        <AnchorPane GridPane.columnIndex="1" fx:id="dashboardContainer">
-
-        </AnchorPane>
-
+    <GridPane prefHeight="780" prefWidth="1140" GridPane.columnIndex="1">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints prefHeight="60" />
+        </rowConstraints>
+        <AnchorPane GridPane.rowIndex="0"  fx:id="dashboardContainer"/>
+        <Button fx:id="activateProductionsButton" GridPane.rowIndex="1" text="PActivate productions"/>
+        <Button fx:id="cancelButton" GridPane.rowIndex="1" text="PCancel"/>
+    </GridPane>
 
     </GridPane>
 

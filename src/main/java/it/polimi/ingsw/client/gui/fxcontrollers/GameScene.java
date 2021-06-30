@@ -37,6 +37,7 @@ public class GameScene extends AbstractController {
 
         ToggleGroup toggleGroup = commonComponentsSelector.getToggleGroup();
 
+
         List<GameSceneSelector.Selection> availableScenes;
 
         if(clientManager.getGameState().equals(GameState.GAME_SETUP))
@@ -58,5 +59,7 @@ public class GameScene extends AbstractController {
         toggleGroup.selectToggle(toggleGroup.getToggles().get(sceneNumber));
 
     }
+
+
 
 }

@@ -25,9 +25,9 @@
                     <RowConstraints vgrow="ALWAYS"/>
                 </rowConstraints>
 
-                <HBox fx:id="devCardsContainer" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <HBox fx:id="devCardsContainer" spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
-                <HBox fx:id="leaderCardsContainer" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <HBox fx:id="leaderCardsContainer" spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
 
             </GridPane>

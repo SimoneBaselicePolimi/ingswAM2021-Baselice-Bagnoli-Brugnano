@@ -31,6 +31,9 @@ public class DevelopmentCard extends AnchorPane {
     @FXML
     Label levelColourLabel;
 
+    @FXML
+    Production cardProdComp;
+
     ClientDevelopmentCardRepresentation card;
 
     public DevelopmentCard(ClientDevelopmentCardRepresentation card) {
@@ -73,7 +76,7 @@ public class DevelopmentCard extends AnchorPane {
     @FXML
     private void initialize() {
 
-        Production cardProdComp = new Production(card.getProduction());
+        cardProdComp = new Production(card.getProduction());
         GridPane.setColumnIndex(cardProdComp, 0);
         GridPane.setRowIndex(cardProdComp, 2);
         container.getChildren().add(cardProdComp);
@@ -90,6 +93,11 @@ public class DevelopmentCard extends AnchorPane {
             card.getColour().getUIColour().b
         ));
 
+    }
+
+    @FXML
+    public Production getProductionComp() {
+        return cardProdComp;
     }
 
 }

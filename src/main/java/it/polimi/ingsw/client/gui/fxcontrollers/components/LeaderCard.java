@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LeaderCard extends AnchorPane {
 
@@ -36,6 +38,8 @@ public class LeaderCard extends AnchorPane {
     VBox specialPowersContainer;
 
     ClientLeaderCardRepresentation card;
+
+    Set<Production> productionsComp = new HashSet<>();
 
     public LeaderCard(ClientLeaderCardRepresentation card) {
         this.card = card;
@@ -98,6 +102,7 @@ public class LeaderCard extends AnchorPane {
         card.getProductions().forEach(p -> {
             Production prod = new Production(p);
             specialPowersContainer.getChildren().add(prod);
+            productionsComp.add(prod);
 
         });
 
@@ -116,6 +121,10 @@ public class LeaderCard extends AnchorPane {
             specialPowersContainer.getChildren().add(discount);
         });
 
+    }
+
+    public Set<Production> getProductionsComp() {
+        return new HashSet<>(productionsComp);
     }
 
 }

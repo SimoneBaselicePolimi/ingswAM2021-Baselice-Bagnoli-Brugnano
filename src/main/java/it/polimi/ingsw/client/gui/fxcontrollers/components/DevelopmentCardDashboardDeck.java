@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class DevelopmentCardDashboardDeck extends AnchorPane implements View {
@@ -111,6 +112,13 @@ public class DevelopmentCardDashboardDeck extends AnchorPane implements View {
                 ));
                 flagsContainer.getChildren().add(flagLabel);
             });
+    }
+
+    public Optional<DevelopmentCard> getLeaderCardOnTopComp() {
+        if(developmentCardComp != null)
+            return Optional.of(developmentCardComp);
+        else
+            return Optional.empty();
     }
 
     @Override
