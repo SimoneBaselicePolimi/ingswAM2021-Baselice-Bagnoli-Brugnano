@@ -99,8 +99,6 @@ public class PlayerDashboard extends GameScene implements View {
     MapProperty<ResourceType, Integer> resourcesLeftToThePlayer = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
     MapProperty<ResourceType, Integer> starResourcesRewardChosen = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
 
-    ClientPlayerContextRepresentation playerContext;
-
     BooleanProperty canMyPlayerEndTurn = new SimpleBooleanProperty(false);
 
     public PlayerDashboard() {
