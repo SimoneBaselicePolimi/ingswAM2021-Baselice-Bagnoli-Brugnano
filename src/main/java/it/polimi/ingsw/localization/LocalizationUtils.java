@@ -17,7 +17,7 @@ public class LocalizationUtils {
             String resourceName = resources.get(resourceType) == 1 ?
                 resourceType.getLocalizedNameSingular() : resourceType.getLocalizedNamePlural();
             s.append(String.format(
-                "- %s %s",
+                "- %s %s\n",
                 resources.get(resourceType),
                 resourceName
             ));

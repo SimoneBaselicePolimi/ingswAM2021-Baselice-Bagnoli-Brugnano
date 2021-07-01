@@ -37,10 +37,9 @@ public class DevCardDashboardDeckView extends CliView {
         this.cardDeck = clientManager.getGameContextRepresentation()
             .getPlayerContext(player).getDevelopmentCardDecks().get(deckNumber);
 
-        subscribeToRepresentation(this.cardDeck);
-
         deckLabel = new LabelView(new ArrayList<>(), clientManager);
 
+        subscribeToRepresentation(this.cardDeck);
         createNewDevCardAndDeckLabel();
     }
 
@@ -58,7 +57,7 @@ public class DevCardDashboardDeckView extends CliView {
 
     private String getCoveredCardsDescription() {
         StringBuilder description = new StringBuilder();
-        if(!cardDeck.getCardDeck().empty()) {
+        if(cardDeck.getCardDeck().size() > 1) {
             description.append(deckNum+1).append(": ");
             for (ClientDevelopmentCardRepresentation card : cardDeck.getCardDeck()) {
                 if (!card.equals(cardDeck.peek())) {
@@ -106,4 +105,5 @@ public class DevCardDashboardDeckView extends CliView {
     public ClientPlayerOwnedDevelopmentCardDeckRepresentation getCardDeck() {
         return cardDeck;
     }
+
 }

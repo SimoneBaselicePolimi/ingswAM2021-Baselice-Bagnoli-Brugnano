@@ -1,0 +1,80 @@
+# STANDARD RULES VALUES #
+
+## MARKET CONFIGURATION FILE ##
+# This file sets all the parameters regarding the Market structure.
+
+# The Market is represented by a matrix of a fixed number of rows and columns, filled with specific coloured Marbles
+# in different quantities.
+
+# Each Marble is characterized by the following aspects:
+#  - unique ID
+#  - marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
+#  - optional type of Resource obtainable with this Marble
+#  - number of Faith Points given to the Player who owns this Marble (according to the standard Game rules,
+#    only Red Marbles can give Faith Points)
+#  - possibility to be transformed into a generic type of Resource by activating the Special Marble Substitution power
+#    of a Leader Card (according to the standard Game rules, only White Marbles have this special ability)
+marketMatrix:
+  numberOfRows: 3
+  numberOfColumns: 4
+marbles:
+  - marbleConfig:
+      marbleID: MARBLE_WHITE
+      marbleColour:
+        - r: 255
+          g: 255
+          b: 255
+      resourceType: null
+      numberOfFaithPoints: 0
+      isSpecial: true
+    numberOfMarbles: 4
+  - marbleConfig:
+      marbleID: MARBLE_BLUE
+      marbleColour:
+        - r: 0
+          g: 0
+          b: 255
+      resourceType: SHIELDS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_GREY
+      marbleColour:
+        - r: 100
+          g: 100
+          b: 100
+      resourceType: STONES
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_YELLOW
+      marbleColour:
+        - r: 255
+          g: 255
+          b: 0
+      resourceType: COINS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_PURPLE
+      marbleColour:
+        - r: 155
+          g: 0
+          b: 255
+      resourceType: SERVANTS
+      numberOfFaithPoints: 0
+      isSpecial: false
+    numberOfMarbles: 2
+  - marbleConfig:
+      marbleID: MARBLE_RED
+      marbleColour:
+        - r: 255
+          g: 0
+          b: 0
+      resourceType: null
+      numberOfFaithPoints: 1
+      isSpecial: false
+    numberOfMarbles: 1

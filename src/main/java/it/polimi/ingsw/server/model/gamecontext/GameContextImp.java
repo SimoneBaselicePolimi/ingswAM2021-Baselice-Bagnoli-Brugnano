@@ -174,4 +174,16 @@ public class GameContextImp implements GameContext {
 		return getServerRepresentation();
 	}
 
+	@Override
+	public Set<DevelopmentCard> getPurchasableDevelopmentCardsForPlayer(Player player) {
+		return developmentCardsTable.getAvailableCards().stream()
+			.filter(c -> {
+				PlayerContext playerContext = getPlayerContext(player);
+				return playerContext.getPlayerDevCardsDecks().stream()
+					.anyMatch(d -> playerContext.canAddDevelopmentCard(c,
+						playerContext.getPlayerDevCardsDecks().indexOf(d))) &&
+					ResourceUtils.areResourcesAContainedInB(c.getPurchaseCost(), playerContext.getAllResources());
+			}).collect(Collectors.toSet());
+	}
+
 }

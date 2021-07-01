@@ -44,24 +44,24 @@ public class ManageResourcesFromMarketClientRequestValidator extends ClientReque
             playerContext.getTemporaryStorageResources()
         );
 
-        // check if star resources chosen by the player are from those possible to choose
-            for (ResourceType resourceType : starResourcesChosen.keySet()){
-                if (!possibleStarMarbleSubstitution.contains(resourceType)) {
-                    return createInvalidRequestServerMessage(
-                        "The resource type chosen by the player as star resources substitution " +
-                            "is not present among those provided by the special abilities of the active leader cards"
-                    );
-                }
-            }
+//        // check if star resources chosen by the player are from those possible to choose
+//            for (ResourceType resourceType : starResourcesChosen.keySet()){
+//                if (!possibleStarMarbleSubstitution.contains(resourceType)) {
+//                    return createInvalidRequestServerMessage(
+//                        "The resource type chosen by the player as star resources substitution " +
+//                            "is not present among those provided by the special abilities of the active leader cards"
+//                    );
+//                }
+//            }
 
-        // check if the number of star resources is the same as what is expected
-        if (starResourcesChosen.size() != playerContext.getTempStarResources()
-            && !possibleStarMarbleSubstitution.isEmpty())
-            return createInvalidRequestServerMessage(
-                "The number of star resources chosen by the player is not the same of the one required. " +
-                    "The number of star resources required is %s",
-                playerContext.getTempStarResources()
-            );
+//        // check if the number of star resources is the same as what is expected
+//        if (starResourcesChosen.size() != playerContext.getTempStarResources()
+//            && !possibleStarMarbleSubstitution.isEmpty())
+//            return createInvalidRequestServerMessage(
+//                "The number of star resources chosen by the player is not the same of the one required. " +
+//                    "The number of star resources required is %s",
+//                playerContext.getTempStarResources()
+//            );
 
 //        // check if the resources the player wants to add in storages are the same as those assigned to him
 //        Map<ResourceType, Integer> sumOfResourcesFromThePlayer = ResourceUtils.sum(

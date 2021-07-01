@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class DiscardLeaderCardClientRequest extends ClientRequest {
 
-    @SerializeAsSetOfIds
+    @SerializeIdOnly
     public final LeaderCard leaderCardThePlayerWantsToDiscard;
 
     public DiscardLeaderCardClientRequest(

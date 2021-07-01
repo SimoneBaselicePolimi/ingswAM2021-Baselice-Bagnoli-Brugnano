@@ -12,8 +12,7 @@ singlePlayerEnabled: true
 # Additional Setup Rules
 gameSetup:
 
-  # Distribution of Leader Cards to each Player.m
-
+  # Distribution of Leader Cards to each Player.
   # At the start of the Game each Player randomly receives {numberOfLeadersCardsGivenToThePlayer} cards.
   # From those he must choose {numberOfLeadersCardsThePlayerKeeps} cards to keep in hand and discard all the others.
   numberOfLeadersCardsGivenToThePlayer: 4
@@ -24,10 +23,10 @@ gameSetup:
   # First Player: 1, Second Player: 2, ...
   initialPlayerResourcesBasedOnPlayOrder:
     1:
-      starResources: 5  #TODO non standard rules
+      starResources: 0
       faithPoints: 0
     2:
-      starResources: 5  #TODO non standard rules
+      starResources: 1
       faithPoints: 0
     3:
       starResources: 1

@@ -10,13 +10,18 @@ import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
+import it.polimi.ingsw.utils.serialization.annotations.SerializeAsSetOfIds;
 
 import java.util.Map;
 import java.util.Set;
 
 public class ProductionActionClientRequest extends ClientRequest {
+
+    @SerializeAsSetOfIds
     public final Set<Production> productions;
+
     public final Map<ResourceType, Integer> starResourceCost;
+
     public final Map<ResourceType, Integer> starResourceReward;
 
     public ProductionActionClientRequest(

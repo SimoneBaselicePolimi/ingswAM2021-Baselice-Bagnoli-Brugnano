@@ -10,6 +10,7 @@ public class PlayerOwnedDevelopmentCardDeckUpdateHandler extends GameUpdateHandl
         ClientPlayerOwnedDevelopmentCardDeckUpdate update,
         ClientManager clientManager
     ) {
-        update.deck.setCardDeck(update.developmentCardsDeck);
+        update.deck.getCardDeck().push(update.developmentCardAddedToDeck);
+        update.deck.setCardDeck(update.deck.getCardDeck());
     }
 }

@@ -30,7 +30,7 @@ public class ClientProductionActionRepresentation extends ClientGameActionRepres
     @Override
     public String getActionMessage() {
         return Localization.getLocalizationInstance().getString(
-            "gameHistory.gameState.mainTurn.developmentAction",
+            "gameHistory.gameState.mainTurn.productionAction",
             player.getName()
         );
     }

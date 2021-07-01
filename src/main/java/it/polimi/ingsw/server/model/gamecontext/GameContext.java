@@ -12,7 +12,6 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTableImp;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.ServerGameContextRepresentation;
-import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation;
 
 import java.util.List;
 import java.util.Set;
@@ -60,4 +59,6 @@ public interface GameContext extends Representable<ServerGameContextRepresentati
     Player getActivePlayer();
 
     Player startNextPlayerTurn();
+
+    Set<DevelopmentCard> getPurchasableDevelopmentCardsForPlayer(Player player);
 }

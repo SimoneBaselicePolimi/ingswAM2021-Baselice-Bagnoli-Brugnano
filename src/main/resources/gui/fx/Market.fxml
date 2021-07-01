@@ -47,8 +47,6 @@
             <RowConstraints maxHeight="132.0" minHeight="0.0" prefHeight="77.0" vgrow="ALWAYS" />
         </rowConstraints>
             <children>
-                <Button fx:id="btnEnterPurchaseMode" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Pcompra dal mercato" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                <Button fx:id="btnExitPurchaseMode" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Pannulla acquisto" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                 <Label fx:id="legendLabel" prefHeight="23.0" prefWidth="138.0" text="PMARKET LEGEND" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <font>
                         <Font size="16.0" />

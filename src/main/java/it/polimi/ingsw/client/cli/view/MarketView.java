@@ -276,7 +276,6 @@ public class MarketView extends CliView{
         );
     }
 
-
     CompletableFuture<Integer> askPlayerForRowNumber() {
         return clientManager.askUserLocalized("client.cli.market.askForRowNumber")
             .thenCompose(input -> {

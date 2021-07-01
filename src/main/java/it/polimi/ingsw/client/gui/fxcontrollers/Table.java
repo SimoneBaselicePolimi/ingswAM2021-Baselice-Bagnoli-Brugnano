@@ -16,6 +16,7 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.utils.Colour;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SetProperty;
@@ -197,9 +198,11 @@ public class Table extends GameScene implements View {
     @Override
     public void updateView() {
         super.updateView();
-        canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
-        purchasableCards.get().clear();
-        purchasableCards.get().addAll(table.getAllPurchasableCardsForMyPlayer());
+        Platform.runLater(() -> {
+            canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
+            purchasableCards.get().clear();
+            purchasableCards.get().addAll(table.getAllPurchasableCardsForMyPlayer());
+        });
     }
 
     @Override

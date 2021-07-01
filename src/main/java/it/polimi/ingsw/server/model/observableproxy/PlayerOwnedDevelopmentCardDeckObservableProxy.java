@@ -75,7 +75,7 @@ public class PlayerOwnedDevelopmentCardDeckObservableProxy extends ObservablePro
             hasSomethingChanged = false;
             return Set.of(new ServerPlayerOwnedDevelopmentCardDeckUpdate(
                 this,
-                imp.peekAll())
+                this.peek())
             );
         }
         else

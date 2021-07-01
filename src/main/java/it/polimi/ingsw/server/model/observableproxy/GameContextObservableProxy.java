@@ -76,6 +76,11 @@ public class GameContextObservableProxy extends ObservableProxy<GameContext> imp
     }
 
     @Override
+    public Set<DevelopmentCard> getPurchasableDevelopmentCardsForPlayer(Player player) {
+        return imp.getPurchasableDevelopmentCardsForPlayer(player);
+    }
+
+    @Override
     public Set<ServerGameUpdate> getUpdates() {
         if (startNextPlayerTurn) {
             startNextPlayerTurn = false;

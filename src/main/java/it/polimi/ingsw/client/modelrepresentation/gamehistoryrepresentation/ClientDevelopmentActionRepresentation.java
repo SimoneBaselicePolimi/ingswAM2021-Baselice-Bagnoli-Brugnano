@@ -27,7 +27,7 @@ public class ClientDevelopmentActionRepresentation extends ClientGameActionRepre
     @Override
     public String getActionMessage() {
         return Localization.getLocalizationInstance().getString(
-            "gameState.mainTurn.developmentAction",
+            "gameHistory.gameState.mainTurn.developmentAction",
             player.getName()
         );
     }

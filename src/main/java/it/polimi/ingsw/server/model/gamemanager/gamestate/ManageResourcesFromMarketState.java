@@ -74,6 +74,9 @@ public class ManageResourcesFromMarketState extends GameState {
 
 		for (ResourceStorage storage : request.resourcesInModifiedStorages.keySet()) {
 			storage.removeResources(storage.peekResources());
+		}
+
+		for (ResourceStorage storage : request.resourcesInModifiedStorages.keySet()) {
 			storage.addResources(request.resourcesInModifiedStorages.get(storage));
 		}
 

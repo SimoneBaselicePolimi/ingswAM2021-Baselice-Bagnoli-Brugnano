@@ -130,7 +130,7 @@ public class GameContextBuilder {
 
 		List<PlayerOwnedDevelopmentCardDeck> decks = new ArrayList<>();
 		for(int i=0; i<gameInfoConfig.numberOfPlayerOwnedDevelopmentCardDecks; i++) {
-			String idDeck = generatePlayerOwnedDevCardDeckID(i+1);
+			String idDeck = generatePlayerOwnedDevCardDeckID(player, i+1);
 			decks.add(initializePlayerOwnedDevelopmentCardDeck(idDeck));
 		}
 
@@ -160,8 +160,8 @@ public class GameContextBuilder {
 		return new PlayerOwnedDevelopmentCardDeckImp(idDeck, gameItemsManager);
 	}
 
-	protected String generatePlayerOwnedDevCardDeckID(int num) {
-		return "PlayerDevCardDeck_ID_" + num;
+	protected String generatePlayerOwnedDevCardDeckID(Player player, int num) {
+		return "PlayerDevCardDeck_ID_" + num + "_" + player.playerName;
 	}
 
 	protected String generateResourceStorageID() {

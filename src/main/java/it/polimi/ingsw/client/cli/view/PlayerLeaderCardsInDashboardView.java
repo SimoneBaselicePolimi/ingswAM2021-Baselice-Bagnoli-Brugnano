@@ -77,6 +77,7 @@ public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsI
                     "client.cli.playerDashboard.selectLeaderCardToActivate",
                     leaderCardList.indexOf(c)+1
                 ));
+            userChoices.apply();
         }
         else {
             clientManager.tellUserLocalized("client.cli.playerDashboard.canNotActivateNewLeaderCard");

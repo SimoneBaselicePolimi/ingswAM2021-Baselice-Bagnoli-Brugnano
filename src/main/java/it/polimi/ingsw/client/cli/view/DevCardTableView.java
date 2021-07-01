@@ -194,8 +194,8 @@ public class DevCardTableView extends CliView{
         return clientManager.askUserLocalized("client.cli.devCardTable.askForDeckNumber")
             .thenCompose(input -> {
                 if (input.matches("\\G\\s*\\d+\\s*$")) {
-                    int intInput = Integer.parseInt(input.replaceAll("\\D+",""));
-                    if (intInput < 1 || intInput > numOfDecksInDashboard) {
+                    int intInput = Integer.parseInt(input.replaceAll("\\D+","")) - 1;
+                    if (intInput < 0 || intInput >= numOfDecksInDashboard) {
                         clientManager.tellUserLocalized("client.cli.devCardTable.notifyPlayerDeckNumberIsInvalid");
                         return askPlayerForDeckNumber(numOfDecksInDashboard, validDecksIndexes);
                     } else if (!validDecksIndexes.contains(intInput)) {
@@ -221,6 +221,7 @@ public class DevCardTableView extends CliView{
                 message -> {
                     clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
                     clientManager.handleGameUpdates(message.gameUpdates);
+                    gameView.setMainContentView(new MainMenuView(clientManager, gameView));
                     return CompletableFuture.<Void>completedFuture(null);
                 }
             ).elseIfMessageTypeCompute(

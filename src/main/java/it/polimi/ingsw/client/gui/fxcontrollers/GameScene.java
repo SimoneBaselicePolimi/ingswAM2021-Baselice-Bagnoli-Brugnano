@@ -65,6 +65,8 @@ public class GameScene extends AbstractController implements View {
 
         toggleGroup.selectToggle(toggleGroup.getToggles().get(sceneNumber));
 
+        updateView();
+
     }
 
 
