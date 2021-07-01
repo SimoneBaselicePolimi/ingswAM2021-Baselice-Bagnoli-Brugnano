@@ -99,11 +99,11 @@ public class ClientProductionRepresentation extends ClientRegisteredIdentifiable
             rewards.append(getStarResourcesDescription(starResourceReward));
             if(faithReward > 0) {
                 rewards.append(", ");
-                rewards.append(getFaithPointsDescription(faithReward));
+                rewards.append(getFaithPointsDescription());
             }
         }
         else if(faithReward > 0)
-            rewards.append(getFaithPointsDescription(faithReward));
+            rewards.append(getFaithPointsDescription());
 
         return Localization.getLocalizationInstance().getString(
             "leaderCards.specialPowers.production",
@@ -120,7 +120,7 @@ public class ClientProductionRepresentation extends ClientRegisteredIdentifiable
             " a scelta";
     }
 
-    protected String getFaithPointsDescription(int numberOfFaithPoints) {
+    protected String getFaithPointsDescription() {
         return faithReward + " " +
             (faithReward == 1 ?
                     Localization.getLocalizationInstance().getString("gameHistory.faithPath.faithPoints.singular")

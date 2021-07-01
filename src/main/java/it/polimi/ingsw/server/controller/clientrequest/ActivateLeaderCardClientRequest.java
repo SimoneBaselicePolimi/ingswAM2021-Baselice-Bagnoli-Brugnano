@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class ActivateLeaderCardClientRequest extends ClientRequest {
 
-    @SerializeAsSetOfIds
+    @SerializeIdOnly
     public final LeaderCard leaderCardThePlayerWantsToActivate;
 
     /**

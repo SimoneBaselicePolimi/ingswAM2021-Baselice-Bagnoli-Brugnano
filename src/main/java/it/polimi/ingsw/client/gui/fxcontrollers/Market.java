@@ -21,6 +21,7 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -41,12 +42,6 @@ import java.util.stream.Collectors;
 public class Market extends GameScene implements View {
 
     @FXML
-    public Button btnEnterPurchaseMode;
-
-    @FXML
-    public Button btnExitPurchaseMode;
-
-    @FXML
     public Label legendLabel;
 
     @FXML
@@ -63,7 +58,6 @@ public class Market extends GameScene implements View {
     int marketRows;
     int marketColumns;
 
-    BooleanProperty isBuyFromMarketModeEnabled =  new SimpleBooleanProperty(false);
     BooleanProperty canMyPlayerDoMainAction = new SimpleBooleanProperty(false);
     Set<ClientMarbleColourRepresentation> differentMarbleColours;
 
@@ -86,12 +80,6 @@ public class Market extends GameScene implements View {
 
         marketRepresentation.subscribe(this);
         clientManager.getGameContextRepresentation().subscribe(this);
-
-        btnEnterPurchaseMode.visibleProperty().bind(isBuyFromMarketModeEnabled.not().and(canMyPlayerDoMainAction));
-        btnEnterPurchaseMode.setOnMouseClicked(e -> isBuyFromMarketModeEnabled.setValue(true));
-
-        btnExitPurchaseMode.visibleProperty().bind(isBuyFromMarketModeEnabled);
-        btnExitPurchaseMode.setOnMouseClicked(e -> isBuyFromMarketModeEnabled.setValue(false));
 
         marketContainer.getColumnConstraints().clear();
         marketContainer.getRowConstraints().clear();
@@ -120,6 +108,8 @@ public class Market extends GameScene implements View {
             int finalCol = col;
             columnSelection.setOnMouseClicked(e -> selectMarketColumn(finalCol));
 
+            columnSelection.visibleProperty().bind(canMyPlayerDoMainAction);
+
             GridPane.setConstraints(columnSelection, col, marketRows);
             GridPane.setHalignment(columnSelection, HPos.CENTER);
             marketContainer.getChildren().add(columnSelection);
@@ -133,6 +123,8 @@ public class Market extends GameScene implements View {
             rowSelection.setPrefHeight(30);
             int finalRow = row;
             rowSelection.setOnMouseClicked(e -> selectMarketRow(finalRow));
+
+            rowSelection.visibleProperty().bind(canMyPlayerDoMainAction);
 
             GridPane.setConstraints(rowSelection, marketColumns, row);
             GridPane.setHalignment(rowSelection, HPos.CENTER);
@@ -342,7 +334,9 @@ public class Market extends GameScene implements View {
     @Override
     public void updateView() {
         super.updateView();
-        canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
+        Platform.runLater(() -> {
+            canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
+        });
     }
 
     @Override

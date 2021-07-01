@@ -32,6 +32,7 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
 
     @Override
     public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) {
+        DevelopmentCard card = imp.popCard(level, colour);
         newUpdates.add(
             new ServerShuffledDevelopmentCardDeckOnTableUpdate(
                 imp.getDeckByLevelAndColour(level, colour),
@@ -39,7 +40,7 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
                 imp.getDeckByLevelAndColour(level, colour).peekAll().size()
             )
         );
-        return imp.popCard(level, colour);
+        return card;
     }
 
     @Override
@@ -54,7 +55,6 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
 
     @Override
     public Set<ServerGameUpdate> getUpdates() {
-
         Set<ServerGameUpdate> updates = new HashSet<>(newUpdates);
         newUpdates.clear();
         return updates;

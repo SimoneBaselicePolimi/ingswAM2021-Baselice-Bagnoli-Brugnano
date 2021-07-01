@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Dashboard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Production;
 import it.polimi.ingsw.client.view.View;
-import javafx.beans.InvalidationListener;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SetProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -66,8 +66,6 @@ public class PlayerDashboard extends GameScene implements View {
     @Override
     public void updateView() {
         super.updateView();
-        canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
-
     }
 
     @Override

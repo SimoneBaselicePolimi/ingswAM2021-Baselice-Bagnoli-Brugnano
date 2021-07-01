@@ -19,7 +19,7 @@ public class ClientPurchasableDevelopmentCardsUpdate extends ClientGameUpdate{
     public final Set<ClientDevelopmentCardRepresentation> purchasableDevelopmentCards;
 
     public ClientPurchasableDevelopmentCardsUpdate(
-        Player player,
+        @JsonProperty("player") Player player,
         @JsonProperty("purchasableDevelopmentCards") Set<ClientDevelopmentCardRepresentation> purchasableDevelopmentCards
     ) {
         this.player = player;

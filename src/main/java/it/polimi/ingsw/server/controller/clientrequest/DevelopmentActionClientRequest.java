@@ -9,12 +9,15 @@ import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gamemanager.gamestate.GameState;
 import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
+import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
 import java.util.Map;
 
 public class DevelopmentActionClientRequest extends ClientRequest {
 
+    @SerializeIdOnly
     public final DevelopmentCard developmentCard;
+
     public final int deckNumber;
 
     public DevelopmentActionClientRequest(

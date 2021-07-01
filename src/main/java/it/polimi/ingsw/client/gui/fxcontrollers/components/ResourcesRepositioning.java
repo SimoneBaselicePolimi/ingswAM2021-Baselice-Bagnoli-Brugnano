@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.utils.FileManager;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -105,14 +106,10 @@ public class ResourcesRepositioning extends AnchorPane implements View {
 
     @Override
         public void updateView() {
-            if(
-                canConfirmWithResourcesLeftInTempStorage ||
-                    playerContext.getTempStorage().getResources().values().stream().mapToInt(n -> n).sum() == 0
-            )
-                isConfirmButtonVisible.setValue(true);
-        else
-            isConfirmButtonVisible.setValue(false);
-
+        Platform.runLater(() -> {
+            isConfirmButtonVisible.setValue(canConfirmWithResourcesLeftInTempStorage ||
+                playerContext.getTempStorage().getResources().values().stream().mapToInt(n -> n).sum() == 0);
+        });
     }
 
     @Override

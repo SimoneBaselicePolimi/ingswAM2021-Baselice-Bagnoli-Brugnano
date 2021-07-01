@@ -15,11 +15,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext> implements PlayerContext {
 
@@ -183,8 +179,8 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
     }
 
     @Override
-    public Set<DevelopmentCard> getPurchasableDevelopmentCards() {
-        return imp.getPurchasableDevelopmentCards();
+    public List<PlayerOwnedDevelopmentCardDeck> getPlayerDevCardsDecks() {
+        return imp.getPlayerDevCardsDecks();
     }
 
     @Override
@@ -205,16 +201,17 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
             ));
         }
 
-        if(!totalResources.equals(imp.getAllResources())) {
+        boolean haveTotalResourcesChanged = !totalResources.equals(imp.getAllResources());
+        if(haveTotalResourcesChanged) {
             totalResources = new HashMap<>(imp.getAllResources());
             updates.add(new ServerTotalResourcesUpdate(imp.getPlayer(), totalResources));
         }
 
-        if(!totalResources.equals(imp.getAllResources()) || haveDevCardsChanged) {
+        if(haveTotalResourcesChanged || haveDevCardsChanged) {
             updates.add(
                 new ServerPurchasableDevelopmentCardsUpdate(
                     imp.getPlayer(),
-                    getPurchasableDevelopmentCards()
+                    gameManager.getGameContext().getPurchasableDevelopmentCardsForPlayer(getPlayer())
                 )
             );
         }
