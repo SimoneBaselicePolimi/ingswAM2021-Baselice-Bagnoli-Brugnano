@@ -38,23 +38,24 @@
 
         <GridPane prefHeight="780" prefWidth="1140" GridPane.columnIndex="1">
             <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints prefHeight="30"/>
-                <RowConstraints vgrow="ALWAYS"/>
-                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints prefHeight="30" />
             </rowConstraints>
-            <HBox fx:id="resourcesLeftToThePlayerComp" GridPane.rowIndex="0" spacing="5"/>
-            <AnchorPane fx:id="dashboardContainer" GridPane.rowIndex="1"/>
+            <HBox fx:id="resourcesLeftToThePlayerComp" spacing="5" GridPane.rowIndex="0" />
+            <AnchorPane fx:id="dashboardContainer" GridPane.rowIndex="1" />
             <HBox alignment="CENTER" spacing="20" GridPane.rowIndex="2">
-                <Button fx:id="activateProductionsButton" prefHeight="26.0" prefWidth="147.0" text="PActivate productions"/>
-                <Button fx:id="cancelButton" prefWidth="87.0" text="PCancel"/>
-                <Button fx:id="activateSelectedProductionsButton" text="PConfirm productions"/>
-                <Label prefWidth="100.0"/>
-                <Button fx:id="activateLeaderCard" prefHeight="26.0" prefWidth="168.0" text="PActivate Leader Card"/>
-                <Label prefWidth="124.0"/>
-                <Button fx:id="endTurn" prefWidth="194.0" text="PEnd my turn"/>
+                <Button fx:id="activateProductionsButton" prefHeight="26.0" prefWidth="147.0" text="PActivate productions" />
+                <Button fx:id="cancelButton" prefWidth="87.0" text="PCancel" />
+                <Button fx:id="activateSelectedProductionsButton" text="PConfirm productions" />
+                <Label prefWidth="100.0" />
+                <Button fx:id="activateLeaderCard" prefHeight="26.0" prefWidth="168.0" text="PActivate Leader Card" />
+                <Button fx:id="cancelActivationLeaderCard" prefHeight="26.0" prefWidth="102.0" text="PCancel" />
+                <Label prefHeight="18.0" prefWidth="58.0" />
+                <Button fx:id="endTurn" prefHeight="26.0" prefWidth="181.0" text="PEnd my turn" />
             </HBox>
         </GridPane>
 

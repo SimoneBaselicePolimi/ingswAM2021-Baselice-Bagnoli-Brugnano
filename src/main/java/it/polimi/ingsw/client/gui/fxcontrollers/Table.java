@@ -82,7 +82,6 @@ public class Table extends GameScene implements View {
     ClientDevelopmentCardsTableRepresentation table;
 
     BooleanProperty isCardPurchaseModeEnabled =  new SimpleBooleanProperty(false);
-    BooleanProperty canMyPlayerDoMainAction = new SimpleBooleanProperty(false);
 
     SetProperty<ClientDevelopmentCardRepresentation> purchasableCards = new SimpleSetProperty<>(
         FXCollections.observableSet(new HashSet<>())
