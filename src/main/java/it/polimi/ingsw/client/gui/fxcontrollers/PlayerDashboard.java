@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.client.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.client.clientrequest.EndTurnClientRequest;
+import it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Dashboard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Production;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesChoice;
@@ -92,6 +93,9 @@ public class PlayerDashboard extends GameScene implements View {
     Dashboard dashboard;
     ClientPlayerContextRepresentation playerContext;
 
+    BooleanProperty isAnyActionModeEnabled =  new SimpleBooleanProperty(false);
+
+
     BooleanProperty isActivateLeaderCardModeEnabled =  new SimpleBooleanProperty(false);
     SetProperty<ClientLeaderCardRepresentation> leaderCardsThePlayerCanActivate = new SimpleSetProperty<>(
         FXCollections.observableSet(new HashSet<>())
@@ -101,7 +105,7 @@ public class PlayerDashboard extends GameScene implements View {
     BooleanProperty isProductionsActivationModeEnabled =  new SimpleBooleanProperty(false);
     SetProperty<Production> selectedProds = new SimpleSetProperty<>(FXCollections.observableSet(new HashSet<>()));
     MapProperty<ResourceType, Integer> resourcesLeftToThePlayer = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
-
+    MapProperty<ResourceType, Integer> starResourcesCostChosen = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
     MapProperty<ResourceType, Integer> starResourcesRewardChosen = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
 
     BooleanProperty canMyPlayerEndTurn = new SimpleBooleanProperty(false);
@@ -121,7 +125,7 @@ public class PlayerDashboard extends GameScene implements View {
 
         dashboardContainer.getChildren().add(dashboard);
 
-        activateProductionsButton.visibleProperty().bind(isProductionsActivationModeEnabled.not().and(canMyPlayerDoMainAction));
+        activateProductionsButton.visibleProperty().bind(isAnyActionModeEnabled.not().and(canMyPlayerDoMainAction));
         activateProductionsButton.setOnMouseClicked(e -> isProductionsActivationModeEnabled.setValue(true));
 
         cancelButton.visibleProperty().bind(isProductionsActivationModeEnabled);
@@ -134,13 +138,45 @@ public class PlayerDashboard extends GameScene implements View {
             isProductionsActivationModeEnabled.and(selectedProds.sizeProperty().greaterThan(0))
         );
         activateSelectedProductionsButton.setOnMouseClicked(e -> {
-            //TODO
+            clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                new ProductionActionClientRequest(
+                    clientManager.getMyPlayer(),
+                    selectedProds.stream().map(Production::getProductionRepresentation).collect(Collectors.toSet()),
+                    starResourcesCostChosen.get(),
+                    starResourcesRewardChosen.get()
+                )
+            )).thenCompose(serverMessage ->
+                ServerMessageUtils.ifMessageTypeCompute(
+                    serverMessage,
+                    GameUpdateServerMessage.class,
+                    message -> {
+                        clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
+                        clientManager.handleGameUpdates(message.gameUpdates);
+                        clientManager.loadScene("PlayerDashboard.fxml");
+                        return CompletableFuture.<Void>completedFuture(null);
+                    }
+                ).elseIfMessageTypeCompute(
+                    InvalidRequestServerMessage.class,
+                    message -> {
+                        clientManager.loadScene("FaithPath.fxml");
+                        return CompletableFuture.completedFuture(null);
+                    }
+                ).elseCompute(message -> {
+                    clientManager.loadScene("FaithPath.fxml");
+                    return CompletableFuture.completedFuture(null);
+                }).apply()
+            );
         });
+
+        isAnyActionModeEnabled.bind(
+            isActivateLeaderCardModeEnabled.or(isDiscardLeaderCardModeEnabled).or(isProductionsActivationModeEnabled)
+        );
 
         isProductionsActivationModeEnabled.addListener( (obv, oldVal, newVal) -> {
             if(!oldVal && newVal) {
                 resourcesLeftToThePlayer.clear();
                 resourcesLeftToThePlayer.putAll(playerContext.getTotalResourcesOwnedByThePlayer());
+                starResourcesCostChosen.clear();
                 starResourcesRewardChosen.clear();
             }
             updateProductions();
@@ -155,7 +191,7 @@ public class PlayerDashboard extends GameScene implements View {
         starResourcesChosenComp.visibleProperty().bind(starResourcesRewardChosen.emptyProperty().not());
         starResourcesRewardChosen.addListener( (InvalidationListener) obv -> updateStarResourcesChosenComp());
 
-        activateLeaderCard.visibleProperty().bind(isActivateLeaderCardModeEnabled.not().and(isMyPlayerTurn));
+        activateLeaderCard.visibleProperty().bind(isAnyActionModeEnabled.not().and(isMyPlayerTurn));
         activateLeaderCard.setOnMouseClicked(e -> {
             isActivateLeaderCardModeEnabled.setValue(true);
             updateLeaderCards();
@@ -171,7 +207,7 @@ public class PlayerDashboard extends GameScene implements View {
 
         leaderCardsThePlayerCanActivate.addListener( (InvalidationListener) obv -> updateLeaderCards());
 
-        discardLeaderCard.visibleProperty().bind(isDiscardLeaderCardModeEnabled.not().and(isMyPlayerTurn));
+        discardLeaderCard.visibleProperty().bind(isAnyActionModeEnabled.not().and(isMyPlayerTurn));
         discardLeaderCard.setOnMouseClicked(e -> {
             isDiscardLeaderCardModeEnabled.setValue(true);
             updateLeaderCards();
@@ -280,7 +316,6 @@ public class PlayerDashboard extends GameScene implements View {
         );
     }
 
-
     void updateProductions() {
         dashboard.getAllProductionsComp().forEach(pComp -> {
             if (isProductionsActivationModeEnabled.get()) {
@@ -340,6 +375,10 @@ public class PlayerDashboard extends GameScene implements View {
                     .collect(Collectors.toList()),
                 resourcesChosen -> {
                     if (ResourceUtils.areResourcesAContainedInB(resourcesChosen, resourcesLeftToThePlayer.get())) {
+                        Map<ResourceType, Integer> newTotalStarCost =
+                            ResourceUtils.sum(resourcesChosen, starResourcesCostChosen.get());
+                        starResourcesCostChosen.clear();
+                        starResourcesCostChosen.putAll(newTotalStarCost);
                         popUpStage.close();
                         Map<ResourceType, Integer> resLeft = ResourceUtils.difference(
                             resourcesLeftToThePlayer.get(),
