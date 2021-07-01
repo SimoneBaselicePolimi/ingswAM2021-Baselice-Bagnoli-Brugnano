@@ -3,10 +3,8 @@ package it.polimi.ingsw.server.controller.clientrequest.validator;
 import it.polimi.ingsw.server.controller.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 
-import java.util.Map;
 import java.util.Optional;
 
 public class DevelopmentActionClientRequestValidator extends ClientRequestValidator <DevelopmentActionClientRequest> {
@@ -35,16 +33,17 @@ public class DevelopmentActionClientRequestValidator extends ClientRequestValida
                 "The development card requested by the player is not available"
             );
 
+        //TODO add development card cost discount (active leader card)
         //check if the player has the necessary resources to get the development card
-        Map<ResourceType, Integer> playerResources = playerContext.getAllResources();
-        for (ResourceType resourceType : requestToValidate.developmentCard.getPurchaseCost().keySet()) {
-            if (!playerResources.containsKey(resourceType)
-                || playerResources.get(resourceType) < requestToValidate.developmentCard.getPurchaseCost().get(resourceType)
-            )
-                return createInvalidRequestServerMessage(
-                    "The player does not have the resources needed to obtain the development card"
-                );
-        }
+//        Map<ResourceType, Integer> playerResources = playerContext.getAllResources();
+//        for (ResourceType resourceType : requestToValidate.developmentCard.getPurchaseCost().keySet()) {
+//            if (!playerResources.containsKey(resourceType)
+//                || playerResources.get(resourceType) < requestToValidate.developmentCard.getPurchaseCost().get(resourceType)
+//            )
+//                return createInvalidRequestServerMessage(
+//                    "The player does not have the resources needed to obtain the development card"
+//                );
+//        }
 
         //check if the player can add the development card on top of the deck specified by him
         if (!playerContext.canAddDevelopmentCard(requestToValidate.developmentCard, requestToValidate.deckNumber)

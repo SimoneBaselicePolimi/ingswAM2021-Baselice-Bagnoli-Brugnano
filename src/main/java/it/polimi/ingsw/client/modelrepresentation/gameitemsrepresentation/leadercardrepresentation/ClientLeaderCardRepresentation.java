@@ -68,6 +68,7 @@ public class ClientLeaderCardRepresentation extends ClientRegisteredIdentifiable
 
     public void setState(LeaderCardState state) {
         this.state = state;
+        notifyViews();
     }
 
     public List<ClientLeaderCardRequirementRepresentation> getRequirements() {
@@ -100,5 +101,6 @@ public class ClientLeaderCardRepresentation extends ClientRegisteredIdentifiable
 
     public void setCanBeActivated(boolean canBeActivated) {
         this.canBeActivated = canBeActivated;
+        notifyViews();
     }
 }

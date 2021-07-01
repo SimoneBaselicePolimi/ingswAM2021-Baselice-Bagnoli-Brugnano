@@ -169,8 +169,11 @@ client:
       notifyPlayerHeDoesNotHaveNeededResources: "Non possiedi le risorse necessarie per attivare la produzione selezionata"
       returnToProductionActivation: "Torna al menu di attivazione delle produzioni"
       activateNewLeaderCard: "Attiva una carta leader"
+      discardLeaderCard: "Scarta una carta leader"
       canNotActivateNewLeaderCard: "Nessuna delle tue carte leader può essere attivata"
+      canNotDiscardLeaderCard: "Nessuna delle tue carte leader può essere scartata"
       selectLeaderCardToActivate: "Attiva la carta %s"
+      selectLeaderCardToDiscard: "Scarta la carta %s"
       lookAtLeaderCardsOfMyPlayer: "Possiedi le seguenti carte leader:"
       lookAtLeaderCardsOfAnotherPlayer: "Il giocatore %s possiede %d carte nascoste"
     resourcesChoice:

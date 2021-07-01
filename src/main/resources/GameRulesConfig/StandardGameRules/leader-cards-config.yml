@@ -183,12 +183,9 @@ leaderCards:
     victoryPoints: 4
   - leaderCardID: LEADER_SUB_1
     requirements:
-      - requirementType: COLOUR
-        cardColour: YELLOW
-        numberOfCards: 2
-      - requirementType: COLOUR
-        cardColour: BLUE
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     specialMarbleSubstitutions:
       - resourceType: SERVANTS
     victoryPoints: 5
@@ -205,23 +202,17 @@ leaderCards:
     victoryPoints: 5
   - leaderCardID: LEADER_SUB_3
     requirements:
-      - requirementType: COLOUR
-        cardColour: BLUE
-        numberOfCards: 2
-      - requirementType: COLOUR
-        cardColour: YELLOW
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     specialMarbleSubstitutions:
       - resourceType: STONES
     victoryPoints: 5
   - leaderCardID: LEADER_SUB_4
     requirements:
-      - requirementType: COLOUR
-        cardColour: GREEN
-        numberOfCards: 2
-      - requirementType: COLOUR
-        cardColour: PURPLE
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     specialMarbleSubstitutions:
       - resourceType: SHIELDS
     victoryPoints: 5

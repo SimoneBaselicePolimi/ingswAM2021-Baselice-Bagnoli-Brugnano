@@ -15,6 +15,7 @@ import it.polimi.ingsw.server.model.gameupdate.ServerLeaderCardStateUpdate;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRepresentation;
 
+import java.util.AbstractMap;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -94,8 +95,15 @@ public class LeaderCardObservableProxy extends ObservableProxyForIdentifiableIte
         firstUpdateDone = true;
 
         if(hasLeaderCardStateChanged){
+            Player playerWhoOwnsLeaderCard = gameManager.getGameContext().getPlayersTurnOrder().stream()
+                .map(p -> gameManager.getGameContext().getPlayerContext(p))
+                .flatMap(c -> c.getLeaderCards().stream().map(l -> new AbstractMap.SimpleEntry<>(c.getPlayer(), l)))
+                .filter(e -> e.getValue().getItemID().equals(imp.getItemID()))
+                .map(AbstractMap.SimpleEntry::getKey)
+                .findAny()
+                .get();
             hasLeaderCardStateChanged = false;
-            updates.add(new ServerLeaderCardStateUpdate(imp, imp.getState()));
+            updates.add(new ServerLeaderCardStateUpdate(playerWhoOwnsLeaderCard, imp, imp.getState()));
         }
 
         return updates;
