@@ -143,7 +143,7 @@ public class FaithPathView extends CliView{
         }
 
         playerPositions.setText(
-            FormattedChar.convertStringToFormattedCharList(getPositionOfPlayersAsString(playersInOrder))
+            FormattedChar.convertStringToFormattedCharList(faithPathRepresentation.getPositionOfPlayersAsString())
         );
 
         return super.getContentAsFormattedCharsBuffer();
@@ -156,19 +156,6 @@ public class FaithPathView extends CliView{
                 .append(popeFavorCardState.getLocalizedName());
         }
         return cardStates.toString();
-    }
-
-    private String getPositionOfPlayersAsString(List<Player> playersInOrder) {
-        StringBuilder positionOfPlayers = new StringBuilder();
-        for(Player player : playersInOrder) {
-            positionOfPlayers.append(player.playerName).append(": ");
-            positionOfPlayers.append(
-                Localization.getLocalizationInstance().getString("gameHistory.faithPath.position")
-            );
-            positionOfPlayers.append(" ").append(faithPathRepresentation.getFaithPositions().get(player));
-            positionOfPlayers.append("\n");
-        }
-        return positionOfPlayers.toString();
     }
 
     private void setFaithPathViewBackground() {

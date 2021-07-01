@@ -20,6 +20,9 @@ public class FaithPath extends GameScene {
     @FXML
     VBox popeFavorCardsContainer;
 
+    @FXML
+    Label playerPositions;
+
     final ClientFaithPathRepresentation faithPath;
 
     final int faithPathLength;
@@ -103,5 +106,9 @@ public class FaithPath extends GameScene {
             popeFavorCardsContainer.getChildren().add(playerLabel);
             popeFavorCardsContainer.getChildren().add(cardsBox);
         }
+
+        //players positions on the path
+        playerPositions.setText(faithPath.getPositionOfPlayersAsString());
+        playerPositions.setFont(new Font(17));
     }
 }
