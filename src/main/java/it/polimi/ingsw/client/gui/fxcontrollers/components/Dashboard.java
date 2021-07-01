@@ -37,7 +37,7 @@ public class Dashboard extends AnchorPane {
 
     Map<ClientResourceStorageRepresentation, Storage> storageRepresentationToComp;
     List<LeaderCard> playerLeaderCards = new ArrayList<>();
-    List<Production> baseProd = new ArrayList<>();
+    List<Production> baseProductions = new ArrayList<>();
     List<DevelopmentCardDashboardDeck> decCardDecksList = new ArrayList<>();
 
     public final boolean enableRepositioning;
@@ -85,7 +85,11 @@ public class Dashboard extends AnchorPane {
 
         storageRepresentationToComp = new HashMap<>();
 
-        playerContext.getBaseProductions().forEach(p -> baseProductionsContainer.getChildren().add(new Production(p)));
+        playerContext.getBaseProductions().forEach(p -> {
+            Production baseProd = new Production(p);
+            baseProductionsContainer.getChildren().add(baseProd);
+            baseProductions.add(baseProd);
+        });
 
         playerContext.getShelves().forEach(storageRep -> {
             Storage storageComp = new Storage("test", storageRep);
@@ -132,7 +136,7 @@ public class Dashboard extends AnchorPane {
                     .filter(l -> l.getLeaderCardRepresentation().getState().equals(LeaderCardState.ACTIVE))
                     .flatMap(l -> l.getProductionsComp().stream())
             ),
-            baseProd.stream()
+            baseProductions.stream()
         ).collect(Collectors.toSet());
     }
 

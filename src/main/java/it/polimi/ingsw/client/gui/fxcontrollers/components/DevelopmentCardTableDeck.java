@@ -62,11 +62,13 @@ public class DevelopmentCardTableDeck extends AnchorPane implements View {
     }
 
     public void setCardBordersColour(Colour colour){
-        developmentCardComp.setBordersColour(colour);
+        if(developmentCardComp != null)
+            developmentCardComp.setBordersColour(colour);
     }
 
     public void setDefaultBordersColour(){
-        developmentCardComp.setDefaultBordersColour();
+        if(developmentCardComp != null)
+            developmentCardComp.setDefaultBordersColour();
     }
 
     @Override

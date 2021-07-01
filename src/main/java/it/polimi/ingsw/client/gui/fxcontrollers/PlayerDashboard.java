@@ -28,9 +28,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -39,14 +41,34 @@ import java.util.stream.Collectors;
 
 public class PlayerDashboard extends GameScene implements View {
 
+    //prod selection header
+    @FXML
+    public HBox prodSelectionHeader;
+
+    @FXML
+    public Label resLeftLabel;
+
+    @FXML
+    HBox resourcesLeftToThePlayerComp;
+
+    @FXML
+    public Label starResLabel;
+
+    @FXML
+    public HBox starResourcesChosenComp;
+
+
+    //dashboard
+    @FXML
+    AnchorPane dashboardContainer;
+
+
+    //buttons in bottom row
     @FXML
     Button activateLeaderCard;
 
     @FXML
     Button endTurn;
-
-    @FXML
-    AnchorPane dashboardContainer;
 
     @FXML
     Button activateProductionsButton;
@@ -57,8 +79,6 @@ public class PlayerDashboard extends GameScene implements View {
     @FXML
     Button activateSelectedProductionsButton;
 
-    @FXML
-    HBox resourcesLeftToThePlayerComp;
 
 
     Dashboard dashboard;
@@ -72,8 +92,8 @@ public class PlayerDashboard extends GameScene implements View {
 
     SetProperty<Production> selectedProds = new SimpleSetProperty<>(FXCollections.observableSet(new HashSet<>()));
     MapProperty<ResourceType, Integer> resourcesLeftToThePlayer = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
+    MapProperty<ResourceType, Integer> starResourcesRewardChosen = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
 
-    //Dashboard dashboard;
 
     ClientPlayerContextRepresentation playerContext;
 
@@ -112,6 +132,7 @@ public class PlayerDashboard extends GameScene implements View {
             if(!oldVal && newVal) {
                 resourcesLeftToThePlayer.clear();
                 resourcesLeftToThePlayer.putAll(playerContext.getTotalResourcesOwnedByThePlayer());
+                starResourcesRewardChosen.clear();
             }
             updateProductions();
         });
@@ -121,7 +142,11 @@ public class PlayerDashboard extends GameScene implements View {
            updateResourcesLeftToThePlayerComp();
         });
 
-        resourcesLeftToThePlayerComp.visibleProperty().bind(isProductionsActivationModeEnabled);
+        prodSelectionHeader.visibleProperty().bind(isProductionsActivationModeEnabled);
+
+        starResLabel.visibleProperty().bind(starResourcesRewardChosen.emptyProperty().not());
+        starResourcesChosenComp.visibleProperty().bind(starResourcesRewardChosen.emptyProperty().not());
+        starResourcesRewardChosen.addListener( (InvalidationListener) obv -> updateStarResourcesChosenComp());
 
         endTurn.visibleProperty().bind(canMyPlayerEndTurn);
         endTurn.setOnMouseClicked(e -> endMyTurn());
@@ -171,43 +196,71 @@ public class PlayerDashboard extends GameScene implements View {
         );
     }
 
+    void updateStarResourcesChosenComp() {
+        starResourcesChosenComp.getChildren().clear();
+
+        starResourcesRewardChosen.forEach( (resType, numOFRes) ->
+            starResourcesChosenComp.getChildren().add(GuiCompUtils.createResourceLabelAndIcon(
+                numOFRes,
+                resType.getIconPathForResourceType(),
+                25,
+                4
+            ))
+        );
+    }
+
+
     void updateProductions() {
-        dashboard.getAllProductionsComp().forEach(p -> {
+        dashboard.getAllProductionsComp().forEach(pComp -> {
             if (isProductionsActivationModeEnabled.get()) {
-                ClientProductionRepresentation prodRepresentation = p.getProductionRepresentation();
-                if (checkIfThePlayerHasNecessaryResourcesToActivateProd(prodRepresentation)) {
-                    p.setBorderColour(Colour.YELLOW);
-                    p.setOnMouseClicked(obv -> {
+                ClientProductionRepresentation prodRepresentation = pComp.getProductionRepresentation();
+                if (selectedProds.contains(pComp)) {
+                    pComp.setBorderColour(Colour.GREEN);
+                    pComp.setOnMouseClicked(obv -> {});
+                } else if (checkIfThePlayerHasNecessaryResourcesToActivateProd(prodRepresentation)) {
+                    pComp.setBorderColour(Colour.YELLOW);
+                    pComp.setOnMouseClicked(obv -> {
                         Map<ResourceType, Integer> resLeft = ResourceUtils.difference(
                             resourcesLeftToThePlayer.get(),
                             prodRepresentation.getResourceCost()
                         );
                         resourcesLeftToThePlayer.clear();
                         resourcesLeftToThePlayer.putAll(resLeft);
-                        if(prodRepresentation.getStarResourceCost() > 0)
-                            chooseStartCostProd(prodRepresentation);
-                       //TODO rem res star res add card
+                        if(prodRepresentation.getStarResourceCost() > 0) {
+                            chooseStarResourcesCost(prodRepresentation).thenAccept(n -> {
+                                if (prodRepresentation.getStarResourceReward() > 0)
+                                    chooseStarResourcesReward(prodRepresentation);
+                            });
+                        } else if(prodRepresentation.getStarResourceReward() > 0) {
+                            chooseStarResourcesReward(prodRepresentation);
+                        }
+                        selectedProds.add(pComp);
                     });
                 } else {
-                    p.setBorderColour(Colour.GREY);
-                    p.setOnMouseClicked(obv -> {});
+                    pComp.setBorderColour(Colour.GREY);
+                    pComp.setOnMouseClicked(obv -> {});
                 }
             } else {
-                p.setDefaultBorderColour();
-                p.setOnMouseClicked(obv -> {});
+                pComp.setDefaultBorderColour();
+                pComp.setOnMouseClicked(obv -> {});
             }
         });
     }
 
-    protected void chooseStartCostProd(ClientProductionRepresentation prodRepresentation) {
+    protected CompletableFuture<Void> chooseStarResourcesCost(ClientProductionRepresentation prodRepresentation) {
+        CompletableFuture<Void> resChosen = new CompletableFuture<>();
         Platform.runLater(() -> {
             Stage popUpStage = new Stage();
             popUpStage.initModality(Modality.APPLICATION_MODAL);
             popUpStage.initOwner(clientManager.getMainStage());
 
-            VBox container = new VBox(10);
+            VBox container = new VBox(15);
+            container.prefWidth(500);
+            container.setAlignment(Pos.CENTER);
 
-            container.getChildren().add(new Label("PScegli costo star"));
+            Label popUpTitle = new Label("PScegli costo star");
+            popUpTitle.setFont(new Font(26));
+            container.getChildren().add(popUpTitle);
             container.getChildren().add(new ResourcesChoice(
                 prodRepresentation.getStarResourceCost(),
                 resourcesLeftToThePlayer.entrySet().stream()
@@ -216,12 +269,14 @@ public class PlayerDashboard extends GameScene implements View {
                     .collect(Collectors.toList()),
                 resourcesChosen -> {
                     if (ResourceUtils.areResourcesAContainedInB(resourcesChosen, resourcesLeftToThePlayer.get())) {
+                        popUpStage.close();
                         Map<ResourceType, Integer> resLeft = ResourceUtils.difference(
                             resourcesLeftToThePlayer.get(),
                             resourcesChosen
                         );
                         resourcesLeftToThePlayer.clear();
                         resourcesLeftToThePlayer.putAll(resLeft);
+                        resChosen.complete(null);
                     } else {
                         popUpStage.close();
                         Stage errorStage = new Stage();
@@ -234,7 +289,8 @@ public class PlayerDashboard extends GameScene implements View {
                         Button okBtn = new Button("OK");
                         okBtn.setOnMouseClicked(obv -> {
                             errorStage.close();
-                            chooseStartCostProd(prodRepresentation);
+                            chooseStarResourcesCost(prodRepresentation)
+                                .thenAccept( n -> resChosen.complete(null));
                         });
                         errContainer.getChildren().add(okBtn);
                         errorStage.setScene(new Scene(errContainer, 300, 150));
@@ -242,7 +298,39 @@ public class PlayerDashboard extends GameScene implements View {
                     }
                 }
             ));
-            popUpStage.setScene(new Scene(container, 500, 600));
+            popUpStage.setScene(new Scene(container, 500, 400));
+            popUpStage.show();
+        });
+        return resChosen;
+    }
+
+    protected void chooseStarResourcesReward(ClientProductionRepresentation prodRepresentation) {
+        Platform.runLater(() -> {
+            Stage popUpStage = new Stage();
+            popUpStage.initModality(Modality.APPLICATION_MODAL);
+            popUpStage.initOwner(clientManager.getMainStage());
+
+            VBox container = new VBox(15);
+            container.prefWidth(500);
+            container.setAlignment(Pos.CENTER);
+
+            Label popUpTitle = new Label("PScegli risorse da ottenere");
+            popUpTitle.setFont(new Font(26));
+            container.getChildren().add(popUpTitle);
+            container.getChildren().add(new ResourcesChoice(
+                prodRepresentation.getStarResourceReward(),
+                Arrays.stream(ResourceType.values()).collect(Collectors.toList()),
+                resourcesChosen -> {
+                    popUpStage.close();
+                    Map<ResourceType, Integer> newTotalStarResObtained = ResourceUtils.sum(
+                        starResourcesRewardChosen.get(),
+                        resourcesChosen
+                    );
+                    starResourcesRewardChosen.clear();
+                    starResourcesRewardChosen.putAll(newTotalStarResObtained);
+                }
+            ));
+            popUpStage.setScene(new Scene(container, 500, 400));
             popUpStage.show();
         });
     }

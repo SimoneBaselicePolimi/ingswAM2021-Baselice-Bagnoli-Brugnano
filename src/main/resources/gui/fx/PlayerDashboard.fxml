@@ -45,7 +45,13 @@
                 <RowConstraints vgrow="ALWAYS"/>
                 <RowConstraints prefHeight="30"/>
             </rowConstraints>
-            <HBox fx:id="resourcesLeftToThePlayerComp" GridPane.rowIndex="0" spacing="5"/>
+            <HBox fx:id="prodSelectionHeader" GridPane.rowIndex="0" >
+                <Label fx:id="resLeftLabel" text="Resources left: "/>
+                <HBox fx:id="resourcesLeftToThePlayerComp"  spacing="5"/>
+                <Label prefWidth="800"/>
+                <Label fx:id="starResLabel" text="Resources left: "/>
+                <HBox fx:id="starResourcesChosenComp"  spacing="5"/>
+            </HBox>
             <AnchorPane fx:id="dashboardContainer" GridPane.rowIndex="1"/>
             <HBox alignment="CENTER" spacing="20" GridPane.rowIndex="2">
                 <Button fx:id="activateProductionsButton" prefHeight="26.0" prefWidth="147.0" text="PActivate productions"/>
