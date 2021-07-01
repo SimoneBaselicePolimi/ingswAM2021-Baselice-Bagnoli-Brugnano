@@ -21,7 +21,7 @@
               <Label fx:id="requirementsTitle" text="PREQUIREMENTS: " />
               <HBox fx:id="requirementsContainer" alignment="CENTER_LEFT" prefHeight="95" prefWidth="200" spacing="10" />
           </VBox>
-          <ScrollPane fx:id="" maxHeight="135" prefWidth="212.0" style="-fx-background-color:transparent;" GridPane.rowIndex="2">
+          <ScrollPane fx:id="specialPowersScrollPane" maxHeight="135" prefWidth="212.0" style="-fx-background-color:transparent;" GridPane.rowIndex="2">
               <content>
                   <VBox fx:id="specialPowersContainer" alignment="TOP_CENTER" prefWidth="200" />
               </content>

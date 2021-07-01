@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.fxcontrollers;
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
+import it.polimi.ingsw.client.clientrequest.ActivateLeaderCardClientRequest;
 import it.polimi.ingsw.client.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Dashboard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Production;
@@ -11,10 +12,12 @@ import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.play
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.servermessage.EndTurnServerMessage;
+import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.utils.Colour;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -44,6 +47,9 @@ public class PlayerDashboard extends GameScene implements View {
     //prod selection header
     @FXML
     public HBox prodSelectionHeader;
+
+    @FXML
+    Button cancelActivationLeaderCard;
 
     @FXML
     public Label resLeftLabel;
@@ -80,8 +86,8 @@ public class PlayerDashboard extends GameScene implements View {
     Button activateSelectedProductionsButton;
 
 
-
     Dashboard dashboard;
+    ClientPlayerContextRepresentation playerContext;
 
     BooleanProperty isActivateLeaderCardModeEnabled =  new SimpleBooleanProperty(false);
     SetProperty<ClientLeaderCardRepresentation> leaderCardsThePlayerCanActivate = new SimpleSetProperty<>(
@@ -89,11 +95,9 @@ public class PlayerDashboard extends GameScene implements View {
     );
 
     BooleanProperty isProductionsActivationModeEnabled =  new SimpleBooleanProperty(false);
-
     SetProperty<Production> selectedProds = new SimpleSetProperty<>(FXCollections.observableSet(new HashSet<>()));
     MapProperty<ResourceType, Integer> resourcesLeftToThePlayer = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
     MapProperty<ResourceType, Integer> starResourcesRewardChosen = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
-
 
     ClientPlayerContextRepresentation playerContext;
 
@@ -107,9 +111,11 @@ public class PlayerDashboard extends GameScene implements View {
     @FXML
     @Override
     protected void initialize() {
-        super.initialize();
 
         dashboard = new Dashboard(clientManager.getMyPlayer(), false);
+
+        dashboard.getPlayerLeaderCards().forEach(comp -> comp.getLeaderCardRepresentation().subscribe(this));
+
         dashboardContainer.getChildren().add(dashboard);
 
         activateProductionsButton.visibleProperty().bind(isProductionsActivationModeEnabled.not().and(canMyPlayerDoMainAction));
@@ -138,24 +144,52 @@ public class PlayerDashboard extends GameScene implements View {
         });
         selectedProds.addListener( (InvalidationListener) obv -> updateProductions());
 
-        resourcesLeftToThePlayer.addListener( (InvalidationListener) obv -> {
-           updateResourcesLeftToThePlayerComp();
-        });
-
+        resourcesLeftToThePlayer.addListener( (InvalidationListener) obv -> updateResourcesLeftToThePlayerComp());
+        resourcesLeftToThePlayerComp.visibleProperty().bind(isProductionsActivationModeEnabled);
         prodSelectionHeader.visibleProperty().bind(isProductionsActivationModeEnabled);
 
         starResLabel.visibleProperty().bind(starResourcesRewardChosen.emptyProperty().not());
         starResourcesChosenComp.visibleProperty().bind(starResourcesRewardChosen.emptyProperty().not());
         starResourcesRewardChosen.addListener( (InvalidationListener) obv -> updateStarResourcesChosenComp());
 
+        activateLeaderCard.visibleProperty().bind(isActivateLeaderCardModeEnabled.not().and(isMyPlayerTurn));
+        activateLeaderCard.setOnMouseClicked(e -> {
+            isActivateLeaderCardModeEnabled.setValue(true);
+            updateLeaderCards();
+        });
+
+        cancelActivationLeaderCard.visibleProperty().bind(isActivateLeaderCardModeEnabled);
+        cancelActivationLeaderCard.setOnMouseClicked(e -> isActivateLeaderCardModeEnabled.setValue(false));
+
+        leaderCardsThePlayerCanActivate.addListener( (InvalidationListener) obv -> updateLeaderCards());
+
         endTurn.visibleProperty().bind(canMyPlayerEndTurn);
         endTurn.setOnMouseClicked(e -> endMyTurn());
 
-        dashboard.getAllProductionsComp();
-
-        leaderCardsThePlayerCanActivate.addListener( (InvalidationListener) obv -> updateCardsColour());
-
+        super.initialize();
         updateView();
+    }
+
+    protected void activateLeaderCardAndSendMessageToServer(ClientLeaderCardRepresentation cardToActivate) {
+        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+            new ActivateLeaderCardClientRequest(
+                clientManager.getMyPlayer(),
+                cardToActivate
+            )
+        )).thenCompose(serverMessage ->
+            ServerMessageUtils.ifMessageTypeCompute(
+                serverMessage,
+                GameUpdateServerMessage.class,
+                message -> {
+                    clientManager.handleGameUpdates(message.gameUpdates);
+                    clientManager.loadScene("PlayerDashboard.fxml");
+                    return CompletableFuture.completedFuture(null);
+                }
+            ).elseCompute(message -> {
+                clientManager.loadScene("Market.fxml");
+                return CompletableFuture.completedFuture(null);
+            }).apply()
+        );
     }
 
     protected void endMyTurn() {
@@ -167,17 +201,17 @@ public class PlayerDashboard extends GameScene implements View {
                 EndTurnServerMessage.class,
                 message -> {
                     clientManager.handleGameUpdates(message.gameUpdates);
-                    clientManager.loadScene("FaithPath.fxml");
+                    clientManager.loadScene("PlayerDashboard.fxml");
                     return CompletableFuture.completedFuture(null);
                 }
             ).elseIfMessageTypeCompute(
                 InvalidRequestServerMessage.class,
                 message -> {
-                    clientManager.loadScene("PlayerDashboard.fxml");
+                    clientManager.loadScene("Market.fxml");
                     return CompletableFuture.completedFuture(null);
                 }
             ).elseCompute(message -> {
-                clientManager.loadScene("PlayerDashboard.fxml");
+                clientManager.loadScene("Market.fxml");
                 return CompletableFuture.completedFuture(null);
             }).apply()
         );
@@ -349,39 +383,44 @@ public class PlayerDashboard extends GameScene implements View {
             );
     }
 
-
-
-
-    void updateCardsColour() {
-//        .forEach( (deckRepresentation, deckComp) -> {
-//            if(isCardPurchaseModeEnabled.get()) {
-//                if (table.isCardPurchasableByMyPlayer(deckRepresentation.getCardOnTop()))
-//                    deckComp.setCardBordersColour(Colour.YELLOW);
-//                else
-//                    deckComp.setCardBordersColour(Colour.GREY);
-//            } else {
-//                deckComp.setDefaultBordersColour();
-//            }
-//        });
+    void updateLeaderCards() {
+        dashboard.getPlayerLeaderCards().forEach( leaderCard -> {
+            if(
+                isActivateLeaderCardModeEnabled.get() &&
+                !leaderCard.getLeaderCardRepresentation().getState().equals(LeaderCardState.ACTIVE)
+            ) {
+                if (leaderCardsThePlayerCanActivate.contains(leaderCard.getLeaderCardRepresentation())) {
+                    leaderCard.setBorderColour(Colour.YELLOW);
+                    leaderCard.setOnMouseClicked(e -> activateLeaderCardAndSendMessageToServer(
+                        leaderCard.getLeaderCardRepresentation())
+                    );
+                } else {
+                    leaderCard.setBorderColour(Colour.GREY);
+                    leaderCard.setOnMouseClicked(e -> {});
+                }
+            } else {
+                leaderCard.setDefaultBorderColour();
+                leaderCard.setOnMouseClicked(e -> {});
+            }
+        });
     }
 
     @Override
     public void updateView() {
         super.updateView();
-        Platform.runLater(() -> {
-            canMyPlayerEndTurn.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION));
-            leaderCardsThePlayerCanActivate.get().clear();
-            leaderCardsThePlayerCanActivate.get().addAll(
-                dashboard.playerContext.getLeaderCardsPlayerOwns().stream()
-                    .filter(ClientLeaderCardRepresentation::canBeActivated)
-                    .collect(Collectors.toList())
-            );
-        });
+        canMyPlayerEndTurn.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION));
+        leaderCardsThePlayerCanActivate.get().clear();
+        leaderCardsThePlayerCanActivate.get().addAll(
+            dashboard.playerContext.getLeaderCardsPlayerOwns().stream()
+                .filter(c -> c.canBeActivated() && c.getState().equals(LeaderCardState.HIDDEN))
+                .collect(Collectors.toList())
+        );
     }
 
     @Override
     public void destroyView() {
         super.destroyView();
+        dashboard.getPlayerLeaderCards().forEach(comp -> comp.getLeaderCardRepresentation().unsubscribe(this));
         clientManager.getGameContextRepresentation().unsubscribe(this);
     }
 

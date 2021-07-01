@@ -21,6 +21,7 @@ public class GameScene extends AbstractController implements View {
     public final int sceneNumber;
 
     protected BooleanProperty canMyPlayerDoMainAction = new SimpleBooleanProperty(false);
+    protected BooleanProperty isMyPlayerTurn = new SimpleBooleanProperty(false);
 
     public GameScene(int sceneNumber) {
         this.sceneNumber = sceneNumber;
@@ -73,6 +74,10 @@ public class GameScene extends AbstractController implements View {
     @Override
     public void updateView() {
         canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
+        isMyPlayerTurn.setValue(
+            clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION) ||
+            clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION)
+        );
     }
 
     @Override
