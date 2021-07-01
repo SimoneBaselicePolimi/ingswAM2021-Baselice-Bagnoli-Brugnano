@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.DialogUtils;
-import it.polimi.ingsw.client.cli.ProductionsSelectionInfo;
+import it.polimi.ingsw.client.ProductionsSelectionInfo;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.view.grid.GridView;

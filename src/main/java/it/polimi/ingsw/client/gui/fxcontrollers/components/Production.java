@@ -2,15 +2,20 @@ package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
 import it.polimi.ingsw.client.gui.fxcontrollers.GuiCompUtils;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
+import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
 public class Production extends AnchorPane {
+
+    @FXML
+    GridPane outerContainer;
 
     @FXML
     VBox costsContainer;
@@ -101,5 +106,21 @@ public class Production extends AnchorPane {
 
     }
 
+    public void setBorderColour(Colour colour) {
+        outerContainer.setStyle(String.format(
+            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;",
+            colour.r,
+            colour.g,
+            colour.b
+        ));
+    }
+
+    public void setDefaultBorderColour(){
+        outerContainer.setStyle("-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;");
+    }
+
+    public ClientProductionRepresentation getProductionRepresentation() {
+        return production;
+    }
 
 }

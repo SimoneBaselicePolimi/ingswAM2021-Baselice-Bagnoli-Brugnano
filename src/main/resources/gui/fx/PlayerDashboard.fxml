@@ -43,12 +43,17 @@
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints prefHeight="30" />
             <RowConstraints vgrow="ALWAYS" />
-            <RowConstraints prefHeight="60" />
+            <RowConstraints prefHeight="30" />
         </rowConstraints>
-        <AnchorPane GridPane.rowIndex="0"  fx:id="dashboardContainer"/>
-        <Button fx:id="activateProductionsButton" GridPane.rowIndex="1" text="PActivate productions"/>
-        <Button fx:id="cancelButton" GridPane.rowIndex="1" text="PCancel"/>
+        <HBox fx:id="resourcesLeftToThePlayerComp" GridPane.rowIndex="0" spacing="5"/>
+        <AnchorPane GridPane.rowIndex="1"  fx:id="dashboardContainer"/>
+        <Button fx:id="activateProductionsButton" GridPane.rowIndex="2" text="PActivate productions"/>
+        <VBox GridPane.rowIndex="2" spacing="10">
+            <Button fx:id="cancelButton" GridPane.rowIndex="2" text="PCancel"/>
+            <Button fx:id="activateSelectedProductionsButton" GridPane.rowIndex="2" text="PCancel"/>
+        </VBox>
     </GridPane>
 
     </GridPane>
