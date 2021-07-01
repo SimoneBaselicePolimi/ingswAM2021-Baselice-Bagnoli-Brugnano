@@ -65,7 +65,9 @@ public class DevCardPlacementInDashboard extends AnchorPane {
             if (validDeckIDs.contains(deckIndex)) {
                 dashboard.getDevelopmentCardDeckComponents().get(deckIndex).setCardBordersColour(Colour.YELLOW);
                 int finalDeckIndex = deckIndex;
-                dashboard.setOnMouseClicked(obv -> onPlacementDone.accept(finalDeckIndex));
+                dashboard.getDevelopmentCardDeckComponents().get(deckIndex).setOnMouseClicked(obv ->
+                    onPlacementDone.accept(finalDeckIndex)
+                );
             } else {
                 dashboard.getDevelopmentCardDeckComponents().get(deckIndex).setCardBordersColour(Colour.GREY);
             }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.storage.MaxResourceNumberRule;
 import it.polimi.ingsw.utils.FileManager;
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -380,13 +381,13 @@ public class Storage extends AnchorPane implements View {
 
     @Override
     public void updateView() {
-        updateResources();
-        if(isResourceRepositioningModeEnabled.get()) {
-            targetStorageProp.setValue(targetStorageProp.get());
-            targetStorageMap.clear();
-            targetStorageMap.putAll(targetStorageProp.get().getResources());
-        }
-
+        Platform.runLater(() -> {updateResources();
+            if(isResourceRepositioningModeEnabled.get()) {
+                targetStorageProp.setValue(targetStorageProp.get());
+                targetStorageMap.clear();
+                targetStorageMap.putAll(targetStorageProp.get().getResources());
+            }
+        });
     }
 
     @Override

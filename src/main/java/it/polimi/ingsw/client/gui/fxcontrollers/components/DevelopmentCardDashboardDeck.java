@@ -70,49 +70,58 @@ public class DevelopmentCardDashboardDeck extends AnchorPane implements View {
     private void initialize() {
         deck.subscribe(this);
         this.setOnMouseClicked(e -> onDeckSelected.accept(cardOnTop));
-        updateView();
-
+        drawDeck();
     }
 
     public void setCardBordersColour(Colour colour){
-        developmentCardComp.setBordersColour(colour);
+        deckContainer.setStyle(String.format(
+            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;",
+            colour.r,
+            colour.g,
+            colour.b
+        ));
     }
 
     public void removeCardBorders(){
-        developmentCardComp.setDefaultBordersColour();
+        deckContainer.setStyle(
+            "-fx-border-color: black; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;"
+        );
+    }
+
+
+    void drawDeck() {
+        if ((cardOnTop == null || !cardOnTop.equals(deck.peek())) && deck.numberOfCardsInDeck() > 0) {
+            if (developmentCardComp != null)
+                deckContainer.getChildren().remove(developmentCardComp);
+            cardOnTop = deck.peek();
+            developmentCardComp = new DevelopmentCard(cardOnTop);
+            GridPane.setRowIndex(developmentCardComp, 0);
+            GridPane.setColumnIndex(developmentCardComp, 0);
+            deckContainer.getChildren().add(developmentCardComp);
+        }
+        flagsContainer.getChildren().clear();
+        deck.getCardDeck().stream()
+            .filter(c -> !c.equals(cardOnTop))
+            .forEach(c -> {
+                Label flagLabel = new Label();
+                flagLabel.setTextFill(Color.WHITE);
+                flagLabel.setText(String.valueOf(c.getLevel().toValue()));
+                flagLabel.setAlignment(Pos.CENTER);
+                flagLabel.setPrefHeight(7);
+                flagLabel.setPrefWidth(85);
+                flagLabel.setStyle(String.format(
+                    "-fx-background-color: \"#%02X%02X%02X\"",
+                    c.getColour().getUIColour().r,
+                    c.getColour().getUIColour().g,
+                    c.getColour().getUIColour().b
+                ));
+                flagsContainer.getChildren().add(flagLabel);
+            });
     }
 
     @Override
     public void updateView() {
-        Platform.runLater(() -> {
-            if ((cardOnTop == null || !cardOnTop.equals(deck.peek())) && deck.numberOfCardsInDeck() > 0) {
-                if (developmentCardComp != null)
-                    deckContainer.getChildren().remove(developmentCardComp);
-                cardOnTop = deck.peek();
-                developmentCardComp = new DevelopmentCard(cardOnTop);
-                GridPane.setRowIndex(developmentCardComp, 0);
-                GridPane.setColumnIndex(developmentCardComp, 0);
-                deckContainer.getChildren().add(developmentCardComp);
-            }
-            flagsContainer.getChildren().clear();
-            deck.getCardDeck().stream()
-                .filter(c -> !c.equals(cardOnTop))
-                .forEach(c -> {
-                    Label flagLabel = new Label();
-                    flagLabel.setTextFill(Color.WHITE);
-                    flagLabel.setText(String.valueOf(c.getLevel().toValue()));
-                    flagLabel.setAlignment(Pos.CENTER);
-                    flagLabel.setPrefHeight(7);
-                    flagLabel.setPrefWidth(85);
-                    flagLabel.setStyle(String.format(
-                        "-fx-background-color: \"#%02X%02X%02X\"",
-                        c.getColour().getUIColour().r,
-                        c.getColour().getUIColour().g,
-                        c.getColour().getUIColour().b
-                    ));
-                    flagsContainer.getChildren().add(flagLabel);
-                });
-        });
+        Platform.runLater(this::drawDeck);
     }
 
     public Optional<DevelopmentCard> getLeaderCardOnTopComp() {
