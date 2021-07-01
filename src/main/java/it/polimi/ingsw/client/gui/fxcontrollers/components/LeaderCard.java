@@ -1,23 +1,25 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
+import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class LeaderCard extends AnchorPane {
+public class LeaderCard extends AnchorPane implements View {
 
     @FXML
     GridPane bordersGrid;
@@ -36,6 +38,9 @@ public class LeaderCard extends AnchorPane {
 
     @FXML
     VBox specialPowersContainer;
+
+    @FXML
+    ScrollPane specialPowersScrollPane;
 
     ClientLeaderCardRepresentation card;
 
@@ -121,10 +126,33 @@ public class LeaderCard extends AnchorPane {
             specialPowersContainer.getChildren().add(discount);
         });
 
+        card.subscribe(this);
+        updateView();
     }
 
     public Set<Production> getProductionsComp() {
         return new HashSet<>(productionsComp);
     }
 
+    @Override
+    public void updateView() {
+        if(card.getState().equals(LeaderCardState.ACTIVE)) {
+            bordersGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            specialPowersContainer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            specialPowersScrollPane.setStyle("-fx-background: WHITE; -fx-border-color: WHITE");
+        } else if(card.getState().equals(LeaderCardState.HIDDEN)) {
+            bordersGrid.setBackground(new Background(new BackgroundFill(Color.DIMGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+            specialPowersContainer.setBackground(new Background(new BackgroundFill(Color.DIMGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+            specialPowersScrollPane.setStyle("-fx-background: DIMGREY; -fx-border-color: DIMGREY");
+        } else {
+            bordersGrid.setBackground(new Background(new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
+            specialPowersContainer.setBackground(new Background(new BackgroundFill(Color.DARKRED, CornerRadii.EMPTY, Insets.EMPTY)));
+            specialPowersScrollPane.setStyle("-fx-background: DARKRED; -fx-border-color: DARKRED");
+        }
+    }
+
+    @Override
+    public void destroyView() {
+        card.unsubscribe(this);
+    }
 }

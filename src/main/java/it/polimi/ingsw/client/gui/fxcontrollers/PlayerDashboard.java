@@ -124,7 +124,10 @@ public class PlayerDashboard extends GameScene implements View {
         resourcesLeftToThePlayerComp.visibleProperty().bind(isProductionsActivationModeEnabled);
 
         activateLeaderCard.visibleProperty().bind(isActivateLeaderCardModeEnabled.not().and(isMyPlayerTurn));
-        activateLeaderCard.setOnMouseClicked(e -> isActivateLeaderCardModeEnabled.setValue(true));
+        activateLeaderCard.setOnMouseClicked(e -> {
+            isActivateLeaderCardModeEnabled.setValue(true);
+            updateLeaderCards();
+        });
 
         cancelActivationLeaderCard.visibleProperty().bind(isActivateLeaderCardModeEnabled);
         cancelActivationLeaderCard.setOnMouseClicked(e -> isActivateLeaderCardModeEnabled.setValue(false));
@@ -290,7 +293,10 @@ public class PlayerDashboard extends GameScene implements View {
 
     void updateLeaderCards() {
         dashboard.getPlayerLeaderCards().forEach( leaderCard -> {
-            if(isActivateLeaderCardModeEnabled.get()) {
+            if(
+                isActivateLeaderCardModeEnabled.get() &&
+                !leaderCard.getLeaderCardRepresentation().getState().equals(LeaderCardState.ACTIVE)
+            ) {
                 if (leaderCardsThePlayerCanActivate.contains(leaderCard.getLeaderCardRepresentation())) {
                     leaderCard.setBorderColour(Colour.YELLOW);
                     leaderCard.setOnMouseClicked(e -> activateLeaderCardAndSendMessageToServer(

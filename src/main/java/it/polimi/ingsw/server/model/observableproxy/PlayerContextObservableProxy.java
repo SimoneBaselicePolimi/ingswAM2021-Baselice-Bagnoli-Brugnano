@@ -207,7 +207,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
             updates.add(new ServerTotalResourcesUpdate(imp.getPlayer(), totalResources));
         }
 
-        if(haveTotalResourcesChanged || haveDevCardsChanged) {
+        if(haveTotalResourcesChanged || haveDevCardsChanged) { //TODO leader cards changed
             updates.add(
                 new ServerPurchasableDevelopmentCardsUpdate(
                     imp.getPlayer(),
