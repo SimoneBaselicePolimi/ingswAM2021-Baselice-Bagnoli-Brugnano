@@ -101,6 +101,7 @@ public class PlayerDashboard extends GameScene implements View {
     BooleanProperty isProductionsActivationModeEnabled =  new SimpleBooleanProperty(false);
     SetProperty<Production> selectedProds = new SimpleSetProperty<>(FXCollections.observableSet(new HashSet<>()));
     MapProperty<ResourceType, Integer> resourcesLeftToThePlayer = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
+
     MapProperty<ResourceType, Integer> starResourcesRewardChosen = new SimpleMapProperty<>(FXCollections.observableMap(new HashMap<>()));
 
     BooleanProperty canMyPlayerEndTurn = new SimpleBooleanProperty(false);

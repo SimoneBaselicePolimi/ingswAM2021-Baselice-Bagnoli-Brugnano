@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
+import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
@@ -178,11 +179,23 @@ public class GameContextImp implements GameContext {
 	public Set<DevelopmentCard> getPurchasableDevelopmentCardsForPlayer(Player player) {
 		return developmentCardsTable.getAvailableCards().stream()
 			.filter(c -> {
+
 				PlayerContext playerContext = getPlayerContext(player);
-				return playerContext.getPlayerDevCardsDecks().stream()
-					.anyMatch(d -> playerContext.canAddDevelopmentCard(c,
-						playerContext.getPlayerDevCardsDecks().indexOf(d))) &&
-					ResourceUtils.areResourcesAContainedInB(c.getPurchaseCost(), playerContext.getAllResources());
+
+				boolean canAddCardInAtLeastOneDeck = playerContext.getPlayerDevCardsDecks().stream().anyMatch(d ->
+						playerContext.canAddDevelopmentCard(c, playerContext.getPlayerDevCardsDecks().indexOf(d))
+				);
+
+				Map<ResourceType, Integer> costWithDiscount = ResourceUtils.relativeDifference(
+					c.getPurchaseCost(),
+					playerContext.getActiveLeaderCardsDiscounts()
+				).entrySet().stream()
+					.filter(e -> e.getValue() > 0)
+					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+				boolean hasEnoughResources = ResourceUtils.areResourcesAContainedInB(costWithDiscount, playerContext.getAllResources());
+
+				return canAddCardInAtLeastOneDeck && hasEnoughResources;
+
 			}).collect(Collectors.toSet());
 	}
 
