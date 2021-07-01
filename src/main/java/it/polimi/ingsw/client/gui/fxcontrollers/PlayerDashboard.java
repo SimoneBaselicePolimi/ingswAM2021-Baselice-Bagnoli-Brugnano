@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.ActivateLeaderCardClientRequest;
+import it.polimi.ingsw.client.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.client.clientrequest.EndTurnClientRequest;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Dashboard;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.Production;
@@ -46,22 +47,19 @@ public class PlayerDashboard extends GameScene implements View {
 
     //prod selection header
     @FXML
-    public HBox prodSelectionHeader;
+    HBox prodSelectionHeader;
 
     @FXML
-    Button cancelActivationLeaderCard;
-
-    @FXML
-    public Label resLeftLabel;
+    Label resLeftLabel;
 
     @FXML
     HBox resourcesLeftToThePlayerComp;
 
     @FXML
-    public Label starResLabel;
+    Label starResLabel;
 
     @FXML
-    public HBox starResourcesChosenComp;
+    HBox starResourcesChosenComp;
 
 
     //dashboard
@@ -71,20 +69,25 @@ public class PlayerDashboard extends GameScene implements View {
 
     //buttons in bottom row
     @FXML
-    Button activateLeaderCard;
-
-    @FXML
-    Button endTurn;
-
-    @FXML
     Button activateProductionsButton;
+
+    @FXML
+    Button activateSelectedProductionsButton;
 
     @FXML
     Button cancelButton;
 
     @FXML
-    Button activateSelectedProductionsButton;
+    Button activateLeaderCard;
 
+    @FXML
+    Button discardLeaderCard;
+
+    @FXML
+    Button cancelActivationLeaderCard;
+
+    @FXML
+    Button endTurn;
 
     Dashboard dashboard;
     ClientPlayerContextRepresentation playerContext;
@@ -93,6 +96,7 @@ public class PlayerDashboard extends GameScene implements View {
     SetProperty<ClientLeaderCardRepresentation> leaderCardsThePlayerCanActivate = new SimpleSetProperty<>(
         FXCollections.observableSet(new HashSet<>())
     );
+    BooleanProperty isDiscardLeaderCardModeEnabled =  new SimpleBooleanProperty(false);
 
     BooleanProperty isProductionsActivationModeEnabled =  new SimpleBooleanProperty(false);
     SetProperty<Production> selectedProds = new SimpleSetProperty<>(FXCollections.observableSet(new HashSet<>()));
@@ -156,10 +160,22 @@ public class PlayerDashboard extends GameScene implements View {
             updateLeaderCards();
         });
 
-        cancelActivationLeaderCard.visibleProperty().bind(isActivateLeaderCardModeEnabled);
-        cancelActivationLeaderCard.setOnMouseClicked(e -> isActivateLeaderCardModeEnabled.setValue(false));
+        cancelActivationLeaderCard.visibleProperty().bind(isActivateLeaderCardModeEnabled.or(isDiscardLeaderCardModeEnabled));
+        cancelActivationLeaderCard.setOnMouseClicked(e -> {
+            if(isActivateLeaderCardModeEnabled.get())
+                isActivateLeaderCardModeEnabled.setValue(false);
+            else
+                isDiscardLeaderCardModeEnabled.setValue(false);
+        });
 
         leaderCardsThePlayerCanActivate.addListener( (InvalidationListener) obv -> updateLeaderCards());
+
+        discardLeaderCard.visibleProperty().bind(isDiscardLeaderCardModeEnabled.not().and(isMyPlayerTurn));
+        discardLeaderCard.setOnMouseClicked(e -> {
+            isDiscardLeaderCardModeEnabled.setValue(true);
+            updateLeaderCards();
+        });
+
 
         endTurn.visibleProperty().bind(canMyPlayerEndTurn);
         endTurn.setOnMouseClicked(e -> endMyTurn());
@@ -173,6 +189,28 @@ public class PlayerDashboard extends GameScene implements View {
             new ActivateLeaderCardClientRequest(
                 clientManager.getMyPlayer(),
                 cardToActivate
+            )
+        )).thenCompose(serverMessage ->
+            ServerMessageUtils.ifMessageTypeCompute(
+                serverMessage,
+                GameUpdateServerMessage.class,
+                message -> {
+                    clientManager.handleGameUpdates(message.gameUpdates);
+                    clientManager.loadScene("PlayerDashboard.fxml");
+                    return CompletableFuture.completedFuture(null);
+                }
+            ).elseCompute(message -> {
+                clientManager.loadScene("Market.fxml");
+                return CompletableFuture.completedFuture(null);
+            }).apply()
+        );
+    }
+
+    protected void discardLeaderCardAndSendMessageToServer(ClientLeaderCardRepresentation cardToDiscard) {
+        clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+            new DiscardLeaderCardClientRequest(
+                clientManager.getMyPlayer(),
+                cardToDiscard
             )
         )).thenCompose(serverMessage ->
             ServerMessageUtils.ifMessageTypeCompute(
@@ -381,7 +419,7 @@ public class PlayerDashboard extends GameScene implements View {
             );
     }
 
-    void updateLeaderCards() {
+    protected void updateLeaderCards() {
         dashboard.getPlayerLeaderCards().forEach( leaderCard -> {
             if(
                 isActivateLeaderCardModeEnabled.get() &&
@@ -390,12 +428,19 @@ public class PlayerDashboard extends GameScene implements View {
                 if (leaderCardsThePlayerCanActivate.contains(leaderCard.getLeaderCardRepresentation())) {
                     leaderCard.setBorderColour(Colour.YELLOW);
                     leaderCard.setOnMouseClicked(e -> activateLeaderCardAndSendMessageToServer(
-                        leaderCard.getLeaderCardRepresentation())
-                    );
+                        leaderCard.getLeaderCardRepresentation()
+                    ));
                 } else {
                     leaderCard.setBorderColour(Colour.GREY);
                     leaderCard.setOnMouseClicked(e -> {});
                 }
+            } else if(isDiscardLeaderCardModeEnabled.get() &&
+                leaderCard.getLeaderCardRepresentation().getState().equals(LeaderCardState.HIDDEN)
+            ) {
+                leaderCard.setBorderColour(Colour.YELLOW);
+                leaderCard.setOnMouseClicked(e -> discardLeaderCardAndSendMessageToServer(
+                    leaderCard.getLeaderCardRepresentation()
+                ));
             } else {
                 leaderCard.setDefaultBorderColour();
                 leaderCard.setOnMouseClicked(e -> {});

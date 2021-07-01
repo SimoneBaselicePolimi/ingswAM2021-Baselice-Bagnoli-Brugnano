@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameupdate.*;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
@@ -23,6 +24,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
     protected boolean haveDevCardsChanged = false;
     protected boolean haveTempStarResourcesChanged = false;
 
+    long numberOfActiveLeaderCards = 0;
 
     protected Map<ResourceType, Integer> totalResources = new HashMap<>();
 
@@ -207,7 +209,19 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
             updates.add(new ServerTotalResourcesUpdate(imp.getPlayer(), totalResources));
         }
 
-        if(haveTotalResourcesChanged || haveDevCardsChanged) { //TODO leader cards changed
+        boolean hasLeaderCardsStatusChanged = false;
+        if(
+            numberOfActiveLeaderCards != imp.getLeaderCards().stream()
+                .filter(l -> l.getState().equals(LeaderCardState.ACTIVE))
+                .count()
+        ) {
+            hasLeaderCardsStatusChanged = true;
+            numberOfActiveLeaderCards = imp.getLeaderCards().stream()
+                .filter(l -> l.getState().equals(LeaderCardState.ACTIVE))
+                .count();
+        }
+
+        if(haveTotalResourcesChanged || haveDevCardsChanged || hasLeaderCardsStatusChanged) {
             updates.add(
                 new ServerPurchasableDevelopmentCardsUpdate(
                     imp.getPlayer(),

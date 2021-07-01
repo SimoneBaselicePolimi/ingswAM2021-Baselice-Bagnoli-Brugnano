@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
 import it.polimi.ingsw.client.gui.fxcontrollers.GuiCompUtils;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
+import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 
-public class DevelopmentCard extends AnchorPane {
+public class DevelopmentCard extends AnchorPane implements View {
 
     @FXML
     GridPane container;
@@ -93,6 +93,7 @@ public class DevelopmentCard extends AnchorPane {
             card.getColour().getUIColour().b
         ));
 
+        card.subscribe(this);
     }
 
     @FXML
@@ -100,4 +101,13 @@ public class DevelopmentCard extends AnchorPane {
         return cardProdComp;
     }
 
+    @Override
+    public void updateView() {
+
+    }
+
+    @Override
+    public void destroyView() {
+        card.unsubscribe(this);
+    }
 }
