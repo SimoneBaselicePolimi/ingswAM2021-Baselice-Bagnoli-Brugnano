@@ -154,7 +154,7 @@ public class Table extends GameScene implements View {
                                             message -> {
                                                 clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
                                                 clientManager.handleGameUpdates(message.gameUpdates);
-                                                clientManager.loadScene("FaithPath.fxml");
+                                                clientManager.loadScene("PlayerDashboard.fxml");
                                                 return CompletableFuture.<Void>completedFuture(null);
                                             }
                                         ).elseIfMessageTypeCompute(
