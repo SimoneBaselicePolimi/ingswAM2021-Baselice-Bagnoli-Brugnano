@@ -107,6 +107,14 @@ public class Dashboard extends AnchorPane {
             LeaderCard leaderCardComp = new LeaderCard(lc);
             playerLeaderCards.add(leaderCardComp);
             leaderCardsContainer.getChildren().add(leaderCardComp);
+
+            if(lc.getState().equals(LeaderCardState.ACTIVE))
+                leaderCardComp.getStoragesComp().forEach(s -> {
+                    storageRepresentationToComp.put(s.getStorageRepresentation(), s);
+                    if (enableRepositioning)
+                        s.enableResourceRepositioningMode(playerContext.getTempStorage());
+                });
+
         });
 
         playerContext.getDevelopmentCardDecks().forEach(d -> {
@@ -121,7 +129,7 @@ public class Dashboard extends AnchorPane {
         return decCardDecksList;
     }
 
-    public Set<Storage> getAllStoragesComp() {
+    public Set<Storage> getAllActiveStoragesComp() {
         return new HashSet<>(storageRepresentationToComp.values());
     }
 

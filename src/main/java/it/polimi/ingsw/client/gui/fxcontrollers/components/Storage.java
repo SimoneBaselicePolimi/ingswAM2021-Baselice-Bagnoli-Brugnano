@@ -395,4 +395,8 @@ public class Storage extends AnchorPane implements View {
         storage.unsubscribe(this);
     }
 
+    public ClientResourceStorageRepresentation getStorageRepresentation() {
+        return storage;
+    }
+
 }

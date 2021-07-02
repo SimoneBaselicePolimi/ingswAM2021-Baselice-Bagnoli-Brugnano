@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leader
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
+import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
@@ -45,6 +46,8 @@ public class LeaderCard extends AnchorPane implements View {
     ClientLeaderCardRepresentation card;
 
     Set<Production> productionsComp = new HashSet<>();
+
+    Set<Storage> storagesComp = new HashSet<>();
 
     public LeaderCard(ClientLeaderCardRepresentation card) {
         this.card = card;
@@ -114,6 +117,7 @@ public class LeaderCard extends AnchorPane implements View {
         card.getResourceStorages().forEach(s -> {
             Storage storage = new Storage("PRes Sto", s); //TODO LOC
             specialPowersContainer.getChildren().add(storage);
+            storagesComp.add(storage);
         });
 
         card.getWhiteMarbleSubstitutions().forEach(s -> {
@@ -132,6 +136,10 @@ public class LeaderCard extends AnchorPane implements View {
 
     public Set<Production> getProductionsComp() {
         return new HashSet<>(productionsComp);
+    }
+
+    public Set<Storage> getStoragesComp() {
+        return new HashSet<>(storagesComp);
     }
 
     @Override
