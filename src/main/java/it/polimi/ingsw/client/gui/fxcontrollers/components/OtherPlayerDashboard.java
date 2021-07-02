@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
+import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.gui.fxcontrollers.GameScene;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.FileManager;
@@ -9,9 +10,15 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class OtherPlayerDashboard extends GameScene {
+public class OtherPlayerDashboard extends AnchorPane {
 
-    AnchorPane root;
+    @FXML
+    AnchorPane commonComponentsContainer;
+
+    @FXML
+    AnchorPane specificComponentsContainer;
+
+    public final int sceneNumber;
 
     @FXML
     AnchorPane dashboardContainer;
@@ -22,14 +29,12 @@ public class OtherPlayerDashboard extends GameScene {
         Player dashboardPlayer,
         int sceneNumber
     ) {
-        super(sceneNumber);
-
+        this.sceneNumber = sceneNumber;
         this.dashboardPlayer = dashboardPlayer;
 
         FXMLLoader fxmlLoader = new FXMLLoader();
 
-        root = new AnchorPane();
-        fxmlLoader.setRoot(root);
+        fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
         try {
@@ -42,14 +47,15 @@ public class OtherPlayerDashboard extends GameScene {
 
     }
 
-    @Override
+    @FXML
     protected void initialize() {
-        super.initialize();
-
+        GameScene.initializeGameSceneSelector(
+            sceneNumber,
+            commonComponentsContainer,
+            specificComponentsContainer,
+            GuiClientManager.getInstance()
+        );
         dashboardContainer.getChildren().add(new Dashboard(dashboardPlayer, false));
     }
 
-    public AnchorPane getRoot() {
-        return root;
-    }
 }

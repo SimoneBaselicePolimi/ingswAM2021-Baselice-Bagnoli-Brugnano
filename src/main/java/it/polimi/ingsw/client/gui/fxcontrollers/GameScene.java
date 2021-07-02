@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.GameState;
+import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.gui.fxcontrollers.components.OtherPlayerDashboard;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.Player;
@@ -32,10 +33,12 @@ public class GameScene extends AbstractController implements View {
         this.sceneNumber = sceneNumber;
     }
 
-    @FXML
-    protected void initialize() {
-
-        clientManager.getGameContextRepresentation().subscribe(this);
+    public static void initializeGameSceneSelector(
+        int sceneNumber,
+        AnchorPane commonComponentsContainer,
+        AnchorPane specificComponentsContainer,
+        GuiClientManager clientManager
+    ) {
 
         GameSceneSelector commonComponentsSelector = new GameSceneSelector(
             List.of(
@@ -71,7 +74,7 @@ public class GameScene extends AbstractController implements View {
                         new GameSceneSelector.Selection(
                             p.playerName,
                             Colour.WHITE,
-                            () -> new OtherPlayerDashboard(p, index.getAndIncrement()).getRoot()
+                            () -> new OtherPlayerDashboard(p, index.getAndIncrement())
                         )
                     );
             }
@@ -86,6 +89,12 @@ public class GameScene extends AbstractController implements View {
 
         toggleGroup.selectToggle(toggleGroup.getToggles().get(sceneNumber));
 
+    }
+
+    @FXML
+    protected void initialize() {
+        clientManager.getGameContextRepresentation().subscribe(this);
+        initializeGameSceneSelector(sceneNumber, commonComponentsContainer, specificComponentsContainer, clientManager);
         updateView();
     }
 
