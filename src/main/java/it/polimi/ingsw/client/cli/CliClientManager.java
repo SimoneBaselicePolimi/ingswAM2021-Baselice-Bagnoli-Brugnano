@@ -85,4 +85,10 @@ public class CliClientManager extends ClientManager {
         return consoleDisplayHeight;
     }
 
+    @Override
+    public void onConnectionWithServerDropped() {
+        tellUserLocalized("client.errors.onConnectionWithServerDropped");
+        System.exit(0);
+    }
+
 }

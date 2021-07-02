@@ -18,4 +18,15 @@ public class NetworkProto {
 
     }
 
+    public static class PING_PROTO {
+
+        public static final long MIN_INTERVAL_BETWEEN_PINGS = 350; //500
+        public static final long PING_REQUEST_FREQUENCY_MILLIS = 900; //400
+        public static final long NO_COMMUNICATION_ERROR_THRESHOLD = 2550; //1550
+
+        public static final byte[] PING_TYPE_REQUEST = {0};
+        public static final byte[] PING_TYPE_ANSWER = {1};
+
+    }
+
 }

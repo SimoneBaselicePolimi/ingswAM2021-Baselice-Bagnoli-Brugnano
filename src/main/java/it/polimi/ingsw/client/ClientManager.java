@@ -54,6 +54,8 @@ public class ClientManager {
         gameHistoryRepresentation = new ClientGameHistoryRepresentation(new ArrayList<>());
     }
 
+    public void onConnectionWithServerDropped() {}
+
     public synchronized void handleServerMessage(ServerMessage serverMessage) {
         if(serverAnswerable != null && !serverAnswerable.isDone()) {
             serverAnswerable.complete(serverMessage);

@@ -105,4 +105,9 @@ public class GameController extends ClientHandler {
         return players.stream().map(Player::getName).reduce("", (s, n) -> s + "#" + n);
     }
 
+    @Override
+    public void onConnectionDropped(Client client) {
+       //TODO
+    }
+
 }
