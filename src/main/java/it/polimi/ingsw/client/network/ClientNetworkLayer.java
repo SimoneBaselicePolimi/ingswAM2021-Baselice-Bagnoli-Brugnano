@@ -45,7 +45,7 @@ public class ClientNetworkLayer extends Thread {
         this.messageFromServerProcessingPolicy = messageFromServerProcessingPolicy;
     }
 
-    public void sendMessage(RawMessage messageToSend) throws ClientNotConnectedException, IOException {
+    public synchronized void sendMessage(RawMessage messageToSend) throws ClientNotConnectedException, IOException {
         if(socketChannel == null)
             throw new ClientNotConnectedException();
         messageWriter.writeMessage(messageToSend);
