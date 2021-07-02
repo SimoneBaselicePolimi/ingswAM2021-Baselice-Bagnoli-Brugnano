@@ -49,8 +49,8 @@ public class YAMLSerializationWorker extends Thread {
                     byte[] messageContent = SerializationHelper.serializeYamlAsBytes(messageToSerialize);
                     ServerRawMessage serverRawMessage = new ServerRawMessage(
                         messageReceivers.get(messageToSerialize),
-                        NetworkProto.MESSAGE_FORMAT.YAML,
                         NetworkProto.MESSAGE_TYPE.GAME_MESSAGE,
+                        NetworkProto.MESSAGE_FORMAT.YAML,
                         messageContent.length,
                         messageContent
                     );

@@ -11,6 +11,7 @@ client:
     userInputNotExpected: "Aspetta, operazione in corso..."
     invalidInput: "Input non valido"
     turnCanNotEndBeforeMainAction: "Non puoi terminare il turno prima di aver compiuto l'azione principale."
+    onConnectionWithServerDropped: "Connessione col server interrotta. Partita terminata"
 
   gui:
     dashboard:

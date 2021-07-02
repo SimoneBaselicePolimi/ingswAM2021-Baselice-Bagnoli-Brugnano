@@ -64,6 +64,8 @@ public class GuiClient extends Application {
 
     public static void startClient() throws IOException, ClientNotConnectedException {
 
+        ProjectLogger.getLogger().setLogInConsole(false);
+
         ClientNetworkLayer networkLayer = new ClientNetworkLayer(
             TCP_SERVER_ADDRESS,
             TCP_SERVER_PORT
