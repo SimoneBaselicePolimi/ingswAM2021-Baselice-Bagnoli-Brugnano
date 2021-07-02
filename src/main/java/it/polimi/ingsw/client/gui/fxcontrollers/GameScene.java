@@ -50,7 +50,7 @@ public class GameScene extends AbstractController implements View {
 
         if(clientManager.getGameState().equals(GameState.GAME_SETUP))
             availableScenes =  List.of(
-                new GameSceneSelector.Selection("Begin setup", "LeaderCardsSetup.fxml")
+                new GameSceneSelector.Selection("Setup", "LeaderCardsSetup.fxml")
             );
         else
             availableScenes = List.of(

@@ -119,10 +119,9 @@ leaderCards:
     victoryPoints: 3
   - leaderCardID: LEADER_PROD_1
     requirements:
-      - requirementType: COLOUR_AND_LEVEL
-        cardColour: YELLOW
-        cardLevel: 2
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     productions:
       - costs:
           resources:
@@ -135,10 +134,9 @@ leaderCards:
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_2
     requirements:
-      - requirementType: COLOUR_AND_LEVEL
-        cardColour: GREEN
-        cardLevel: 2
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     productions:
       - costs:
           resources:
@@ -151,10 +149,9 @@ leaderCards:
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_3
     requirements:
-      - requirementType: COLOUR_AND_LEVEL
-        cardColour: PURPLE
-        cardLevel: 2
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     productions:
       - costs:
           resources:
@@ -167,10 +164,9 @@ leaderCards:
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_4
     requirements:
-      - requirementType: COLOUR_AND_LEVEL
-        cardColour: BLUE
-        cardLevel: 2
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     productions:
       - costs:
           resources:

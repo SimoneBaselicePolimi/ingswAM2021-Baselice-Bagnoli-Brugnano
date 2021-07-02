@@ -31,6 +31,9 @@
              <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
              <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
+
+         <!--        custom scene components:          -->
+
          </GridPane>
           <GridPane prefWidth="928.0" GridPane.columnIndex="1">
               <columnConstraints>
@@ -98,11 +101,6 @@
 
               </children>
           </GridPane>
-
-
-          <!--        custom scene components:          -->
-
-
 
       </GridPane>
 

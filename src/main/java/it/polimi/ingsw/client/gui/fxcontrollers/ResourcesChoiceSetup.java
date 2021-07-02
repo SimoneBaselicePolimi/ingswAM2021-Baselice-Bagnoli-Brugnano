@@ -25,13 +25,6 @@ public class ResourcesChoiceSetup extends AbstractController{
     @FXML
     public AnchorPane container;
 
-    private int totalResourcesSelected = 0;
-
-    int coinsCurrentSelected = 0;
-    int stonesCurrentSelected = 0;
-    int servantsCurrentSelected = 0;
-    int shieldsCurrentSelected = 0;
-
     public ResourcesChoiceSetup() {
     }
 

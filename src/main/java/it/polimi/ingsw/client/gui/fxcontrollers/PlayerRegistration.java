@@ -1,20 +1,17 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
-import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
 import it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
 import it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage;
 import it.polimi.ingsw.client.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.localization.Localization;
-import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.server.model.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 public class PlayerRegistration extends AbstractController {
@@ -35,8 +32,6 @@ public class PlayerRegistration extends AbstractController {
     Button confirmButton;
 
     public PlayerRegistration() {
-
-
     }
 
     @FXML

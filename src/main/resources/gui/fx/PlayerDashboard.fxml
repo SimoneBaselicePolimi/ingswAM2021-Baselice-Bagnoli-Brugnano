@@ -41,7 +41,7 @@
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints prefHeight="30" />
+                <RowConstraints prefHeight="30" valignment="CENTER"/>
                 <RowConstraints vgrow="ALWAYS" />
                 <RowConstraints prefHeight="30" />
             </rowConstraints>

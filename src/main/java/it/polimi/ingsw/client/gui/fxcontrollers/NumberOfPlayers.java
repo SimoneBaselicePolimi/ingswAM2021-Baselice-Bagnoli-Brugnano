@@ -2,20 +2,13 @@ package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
-import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
 import it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
-import it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage;
-import it.polimi.ingsw.client.servermessage.PlayerNameAlreadyExistsServerMessage;
 import it.polimi.ingsw.localization.Localization;
-import it.polimi.ingsw.server.model.Player;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class NumberOfPlayers extends AbstractController{
@@ -33,7 +26,6 @@ public class NumberOfPlayers extends AbstractController{
     ChoiceBox choiceBox;
 
     public NumberOfPlayers() {
-
     }
 
     @FXML

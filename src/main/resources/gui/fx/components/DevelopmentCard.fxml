@@ -6,8 +6,6 @@
 
 <fx:root prefHeight="150.0" prefWidth="190" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <!--      <ImageView fx:id="backgroundImg" fitHeight="227.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">-->
-        <!--         </ImageView>-->
 
         <GridPane fx:id="container" prefHeight="150.0" prefWidth="190.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;">
             <columnConstraints>
@@ -34,7 +32,7 @@
                         <Font size="16.0" />
                     </font>
                 </Label>
-                <Label text="VP: 2" GridPane.columnIndex="1" />
+                <Label fx:id="victoryPointsLabel" text="VP: 2" GridPane.columnIndex="1" />
             </GridPane>
 
             <HBox fx:id="purchaseCostContainer" alignment="CENTER_LEFT" spacing="6" GridPane.rowIndex="1">
