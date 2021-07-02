@@ -1,14 +1,19 @@
 package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.GameState;
+import it.polimi.ingsw.client.gui.fxcontrollers.components.OtherPlayerDashboard;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.utils.Colour;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameScene extends AbstractController implements View {
 
@@ -45,17 +50,32 @@ public class GameScene extends AbstractController implements View {
 
         ToggleGroup toggleGroup = commonComponentsSelector.getToggleGroup();
 
+        List<GameSceneSelector.Selection> availableScenes = new ArrayList<>();
 
-        List<GameSceneSelector.Selection> availableScenes;
-
-        if(clientManager.getGameState().equals(GameState.GAME_SETUP))
-            availableScenes =  List.of(
+        if(clientManager.getGameState().equals(GameState.GAME_SETUP)) {
+            availableScenes = List.of(
                 new GameSceneSelector.Selection("Setup", "LeaderCardsSetup.fxml")
             );
-        else
-            availableScenes = List.of(
-                    new GameSceneSelector.Selection("Dashboard", "PlayerDashboard.fxml")
+        } else {
+            availableScenes.add(
+                new GameSceneSelector.Selection(
+                    clientManager.getMyPlayer().playerName,
+                    Colour.GREEN,
+                    "PlayerDashboard.fxml"
+                )
             );
+            AtomicInteger index = new AtomicInteger(5);
+            for (Player p : clientManager.getGameContextRepresentation().getPlayersOrder()) {
+                if(!p.equals(clientManager.getMyPlayer()))
+                    availableScenes.add(
+                        new GameSceneSelector.Selection(
+                            p.playerName,
+                            Colour.WHITE,
+                            () -> new OtherPlayerDashboard(p, index.getAndIncrement()).getRoot()
+                        )
+                    );
+            }
+        }
 
         GameSceneSelector specificComponentsSelector = new GameSceneSelector(
             availableScenes,
@@ -67,7 +87,6 @@ public class GameScene extends AbstractController implements View {
         toggleGroup.selectToggle(toggleGroup.getToggles().get(sceneNumber));
 
         updateView();
-
     }
 
 
