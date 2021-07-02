@@ -33,7 +33,6 @@ public abstract class AbstractPlayerDashboardView extends CliView{
     protected List<ClientPlayerOwnedDevelopmentCardDeckRepresentation> playerDecks;
 
     protected GridView storagesAndBaseProdGrid, devCardDecksGrid;
-    protected DevCardDashboardDeckView devCardDashboardDeckView;
     protected List<DevCardDashboardDeckView> devCardDashboardDeckViewList;
     protected List<GridView> baseProductionBorderLists;
 
@@ -71,8 +70,9 @@ public abstract class AbstractPlayerDashboardView extends CliView{
 
         devCardDashboardDeckViewList = new ArrayList<>();
         for (int i = 0; i < playerDecks.size(); i++) {
-            devCardDashboardDeckView = new DevCardDashboardDeckView(dashboardPlayer, i, clientManager);
-            devCardDashboardDeckViewList.add(devCardDashboardDeckView);
+            devCardDashboardDeckViewList.add(
+                new DevCardDashboardDeckView(dashboardPlayer, i, clientManager)
+            );
         }
 
         int r=0;
@@ -147,7 +147,7 @@ public abstract class AbstractPlayerDashboardView extends CliView{
         storagesAndBaseProdGrid.setRowWeight(0, 2);
 
         for (int i = 0; i < playerDecks.size(); i++) {
-            devCardDecksGrid.setView(0, i, devCardDashboardDeckView);
+            devCardDecksGrid.setView(0, i, devCardDashboardDeckViewList.get(i));
         }
 
         GridView storagesGrid = new GridView(

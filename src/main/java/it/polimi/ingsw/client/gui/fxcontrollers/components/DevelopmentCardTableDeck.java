@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -61,28 +62,32 @@ public class DevelopmentCardTableDeck extends AnchorPane implements View {
     }
 
     public void setCardBordersColour(Colour colour){
-        developmentCardComp.setBordersColour(colour);
+        if(cardOnTop != null)
+            developmentCardComp.setBordersColour(colour);
     }
 
     public void setDefaultBordersColour(){
-        developmentCardComp.setDefaultBordersColour();
+        if(cardOnTop != null)
+            developmentCardComp.setDefaultBordersColour();
     }
 
     @Override
     public void updateView() {
-        if(cardOnTop == null || !cardOnTop.equals(deck.getCardOnTop())) {
-            if(developmentCardComp != null)
-                deckContainer.getChildren().remove(developmentCardComp);
-            cardOnTop = deck.getCardOnTop();
-            developmentCardComp = new DevelopmentCard(cardOnTop);
-            GridPane.setRowIndex(developmentCardComp, 0);
-            GridPane.setColumnIndex(developmentCardComp, 0);
-            deckContainer.getChildren().add(developmentCardComp);
-        }
-        contentLabel.setText(Localization.getLocalizationInstance().getString(
-            "client.gui.devCardTableDeck.deckSize",
-            deck.getNumberOfCardsInDeck()
-        ));
+        Platform.runLater(() -> {
+            if (cardOnTop == null || !cardOnTop.equals(deck.getCardOnTop())) {
+                if (developmentCardComp != null)
+                    deckContainer.getChildren().remove(developmentCardComp);
+                cardOnTop = deck.getCardOnTop();
+                developmentCardComp = new DevelopmentCard(cardOnTop);
+                GridPane.setRowIndex(developmentCardComp, 0);
+                GridPane.setColumnIndex(developmentCardComp, 0);
+                deckContainer.getChildren().add(developmentCardComp);
+            }
+            contentLabel.setText(Localization.getLocalizationInstance().getString(
+                "client.gui.devCardTableDeck.deckSize",
+                deck.getNumberOfCardsInDeck()
+            ));
+        });
     }
 
     @Override

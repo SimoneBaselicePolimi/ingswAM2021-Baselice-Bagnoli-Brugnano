@@ -222,8 +222,16 @@ public class GameTurnMainActionState extends LeaderCardActionState {
 				request.deckNumber
 			);
 
-		//remove required cost resources from the shelves of the player
-		playerContext.removeResourcesBasedOnResourcesStoragesPriority(request.developmentCard.getPurchaseCost());
+		//remove required cost resources from the shelves of the player, then the leader card storages and eventually
+		// the infinite chest
+		playerContext.removeResourcesBasedOnResourcesStoragesPriority(
+		    ResourceUtils.relativeDifference(
+				request.developmentCard.getPurchaseCost(),
+				playerContext.getActiveLeaderCardsDiscounts()
+			).entrySet().stream()
+				.filter(e -> e.getValue() > 0)
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+		);
 
 		gameManager.getGameHistory().addAction(
 			new DevelopmentAction(activePlayer, request.developmentCard)

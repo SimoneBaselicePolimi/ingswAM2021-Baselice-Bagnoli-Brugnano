@@ -16,6 +16,7 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.utils.Colour;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SetProperty;
@@ -81,7 +82,6 @@ public class Table extends GameScene implements View {
     ClientDevelopmentCardsTableRepresentation table;
 
     BooleanProperty isCardPurchaseModeEnabled =  new SimpleBooleanProperty(false);
-    BooleanProperty canMyPlayerDoMainAction = new SimpleBooleanProperty(false);
 
     SetProperty<ClientDevelopmentCardRepresentation> purchasableCards = new SimpleSetProperty<>(
         FXCollections.observableSet(new HashSet<>())
@@ -154,7 +154,7 @@ public class Table extends GameScene implements View {
                                             message -> {
                                                 clientManager.setGameState(GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION);
                                                 clientManager.handleGameUpdates(message.gameUpdates);
-                                                clientManager.loadScene("FaithPath.fxml");
+                                                clientManager.loadScene("PlayerDashboard.fxml");
                                                 return CompletableFuture.<Void>completedFuture(null);
                                             }
                                         ).elseIfMessageTypeCompute(
@@ -196,13 +196,17 @@ public class Table extends GameScene implements View {
 
     @Override
     public void updateView() {
-        canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
-        purchasableCards.get().clear();
-        purchasableCards.get().addAll(table.getAllPurchasableCardsForMyPlayer());
+        super.updateView();
+        Platform.runLater(() -> {
+            canMyPlayerDoMainAction.setValue(clientManager.getGameState().equals(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION));
+            purchasableCards.get().clear();
+            purchasableCards.get().addAll(table.getAllPurchasableCardsForMyPlayer());
+        });
     }
 
     @Override
     public void destroyView() {
+        super.destroyView();
         table.unsubscribe(this);
         clientManager.getGameContextRepresentation().unsubscribe(this);
     }

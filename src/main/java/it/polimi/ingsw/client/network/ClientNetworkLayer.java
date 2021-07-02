@@ -45,7 +45,7 @@ public class ClientNetworkLayer extends Thread {
         this.messageFromServerProcessingPolicy = messageFromServerProcessingPolicy;
     }
 
-    public void sendMessage(RawMessage messageToSend) throws ClientNotConnectedException, IOException {
+    public synchronized void sendMessage(RawMessage messageToSend) throws ClientNotConnectedException, IOException {
         if(socketChannel == null)
             throw new ClientNotConnectedException();
         messageWriter.writeMessage(messageToSend);
@@ -61,17 +61,11 @@ public class ClientNetworkLayer extends Thread {
             messageWriter = new ClientMessageWriter(socketChannel);
             while (true) {
                 RawMessage newMessageFromServer = messageReader.readMessage();
-//                logger.log(
-//                    LogLevel.BORING_INFO,
-//                    "New message from server [type: %s, bytes: %s]",
-//                    newMessageFromServer.type,
-//                    newMessageFromServer.valueLength
-//                );
                 messageFromServerProcessingPolicy.accept(newMessageFromServer);
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            ProjectLogger.getLogger().log(e);
         }
     }
 

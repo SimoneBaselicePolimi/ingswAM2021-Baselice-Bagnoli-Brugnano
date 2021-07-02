@@ -57,6 +57,8 @@ public abstract class ClientHandler extends Thread {
 
     }
 
+    public void onConnectionDropped(Client client) { }
+
     protected void handleNewMessage(ClientMessage message) {};
 
     protected void sendMessage(ServerMessage message, Client receiver) {

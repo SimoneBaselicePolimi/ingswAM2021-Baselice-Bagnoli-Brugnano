@@ -2,7 +2,8 @@ package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
 import it.polimi.ingsw.client.gui.fxcontrollers.GuiCompUtils;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
-import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
+import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
@@ -11,16 +12,20 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 
-public class DevelopmentCard extends AnchorPane {
+public class DevelopmentCard extends AnchorPane implements View {
 
     @FXML
     GridPane container;
 
     @FXML
     Label titleLabel;
+
+    @FXML
+    Label victoryPointsLabel;
 
     @FXML
     HBox purchaseCostContainer;
@@ -30,6 +35,9 @@ public class DevelopmentCard extends AnchorPane {
 
     @FXML
     Label levelColourLabel;
+
+    @FXML
+    Production cardProdComp;
 
     ClientDevelopmentCardRepresentation card;
 
@@ -73,7 +81,12 @@ public class DevelopmentCard extends AnchorPane {
     @FXML
     private void initialize() {
 
-        Production cardProdComp = new Production(card.getProduction());
+        titleLabel.setText(Localization.getLocalizationInstance().getString("developmentCards.name"));
+        victoryPointsLabel.setText("+ " + card.getVictoryPoints());
+        victoryPointsLabel.setFont(new Font(15));
+        purchaseCostLabel.setText(Localization.getLocalizationInstance().getString("developmentCards.cost"));
+
+        cardProdComp = new Production(card.getProduction());
         GridPane.setColumnIndex(cardProdComp, 0);
         GridPane.setRowIndex(cardProdComp, 2);
         container.getChildren().add(cardProdComp);
@@ -90,6 +103,20 @@ public class DevelopmentCard extends AnchorPane {
             card.getColour().getUIColour().b
         ));
 
+        card.subscribe(this);
     }
 
+    @FXML
+    public Production getProductionComp() {
+        return cardProdComp;
+    }
+
+    @Override
+    public void updateView() {
+    }
+
+    @Override
+    public void destroyView() {
+        card.unsubscribe(this);
+    }
 }

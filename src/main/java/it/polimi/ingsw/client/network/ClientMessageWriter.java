@@ -20,7 +20,7 @@ public class ClientMessageWriter {
         this.socket = socket;
     }
 
-    public void writeMessage(RawMessage messageToSend) throws IOException {
+    public synchronized void writeMessage(RawMessage messageToSend) throws IOException {
 
         headerBuffer.put(messageToSend.type);
         headerBuffer.put(messageToSend.valueFormat);

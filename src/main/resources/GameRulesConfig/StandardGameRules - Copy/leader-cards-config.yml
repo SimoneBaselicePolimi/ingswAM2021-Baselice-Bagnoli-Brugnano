@@ -1,0 +1,239 @@
+# STANDARD RULES VALUES #
+
+## LEADER CARDS CONFIGURATION FILE ##
+# This file sets all the parameters regarding the Leader Cards in the Game (16 Cards in the standard Game).
+
+# Each Leader Card is identified by:
+#  - unique ID
+#  - specific type of requirements (the Player who owns this Leader Card must satisfy these requirements to activate
+#    this Card and obtain its special abilities):
+#    - COLOUR: request for a specific number of Development Cards (even the covered ones) of a certain colour
+#    - COLOUR_AND_LEVEL: request for a specific number of Development Cards (even the covered ones) of a certain colour and level
+#    - RESOURCE: request for a specific number of Resources to be present in the Player's Storages
+#  - special abilities, which can be used by the Player only after activating this Card
+#    (according to the standard Game rules, each Leader Card has only one of the following abilities):
+#    - Development Card Cost Discount: the Player who owns this Leader Card, when buying a Development Card,
+#      can pay its cost with the specified discount of the indicated Resource
+#    - Special Leader Storages: extra special depots used only to store the indicated Resources within a certain amount
+#    - Special Marble Substitution (White Marble Substitution, according the standard Game rules):
+#      when taking Resources from the Market, the Player can choose which Resource to take from those given by this
+#      special ability for each of the special Marbles
+#    - Production Power (the Player can pay the following costs to obtain the specified rewards), characterized by:
+#      - costs:
+#        - cost made of specific type and number of Resources
+#        - cost made of a generic type of Resource (Player can choose), in a fixed quantity
+#      - rewards:
+#        - reward made of specific type and number of Resources
+#        - reward made of a generic type of Resource (Player can choose), in a fixed quantity
+#        - reward made of a fixed number of Faith Points
+#      (according to the standard Game rules, Production's rewards are 1 generic Resource (Player can choose) and 1 Faith Point)
+#  - number of Victory Points given at the end of the Game to the Player who owns this Leader Card
+leaderCards:
+  - leaderCardID: LEADER_DISC_1
+    requirements:
+      - requirementType: COLOUR
+        cardColour: YELLOW
+        numberOfCards: 1
+      - requirementType: COLOUR
+        cardColour: PURPLE
+        numberOfCards: 1
+    developmentCardCostDiscounts:
+      - resourceType: COINS
+        amountToDiscount: 1
+    victoryPoints: 2
+  - leaderCardID: LEADER_DISC_2
+    requirements:
+      - requirementType: COLOUR
+        cardColour: GREEN
+        numberOfCards: 1
+      - requirementType: COLOUR
+        cardColour: BLUE
+        numberOfCards: 1
+    developmentCardCostDiscounts:
+      - resourceType: STONES
+        amountToDiscount: 1
+    victoryPoints: 2
+  - leaderCardID: LEADER_DISC_3
+    requirements:
+      - requirementType: COLOUR
+        cardColour: BLUE
+        numberOfCards: 1
+      - requirementType: COLOUR
+        cardColour: PURPLE
+        numberOfCards: 1
+    developmentCardCostDiscounts:
+      - resourceType: SHIELDS
+        amountToDiscount: 1
+    victoryPoints: 2
+  - leaderCardID: LEADER_DISC_4
+    requirements:
+      - requirementType: COLOUR
+        cardColour: YELLOW
+        numberOfCards: 1
+      - requirementType: COLOUR
+        cardColour: GREEN
+        numberOfCards: 1
+    developmentCardCostDiscounts:
+      - resourceType: SERVANTS
+        amountToDiscount: 1
+    victoryPoints: 2
+  - leaderCardID: LEADER_STOR_1
+    requirements:
+      - requirementType: RESOURCE
+        resourceType: SHIELDS
+        numberOfResources: 5
+    resourceStorages:
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: COINS
+    victoryPoints: 3
+  - leaderCardID: LEADER_STOR_2
+    requirements:
+      - requirementType: RESOURCE
+        resourceType: SERVANTS
+        numberOfResources: 5
+    resourceStorages:
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: SHIELDS
+    victoryPoints: 3
+  - leaderCardID: LEADER_STOR_3
+    requirements:
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 5
+    resourceStorages:
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: SERVANTS
+    victoryPoints: 3
+  - leaderCardID: LEADER_STOR_4
+    requirements:
+      - requirementType: RESOURCE
+        resourceType: COINS
+        numberOfResources: 5
+    resourceStorages:
+      - storage:
+          rules:
+            - ruleType: MAX_RESOURCE_NUMBER
+              maxNumber: 2
+            - ruleType: SPECIFIC_RESOURCE_TYPE
+              resourceType: STONES
+    victoryPoints: 3
+  - leaderCardID: LEADER_PROD_1
+    requirements:
+      - requirementType: COLOUR_AND_LEVEL
+        cardColour: YELLOW
+        cardLevel: 2
+        numberOfCards: 1
+    productions:
+      - costs:
+          resources:
+            SHIELDS: 1
+          starResources: 0
+        rewards:
+          resources: {}
+          starResources: 1
+          faithPoints: 1
+    victoryPoints: 4
+  - leaderCardID: LEADER_PROD_2
+    requirements:
+      - requirementType: COLOUR_AND_LEVEL
+        cardColour: GREEN
+        cardLevel: 2
+        numberOfCards: 1
+    productions:
+      - costs:
+          resources:
+            COINS: 1
+          starResources: 0
+        rewards:
+          resources: {}
+          starResources: 1
+          faithPoints: 1
+    victoryPoints: 4
+  - leaderCardID: LEADER_PROD_3
+    requirements:
+      - requirementType: COLOUR_AND_LEVEL
+        cardColour: PURPLE
+        cardLevel: 2
+        numberOfCards: 1
+    productions:
+      - costs:
+          resources:
+            STONES: 1
+          starResources: 0
+        rewards:
+          resources: {}
+          starResources: 1
+          faithPoints: 1
+    victoryPoints: 4
+  - leaderCardID: LEADER_PROD_4
+    requirements:
+      - requirementType: COLOUR_AND_LEVEL
+        cardColour: BLUE
+        cardLevel: 2
+        numberOfCards: 1
+    productions:
+      - costs:
+          resources:
+            SERVANTS: 1
+          starResources: 0
+        rewards:
+          resources: {}
+          starResources: 1
+          faithPoints: 1
+    victoryPoints: 4
+  - leaderCardID: LEADER_SUB_1
+    requirements:
+      - requirementType: COLOUR
+        cardColour: YELLOW
+        numberOfCards: 2
+      - requirementType: COLOUR
+        cardColour: BLUE
+        numberOfCards: 1
+    specialMarbleSubstitutions:
+      - resourceType: SERVANTS
+    victoryPoints: 5
+  - leaderCardID: LEADER_SUB_2
+    requirements:
+      - requirementType: COLOUR
+        cardColour: PURPLE
+        numberOfCards: 2
+      - requirementType: COLOUR
+        cardColour: GREEN
+        numberOfCards: 1
+    specialMarbleSubstitutions:
+      - resourceType: COINS
+    victoryPoints: 5
+  - leaderCardID: LEADER_SUB_3
+    requirements:
+      - requirementType: COLOUR
+        cardColour: BLUE
+        numberOfCards: 2
+      - requirementType: COLOUR
+        cardColour: YELLOW
+        numberOfCards: 1
+    specialMarbleSubstitutions:
+      - resourceType: STONES
+    victoryPoints: 5
+  - leaderCardID: LEADER_SUB_4
+    requirements:
+      - requirementType: COLOUR
+        cardColour: GREEN
+        numberOfCards: 2
+      - requirementType: COLOUR
+        cardColour: PURPLE
+        numberOfCards: 1
+    specialMarbleSubstitutions:
+      - resourceType: SHIELDS
+    victoryPoints: 5

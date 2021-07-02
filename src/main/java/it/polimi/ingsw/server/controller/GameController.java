@@ -1,15 +1,11 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.server.controller.servermessage.GameInitializationStartedServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.InvalidClientMessageServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
+import it.polimi.ingsw.server.controller.servermessage.*;
 import it.polimi.ingsw.server.GlobalPlayersManager;
 import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.GetInitialGameRepresentationClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.ReadyToStartGameClientMessage;
-import it.polimi.ingsw.server.controller.servermessage.GameInitialRepresentationServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContextCreationError;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
@@ -103,6 +99,16 @@ public class GameController extends ClientHandler {
 
     protected String generateGameName() {
         return players.stream().map(Player::getName).reduce("", (s, n) -> s + "#" + n);
+    }
+
+    @Override
+    public void onConnectionDropped(Client client) {
+        players.stream()
+            .filter(p -> !p.equals(playersManager.getPlayerAssociatedWithClient(client)))
+            .forEach(p -> sendMessage(
+            new PlayerDisconnectedServerMessage(playersManager.getPlayerAssociatedWithClient(client)),
+            playersManager.getClientForPlayer(p)
+        ));
     }
 
 }

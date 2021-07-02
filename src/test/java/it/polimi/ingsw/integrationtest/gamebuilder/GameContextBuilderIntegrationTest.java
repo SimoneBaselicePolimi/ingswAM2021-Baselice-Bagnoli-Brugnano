@@ -38,8 +38,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GameContextBuilderIntegrationTest {
@@ -174,6 +173,9 @@ public class GameContextBuilderIntegrationTest {
 
     @BeforeEach
     void buildGameContext() throws IOException, GameContextCreationError {
+
+        lenient().doReturn(gameItemsManager).when(gameManager).getGameItemsManager();
+
         player1 = new Player("id1", gameItemsManager);
         player2 = new Player("id2", gameItemsManager);
         player3 = new Player("id3", gameItemsManager);

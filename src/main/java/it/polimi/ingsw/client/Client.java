@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.client.cli.ConsoleWriter;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.view.PreGameView;
+import it.polimi.ingsw.client.clientmessage.ClientMessage;
 import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.network.NetworkProto;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
+import it.polimi.ingsw.network.PingWorker;
 import it.polimi.ingsw.server.network.RawMessage;
 import it.polimi.ingsw.utils.serialization.SerializationHelper;
 
@@ -64,6 +66,8 @@ public class Client {
 
     public void startClient() throws IOException, ClientNotConnectedException {
 
+        ProjectLogger.getLogger().setLogInConsole(false);
+
         ClientNetworkLayer networkLayer = new ClientNetworkLayer(
             TCP_SERVER_ADDRESS,
             TCP_SERVER_PORT
@@ -78,28 +82,43 @@ public class Client {
                     messageContent.length,
                     messageContent
                 ));
-            } catch (JsonProcessingException e) { //TODO
-                e.printStackTrace();
-            } catch (ClientNotConnectedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (ClientNotConnectedException | IOException e) { //TODO
+                logger.log((Exception) e);
             }
         };
 
         CliClientManager clientManager = CliClientManager.initializeInstance(consoleWriter, messageSender);
 
+        PingWorker pingWorker = new PingWorker(
+            rawMessage -> {
+                try {
+                    networkLayer.sendMessage(rawMessage);
+                } catch (ClientNotConnectedException e) {
+                    logger.log(LogLevel.ERROR, "Unexpected error while trying to send a ping message");
+                } catch (IOException e) {
+                    logger.log(LogLevel.ERROR, "Unexpected error while trying to send a ping message");
+                    logger.log(e);
+                }
+            },
+            clientManager::onConnectionWithServerDropped
+        );
+
         networkLayer.setMessageFromServerProcessingPolicy(messageFromServer -> {
-            try {
-                ServerMessage deserializedMessage = SerializationHelper.deserializeYamlFromBytes(
-                    messageFromServer.value,
-                    ServerMessage.class,
-                    clientManager.getContextInfoMap()
-                );
-                clientManager.handleServerMessage(deserializedMessage);
-            } catch (IOException e) {
-                //TODO
-                e.printStackTrace();
+            if (messageFromServer.type == NetworkProto.MESSAGE_TYPE.PING_MESSAGE) {
+                pingWorker.handlePingMessage(messageFromServer);
+            } else if(messageFromServer.type == NetworkProto.MESSAGE_TYPE.GAME_MESSAGE) {
+                try {
+                    ServerMessage deserializedMessage = SerializationHelper.deserializeYamlFromBytes(
+                        messageFromServer.value,
+                        ServerMessage.class,
+                        clientManager.getContextInfoMap()
+                    );
+                    clientManager.handleServerMessage(deserializedMessage);
+                } catch (IOException e) {
+                    logger.log(e);
+                }
+            } else {
+                logger.log(LogLevel.ERROR, "Message of unexpected type code [%s]", String.valueOf(messageFromServer.type));
             }
         });
 
@@ -107,6 +126,7 @@ public class Client {
 
         new PreGameView(clientManager, clientManager.getConsoleDisplayHeight(), clientManager.getConsoleDisplayWidth());
 
+        pingWorker.start();
 
         while (true) {
             String input = getUserInputBlocking();

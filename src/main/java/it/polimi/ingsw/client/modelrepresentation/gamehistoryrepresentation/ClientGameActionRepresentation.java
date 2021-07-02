@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientDiscardCardsSinglePlayerTokenActionRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientFaithPathMoveBlackCrossActionRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientMoveBlackCrossAndShuffleSinglePlayerTokenActionRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientMoveBlackCrossSinglePlayerTokenActionRepresentation;
 
 import java.util.List;
 
@@ -23,7 +27,11 @@ import java.util.List;
     @JsonSubTypes.Type(value = ClientPostTurnFinalActionRepresentation.class, name = "PostTurnFinalAction"),
     @JsonSubTypes.Type(value = ClientProductionActionRepresentation.class, name = "ProductionAction"),
     @JsonSubTypes.Type(value = ClientSetupChoiceActionRepresentation.class, name = "SetupChoiceAction"),
-    @JsonSubTypes.Type(value = ClientSetupStartedActionRepresentation.class, name = "SetupStartedAction")
+    @JsonSubTypes.Type(value = ClientSetupStartedActionRepresentation.class, name = "SetupStartedAction"),
+    @JsonSubTypes.Type(value = ClientDiscardCardsSinglePlayerTokenActionRepresentation.class, name = "DiscardCardsSinglePlayerTokenAction"),
+    @JsonSubTypes.Type(value = ClientMoveBlackCrossAndShuffleSinglePlayerTokenActionRepresentation.class, name = "MoveBlackCrossAndShuffleSinglePlayerTokenAction"),
+    @JsonSubTypes.Type(value = ClientMoveBlackCrossSinglePlayerTokenActionRepresentation.class, name = "MoveBlackCrossSinglePlayerTokenAction"),
+    @JsonSubTypes.Type(value = ClientFaithPathMoveBlackCrossActionRepresentation.class, name = "FaithPathMoveBlackCrossAction")
 })
 public abstract class ClientGameActionRepresentation extends ClientRepresentation {
 

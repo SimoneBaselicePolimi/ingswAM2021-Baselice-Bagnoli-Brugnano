@@ -14,6 +14,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -230,5 +231,7 @@ public interface PlayerContext extends Representable<ServerPlayerContextRepresen
      */
     Set<DevelopmentCard> getDevelopmentCardsOnTop();
 
-    Set<DevelopmentCard> getPurchasableDevelopmentCards();
+    List<PlayerOwnedDevelopmentCardDeck> getPlayerDevCardsDecks();
+
+
 }

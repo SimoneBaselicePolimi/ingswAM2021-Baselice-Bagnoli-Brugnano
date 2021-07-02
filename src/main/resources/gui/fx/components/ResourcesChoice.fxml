@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root prefHeight="500" prefWidth="500" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="150" prefWidth="500" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-       <GridPane prefHeight="500" prefWidth="500">
+       <GridPane prefHeight="150" prefWidth="500">
 
            <columnConstraints>
                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />

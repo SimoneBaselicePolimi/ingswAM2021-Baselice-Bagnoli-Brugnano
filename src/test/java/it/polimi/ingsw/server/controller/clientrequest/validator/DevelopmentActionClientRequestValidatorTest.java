@@ -1,8 +1,5 @@
 package it.polimi.ingsw.server.controller.clientrequest.validator;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import it.polimi.ingsw.server.controller.clientrequest.DevelopmentActionClientRequest;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
@@ -15,7 +12,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -91,7 +94,6 @@ class DevelopmentActionClientRequestValidatorTest extends ValidatorTest<Developm
             1
         );
 
-        assertTrue(validator.getErrorMessage(request1, gameManager).isPresent());
         assertTrue(validator.getErrorMessage(request2, gameManager).isEmpty());
     }
 

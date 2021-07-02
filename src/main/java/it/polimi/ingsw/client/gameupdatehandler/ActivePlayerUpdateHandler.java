@@ -8,11 +8,11 @@ public class ActivePlayerUpdateHandler extends GameUpdateHandler<ClientActivePla
 
     @Override
     public void handleGameUpdate(ClientActivePlayerUpdate update, ClientManager clientManager) {
-        clientManager.getGameContextRepresentation().setActivePlayer(update.newActivePlayer);
         if(update.newActivePlayer.equals(clientManager.getMyPlayer())) {
             clientManager.setGameState(GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION);
         } else {
             clientManager.setGameState(GameState.ANOTHER_PLAYER_TURN);
         }
+        clientManager.getGameContextRepresentation().setActivePlayer(update.newActivePlayer);
     }
 }

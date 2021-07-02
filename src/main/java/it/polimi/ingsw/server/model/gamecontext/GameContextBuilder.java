@@ -4,9 +4,7 @@ import it.polimi.ingsw.configfile.*;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
-import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathImp;
-import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
+import it.polimi.ingsw.server.model.gamecontext.faith.*;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
@@ -86,20 +84,45 @@ public class GameContextBuilder {
 		return new GameContextImp(market, developmentCardsTable, faithPath, playersOrder, playerContexts);
 	}
 
-	public GameContext buildGameContext() throws GameContextCreationError {
+	public SinglePlayerGameContext initializeSinglePlayerGameContext(
+		Market market,
+		DevelopmentCardsTable developmentCardsTable,
+		FaithPathSinglePlayer faithPath,
+		List<Player> playersOrder,
+		Map<Player, PlayerContext> playerContexts
+	) {
+		return new SinglePlayerGameContextImp(market, developmentCardsTable, faithPath, playersOrder, playerContexts);
+	}
 
+	public GameContext buildGameContext() throws GameContextCreationError {
 		logger.log(LogLevel.INFO, "GameContext creation started");
 
 		Market market = buildMarket();
 		gameRules.leaderCardsConfig.leaderCards.forEach(this::buildLeaderCard);
 		DevelopmentCardsTable developmentCardsTable = buildDevelopmentCardsTable();
-		FaithPath faithPath = buildFaithPath();
 		List<Player> playersInOrder = generateRandomPlayersOrder();
+		FaithPath faithPath = buildFaithPath();
 		Map<Player, PlayerContext> playerContexts = new HashMap<>();
 		for(Player player : players)
 			playerContexts.put(player, buildPlayerContext(player));
 
 		return initializeGameContext(market, developmentCardsTable, faithPath, playersInOrder, playerContexts);
+	}
+
+	public SinglePlayerGameContext buildSinglePlayerGameContext() throws GameContextCreationError {
+
+		logger.log(LogLevel.INFO, "GameContext creation started (single player mode)");
+
+		Market market = buildMarket();
+		FaithPathSinglePlayer faithPathSinglePlayer = buildFaithPathSinglePlayer();
+		gameRules.leaderCardsConfig.leaderCards.forEach(this::buildLeaderCard);
+		DevelopmentCardsTable developmentCardsTable = buildDevelopmentCardsTable();
+		List<Player> playersInOrder = generateRandomPlayersOrder();
+		Map<Player, PlayerContext> playerContexts = new HashMap<>();
+		for(Player player : players)
+			playerContexts.put(player, buildPlayerContext(player));
+
+		return initializeSinglePlayerGameContext(market, developmentCardsTable, faithPathSinglePlayer, playersInOrder, playerContexts);
 	}
 
 	public PlayerContext initializePlayerContext(
@@ -130,7 +153,7 @@ public class GameContextBuilder {
 
 		List<PlayerOwnedDevelopmentCardDeck> decks = new ArrayList<>();
 		for(int i=0; i<gameInfoConfig.numberOfPlayerOwnedDevelopmentCardDecks; i++) {
-			String idDeck = generatePlayerOwnedDevCardDeckID(i+1);
+			String idDeck = generatePlayerOwnedDevCardDeckID(player, i+1);
 			decks.add(initializePlayerOwnedDevelopmentCardDeck(idDeck));
 		}
 
@@ -160,8 +183,8 @@ public class GameContextBuilder {
 		return new PlayerOwnedDevelopmentCardDeckImp(idDeck, gameItemsManager);
 	}
 
-	protected String generatePlayerOwnedDevCardDeckID(int num) {
-		return "PlayerDevCardDeck_ID_" + num;
+	protected String generatePlayerOwnedDevCardDeckID(Player player, int num) {
+		return "PlayerDevCardDeck_ID_" + num + "_" + player.playerName;
 	}
 
 	protected String generateResourceStorageID() {
@@ -320,6 +343,14 @@ public class GameContextBuilder {
 		return new FaithPathImp(faithPathLength, vaticanSections, victoryPointsByPosition, players, gameHistory);
 	}
 
+	public FaithPathSinglePlayer initializeFaithPathSinglePlayer(
+		int faithPathLength,
+		List<VaticanReportSection> vaticanSections,
+		int[] victoryPointsByPosition
+	) {
+		return new FaithPathSinglePlayerImp(faithPathLength, vaticanSections, victoryPointsByPosition, players.iterator().next(), gameHistory);
+	}
+
 	protected FaithPath buildFaithPath() throws GameContextCreationError {
 		FaithPathConfig faithPathConfig = gameRules.faithPathConfig;
 
@@ -341,6 +372,38 @@ public class GameContextBuilder {
 
 		try {
 			return initializeFaithPath(
+				faithPathConfig.faithPathLength,
+				vaticanReportSectionList,
+				victoryPointsByPosition
+			);
+		} catch (IllegalArgumentException e) {
+			GameContextCreationError newException = new GameContextCreationError(e);
+			logger.log(newException);
+			throw newException;
+		}
+	}
+
+	protected FaithPathSinglePlayer buildFaithPathSinglePlayer() throws GameContextCreationError {
+		FaithPathConfig faithPathConfig = gameRules.faithPathConfig;
+
+		List<VaticanReportSection> vaticanReportSectionList = new ArrayList<>();
+		for(FaithPathConfig.VaticanReportSectionConfig vaticanSectionConf : faithPathConfig.vaticanReportSections) {
+			VaticanReportSection vaticanReportSection = initializeVaticanReportSection(
+				vaticanSectionConf.initialPosition,
+				vaticanSectionConf.popeSpacePosition,
+				vaticanSectionConf.victoryPoints
+			);
+			vaticanReportSectionList.add(vaticanReportSection);
+		}
+
+		int[] victoryPointsByPosition = new int[faithPathConfig.faithPathLength];
+		int cell;
+		for(FaithPathConfig.VictoryPointsByPositionConfig victoryPointsConf : faithPathConfig.victoryPointsByPosition)
+			for (cell = victoryPointsConf.startPosition; cell <= victoryPointsConf.endPosition; cell++)
+				victoryPointsByPosition[cell] = victoryPointsConf.victoryPoints;
+
+		try {
+			return initializeFaithPathSinglePlayer(
 				faithPathConfig.faithPathLength,
 				vaticanReportSectionList,
 				victoryPointsByPosition

@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.client.MessageSender;
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -76,6 +77,11 @@ public class GuiClientManager extends ClientManager {
             mainStage.setScene(scene);
             mainStage.show();
         });
+    }
+
+    @Override
+    public void onAnotherPlayerDisconnected(Player player) {
+
     }
 
 }

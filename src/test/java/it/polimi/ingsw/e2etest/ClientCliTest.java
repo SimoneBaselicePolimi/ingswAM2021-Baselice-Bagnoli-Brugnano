@@ -4,15 +4,12 @@ import it.polimi.ingsw.client.Client;
 import it.polimi.ingsw.client.cli.ConsoleWriter;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.server.Server;
-import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.util.concurrent.TimeUnit;
 
-
 public class ClientCliTest {
 
-    @Test
     void testCliClient() throws InterruptedException, IOException {
 
         Thread serverThread = new Thread(Server::startServer);

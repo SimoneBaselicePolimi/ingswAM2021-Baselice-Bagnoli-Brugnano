@@ -7,6 +7,10 @@ public class BlackCrossFaithUpdateHandler extends GameUpdateHandler<ClientBlackC
 
     @Override
     public void handleGameUpdate(ClientBlackCrossFaithUpdate update, ClientManager clientManager) {
-        // TODO: abbiamo il riferimento al SinglePlayerFaithPath?
+        if(clientManager.getGameContextRepresentation().isSinglePlayerGame()) {
+            clientManager.getGameContextRepresentation().getSinglePlayerFaithPath().get()
+                .setBlackCrossFaithPosition(update.blackCrossFaithPosition);
+        }
     }
+
 }

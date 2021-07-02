@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.model.gameupdate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeAsSetOfIds;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeIdOnly;
 
@@ -18,7 +17,7 @@ public class ServerPurchasableDevelopmentCardsUpdate extends ServerGameUpdate {
     public final Set<DevelopmentCard> purchasableDevelopmentCards;
 
     public ServerPurchasableDevelopmentCardsUpdate(
-        Player player,
+        @JsonProperty("player") Player player,
         @JsonProperty("purchasableDevelopmentCards") Set<DevelopmentCard> purchasableDevelopmentCards
     ) {
         this.player = player;

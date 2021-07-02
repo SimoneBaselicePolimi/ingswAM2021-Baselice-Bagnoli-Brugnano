@@ -3,6 +3,8 @@ package it.polimi.ingsw.server.model.gamecontext;
 import it.polimi.ingsw.configfile.GameRules;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
+import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayer;
+import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayerImp;
 import it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException;
@@ -27,7 +29,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-//TODO initialize FaithPathSinglePlayerObservableProxy
 public class ObservableGameContextBuilder extends GameContextBuilder{
 
 	protected GameManager gameManager;
@@ -71,6 +72,20 @@ public class ObservableGameContextBuilder extends GameContextBuilder{
 	}
 
 	@Override
+	public SinglePlayerGameContext initializeSinglePlayerGameContext(
+		Market market,
+		DevelopmentCardsTable developmentCardsTable,
+		FaithPathSinglePlayer faithPath,
+		List<Player> playersOrder,
+		Map<Player, PlayerContext> playerContexts
+	) {
+		return new SinglePlayerGameContextObservableProxy(
+			super.initializeSinglePlayerGameContext(market, developmentCardsTable, faithPath, playersOrder, playerContexts),
+			gameManager
+		);
+	}
+
+	@Override
 	public PlayerContext initializePlayerContext(
 		Player player,
 		Set<ResourceStorage> shelves,
@@ -104,6 +119,16 @@ public class ObservableGameContextBuilder extends GameContextBuilder{
 	) {
 		return new FaithPathObservableProxy(
 			super.initializeFaithPath(faithPathLength, vaticanSections, victoryPointsByPosition),
+			gameManager
+		);
+	}
+
+	@Override
+	public FaithPathSinglePlayer initializeFaithPathSinglePlayer(
+		int faithPathLength, List<VaticanReportSection> vaticanSections, int[] victoryPointsByPosition
+	) {
+		return new FaithPathSinglePlayerObservableProxy(
+			super.initializeFaithPathSinglePlayer(faithPathLength, vaticanSections, victoryPointsByPosition),
 			gameManager
 		);
 	}

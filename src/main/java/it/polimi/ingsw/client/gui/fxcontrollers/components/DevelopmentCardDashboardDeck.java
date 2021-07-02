@@ -3,9 +3,9 @@ package it.polimi.ingsw.client.gui.fxcontrollers.components;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -14,9 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class DevelopmentCardDashboardDeck extends AnchorPane implements View {
@@ -70,22 +70,28 @@ public class DevelopmentCardDashboardDeck extends AnchorPane implements View {
     private void initialize() {
         deck.subscribe(this);
         this.setOnMouseClicked(e -> onDeckSelected.accept(cardOnTop));
-        updateView();
-
+        drawDeck();
     }
 
     public void setCardBordersColour(Colour colour){
-        developmentCardComp.setBordersColour(colour);
+        deckContainer.setStyle(String.format(
+            "-fx-border-color:#%02x%02x%02x; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;",
+            colour.r,
+            colour.g,
+            colour.b
+        ));
     }
 
     public void removeCardBorders(){
-        developmentCardComp.setDefaultBordersColour();
+        deckContainer.setStyle(
+            "-fx-border-color: black; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;"
+        );
     }
 
-    @Override
-    public void updateView() {
-        if( (cardOnTop == null || !cardOnTop.equals(deck.peek())) && deck.numberOfCardsInDeck() > 0) {
-            if(developmentCardComp != null)
+
+    void drawDeck() {
+        if ((cardOnTop == null || !cardOnTop.equals(deck.peek())) && deck.numberOfCardsInDeck() > 0) {
+            if (developmentCardComp != null)
                 deckContainer.getChildren().remove(developmentCardComp);
             cardOnTop = deck.peek();
             developmentCardComp = new DevelopmentCard(cardOnTop);
@@ -111,6 +117,18 @@ public class DevelopmentCardDashboardDeck extends AnchorPane implements View {
                 ));
                 flagsContainer.getChildren().add(flagLabel);
             });
+    }
+
+    @Override
+    public void updateView() {
+        Platform.runLater(this::drawDeck);
+    }
+
+    public Optional<DevelopmentCard> getLeaderCardOnTopComp() {
+        if(developmentCardComp != null)
+            return Optional.of(developmentCardComp);
+        else
+            return Optional.empty();
     }
 
     @Override

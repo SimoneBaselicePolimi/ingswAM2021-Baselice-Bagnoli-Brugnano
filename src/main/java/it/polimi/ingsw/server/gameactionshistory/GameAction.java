@@ -2,6 +2,10 @@ package it.polimi.ingsw.server.gameactionshistory;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import it.polimi.ingsw.server.gameactionshistory.singleplayer.DiscardCardsSinglePlayerTokenAction;
+import it.polimi.ingsw.server.gameactionshistory.singleplayer.FaithPathMoveBlackCrossAction;
+import it.polimi.ingsw.server.gameactionshistory.singleplayer.MoveBlackCrossAndShuffleSinglePlayerTokenAction;
+import it.polimi.ingsw.server.gameactionshistory.singleplayer.MoveBlackCrossSinglePlayerTokenAction;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "gameActionType")
 @JsonSubTypes({
@@ -18,7 +22,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = PostTurnFinalAction.class, name = "PostTurnFinalAction"),
     @JsonSubTypes.Type(value = ProductionAction.class, name = "ProductionAction"),
     @JsonSubTypes.Type(value = SetupChoiceAction.class, name = "SetupChoiceAction"),
-    @JsonSubTypes.Type(value = SetupStartedAction.class, name = "SetupStartedAction")
+    @JsonSubTypes.Type(value = SetupStartedAction.class, name = "SetupStartedAction"),
+    @JsonSubTypes.Type(value = DiscardCardsSinglePlayerTokenAction.class, name = "DiscardCardsSinglePlayerTokenAction"),
+    @JsonSubTypes.Type(value = MoveBlackCrossAndShuffleSinglePlayerTokenAction.class, name = "MoveBlackCrossAndShuffleSinglePlayerTokenAction"),
+    @JsonSubTypes.Type(value = MoveBlackCrossSinglePlayerTokenAction.class, name = "MoveBlackCrossSinglePlayerTokenAction"),
+    @JsonSubTypes.Type(value = FaithPathMoveBlackCrossAction.class, name = "FaithPathMoveBlackCrossAction")
 })
 public abstract class GameAction {
 }

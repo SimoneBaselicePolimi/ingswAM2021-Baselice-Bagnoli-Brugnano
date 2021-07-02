@@ -20,5 +20,6 @@ public class ClientGameHistoryUpdate extends ClientGameUpdate {
     public GameUpdateHandler getHandler() {
         return new GameHistoryUpdateHandler();
     }
+
 }
 

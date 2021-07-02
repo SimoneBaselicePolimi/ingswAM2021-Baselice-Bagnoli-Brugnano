@@ -31,48 +31,36 @@
 leaderCards:
   - leaderCardID: LEADER_DISC_1
     requirements:
-      - requirementType: COLOUR
-        cardColour: YELLOW
-        numberOfCards: 1
-      - requirementType: COLOUR
-        cardColour: PURPLE
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     developmentCardCostDiscounts:
       - resourceType: COINS
         amountToDiscount: 1
     victoryPoints: 2
   - leaderCardID: LEADER_DISC_2
     requirements:
-      - requirementType: COLOUR
-        cardColour: GREEN
-        numberOfCards: 1
-      - requirementType: COLOUR
-        cardColour: BLUE
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     developmentCardCostDiscounts:
       - resourceType: STONES
         amountToDiscount: 1
     victoryPoints: 2
   - leaderCardID: LEADER_DISC_3
     requirements:
-      - requirementType: COLOUR
-        cardColour: BLUE
-        numberOfCards: 1
-      - requirementType: COLOUR
-        cardColour: PURPLE
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     developmentCardCostDiscounts:
       - resourceType: SHIELDS
         amountToDiscount: 1
     victoryPoints: 2
   - leaderCardID: LEADER_DISC_4
     requirements:
-      - requirementType: COLOUR
-        cardColour: YELLOW
-        numberOfCards: 1
-      - requirementType: COLOUR
-        cardColour: GREEN
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     developmentCardCostDiscounts:
       - resourceType: SERVANTS
         amountToDiscount: 1
@@ -80,8 +68,8 @@ leaderCards:
   - leaderCardID: LEADER_STOR_1
     requirements:
       - requirementType: RESOURCE
-        resourceType: SHIELDS
-        numberOfResources: 5
+        resourceType: STONES
+        numberOfResources: 1
     resourceStorages:
       - storage:
           rules:
@@ -93,8 +81,8 @@ leaderCards:
   - leaderCardID: LEADER_STOR_2
     requirements:
       - requirementType: RESOURCE
-        resourceType: SERVANTS
-        numberOfResources: 5
+        resourceType: STONES
+        numberOfResources: 1
     resourceStorages:
       - storage:
           rules:
@@ -131,10 +119,9 @@ leaderCards:
     victoryPoints: 3
   - leaderCardID: LEADER_PROD_1
     requirements:
-      - requirementType: COLOUR_AND_LEVEL
-        cardColour: YELLOW
-        cardLevel: 2
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     productions:
       - costs:
           resources:
@@ -147,10 +134,9 @@ leaderCards:
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_2
     requirements:
-      - requirementType: COLOUR_AND_LEVEL
-        cardColour: GREEN
-        cardLevel: 2
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     productions:
       - costs:
           resources:
@@ -163,10 +149,9 @@ leaderCards:
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_3
     requirements:
-      - requirementType: COLOUR_AND_LEVEL
-        cardColour: PURPLE
-        cardLevel: 2
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     productions:
       - costs:
           resources:
@@ -179,10 +164,9 @@ leaderCards:
     victoryPoints: 4
   - leaderCardID: LEADER_PROD_4
     requirements:
-      - requirementType: COLOUR_AND_LEVEL
-        cardColour: BLUE
-        cardLevel: 2
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     productions:
       - costs:
           resources:
@@ -195,12 +179,9 @@ leaderCards:
     victoryPoints: 4
   - leaderCardID: LEADER_SUB_1
     requirements:
-      - requirementType: COLOUR
-        cardColour: YELLOW
-        numberOfCards: 2
-      - requirementType: COLOUR
-        cardColour: BLUE
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     specialMarbleSubstitutions:
       - resourceType: SERVANTS
     victoryPoints: 5
@@ -217,23 +198,17 @@ leaderCards:
     victoryPoints: 5
   - leaderCardID: LEADER_SUB_3
     requirements:
-      - requirementType: COLOUR
-        cardColour: BLUE
-        numberOfCards: 2
-      - requirementType: COLOUR
-        cardColour: YELLOW
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     specialMarbleSubstitutions:
       - resourceType: STONES
     victoryPoints: 5
   - leaderCardID: LEADER_SUB_4
     requirements:
-      - requirementType: COLOUR
-        cardColour: GREEN
-        numberOfCards: 2
-      - requirementType: COLOUR
-        cardColour: PURPLE
-        numberOfCards: 1
+      - requirementType: RESOURCE
+        resourceType: STONES
+        numberOfResources: 1
     specialMarbleSubstitutions:
       - resourceType: SHIELDS
     victoryPoints: 5

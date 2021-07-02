@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
 public interface FaithPathSinglePlayer extends FaithPath {
+
     /**
      * Returns the position of Lorenzo il Magnifico in the Faith Track.
      * @return position of the Black Cross token in the Faith Track

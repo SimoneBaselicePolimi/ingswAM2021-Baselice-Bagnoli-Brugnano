@@ -11,7 +11,7 @@ import java.util.Set;
 public class ProductionAction extends GameAction {
 
     @SerializeIdOnly
-    private final Player player;
+    public final Player player;
 
     @SerializeAsSetOfIds
     public final Set<Production> productions;

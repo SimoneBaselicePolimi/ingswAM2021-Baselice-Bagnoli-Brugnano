@@ -20,7 +20,7 @@ public class FaithPathSinglePlayerObservableProxy extends ObservableProxy<FaithP
     protected FaithPathEvent faithPathEvent;
     protected Player player;
 
-    public FaithPathSinglePlayerObservableProxy(FaithPathSinglePlayerImp imp, GameManager gameManager) {
+    public FaithPathSinglePlayerObservableProxy(FaithPathSinglePlayer imp, GameManager gameManager) {
         super(imp, gameManager);
     }
 

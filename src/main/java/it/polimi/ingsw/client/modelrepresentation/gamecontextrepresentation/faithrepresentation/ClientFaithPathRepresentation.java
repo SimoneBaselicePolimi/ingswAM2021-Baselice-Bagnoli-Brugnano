@@ -2,12 +2,14 @@ package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.fai
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.client.modelrepresentation.ClientRepresentation;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
 import it.polimi.ingsw.utils.serialization.annotations.SerializeAsMapWithIdKey;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ClientFaithPathRepresentation extends ClientRepresentation {
 
@@ -97,5 +99,19 @@ public class ClientFaithPathRepresentation extends ClientRepresentation {
     public void setVictoryPoints(Map<Player, Integer> victoryPoints) {
         this.victoryPoints = victoryPoints;
         notifyViews();
+    }
+
+    public String getPositionOfPlayersAsString() {
+        Set<Player> players = faithPositions.keySet();
+        StringBuilder positionOfPlayers = new StringBuilder();
+        for(Player player : players) {
+            positionOfPlayers.append(player.playerName).append(": ");
+            positionOfPlayers.append(
+                Localization.getLocalizationInstance().getString("gameHistory.faithPath.position")
+            );
+            positionOfPlayers.append(" ").append(getFaithPositions().get(player));
+            positionOfPlayers.append("\n");
+        }
+        return positionOfPlayers.toString();
     }
 }

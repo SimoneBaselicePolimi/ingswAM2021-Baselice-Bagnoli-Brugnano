@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.fxcontrollers.components;
 import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
@@ -55,6 +56,10 @@ public class DevCardPlacementInDashboard extends AnchorPane {
 
     @FXML
     private void initialize() {
+        placementTitle.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.devCardPlacementInDashboard"
+        ));
+
         Dashboard dashboard = new Dashboard(clientManager.getMyPlayer(), false);
         GridPane.setRowIndex(dashboard, 1);
         GridPane.setColumnIndex(dashboard, 0);
@@ -65,7 +70,9 @@ public class DevCardPlacementInDashboard extends AnchorPane {
             if (validDeckIDs.contains(deckIndex)) {
                 dashboard.getDevelopmentCardDeckComponents().get(deckIndex).setCardBordersColour(Colour.YELLOW);
                 int finalDeckIndex = deckIndex;
-                dashboard.setOnMouseClicked(obv -> onPlacementDone.accept(finalDeckIndex));
+                dashboard.getDevelopmentCardDeckComponents().get(deckIndex).setOnMouseClicked(obv ->
+                    onPlacementDone.accept(finalDeckIndex)
+                );
             } else {
                 dashboard.getDevelopmentCardDeckComponents().get(deckIndex).setCardBordersColour(Colour.GREY);
             }

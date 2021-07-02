@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage;
 import it.polimi.ingsw.client.clientrequest.ActivateLeaderCardClientRequest;
+import it.polimi.ingsw.client.clientrequest.DiscardLeaderCardClientRequest;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
@@ -41,6 +42,10 @@ public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsI
                 this::activateNewLeaderCard,
                 "client.cli.playerDashboard.activateNewLeaderCard"
             );
+            userChoices.addUserChoiceLocalized(
+                this::discardLeaderCard,
+                "client.cli.playerDashboard.discardLeaderCard"
+            );
         }
 
         userChoices.addUserChoiceLocalized(
@@ -51,7 +56,43 @@ public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsI
         userChoices.apply();
     }
 
-    void activateNewLeaderCard() {
+    protected void discardLeaderCard() {
+        if(leaderCardList.stream().anyMatch(c -> c.getState() == LeaderCardState.HIDDEN)) {
+            UserChoicesUtils.PossibleUserChoices userChoices = UserChoicesUtils.makeUserChoose(clientManager);
+            leaderCardList.stream()
+                .filter(c -> c.getState() == LeaderCardState.HIDDEN)
+                .forEach(c -> userChoices.addUserChoiceLocalized(
+                    () -> clientManager.sendMessageAndGetAnswer(new PlayerRequestClientMessage(
+                        new DiscardLeaderCardClientRequest(
+                            clientManager.getMyPlayer(),
+                            c
+                        )
+                    )).thenCompose(serverMessage ->
+                        ServerMessageUtils.ifMessageTypeCompute(
+                            serverMessage,
+                            GameUpdateServerMessage.class,
+                            message -> {
+                                clientManager.handleGameUpdates(message.gameUpdates);
+                                startLeaderCardsInDashboardDialog();
+                                return CompletableFuture.completedFuture(null);
+                            }
+                        ).elseCompute(message -> {
+                            startLeaderCardsInDashboardDialog();
+                            return CompletableFuture.completedFuture(null);
+                        }).apply()
+                    ),
+                    "client.cli.playerDashboard.selectLeaderCardToDiscard",
+                    leaderCardList.indexOf(c)+1
+                ));
+            userChoices.apply();
+        }
+        else {
+            clientManager.tellUserLocalized("client.cli.playerDashboard.canNotDiscardLeaderCard");
+            startLeaderCardsInDashboardDialog();
+        }
+    }
+
+    protected void activateNewLeaderCard() {
 
         if(leaderCardList.stream().anyMatch(c -> c.canBeActivated() && c.getState() == LeaderCardState.HIDDEN)) {
             UserChoicesUtils.PossibleUserChoices userChoices = UserChoicesUtils.makeUserChoose(clientManager);
@@ -80,6 +121,7 @@ public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsI
                     "client.cli.playerDashboard.selectLeaderCardToActivate",
                     leaderCardList.indexOf(c)+1
                 ));
+            userChoices.apply();
         }
         else {
             clientManager.tellUserLocalized("client.cli.playerDashboard.canNotActivateNewLeaderCard");

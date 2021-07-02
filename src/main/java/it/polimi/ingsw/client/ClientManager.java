@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
+import it.polimi.ingsw.client.servermessage.PlayerDisconnectedServerMessage;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,6 +49,8 @@ public class ClientManager {
     protected ClientGameContextRepresentation gameContextRepresentation;
     protected ClientGameHistoryRepresentation gameHistoryRepresentation;
 
+    protected Optional<ServerMessage> messageStillToHandle = Optional.empty();
+
     public ClientManager(MessageSender serverSender) {
         this.serverSender = serverSender;
         gameState = GameState.PLAYER_REGISTRATION_AND_MATCHMAKING;
@@ -54,19 +58,39 @@ public class ClientManager {
         gameHistoryRepresentation = new ClientGameHistoryRepresentation(new ArrayList<>());
     }
 
+    public void onConnectionWithServerDropped() {}
+
+    public void onAnotherPlayerDisconnected(Player player) {}
+
     public synchronized void handleServerMessage(ServerMessage serverMessage) {
-        if(serverAnswerable != null && !serverAnswerable.isDone()) {
-            serverAnswerable.complete(serverMessage);
-        } else {
-            ServerMessageUtils.ifMessageTypeCompute(
-                serverMessage,
-                GameUpdateServerMessage.class,
-                message -> {
-                    handleGameUpdates(message.gameUpdates);
-                    return null;
-                }
-            ).apply();
-        }
+        ServerMessageUtils.ifMessageTypeCompute(
+            serverMessage,
+            PlayerDisconnectedServerMessage.class,
+            message -> {
+                onAnotherPlayerDisconnected(message.player);
+                return null;
+            }
+        ).elseCompute(m -> {
+            if(serverAnswerable != null && !serverAnswerable.isDone()) {
+                serverAnswerable.complete(serverMessage);
+            } else {
+                ServerMessageUtils.ifMessageTypeCompute(
+                    serverMessage,
+                    GameUpdateServerMessage.class,
+                    message -> {
+                        handleGameUpdates(message.gameUpdates);
+                        return null;
+                    }
+                ).elseCompute(
+                    message -> {
+                        if(gameState.equals(GameState.PLAYER_REGISTRATION_AND_MATCHMAKING))
+                            messageStillToHandle = Optional.of(serverMessage);
+                        return null;
+                    }
+                ).apply();
+            }
+            return null;
+        }).apply();
     }
 
     public CompletableFuture<ServerMessage> sendMessageAndGetAnswer(ClientMessage messageToSend) {
@@ -76,6 +100,8 @@ public class ClientManager {
     }
 
     public CompletableFuture<ServerMessage> getNewMessageFromServer() {
+        if(messageStillToHandle.isPresent())
+            return CompletableFuture.completedFuture(messageStillToHandle.get());
         serverAnswerable = new CompletableFuture<>();
         return serverAnswerable;
     }

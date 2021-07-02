@@ -1,5 +1,14 @@
 client:
 
+  startupWizard:
+    title: "\n*** MAESTRI DEL RINASCIMENTO ***\n\n
+    1) Avvia il gioco con interfaccia testuale (CLI)\n
+    2) Avvia il gioco con interfaccia grafica (GUI)\n
+    3) Avvia la partita in solitario in locale (CLI)\n
+    4) Avvia la partita in solitario in locale (GUI)\n
+    5) Seleziona la lingua di gioco\n"
+    error: "Input non valido"
+
   mainMenu:
     gameTitle: "MAESTRI DEL RINASCIMENTO"
     players: "Giocatori: "
@@ -11,14 +20,29 @@ client:
     userInputNotExpected: "Aspetta, operazione in corso..."
     invalidInput: "Input non valido"
     turnCanNotEndBeforeMainAction: "Non puoi terminare il turno prima di aver compiuto l'azione principale."
+    onConnectionWithServerDropped: "Connessione col server interrotta. Partita terminata"
+    onAnotherPlayerDisconnected: "Il giocatore %s si è disconnesso. Partita terminata"
 
   gui:
+    dashboard:
+      baseProductions: "PRODUZIONI BASE"
+      chooseStarCosts: "Scegli le risorse con cui pagare"
+      chooseStarRewards: "Scegli le risorse da ottenere"
+      notEnoughResourcesErrorMessage: "Non hai abbastanza risorse!"
+      resourcesLeft: "Risorse rimaste: "
+      starResourcesChosen: "Risorse scelte: "
+      activateProductionsButton: "Attiva produzioni"
+      cancelButton: "Annulla"
+      activateSelectedProductionsButton: "Conferma produzioni"
+      activateLeaderCard: "Attiva carta leader"
+      discardLeaderCard: "Scarta carta leader"
+      cancelActivationLeaderCard: "Annulla"
+      endTurn: "Termina il mio turno"
     playerRegistration:
       titleLabel: "MAESTRI DEL RINASCIMENTO"
       descLabel: "Nome del giocatore"
       errorLabel: "Nome già in uso"
       confirmButton: "Conferma"
-    testLoc: "test localizeeeed"
     numberOfPlayers:
       descLabel: "Numero di giocatori"
       errorLabel: "Numero di giocatori non valido"
@@ -41,9 +65,11 @@ client:
     faithPath:
        playersLabel: "Giocatore %s : "
     repositioningInStorages:
+      temporaryStorage: "DA POSIZIONARE"
       rules:
         info:
           maxNumber: "MAX %d"
+      confirmButton: "Conferma"
     devCardTableDeck:
       deckSize: "Numero di carte nel mazzo: %d"
     table:
@@ -60,7 +86,7 @@ client:
         second: "L2"
         third: "L3"
     market:
-      legend: "Legenda"
+      legend: "Legenda di conversione delle biglie"
       buttons:
         btnEnterPurchaseMode: "Compra dal mercato"
         btnExitPurchaseMode: "Annulla acquisto"
@@ -70,6 +96,7 @@ client:
           singular: "1 punto fede\n"
           plural: "%d punti fede\n"
         specialMarble: "Biglia speciale\n"
+    devCardPlacementInDashboard: "Scegli su quale spazio posizionare la tua carta sviluppo"
 
   cli:
     setup:
@@ -169,8 +196,11 @@ client:
       notifyPlayerHeDoesNotHaveNeededResources: "Non possiedi le risorse necessarie per attivare la produzione selezionata"
       returnToProductionActivation: "Torna al menu di attivazione delle produzioni"
       activateNewLeaderCard: "Attiva una carta leader"
+      discardLeaderCard: "Scarta una carta leader"
       canNotActivateNewLeaderCard: "Nessuna delle tue carte leader può essere attivata"
+      canNotDiscardLeaderCard: "Nessuna delle tue carte leader può essere scartata"
       selectLeaderCardToActivate: "Attiva la carta %s"
+      selectLeaderCardToDiscard: "Scarta la carta %s"
       lookAtLeaderCardsOfMyPlayer: "Possiedi le seguenti carte leader:"
       lookAtLeaderCardsOfAnotherPlayer: "Il giocatore %s possiede %d carte nascoste"
     resourcesChoice:
@@ -193,7 +223,7 @@ leaderCards:
   specialPowers:
     specialPowers: "Poteri speciali: "
     developmentCardCostDiscount: "Sconto carta sviluppo: %d %s"
-    storage: "Magazzino extra: %s"
+    storage: "Magazzino extra"
     marbleSubstitution: "Sostituzione biglia bianca: 1 %s"
     production: "Produzione: %s --> %s"
   victoryPoints: "+ %d punti vittoria"
@@ -253,6 +283,7 @@ dashboard:
   shelf: "MAGAZZINO"
   infiniteChest: "FORZIERE"
   leaderStorages: "DEPOSITO SPECIALE LEADER"
+  specialStorage: "DEPOSITO SPECIALE"
 
 gameHistory:
 
@@ -272,6 +303,21 @@ gameHistory:
         discarded: "scartata"
         hidden: "coperta"
     lastPositionReached: "Il giocatore %s ha raggiunto l'ultima casella del tracciato fede"
+    singlePlayer:
+      lorenzoIlMagnifico: "Lorenzo Il Magnifico"
+      moveBlackCross:
+        oneStep: "Lorenzo Il Magnifico è avanzato di 1 passo sul tracciato fede"
+        multipleSteps: "Lorenzo Il Magnifico è avanzato di %s passi sul tracciato fede"
+      tokenMessage: "SEGNALINO AZIONE: "
+      moveBlackCrossAndShuffleTokens:
+        oneStep: "Lorenzo Il Magnifico è avanzato di 1 passo sul tracciato fede e ha mescolato i tuoi segnalini Azione"
+        multipleSteps: "Lorenzo Il Magnifico è avanzato di % passi sul tracciato fede e ha mescolato i tuoi segnalini Azione"
+      discardCards:
+        action: "Lorenzo Il Magnifico ti ha fatto scartare dal tavolo delle carte sviluppo %s"
+        cards:
+          singular: "carta"
+          plural: "carte"
+        level: "di livello"
 
   leaderCard:
     activateCard: "Il giocatore %s ha attivato una carta leader"

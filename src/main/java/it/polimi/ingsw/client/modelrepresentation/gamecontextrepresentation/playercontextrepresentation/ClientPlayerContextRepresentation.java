@@ -158,7 +158,10 @@ public class ClientPlayerContextRepresentation extends ClientRepresentation {
         return decks.stream()
             .filter(d ->
                 (card.getLevel().equals(DevelopmentCardLevel.FIRST_LEVEL) && d.getCardDeck().isEmpty()) ||
+                (
+                    d.getCardDeck().size() > 0 &&
                     d.getCardDeck().peek().getLevel().toValue() == card.getLevel().toValue() - 1
+                )
             ).map(decks::indexOf)
             .collect(Collectors.toList());
     }

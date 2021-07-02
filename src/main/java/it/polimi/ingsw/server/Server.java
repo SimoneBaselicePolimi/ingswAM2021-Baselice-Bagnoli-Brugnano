@@ -1,8 +1,11 @@
 package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.network.NetworkProto;
+import it.polimi.ingsw.network.PingWorker;
+import it.polimi.ingsw.server.controller.Client;
 import it.polimi.ingsw.server.controller.PlayerRegistrationAndDispatchController;
 import it.polimi.ingsw.server.controller.ServerMessageSender;
 import it.polimi.ingsw.server.controller.clientmessage.PlayerRequestClientMessage;
@@ -12,6 +15,8 @@ import it.polimi.ingsw.server.workers.YAMLSerializationWorker;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Server {
 
@@ -31,6 +36,8 @@ public class Server {
         NetworkLayer networkLayer = new NetworkLayer(TCP_SERVER_PORT, clientRawMessageProcessor);
 
         YAMLSerializationWorker serializationWorker = new YAMLSerializationWorker(networkLayer::sendMessage);
+
+        Map<Client, PingWorker> pingWorkerForClientMap = new ConcurrentHashMap<>();
 
         YAMLDeserializationWorker deserializationWorker = new YAMLDeserializationWorker(
             deserializedClientMessage -> {
@@ -74,6 +81,20 @@ public class Server {
             (client, sender) -> {
                 logger.log(LogLevel.BORING_INFO, "New client connected: %s", client.getClientId());
                 dispatcherController.acceptNewClient(client);
+                PingWorker pingWorker = new PingWorker(
+                    rawMessage -> {
+                        networkLayer.sendMessage(new ServerRawMessage(
+                            client,
+                            rawMessage.type,
+                            rawMessage.valueFormat,
+                            rawMessage.valueLength,
+                            rawMessage.value
+                        ));
+                    },
+                    () -> client.getHandler().onConnectionDropped(client)
+                );
+                pingWorkerForClientMap.put(client, pingWorker);
+                pingWorker.start();
             }
         );
 
@@ -87,6 +108,13 @@ public class Server {
                     message.valueLength
                 );
                 deserializationWorker.addMessageToDeserialize(message);
+            }
+        );
+
+        clientRawMessageProcessor.setPolicyForMessageType(
+            NetworkProto.MESSAGE_TYPE.PING_MESSAGE,
+            (message, sender) -> {
+                pingWorkerForClientMap.get(message.sender).handlePingMessage(message);
             }
         );
 

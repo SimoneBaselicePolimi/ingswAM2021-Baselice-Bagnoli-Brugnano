@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
 
@@ -35,4 +36,13 @@ public class ClientFaithPathSinglePlayerRepresentation extends ClientFaithPathRe
         this.blackCrossFaithPosition = blackCrossFaithPosition;
         notifyViews();
     }
+
+    @Override
+    public String getPositionOfPlayersAsString() {
+        return super.getPositionOfPlayersAsString()
+            + Localization.getLocalizationInstance().getString("gameHistory.faithPath.singlePlayer.lorenzoIlMagnifico")
+            + ": " + Localization.getLocalizationInstance().getString("gameHistory.faithPath.position")
+            + " " + blackCrossFaithPosition;
+    }
+
 }

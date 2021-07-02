@@ -3,6 +3,8 @@ package it.polimi.ingsw.localization;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
 import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class LocalizationUtils {
             String resourceName = resources.get(resourceType) == 1 ?
                 resourceType.getLocalizedNameSingular() : resourceType.getLocalizedNamePlural();
             s.append(String.format(
-                "- %s %s",
+                "- %s %s\n",
                 resources.get(resourceType),
                 resourceName
             ));
@@ -59,6 +61,34 @@ public class LocalizationUtils {
             ));
         }
         return marblesDescription;
+    }
+
+    public static String getNumberAndLevelOfDevCardsAsCompactString(
+        DevelopmentCardColour cardColour,
+        Map<DevelopmentCardLevel, Long> devCards
+    ){
+        StringBuilder s = new StringBuilder();
+        for (DevelopmentCardLevel cardLevel : devCards.keySet()) {
+            if(!s.toString().isEmpty())
+                s.append(", ");
+            s.append(String.format(
+                "%s %s %s %s %s",
+                devCards.get(cardLevel),
+                devCards.get(cardLevel) == 1 ?
+                    Localization.getLocalizationInstance().getString(
+                        "gameHistory.faithPath.singlePlayer.discardCards.cards.singular"
+                    ) : Localization.getLocalizationInstance().getString(
+                    "gameHistory.faithPath.singlePlayer.discardCards.cards.plural"
+                ),
+                devCards.get(cardLevel) == 1 ?
+                    cardColour.getColourNameLocalizedSingular() : cardColour.getColourNameLocalizedPlural(),
+                Localization.getLocalizationInstance().getString(
+                    "gameHistory.faithPath.singlePlayer.discardCards.level"
+                ),
+                cardLevel.toValue()
+            ));
+        }
+        return s.toString();
     }
 
 }

@@ -43,8 +43,7 @@ public class SocketConnectionsProcessor implements Runnable {
                 readFromSockets();
                 writeToSockets();
             } catch (IOException e) {
-                //TODO
-                e.printStackTrace();
+                ProjectLogger.getLogger().log(e);
             }
 
         }
@@ -101,9 +100,13 @@ public class SocketConnectionsProcessor implements Runnable {
                 else
                     connection = channelToConnectionFallbackMap.get(key.channel());
 
-                connection.readIncomingMessages().forEach(
-                    m -> inboundMessagesProcessor.processNewMessage(m, networkLayer)
-                );
+                try {
+                    connection.readIncomingMessages().forEach(
+                        m -> inboundMessagesProcessor.processNewMessage(m, networkLayer)
+                    );
+                } catch (IOException e) {
+                    ProjectLogger.getLogger().log(e);
+                }
 
                 keyIterator.remove();
 
@@ -134,7 +137,11 @@ public class SocketConnectionsProcessor implements Runnable {
                     connection = channelToConnectionFallbackMap.get(key.channel());
                 }
 
-                connection.flushOutboundMessages();
+                try {
+                    connection.flushOutboundMessages();
+                } catch (IOException e) {
+                    ProjectLogger.getLogger().log(e);
+                }
 
                 keyIterator.remove();
             }

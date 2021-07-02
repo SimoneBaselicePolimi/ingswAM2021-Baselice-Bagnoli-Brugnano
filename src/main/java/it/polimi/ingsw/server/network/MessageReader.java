@@ -43,6 +43,10 @@ public class MessageReader {
         List<ClientRawMessage> newCompleteMessages = new ArrayList<>();
 
         while(true) {
+
+//            if(!socket.isConnected())
+//                return new ArrayList<>();
+
             switch (readerState) {
 
                 case SETUP_FOR_NEXT_MESSAGE -> {

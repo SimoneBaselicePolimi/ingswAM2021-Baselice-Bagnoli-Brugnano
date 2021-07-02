@@ -5,20 +5,19 @@ import it.polimi.ingsw.utils.Colour;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class GameSceneSelector extends AnchorPane {
 
@@ -30,17 +29,24 @@ public class GameSceneSelector extends AnchorPane {
         public final String text;
         public final Colour backgroundColour;
         public final String scenePath;
+        public final Supplier<Parent> buildScene;
 
         Selection(String text, Colour backgroundColour, String scenePath) {
             this.text = text;
             this.backgroundColour = backgroundColour;
             this.scenePath = scenePath;
+            buildScene = null;
         }
 
         public Selection(String text, String scenePath) {
+            this(text, Colour.WHITE, scenePath);
+        }
+
+        Selection(String text, Colour backgroundColour, Supplier<Parent> buildScene) {
             this.text = text;
-            this.scenePath = scenePath;
-            backgroundColour = Colour.WHITE;
+            this.backgroundColour = backgroundColour;
+            this.scenePath = null;
+            this.buildScene = buildScene;
         }
 
     }
@@ -106,7 +112,12 @@ public class GameSceneSelector extends AnchorPane {
             button.setFont(Font.font(defaultFont.getName(), FontWeight.NORMAL, FONT_SIZE));
             button.setText(selection.text);
             button.setToggleGroup(toggleGroup);
-            button.setOnMouseClicked( e -> clientManager.loadScene(selection.scenePath));
+            button.setOnMouseClicked( e -> {
+                if(selection.scenePath == null)
+                    clientManager.loadScene(selection.buildScene.get());
+                else
+                    clientManager.loadScene(selection.scenePath);
+            });
             container.getChildren().add(button);
         }
 

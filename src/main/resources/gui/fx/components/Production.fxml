@@ -6,7 +6,7 @@
 
 <fx:root prefHeight="85.0" maxWidth="155" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
 
-    <GridPane alignment="CENTER" prefHeight="85" prefWidth="155" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
+    <GridPane fx:id="outerContainer" alignment="CENTER" prefHeight="85" prefWidth="155" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
 
         <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />

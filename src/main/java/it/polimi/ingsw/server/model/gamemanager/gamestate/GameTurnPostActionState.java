@@ -45,10 +45,12 @@ public class GameTurnPostActionState extends LeaderCardActionState {
 	 * Method that changes the state of the game.
 	 * The current state ends and the player's turn is over.
 	 * The game switches to the main state where the new player can choose what action to perform.
-	 * @return GameTurnMainActionState main state of the game, see {@link GameTurnMainActionState}
 	 */
-	public GameTurnMainActionState getNextState() {
-		return new GameTurnMainActionState(gameManager);
+	public GameState getNextState() {
+		if(gameManager.singlePlayerMode())
+			return new SinglePlayerTokenActionState(gameManager);
+		else
+			return new GameTurnMainActionState(gameManager);
 	}
 
 	/**

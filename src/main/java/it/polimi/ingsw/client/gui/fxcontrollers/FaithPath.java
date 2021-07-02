@@ -20,6 +20,9 @@ public class FaithPath extends GameScene {
     @FXML
     VBox popeFavorCardsContainer;
 
+    @FXML
+    Label playerPositions;
+
     final ClientFaithPathRepresentation faithPath;
 
     final int faithPathLength;
@@ -61,7 +64,7 @@ public class FaithPath extends GameScene {
             int victoryPoints = victoryPointsByPosition[c];
             Label victoryPointsByPosition = new Label();
             victoryPointsByPosition.setFont(new Font(12));
-            victoryPointsByPosition.setText("+" + String.valueOf(victoryPoints));
+            victoryPointsByPosition.setText("+" + victoryPoints);
             cell.getChildren().add(victoryPointsByPosition);
             StackPane.setAlignment(victoryPointsByPosition, Pos.TOP_RIGHT);
 
@@ -103,5 +106,9 @@ public class FaithPath extends GameScene {
             popeFavorCardsContainer.getChildren().add(playerLabel);
             popeFavorCardsContainer.getChildren().add(cardsBox);
         }
+
+        //players positions on the path
+        playerPositions.setText(faithPath.getPositionOfPlayersAsString());
+        playerPositions.setFont(new Font(17));
     }
 }

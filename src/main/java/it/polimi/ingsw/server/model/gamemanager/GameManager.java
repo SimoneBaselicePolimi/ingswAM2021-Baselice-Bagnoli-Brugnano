@@ -8,7 +8,6 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.controller.clientrequest.ClientRequest;
 import it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.*;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
@@ -40,6 +39,8 @@ public class GameManager {
 	private GameController controller;
 
 	private GameContext gameContext;
+
+	private Optional<SinglePlayerGameContext> singlePlayerGameContext = Optional.empty();
 
 	private GameItemsManager gameItemsManager;
 
@@ -79,8 +80,15 @@ public class GameManager {
 		players.forEach(p -> gameItemsManager.addItem(p));
 
 		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(this, players, gameRules, gameItemsManager, gameHistory);
+		if (players.size() == 1) {
+			this.singlePlayerGameContext = Optional.of(contextBuilder.buildSinglePlayerGameContext());
+		}
 		this.gameContext = contextBuilder.buildGameContext();
 
+	}
+
+	public boolean singlePlayerMode() {
+		return singlePlayerGameContext.isPresent();
 	}
 
 	public void registerObservableProxy(ObservableProxy observableProxy) {
@@ -122,6 +130,10 @@ public class GameManager {
 		return gameContext;
 	}
 
+	public Optional<SinglePlayerGameContext> getSinglePlayerGameContext() {
+		return singlePlayerGameContext;
+	}
+
 	/**
 	 * Method to get the Game Rules
 	 * @return GameContext, see {@link GameRules}
@@ -154,7 +166,7 @@ public class GameManager {
 			controller.sendMessagesToClients(Map.of(request.player, error.get()));
 		} else {
 			controller.sendMessagesToClients(request.callHandler(currentState));
-			if(currentState.isStateDone())
+			while (currentState.isStateDone())
 				changeState();
 		}
 	}

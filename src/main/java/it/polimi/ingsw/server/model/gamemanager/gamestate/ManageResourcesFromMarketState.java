@@ -74,6 +74,9 @@ public class ManageResourcesFromMarketState extends GameState {
 
 		for (ResourceStorage storage : request.resourcesInModifiedStorages.keySet()) {
 			storage.removeResources(storage.peekResources());
+		}
+
+		for (ResourceStorage storage : request.resourcesInModifiedStorages.keySet()) {
 			storage.addResources(request.resourcesInModifiedStorages.get(storage));
 		}
 
@@ -98,6 +101,8 @@ public class ManageResourcesFromMarketState extends GameState {
 					numberOfResourcesLeftInTemporaryStorage
 				);
 			}
+			if(gameManager.singlePlayerMode())
+				gameManager.getSinglePlayerGameContext().get().getFaithPathSinglePlayer().moveBlackCross(numberOfResourcesLeftInTemporaryStorage);
 
 			gameManager.getGameHistory().addAction(
 				new DiscardedResourcesMarketAction(

@@ -20,7 +20,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = PlayerNameAlreadyExistsServerMessage.class, name = "PlayerNameAlreadyExistsServerMessage"),
     @JsonSubTypes.Type(value = PostGameSetupServerMessage.class, name = "PostGameSetupServerMessage"),
     @JsonSubTypes.Type(value = ProductionActionServerMessage.class, name = "ProductionActionServerMessage"),
-    @JsonSubTypes.Type(value = GameInitialRepresentationServerMessage.class, name = "GameInitialRepresentationServerMessage")
+    @JsonSubTypes.Type(value = GameInitialRepresentationServerMessage.class, name = "GameInitialRepresentationServerMessage"),
+    @JsonSubTypes.Type(value = PlayerDisconnectedServerMessage.class, name = "PlayerDisconnectedServerMessage")
 })
 public class ServerMessage {
 

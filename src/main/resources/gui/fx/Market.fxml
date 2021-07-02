@@ -34,7 +34,7 @@
         <GridPane GridPane.columnIndex="1">
             <columnConstraints>
                 <ColumnConstraints prefWidth="30.0" />
-                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints hgrow="ALWAYS" />
                 <ColumnConstraints maxWidth="30" prefWidth="20" />
                 <ColumnConstraints prefWidth="130.0" />
                 <ColumnConstraints prefWidth="60" />
@@ -47,9 +47,7 @@
             <RowConstraints maxHeight="132.0" minHeight="0.0" prefHeight="77.0" vgrow="ALWAYS" />
         </rowConstraints>
             <children>
-                <Button fx:id="btnEnterPurchaseMode" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Pcompra dal mercato" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                <Button fx:id="btnExitPurchaseMode" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Pannulla acquisto" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-                <Label fx:id="legendLabel" prefHeight="23.0" prefWidth="138.0" text="PMARKET LEGEND" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <Label fx:id="legendLabel" alignment="CENTER" prefHeight="26.0" prefWidth="261.0" text="PMARKET LEGEND" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -64,7 +62,7 @@
                 </GridPane>
                 <GridPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="NEVER" maxWidth="130"/>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="130" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints prefHeight="130.0" vgrow="NEVER" />
@@ -83,10 +81,10 @@
                 </GridPane>
                 <GridPane fx:id="legendContainer" GridPane.columnIndex="5" GridPane.rowIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints vgrow="ALWAYS"/>
+                        <RowConstraints vgrow="ALWAYS" />
                     </rowConstraints>
                 </GridPane>
             </children>

@@ -4,9 +4,11 @@ import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.utils.FileManager;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -76,6 +78,9 @@ public class ResourcesRepositioning extends AnchorPane implements View {
 
     @FXML
     private void initialize() {
+        confirmButton.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.repositioningInStorages.confirmButton"
+        ));
 
         playerContext.getTempStorage().subscribe(this);
 
@@ -84,7 +89,13 @@ public class ResourcesRepositioning extends AnchorPane implements View {
         GridPane.setColumnIndex(dashboard, 0);
         dashboardContainer.getChildren().add(dashboard);
 
-        Storage storageComp = new Storage("PTempStorage", playerContext.getTempStorage(), true);
+        Storage storageComp = new Storage(
+            Localization.getLocalizationInstance().getString(
+                "client.gui.repositioningInStorages.temporaryStorage"
+            ),
+            playerContext.getTempStorage(),
+            true
+        );
         GridPane.setRowIndex(storageComp, 0);
         GridPane.setColumnIndex(storageComp, 1);
         bottomContainer.getChildren().add(storageComp);
@@ -105,14 +116,10 @@ public class ResourcesRepositioning extends AnchorPane implements View {
 
     @Override
         public void updateView() {
-            if(
-                canConfirmWithResourcesLeftInTempStorage ||
-                    playerContext.getTempStorage().getResources().values().stream().mapToInt(n -> n).sum() == 0
-            )
-                isConfirmButtonVisible.setValue(true);
-        else
-            isConfirmButtonVisible.setValue(false);
-
+        Platform.runLater(() -> {
+            isConfirmButtonVisible.setValue(canConfirmWithResourcesLeftInTempStorage ||
+                playerContext.getTempStorage().getResources().values().stream().mapToInt(n -> n).sum() == 0);
+        });
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GameContextObservableProxy extends ObservableProxy<GameContext> implements GameContext{
+public class GameContextObservableProxy extends ObservableProxy<GameContext> implements GameContext {
 
     protected boolean startNextPlayerTurn = false;
 
@@ -73,6 +73,11 @@ public class GameContextObservableProxy extends ObservableProxy<GameContext> imp
     public Player startNextPlayerTurn() {
         startNextPlayerTurn = true;
         return imp.startNextPlayerTurn();
+    }
+
+    @Override
+    public Set<DevelopmentCard> getPurchasableDevelopmentCardsForPlayer(Player player) {
+        return imp.getPurchasableDevelopmentCardsForPlayer(player);
     }
 
     @Override

@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopExcept
 import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.gamemanager.GameManager;
 import it.polimi.ingsw.server.model.gameupdate.*;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
@@ -15,11 +16,7 @@ import it.polimi.ingsw.server.model.storage.ResourceStorage;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext> implements PlayerContext {
 
@@ -27,6 +24,7 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
     protected boolean haveDevCardsChanged = false;
     protected boolean haveTempStarResourcesChanged = false;
 
+    long numberOfActiveLeaderCards = 0;
 
     protected Map<ResourceType, Integer> totalResources = new HashMap<>();
 
@@ -183,8 +181,8 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
     }
 
     @Override
-    public Set<DevelopmentCard> getPurchasableDevelopmentCards() {
-        return imp.getPurchasableDevelopmentCards();
+    public List<PlayerOwnedDevelopmentCardDeck> getPlayerDevCardsDecks() {
+        return imp.getPlayerDevCardsDecks();
     }
 
     @Override
@@ -205,16 +203,29 @@ public class PlayerContextObservableProxy extends ObservableProxy<PlayerContext>
             ));
         }
 
-        if(!totalResources.equals(imp.getAllResources())) {
+        boolean haveTotalResourcesChanged = !totalResources.equals(imp.getAllResources());
+        if(haveTotalResourcesChanged) {
             totalResources = new HashMap<>(imp.getAllResources());
             updates.add(new ServerTotalResourcesUpdate(imp.getPlayer(), totalResources));
         }
 
-        if(!totalResources.equals(imp.getAllResources()) || haveDevCardsChanged) {
+        boolean hasLeaderCardsStatusChanged = false;
+        if(
+            numberOfActiveLeaderCards != imp.getLeaderCards().stream()
+                .filter(l -> l.getState().equals(LeaderCardState.ACTIVE))
+                .count()
+        ) {
+            hasLeaderCardsStatusChanged = true;
+            numberOfActiveLeaderCards = imp.getLeaderCards().stream()
+                .filter(l -> l.getState().equals(LeaderCardState.ACTIVE))
+                .count();
+        }
+
+        if(haveTotalResourcesChanged || haveDevCardsChanged || hasLeaderCardsStatusChanged) {
             updates.add(
                 new ServerPurchasableDevelopmentCardsUpdate(
                     imp.getPlayer(),
-                    getPurchasableDevelopmentCards()
+                    gameManager.getGameContext().getPurchasableDevelopmentCardsForPlayer(getPlayer())
                 )
             );
         }
