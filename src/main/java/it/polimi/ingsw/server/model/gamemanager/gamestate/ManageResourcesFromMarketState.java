@@ -101,6 +101,8 @@ public class ManageResourcesFromMarketState extends GameState {
 					numberOfResourcesLeftInTemporaryStorage
 				);
 			}
+			if(gameManager.singlePlayerMode())
+				gameManager.getSinglePlayerGameContext().get().getFaithPathSinglePlayer().moveBlackCross(numberOfResourcesLeftInTemporaryStorage);
 
 			gameManager.getGameHistory().addAction(
 				new DiscardedResourcesMarketAction(

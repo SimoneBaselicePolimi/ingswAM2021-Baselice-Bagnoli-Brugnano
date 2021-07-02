@@ -1,7 +1,9 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.configfile.GameRules;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
+import it.polimi.ingsw.server.controller.servermessage.InvalidClientMessageServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.PlayerCanCreateNewLobbyServerMessage;
 import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.CreateNewLobbyClientMessage;
@@ -10,7 +12,9 @@ import it.polimi.ingsw.server.GlobalPlayersManager;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.GameContextCreationError;
 import it.polimi.ingsw.server.model.gamemanager.InvalidGameRules;
+import it.polimi.ingsw.utils.FileManager;
 
+import java.io.IOException;
 import java.util.*;
 
 public class NewGameLobbyController extends NewClientsAccepterClientHandler {
@@ -31,13 +35,29 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
 
     protected List<Runnable> onLobbyCreatedCallbacks = Collections.synchronizedList(new ArrayList<>());
 
-    public NewGameLobbyController(ServerMessageSender messageSender, Client clientThatShouldCreateTheLobby) {
+    protected final int lobbyMinSize, lobbyMaxSize;
+
+    public NewGameLobbyController(ServerMessageSender messageSender, Client clientThatShouldCreateTheLobby){
         super(new HashSet<>(), messageSender);
         playersManager = GlobalPlayersManager.getGlobalPlayerManager();
         registerClientWithThisHandler(clientThatShouldCreateTheLobby);
         playerThatShouldCreateTheLobby = playersManager.getPlayerAssociatedWithClient(clientThatShouldCreateTheLobby);
+
+        GameRules rules;
+        try {
+            rules = FileManager.getFileManagerInstance().getGameRules(FileManager.DEFAULT_RULES_PATH);
+            lobbyMinSize = rules.gameInfoConfig.singlePlayerEnabled ? 1 : 0;
+            lobbyMaxSize = rules.gameInfoConfig.maxNumberOfPlayers;
+        } catch (IOException e) {
+            logger.log(LogLevel.ERROR, "Error!");
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
         sendMessage(
-            new PlayerCanCreateNewLobbyServerMessage(false, 4), //TODO
+            new PlayerCanCreateNewLobbyServerMessage(
+                lobbyMinSize == 1,
+                rules.gameInfoConfig.maxNumberOfPlayers
+            ),
             clientThatShouldCreateTheLobby
         );
     }
@@ -106,16 +126,13 @@ public class NewGameLobbyController extends NewClientsAccepterClientHandler {
             playersManager.getPlayerAssociatedWithClient(message.client).equals(playerThatShouldCreateTheLobby)
         ) {
             CreateNewLobbyClientMessage lobbyCreationInfoMessage = (CreateNewLobbyClientMessage) message;
-            lobbySize = lobbyCreationInfoMessage.lobbySize;      //TODO check lobby size
-            lobbyAlreadyCreated = true;
-            playersInLobby.add(playerThatShouldCreateTheLobby);
-            sendMessage(
-                new NewPlayerEnteredNewGameLobbyServerMessage(
-                    playerThatShouldCreateTheLobby,
-                    playersInLobby,
-                    lobbySize
-                ), message.client
-            );
+            lobbySize = lobbyCreationInfoMessage.lobbySize;
+            if(lobbySize>=lobbyMinSize && lobbySize<=lobbyMaxSize) {
+                lobbyAlreadyCreated = true;
+                acceptNewClient(message.client);
+            } else {
+                sendMessage(new InvalidClientMessageServerMessage("Invalid lobby size"), message.client);
+            }
         }
     }
 

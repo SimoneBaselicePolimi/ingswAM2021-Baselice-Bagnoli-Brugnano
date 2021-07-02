@@ -3,11 +3,10 @@ package it.polimi.ingsw.server.model.gameitems.singleplayertokens;
 import it.polimi.ingsw.server.gameactionshistory.singleplayer.DiscardCardsSinglePlayerTokenAction;
 import it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContext;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
-import it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel;
-import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,16 +30,15 @@ public class DiscardCardsToken extends SinglePlayerToken {
         DevelopmentCardLevel cardLevel = DevelopmentCardLevel.FIRST_LEVEL;
         Set<DevelopmentCard> discardedCards = new HashSet<>();
         while (cardLeftToDiscard > 0 && cardLevel != null) {
-            ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck =
-                singlePlayerGameContext.getDevelopmentCardsTable().getDeckByLevelAndColour(cardLevel, cardColour);
-            while (!deck.isEmpty() && cardLeftToDiscard > 0) {
-                discardedCards.add(deck.pop());
+            DevelopmentCardsTable table = singlePlayerGameContext.getDevelopmentCardsTable();
+            while (!table.getDeckByLevelAndColour(cardLevel, cardColour).isEmpty() && cardLeftToDiscard > 0) {
+                discardedCards.add(table.popCard(cardLevel, cardColour));
                 cardLeftToDiscard--;
             }
             cardLevel = cardLevel.nextLevel();
         }
         if(cardLeftToDiscard > 0) {
-            //TODO SP01 add end of the game
+            //TODO SP01 end of the game
         }
         gameHistory.addAction(new DiscardCardsSinglePlayerTokenAction(cardColour, discardedCards));
     }

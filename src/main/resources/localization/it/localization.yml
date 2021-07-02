@@ -292,6 +292,21 @@ gameHistory:
         discarded: "scartata"
         hidden: "coperta"
     lastPositionReached: "Il giocatore %s ha raggiunto l'ultima casella del tracciato fede"
+    singlePlayer:
+      lorenzoIlMagnifico: "Lorenzo Il Magnifico"
+      moveBlackCross:
+        oneStep: "Lorenzo Il Magnifico è avanzato di 1 passo sul tracciato fede"
+        multipleSteps: "Lorenzo Il Magnifico è avanzato di %s passi sul tracciato fede"
+      tokenMessage: "SEGNALINO AZIONE: "
+      moveBlackCrossAndShuffleTokens:
+        oneStep: "Lorenzo Il Magnifico è avanzato di 1 passo sul tracciato fede e ha mescolato i tuoi segnalini Azione"
+        multipleSteps: "Lorenzo Il Magnifico è avanzato di % passi sul tracciato fede e ha mescolato i tuoi segnalini Azione"
+      discardCards:
+        action: "Lorenzo Il Magnifico ti ha fatto scartare dal tavolo delle carte sviluppo %s"
+        cards:
+          singular: "carta"
+          plural: "carte"
+        level: "di livello"
 
   leaderCard:
     activateCard: "Il giocatore %s ha attivato una carta leader"
