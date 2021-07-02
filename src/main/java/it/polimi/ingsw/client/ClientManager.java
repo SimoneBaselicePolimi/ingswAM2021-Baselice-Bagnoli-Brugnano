@@ -66,26 +66,31 @@ public class ClientManager {
         ServerMessageUtils.ifMessageTypeCompute(
             serverMessage,
             PlayerDisconnectedServerMessage.class,
-            () ->
-        )
-        if(serverAnswerable != null && !serverAnswerable.isDone()) {
-            serverAnswerable.complete(serverMessage);
-        } else {
-            ServerMessageUtils.ifMessageTypeCompute(
-                serverMessage,
-                GameUpdateServerMessage.class,
-                message -> {
-                    handleGameUpdates(message.gameUpdates);
-                    return null;
-                }
-            ).elseCompute(
-                message -> {
-                    if(gameState.equals(GameState.PLAYER_REGISTRATION_AND_MATCHMAKING))
-                        messageStillToHandle = Optional.of(serverMessage);
-                    return null;
-                }
-            ).apply();
-        }
+            message -> {
+                onAnotherPlayerDisconnected(message.player);
+                return null;
+            }
+        ).elseCompute(m -> {
+            if(serverAnswerable != null && !serverAnswerable.isDone()) {
+                serverAnswerable.complete(serverMessage);
+            } else {
+                ServerMessageUtils.ifMessageTypeCompute(
+                    serverMessage,
+                    GameUpdateServerMessage.class,
+                    message -> {
+                        handleGameUpdates(message.gameUpdates);
+                        return null;
+                    }
+                ).elseCompute(
+                    message -> {
+                        if(gameState.equals(GameState.PLAYER_REGISTRATION_AND_MATCHMAKING))
+                            messageStillToHandle = Optional.of(serverMessage);
+                        return null;
+                    }
+                ).apply();
+            }
+            return null;
+        }).apply();
     }
 
     public CompletableFuture<ServerMessage> sendMessageAndGetAnswer(ClientMessage messageToSend) {
