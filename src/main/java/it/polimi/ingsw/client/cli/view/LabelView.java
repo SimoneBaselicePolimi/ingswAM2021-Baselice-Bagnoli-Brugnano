@@ -7,6 +7,9 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
 
 import java.util.List;
 
+/**
+ * View representing a label used in other views to display text referring to game components
+ */
 public class LabelView extends CliView {
 
     List<FormattedChar> text;

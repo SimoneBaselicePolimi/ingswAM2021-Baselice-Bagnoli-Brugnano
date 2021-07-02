@@ -14,6 +14,9 @@ import it.polimi.ingsw.utils.Colour;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * View representing the selection of personal active leader cards in order to activate a production of these
+ */
 public class ProductionSelectionLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsInDashboardView {
 
     protected ProductionsSelectionInfo selectionInfo;

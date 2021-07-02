@@ -8,8 +8,14 @@ import it.polimi.ingsw.server.model.gameitems.IdentifiableItem;
 
 import java.util.Objects;
 
+/**
+ * This class represents a player in the game
+ */
 public class Player implements IdentifiableItem {
 
+	/**
+	 * Name used by the player to register for the game before entering the lobby
+	 */
 	public final String playerName;
 
 	@JsonCreator

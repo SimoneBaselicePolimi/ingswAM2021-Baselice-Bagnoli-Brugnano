@@ -21,6 +21,9 @@ import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * View representing players registration and lobby creation
+ */
 public class PreGameView extends CliView {
 
     public PreGameView(CliClientManager clientManager, int rowSize, int columnSize) {

@@ -4,6 +4,10 @@ import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 
+/**
+ * Main view of the game where the various components are shown.
+ * In fact, a screen is composed of the GameHistory, the Console and the GameView that shows to the user game components
+ */
 public class GameView extends CliView {
 
     protected CliView currentContentView = null;

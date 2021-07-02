@@ -17,7 +17,9 @@ import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * View representing the faith path component of the game
+ */
 public class FaithPathView extends CliView{
 
     protected GameView gameView;
