@@ -1,14 +1,298 @@
 client:
 
+  mainMenu:
+    gameTitle: "MASTERS OF THE RENAISSANCE"
+    players: "Players: "
+    resources: "Resources: "
+    faithPositions: "Position on the faith track: "
+
   errors:
-    unexpectedServerMessage: Unexpected error! [The server sent an unexpected message]
-    userInputNotExpected: Wait, operation ongoing...
+    unexpectedServerMessage: "Unexpected error! [The server sent an unexpected message]."
+    userInputNotExpected: "Wait, operation in progress..."
+    invalidInput: "Invalid input"
+    turnCanNotEndBeforeMainAction: "You cannot end your turn until you have taken your main action."
+
+  gui:
+    playerRegistration:
+      titleLabel: "MASTERS OF THE RENAISSANCE"
+      descLabel: "Player name"
+      errorLabel: "Name already in use"
+      confirmButton: "Confirm"
+    testLoc: "test localizeeeed"
+    numberOfPlayers:
+      descLabel: "Number of players"
+      errorLabel: "Invalid number of players"
+      confirmButton: "Confirm"
+    preGame:
+      numOfPlayers: "%d/%d players"
+    leaderCardsSetup:
+      selection: "Select %d leader cards"
+      confirmButton: "Confirm the selection of leader cards"
+    resourcesChoice:
+      titleLabel:
+        singular: "Select on resource"
+        plural: "Select %d resources"
+      confirmButton: "Confirm"
+      selectedResources: "Resources currently selected:: %d of %d"
+      coins: "Coins"
+      stones: "Stones"
+      servants: "Servants"
+      shields: "Shields"
+    faithPath:
+      playersLabel: "Player %s : "
+    repositioningInStorages:
+      rules:
+        info:
+          maxNumber: "MAX %d"
+    devCardTableDeck:
+      deckSize: "Number of cards in the deck: %d"
+    table:
+      buttons:
+        btnEnterPurchaseMode: "Buy development card"
+        btnExitPurchaseMode: "Cancel purchase"
+      colours:
+        green: "GREEN"
+        blue: "BLUE"
+        yellow: "YELLOW"
+        purple: "PURPLE"
+      levels:
+        first: "L1"
+        second: "L2"
+        third: "L3"
+    market:
+      legend: "Legend"
+      buttons:
+        btnEnterPurchaseMode: "Buy from market"
+        btnExitPurchaseMode: "Cancel purchase"
+      marbleDescription:
+        marbleResource: "1 %s\n"
+        marbleFaithPoints:
+          singular: "1 faith point\n"
+          plural: "%d faith points\n"
+        specialMarble: "SpecialMarble\n"
 
   cli:
     setup:
       askPlayerName: "Player name: "
-      notifyPlayerNameAlreadyInUse: Player name %s is already in use.
+      notifyPlayerNameAlreadyInUse: "The name %s is already used by another player"
+      askNumberOfPlayers: "Number of players: "
+      notifyPlayerNumberOfPlayersIsInvalid: "The number of players is not valid for lobby creation."
+      notifyPlayerEnteredInLobby: "The player %s has just joined the lobby."
+      notifyCurrentPlayerEnteredInLobby: "You have just joined the lobby"
+      notifyLobbyPlayersList: "Players currently in the lobby (%s/%s): \n%s"
+      notifyRepresentationDownloaded: "[Match info downloaded from server]"
+      notifyGameStarted: "The game has started"
+      notifySetupIsStarting: "Start game setup!"
+    gameSetup:
+      gameSetupInfo: "PRE-GAME"
+      leaderCardsToChooseInfo:
+        singular: "You still have to choose a leader card"
+        plural: "You still have to choose %s leader cards"
+      chooseLeaderCards: "Choose your leader cards"
+      leaderCardsDialog:
+        choose: "Choose a leader card: (enter the corresponding number)"
+        invalid: "Invalid number. Please enter the number of an existing leader card"
+        alreadyChosen: "You have already chosen this leader card"
+    game:
+      possibleUserChoices: "You can perform the following actions: "
+      makeChoice: "Enter the number corresponding to your choice: "
+      invalidChoice: "Invalid choice"
+      returnToMenu: "Return to the main menu"
+      returnToSetupView: "Return to the setup phase"
+    resourcesChoiceDialog:
+      specifyResources: "Enter quantity and type of resources: "
+      invalidChoice: "Invalid choice. Format: '{numOfResources} {type}'"
+    mainMenuActions:
+      openMarket: "Open the market"
+      openDevCardsTable: "Open the development cards table"
+      openFaithPath: "Open the faith track"
+      openPersonalDashboard: "Open your personal dashboard"
+      openDifferentPlayerDashboard: "Open another player's dashboard"
+      openDashboardOfPlayerName: "Look at the dashboard of: %s"
+      endMyTurn: "End your turn"
+    market:
+      rowChoice: "Take a row from the market"
+      columnChoice: "Take a column from the market"
+      askForRowNumber: "Which market row do you want to select?"
+      askForColumnNumber: "Which market column do you want to select?"
+      notifyPlayerRowNumberIsInvalid: "The selected line is not a valid market line"
+      notifyPlayerColumnNumberIsInvalid: "The selected column is not a valid market column"
+    resourcesRepositioning:
+      temporaryResourcesInfo: "You still have to place the following resources: %s"
+        absentTemporaryResourcesInfo: "You have no resources to place"
+        putResourcesInStorage: "Put resources in a storage"
+        removeResourcesFromStorage: "Get resources from a storage"
+        repositioningDone: "Confirm placement"
+        specifyInWhichStorage: "Put resources in %s"
+        specifyForWhichStorage: "Get resources from %s"
+        notEnoughResourcesInTempStorage: "You don't have enough resources to place"
+        notEnoughResourcesInStorage: "You don't have enough resources in the repository"
+      checkRuleErrorMessage:
+        maxNumberRule: "In the selected storage the maximum number of resources is: %d"
+        sameResourceType: "In the selected storage all resources must be of a single type"
+        specificResourceType: "In the selected storage all resources must be of the type: %s"
+        differentResourceTypeInDifferentStorages: "You cannot put resources of the same type in different storages"
+    devCard:
+      deckTitle: "Cards in the deck: %s "
+    devCardTable:
+      devCardChoice: "Buy development card of level %s"
+      viewCardOfLevel: "View cards of level %s"
+      askForDevCardColourChoice: "Enter the color of the development card you want to buy:"
+      askForDevCardLevelChoice: "Enter the level of the development card you want to buy:"
+      askForDeckNumber: "In which space on your personal board do you want to put the development card?"
+      notifyPlayerDevCardColourIsInvalid: "The selected color is invalid"
+      notifyPlayerDevCardLevelIsInvalid: "The selected level is invalid"
+      notifyPlayerDeckIsEmpty: "Selected deck is empty"
+      notifyPlayerCannotAddCardToDeck: "You cannot put the development card in this space of your personal dashboard"
+      notifyPlayerDeckNumberIsInvalid: "Invalid number"
+      notifyAllPlayerDecksAreInvalid: "You cannot put the selected development card in any of your decks"
+      notifyPlayerHeDoesNotHaveNeededResources: "You don't have the necessary resources to buy the selected development card"
+    playerDashboard:
+      activateProduction: "Activate productions"
+      leaderCardList: "View leader cards"
+      activateBaseProduction: "Activate base production"
+      activateDashboardProductions: "Activate development card productions"
+      activateNewLeaderCardProduction: "Activate a new production among those of your leader cards"
+      endProductionsActivation: "End production activation phase"
+      activateNewProduction: "Activate a new production"
+      cancelSelectedProductions: "Cancel all selected productions"
+      askPlayerForDevProductionsChoice: "Choose the production you want to activate among those of your development cards:"
+      askPlayerForLeaderProductionsChoice: "Choose the leader card that contains the production you want to activate:"
+      askPlayerForBaseProductionChoice: "Choose the base production you want to activate:"
+      askPlayerForTypeOfLeaderProductionsChoice: "Which production of the selected leader card you want to activate:"
+      notifyPlayerLeaderCardIsNotActive: "The selected leader card is not active. You cannot activate any production of this card"
+      notifyPlayerNumberOfResourcesLeftToPay: "You still have %s resources left to pay. Enter the number and type of resources you want to pay for production:"
+      notifyPlayerNumberOfResourcesLeftToObtain: "You still have %s resources left to get. Enter the number and type of resources you want to get from production:"
+      notifyPlayerResourcesAreInvalid: "The resources you indicated are invalid"
+      notifyPlayerProductionNumberIsInvalid: "The selected production is invalid"
+      notifyPlayerProductionAlreadyChosen: "You have already chosen this production"
+      notifyPlayerHeDoesNotHaveNeededResources: "You don't have the necessary resources to activate the selected production"
+      returnToProductionActivation: "Back to the production activation menu"
+      activateNewLeaderCard: "Activate a leader card"
+      canNotActivateNewLeaderCard: "None of your leader cards can be activated"
+      selectLeaderCardToActivate: "Activate card %s"
+      lookAtLeaderCardsOfMyPlayer: "You have the following leader cards:"
+      lookAtLeaderCardsOfAnotherPlayer: "Player %s has %d hidden cards"
+    resourcesChoice:
+      title: "Choose which resources to get"
+      obtained: "Resources already obtained: "
+      info:
+        singular: "You still have to choose a resource"
+        plural: "You still have to choose %s resources"
+      conversions: "You can convert a resource to: %s"
+      choiceMenu: "Get a resource of type %s"
+      specialMarbleSubstitutions: "SPECIAL MARBLE SUBSTITUTION"
 
-setup:
-  initialMessage: The game setup has started. The players will now choose the leader cards and the initial resources.
-  choiceMessage: The player %s has chosen the leader cards. The initial resources are %s
+leaderCards:
+  name: "LEADER CARD"
+  requirements:
+    requirements: "Requirements: "
+    colourAndLevel: "%d %s %s liv. %d"
+    colour: "%d %s %s"
+    resourceNumber: "%d %s"
+  specialPowers:
+    specialPowers: "Special powers:: "
+    developmentCardCostDiscount: "Development card discount: %d %s"
+    storage: "Extra storage: %s"
+    marbleSubstitution: "White marble substitution: 1 %s"
+    production: "Production: %s --> %s"
+  victoryPoints: "+ %d victory points"
+
+cards:
+  singular: "card"
+  plural: "cards"
+
+marbles:
+  special: "special marble"
+
+resources:
+  singular: "resource"
+  plural: "resources"
+  coins:
+    singular: "coin"
+    plural: "coins"
+  servants:
+    singular: "servant"
+    plural: "servants"
+  shields:
+    singular: "shield"
+    plural: "shields"
+  stones:
+    singular: "stone"
+    plural: "stones"
+  finalMessage: "The game has started"
+
+resourceStorages:
+  singular: "storage"
+  plural: "storages"
+  rules:
+    maxResourceNumber: ">> max %d %s"
+    sameResource: ">> single type of resource"
+    specificResourceNumber: ">> only %s"
+
+developmentCards:
+  name: "DEVELOPMENT CARD"
+  colours:
+    yellow:
+      singular: "yellow"
+      plural: "yellow"
+    green:
+      singular: "green"
+      plural: "green"
+    purple:
+      singular: "purple"
+      plural: "purple"
+    blue:
+      singular: "blue"
+      plural: "blue"
+  level: "liv."
+  cost: "Cost:"
+
+dashboard:
+  baseProductions: "BASE PRODUCTION"
+  shelf: "STORAGE"
+  infiniteChest: "INFINITE CHEST"
+  leaderStorages: "SPECIAL DEPOSIT LEADER"
+
+gameHistory:
+
+  faithPath:
+    position: "position"
+    faithPoints:
+      singular: "faith point"
+      plural: "faith points"
+    playerMove:
+      singular: "The player %s moved on the faith track by 1 step"
+      plural: "The player %s moved on the faith track of %s steps"
+    vaticanReport: "There was a report in the Vatican"
+    popeFavorCards:
+      name: "POPE FAVOR CARD"
+      states:
+        active: "active"
+        discarded: "discarded"
+        hidden: "hidden"
+    lastPositionReached: "The player %s has reached the last position of the faith track"
+
+  leaderCard:
+    activateCard: "Player %s has activated a leader card"
+    discardCard: "Player %s has discarded a leader card"
+
+  gameState:
+    setup:
+      initialMessage: "The game begun. Players choose leader cards and starting resources"
+      choiceMessageWithInitialResources: "Player %s has chosen his leader cards.\nHis starting resources are: %s"
+      choiceMessageWithoutInitialResources: "Player %s has chosen his leader cards.\nHe has no starting resources"
+    mainTurn:
+      initialMessage: "Player %s turn begins"
+      developmentAction: "Player %s bought a development card"
+      obtainedMarblesMarketActionAsList: "Player %s got the following marbles:"
+      obtainedMarblesMarketAction: "Player %s got some marbles after the market action."
+      productionAction: "Player %s has activated productions"
+    postTurn:
+      finalMessage: "Player %s turn ended"
+    manageResourcesFromMarketTurn:
+      obtainedResourcesMarketMessage: "Player %s has obtained the following resources: %s"
+      noObtainedResourcesMarketMessage: "Player %s did not get any resources from the market action"
+      discardedResourcesMarketAction:
+        singular: "Player %s has discarded 1 resource"
+        plural: "Player %s discarded %s resources"
