@@ -205,6 +205,7 @@ public class PlayerDashboard extends GameScene implements View {
                 isDiscardLeaderCardModeEnabled.setValue(false);
         });
 
+        isActivateLeaderCardModeEnabled.addListener( obv -> updateLeaderCards());
         leaderCardsThePlayerCanActivate.addListener( (InvalidationListener) obv -> updateLeaderCards());
 
         discardLeaderCard.visibleProperty().bind(isAnyActionModeEnabled.not().and(isMyPlayerTurn));
