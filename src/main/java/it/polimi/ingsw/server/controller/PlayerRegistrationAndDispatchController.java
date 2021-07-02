@@ -2,12 +2,12 @@ package it.polimi.ingsw.server.controller;
 
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
+import it.polimi.ingsw.server.GlobalPlayersManager;
 import it.polimi.ingsw.server.PlayerNameAlreadyInUseException;
 import it.polimi.ingsw.server.controller.clientmessage.ClientMessage;
 import it.polimi.ingsw.server.controller.clientmessage.RegisterPlayerNameClientMessage;
 import it.polimi.ingsw.server.controller.servermessage.InvalidClientMessageServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.PlayerNameAlreadyExistsServerMessage;
-import it.polimi.ingsw.server.GlobalPlayersManager;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class PlayerRegistrationAndDispatchController extends NewClientsAccepterC
     }
 
     @Override
-    protected void handleNewMessage(ClientMessage message) {
+    protected void handleNewMessage(ClientMessage message){
 
         if(!(message instanceof RegisterPlayerNameClientMessage)) {
             sendMessage(
@@ -71,7 +71,7 @@ public class PlayerRegistrationAndDispatchController extends NewClientsAccepterC
 
     }
 
-    protected void assignClientToNewGameLobby(Client client) {
+    protected void assignClientToNewGameLobby(Client client){
 
         if(newGameLobby.isEmpty() || newGameLobby.get().isLobbyFull()) {
             initNewGameLobby(client);
@@ -86,7 +86,7 @@ public class PlayerRegistrationAndDispatchController extends NewClientsAccepterC
 
     }
 
-    protected void initNewGameLobby(Client clientThatShouldCreateLobby) {
+    protected void initNewGameLobby(Client clientThatShouldCreateLobby){
         newGameLobby = Optional.of(new NewGameLobbyController(messageSender, clientThatShouldCreateLobby));
         newGameLobby.get().start();
     }

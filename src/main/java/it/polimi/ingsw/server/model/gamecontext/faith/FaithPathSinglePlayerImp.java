@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model.gamecontext.faith;
 
+import it.polimi.ingsw.server.gameactionshistory.FaithPathVaticanReportAction;
+import it.polimi.ingsw.server.gameactionshistory.singleplayer.FaithPathMoveBlackCrossAction;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
 import it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathSinglePlayerRepresentation;
@@ -53,6 +55,10 @@ public class FaithPathSinglePlayerImp extends FaithPathImp implements FaithPathS
 	public FaithPathEvent moveBlackCross(int steps) {
         blackCrossFaithPosition = Math.min(blackCrossFaithPosition + steps, faithPathLength - 1);
 
+        gameHistory.addAction(
+        	new FaithPathMoveBlackCrossAction(steps)
+		);
+
         boolean endReached = false;
 		boolean vaticanReport = false;
 
@@ -63,6 +69,7 @@ public class FaithPathSinglePlayerImp extends FaithPathImp implements FaithPathS
 		for (VaticanReportSection section : vaticanReportSections) {
 			if (blackCrossFaithPosition >= section.getPopeSpacePos()) {
 				vaticanReport = true;
+				gameHistory.addAction(new FaithPathVaticanReportAction());
 				Player singlePlayer =  popeFavorCards.keySet().iterator().next();
 				turnPopeFavorCard(singlePlayer, section, numSection);
 			}

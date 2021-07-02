@@ -8,7 +8,6 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.controller.clientrequest.ClientRequest;
 import it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
-import it.polimi.ingsw.server.controller.servermessage.ServerMessage;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.*;
 import it.polimi.ingsw.server.model.gamehistory.GameHistory;
@@ -167,7 +166,7 @@ public class GameManager {
 			controller.sendMessagesToClients(Map.of(request.player, error.get()));
 		} else {
 			controller.sendMessagesToClients(request.callHandler(currentState));
-			if(currentState.isStateDone())
+			while (currentState.isStateDone())
 				changeState();
 		}
 	}

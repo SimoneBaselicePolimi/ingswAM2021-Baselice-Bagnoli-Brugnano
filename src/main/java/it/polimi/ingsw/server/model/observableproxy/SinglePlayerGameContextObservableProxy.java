@@ -24,26 +24,22 @@ public class SinglePlayerGameContextObservableProxy extends GameContextObservabl
 
     @Override
     public FaithPathSinglePlayer getFaithPathSinglePlayer() {
-        //TODO SP01
         return singlePlayerGameContextImp.getFaithPathSinglePlayer();
     }
 
     @Override
     public Stack<SinglePlayerToken> getSinglePlayerTokensDeck() {
-        //TODO SP01
         return singlePlayerGameContextImp.getSinglePlayerTokensDeck();
     }
 
     @Override
     public void resetAndShuffleSinglePlayerTokens() {
-        //TODO SP01
         singlePlayerGameContextImp.resetAndShuffleSinglePlayerTokens();
     }
 
     @Override
     public Set<ServerGameUpdate> getUpdates() {
         Set<ServerGameUpdate> updates = super.getUpdates();
-        //TODO SP01
         return updates;
     }
 

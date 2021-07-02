@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="780" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.PlayerDashboard">
+
+    <GridPane prefHeight="780" prefWidth="1200">
+        <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="60" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+
+        <GridPane GridPane.columnIndex="0">
+
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+            <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints prefHeight="100" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="ALWAYS" />
+            </rowConstraints>
+
+            <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+        </GridPane>
+
+           <!--        custom scene components:          -->
+
+        <GridPane prefHeight="780" prefWidth="1140" GridPane.columnIndex="1">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="30" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints prefHeight="30" />
+            </rowConstraints>
+            <AnchorPane fx:id="dashboardContainer" GridPane.rowIndex="1" />
+        </GridPane>
+
+    </GridPane>
+
+</AnchorPane>
