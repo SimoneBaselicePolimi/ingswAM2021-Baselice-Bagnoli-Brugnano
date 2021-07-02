@@ -19,7 +19,7 @@ public class ProjectLogger {
 
     public void log(Exception exception) {
         if(logInConsole)
-            log(LogLevel.ERROR, "An exception has been thrown: \n%s", exception.getMessage());
+            log(LogLevel.ERROR, "An exception has been thrown: \n%s\n%s", exception.getMessage(), exception.getCause());
     }
 
     public void setLogInConsole(boolean logInConsole) {

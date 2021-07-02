@@ -19,6 +19,7 @@ client:
     invalidInput: "Input non valido"
     turnCanNotEndBeforeMainAction: "Non puoi terminare il turno prima di aver compiuto l'azione principale."
     onConnectionWithServerDropped: "Connessione col server interrotta. Partita terminata"
+    onAnotherPlayerDisconnected: "Il giocatore %s si è disconnesso. Partita terminata"
 
   gui:
     dashboard:

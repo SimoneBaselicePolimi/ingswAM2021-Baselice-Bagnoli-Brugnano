@@ -63,7 +63,7 @@ public class PingWorker extends Thread {
         sendMessage(new RawMessage(
             NetworkProto.MESSAGE_TYPE.PING_MESSAGE,
             (byte) 0,
-            NetworkProto.PING_PROTO.PING_TYPE_REQUEST.length,
+            1,
             NetworkProto.PING_PROTO.PING_TYPE_REQUEST
         ));
     }
@@ -72,7 +72,7 @@ public class PingWorker extends Thread {
         sendMessage(new RawMessage(
             NetworkProto.MESSAGE_TYPE.PING_MESSAGE,
             (byte) 0,
-            NetworkProto.PING_PROTO.PING_TYPE_ANSWER.length,
+           1,
             NetworkProto.PING_PROTO.PING_TYPE_ANSWER
         ));
     }

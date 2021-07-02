@@ -2,8 +2,8 @@ package it.polimi.ingsw.client.cli;
 
 import it.polimi.ingsw.client.ClientManager;
 import it.polimi.ingsw.client.MessageSender;
-import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.server.model.Player;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -88,6 +88,12 @@ public class CliClientManager extends ClientManager {
     @Override
     public void onConnectionWithServerDropped() {
         tellUserLocalized("client.errors.onConnectionWithServerDropped");
+        System.exit(0);
+    }
+
+    @Override
+    public void onAnotherPlayerDisconnected(Player player) {
+        tellUserLocalized("client.errors.onAnotherPlayerDisconnected", player.playerName);
         System.exit(0);
     }
 
