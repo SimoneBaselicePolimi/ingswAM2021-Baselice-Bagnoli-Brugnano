@@ -31,6 +31,9 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+/**
+ * View representing the market component of the game
+ */
 public class MarketView extends CliView{
 
     protected GridView outerGrid;

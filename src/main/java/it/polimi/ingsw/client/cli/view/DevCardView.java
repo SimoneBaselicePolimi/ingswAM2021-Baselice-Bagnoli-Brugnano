@@ -10,6 +10,9 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.utils.Colour;
 
+/**
+ * View representing the development card
+ */
 public class DevCardView extends CliView {
 
     public static final int DEV_CARD_ROW_SIZE = 15;

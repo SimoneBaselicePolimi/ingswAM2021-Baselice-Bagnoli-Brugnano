@@ -6,6 +6,9 @@ import it.polimi.ingsw.client.cli.ProductionsSelectionInfo;
 import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.server.model.Player;
 
+/**
+ * View representing each player's personal table
+ */
 public class PlayerDashboardView extends AbstractPlayerDashboardView {
 
     public PlayerDashboardView(Player dashboardPlayer, CliClientManager clientManager, GameView gameView) {

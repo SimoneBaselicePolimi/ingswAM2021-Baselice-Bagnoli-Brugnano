@@ -5,10 +5,14 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
 import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation;
+import it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * View representing the game history component of the game, see {@link it.polimi.ingsw.server.model.gamehistory.GameHistoryImp}
+ */
 public class GameHistoryView extends CliView {
 
     public GameHistoryView(CliClientManager clientManager, int rowSize, int columnSize) {
