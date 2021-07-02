@@ -14,6 +14,9 @@ import it.polimi.ingsw.utils.Colour;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * View representing the choice of resources the player has to obtain
+ */
 public class ResourcesChoiceView extends CliView {
 
     public final int numberOfResourcesToChoose;

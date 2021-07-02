@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * View representing the set of leader cards on players' personal dashboards
+ */
 public class LeaderCardListView extends CliView {
 
     public static final int SPACE_BETWEEN_CARDS = 2;

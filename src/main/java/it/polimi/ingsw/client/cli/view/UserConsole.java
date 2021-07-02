@@ -10,6 +10,10 @@ import it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * View representing the console available to the user to view the various game options
+ * and choose which screen to switch to and what actions to perform
+ */
 public class UserConsole extends CliView implements UserIOLogger {
 
     protected static class IOMessage {

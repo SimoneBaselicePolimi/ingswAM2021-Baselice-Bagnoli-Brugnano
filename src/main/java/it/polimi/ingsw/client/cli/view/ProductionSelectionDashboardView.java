@@ -20,6 +20,9 @@ import it.polimi.ingsw.utils.Colour;
 import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * View representing the activation choice of a production on the player's personal dashboard
+ */
 public class ProductionSelectionDashboardView extends AbstractPlayerDashboardView {
 
     protected ProductionsSelectionInfo selectionInfo;

@@ -17,6 +17,9 @@ import it.polimi.ingsw.utils.Colour;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ *Vview representing the set of leader cards the player has and can choose to activate
+ */
 public class PlayerLeaderCardsInDashboardView extends AbstractPlayerLeaderCardsInDashboardView {
 
     protected Player player;

@@ -11,7 +11,6 @@ import java.util.List;
 
 public abstract class CliView extends AbstractView {
 
-
     protected static class ChildCliView {
 
         final CliView view;
