@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = ProductionAction.class, name = "ProductionAction"),
     @JsonSubTypes.Type(value = SetupChoiceAction.class, name = "SetupChoiceAction"),
     @JsonSubTypes.Type(value = SetupStartedAction.class, name = "SetupStartedAction")
+
 })
 public abstract class GameAction {
 }
