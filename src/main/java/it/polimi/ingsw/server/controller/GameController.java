@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.client.servermessage.PlayerDisconnectedServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.GameInitializationStartedServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.InvalidClientMessageServerMessage;
 import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
@@ -107,7 +108,11 @@ public class GameController extends ClientHandler {
 
     @Override
     public void onConnectionDropped(Client client) {
-       //TODO
+        players.forEach(p -> sendMessage(
+            new PlayerDisconnectedServerMessage(playersManager.getPlayerAssociatedWithClient(client)),
+            playersManager.getClientForPlayer(p)
+        ));
+
     }
 
 }
