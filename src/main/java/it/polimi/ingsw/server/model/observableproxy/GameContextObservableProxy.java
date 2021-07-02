@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GameContextObservableProxy extends ObservableProxy<GameContext> implements GameContext{
+public class GameContextObservableProxy extends ObservableProxy<GameContext> implements GameContext {
 
     protected boolean startNextPlayerTurn = false;
 

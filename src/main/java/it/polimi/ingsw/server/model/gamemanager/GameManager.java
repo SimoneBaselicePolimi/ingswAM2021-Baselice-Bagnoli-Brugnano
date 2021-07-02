@@ -41,6 +41,8 @@ public class GameManager {
 
 	private GameContext gameContext;
 
+	private Optional<SinglePlayerGameContext> singlePlayerGameContext = Optional.empty();
+
 	private GameItemsManager gameItemsManager;
 
 	private GameRules gameRules;
@@ -79,6 +81,9 @@ public class GameManager {
 		players.forEach(p -> gameItemsManager.addItem(p));
 
 		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(this, players, gameRules, gameItemsManager, gameHistory);
+		if (players.size() == 1) {
+			this.singlePlayerGameContext = Optional.of(contextBuilder.buildSinglePlayerGameContext());
+		}
 		this.gameContext = contextBuilder.buildGameContext();
 
 	}
@@ -120,6 +125,10 @@ public class GameManager {
 	 */
 	public GameContext getGameContext() {
 		return gameContext;
+	}
+
+	public Optional<SinglePlayerGameContext> getSinglePlayerGameContext() {
+		return singlePlayerGameContext;
 	}
 
 	/**
