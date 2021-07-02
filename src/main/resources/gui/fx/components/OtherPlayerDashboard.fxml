@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="780" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.PlayerDashboard">
+<fx:root type="javafx.scene.layout.AnchorPane" prefHeight="780" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
 
     <GridPane prefHeight="780" prefWidth="1200">
         <columnConstraints>
@@ -48,4 +48,4 @@
 
     </GridPane>
 
-</AnchorPane>
+</fx:root>

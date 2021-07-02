@@ -104,7 +104,7 @@ public class Client {
         );
 
         networkLayer.setMessageFromServerProcessingPolicy(messageFromServer -> {
-            if(messageFromServer.type == NetworkProto.MESSAGE_TYPE.PING_MESSAGE) {
+            if (messageFromServer.type == NetworkProto.MESSAGE_TYPE.PING_MESSAGE) {
                 pingWorker.handlePingMessage(messageFromServer);
             } else if(messageFromServer.type == NetworkProto.MESSAGE_TYPE.GAME_MESSAGE) {
                 try {

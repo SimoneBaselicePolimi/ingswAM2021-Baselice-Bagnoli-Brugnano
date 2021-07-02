@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,6 +48,8 @@ public class ClientManager {
     protected ClientGameContextRepresentation gameContextRepresentation;
     protected ClientGameHistoryRepresentation gameHistoryRepresentation;
 
+    protected Optional<ServerMessage> messageStillToHandle = Optional.empty();
+
     public ClientManager(MessageSender serverSender) {
         this.serverSender = serverSender;
         gameState = GameState.PLAYER_REGISTRATION_AND_MATCHMAKING;
@@ -67,6 +70,12 @@ public class ClientManager {
                     handleGameUpdates(message.gameUpdates);
                     return null;
                 }
+            ).elseCompute(
+                message -> {
+                    if(gameState.equals(GameState.PLAYER_REGISTRATION_AND_MATCHMAKING))
+                        messageStillToHandle = Optional.of(serverMessage);
+                    return null;
+                }
             ).apply();
         }
     }
@@ -78,6 +87,8 @@ public class ClientManager {
     }
 
     public CompletableFuture<ServerMessage> getNewMessageFromServer() {
+        if(messageStillToHandle.isPresent())
+            return CompletableFuture.completedFuture(messageStillToHandle.get());
         serverAnswerable = new CompletableFuture<>();
         return serverAnswerable;
     }

@@ -11,8 +11,10 @@ import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.localization.Localization;
+import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.network.NetworkProto;
+import it.polimi.ingsw.network.PingWorker;
 import it.polimi.ingsw.server.network.RawMessage;
 import it.polimi.ingsw.utils.FileManager;
 import it.polimi.ingsw.utils.serialization.SerializationHelper;
@@ -64,7 +66,7 @@ public class GuiClient extends Application {
 
     public static void startClient() throws IOException, ClientNotConnectedException {
 
-        ProjectLogger.getLogger().setLogInConsole(false);
+        //ProjectLogger.getLogger().setLogInConsole(false);
 
         ClientNetworkLayer networkLayer = new ClientNetworkLayer(
             TCP_SERVER_ADDRESS,
@@ -87,21 +89,42 @@ public class GuiClient extends Application {
 
         clientManager = GuiClientManager.initializeInstance(messageSender);
 
+        PingWorker pingWorker = new PingWorker(
+            rawMessage -> {
+                try {
+                    networkLayer.sendMessage(rawMessage);
+                } catch (ClientNotConnectedException e) {
+                    logger.log(LogLevel.ERROR, "Unexpected error while trying to send a ping message");
+                } catch (IOException e) {
+                    logger.log(LogLevel.ERROR, "Unexpected error while trying to send a ping message");
+                    logger.log(e);
+                }
+            },
+            clientManager::onConnectionWithServerDropped
+        );
+
         networkLayer.setMessageFromServerProcessingPolicy(messageFromServer -> {
-            try {
-                ServerMessage deserializedMessage = SerializationHelper.deserializeYamlFromBytes(
-                    messageFromServer.value,
-                    ServerMessage.class,
-                    clientManager.getContextInfoMap()
-                );
-                clientManager.handleServerMessage(deserializedMessage);
-            } catch (IOException e) {
-                //TODO
-                e.printStackTrace();
+            if (messageFromServer.type == NetworkProto.MESSAGE_TYPE.PING_MESSAGE) {
+                pingWorker.handlePingMessage(messageFromServer);
+            } else if(messageFromServer.type == NetworkProto.MESSAGE_TYPE.GAME_MESSAGE) {
+                try {
+                    ServerMessage deserializedMessage = SerializationHelper.deserializeYamlFromBytes(
+                        messageFromServer.value,
+                        ServerMessage.class,
+                        clientManager.getContextInfoMap()
+                    );
+                    clientManager.handleServerMessage(deserializedMessage);
+                } catch (IOException e) {
+                    logger.log(e);
+                }
+            } else {
+                logger.log(LogLevel.ERROR, "Message of unexpected type code [%s]", String.valueOf(messageFromServer.type));
             }
         });
 
         networkLayer.start();
+
+        pingWorker.start();
 
     }
 
