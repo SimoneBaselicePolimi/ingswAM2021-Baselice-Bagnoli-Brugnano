@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -34,6 +35,11 @@ public enum DevelopmentCardLevel {
 	@JsonValue
 	public int toValue() {
 		return numAlias;
+	}
+
+	@JsonIgnore
+	public DevelopmentCardLevel nextLevel() {
+		return forValue(this.toValue()+1);
 	}
 
 	static {

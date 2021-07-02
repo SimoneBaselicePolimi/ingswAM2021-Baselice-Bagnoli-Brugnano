@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.model.observableproxy;
 
-import it.polimi.ingsw.server.model.gamecontext.GameContext;
 import it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContext;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayer;
 import it.polimi.ingsw.server.model.gameitems.singleplayertokens.SinglePlayerToken;
@@ -36,9 +35,9 @@ public class SinglePlayerGameContextObservableProxy extends GameContextObservabl
     }
 
     @Override
-    public void initializeAndShuffleSinglePlayerTokens() {
+    public void resetAndShuffleSinglePlayerTokens() {
         //TODO SP01
-        singlePlayerGameContextImp.initializeAndShuffleSinglePlayerTokens();
+        singlePlayerGameContextImp.resetAndShuffleSinglePlayerTokens();
     }
 
     @Override

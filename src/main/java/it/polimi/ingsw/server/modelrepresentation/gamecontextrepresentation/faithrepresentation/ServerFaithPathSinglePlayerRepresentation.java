@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState;
 import java.util.List;
 import java.util.Map;
 
+
 public class ServerFaithPathSinglePlayerRepresentation extends ServerFaithPathRepresentation {
 
     /**

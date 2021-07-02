@@ -15,6 +15,6 @@ public interface SinglePlayerGameContext extends GameContext {
 
     Stack<SinglePlayerToken> getSinglePlayerTokensDeck();
 
-    void initializeAndShuffleSinglePlayerTokens();
+    void resetAndShuffleSinglePlayerTokens();
 
 }

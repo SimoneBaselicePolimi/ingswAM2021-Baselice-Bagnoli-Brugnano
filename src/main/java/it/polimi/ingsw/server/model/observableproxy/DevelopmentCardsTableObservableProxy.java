@@ -12,14 +12,15 @@ import it.polimi.ingsw.server.model.gameupdate.ServerShuffledDevelopmentCardDeck
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation;
 import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DevelopmentCardsTableObservableProxy extends ObservableProxy<DevelopmentCardsTable> implements DevelopmentCardsTable {
 
-    protected Set<ServerShuffledDevelopmentCardDeckOnTableUpdate> newUpdates = new HashSet<>();
+    protected Map<
+        ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard>,
+        ServerShuffledDevelopmentCardDeckOnTableUpdate
+    > newUpdates = new HashMap<>();
+
 
     public DevelopmentCardsTableObservableProxy(DevelopmentCardsTable imp, GameManager gameManager) {
         super(imp, gameManager);
@@ -33,7 +34,8 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
     @Override
     public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) {
         DevelopmentCard card = imp.popCard(level, colour);
-        newUpdates.add(
+        newUpdates.put(
+            imp.getDeckByLevelAndColour(level, colour),
             new ServerShuffledDevelopmentCardDeckOnTableUpdate(
                 imp.getDeckByLevelAndColour(level, colour),
                 imp.getDeckByLevelAndColour(level, colour).peek(),
@@ -55,7 +57,7 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
 
     @Override
     public Set<ServerGameUpdate> getUpdates() {
-        Set<ServerGameUpdate> updates = new HashSet<>(newUpdates);
+        Set<ServerGameUpdate> updates = new HashSet<>(newUpdates.values());
         newUpdates.clear();
         return updates;
     }

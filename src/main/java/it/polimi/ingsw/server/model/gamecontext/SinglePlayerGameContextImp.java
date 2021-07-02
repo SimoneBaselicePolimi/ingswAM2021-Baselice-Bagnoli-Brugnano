@@ -1,22 +1,32 @@
 package it.polimi.ingsw.server.model.gamecontext;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gamecontext.faith.FaithPath;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathImp;
 import it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayer;
 import it.polimi.ingsw.server.model.gamecontext.market.Market;
 import it.polimi.ingsw.server.model.gamecontext.market.MarketImp;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContextImp;
+import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTableImp;
+import it.polimi.ingsw.server.model.gameitems.singleplayertokens.BlackCrossMoveAndTokensShuffleToken;
+import it.polimi.ingsw.server.model.gameitems.singleplayertokens.BlackCrossMoveToken;
+import it.polimi.ingsw.server.model.gameitems.singleplayertokens.DiscardCardsToken;
 import it.polimi.ingsw.server.model.gameitems.singleplayertokens.SinglePlayerToken;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class SinglePlayerGameContextImp extends GameContextImp implements SinglePlayerGameContext {
+
+    public final List<SinglePlayerToken> SINGLE_PLAYER_TOKENS = List.of(
+        new DiscardCardsToken(2, DevelopmentCardColour.GREEN),
+        new DiscardCardsToken(2, DevelopmentCardColour.YELLOW),
+        new DiscardCardsToken(2, DevelopmentCardColour.BLUE),
+        new DiscardCardsToken(2, DevelopmentCardColour.PURPLE),
+        new BlackCrossMoveToken(2),
+        new BlackCrossMoveAndTokensShuffleToken(1)
+    );
 
     protected FaithPathSinglePlayer faithPathSinglePlayer;
     protected Stack<SinglePlayerToken> singlePlayerTokens;
@@ -46,7 +56,7 @@ public class SinglePlayerGameContextImp extends GameContextImp implements Single
     ) {
         super(market, developmentCardsTable, faithPath, playersOrder, playerContexts);
         this.faithPathSinglePlayer = faithPath;
-        initializeAndShuffleSinglePlayerTokens();
+        resetAndShuffleSinglePlayerTokens();
     }
 
     @Override
@@ -60,7 +70,15 @@ public class SinglePlayerGameContextImp extends GameContextImp implements Single
     }
 
     @Override
-    public void initializeAndShuffleSinglePlayerTokens() {
+    public void resetAndShuffleSinglePlayerTokens() {
+
+        Random randGen = new Random();
+
+        singlePlayerTokens = new Stack<>();
+        List<SinglePlayerToken> tokensToPickFrom = new ArrayList<>(SINGLE_PLAYER_TOKENS);
+        while (!tokensToPickFrom.isEmpty()) {
+            singlePlayerTokens.add(tokensToPickFrom.remove(randGen.nextInt(tokensToPickFrom.size())));
+        }
 
     }
 

@@ -88,6 +88,10 @@ public class GameManager {
 
 	}
 
+	public boolean singlePlayerMode() {
+		return singlePlayerGameContext.isPresent();
+	}
+
 	public void registerObservableProxy(ObservableProxy observableProxy) {
 		observableProxies.add(observableProxy);
 	}
