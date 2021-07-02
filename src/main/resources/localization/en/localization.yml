@@ -1,5 +1,12 @@
 client:
 
+  startupWizard: "\n*** MASTERS OF RENAISSANCE ***\n\n
+  1) Start the game with text interface (CLI)\n
+  2) Start the game with graphical interface (GUI)\n
+  3) Start the local solo game (CLI)\n
+  4) Start the local solo game (GUI)\n
+  5) Select your language\n"
+
   errors:
     unexpectedServerMessage: Unexpected error! [The server sent an unexpected message]
     userInputNotExpected: Wait, operation ongoing...
