@@ -1,11 +1,13 @@
 client:
 
-  startupWizard: "\n*** MAESTRI DEL RINASCIMENTO ***\n\n
+  startupWizard:
+    title: "\n*** MAESTRI DEL RINASCIMENTO ***\n\n
     1) Avvia il gioco con interfaccia testuale (CLI)\n
     2) Avvia il gioco con interfaccia grafica (GUI)\n
     3) Avvia la partita in solitario in locale (CLI)\n
     4) Avvia la partita in solitario in locale (GUI)\n
     5) Seleziona la lingua di gioco\n"
+    error: "Input non valido"
 
   mainMenu:
     gameTitle: "MAESTRI DEL RINASCIMENTO"
