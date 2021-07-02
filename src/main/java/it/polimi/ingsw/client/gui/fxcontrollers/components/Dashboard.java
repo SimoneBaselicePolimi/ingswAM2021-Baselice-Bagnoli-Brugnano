@@ -2,18 +2,23 @@ package it.polimi.ingsw.client.gui.fxcontrollers.components;
 
 import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation;
+import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientMaxResourceNumberRuleRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.utils.FileManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,6 +39,9 @@ public class Dashboard extends AnchorPane {
 
     @FXML
     HBox leaderCardsContainer;
+
+    @FXML
+    Label baseProductionsLabel;
 
     Map<ClientResourceStorageRepresentation, Storage> storageRepresentationToComp;
     List<LeaderCard> playerLeaderCards = new ArrayList<>();
@@ -83,6 +91,11 @@ public class Dashboard extends AnchorPane {
     @FXML
     private void initialize() {
 
+        baseProductionsLabel.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.baseProductions"
+        ));
+        baseProductionsLabel.setFont(new Font(14));
+
         storageRepresentationToComp = new HashMap<>();
 
         playerContext.getBaseProductions().forEach(p -> {
@@ -91,15 +104,34 @@ public class Dashboard extends AnchorPane {
             baseProductions.add(baseProd);
         });
 
-        playerContext.getShelves().forEach(storageRep -> {
-            Storage storageComp = new Storage("test", storageRep);
-            storagesContainer.getChildren().add(storageComp);
-            storageRepresentationToComp.put(storageRep, storageComp);
-            if(enableRepositioning)
-                storageComp.enableResourceRepositioningMode(playerContext.getTempStorage());
-        });
+        AtomicInteger index = new AtomicInteger(1);
+        playerContext.getShelves().stream()
+            .sorted(
+                Comparator.comparing(
+                    s -> s.getRules().stream()
+                        .filter(r -> r instanceof ClientMaxResourceNumberRuleRepresentation)
+                        .findAny(),
+                    Comparator.comparingInt(r ->
+                        r.isPresent() ? ((ClientMaxResourceNumberRuleRepresentation) r.get()).getMaxResources() : 0
+                    )
+                )
+            ).forEach(storageRep -> {
 
-        Storage infiniteChestComp = new Storage("Infinite Chest", playerContext.getInfiniteChest());
+                Storage storageComp = new Storage(
+                    Localization.getLocalizationInstance().getString("dashboard.shelf")
+                        + " " + index.getAndIncrement(),
+                    storageRep
+                );
+                storagesContainer.getChildren().add(storageComp);
+                storageRepresentationToComp.put(storageRep, storageComp);
+                if(enableRepositioning)
+                    storageComp.enableResourceRepositioningMode(playerContext.getTempStorage());
+            });
+
+        Storage infiniteChestComp = new Storage(
+            Localization.getLocalizationInstance().getString("dashboard.infiniteChest"),
+            playerContext.getInfiniteChest()
+        );
         storageRepresentationToComp.put(playerContext.getInfiniteChest(), infiniteChestComp);
         storagesContainer.getChildren().add(infiniteChestComp);
 

@@ -9,7 +9,7 @@
 
     <children>
         
-        <GridPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" prefWidth="200" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
+        <GridPane prefWidth="200" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
@@ -23,9 +23,9 @@
             <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
                 <columnConstraints>
                     <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
-                    <ColumnConstraints halignment="RIGHT" prefWidth="15"/>
+                    <ColumnConstraints halignment="RIGHT" prefWidth="15" />
                 </columnConstraints>
-                <Label fx:id="titleLabel" text="PMagazzino 1" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label fx:id="titleLabel" prefHeight="26.0" prefWidth="161.0" text="PMagazzino 1" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font></Label>

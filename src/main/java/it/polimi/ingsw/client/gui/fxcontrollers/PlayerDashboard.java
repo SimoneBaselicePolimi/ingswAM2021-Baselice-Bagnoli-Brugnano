@@ -17,6 +17,7 @@ import it.polimi.ingsw.client.servermessage.EndTurnServerMessage;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
 import it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import it.polimi.ingsw.server.model.gameitems.ResourceUtils;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
@@ -95,7 +96,6 @@ public class PlayerDashboard extends GameScene implements View {
 
     BooleanProperty isAnyActionModeEnabled =  new SimpleBooleanProperty(false);
 
-
     BooleanProperty isActivateLeaderCardModeEnabled =  new SimpleBooleanProperty(false);
     SetProperty<ClientLeaderCardRepresentation> leaderCardsThePlayerCanActivate = new SimpleSetProperty<>(
         FXCollections.observableSet(new HashSet<>())
@@ -118,6 +118,36 @@ public class PlayerDashboard extends GameScene implements View {
     @FXML
     @Override
     protected void initialize() {
+
+        resLeftLabel.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.resourcesLeft"
+        ));
+        resLeftLabel.setFont(new Font(14));
+        starResLabel.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.starResourcesChosen"
+        ));
+        starResLabel.setFont(new Font(14));
+        activateProductionsButton.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.activateProductionsButton"
+        ));
+        cancelButton.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.cancelButton"
+        ));
+        activateSelectedProductionsButton.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.activateSelectedProductionsButton"
+        ));
+        activateLeaderCard.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.activateLeaderCard"
+        ));
+        discardLeaderCard.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.discardLeaderCard"
+        ));
+        cancelActivationLeaderCard.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.cancelActivationLeaderCard"
+        ));
+        endTurn.setText(Localization.getLocalizationInstance().getString(
+            "client.gui.dashboard.endTurn"
+        ));
 
         dashboard = new Dashboard(clientManager.getMyPlayer(), false);
 
@@ -365,7 +395,9 @@ public class PlayerDashboard extends GameScene implements View {
             container.prefWidth(500);
             container.setAlignment(Pos.CENTER);
 
-            Label popUpTitle = new Label("PScegli costo star");
+            Label popUpTitle = new Label(Localization.getLocalizationInstance().getString(
+                "client.gui.dashboard.chooseStarCosts"
+            ));
             popUpTitle.setFont(new Font(26));
             container.getChildren().add(popUpTitle);
             container.getChildren().add(new ResourcesChoice(
@@ -396,7 +428,9 @@ public class PlayerDashboard extends GameScene implements View {
                         VBox errContainer = new VBox(10);
                         errContainer.prefWidth(300);
                         errContainer.setAlignment(Pos.CENTER);
-                        errContainer.getChildren().add(new Label("PNon hai abbastanza risorse!"));
+                        errContainer.getChildren().add(new Label(Localization.getLocalizationInstance().getString(
+                            "client.gui.dashboard.notEnoughResourcesErrorMessage"
+                        )));
                         Button okBtn = new Button("OK");
                         okBtn.setOnMouseClicked(obv -> {
                             errorStage.close();
@@ -425,7 +459,9 @@ public class PlayerDashboard extends GameScene implements View {
             container.prefWidth(500);
             container.setAlignment(Pos.CENTER);
 
-            Label popUpTitle = new Label("PScegli risorse da ottenere");
+            Label popUpTitle = new Label(Localization.getLocalizationInstance().getString(
+                "client.gui.dashboard.chooseStarRewards"
+            ));
             popUpTitle.setFont(new Font(26));
             container.getChildren().add(popUpTitle);
             container.getChildren().add(new ResourcesChoice(

@@ -115,7 +115,10 @@ public class LeaderCard extends AnchorPane implements View {
         });
 
         card.getResourceStorages().forEach(s -> {
-            Storage storage = new Storage("PRes Sto", s); //TODO LOC
+            Storage storage = new Storage(
+                Localization.getLocalizationInstance().getString("dashboard.specialStorage"),
+                s
+            );
             specialPowersContainer.getChildren().add(storage);
             storagesComp.add(storage);
         });

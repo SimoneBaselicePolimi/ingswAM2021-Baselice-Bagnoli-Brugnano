@@ -12,11 +12,11 @@ import java.util.Map;
 public class ServerPopeCardsUpdate extends ServerGameUpdate {
 
 	@SerializeAsMapWithIdKey
-	public final Map<Player, List<PopeFavorCardState>> faithPopeCardsState;
+	public final Map<Player, List<PopeFavorCardState>> faithPopeCardsStates;
 
 	public ServerPopeCardsUpdate(
-		@JsonProperty("faithPopeCardsState") Map<Player, List<PopeFavorCardState>> faithPopeCardsState
+		@JsonProperty("faithPopeCardsStates") Map<Player, List<PopeFavorCardState>> faithPopeCardsStates
 	) {
-		this.faithPopeCardsState = faithPopeCardsState;
+		this.faithPopeCardsStates = faithPopeCardsStates;
 	}
 }

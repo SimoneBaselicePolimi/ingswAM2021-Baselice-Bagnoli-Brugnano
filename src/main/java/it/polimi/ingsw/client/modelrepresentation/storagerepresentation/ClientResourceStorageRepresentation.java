@@ -77,9 +77,8 @@ public class ClientResourceStorageRepresentation extends ClientRegisteredIdentif
             .forEach(r -> storageDescription.append(r.get()).append("\n"));
 
         return Localization.getLocalizationInstance().getString(
-            "leaderCards.specialPowers.storage",
-            storageDescription.toString()
-        );
+            "leaderCards.specialPowers.storage"
+        ) + ": " + storageDescription.toString();
     }
 
 }

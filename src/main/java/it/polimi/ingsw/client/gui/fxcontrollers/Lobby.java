@@ -2,10 +2,12 @@ package it.polimi.ingsw.client.gui.fxcontrollers;
 
 import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
-import it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage;
 import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage;
 import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
-import it.polimi.ingsw.client.servermessage.*;
+import it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage;
+import it.polimi.ingsw.client.servermessage.GameInitializationStartedServerMessage;
+import it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage;
+import it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
@@ -13,11 +15,9 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
 public class Lobby extends AbstractController {
@@ -33,7 +33,6 @@ public class Lobby extends AbstractController {
 
 
     public Lobby() {
-
     }
 
     @FXML
@@ -42,10 +41,7 @@ public class Lobby extends AbstractController {
         NewPlayerEnteredNewGameLobbyServerMessage message = (NewPlayerEnteredNewGameLobbyServerMessage) clientManager.getEntryInContextInfoMap("newPlayerEnteredMessage");
         titleLabel.setText(Localization.getLocalizationInstance().getString("client.gui.playerRegistration.titleLabel"));
 
-
         updateLobby(message);
-
-
     }
 
     private void updateLobby(NewPlayerEnteredNewGameLobbyServerMessage newMessage) {

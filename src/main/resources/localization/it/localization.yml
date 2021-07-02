@@ -13,12 +13,25 @@ client:
     turnCanNotEndBeforeMainAction: "Non puoi terminare il turno prima di aver compiuto l'azione principale."
 
   gui:
+    dashboard:
+      baseProductions: "PRODUZIONI BASE"
+      chooseStarCosts: "Scegli le risorse con cui pagare"
+      chooseStarRewards: "Scegli le risorse da ottenere"
+      notEnoughResourcesErrorMessage: "Non hai abbastanza risorse!"
+      resourcesLeft: "Risorse rimaste: "
+      starResourcesChosen: "Risorse scelte: "
+      activateProductionsButton: "Attiva produzioni"
+      cancelButton: "Annulla"
+      activateSelectedProductionsButton: "Conferma produzioni"
+      activateLeaderCard: "Attiva carta leader"
+      discardLeaderCard: "Scarta carta leader"
+      cancelActivationLeaderCard: "Annulla"
+      endTurn: "Termina il mio turno"
     playerRegistration:
       titleLabel: "MAESTRI DEL RINASCIMENTO"
       descLabel: "Nome del giocatore"
       errorLabel: "Nome già in uso"
       confirmButton: "Conferma"
-    testLoc: "test localizeeeed"
     numberOfPlayers:
       descLabel: "Numero di giocatori"
       errorLabel: "Numero di giocatori non valido"
@@ -41,9 +54,11 @@ client:
     faithPath:
        playersLabel: "Giocatore %s : "
     repositioningInStorages:
+      temporaryStorage: "DA POSIZIONARE"
       rules:
         info:
           maxNumber: "MAX %d"
+      confirmButton: "Conferma"
     devCardTableDeck:
       deckSize: "Numero di carte nel mazzo: %d"
     table:
@@ -60,7 +75,7 @@ client:
         second: "L2"
         third: "L3"
     market:
-      legend: "Legenda"
+      legend: "Legenda di conversione delle biglie"
       buttons:
         btnEnterPurchaseMode: "Compra dal mercato"
         btnExitPurchaseMode: "Annulla acquisto"
@@ -70,6 +85,7 @@ client:
           singular: "1 punto fede\n"
           plural: "%d punti fede\n"
         specialMarble: "Biglia speciale\n"
+    devCardPlacementInDashboard: "Scegli su quale spazio posizionare la tua carta sviluppo"
 
   cli:
     setup:
@@ -196,7 +212,7 @@ leaderCards:
   specialPowers:
     specialPowers: "Poteri speciali: "
     developmentCardCostDiscount: "Sconto carta sviluppo: %d %s"
-    storage: "Magazzino extra: %s"
+    storage: "Magazzino extra"
     marbleSubstitution: "Sostituzione biglia bianca: 1 %s"
     production: "Produzione: %s --> %s"
   victoryPoints: "+ %d punti vittoria"
@@ -256,6 +272,7 @@ dashboard:
   shelf: "MAGAZZINO"
   infiniteChest: "FORZIERE"
   leaderStorages: "DEPOSITO SPECIALE LEADER"
+  specialStorage: "DEPOSITO SPECIALE"
 
 gameHistory:
 
