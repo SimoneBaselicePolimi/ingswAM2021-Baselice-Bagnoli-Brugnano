@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
+import it.polimi.ingsw.client.servermessage.PlayerDisconnectedServerMessage;
 import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
@@ -59,7 +60,14 @@ public class ClientManager {
 
     public void onConnectionWithServerDropped() {}
 
+    public void onAnotherPlayerDisconnected(Player player) {}
+
     public synchronized void handleServerMessage(ServerMessage serverMessage) {
+        ServerMessageUtils.ifMessageTypeCompute(
+            serverMessage,
+            PlayerDisconnectedServerMessage.class,
+            () ->
+        )
         if(serverAnswerable != null && !serverAnswerable.isDone()) {
             serverAnswerable.complete(serverMessage);
         } else {
