@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="780" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.FaithPath">
+
+
+    <GridPane prefHeight="780" prefWidth="1200">
+        <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="60" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints prefHeight="100" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="ALWAYS" />
+            </rowConstraints>
+
+            <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+        </GridPane>
+
+
+        <!--        custom scene components:          -->
+
+
+        <GridPane GridPane.columnIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="252.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="365.0" minHeight="10.0" prefHeight="360.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <GridPane prefWidth="964.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="20.0" prefWidth="20.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="101.0" minHeight="50.0" prefHeight="89.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+               <children>
+                  <HBox fx:id="faithPathContainer" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+                </GridPane>
+                <GridPane prefHeight="349.0" prefWidth="918.0" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="320.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="831.0" minWidth="10.0" prefWidth="250.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" prefWidth="150.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="26.0" minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="308.0" minHeight="10.0" prefHeight="308.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+               <children>
+                  <VBox fx:id="popeFavorCardsContainer" prefHeight="308.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="playerPositions" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 20px; -fx-border-radius: 8;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               </children>
+                </GridPane>
+            </children>
+        </GridPane>
+
+    </GridPane>
+
+</AnchorPane>

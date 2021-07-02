@@ -1,10 +1,16 @@
 package it.polimi.ingsw.server.model.storage;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * This is a rule that "checks" multiple storages.
@@ -16,12 +22,17 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 	/**
 	 * List of storages that implement this specific rule
 	 */
-	private List<ResourceStorage> storages = new ArrayList<>();
+	private final List<ResourceStorage> storages = new ArrayList<>();
 
 	/**
 	 * DifferentResourceTypesInDifferentStoragesRule Constructor
 	 */
 	public DifferentResourceTypesInDifferentStoragesRule() {
+	}
+
+	@Override
+	public void initializeRule(ResourceStorage storage) {
+		storages.add(storage);
 	}
 
 	/**
@@ -32,19 +43,28 @@ public class DifferentResourceTypesInDifferentStoragesRule extends ResourceStora
 	 */
 	@Override
 	public boolean checkRule(ResourceStorage storage, Map<ResourceType,Integer> newResources) {
-			if (!storages.contains(storage))
-				storages.add(storage);
-			for (ResourceStorage s :  storages){
-				for (ResourceType resourceInStorage: s.peekResources().keySet()) {
-					if (!s.equals(storage)){
-						for (ResourceType resourceType : newResources.keySet()) {
-							if (resourceType.equals(resourceInStorage))
-									return false;
-						}
+		for (ResourceStorage s : storages){
+			for (ResourceType resourceInStorage: s.peekResources().keySet()) {
+				if (!s.equals(storage)){
+					for (ResourceType resourceType : newResources.keySet()) {
+						if (resourceType.equals(resourceInStorage))
+							return false;
 					}
 				}
 			}
-			return true;
+		}
+		return true;
 	}
 
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentation() {
+		return new ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation(
+			storages.stream().map(ResourceStorage::getItemID).collect(Collectors.toList())
+		);
+	}
+
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }

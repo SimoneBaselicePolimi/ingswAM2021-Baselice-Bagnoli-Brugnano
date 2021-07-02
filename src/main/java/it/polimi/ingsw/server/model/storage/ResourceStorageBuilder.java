@@ -1,20 +1,29 @@
 package it.polimi.ingsw.server.model.storage;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResourceStorageBuilder {
+
+	private GameItemsManager gameItemsManager;
+
 	/**
 	 * List of rules that the storage implements when the storage is created
 	 */
-	private List<ResourceStorageRule> rules = new ArrayList<>();;
+	private List<ResourceStorageRule> rules = new ArrayList<>();
+
+	public ResourceStorageBuilder(GameItemsManager gameItemsManager) {
+		this.gameItemsManager = gameItemsManager;
+	}
 
 	/**
 	 * Method to create new ResourceStorageBuilder
 	 * @return ResourceStorageBuilder
 	 */
-	public static ResourceStorageBuilder initResourceStorageBuilder() {
-		return new ResourceStorageBuilder();
+	public static ResourceStorageBuilder initResourceStorageBuilder(GameItemsManager gameItemsManager) {
+		return new ResourceStorageBuilder(gameItemsManager);
 	}
 
 	/**
@@ -23,7 +32,7 @@ public class ResourceStorageBuilder {
 	 * @return ResourceStorage new storage
 	 */
 	public ResourceStorage createResourceStorage(String storageID) {
-		return new ResourceStorage(rules, storageID);
+		return new ResourceStorageImp(storageID, gameItemsManager, rules);
 	}
 
 	/**

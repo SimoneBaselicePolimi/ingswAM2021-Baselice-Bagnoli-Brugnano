@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root prefHeight="300" prefWidth="220" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+
+      <GridPane fx:id="bordersGrid" prefHeight="300.0" prefWidth="220.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 4px; -fx-border-radius: 8;">
+          <columnConstraints>
+              <ColumnConstraints hgrow="ALWAYS"/>
+          </columnConstraints>
+          <rowConstraints>
+              <RowConstraints prefHeight="35" />
+              <RowConstraints prefHeight="80" valignment="CENTER" />
+              <RowConstraints prefHeight="155" />
+              <RowConstraints prefHeight="30" />
+          </rowConstraints>
+          <Label fx:id="title" prefHeight="30.0" prefWidth="200.0" text="PLeader Card" GridPane.rowIndex="0" />
+          <VBox prefHeight="93.0" prefWidth="208.0" GridPane.rowIndex="1">
+              <Label fx:id="requirementsTitle" text="PREQUIREMENTS: " />
+              <HBox fx:id="requirementsContainer" alignment="CENTER_LEFT" prefHeight="95" prefWidth="200" spacing="10" />
+          </VBox>
+          <ScrollPane fx:id="specialPowersScrollPane" maxHeight="135" prefWidth="212.0" style="-fx-background-color:transparent;" GridPane.rowIndex="2">
+              <content>
+                  <VBox fx:id="specialPowersContainer" alignment="TOP_CENTER" prefWidth="200" />
+              </content>
+          </ScrollPane>
+          <Label fx:id="victoryPointsLabel" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="200" text="PV: +2" GridPane.rowIndex="3" />
+
+      </GridPane>
+   </children>
+</fx:root>

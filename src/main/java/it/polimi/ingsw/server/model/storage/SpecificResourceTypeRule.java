@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.model.storage;
 
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerSpecificResourceTypeRuleRepresentation;
 
 import java.util.Map;
 
@@ -12,7 +15,7 @@ public class SpecificResourceTypeRule extends ResourceStorageRule {
 	/**
 	 * Specific type of resource that the storage can contain
 	 */
-	private ResourceType resourceType;
+	public final ResourceType resourceType;
 
 	/**
 	 * SpecificResourceTypeRule Constructor
@@ -39,4 +42,13 @@ public class SpecificResourceTypeRule extends ResourceStorageRule {
 		return true;
 	}
 
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentation() {
+		return new ServerSpecificResourceTypeRuleRepresentation(resourceType);
+	}
+
+	@Override
+	public ServerResourceStorageRuleRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }

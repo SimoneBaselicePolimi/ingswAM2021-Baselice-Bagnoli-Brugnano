@@ -1,5 +1,13 @@
 package it.polimi.ingsw.server.model.gameitems;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation;
+import it.polimi.ingsw.utils.Colour;
+
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -7,7 +15,7 @@ import java.util.Optional;
  * Each Marble can be used by a Player to obtain certain types of resources or faith points. There are also some
  * special Marbles which can be used to gain a generic type of resources if activated by a special Leader card power.
  */
-public class MarbleColour {
+public class MarbleColour extends RegisteredIdentifiableItem implements Representable<ServerMarbleColourRepresentation> {
 	/**
 	 * Optional type of resource obtainable with this Marble
 	 */
@@ -24,23 +32,57 @@ public class MarbleColour {
 	private boolean isSpecialMarble;
 
 	/**
-	 * ID which identifies this specific Marble
+	 * Marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
 	 */
-	private String marbleID;
+	private List<Colour> marbleColour;
 
 	/**
 	 * Class constructor.
+	 * @param marbleID ID which identifies this specific Marble
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new MarbleColour object
+	 *                          (see {@link RegisteredIdentifiableItem})
 	 * @param resourceType optional type of resource obtainable with this Marble
 	 * @param faithPoints number of faith points obtainable by this Marble
 	 * @param isSpecialMarble boolean which states if this Marble can be transformed into a generic type of resource
 	 *                        by activating a special Leader card power
-	 * @param marbleID ID which identifies this specific Marble
 	 */
-	public MarbleColour(Optional<ResourceType> resourceType, int faithPoints, boolean isSpecialMarble, String marbleID) {
+	public MarbleColour(
+		String marbleID,
+		GameItemsManager gameItemsManager,
+		Optional<ResourceType> resourceType,
+		int faithPoints,
+		boolean isSpecialMarble
+	) {
+		super(marbleID, gameItemsManager);
 		this.resourceType = resourceType;
 		this.faithPoints = faithPoints;
 		this.isSpecialMarble = isSpecialMarble;
-		this.marbleID = marbleID;
+	}
+
+	/**
+	 * Class constructor.
+	 * @param marbleID ID which identifies this specific Marble
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new MarbleColour object
+	 *                          (see {@link RegisteredIdentifiableItem})
+	 * @param resourceType optional type of resource obtainable with this Marble
+	 * @param faithPoints number of faith points obtainable by this Marble
+	 * @param isSpecialMarble boolean which states if this Marble can be transformed into a generic type of resource
+	 *                        by activating a special Leader card power
+	 * @param marbleColour marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
+	 */
+	public MarbleColour(
+		String marbleID,
+		GameItemsManager gameItemsManager,
+		Optional<ResourceType> resourceType,
+		int faithPoints,
+		boolean isSpecialMarble,
+		List<Colour> marbleColour
+	) {
+		super(marbleID, gameItemsManager);
+		this.resourceType = resourceType;
+		this.faithPoints = faithPoints;
+		this.isSpecialMarble = isSpecialMarble;
+		this.marbleColour = marbleColour;
 	}
 
 	/**
@@ -64,38 +106,27 @@ public class MarbleColour {
 	 * a special Leader card power.
 	 * @return true if this is special Marble, false otherwise
 	 */
+	@JsonGetter("isSpecialMarble")
 	public boolean isSpecialMarble() {
 		return isSpecialMarble;
 	}
 
 	/**
-	 * Method to get the unique ID which identifies this specific Marble.
-	 * @return ID of this Marble
+	 * Method to get the marble colour, specified as a list (in case of multi-coloured marbles) of RGB colour codes
 	 */
-	public String getMarbleID() {
-		return marbleID;
+	public List<Colour> getMarbleColour() {
+		return marbleColour;
 	}
 
-	/**
-	 * Override of the equals method used to compare the equality between two Marbles.
-	 * @param o Object to compare to this Marble
-	 * @return true if the Object passed as parameter is identified by the same Marble ID of the Marble
-	 * which invokes this method, false otherwise
-	 */
+	@JsonIgnore
 	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof MarbleColour)) return false;
-		MarbleColour m = (MarbleColour) o;
-		return (marbleID.equals(m.marbleID));
+	public ServerMarbleColourRepresentation getServerRepresentation() {
+		return new ServerMarbleColourRepresentation(itemID, resourceType, faithPoints, isSpecialMarble, marbleColour);
 	}
 
-	/**
-	 * Override of the hashCode method used to return the hash code of this Marble.
-	 * @return hash code of this Marble based on its ID
-	 */
+	@JsonIgnore
 	@Override
-	public int hashCode() {
-		return marbleID.hashCode();
+	public ServerMarbleColourRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
 	}
-
 }

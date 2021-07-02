@@ -1,14 +1,17 @@
 package it.polimi.ingsw.server.model.gameitems.leadercard;
 
+import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRequirementRepresentation;
+import it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceNumberRequirementRepresentation;
 
 /**
  * This class represent the request for a specific number of resources in the player's storages
  */
 public class ResourceNumberRequirement extends LeaderCardRequirement {
-    ResourceType resourceType;
-    int resourceNumber;
+    public final ResourceType resourceType;
+    public final int resourceNumber;
 
     /**
      * ResourceNumberRequirement constructor
@@ -28,5 +31,15 @@ public class ResourceNumberRequirement extends LeaderCardRequirement {
     @Override
     public boolean checkRequirement(PlayerContext playerContext) {
         return playerContext.getAllResources().containsKey(resourceType) && playerContext.getAllResources().get(resourceType) >= resourceNumber;
+    }
+
+    @Override
+    public ServerLeaderCardRequirementRepresentation getServerRepresentation() {
+        return new ServerResourceNumberRequirementRepresentation(resourceType, resourceNumber);
+    }
+
+    @Override
+    public ServerLeaderCardRequirementRepresentation getServerRepresentationForPlayer(Player player) {
+        return getServerRepresentation();
     }
 }

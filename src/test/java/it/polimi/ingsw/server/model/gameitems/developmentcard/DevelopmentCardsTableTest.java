@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.gameitems.developmentcard;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.Production;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +10,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
+import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DevelopmentCardsTableTest {
+
+    @Mock
+    BiFunction<DevelopmentCardColour, DevelopmentCardLevel, String> getIdForDeckWithColourAndLevel;
+
+    @Mock
+    GameItemsManager gameItemsManager;
 
     @Mock
     Production production1;
@@ -27,22 +35,29 @@ public class DevelopmentCardsTableTest {
     @Mock
     Map<ResourceType, Integer> purchaseCost;
 
-        DevelopmentCard developmentCard1 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production1, 3, purchaseCost);
-        DevelopmentCard developmentCard2 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production1, 2, purchaseCost);
-        DevelopmentCard developmentCard3 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production2, 5, purchaseCost);
-        DevelopmentCard developmentCard4 = new DevelopmentCard(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production1, 2, purchaseCost);
-        DevelopmentCard developmentCard5 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production3, 3, purchaseCost);
-        DevelopmentCard developmentCard6 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production2, 1, purchaseCost);
-        DevelopmentCard developmentCard7 = new DevelopmentCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production3, 1, purchaseCost);
-        DevelopmentCard developmentCard8 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 1, purchaseCost);
-        DevelopmentCard developmentCard9 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 2, purchaseCost);
-        DevelopmentCard developmentCard10 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production2, 3, purchaseCost);
-        DevelopmentCard developmentCard11 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
-        DevelopmentCard developmentCard12 = new DevelopmentCard(DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
+    DevelopmentCard developmentCard1, developmentCard2, developmentCard3, developmentCard4,
+        developmentCard5, developmentCard6, developmentCard7, developmentCard8, developmentCard9,
+        developmentCard10, developmentCard11, developmentCard12;
 
-    List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
+    List<DevelopmentCard> developmentCards;
     @BeforeEach
     void setUp() {
+
+        developmentCard1 = new DevelopmentCard("testID1", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production1, 3, purchaseCost);
+        developmentCard2 = new DevelopmentCard("testID2", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production1, 2, purchaseCost);
+        developmentCard3 = new DevelopmentCard("testID3", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE, production2, 5, purchaseCost);
+        developmentCard4 = new DevelopmentCard("testID4", gameItemsManager, DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.GREEN, production1, 2, purchaseCost);
+        developmentCard5 = new DevelopmentCard("testID5", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.BLUE, production3, 3, purchaseCost);
+        developmentCard6 = new DevelopmentCard("testID6", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production2, 1, purchaseCost);
+        developmentCard7 = new DevelopmentCard("testID7", gameItemsManager, DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW, production3, 1, purchaseCost);
+        developmentCard8 = new DevelopmentCard("testID8", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 1, purchaseCost);
+        developmentCard9 = new DevelopmentCard("testID9", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 2, purchaseCost);
+        developmentCard10 = new DevelopmentCard("testID10", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production2, 3, purchaseCost);
+        developmentCard11 = new DevelopmentCard("testID11", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
+        developmentCard12 = new DevelopmentCard("testID12", gameItemsManager, DevelopmentCardLevel.THIRD_LEVEL, DevelopmentCardColour.PURPLE, production1, 4, purchaseCost);
+
+        developmentCards = new ArrayList<DevelopmentCard>();
+
         developmentCards.add(developmentCard1);
         developmentCards.add(developmentCard2);
         developmentCards.add(developmentCard3);
@@ -65,7 +80,7 @@ public class DevelopmentCardsTableTest {
      */
     @Test
     void testDevelopmentCardsTableConstructor (){
-        DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
+        DevelopmentCardsTable table = new DevelopmentCardsTableImp(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
         assertEquals(
                 Set.of(developmentCard1, developmentCard2, developmentCard3),
                 new HashSet<>(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL, DevelopmentCardColour.BLUE).peekAll())
@@ -97,7 +112,7 @@ public class DevelopmentCardsTableTest {
      */
         @Test
         void testGetAvailableCards(){
-            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
+            DevelopmentCardsTable table = new DevelopmentCardsTableImp(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
 
             assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.BLUE).peek()));
             assertTrue(table.getAvailableCards().contains(table.getDeckByLevelAndColour(DevelopmentCardLevel.FIRST_LEVEL,DevelopmentCardColour.GREEN).peek()));
@@ -113,7 +128,7 @@ public class DevelopmentCardsTableTest {
      */
         @Test
         void testPopCard (){
-            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
+            DevelopmentCardsTable table = new DevelopmentCardsTableImp(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
 
             List<DevelopmentCard> list1 = table.getDeckByLevelAndColour(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW).peekAll();
             DevelopmentCard card1 = table.popCard(DevelopmentCardLevel.SECOND_LEVEL, DevelopmentCardColour.YELLOW);
@@ -139,12 +154,11 @@ public class DevelopmentCardsTableTest {
          */
         @Test
         void testGetAvailableCardsAsMap(){
-            DevelopmentCardsTable table = new DevelopmentCardsTable(developmentCards);
+            DevelopmentCardsTable table = new DevelopmentCardsTableImp(developmentCards, gameItemsManager, getIdForDeckWithColourAndLevel);
 
             for (DevelopmentCard card : table.getAvailableCards()) {
                 assertEquals(card, table.getAvailableCardsAsMap().get(card.getLevel()).get(card.getColour()));
             }
         }
-
 
 }

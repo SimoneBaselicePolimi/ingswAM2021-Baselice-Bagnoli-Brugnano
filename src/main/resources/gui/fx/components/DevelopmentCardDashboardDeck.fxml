@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<fx:root prefHeight="240.0" prefWidth="190" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+
+        <GridPane fx:id="deckContainer" prefHeight="240.0" prefWidth="190.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" prefWidth="190" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="170" />
+                <RowConstraints prefHeight="16" />
+                <RowConstraints prefHeight="44" />
+            </rowConstraints>
+            <VBox fx:id="flagsContainer" prefWidth="190" prefHeight="44" spacing="6" GridPane.rowIndex="2" alignment="TOP_CENTER" >
+            </VBox>
+        </GridPane>
+    </children>
+</fx:root>

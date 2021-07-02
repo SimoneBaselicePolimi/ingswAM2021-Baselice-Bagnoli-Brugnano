@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="780" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.GameHistory">
+
+    <GridPane prefHeight="780" prefWidth="1200">
+        <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="NEVER" prefWidth="60" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" valignment="CENTER"/>
+        </rowConstraints>
+
+        <GridPane GridPane.columnIndex="0">
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints prefHeight="100" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="ALWAYS" />
+            </rowConstraints>
+
+            <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        </GridPane>
+
+        <ScrollPane GridPane.columnIndex="1" maxWidth="800" maxHeight="700" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 10px; -fx-border-radius: 12;">
+            <Label fx:id="historyText" alignment="TOP_LEFT" prefWidth="750.0" />
+        </ScrollPane>
+    </GridPane>
+
+</AnchorPane>

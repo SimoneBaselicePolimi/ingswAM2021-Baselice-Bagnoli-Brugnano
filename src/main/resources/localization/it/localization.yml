@@ -1,0 +1,344 @@
+client:
+
+  startupWizard:
+    title: "\n*** MAESTRI DEL RINASCIMENTO ***\n\n
+    1) Avvia il gioco con interfaccia testuale (CLI)\n
+    2) Avvia il gioco con interfaccia grafica (GUI)\n
+    3) Avvia la partita in solitario in locale (CLI)\n
+    4) Avvia la partita in solitario in locale (GUI)\n
+    5) Seleziona la lingua di gioco\n"
+    error: "Input non valido"
+
+  mainMenu:
+    gameTitle: "MAESTRI DEL RINASCIMENTO"
+    players: "Giocatori: "
+    resources: "Risorse: "
+    faithPositions: "Posizione sul tracciato fede: "
+
+  errors:
+    unexpectedServerMessage: "Errore inaspettato! [Il server ha inviato un messaggio inaspettato]"
+    userInputNotExpected: "Aspetta, operazione in corso..."
+    invalidInput: "Input non valido"
+    turnCanNotEndBeforeMainAction: "Non puoi terminare il turno prima di aver compiuto l'azione principale."
+    onConnectionWithServerDropped: "Connessione col server interrotta. Partita terminata"
+    onAnotherPlayerDisconnected: "Il giocatore %s si è disconnesso. Partita terminata"
+
+  gui:
+    dashboard:
+      baseProductions: "PRODUZIONI BASE"
+      chooseStarCosts: "Scegli le risorse con cui pagare"
+      chooseStarRewards: "Scegli le risorse da ottenere"
+      notEnoughResourcesErrorMessage: "Non hai abbastanza risorse!"
+      resourcesLeft: "Risorse rimaste: "
+      starResourcesChosen: "Risorse scelte: "
+      activateProductionsButton: "Attiva produzioni"
+      cancelButton: "Annulla"
+      activateSelectedProductionsButton: "Conferma produzioni"
+      activateLeaderCard: "Attiva carta leader"
+      discardLeaderCard: "Scarta carta leader"
+      cancelActivationLeaderCard: "Annulla"
+      endTurn: "Termina il mio turno"
+    playerRegistration:
+      titleLabel: "MAESTRI DEL RINASCIMENTO"
+      descLabel: "Nome del giocatore"
+      errorLabel: "Nome già in uso"
+      confirmButton: "Conferma"
+    numberOfPlayers:
+      descLabel: "Numero di giocatori"
+      errorLabel: "Numero di giocatori non valido"
+      confirmButton: "Conferma"
+    preGame:
+      numOfPlayers: "%d/%d giocatori"
+    leaderCardsSetup:
+      selection: "Seleziona %d carte leader"
+      confirmButton: "Conferma la selezione delle carte leader"
+    resourcesChoice:
+      titleLabel:
+        singular: "Seleziona una risorsa"
+        plural: "Seleziona %d risorse"
+      confirmButton: "Conferma"
+      selectedResources: "Risorse attualmente selezionate: %d di %d"
+      coins: "Monete"
+      stones: "Pietre"
+      servants: "Servitori"
+      shields: "Scudi"
+    faithPath:
+       playersLabel: "Giocatore %s : "
+    repositioningInStorages:
+      temporaryStorage: "DA POSIZIONARE"
+      rules:
+        info:
+          maxNumber: "MAX %d"
+      confirmButton: "Conferma"
+    devCardTableDeck:
+      deckSize: "Numero di carte nel mazzo: %d"
+    table:
+      buttons:
+        btnEnterPurchaseMode: "Compra carta sviluppo"
+        btnExitPurchaseMode: "Annulla acquisto"
+      colours:
+        green: "VERDE"
+        blue: "BLU"
+        yellow: "GIALLO"
+        purple: "VIOLA"
+      levels:
+        first: "L1"
+        second: "L2"
+        third: "L3"
+    market:
+      legend: "Legenda di conversione delle biglie"
+      buttons:
+        btnEnterPurchaseMode: "Compra dal mercato"
+        btnExitPurchaseMode: "Annulla acquisto"
+      marbleDescription:
+        marbleResource: "1 %s\n"
+        marbleFaithPoints:
+          singular: "1 punto fede\n"
+          plural: "%d punti fede\n"
+        specialMarble: "Biglia speciale\n"
+    devCardPlacementInDashboard: "Scegli su quale spazio posizionare la tua carta sviluppo"
+
+  cli:
+    setup:
+      askPlayerName: "Nome del giocatore: "
+      notifyPlayerNameAlreadyInUse: "Il nome %s è già utilizzato da un altro giocatore."
+      askNumberOfPlayers: "Numero di giocatori: "
+      notifyPlayerNumberOfPlayersIsInvalid: "Il numero di giocatori non è valido per la creazione della lobby."
+      notifyPlayerEnteredInLobby: "Il giocatore %s è appena entrato nella lobby."
+      notifyCurrentPlayerEnteredInLobby: "Sei appena entrat* nella lobby."
+      notifyLobbyPlayersList: "Giocatori attualmente nella lobby (%s/%s): \n%s"
+      notifyRepresentationDownloaded: "[Info partita scaricate dal server]"
+      notifyGameStarted: "Il gioco è iniziato"
+      notifySetupIsStarting: "Inizia il setup del gioco!"
+    gameSetup:
+      gameSetupInfo: "PRE PARTITA"
+      leaderCardsToChooseInfo:
+        singular: "Devi ancora scegliere una carta leader"
+        plural: "Devi ancora scegliere %s carte leader"
+      chooseLeaderCards: "Scegli le tue carte leader"
+      leaderCardsDialog:
+        choose: "Scegli una carta leader: (inserisci il numero corrispondente)"
+        invalid: "Numero non valido. Inserisci il numero di una carta leader esistente"
+        alreadyChosen: "Hai già scelto questa carta leader"
+    game:
+      possibleUserChoices: "Puoi eseguire le seguenti azioni: "
+      makeChoice: "Inserisci il numero corrispondente alla tua scelta: "
+      invalidChoice: "Scelta non valida"
+      returnToMenu: "Torna al menu principale"
+      returnToSetupView: "Torna alla fase di setup"
+    resourcesChoiceDialog:
+      specifyResources: "Inserisci quantità e tipo di risorse: "
+      invalidChoice: "Scelta non valida. Formato: '{numRisorse} {tipo}'"
+    mainMenuActions:
+      openMarket: "Apri il mercato"
+      openDevCardsTable: "Apri il tavolo delle carte sviluppo"
+      openFaithPath: "Apri il tracciato fede"
+      openPersonalDashboard: "Apri la tua plancia di gioco"
+      openDifferentPlayerDashboard: "Apri la plancia di un altro giocatore"
+      openDashboardOfPlayerName: "Guarda la plancia di: %s"
+      endMyTurn: "Termina il turno"
+    market:
+      rowChoice: "Prendi riga dal mercato"
+      columnChoice: "Prendi colonna dal mercato"
+      askForRowNumber: "Quale riga del mercato vuoi selezionare?"
+      askForColumnNumber: "Quale colonna del mercato vuoi selezionare?"
+      notifyPlayerRowNumberIsInvalid: "La riga selezionata non è una riga valida del mercato"
+      notifyPlayerColumnNumberIsInvalid: "La colonna selezionata non è una colonna valida del mercato"
+    resourcesRepositioning:
+      temporaryResourcesInfo: "Devi ancora posizionare le seguenti risorse: %s"
+      absentTemporaryResourcesInfo: "Non hai risorse da posizionare"
+      putResourcesInStorage: "Inserisci le risorse in un deposito"
+      removeResourcesFromStorage: "Prendi le risorse da un deposito"
+      repositioningDone: "Conferma posizionamento"
+      specifyInWhichStorage: "Inserisci le risorse in %s"
+      specifyForWhichStorage: "Prendi le risorse da %s"
+      notEnoughResourcesInTempStorage: "Non hai abbastanza risorse da posizionare"
+      notEnoughResourcesInStorage: "Non hai abbastanza risorse nel deposito"
+      checkRuleErrorMessage:
+        maxNumberRule: "Nel deposito selezionato il numero massimo di risorse è: %d"
+        sameResourceType: "Nel deposito selezionato tutte le risorse devono essere di un unico tipo"
+        specificResourceType: "Nel deposito selezionato tutte le risorse devono essere del tipo: %s"
+        differentResourceTypeInDifferentStorages: "Non puoi inserire risorse dello stesso tipo in magazzini diversi"
+    devCard:
+      deckTitle: "Carte nel mazzo: %s "
+    devCardTable:
+      devCardChoice: "Compra carta sviluppo di livello %s"
+      viewCardOfLevel: "Vedi carte di livello %s"
+      askForDevCardColourChoice: "Inserisci il colore della carta sviluppo che vuoi comprare:"
+      askForDevCardLevelChoice: "Inserisci il livello della carta sviluppo che vuoi comprare:"
+      askForDeckNumber: "In quale spazio della tua plancia personale vuoi mettere la carta sviluppo?"
+      notifyPlayerDevCardColourIsInvalid: "Il colore selezionato non è valido"
+      notifyPlayerDevCardLevelIsInvalid: "Il livello selezionato non è valido"
+      notifyPlayerDeckIsEmpty: "Il mazzo selezionato è vuoto"
+      notifyPlayerCannotAddCardToDeck: "Non puoi mettere la carta sviluppo in questo spazio della tua plancia personale"
+      notifyPlayerDeckNumberIsInvalid: "Numero non valido"
+      notifyAllPlayerDecksAreInvalid: "Non puoi mettere la carta sviluppo selezionata in nessuno dei tuoi mazzi"
+      notifyPlayerHeDoesNotHaveNeededResources: "Non possiedi le risorse necessarie per comprare la carta sviluppo selezionata"
+    playerDashboard:
+      activateProduction: "Attiva produzioni"
+      leaderCardList: "Guarda carte leader"
+      activateBaseProduction: "Attiva produzione base"
+      activateDashboardProductions: "Attiva produzioni delle carte sviluppo"
+      activateNewLeaderCardProduction: "Attiva una nuova produzione tra quelle delle tue carte leader"
+      endProductionsActivation: "Termina fase di attivazione delle produzioni"
+      activateNewProduction : "Attiva una nuova produzione"
+      cancelSelectedProductions: "Annulla tutte le produzioni selezionate"
+      askPlayerForDevProductionsChoice: "Scegli la produzione che vuoi attivare tra quelle delle tue carte sviluppo:"
+      askPlayerForLeaderProductionsChoice: "Scegli la carta leader che contiene la produzione che vuoi attivare:"
+      askPlayerForBaseProductionChoice: "Scegli la produzione base che vuoi attivare:"
+      askPlayerForTypeOfLeaderProductionsChoice: "Quale la produzione della carta leader selezionata che vuoi attivare:"
+      notifyPlayerLeaderCardIsNotActive: "La carta leader selezionata non è attiva. Non puoi attivare nessuna produzione di questa carta"
+      notifyPlayerNumberOfResourcesLeftToPay: "Ti restano ancora %s risorse da pagare. Inserisci numero e tipo di risorse con le quali vuoi pagare la produzione:"
+      notifyPlayerNumberOfResourcesLeftToObtain: "Ti restano ancora %s risorse da ottenere. Inserisci numero e tipo di risorse che vuoi ottenere dalla produzione:"
+      notifyPlayerResourcesAreInvalid: "Le risorse che hai indicato non sono valide"
+      notifyPlayerProductionNumberIsInvalid: "La produzione selezionata non è valida"
+      notifyPlayerProductionAlreadyChosen: "Hai già scelto questa produzione"
+      notifyPlayerHeDoesNotHaveNeededResources: "Non possiedi le risorse necessarie per attivare la produzione selezionata"
+      returnToProductionActivation: "Torna al menu di attivazione delle produzioni"
+      activateNewLeaderCard: "Attiva una carta leader"
+      discardLeaderCard: "Scarta una carta leader"
+      canNotActivateNewLeaderCard: "Nessuna delle tue carte leader può essere attivata"
+      canNotDiscardLeaderCard: "Nessuna delle tue carte leader può essere scartata"
+      selectLeaderCardToActivate: "Attiva la carta %s"
+      selectLeaderCardToDiscard: "Scarta la carta %s"
+      lookAtLeaderCardsOfMyPlayer: "Possiedi le seguenti carte leader:"
+      lookAtLeaderCardsOfAnotherPlayer: "Il giocatore %s possiede %d carte nascoste"
+    resourcesChoice:
+      title: "Scegli quali risorse ottenere"
+      obtained: "Risorse già ottenute: "
+      info:
+        singular: "Devi ancora scegliere una risorsa"
+        plural: "Devi ancora scegliere %s risorse"
+      conversions: "Puoi convertire una risorsa in: %s"
+      choiceMenu: "Ottieni una risorsa di tipo %s"
+      specialMarbleSubstitutions: "SOSTITUZIONE BIGLIE BIANCHE"
+
+leaderCards:
+  name: "CARTA LEADER"
+  requirements:
+    requirements: "Requisiti: "
+    colourAndLevel: "%d %s %s liv. %d"
+    colour: "%d %s %s"
+    resourceNumber: "%d %s"
+  specialPowers:
+    specialPowers: "Poteri speciali: "
+    developmentCardCostDiscount: "Sconto carta sviluppo: %d %s"
+    storage: "Magazzino extra"
+    marbleSubstitution: "Sostituzione biglia bianca: 1 %s"
+    production: "Produzione: %s --> %s"
+  victoryPoints: "+ %d punti vittoria"
+
+cards:
+  singular: "carta"
+  plural: "carte"
+
+marbles:
+  special: "biglia speciale"
+
+resources:
+  singular: "risorsa"
+  plural: "risorse"
+  coins:
+    singular: "moneta"
+    plural: "monete"
+  servants:
+    singular: "servitore"
+    plural: "servitori"
+  shields:
+    singular: "scudo"
+    plural: "scudi"
+  stones:
+    singular: "pietra"
+    plural: "pietre"
+  finalMessage: "Il gioco è iniziato"
+
+resourceStorages:
+  singular: "magazzino"
+  plural: "magazzini"
+  rules:
+    maxResourceNumber: ">> max %d %s"
+    sameResource: ">> unico tipo di risorsa"
+    specificResourceNumber: ">> solo %s"
+
+developmentCards:
+  name: "CARTA SVILUPPO"
+  colours:
+    yellow:
+      singular: "gialla"
+      plural: "gialle"
+    green:
+      singular: "verde"
+      plural: "verdi"
+    purple:
+      singular: "viola"
+      plural: "viola"
+    blue:
+      singular: "blu"
+      plural: "blu"
+  level: "liv."
+  cost: "Costo:"
+
+dashboard:
+  baseProductions: "PRODUZIONE BASE"
+  shelf: "MAGAZZINO"
+  infiniteChest: "FORZIERE"
+  leaderStorages: "DEPOSITO SPECIALE LEADER"
+  specialStorage: "DEPOSITO SPECIALE"
+
+gameHistory:
+
+  faithPath:
+    position: "posizione"
+    faithPoints:
+      singular: "punto fede"
+      plural: "punti fede"
+    playerMove:
+      singular: "Il giocatore %s si è mosso sul tracciato fede di 1 passo"
+      plural: "Il giocatore %s si è mosso sul tracciato fede di %s passi"
+    vaticanReport: "E' avvenuto un rapporto in Vaticano"
+    popeFavorCards:
+      name: "TESSERA FAVORE PAPALE"
+      states:
+        active: "attiva"
+        discarded: "scartata"
+        hidden: "coperta"
+    lastPositionReached: "Il giocatore %s ha raggiunto l'ultima casella del tracciato fede"
+    singlePlayer:
+      lorenzoIlMagnifico: "Lorenzo Il Magnifico"
+      moveBlackCross:
+        oneStep: "Lorenzo Il Magnifico è avanzato di 1 passo sul tracciato fede"
+        multipleSteps: "Lorenzo Il Magnifico è avanzato di %s passi sul tracciato fede"
+      tokenMessage: "SEGNALINO AZIONE: "
+      moveBlackCrossAndShuffleTokens:
+        oneStep: "Lorenzo Il Magnifico è avanzato di 1 passo sul tracciato fede e ha mescolato i tuoi segnalini Azione"
+        multipleSteps: "Lorenzo Il Magnifico è avanzato di % passi sul tracciato fede e ha mescolato i tuoi segnalini Azione"
+      discardCards:
+        action: "Lorenzo Il Magnifico ti ha fatto scartare dal tavolo delle carte sviluppo %s"
+        cards:
+          singular: "carta"
+          plural: "carte"
+        level: "di livello"
+
+  leaderCard:
+    activateCard: "Il giocatore %s ha attivato una carta leader"
+    discardCard: "Il giocatore %s ha scartato una carta leader"
+
+  gameState:
+    setup:
+      initialMessage: "La partita è iniziata. I giocatori scelgono le carte leader e le risorse iniziali"
+      choiceMessageWithInitialResources: "Il giocatore %s ha scelto le sue carte leader.\nLe sue risorse iniziali sono: %s"
+      choiceMessageWithoutInitialResources: "Il giocatore %s ha scelto le sue carte leader.\nNon ha risorse iniziali"
+    mainTurn:
+      initialMessage: "Inizia il turno del giocatore %s"
+      developmentAction: "Il giocatore %s ha comprato una carta sviluppo"
+      obtainedMarblesMarketActionAsList: "Il giocatore %s ha ottenuto le seguenti biglie:"
+      obtainedMarblesMarketAction: "Il giocatore %s ha ottenuto delle biglie dopo l'azione mercato."
+      productionAction: "Il giocatore %s ha attivato delle produzioni"
+    postTurn:
+      finalMessage: "Si è concluso il turno del giocatore %s"
+    manageResourcesFromMarketTurn:
+      obtainedResourcesMarketMessage: "Il giocatore %s ha ottenuto le seguenti risorse: %s"
+      noObtainedResourcesMarketMessage: "Il giocatore %s non ha ottenuto risorse dall'azione mercato"
+      discardedResourcesMarketAction:
+        singular: "Il giocatore %s ha scartato 1 risorsa"
+        plural: "Il giocatore %s ha scartato %s risorse"

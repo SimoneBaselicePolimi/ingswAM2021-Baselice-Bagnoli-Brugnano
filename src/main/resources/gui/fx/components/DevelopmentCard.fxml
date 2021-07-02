@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root prefHeight="150.0" prefWidth="190" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+
+        <GridPane fx:id="container" prefHeight="150.0" prefWidth="190.0" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 6px; -fx-border-radius: 8;">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="20" />
+                <RowConstraints prefHeight="35" valignment="CENTER" />
+                <RowConstraints prefHeight="85" valignment="CENTER" />
+                <RowConstraints prefHeight="5" />
+                <RowConstraints prefHeight="30" valignment="CENTER" />
+            </rowConstraints>
+
+            <GridPane GridPane.rowIndex="0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS" />
+                    <ColumnConstraints prefWidth="35" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="ALWAYS" />
+                </rowConstraints>
+                <Label fx:id="titleLabel" text="PDev Card" GridPane.columnIndex="0" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <Label fx:id="victoryPointsLabel" text="VP: 2" GridPane.columnIndex="1" />
+            </GridPane>
+
+            <HBox fx:id="purchaseCostContainer" alignment="CENTER_LEFT" spacing="6" GridPane.rowIndex="1">
+                <Label fx:id="purchaseCostLabel" text="Pcost">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
+            </HBox>
+
+            <Label fx:id="levelColourLabel" alignment="CENTER" prefHeight="7" prefWidth="130" style="-fx-background-color: green" text="P1" textFill="WHITE" GridPane.rowIndex="4">
+            <font>
+               <Font size="11.0" />
+            </font></Label>
+
+        </GridPane>
+    </children>
+</fx:root>

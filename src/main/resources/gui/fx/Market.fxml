@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="780" prefWidth="1200" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.fxcontrollers.Market">
+
+    <GridPane prefHeight="780" prefWidth="1200">
+        <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="60" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints prefHeight="100" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="ALWAYS" />
+            </rowConstraints>
+
+            <AnchorPane fx:id="commonComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <AnchorPane fx:id="specificComponentsContainer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+
+        </GridPane>
+        <GridPane GridPane.columnIndex="1">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="30.0" />
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints maxWidth="30" prefWidth="20" />
+                <ColumnConstraints prefWidth="130.0" />
+                <ColumnConstraints prefWidth="60" />
+                <ColumnConstraints prefWidth="260.0" />
+                <ColumnConstraints prefWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints prefHeight="40.0" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="677.0" minHeight="508.0" prefHeight="639.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="132.0" minHeight="0.0" prefHeight="77.0" vgrow="ALWAYS" />
+        </rowConstraints>
+            <children>
+                <Label fx:id="legendLabel" alignment="CENTER" prefHeight="26.0" prefWidth="261.0" text="PMARKET LEGEND" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+                <GridPane fx:id="marketContainer" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+                </GridPane>
+                <GridPane GridPane.columnIndex="3" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="130" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints prefHeight="130.0" vgrow="NEVER" />
+                        <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+               <children>
+                  <GridPane fx:id="outMarbleContainer" gridLinesVisible="true">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="NEVER" prefWidth="130.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints prefHeight="130.0" vgrow="NEVER" />
+                    </rowConstraints>
+                  </GridPane>
+               </children>
+                </GridPane>
+                <GridPane fx:id="legendContainer" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+                </GridPane>
+            </children>
+        </GridPane>
+
+
+<!--        custom scene:          -->
+
+
+
+    </GridPane>
+
+
+
+</AnchorPane>

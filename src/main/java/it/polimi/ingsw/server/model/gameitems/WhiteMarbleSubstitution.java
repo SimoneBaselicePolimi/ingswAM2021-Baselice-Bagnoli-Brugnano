@@ -1,11 +1,15 @@
 package it.polimi.ingsw.server.model.gameitems;
 
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Representable;
+import it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerWhiteMarbleSubstitutionRepresentation;
+
 /**
  * This class represents the White Marble Substitution power held by some Game Items (Leader Cards).
  * A Player who owns this Substitution Item, when taking Resources from the Market, can choose which Resource to take
  * (from those given by this Substitution Item) for each of the white Marbles.
  */
-public class WhiteMarbleSubstitution {
+public class WhiteMarbleSubstitution extends RegisteredIdentifiableItem implements Representable<ServerWhiteMarbleSubstitutionRepresentation> {
 	/**
 	 * Resource type the Player can substitute to a White Marble taken from the Market
 	 */
@@ -13,10 +17,18 @@ public class WhiteMarbleSubstitution {
 
 	/**
 	 * Class constructor.
+	 * @param marbleSubstitutionID ID which identifies this specific Special Marble Substitution Item
+	 * @param gameItemsManager a reference to gameItemsManager is needed to register the new WhiteMarbleSubstitution object
+	 *                          (see {@link RegisteredIdentifiableItem})
 	 * @param resourceTypeToSubstitute resource type to substitute to a White Marble
 	 * @throws IllegalArgumentException if a null Resource type is passed as parameter
 	 */
-	public WhiteMarbleSubstitution(ResourceType resourceTypeToSubstitute) throws IllegalArgumentException{
+	public WhiteMarbleSubstitution(
+		String marbleSubstitutionID,
+		GameItemsManager gameItemsManager,
+		ResourceType resourceTypeToSubstitute
+	) throws IllegalArgumentException{
+		super(marbleSubstitutionID, gameItemsManager);
 		if(resourceTypeToSubstitute == null)
 			throw new IllegalArgumentException();
 		this.resourceTypeToSubstitute = resourceTypeToSubstitute;
@@ -30,4 +42,13 @@ public class WhiteMarbleSubstitution {
 		return resourceTypeToSubstitute;
 	}
 
+	@Override
+	public ServerWhiteMarbleSubstitutionRepresentation getServerRepresentation() {
+		return new ServerWhiteMarbleSubstitutionRepresentation(getItemID(), resourceTypeToSubstitute);
+	}
+
+	@Override
+	public ServerWhiteMarbleSubstitutionRepresentation getServerRepresentationForPlayer(Player player) {
+		return getServerRepresentation();
+	}
 }

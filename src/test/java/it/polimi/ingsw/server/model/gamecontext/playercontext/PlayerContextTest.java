@@ -1,17 +1,16 @@
 package it.polimi.ingsw.server.model.gamecontext.playercontext;
 
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount;
-import it.polimi.ingsw.server.model.gameitems.Production;
-import it.polimi.ingsw.server.model.gameitems.ResourceType;
-import it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution;
+import it.polimi.ingsw.server.model.gameitems.*;
 import it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException;
-import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck;
+import it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeckImp;
 import it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard;
+import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp;
 import it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState;
 import it.polimi.ingsw.server.model.storage.NotEnoughResourcesException;
 import it.polimi.ingsw.server.model.storage.ResourceStorage;
+import it.polimi.ingsw.server.model.storage.ResourceStorageImp;
 import it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +27,9 @@ import static org.mockito.Mockito.*;
 class PlayerContextTest {
 
     @Mock
+    GameItemsManager gameItemsManager;
+
+    @Mock
     Player player;
 
     @Mock
@@ -36,17 +38,39 @@ class PlayerContextTest {
     @Mock
     ResourceStorage temporaryStorage;
 
+    @Mock
+    Production baseProductions;
+
     PlayerContext playerContext;
+
+    DevelopmentCardCostDiscount disc1, disc2, disc3, disc4, disc5;
+
+    WhiteMarbleSubstitution sub1, sub2, sub3, sub4, sub5, sub6;
 
     @BeforeEach
     void setUp() {
-        playerContext = new PlayerContext(
+        playerContext = new PlayerContextImp(
                 player,
                 new HashSet<>(),
                 new ArrayList<>(),
                 infiniteChest,
-                temporaryStorage
+                temporaryStorage,
+                Set.of(baseProductions)
         );
+
+        disc1 = new DevelopmentCardCostDiscount("id1", gameItemsManager, ResourceType.COINS, 2);
+        disc2 = new DevelopmentCardCostDiscount("id2", gameItemsManager, ResourceType.STONES, 1);
+        disc3 = new DevelopmentCardCostDiscount("id3", gameItemsManager, ResourceType.STONES, 1);
+        disc4 = new DevelopmentCardCostDiscount("id4", gameItemsManager, ResourceType.STONES, 5);
+        disc5 = new DevelopmentCardCostDiscount("id5", gameItemsManager, ResourceType.COINS, 1);
+
+        sub1 = new WhiteMarbleSubstitution("ID_1", gameItemsManager, ResourceType.SHIELDS);
+        sub2 = new WhiteMarbleSubstitution("ID_2", gameItemsManager, ResourceType.SHIELDS);
+        sub3 = new WhiteMarbleSubstitution("ID_3", gameItemsManager, ResourceType.STONES);
+        sub4 = new WhiteMarbleSubstitution("ID_4", gameItemsManager, ResourceType.SERVANTS);
+        sub5 = new WhiteMarbleSubstitution("ID_5", gameItemsManager, ResourceType.COINS);
+        sub6 = new WhiteMarbleSubstitution("ID_6", gameItemsManager, ResourceType.COINS);
+
     }
 
     @Test
@@ -55,10 +79,10 @@ class PlayerContextTest {
         assertEquals(new HashSet<>(), playerContext.getLeaderCards());
 
         Set<LeaderCard> cards = Set.of(
-                mock(LeaderCard.class),
-                mock(LeaderCard.class),
-                mock(LeaderCard.class),
-                mock(LeaderCard.class)
+                mock(LeaderCardImp.class),
+                mock(LeaderCardImp.class),
+                mock(LeaderCardImp.class),
+                mock(LeaderCardImp.class)
         );
         playerContext.setLeaderCards(cards);
         assertEquals(cards, playerContext.getLeaderCards());
@@ -68,19 +92,19 @@ class PlayerContextTest {
     @Test
     void testGetActiveLeaderCards() {
 
-        LeaderCard activeCard1 = mock(LeaderCard.class);
+        LeaderCard activeCard1 = mock(LeaderCardImp.class);
         when(activeCard1.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard activeCard2 = mock(LeaderCard.class);
+        LeaderCard activeCard2 = mock(LeaderCardImp.class);
         when(activeCard2.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard hiddenCard1 = mock(LeaderCard.class);
+        LeaderCard hiddenCard1 = mock(LeaderCardImp.class);
         when(hiddenCard1.getState()).thenReturn(LeaderCardState.HIDDEN);
 
-        LeaderCard hiddenCard2 = mock(LeaderCard.class);
+        LeaderCard hiddenCard2 = mock(LeaderCardImp.class);
         when(hiddenCard2.getState()).thenReturn(LeaderCardState.HIDDEN);
 
-        LeaderCard discardedCard1 = mock(LeaderCard.class);
+        LeaderCard discardedCard1 = mock(LeaderCardImp.class);
         when(discardedCard1.getState()).thenReturn(LeaderCardState.DISCARDED);
 
         Set<LeaderCard> cards = Set.of(activeCard1, hiddenCard1, discardedCard1, activeCard2, hiddenCard2);
@@ -94,33 +118,25 @@ class PlayerContextTest {
     @Test
     void testGetActiveLeaderCardsDiscounts() {
 
-        LeaderCard cardWithCoinsDiscount = mock(LeaderCard.class);
-        when(cardWithCoinsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount(ResourceType.COINS, 2)
-        ));
+        LeaderCard cardWithCoinsDiscount = mock(LeaderCardImp.class);
+        when(cardWithCoinsDiscount.getDevelopmentCardCostDiscount()).thenReturn(Set.of(disc1));
         when(cardWithCoinsDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardHiddenWithShieldsDiscount = mock(LeaderCard.class);
-        lenient().when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount(ResourceType.STONES, 1)
-        ));
+
+        LeaderCard cardHiddenWithShieldsDiscount = mock(LeaderCardImp.class);
+        lenient().when(cardHiddenWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(Set.of(disc2));
         when(cardHiddenWithShieldsDiscount.getState()).thenReturn(LeaderCardState.HIDDEN);
 
-        LeaderCard cardDiscardedWithShieldsDiscount = mock(LeaderCard.class);
-        lenient().when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount(ResourceType.STONES, 1)
-        ));
+        LeaderCard cardDiscardedWithShieldsDiscount = mock(LeaderCardImp.class);
+        lenient().when(cardDiscardedWithShieldsDiscount.getDevelopmentCardCostDiscount()).thenReturn(Set.of(disc3));
         when(cardDiscardedWithShieldsDiscount.getState()).thenReturn(LeaderCardState.DISCARDED);
 
-        LeaderCard cardWithCoinsAndStonesDiscount = mock(LeaderCard.class);
-        when(cardWithCoinsAndStonesDiscount.getDevelopmentCardCostDiscount()).thenReturn(List.of(
-                new DevelopmentCardCostDiscount(ResourceType.STONES, 5),
-                new DevelopmentCardCostDiscount(ResourceType.COINS, 1)
-        ));
+        LeaderCard cardWithCoinsAndStonesDiscount = mock(LeaderCardImp.class);
+        when(cardWithCoinsAndStonesDiscount.getDevelopmentCardCostDiscount()).thenReturn(Set.of(disc4, disc5));
         when(cardWithCoinsAndStonesDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardWithNoDiscount = mock(LeaderCard.class);
-        when(cardWithNoDiscount.getDevelopmentCardCostDiscount()).thenReturn(new ArrayList<>());
+        LeaderCard cardWithNoDiscount = mock(LeaderCardImp.class);
+        when(cardWithNoDiscount.getDevelopmentCardCostDiscount()).thenReturn(new HashSet<>());
         when(cardWithNoDiscount.getState()).thenReturn(LeaderCardState.ACTIVE);
 
         playerContext.setLeaderCards(Set.of(
@@ -143,35 +159,24 @@ class PlayerContextTest {
     @Test
     void testGetActiveLeaderCardsWhiteMarblesMarketSubstitutions() {
 
-        LeaderCard cardWithShieldsSub = mock(LeaderCard.class);
-        when(cardWithShieldsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.SHIELDS)
-        ));
+        LeaderCard cardWithShieldsSub = mock(LeaderCardImp.class);
+        when(cardWithShieldsSub.getWhiteMarbleSubstitutions()).thenReturn(Set.of(sub1));
         when(cardWithShieldsSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardWithShieldStoneSub = mock(LeaderCard.class);
-        when(cardWithShieldStoneSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.SHIELDS),
-                new WhiteMarbleSubstitution(ResourceType.STONES)
-        ));
+        LeaderCard cardWithShieldStoneSub = mock(LeaderCardImp.class);
+        when(cardWithShieldStoneSub.getWhiteMarbleSubstitutions()).thenReturn(Set.of(sub2, sub3));
         when(cardWithShieldStoneSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardWithServantsSub = mock(LeaderCard.class);
-        when(cardWithServantsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.SERVANTS)
-        ));
+        LeaderCard cardWithServantsSub = mock(LeaderCardImp.class);
+        when(cardWithServantsSub.getWhiteMarbleSubstitutions()).thenReturn(Set.of(sub4));
         when(cardWithServantsSub.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardHiddenWithCoinsSub = mock(LeaderCard.class);
-        lenient().when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.COINS)
-        ));
+        LeaderCard cardHiddenWithCoinsSub = mock(LeaderCardImp.class);
+        lenient().when(cardHiddenWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(Set.of(sub5));
         when(cardHiddenWithCoinsSub.getState()).thenReturn(LeaderCardState.HIDDEN);
 
-        LeaderCard cardDiscardedWithCoinsSub = mock(LeaderCard.class);
-        lenient().when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(List.of(
-                new WhiteMarbleSubstitution(ResourceType.COINS)
-        ));
+        LeaderCard cardDiscardedWithCoinsSub = mock(LeaderCardImp.class);
+        lenient().when(cardDiscardedWithCoinsSub.getWhiteMarbleSubstitutions()).thenReturn(Set.of(sub6));
         when(cardDiscardedWithCoinsSub.getState()).thenReturn(LeaderCardState.DISCARDED);
 
         playerContext.setLeaderCards(Set.of(
@@ -191,21 +196,21 @@ class PlayerContextTest {
     @Test
     void testGetActiveLeaderCardsResourceStorages() {
 
-        ResourceStorage storage1 = mock(ResourceStorage.class);
-        ResourceStorage storage2 = mock(ResourceStorage.class);
-        ResourceStorage storage3 = mock(ResourceStorage.class);
-        ResourceStorage storage4 = mock(ResourceStorage.class);
+        ResourceStorage storage1 = mock(ResourceStorageImp.class);
+        ResourceStorage storage2 = mock(ResourceStorageImp.class);
+        ResourceStorage storage3 = mock(ResourceStorageImp.class);
+        ResourceStorage storage4 = mock(ResourceStorageImp.class);
 
-        LeaderCard cardWithStorage1 = mock(LeaderCard.class);
-        when(cardWithStorage1.getResourceStorages()).thenReturn(List.of(storage1));
+        LeaderCard cardWithStorage1 = mock(LeaderCardImp.class);
+        when(cardWithStorage1.getResourceStorages()).thenReturn(Set.of(storage1));
         when(cardWithStorage1.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardWithStorage2 = mock(LeaderCard.class);
-        when(cardWithStorage2.getResourceStorages()).thenReturn(List.of(storage2, storage3));
+        LeaderCard cardWithStorage2 = mock(LeaderCardImp.class);
+        when(cardWithStorage2.getResourceStorages()).thenReturn(Set.of(storage2, storage3));
         when(cardWithStorage2.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardHiddenWithStorage = mock(LeaderCard.class);
-        lenient().when(cardHiddenWithStorage.getResourceStorages()).thenReturn(List.of(storage4));
+        LeaderCard cardHiddenWithStorage = mock(LeaderCardImp.class);
+        lenient().when(cardHiddenWithStorage.getResourceStorages()).thenReturn(Set.of(storage4));
         when(cardHiddenWithStorage.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         playerContext.setLeaderCards(Set.of(cardWithStorage1, cardWithStorage2, cardHiddenWithStorage));
@@ -224,16 +229,16 @@ class PlayerContextTest {
         Production production3 = mock(Production.class);
         Production production4 = mock(Production.class);
 
-        LeaderCard cardWithProd1 = mock(LeaderCard.class);
-        when(cardWithProd1.getProductions()).thenReturn(List.of(production1));
+        LeaderCard cardWithProd1 = mock(LeaderCardImp.class);
+        when(cardWithProd1.getProductions()).thenReturn(Set.of(production1));
         when(cardWithProd1.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardWithProd2 = mock(LeaderCard.class);
-        when(cardWithProd2.getProductions()).thenReturn(List.of(production2, production3));
+        LeaderCard cardWithProd2 = mock(LeaderCardImp.class);
+        when(cardWithProd2.getProductions()).thenReturn(Set.of(production2, production3));
         when(cardWithProd2.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard cardHiddenWithProd = mock(LeaderCard.class);
-        lenient().when(cardHiddenWithProd.getProductions()).thenReturn(List.of(production4));
+        LeaderCard cardHiddenWithProd = mock(LeaderCardImp.class);
+        lenient().when(cardHiddenWithProd.getProductions()).thenReturn(Set.of(production4));
         when(cardHiddenWithProd.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         playerContext.setLeaderCards(Set.of(cardWithProd1, cardWithProd2, cardHiddenWithProd));
@@ -247,16 +252,17 @@ class PlayerContextTest {
     @Test
     void testGetShelves() {
         Set<ResourceStorage> shelves = Set.of(
-                mock(ResourceStorage.class),
-                mock(ResourceStorage.class),
-                mock(ResourceStorage.class)
+                mock(ResourceStorageImp.class),
+                mock(ResourceStorageImp.class),
+                mock(ResourceStorageImp.class)
         );
-        playerContext = new PlayerContext(
-                player,
-                shelves,
-                new ArrayList<>(),
-                infiniteChest,
-                temporaryStorage
+        playerContext = new PlayerContextImp(
+            player,
+            shelves,
+            new ArrayList<>(),
+            infiniteChest,
+            temporaryStorage,
+            Set.of(baseProductions)
         );
         assertEquals(shelves, playerContext.getShelves());
     }
@@ -264,26 +270,27 @@ class PlayerContextTest {
     @Test
     void testGetResourceStoragesForResourcesFromMarket() {
 
-        ResourceStorage shelve1 = mock(ResourceStorage.class);
-        ResourceStorage shelve2 = mock(ResourceStorage.class);
-        ResourceStorage leaderCardStorage1 = mock(ResourceStorage.class);
-        ResourceStorage leaderCardStorage2 = mock(ResourceStorage.class);
+        ResourceStorage shelve1 = mock(ResourceStorageImp.class);
+        ResourceStorage shelve2 = mock(ResourceStorageImp.class);
+        ResourceStorage leaderCardStorage1 = mock(ResourceStorageImp.class);
+        ResourceStorage leaderCardStorage2 = mock(ResourceStorageImp.class);
         Set<ResourceStorage> shelves = Set.of(shelve1, shelve2);
 
-        LeaderCard leaderCard1 = mock(LeaderCard.class);
-        when(leaderCard1.getResourceStorages()).thenReturn(List.of(leaderCardStorage1));
+        LeaderCard leaderCard1 = mock(LeaderCardImp.class);
+        when(leaderCard1.getResourceStorages()).thenReturn(Set.of(leaderCardStorage1));
         when(leaderCard1.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        LeaderCard leaderCardDiscarded = mock(LeaderCard.class);
-        lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(List.of(leaderCardStorage2)); //Should not be called
+        LeaderCard leaderCardDiscarded = mock(LeaderCardImp.class);
+        lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(Set.of(leaderCardStorage2)); //Should not be called
         when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.DISCARDED);
 
-        playerContext = new PlayerContext(
-                player,
-                shelves,
-                new ArrayList<>(),
-                infiniteChest,
-                temporaryStorage
+        playerContext = new PlayerContextImp(
+            player,
+            shelves,
+            new ArrayList<>(),
+            infiniteChest,
+            temporaryStorage,
+            Set.of(baseProductions)
         );
         playerContext.setLeaderCards(Set.of(leaderCard1, leaderCardDiscarded));
         assertEquals(
@@ -305,6 +312,100 @@ class PlayerContextTest {
     @Test
     void testGetTemporaryStorage() {
         assertEquals(temporaryStorage, playerContext.getTemporaryStorage());
+    }
+
+    @Test
+    void testRemoveResourcesBasedOnResourcesStoragesPriority() throws NotEnoughResourcesException {
+
+//        ResourceStorage shelve1 = mock(ResourceStorage.class);
+//        ResourceStorage shelve2 = mock(ResourceStorage.class);
+//        ResourceStorage shelve3 = mock(ResourceStorage.class);
+//        ResourceStorage leaderCardStorage1 = mock(ResourceStorage.class);
+//        ResourceStorage leaderCardStorage2 = mock(ResourceStorage.class);
+//        Set<ResourceStorage> shelves = Set.of(shelve1, shelve2);
+//
+//        LeaderCard leaderCard1 = mock(LeaderCard.class);
+//        when(leaderCard1.getResourceStorages()).thenReturn(List.of(leaderCardStorage1));
+//        when(leaderCard1.getState()).thenReturn(LeaderCardState.ACTIVE);
+//
+//        LeaderCard leaderCard2 = mock(LeaderCard.class);
+//        when(leaderCard2.getResourceStorages()).thenReturn(List.of(leaderCardStorage2));
+//        when(leaderCard2.getState()).thenReturn(LeaderCardState.ACTIVE);
+//
+//        playerContext = new PlayerContext(
+//            player,
+//            shelves,
+//            new ArrayList<>(),
+//            infiniteChest,
+//            temporaryStorage,
+//            Set.of(baseProductions)
+//        );
+//        playerContext.setLeaderCards(Set.of(leaderCard1, leaderCard2));
+//
+//        Map<ResourceStorage, Map<ResourceType, Integer>> resourcesInStorages = Map.of(
+//            shelve1, Map.of(
+//                ResourceType.SHIELDS, 3
+//            ),
+//            shelve2, Map.of(
+//                ResourceType.SHIELDS, 2,
+//                ResourceType.COINS, 10
+//            ),
+//            shelve3, Map.of(
+//                ResourceType.SHIELDS,3
+//            ),
+//            leaderCardStorage1, Map.of(
+//                ResourceType.STONES,3,
+//                ResourceType.SERVANTS, 2
+//            ),
+//            leaderCardStorage2, Map.of(
+//                ResourceType.SHIELDS, 1
+//            )
+//        );
+//
+//        when(shelve1.peekResources()).thenReturn(resourcesInStorages.get(shelve1));
+//
+//        when(shelve2.peekResources()).thenReturn(resourcesInStorages.get(shelve2));
+//
+//        when(shelve3.peekResources()).thenReturn(resourcesInStorages.get(shelve3));
+//
+//        when(leaderCardStorage1.peekResources()).thenReturn(resourcesInStorages.get(leaderCardStorage1));
+//
+//        when(leaderCardStorage2.peekResources()).thenReturn(resourcesInStorages.get(leaderCardStorage2));
+//
+//        playerContext.removeResourcesBasedOnResourcesStoragesPriority(Map.of(
+//            ResourceType.SHIELDS, 4,
+//            ResourceType.COINS, 100,
+//            ResourceType.SERVANTS, 3
+//        ));
+//
+//        Map<ResourceType, Integer> resourcesTakenFromStoragesForMarket = resourcesInStorages.
+//
+//
+//
+//
+//
+//        verify(shelve1).removeResources(eq(Map.of(
+//            ResourceType.SHIELDS,3
+//        )));
+//
+//        verify(shelve2).removeResources(eq(Map.of(
+//            ResourceType.SHIELDS, 1,
+//            ResourceType.COINS, 10
+//        )));
+//
+//        verify(shelve3).removeResources(eq(Map.of()));
+//
+//        verify(leaderCardStorage1).removeResources(eq(Map.of(
+//            ResourceType.SERVANTS, 2
+//        )));
+//
+//        verify(leaderCardStorage2).removeResources(eq(Map.of()));
+//
+//        verify(infiniteChest).removeResources(eq(Map.of(
+//            ResourceType.SERVANTS, 1,
+//            ResourceType.COINS, 90
+//        )));
+
     }
 
     @Test
@@ -351,32 +452,32 @@ class PlayerContextTest {
     @Test
     void testGetAllResourceAndResourcesStorages() {
 
-        ResourceStorage shelve1 = mock(ResourceStorage.class);
+        ResourceStorage shelve1 = mock(ResourceStorageImp.class);
         when(shelve1.peekResources()).thenReturn(Map.of(
                 ResourceType.COINS, 2
         ));
 
-        ResourceStorage shelve2 = mock(ResourceStorage.class);
+        ResourceStorage shelve2 = mock(ResourceStorageImp.class);
         when(shelve2.peekResources()).thenReturn(Map.of(
                 ResourceType.SHIELDS, 1
         ));
 
         Set<ResourceStorage> shelves = Set.of(shelve1, shelve2);
 
-        ResourceStorage leaderCardStorage1 = mock(ResourceStorage.class);
+        ResourceStorage leaderCardStorage1 = mock(ResourceStorageImp.class);
         when(leaderCardStorage1.peekResources()).thenReturn(Map.of(
                 ResourceType.COINS, 2
         ));
-        LeaderCard leaderCard1 = mock(LeaderCard.class);
-        when(leaderCard1.getResourceStorages()).thenReturn(List.of(leaderCardStorage1));
+        LeaderCard leaderCard1 = mock(LeaderCardImp.class);
+        when(leaderCard1.getResourceStorages()).thenReturn(Set.of(leaderCardStorage1));
         when(leaderCard1.getState()).thenReturn(LeaderCardState.ACTIVE);
 
-        ResourceStorage leaderCardStorage2 = mock(ResourceStorage.class);
+        ResourceStorage leaderCardStorage2 = mock(ResourceStorageImp.class);
         lenient().when(leaderCardStorage2.peekResources()).thenReturn(Map.of(
                 ResourceType.SERVANTS, 100
         ));
-        LeaderCard leaderCardDiscarded = mock(LeaderCard.class);
-        lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(List.of(leaderCardStorage2));
+        LeaderCard leaderCardDiscarded = mock(LeaderCardImp.class);
+        lenient().when(leaderCardDiscarded.getResourceStorages()).thenReturn(Set.of(leaderCardStorage2));
         when(leaderCardDiscarded.getState()).thenReturn(LeaderCardState.HIDDEN);
 
         when(infiniteChest.peekResources()).thenReturn(Map.of(
@@ -388,12 +489,13 @@ class PlayerContextTest {
                 ResourceType.SERVANTS, 1000
         ));
 
-        PlayerContext playerContext = new PlayerContext(
-                player,
-                shelves,
-                new ArrayList<>(),
-                infiniteChest,
-                temporaryStorage
+        PlayerContext playerContext = new PlayerContextImp(
+            player,
+            shelves,
+            new ArrayList<>(),
+            infiniteChest,
+            temporaryStorage,
+            Set.of(baseProductions)
         );
         playerContext.setLeaderCards(Set.of(leaderCard1, leaderCardDiscarded));
 
@@ -424,15 +526,16 @@ class PlayerContextTest {
         DevelopmentCard devCard1Deck2 = mock(DevelopmentCard.class);
         DevelopmentCard devCard2Deck2 = mock(DevelopmentCard.class);
         DevelopmentCard devCard3Deck2 = mock(DevelopmentCard.class);
-        PlayerOwnedDevelopmentCardDeck deck1 = mock(PlayerOwnedDevelopmentCardDeck.class);
-        PlayerOwnedDevelopmentCardDeck deck2 = mock(PlayerOwnedDevelopmentCardDeck.class);
+        PlayerOwnedDevelopmentCardDeckImp deck1 = mock(PlayerOwnedDevelopmentCardDeckImp.class);
+        PlayerOwnedDevelopmentCardDeckImp deck2 = mock(PlayerOwnedDevelopmentCardDeckImp.class);
 
-        PlayerContext playerContext = new PlayerContext(
-                player,
-                new HashSet<>(),
-                List.of(deck1, deck2),
-                infiniteChest,
-                temporaryStorage
+        PlayerContext playerContext = new PlayerContextImp(
+            player,
+            new HashSet<>(),
+            List.of(deck1, deck2),
+            infiniteChest,
+            temporaryStorage,
+            Set.of(baseProductions)
         );
         assertEquals(deck1, playerContext.getDeck(0));
         assertEquals(deck2, playerContext.getDeck(1));

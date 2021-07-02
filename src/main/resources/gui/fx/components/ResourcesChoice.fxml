@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root prefHeight="150" prefWidth="500" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+       <GridPane prefHeight="150" prefWidth="500">
+
+           <columnConstraints>
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints vgrow="ALWAYS" />
+               <RowConstraints prefHeight="34" vgrow="NEVER" />
+               <RowConstraints />
+               <RowConstraints prefHeight="30" vgrow="NEVER" />
+               <RowConstraints vgrow="ALWAYS" />
+           </rowConstraints>
+
+           <Label fx:id="titleLabel" text="P sel 2 res" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <font>
+               <Font name="System Bold" size="19.0" />
+            </font></Label>
+
+           <GridPane fx:id="container" alignment="CENTER" maxWidth="200" style="-fx-border-color: black; -fx-border-width: 2; -fx-padding: 8px; -fx-border-radius: 8;" GridPane.columnIndex="0" GridPane.rowIndex="2">
+               <columnConstraints>
+                   <ColumnConstraints halignment="LEFT" hgrow="NEVER" prefWidth="60" />
+                   <ColumnConstraints halignment="CENTER" hgrow="NEVER" prefWidth="80" />
+                   <ColumnConstraints halignment="RIGHT" hgrow="NEVER" prefWidth="60" />
+               </columnConstraints>
+               <rowConstraints>
+                   <RowConstraints prefHeight="40" vgrow="NEVER" />
+               </rowConstraints>
+           </GridPane>
+
+           <HBox fx:id="btnLabelHBox" GridPane.columnIndex="0" GridPane.rowIndex="3" spacing="15" alignment="BOTTOM_CENTER">
+               <Label fx:id="totalResourcesLabel" text="P res sel 1 of 2">
+                   <font> <Font name="System Italic" size="15.0" /> </font>
+               </Label>
+               <Button fx:id="confirmButton" prefHeight="20" text="PConferma"/>
+           </HBox>
+
+       </GridPane>
+
+   </children>
+</fx:root>

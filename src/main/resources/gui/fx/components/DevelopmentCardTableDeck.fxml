@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root prefHeight="170.0" prefWidth="190" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <GridPane fx:id="deckContainer" prefHeight="170.0" prefWidth="190.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" prefWidth="190" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="170" />
+                <RowConstraints prefHeight="30" />
+            </rowConstraints>
+            <Label fx:id="contentLabel" prefHeight="30.0" text="Pcarte nel mazzo: 2" GridPane.rowIndex="1">
+            <font>
+               <Font size="12.0" />
+            </font>
+            </Label>
+        </GridPane>
+    </children>
+</fx:root>

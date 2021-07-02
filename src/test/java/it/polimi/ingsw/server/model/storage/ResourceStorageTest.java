@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model.storage;
 
+import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 import it.polimi.ingsw.server.model.gameitems.ResourceType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,9 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class) //Needed to use annotation @Mock
 class ResourceStorageTest {
+
+    @Mock
+    GameItemsManager gameItemsManager;
 
     @Mock
     ResourceStorageRule trueRule1;
@@ -49,13 +53,13 @@ class ResourceStorageTest {
      */
     @Test
     void testBuilder(){
-        ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder().
-                createResourceStorage("firstStorage");
-        ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder().
-                createResourceStorage("secondStorage");
+        ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
+            .createResourceStorage("firstStorage");
+        ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
+            .createResourceStorage("secondStorage");
 
-        assertEquals(storage1.getStorageID(), "firstStorage");
-        assertEquals(storage2.getStorageID(), "secondStorage");
+        assertEquals(storage1.getItemID(), "firstStorage");
+        assertEquals(storage2.getItemID(), "secondStorage");
     }
 
     /**
@@ -63,7 +67,7 @@ class ResourceStorageTest {
      */
     @Test
     void testResourceStorageWith2TrueRules() {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
             .addRule(trueRule1)
             .addRule(trueRule2)
             .createResourceStorage("s");
@@ -84,7 +88,7 @@ class ResourceStorageTest {
      */
     @Test
     void testResourceStorageWith2TrueRulesAnd1False() {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
             .addRule(trueRule1)
             .addRule(falseRule1)
             .addRule(trueRule2)
@@ -109,7 +113,7 @@ class ResourceStorageTest {
     @Test
     void testCanAddResources() throws ResourceStorageRuleViolationException {
 
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage("s");
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager).createResourceStorage("s");
         assertNotNull(storage);
         assertEquals(new HashMap<>(), storage.peekResources(), "The storage should be empty");
 
@@ -143,7 +147,7 @@ class ResourceStorageTest {
      */
     @Test
     void testAddResources() throws ResourceStorageRuleViolationException {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage("s");
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager).createResourceStorage("s");
         assertNotNull(storage);
         assertEquals(new HashMap<>(), storage.peekResources(), "The storage should be empty");
 
@@ -177,7 +181,7 @@ class ResourceStorageTest {
     @Test
     void testAddAndRemoveResources() throws ResourceStorageRuleViolationException, NotEnoughResourcesException {
 
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage("s");
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager).createResourceStorage("s");
         assertTrue(storage.canAddResources(Map.of(
             ResourceType.STONES, 2,
             ResourceType.COINS, 1,
@@ -229,7 +233,7 @@ class ResourceStorageTest {
      */
     @Test
     void testTryToRemoveTooManyResources() throws ResourceStorageRuleViolationException {
-        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder().createResourceStorage("s");
+        ResourceStorage storage = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager).createResourceStorage("s");
         assertTrue(storage.canAddResources(Map.of(
                 ResourceType.STONES, 2,
                 ResourceType.COINS, 1,
@@ -259,22 +263,22 @@ class ResourceStorageTest {
      */
     @Test
     void testEqualsID () {
-        ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage1 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
                 .createResourceStorage("s1");
-        ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage2 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
                 .createResourceStorage("s2");
-        ResourceStorage storage3 = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage3 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
                 .createResourceStorage("s3");
-        ResourceStorage storage4 = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage4 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
                 .createResourceStorage("s1");
-        ResourceStorage storage5 = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage5 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
                 .createResourceStorage("s1");
-        ResourceStorage storage6 = ResourceStorageBuilder.initResourceStorageBuilder()
+        ResourceStorage storage6 = ResourceStorageBuilder.initResourceStorageBuilder(gameItemsManager)
                 .createResourceStorage("s6");
 
         assertEquals(storage1, storage4);
         assertEquals(storage1, storage5);
-        assertNotEquals(storage1, storage6);
+        assertNotEquals(storage3, storage6);
         assertNotEquals(storage6, storage5);
         assertNotEquals(storage4, storage2);
     }

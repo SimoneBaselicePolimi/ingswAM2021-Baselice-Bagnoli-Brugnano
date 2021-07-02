@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root prefHeight="660" prefWidth="1200" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <GridPane prefHeight="660" prefWidth="1200" style="-fx-padding: 10px;">
+
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="900" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+            </rowConstraints>
+
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+
+                <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints prefHeight="290"/>
+                    <RowConstraints vgrow="ALWAYS"/>
+                </rowConstraints>
+
+                <HBox fx:id="devCardsContainer" spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+                <HBox fx:id="leaderCardsContainer" spacing="10" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+
+            </GridPane>
+
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" >
+                <columnConstraints>
+                    <ColumnConstraints halignment="LEFT" hgrow="NEVER" prefWidth="700" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="ALWAYS"/>
+                    <RowConstraints prefHeight="5"/>
+                    <RowConstraints prefHeight="15"/>
+                    <RowConstraints minHeight="115"/>
+                </rowConstraints>
+                <ScrollPane prefHeight="544" prefWidth="250.0" style="-fx-background-color:transparent;" GridPane.rowIndex="0" >
+                    <content>
+                        <VBox fx:id="storagesContainer" alignment="CENTER" spacing="10" style="-fx-padding: 2px;" />
+                    </content>
+                </ScrollPane>
+                <Label fx:id="baseProductionsLabel" GridPane.rowIndex="2" text="PBASE PRODUCTION"/>
+                <ScrollPane GridPane.rowIndex="3" style="-fx-background-color:transparent;">
+                    <content>
+                        <VBox fx:id="baseProductionsContainer" alignment="CENTER" spacing="10" style="-fx-padding: 2px;"  />
+                    </content>
+                </ScrollPane>
+            </GridPane>
+
+        </GridPane>
+
+    </children>
+</fx:root>

@@ -1,26 +1,34 @@
 package it.polimi.ingsw.server.model.gameitems;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class ProductionTest {
+
+    @Mock
+    GameItemsManager gameItemsManager;
+
     // Resource Map initialization
-    Map<ResourceType,Integer> singleResource = Map.of(
-            ResourceType.COINS, 2
+    Map<ResourceType, Integer> singleResource = Map.of(
+        ResourceType.COINS, 2
     );
 
-    Map<ResourceType,Integer> twoResources = Map.of(
-            ResourceType.SHIELDS, 15,
-            ResourceType.SERVANTS, 3
+    Map<ResourceType, Integer> twoResources = Map.of(
+        ResourceType.SHIELDS, 15,
+        ResourceType.SERVANTS, 3
     );
 
-    Map<ResourceType,Integer> negativeValue = Map.of(
-            ResourceType.COINS, 2,
-            ResourceType.STONES, -1
+    Map<ResourceType, Integer> negativeValue = Map.of(
+        ResourceType.COINS, 2,
+        ResourceType.STONES, -1
     );
 
     /**
@@ -30,26 +38,38 @@ class ProductionTest {
     @Test
     void testProductionConstructor() {
         assertThrows(
-                IllegalArgumentException.class,
-                ()->new Production(negativeValue, twoResources, 0, 1, 2, "Prod1")
+            IllegalArgumentException.class,
+            () -> new Production(
+                "Prod1", gameItemsManager, negativeValue, twoResources, 0, 1, 2
+            )
         );
         assertThrows(
-                IllegalArgumentException.class,
-                ()->new Production(singleResource, negativeValue, 0, 1, 2, "Prod2")
+            IllegalArgumentException.class,
+            () -> new Production(
+                "Prod2", gameItemsManager, singleResource, negativeValue, 0, 1, 2
+            )
         );
         assertThrows(
-                IllegalArgumentException.class,
-                ()->new Production(negativeValue, twoResources, 0, 1, 2,null )
+            IllegalArgumentException.class,
+            () -> new Production(
+                null, gameItemsManager, negativeValue, twoResources, 0, 1, 2
+            )
         );
         assertThrows(
-                IllegalArgumentException.class,
-                ()->new Production(singleResource, twoResources, 0, -1, 2, "Prod3")
+            IllegalArgumentException.class,
+            () -> new Production(
+                "Prod3", gameItemsManager, singleResource, twoResources, 0, -1, 2
+            )
         );
         assertDoesNotThrow(
-                ()->new Production(singleResource, twoResources, 0, 1, 2, "Prod4")
+            () -> new Production(
+                "Prod4", gameItemsManager, singleResource, twoResources, 0, 1, 2
+            )
         );
         assertDoesNotThrow(
-                ()->new Production(singleResource, new HashMap<>(), 0, 1, 2, "Prod5")
+            () -> new Production(
+                "Prod5", gameItemsManager, singleResource, new HashMap<>(), 0, 1, 2
+            )
         );
     }
 
@@ -60,16 +80,18 @@ class ProductionTest {
     @Test
     void testGetProductionAttributes() {
         Production p1 = new Production(
-                singleResource, twoResources, 0, 1, 2, "ID_1");
+            "ID_1", gameItemsManager, singleResource, twoResources, 0, 1, 2
+        );
         Production p2 = new Production(
-                twoResources, new HashMap<>(), 5, 10, 0, "ID_2");
+            "ID_2", gameItemsManager, twoResources, new HashMap<>(), 5, 10, 0
+        );
 
-        assertEquals(singleResource,p1.getProductionResourceCost());
+        assertEquals(singleResource, p1.getProductionResourceCost());
         assertEquals(twoResources, p1.getProductionResourceReward());
         assertEquals(0, p1.getProductionStarResourceCost());
         assertEquals(1, p1.getProductionStarResourceReward());
         assertEquals(2, p1.getProductionFaithReward());
-        assertEquals("ID_1", p1.getID());
+        assertEquals("ID_1", p1.getItemID());
 
         assertEquals(p1.getProductionResourceReward(), p2.getProductionResourceCost());
         assertEquals(p1.getProductionStarResourceCost(), p2.getProductionFaithReward());
@@ -82,16 +104,20 @@ class ProductionTest {
     @Test
     void testProductionEquals() {
         assertEquals(
-                new Production(
-                        singleResource, singleResource, 1, 2, 3, "SameIDProd"),
-                new Production(
-                        singleResource, twoResources, 0, 1, 3, "SameIDProd")
+            new Production(
+                "SameIDProd", gameItemsManager, singleResource, singleResource, 1, 2, 3
+            ),
+            new Production(
+                "SameIDProd", gameItemsManager, singleResource, twoResources, 0, 1, 3
+            )
         );
         assertNotEquals(
-                new Production(
-                        twoResources, singleResource, 1, 0, 3, "IDProd"),
-                new Production(
-                        twoResources, singleResource, 1, 0, 3, "DifferentIDProd")
+            new Production(
+                "IDProd", gameItemsManager, twoResources, singleResource, 1, 0, 3
+            ),
+            new Production(
+                "DifferentIDProd", gameItemsManager, twoResources, singleResource, 1, 0, 3
+            )
         );
     }
 

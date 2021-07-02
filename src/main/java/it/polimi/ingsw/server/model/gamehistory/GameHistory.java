@@ -1,9 +1,11 @@
 package it.polimi.ingsw.server.model.gamehistory;
 
-public class GameHistory {
+import it.polimi.ingsw.server.gameactionshistory.GameAction;
 
-	public GameAction getGameHistory() {
-		return null;
-	}
+import java.util.List;
 
+public interface GameHistory {
+    List<GameAction> getGameHistory();
+
+    void addAction(GameAction gameAction);
 }

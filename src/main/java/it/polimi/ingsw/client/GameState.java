@@ -1,0 +1,9 @@
+package it.polimi.ingsw.client;
+
+public enum GameState {
+    PLAYER_REGISTRATION_AND_MATCHMAKING,
+    GAME_SETUP,
+    MY_PLAYER_TURN_BEFORE_MAIN_ACTION,
+    MY_PLAYER_TURN_AFTER_MAIN_ACTION,
+    ANOTHER_PLAYER_TURN
+}

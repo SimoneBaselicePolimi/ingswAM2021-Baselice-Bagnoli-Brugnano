@@ -1,6 +1,10 @@
 package it.polimi.ingsw.server.model.gameitems;
 
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.lang.Math.min;
 
 public class ResourceUtils {
 
@@ -24,6 +28,74 @@ public class ResourceUtils {
         return resourcesA.entrySet().stream().allMatch(entryA ->
                 resourcesB.containsKey(entryA.getKey()) && entryA.getValue() <= resourcesB.get(entryA.getKey())
         );
+    }
+
+    //TODO JavaDoc (and Test?)
+    public static Map<ResourceType, Integer> sum(
+        Map<ResourceType, Integer> resourcesA,
+        Map<ResourceType, Integer> resourcesB
+    ) {
+        return Stream.concat(resourcesA.entrySet().stream(), resourcesB.entrySet().stream())
+            .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
+    }
+
+    //TODO JavaDoc (and Test?)
+    public static Map<ResourceType, Integer> sum(
+        Collection<Map<ResourceType, Integer>> resourcesToSum
+    ) {
+        return resourcesToSum.stream().reduce(new HashMap<>(), ResourceUtils::sum);
+    }
+
+    //TODO JavaDoc (and Test?)
+    public static Map<ResourceType, Integer> difference(
+        Map<ResourceType, Integer> resourcesA,
+        Map<ResourceType, Integer> resourcesB
+    ) throws IllegalArgumentException{
+        for (ResourceType resourceType : resourcesB.keySet()) {
+            if (!resourcesA.containsKey(resourceType))
+                throw new IllegalArgumentException(String.format(
+                    "Resources of type %s in B are not present in A",
+                    resourceType
+                ));
+        }
+
+        Map<ResourceType, Integer> difference = new HashMap<>(resourcesA);
+        for (ResourceType resourceType : resourcesB.keySet()){
+            if (resourcesA.get(resourceType) > resourcesB.get(resourceType))
+                difference.put(resourceType, resourcesA.get(resourceType) - resourcesB.get(resourceType));
+            else if(resourcesA.get(resourceType).equals(resourcesB.get(resourceType)))
+                difference.remove(resourceType);
+            else
+                throw new IllegalArgumentException(String.format(
+                    "The number of resources of type %s in A is smaller than the number in B",
+                    resourceType
+                ));
+        }
+        return difference;
+    }
+
+    //TODO JavaDoc and test
+    public static Map<ResourceType, Integer> intersection(
+        Map<ResourceType, Integer> resourcesA,
+        Map<ResourceType, Integer> resourcesB
+    ) {
+        return resourcesA.entrySet().stream()
+            .filter(e -> resourcesB.containsKey(e.getKey()))
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                e -> min(e.getValue(), resourcesB.get(e.getKey()))
+            ));
+    }
+
+    public static Map<ResourceType, Integer> negate (Map<ResourceType, Integer> resourcesA) {
+        return resourcesA.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> -e.getValue()));
+    }
+
+    public static Map<ResourceType, Integer> relativeDifference(
+        Map<ResourceType, Integer> resourcesA,
+        Map<ResourceType, Integer> resourcesB
+    ) {
+        return sum(resourcesA, negate(resourcesB));
     }
 
 }

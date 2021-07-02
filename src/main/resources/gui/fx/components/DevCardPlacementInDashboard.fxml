@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root prefHeight="780" prefWidth="1024" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <GridPane fx:id="dashboardContainer" prefHeight="720" prefWidth="1200">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" prefWidth="1200" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints prefHeight="25" />
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+        <Label fx:id="placementTitle" text="PChoose the deck where to place your dev card" GridPane.rowIndex="0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+    </GridPane>
+
+</fx:root>
