@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * logic client
  */
 public class Client {
+
     @SuppressWarnings("all")
     Optional<ClientHandler> handler = Optional.empty();
 

@@ -86,6 +86,7 @@ public class MessageReader {
                         return newCompleteMessages;
                     else
                         readerState = ReaderState.PARSE_MESSAGE_VALUE;
+
                 }
 
                 case PARSE_MESSAGE_VALUE -> {

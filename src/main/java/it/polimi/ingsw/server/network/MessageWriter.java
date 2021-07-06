@@ -60,6 +60,7 @@ public class MessageWriter {
         }
 
         messagesToSendQueue.add(serverMessage);
+
     }
 
     void flushMessagesInQueue() throws IOException {

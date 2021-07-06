@@ -1,7 +1,6 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.cli;
 
-import it.polimi.ingsw.client.cli.CliClientManager;
-import it.polimi.ingsw.client.cli.ConsoleWriter;
+import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.client.cli.view.PreGameView;
 import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
@@ -21,7 +20,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 
-public class Client {
+public class CliClient {
 
     protected static final ProjectLogger logger = ProjectLogger.getLogger();
 
@@ -31,12 +30,12 @@ public class Client {
     protected BufferedReader userInputReader;
     protected ConsoleWriter consoleWriter;
 
-    public Client(BufferedReader userInputReader, ConsoleWriter consoleWriter) {
+    public CliClient(BufferedReader userInputReader, ConsoleWriter consoleWriter) {
         this.userInputReader = userInputReader;
         this.consoleWriter = consoleWriter;
     }
 
-    public Client() {
+    public CliClient() {
         this.userInputReader = new BufferedReader(new InputStreamReader(System.in));
         this.consoleWriter = new ConsoleWriter() {
             @Override
@@ -54,7 +53,7 @@ public class Client {
     public static void main( String[] args ) {
 
         try {
-            new Client().startClient();
+            new CliClient().startClient();
         } catch (IOException | ClientNotConnectedException e) {
             e.printStackTrace();
         }
@@ -123,7 +122,7 @@ public class Client {
         networkLayer.start();
 
         while (!networkLayer.isNetworkReady()) ; // wait for network
-        //pingWorker.start();
+        pingWorker.start();
 
         new PreGameView(clientManager, clientManager.getConsoleDisplayHeight(), clientManager.getConsoleDisplayWidth());
 

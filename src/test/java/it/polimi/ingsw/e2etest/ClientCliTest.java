@@ -1,6 +1,6 @@
 package it.polimi.ingsw.e2etest;
 
-import it.polimi.ingsw.client.Client;
+import it.polimi.ingsw.client.cli.CliClient;
 import it.polimi.ingsw.client.cli.ConsoleWriter;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.server.Server;
@@ -55,7 +55,7 @@ public class ClientCliTest {
                 return;
             }
 
-            Client client = new Client(
+            CliClient client = new CliClient(
                 mockClientReader,
                 new ConsoleWriter() {
                     @Override
