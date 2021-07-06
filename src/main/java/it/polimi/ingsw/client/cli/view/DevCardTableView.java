@@ -61,9 +61,7 @@ public class DevCardTableView extends CliView{
 
     protected void setVisibleCards(DevelopmentCardLevel cardLevel) {
         visibleCardsLevel = cardLevel;
-        List<ClientDevelopmentCardRepresentation> visibleCards = table.getCards().get(cardLevel).values().stream()
-            .map(ClientCoveredCardsDeckRepresentation::getCardOnTop)
-            .collect(Collectors.toList());
+        List<ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation>> visibleDecks = new ArrayList<>(table.getCards().get(cardLevel).values());
 
         if(developmentCardTableGrid != null) {
             developmentCardTableGrid.destroyView();
@@ -72,12 +70,12 @@ public class DevCardTableView extends CliView{
 
         int gridRowSize = 2*SPACE_BETWEEN_CARDS + DevCardTableDeckView.DEV_CARD_DECK_ROW_SIZE;
         int gridColSize = SPACE_BETWEEN_CARDS +
-            visibleCards.size()*(DevCardTableDeckView.DEV_CARD_DECK_COL_SIZE + SPACE_BETWEEN_CARDS);
+            visibleDecks.size()*(DevCardTableDeckView.DEV_CARD_DECK_COL_SIZE + SPACE_BETWEEN_CARDS);
 
         developmentCardTableGrid = new GridView(
             clientManager,
             1,
-            visibleCards.size(),
+            visibleDecks.size(),
             SPACE_BETWEEN_CARDS,
             gridRowSize,
             gridColSize
@@ -86,9 +84,9 @@ public class DevCardTableView extends CliView{
         addChildView(developmentCardTableGrid, 0, 0);
 
         cardTableDeckViewList = new ArrayList<>();
-        for (int i = 0; i < visibleCards.size(); i++) {
+        for (int i = 0; i < visibleDecks.size(); i++) {
             DevCardTableDeckView deckView = new DevCardTableDeckView(
-                visibleCards.get(i).getColour(), visibleCardsLevel, clientManager
+                visibleDecks.get(i), clientManager
             );
             developmentCardTableGrid.setView(0, i, deckView);
             cardTableDeckViewList.add(deckView);
