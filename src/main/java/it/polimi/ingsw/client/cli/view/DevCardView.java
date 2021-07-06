@@ -10,6 +10,9 @@ import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.localization.LocalizationUtils;
 import it.polimi.ingsw.utils.Colour;
 
+/**
+ * View representing the development card
+ */
 import java.util.ArrayList;
 
 public class DevCardView extends CliView {

@@ -6,6 +6,10 @@ import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
 import it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation;
 import it.polimi.ingsw.utils.Colour;
 
+/**
+ * View representing the leader cards of a player that are covered:
+ * if a player does not activate his cards, the other players cannot see the ones not yet activated
+ */
 public class CoveredLeaderCardView extends AbstractLeaderCardView{
 
     protected GridView cardGrid;

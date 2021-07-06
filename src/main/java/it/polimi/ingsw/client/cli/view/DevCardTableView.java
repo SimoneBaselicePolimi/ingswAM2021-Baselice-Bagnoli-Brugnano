@@ -26,6 +26,9 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+/**
+ * View representing the table containing development cards
+ */
 public class DevCardTableView extends CliView{
 
     public static final int SPACE_BETWEEN_CARDS = 2;
