@@ -137,7 +137,7 @@ public class FaithPathView extends CliView{
             popeFavorCardStateLabelList.get(i).setText(
                 FormattedChar.convertStringToFormattedCharList(
                 Localization.getLocalizationInstance().getString("gameHistory.faithPath.popeFavorCards.name")
-                    + " " + (i+1) + "\n" + getPopeFavorCardsStateForEachPlayer(popeFavorCardState),
+                    + " " + (i+1) + "\n" + getPopeFavorCardsStateForEachPlayer(i),
                 Colour.WHITE,
                 Colour.BLACK)
             );
@@ -151,11 +151,11 @@ public class FaithPathView extends CliView{
         return super.getContentAsFormattedCharsBuffer();
     }
 
-    private String getPopeFavorCardsStateForEachPlayer(PopeFavorCardState popeFavorCardState) {
+    private String getPopeFavorCardsStateForEachPlayer(int index) {
         StringBuilder cardStates = new StringBuilder();
         for(Player player : playersInOrder) {
             cardStates.append("\n").append(player.playerName).append(": ")
-                .append(popeFavorCardState.getLocalizedName());
+                .append(clientManager.getGameContextRepresentation().getFaithPath().getPopeFavorCards().get(player).get(index).getLocalizedName());
         }
         return cardStates.toString();
     }

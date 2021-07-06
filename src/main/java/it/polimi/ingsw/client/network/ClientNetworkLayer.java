@@ -1,13 +1,12 @@
 package it.polimi.ingsw.client.network;
 
-import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.server.network.RawMessage;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public class ClientNetworkLayer extends Thread {
@@ -22,6 +21,8 @@ public class ClientNetworkLayer extends Thread {
     SocketChannel socketChannel = null;
     ClientMessageReader messageReader = null;
     ClientMessageWriter messageWriter = null;
+
+    AtomicBoolean isNetworkReady = new AtomicBoolean(false);
 
     public ClientNetworkLayer(
         String tcpServerAddress,
@@ -59,6 +60,7 @@ public class ClientNetworkLayer extends Thread {
             while (!socketChannel.finishConnect());
             messageReader = new ClientMessageReader(socketChannel);
             messageWriter = new ClientMessageWriter(socketChannel);
+            isNetworkReady.set(true);
             while (true) {
                 RawMessage newMessageFromServer = messageReader.readMessage();
                 messageFromServerProcessingPolicy.accept(newMessageFromServer);
@@ -69,4 +71,7 @@ public class ClientNetworkLayer extends Thread {
         }
     }
 
+    public synchronized boolean isNetworkReady() {
+        return isNetworkReady.get();
+    }
 }

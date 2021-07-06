@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.GameState;
 import it.polimi.ingsw.client.ServerMessageUtils;
 import it.polimi.ingsw.client.cli.CliClientManager;
 import it.polimi.ingsw.client.cli.UnexpectedServerMessage;
-import it.polimi.ingsw.client.cli.UserChoicesUtils;
 import it.polimi.ingsw.client.cli.graphicutils.FormattedChar;
 import it.polimi.ingsw.client.cli.view.grid.GridView;
 import it.polimi.ingsw.client.cli.view.grid.LineBorderStyle;
@@ -14,7 +13,6 @@ import it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMe
 import it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage;
 import it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage;
 import it.polimi.ingsw.client.servermessage.*;
-import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
 
@@ -43,6 +41,7 @@ public class PreGameView extends CliView {
         innerBordersContainer.setView(0, 0, consoleView);
         clientManager.setNewUserIOLogger(consoleView);
 
+        startPreGameSetup();
     }
 
     protected void startPreGameSetup() {

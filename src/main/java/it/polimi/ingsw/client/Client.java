@@ -1,16 +1,14 @@
 package it.polimi.ingsw.client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import it.polimi.ingsw.client.cli.ConsoleWriter;
 import it.polimi.ingsw.client.cli.CliClientManager;
+import it.polimi.ingsw.client.cli.ConsoleWriter;
 import it.polimi.ingsw.client.cli.view.PreGameView;
-import it.polimi.ingsw.client.clientmessage.ClientMessage;
 import it.polimi.ingsw.client.network.ClientNetworkLayer;
 import it.polimi.ingsw.client.network.ClientNotConnectedException;
+import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.network.NetworkProto;
-import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.network.PingWorker;
 import it.polimi.ingsw.server.network.RawMessage;
 import it.polimi.ingsw.utils.serialization.SerializationHelper;
@@ -66,7 +64,7 @@ public class Client {
 
     public void startClient() throws IOException, ClientNotConnectedException {
 
-        ProjectLogger.getLogger().setLogInConsole(false);
+        ProjectLogger.getLogger().setLogInConsole(true);
 
         ClientNetworkLayer networkLayer = new ClientNetworkLayer(
             TCP_SERVER_ADDRESS,
@@ -124,9 +122,10 @@ public class Client {
 
         networkLayer.start();
 
-        new PreGameView(clientManager, clientManager.getConsoleDisplayHeight(), clientManager.getConsoleDisplayWidth());
+        while (!networkLayer.isNetworkReady()) ; // wait for network
+        //pingWorker.start();
 
-        pingWorker.start();
+        new PreGameView(clientManager, clientManager.getConsoleDisplayHeight(), clientManager.getConsoleDisplayWidth());
 
         while (true) {
             String input = getUserInputBlocking();

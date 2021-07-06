@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.client.network.ClientNotConnectedException;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.network.NetworkProto;
@@ -9,7 +8,9 @@ import it.polimi.ingsw.server.controller.Client;
 import it.polimi.ingsw.server.controller.PlayerRegistrationAndDispatchController;
 import it.polimi.ingsw.server.controller.ServerMessageSender;
 import it.polimi.ingsw.server.controller.clientmessage.PlayerRequestClientMessage;
-import it.polimi.ingsw.server.network.*;
+import it.polimi.ingsw.server.network.ClientRawMessageProcessor;
+import it.polimi.ingsw.server.network.NetworkLayer;
+import it.polimi.ingsw.server.network.ServerRawMessage;
 import it.polimi.ingsw.server.workers.YAMLDeserializationWorker;
 import it.polimi.ingsw.server.workers.YAMLSerializationWorker;
 
@@ -94,7 +95,7 @@ public class Server {
                     () -> client.getHandler().onConnectionDropped(client)
                 );
                 pingWorkerForClientMap.put(client, pingWorker);
-                pingWorker.start();
+                //pingWorker.start();
             }
         );
 

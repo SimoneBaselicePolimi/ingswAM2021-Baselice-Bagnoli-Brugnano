@@ -27,6 +27,9 @@ public class NetworkProto {
         public static final byte[] PING_TYPE_REQUEST = {(byte) 0};
         public static final byte[] PING_TYPE_ANSWER = {(byte) 1};
 
+        public static final long STARTUP_DELAY_MILLIS = 5000;
+
     }
+
 
 }

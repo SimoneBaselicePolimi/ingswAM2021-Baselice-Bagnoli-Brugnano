@@ -92,8 +92,7 @@ public class MainMenuView extends CliView{
             "client.cli.mainMenuActions.openDifferentPlayerDashboard"
         );
 
-        if(clientManager.getGameState() == GameState.MY_PLAYER_TURN_BEFORE_MAIN_ACTION
-            || clientManager.getGameState() == GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION) {
+        if(clientManager.getGameState() == GameState.MY_PLAYER_TURN_AFTER_MAIN_ACTION) {
             userChoices.addUserChoiceLocalized(this::endMyTurn, "client.cli.mainMenuActions.endMyTurn");
         }
 
