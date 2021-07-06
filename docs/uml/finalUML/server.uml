@@ -1,0 +1,1746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.server</OriginalElement>
+  <nodes>
+    <node x="585.0" y="2235.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation</node>
+    <node x="8784.211538461539" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.ManageResourcesFromMarketClientRequest</node>
+    <node x="19614.30711334121" y="1602.0">it.polimi.ingsw.server.model.storage.SpecificResourceTypeRule</node>
+    <node x="17847.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTableTest</node>
+    <node x="4733.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation</node>
+    <node x="12176.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeckTest</node>
+    <node x="20876.498975804898" y="2489.0">it.polimi.ingsw.server.model.gamemanager.gamestate.GameStateTest</node>
+    <node x="29647.0" y="3706.0">it.polimi.ingsw.server.model.storage.SameResourceTypeRuleTest</node>
+    <node x="19981.998975804898" y="2489.0">it.polimi.ingsw.server.controller.ClientHandler</node>
+    <node x="11420.0" y="3706.0">it.polimi.ingsw.server.network.SocketConnection</node>
+    <node x="25211.80711334121" y="1294.0">it.polimi.ingsw.server.model.observableproxy.PlayerContextObservableProxy</node>
+    <node x="16418.837138240557" y="1602.0">it.polimi.ingsw.server.model.gameitems.leadercard.ResourceNumberRequirement</node>
+    <node x="14288.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.ManageResourcesFromMarketClientRequestValidator</node>
+    <node x="24242.998975804898" y="2489.0">it.polimi.ingsw.server.model.storage.ResourceStorageBuilder</node>
+    <node x="16616.837138240557" y="0.0">it.polimi.ingsw.server.modelrepresentation.ServerRepresentation</node>
+    <node x="21510.0" y="3706.0">it.polimi.ingsw.server.model.gamemanager.InvalidGameRules</node>
+    <node x="4843.615384615385" y="2489.0">it.polimi.ingsw.server.controller.servermessage.ServerMessage</node>
+    <node x="6411.711538461539" y="2828.5">it.polimi.ingsw.server.controller.servermessage.LeaderActionServerMessage</node>
+    <node x="32593.60714285714" y="782.0">it.polimi.ingsw.server.model.gamehistory.GameHistory</node>
+    <node x="15541.253804907225" y="749.0">it.polimi.ingsw.server.model.gameitems.cardstack.CardDeck</node>
+    <node x="19881.355421094057" y="782.0">it.polimi.ingsw.server.model.storage.ResourceStorageRule</node>
+    <node x="19678.998975804898" y="2781.0">it.polimi.ingsw.server.controller.NewClientsAccepterClientHandler</node>
+    <node x="28030.80711334121" y="1514.0">it.polimi.ingsw.server.model.observableproxy.FaithPathObservableProxy</node>
+    <node x="28558.80711334121" y="1514.0">it.polimi.ingsw.server.model.gamecontext.faith.FaithPathImp</node>
+    <node x="492.0" y="3706.0">it.polimi.ingsw.server.controller.Client</node>
+    <node x="7977.711538461539" y="2828.5">it.polimi.ingsw.server.controller.servermessage.GameInitializationStartedServerMessage</node>
+    <node x="19288.498975804898" y="2996.0">it.polimi.ingsw.server.controller.ResumeGameLobbyController</node>
+    <node x="8346.837138240557" y="2125.0">it.polimi.ingsw.server.model.observableproxy.ResourceStorageObservableProxy</node>
+    <node x="4041.711538461539" y="2828.5">it.polimi.ingsw.server.controller.servermessage.EndGameServerMessage</node>
+    <node x="18887.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirementsNotSatisfiedException</node>
+    <node x="19697.498975804898" y="2974.0">it.polimi.ingsw.server.controller.PlayerRegistrationAndDispatchController</node>
+    <node x="26762.02380952381" y="760.0">it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable</node>
+    <node x="21584.93211334121" y="2202.0">it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContextImp</node>
+    <node x="3462.711538461539" y="2816.5">it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage</node>
+    <node x="24141.18211334121" y="1503.0">it.polimi.ingsw.server.model.observableproxy.GameContextObservableProxy</node>
+    <node x="30200.0" y="3706.0">it.polimi.ingsw.server.model.gamehistory.GameHistoryTest</node>
+    <node x="12352.464827935222" y="2489.0">it.polimi.ingsw.server.controller.clientrequest.ClientRequest</node>
+    <node x="17649.498975804898" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.MarketActionFetchColumnClientRequest</node>
+    <node x="20822.30711334121" y="1602.0">it.polimi.ingsw.server.model.storage.SameResourceTypeRule</node>
+    <node x="17825.212138240557" y="1624.5">it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck</node>
+    <node x="12001.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.ActivateLeaderCardClientRequestValidator</node>
+    <node x="6037.711538461539" y="2816.5">it.polimi.ingsw.server.controller.servermessage.PlayerNameAlreadyExistsServerMessage</node>
+    <node x="30795.0" y="3706.0">it.polimi.ingsw.server.model.gamecontext.market.WrongNumberOfMarblesException</node>
+    <node x="9946.0" y="3810.0">it.polimi.ingsw.server.model.gameitems.singleplayertokens.BlackCrossMoveToken</node>
+    <node x="8057.312380801018" y="726.5">it.polimi.ingsw.server.model.Player</node>
+    <node x="23148.18211334121" y="1305.0">it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContextImp</node>
+    <node x="25400.89880952381" y="781.5">it.polimi.ingsw.server.model.observableproxy.ObservableProxy</node>
+    <node x="21426.30711334121" y="1514.0">it.polimi.ingsw.server.model.gamecontext.GameContextImp</node>
+    <node x="14762.173161268556" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.DevelopmentActionClientRequest</node>
+    <node x="20661.998975804898" y="2725.0">it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionStateTest</node>
+    <node x="17775.712138240557" y="2191.0">it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeckImp</node>
+    <node x="11678.214827935222" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.MarketActionFetchRowClientRequest</node>
+    <node x="29952.700396194712" y="2092.0">it.polimi.ingsw.server.model.observableproxy.FaithPathSinglePlayerObservableProxy</node>
+    <node x="10473.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionFetchRowClientRequestValidator</node>
+    <node x="9236.587138240557" y="1514.0">it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp</node>
+    <node x="20714.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.cardstack.ForbiddenPushOnTopException</node>
+    <node x="14751.587138240557" y="1624.5">it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck</node>
+    <node x="7943.0" y="3810.0">it.polimi.ingsw.server.network.NetworkLayer</node>
+    <node x="27910.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardState</node>
+    <node x="16561.337138240557" y="793.0">it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement</node>
+    <node x="12130.337138240557" y="141.0">it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerVaticanReportSectionRepresentation</node>
+    <node x="25733.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerPlayerOwnedDevelopmentCardDeckUpdate</node>
+    <node x="31572.587138240557" y="1602.0">it.polimi.ingsw.server.model.observableproxy.GameHistoryObservableProxy</node>
+    <node x="7215.711538461539" y="2816.5">it.polimi.ingsw.server.controller.servermessage.PlayerDisconnectedServerMessage</node>
+    <node x="19400.0" y="3706.0">it.polimi.ingsw.server.model.storage.ResourceStorageRuleViolationException</node>
+    <node x="3081.711538461539" y="3367.0">it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionState</node>
+    <node x="12755.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.ProductionActionClientRequestValidator</node>
+    <node x="15301.5" y="3706.0">it.polimi.ingsw.server.network.RawMessage</node>
+    <node x="0.0" y="3386.0">it.polimi.ingsw.server.model.gamecontext.ObservableGameContextBuilder</node>
+    <node x="27705.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerLeaderCardsThePlayerOwnsUpdate</node>
+    <node x="10912.0" y="3810.0">it.polimi.ingsw.server.model.gameitems.singleplayertokens.DiscardCardsToken</node>
+    <node x="18583.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeckTest</node>
+    <node x="4012.75" y="3706.0">it.polimi.ingsw.server.gameactionshistory.GameAction</node>
+    <node x="6090.365384615385" y="3108.0">it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState</node>
+    <node x="3853.0871382405567" y="781.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation</node>
+    <node x="28759.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerPopeCardsUpdate</node>
+    <node x="8826.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.ResourceUtils</node>
+    <node x="7531.0" y="3706.0">it.polimi.ingsw.server.network.MessageReader</node>
+    <node x="7814.187380801017" y="782.0">it.polimi.ingsw.server.model.gameitems.IdentifiableItemTest</node>
+    <node x="2095.711538461539" y="2816.5">it.polimi.ingsw.server.controller.servermessage.GameInitialRepresentationServerMessage</node>
+    <node x="16503.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.DiscardLeaderCardClientRequestValidator</node>
+    <node x="9205.337138240557" y="141.0">it.polimi.ingsw.server.model.gameitems.IdentifiableItem</node>
+    <node x="27564.0" y="3706.0">it.polimi.ingsw.server.model.gamecontext.GameContextBuilderTest</node>
+    <node x="21335.998975804898" y="2791.0">it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnPostActionStateTest</node>
+    <node x="15847.0" y="3706.0">it.polimi.ingsw.server.network.SocketConnectionsProcessor</node>
+    <node x="25307.998975804898" y="2489.0">it.polimi.ingsw.server.model.storage.ResourceStorageTest</node>
+    <node x="983.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerDevelopmentCardCostDiscountRepresentation</node>
+    <node x="6665.365384615385" y="3152.0">it.polimi.ingsw.server.model.gamemanager.gamestate.EndGameState</node>
+    <node x="15072.0" y="3810.0">it.polimi.ingsw.server.network.ServerRawMessage</node>
+    <node x="16776.0" y="3706.0">it.polimi.ingsw.server.model.Lobby</node>
+    <node x="11840.587138240557" y="1558.0">it.polimi.ingsw.server.model.gameitems.MarbleColour</node>
+    <node x="15033.837138240557" y="2191.0">it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeckImp</node>
+    <node x="9592.0" y="3706.0">it.polimi.ingsw.server.model.gamecontext.faith.FaithPathTest</node>
+    <node x="24240.998975804898" y="2660.0">it.polimi.ingsw.server.model.storage.ObservableResourcesStorageBuilder</node>
+    <node x="23855.23042109406" y="738.0">it.polimi.ingsw.server.model.gamecontext.market.Market</node>
+    <node x="30350.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerResourceStorageUpdate</node>
+    <node x="8032.712138240558" y="141.0">it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathEventRepresentation</node>
+    <node x="17015.962138240557" y="141.0">it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.ServerGameContextRepresentation</node>
+    <node x="29319.200396194712" y="2191.0">it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayerImp</node>
+    <node x="15461.837138240557" y="1580.0">it.polimi.ingsw.server.model.gameitems.cardstack.CardDeckImp</node>
+    <node x="3473.0871382405567" y="805.0">it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerSameResourceTypeRuleRepresentation</node>
+    <node x="31313.607142857145" y="793.0">it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathSinglePlayerRepresentation</node>
+    <node x="13205.0" y="3810.0">it.polimi.ingsw.server.controller.clientmessage.ReadyToStartGameClientMessage</node>
+    <node x="1844.0000000000005" y="3185.5">it.polimi.ingsw.server.controller.servermessage.EndTurnServerMessage</node>
+    <node x="4561.711538461539" y="2828.5">it.polimi.ingsw.server.controller.servermessage.DevelopmentActionServerMessage</node>
+    <node x="10501.587138240557" y="1547.0">it.polimi.ingsw.server.model.storage.ResourceStorageImp</node>
+    <node x="8587.587138240557" y="1569.5">it.polimi.ingsw.server.model.leadercard.LeaderCardTest</node>
+    <node x="23419.0" y="3706.0">it.polimi.ingsw.server.model.leadercard.DevelopmentCardColourAndLevelRequirementTest</node>
+    <node x="31774.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerLeaderCardCanBeActivatedUpdate</node>
+    <node x="31326.0" y="3706.0">it.polimi.ingsw.server.controller.SocketMessage</node>
+    <node x="25284.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.ProductionTest</node>
+    <node x="22278.232142857145" y="705.0">it.polimi.ingsw.server.model.gamecontext.GameContext</node>
+    <node x="31115.0" y="3706.0">it.polimi.ingsw.server.model.gamemanager.GameManagerTest</node>
+    <node x="17039.837138240557" y="1602.0">it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourAndLevelRequirement</node>
+    <node x="2645.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRepresentation</node>
+    <node x="3198.711538461539" y="2828.5">it.polimi.ingsw.server.controller.servermessage.MarketActionServerMessage</node>
+    <node x="6146.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.singleplayer.DiscardCardsSinglePlayerTokenAction</node>
+    <node x="22148.998975804898" y="2489.0">it.polimi.ingsw.server.model.gamemanager.GameManager</node>
+    <node x="14326.0" y="3810.0">it.polimi.ingsw.server.controller.clientmessage.CreateNewLobbyClientMessage</node>
+    <node x="12084.214827935222" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.DiscardLeaderCardClientRequest</node>
+    <node x="15233.173161268556" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.InitialChoicesClientRequest</node>
+    <node x="6772.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.singleplayer.MoveBlackCrossAndShuffleSinglePlayerTokenAction</node>
+    <node x="0.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation</node>
+    <node x="9200.548161268554" y="3359.0">it.polimi.ingsw.server.controller.clientrequest.validator.ActivateLeaderCardClientRequestValidatorTest</node>
+    <node x="12503.587138240557" y="1558.0">it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard</node>
+    <node x="4119.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.DevelopmentAction</node>
+    <node x="7207.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.singleplayer.FaithPathMoveBlackCrossAction</node>
+    <node x="15797.837138240557" y="1602.0">it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourRequirement</node>
+    <node x="1835.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.DiscardLeaderCardsAction</node>
+    <node x="17835.212138240557" y="737.5">it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection</node>
+    <node x="26755.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerActivePlayerUpdate</node>
+    <node x="8340.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardColour</node>
+    <node x="4480.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.FaithPathLastPositionReachedAction</node>
+    <node x="0.0" y="2489.0">it.polimi.ingsw.server.model.gamecontext.GameContextBuilder</node>
+    <node x="13461.587138240557" y="1602.0">it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution</node>
+    <node x="5212.711538461539" y="2629.0">it.polimi.ingsw.server.model.gamemanager.gamestate.GameState</node>
+    <node x="17060.0" y="3706.0">it.polimi.ingsw.server.GlobalPlayersManager</node>
+    <node x="20193.998975804898" y="2748.0">it.polimi.ingsw.server.controller.GameController</node>
+    <node x="21054.998975804898" y="2747.0">it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupStateTest</node>
+    <node x="5499.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation</node>
+    <node x="13175.50649460189" y="2699.5">it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator</node>
+    <node x="24230.0" y="3706.0">it.polimi.ingsw.server.model.leadercard.ResourceNumberRequirementTest</node>
+    <node x="19866.0" y="3706.0">it.polimi.ingsw.server.PlayerNameAlreadyInUseException</node>
+    <node x="949.0" y="3868.0">it.polimi.ingsw.server.gameactionshistory.FaithPathVaticanReportAction</node>
+    <node x="30436.0" y="3706.0">it.polimi.ingsw.server.model.gamemanager.gamestate.ManageResourcesFromMarketStateTest</node>
+    <node x="31363.607142857145" y="141.0">it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathRepresentation</node>
+    <node x="1260.0000000000005" y="3185.5">it.polimi.ingsw.server.controller.servermessage.InitialChoicesServerMessage</node>
+    <node x="10222.438754427392" y="738.0">it.polimi.ingsw.server.model.storage.ResourceStorage</node>
+    <node x="24961.0" y="3706.0">it.polimi.ingsw.server.model.gamecontext.faith.PopeFavorCardState</node>
+    <node x="5199.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.MainTurnInitialAction</node>
+    <node x="22218.18211334121" y="1613.5">it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContext</node>
+    <node x="9407.048161268554" y="3123.0">it.polimi.ingsw.server.controller.clientrequest.validator.ProductionActionClientRequestValidatorTest</node>
+    <node x="29964.190476190477" y="153.0">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRequirementRepresentation</node>
+    <node x="24601.0" y="3706.0">it.polimi.ingsw.server.model.gamecontext.GameContextTest</node>
+    <node x="13534.0" y="3810.0">it.polimi.ingsw.server.controller.clientmessage.GetInitialGameRepresentationClientMessage</node>
+    <node x="14297.837138240557" y="2125.0">it.polimi.ingsw.server.model.observableproxy.PlayerOwnedDevelopmentCardDeckObservableProxy</node>
+    <node x="8810.938754427392" y="705.0">it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard</node>
+    <node x="11248.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.DevelopmentActionClientRequestValidator</node>
+    <node x="26471.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerBlackCrossFaithUpdate</node>
+    <node x="7556.711538461539" y="2816.5">it.polimi.ingsw.server.controller.servermessage.PlayerCanCreateNewLobbyServerMessage</node>
+    <node x="27039.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerFaithUpdate</node>
+    <node x="11688.063754427392" y="748.5">it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem</node>
+    <node x="30689.607142857145" y="793.0">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerDevelopmentCardColourRequirementRepresentation</node>
+    <node x="23080.0" y="3706.0">it.polimi.ingsw.server.model.gamecontext.faith.FaithPathEvent</node>
+    <node x="28210.0" y="3706.0">it.polimi.ingsw.server.model.storage.MaxResourceNumberRuleTest</node>
+    <node x="0.0" y="3706.0">it.polimi.ingsw.server.network.MessageWriter</node>
+    <node x="7516.337138240557" y="2081.0">it.polimi.ingsw.server.model.observableproxy.LeaderCardObservableProxy</node>
+    <node x="29335.0" y="3706.0">it.polimi.ingsw.server.model.storage.SpecificResourceTypeRuleTest</node>
+    <node x="10138.25649460189" y="2887.0">it.polimi.ingsw.server.controller.clientrequest.validator.ValidatorTest</node>
+    <node x="31422.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerTempStarResourcesUpdate</node>
+    <node x="112.99999999999636" y="3855.0">it.polimi.ingsw.server.network.MessageWriter.WriterState</node>
+    <node x="5265.365384615385" y="3152.0">it.polimi.ingsw.server.model.gamemanager.gamestate.ManageResourcesFromMarketState</node>
+    <node x="19010.30711334121" y="1591.0">it.polimi.ingsw.server.model.storage.DifferentResourceTypesInDifferentStoragesRule</node>
+    <node x="20301.0" y="3706.0">it.polimi.ingsw.server.model.storage.NotEnoughResourcesException</node>
+    <node x="24350.10542109406" y="496.0">it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext</node>
+    <node x="14085.587138240557" y="1591.0">it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount</node>
+    <node x="3858.711538461539" y="3422.0">it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnPostActionState</node>
+    <node x="18229.0" y="3706.0">it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayerTest</node>
+    <node x="3770.711538461539" y="2828.5">it.polimi.ingsw.server.controller.servermessage.PostGameSetupServerMessage</node>
+    <node x="24696.18211334121" y="1536.0">it.polimi.ingsw.server.model.observableproxy.MarketObservableProxy</node>
+    <node x="7970.0" y="3706.0">it.polimi.ingsw.server.network.ServerRawMessageSender</node>
+    <node x="12544.337138240557" y="141.0">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation</node>
+    <node x="10074.25649460189" y="3134.0">it.polimi.ingsw.server.controller.clientrequest.validator.InitialChoicesClientRequestValidatorTest</node>
+    <node x="2004.0871382405567" y="141.0">it.polimi.ingsw.server.modelrepresentation.ServerGameRepresentation</node>
+    <node x="2728.0871382405567" y="153.0">it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation</node>
+    <node x="2023.0871382405567" y="793.0">it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerMaxResourceNumberRuleRepresentation</node>
+    <node x="25834.80711334121" y="1558.0">it.polimi.ingsw.server.model.observableproxy.DevelopmentCardsTableObservableProxy</node>
+    <node x="15449.0" y="3810.0">it.polimi.ingsw.server.network.ClientRawMessage</node>
+    <node x="2923.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.FaithPathMoveAction</node>
+    <node x="18461.498975804898" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.ProductionActionClientRequest</node>
+    <node x="24797.998975804898" y="2489.0">it.polimi.ingsw.server.model.gamecontext.market.MarketTest</node>
+    <node x="4314.711538461539" y="3152.0">it.polimi.ingsw.server.model.gamemanager.gamestate.SinglePlayerTokenActionState</node>
+    <node x="4266.711538461539" y="2828.5">it.polimi.ingsw.server.controller.servermessage.ProductionActionServerMessage</node>
+    <node x="2201.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.ObtainedResourcesMarketAction</node>
+    <node x="7601.0" y="3833.0">it.polimi.ingsw.server.network.MessageReader.ReaderState</node>
+    <node x="7831.587138240557" y="1624.0">it.polimi.ingsw.server.model.observableproxy.ObservableProxyForIdentifiableItem</node>
+    <node x="29250.998975804898" y="2619.0">it.polimi.ingsw.server.model.gameupdate.ServerShuffledDevelopmentCardDeckOnTableUpdate</node>
+    <node x="21125.0" y="3706.0">it.polimi.ingsw.server.model.gamecontext.GameContextCreationError</node>
+    <node x="23856.0" y="3706.0">it.polimi.ingsw.server.model.leadercard.DevelopmentCardColourRequirementTest</node>
+    <node x="667.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCardDeckRepresentation</node>
+    <node x="11303.152327935222" y="3134.0">it.polimi.ingsw.server.controller.clientrequest.validator.DevelopmentActionClientRequestValidatorTest</node>
+    <node x="23576.355421094057" y="141.0">it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation</node>
+    <node x="28851.607142857145" y="716.0">it.polimi.ingsw.server.model.gamecontext.faith.FaithPath</node>
+    <node x="32543.60714285714" y="141.0">it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation.ServerMarketRepresentation</node>
+    <node x="4864.711538461539" y="2816.5">it.polimi.ingsw.server.controller.servermessage.InvalidClientMessageServerMessage</node>
+    <node x="23319.48042109406" y="2191.0">it.polimi.ingsw.server.model.observableproxy.SinglePlayerGameContextObservableProxy</node>
+    <node x="27299.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerMarketUpdate</node>
+    <node x="1676.711538461539" y="2816.5">it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage</node>
+    <node x="8636.548161268554" y="3370.0">it.polimi.ingsw.server.controller.clientrequest.validator.DiscardLeaderCardClientRequestValidatorTest</node>
+    <node x="26281.0" y="3706.0">it.polimi.ingsw.server.controller.ServerController</node>
+    <node x="18055.498975804898" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.CustomClientRequest</node>
+    <node x="11837.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardLevel</node>
+    <node x="2884.0871382405567" y="793.0">it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation</node>
+    <node x="17207.00649460189" y="3370.0">it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionFetchRowClientRequestValidatorTest</node>
+    <node x="2714.0" y="3868.0">it.polimi.ingsw.server.gameactionshistory.SetupStartedAction</node>
+    <node x="22635.18211334121" y="1514.0">it.polimi.ingsw.server.model.gamecontext.market.MarketImp</node>
+    <node x="16663.00649460189" y="3370.0">it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionFetchColumnClientRequestValidatorTest</node>
+    <node x="11268.214827935222" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.ActivateLeaderCardClientRequest</node>
+    <node x="28908.998975804898" y="2489.0">it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate</node>
+    <node x="14666.0" y="3810.0">it.polimi.ingsw.server.controller.clientmessage.RegisterPlayerNameClientMessage</node>
+    <node x="8378.211538461539" y="2688.0">it.polimi.ingsw.server.controller.clientrequest.EndTurnClientRequest</node>
+    <node x="22669.998975804898" y="2489.0">it.polimi.ingsw.server.network.ClientRawMessageProcessor</node>
+    <node x="6363.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerWhiteMarbleSubstitutionRepresentation</node>
+    <node x="29344.607142857145" y="793.0">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerDevelopmentCardColourAndLevelRequirementRepresentation</node>
+    <node x="4829.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.ActivateLeaderCardsAction</node>
+    <node x="30919.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerLeaderCardStateUpdate</node>
+    <node x="25594.0" y="3706.0">it.polimi.ingsw.server.Server</node>
+    <node x="32790.857142857145" y="1624.5">it.polimi.ingsw.server.model.gamehistory.GameHistoryImp</node>
+    <node x="21838.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.GameItemsManager</node>
+    <node x="26932.80711334121" y="1569.0">it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTableImp</node>
+    <node x="17461.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.GameItemsManagerTest</node>
+    <node x="15107.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.EndTurnClientRequestValidator</node>
+    <node x="28975.0" y="3706.0">it.polimi.ingsw.server.controller.ServerMessageSender</node>
+    <node x="22165.0" y="3706.0">it.polimi.ingsw.server.workers.YAMLSerializationWorker</node>
+    <node x="21639.998975804898" y="2489.0">it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContextTest</node>
+    <node x="8996.048161268554" y="3156.0">it.polimi.ingsw.server.controller.clientrequest.validator.LeaderCardActionClientRequestValidatorTest</node>
+    <node x="16557.337138240557" y="130.0">it.polimi.ingsw.server.model.Representable</node>
+    <node x="14023.0" y="3706.0">it.polimi.ingsw.server.controller.clientmessage.ClientMessage</node>
+    <node x="6675.711538461539" y="2816.5">it.polimi.ingsw.server.controller.servermessage.NewPlayerEnteredNewGameLobbyServerMessage</node>
+    <node x="28202.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerPurchasableDevelopmentCardsUpdate</node>
+    <node x="5449.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.ProductionAction</node>
+    <node x="20175.498975804898" y="2941.0">it.polimi.ingsw.server.controller.NewGameLobbyController</node>
+    <node x="8913.587138240557" y="1602.5">it.polimi.ingsw.server.model.gameitems.MarbleColourTest</node>
+    <node x="32243.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerTotalResourcesUpdate</node>
+    <node x="6865.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation</node>
+    <node x="10429.0" y="3810.0">it.polimi.ingsw.server.model.gameitems.singleplayertokens.BlackCrossMoveAndTokensShuffleToken</node>
+    <node x="1481.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.DiscardedResourcesMarketAction</node>
+    <node x="13931.0" y="3810.0">it.polimi.ingsw.server.controller.clientmessage.PlayerRequestClientMessage</node>
+    <node x="30176.607142857145" y="793.0">it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceNumberRequirementRepresentation</node>
+    <node x="12740.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.ResourceType</node>
+    <node x="3610.711538461539" y="3163.0">it.polimi.ingsw.server.model.gamemanager.gamestate.LeaderCardActionState</node>
+    <node x="5789.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.singleplayer.MoveBlackCrossSinglePlayerTokenAction</node>
+    <node x="1549.0" y="1635.5">it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation</node>
+    <node x="27177.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitutionTest</node>
+    <node x="15789.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.InitialChoicesClientRequestValidator</node>
+    <node x="28499.0" y="3706.0">it.polimi.ingsw.server.model.storage.DifferentResourceTypesInDifferentStoragesRuleTest</node>
+    <node x="20218.30711334121" y="1602.0">it.polimi.ingsw.server.model.storage.MaxResourceNumberRule</node>
+    <node x="25823.0" y="3706.0">it.polimi.ingsw.server.network.SocketConnectionsAccepter</node>
+    <node x="13493.25649460189" y="2953.0">it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionFetchColumnClientRequestValidator</node>
+    <node x="32731.998975804898" y="2641.5">it.polimi.ingsw.server.model.gameupdate.ServerGameHistoryUpdate</node>
+    <node x="29928.0" y="3706.0">it.polimi.ingsw.server.model.PlayerTest</node>
+    <node x="29777.200396194712" y="1624.5">it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayer</node>
+    <node x="22630.0" y="3706.0">it.polimi.ingsw.server.workers.YAMLDeserializationWorker</node>
+    <node x="1236.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.PostTurnFinalAction</node>
+    <node x="26749.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscountTest</node>
+    <node x="3625.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.ObtainedMarblesMarketAction</node>
+    <node x="17019.25649460189" y="3167.0">it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionClientRequestValidatorTest</node>
+    <node x="10429.0" y="3706.0">it.polimi.ingsw.server.model.gameitems.singleplayertokens.SinglePlayerToken</node>
+    <node x="8237.587138240557" y="1624.5">it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardTest</node>
+    <node x="2417.0871382405567" y="793.0">it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerSpecificResourceTypeRuleRepresentation</node>
+    <node x="11078.587138240557" y="1558.0">it.polimi.ingsw.server.model.gameitems.Production</node>
+    <node x="3198.0" y="3856.0">it.polimi.ingsw.server.gameactionshistory.SetupChoiceAction</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayerImp" target="it.polimi.ingsw.server.model.gamecontext.faith.FaithPathImp">
+      <point x="-146.25" y="-71.5" />
+      <point x="29465.450396194712" y="2061.0" />
+      <point x="28830.30711334121" y="2061.0" />
+      <point x="0.0" y="148.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.DevelopmentActionClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="14987.673161268556" y="2658.0" />
+      <point x="12586.821970792365" y="2658.0" />
+      <point x="41.35714285714312" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.ObtainedResourcesMarketAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="2447.5" y="3796.0" />
+      <point x="4044.25" y="3796.0" />
+      <point x="-31.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContext" target="it.polimi.ingsw.server.model.gamecontext.GameContext">
+      <point x="0.0" y="-49.0" />
+      <point x="22416.68211334121" y="1244.0" />
+      <point x="22540.232142857145" y="1244.0" />
+      <point x="0.0" y="115.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnPostActionStateTest" target="it.polimi.ingsw.server.model.gamemanager.gamestate.GameStateTest">
+      <point x="0.0" y="-38.0" />
+      <point x="21465.498975804898" y="2700.0" />
+      <point x="21391.498975804898" y="2700.0" />
+      <point x="206.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.singleplayertokens.DiscardCardsToken" target="it.polimi.ingsw.server.model.gameitems.singleplayertokens.SinglePlayerToken">
+      <point x="0.0" y="-38.5" />
+      <point x="11143.5" y="3785.0" />
+      <point x="10814.833333333334" y="3785.0" />
+      <point x="154.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerTotalResourcesUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="32477.998975804898" y="2549.0" />
+      <point x="29064.6989758049" y="2549.0" />
+      <point x="69.20000000000073" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerLeaderCardCanBeActivatedUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="31999.498975804898" y="2559.0" />
+      <point x="29053.165642471566" y="2559.0" />
+      <point x="57.66666666666788" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.PlayerOwnedDevelopmentCardDeckObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxyForIdentifiableItem">
+      <point x="-179.0" y="-137.5" />
+      <point x="14476.837138240557" y="2051.0" />
+      <point x="8153.253804907225" y="2051.0" />
+      <point x="128.66666666666788" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.ValidatorTest">
+      <point x="-115.0" y="-49.0" />
+      <point x="17076.75649460189" y="3093.0" />
+      <point x="10421.75649460189" y="3093.0" />
+      <point x="126.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.singleplayer.MoveBlackCrossAndShuffleSinglePlayerTokenAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="6979.5" y="3766.0" />
+      <point x="4128.25" y="3766.0" />
+      <point x="52.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.FaithPathVaticanReportAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-15.0" />
+      <point x="1082.5" y="3756.0" />
+      <point x="4016.25" y="3756.0" />
+      <point x="-59.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.DiscardLeaderCardsAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="2008.0" y="3786.0" />
+      <point x="4037.25" y="3786.0" />
+      <point x="-38.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.ResumeGameLobbyController" target="it.polimi.ingsw.server.controller.NewClientsAccepterClientHandler">
+      <point x="0.0" y="-49.5" />
+      <point x="19482.998975804898" y="2916.0" />
+      <point x="19761.498975804898" y="2916.0" />
+      <point x="-165.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.MarbleColourTest" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItemTest">
+      <point x="0.0" y="-60.0" />
+      <point x="9064.587138240557" y="1194.0" />
+      <point x="7999.187380801017" y="1194.0" />
+      <point x="74.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeck" target="it.polimi.ingsw.server.model.Representable">
+      <point x="42.0" y="-71.0" />
+      <point x="15667.253804907225" y="466.0" />
+      <point x="16688.479995383415" y="466.0" />
+      <point x="-30.857142857143117" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="-128.0" y="-115.0" />
+      <point x="8938.938754427392" y="376.0" />
+      <point x="9291.837138240557" y="376.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.faith.FaithPathImp" target="it.polimi.ingsw.server.model.gamecontext.faith.FaithPath">
+      <point x="0.0" y="-148.5" />
+      <point x="28830.30711334121" y="1274.0" />
+      <point x="29088.107142857145" y="1274.0" />
+      <point x="0.0" y="104.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-49.0" />
+      <point x="17191.75649460189" y="3103.0" />
+      <point x="17243.75649460189" y="3103.0" />
+      <point x="17243.75649460189" y="2817.0" />
+      <point x="13792.673161268556" y="2817.0" />
+      <point x="295.16666666666606" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.IdentifiableItemTest" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="0.0" y="-38.0" />
+      <point x="7925.187380801017" y="356.0" />
+      <point x="9265.221753625174" y="356.0" />
+      <point x="-26.615384615382936" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.GameState" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-214.5" />
+      <point x="5615.211538461539" y="2599.0" />
+      <point x="4932.677884615385" y="2599.0" />
+      <point x="14.0625" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.ResourceStorageRule" target="it.polimi.ingsw.server.model.Representable">
+      <point x="0.0" y="-38.0" />
+      <point x="20116.855421094057" y="276.0" />
+      <point x="16796.479995383415" y="276.0" />
+      <point x="77.14285714285688" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.ManageResourcesFromMarketState" target="it.polimi.ingsw.server.model.gamemanager.gamestate.GameState">
+      <point x="0.0" y="-60.5" />
+      <point x="5667.865384615385" y="3088.0" />
+      <point x="5615.211538461539" y="3088.0" />
+      <point x="0.0" y="214.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.marketrepresentation.ServerMarketRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="32918.607142857145" y="50.0" />
+      <point x="16815.003804907225" y="50.0" />
+      <point x="95.66666666666788" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerDevelopmentCardColourRequirementRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRequirementRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="30991.607142857145" y="466.0" />
+      <point x="30270.85714285714" y="466.0" />
+      <point x="122.66666666666424" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.SameResourceTypeRule" target="it.polimi.ingsw.server.model.storage.ResourceStorageRule">
+      <point x="0.0" y="-60.5" />
+      <point x="21114.30711334121" y="1234.0" />
+      <point x="20293.480421094057" y="1234.0" />
+      <point x="176.625" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="2087.0" y="1264.0" />
+      <point x="4011.364916018334" y="1264.0" />
+      <point x="-45.222222222222626" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.ObservableProxyForIdentifiableItem" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxy">
+      <point x="128.66666666666788" y="-38.5" />
+      <point x="8153.253804907225" y="1254.0" />
+      <point x="25419.27380952381" y="1254.0" />
+      <point x="-128.625" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.LeaderCardActionClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-60.0" />
+      <point x="9191.548161268554" y="3103.0" />
+      <point x="9131.88149460189" y="3103.0" />
+      <point x="9131.88149460189" y="2817.0" />
+      <point x="13202.339827935224" y="2817.0" />
+      <point x="-295.16666666666606" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeckImp" target="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem">
+      <point x="-105.33333333333212" y="-82.5" />
+      <point x="15514.503804907225" y="1164.0" />
+      <point x="12119.313754427392" y="1164.0" />
+      <point x="201.25" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="3606.711538461539" y="2569.0" />
+      <point x="4876.427884615385" y="2569.0" />
+      <point x="-42.1875" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.LeaderCardActionClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.ValidatorTest">
+      <point x="130.33333333333212" y="-60.0" />
+      <point x="9321.881494601887" y="3093.0" />
+      <point x="10169.75649460189" y="3093.0" />
+      <point x="-126.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.DevelopmentActionClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.ValidatorTest">
+      <point x="0.0" y="-82.0" />
+      <point x="11543.652327935222" y="3103.0" />
+      <point x="10358.75649460189" y="3103.0" />
+      <point x="63.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerMaxResourceNumberRuleRepresentation" target="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="2210.0871382405567" y="466.0" />
+      <point x="2772.2121382405567" y="466.0" />
+      <point x="-132.375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.FaithPathMoveAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="3050.5" y="3816.0" />
+      <point x="4058.25" y="3816.0" />
+      <point x="-17.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.market.MarketImp" target="it.polimi.ingsw.server.model.gamecontext.market.Market">
+      <point x="0.0" y="-148.5" />
+      <point x="22881.68211334121" y="1234.0" />
+      <point x="23928.73042109406" y="1234.0" />
+      <point x="-73.5" y="82.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerFaithUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="27159.998975804898" y="2569.0" />
+      <point x="28949.365642471563" y="2569.0" />
+      <point x="-46.13333333333503" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.DevelopmentCardsTableObservableProxy" target="it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable">
+      <point x="269.5" y="-104.5" />
+      <point x="26643.30711334121" y="1274.0" />
+      <point x="27031.52380952381" y="1274.0" />
+      <point x="-269.5" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathEventRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="8230.712138240557" y="90.0" />
+      <point x="16678.337138240557" y="90.0" />
+      <point x="-41.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.ProductionActionClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="18852.498975804898" y="2608.0" />
+      <point x="12724.679113649509" y="2608.0" />
+      <point x="179.21428571428623" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.GameContext" target="it.polimi.ingsw.server.model.Representable">
+      <point x="0.0" y="-115.0" />
+      <point x="22540.232142857145" y="266.0" />
+      <point x="16811.908566811988" y="266.0" />
+      <point x="92.57142857142935" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.DiscardLeaderCardClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.LeaderCardActionClientRequestValidatorTest">
+      <point x="0.0" y="-49.0" />
+      <point x="8908.548161268554" y="3334.0" />
+      <point x="9093.798161268554" y="3334.0" />
+      <point x="-97.75" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="-131.33333333333212" y="-27.0" />
+      <point x="6930.666666666668" y="1244.0" />
+      <point x="4237.476027129447" y="1244.0" />
+      <point x="180.8888888888905" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="7062.0" y="80.0" />
+      <point x="16664.67047157389" y="80.0" />
+      <point x="-54.66666666666788" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ServerPlayerContextRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="24603.855421094057" y="80.0" />
+      <point x="16774.003804907225" y="80.0" />
+      <point x="54.66666666666788" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.PostGameSetupServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="3896.211538461539" y="2579.0" />
+      <point x="4885.802884615385" y="2579.0" />
+      <point x="-32.8125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.PlayerContextObservableProxy" target="it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext">
+      <point x="-150.75" y="-368.5" />
+      <point x="25362.55711334121" y="1204.0" />
+      <point x="24802.35542109406" y="1204.0" />
+      <point x="150.75" y="324.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.DiscardedResourcesMarketAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="1648.0" y="3776.0" />
+      <point x="4030.25" y="3776.0" />
+      <point x="-45.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.network.NetworkLayer" target="it.polimi.ingsw.server.network.ServerRawMessageSender">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.SinglePlayerGameContextObservableProxy" target="it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContext">
+      <point x="-147.25" y="-71.5" />
+      <point x="23466.73042109406" y="2061.0" />
+      <point x="22515.93211334121" y="2061.0" />
+      <point x="99.25" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.InitialChoicesServerMessage" target="it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="1542.0000000000005" y="3088.0" />
+      <point x="1776.461538461539" y="3088.0" />
+      <point x="-99.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.DevelopmentActionClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="11614.75649460189" y="2847.0" />
+      <point x="13363.339827935224" y="2847.0" />
+      <point x="-134.16666666666606" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.GameHistoryObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxy">
+      <point x="-106.5" y="-60.5" />
+      <point x="31679.087138240557" y="1244.0" />
+      <point x="25639.77380952381" y="1244.0" />
+      <point x="91.875" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.PlayerDisconnectedServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="7376.211538461539" y="2559.0" />
+      <point x="4970.177884615385" y="2559.0" />
+      <point x="51.5625" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeckImp" target="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeckImp">
+      <point x="-242.0" y="-71.5" />
+      <point x="17836.212138240557" y="2061.0" />
+      <point x="15698.837138240557" y="2061.0" />
+      <point x="79.0" y="82.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.InvalidClientMessageServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="5028.711538461539" y="2609.0" />
+      <point x="4923.302884615385" y="2609.0" />
+      <point x="4.6875" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="101.75" y="-38.5" />
+      <point x="4158.337138240557" y="316.0" />
+      <point x="9211.990984394404" y="316.0" />
+      <point x="-79.84615384615245" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerShuffledDevelopmentCardDeckOnTableUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-49.5" />
+      <point x="29790.998975804898" y="2599.0" />
+      <point x="29007.03230913823" y="2599.0" />
+      <point x="11.533333333332848" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.ValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="-78.75" y="-93.0" />
+      <point x="10217.00649460189" y="2807.0" />
+      <point x="9703.711538461539" y="2807.0" />
+      <point x="9703.711538461539" y="2638.0" />
+      <point x="12448.964827935222" y="2638.0" />
+      <point x="-96.5" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.faith.FaithPath" target="it.polimi.ingsw.server.model.Representable">
+      <point x="0.0" y="-104.0" />
+      <point x="29088.107142857145" y="226.0" />
+      <point x="16873.62285252627" y="226.0" />
+      <point x="154.28571428571377" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.DiscardLeaderCardClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="16868.25649460189" y="2827.0" />
+      <point x="13739.00649460189" y="2827.0" />
+      <point x="241.5" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.SpecificResourceTypeRule" target="it.polimi.ingsw.server.model.storage.ResourceStorageRule">
+      <point x="0.0" y="-60.5" />
+      <point x="19906.30711334121" y="1244.0" />
+      <point x="20057.980421094057" y="1244.0" />
+      <point x="-58.875" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.ProductionActionClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="13114.25649460189" y="2867.0" />
+      <point x="13470.673161268556" y="2867.0" />
+      <point x="-26.83333333333394" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.NewClientsAccepterClientHandler" target="it.polimi.ingsw.server.controller.ClientHandler">
+      <point x="0.0" y="-38.5" />
+      <point x="19926.498975804898" y="2723.0" />
+      <point x="20073.998975804898" y="2723.0" />
+      <point x="-92.0" y="104.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerPurchasableDevelopmentCardsUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="28471.498975804898" y="2599.0" />
+      <point x="28983.965642471565" y="2599.0" />
+      <point x="-11.533333333332848" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContextImp" target="it.polimi.ingsw.server.model.gamecontext.GameContextImp">
+      <point x="-213.75" y="-60.5" />
+      <point x="21798.68211334121" y="2061.0" />
+      <point x="21777.30711334121" y="2061.0" />
+      <point x="0.0" y="148.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.SetupStartedAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-15.0" />
+      <point x="2808.5" y="3806.0" />
+      <point x="4051.25" y="3806.0" />
+      <point x="-24.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.singleplayer.MoveBlackCrossSinglePlayerTokenAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="5957.5" y="3786.0" />
+      <point x="4114.25" y="3786.0" />
+      <point x="38.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerDevelopmentCardCostDiscountRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="1256.0" y="1254.0" />
+      <point x="3966.1426937961114" y="1254.0" />
+      <point x="-90.44444444444525" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard" target="it.polimi.ingsw.server.model.Representable">
+      <point x="234.5" y="-104.5" />
+      <point x="13207.087138240557" y="1244.0" />
+      <point x="13078.462138240557" y="1244.0" />
+      <point x="13078.462138240557" y="426.0" />
+      <point x="16626.76570966913" y="426.0" />
+      <point x="-92.57142857142935" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.NewPlayerEnteredNewGameLobbyServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="6935.711538461539" y="2569.0" />
+      <point x="4960.802884615385" y="2569.0" />
+      <point x="42.1875" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.LeaderCardObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxyForIdentifiableItem">
+      <point x="130.75" y="-181.5" />
+      <point x="7908.587138240557" y="2061.0" />
+      <point x="7895.920471573889" y="2061.0" />
+      <point x="-128.66666666666788" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.ResourceStorage" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="-133.75" y="-82.0" />
+      <point x="10356.188754427392" y="376.0" />
+      <point x="9305.144830548248" y="376.0" />
+      <point x="13.307692307691468" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="-101.75" y="-38.5" />
+      <point x="3954.8371382405567" y="70.0" />
+      <point x="16651.003804907225" y="70.0" />
+      <point x="-68.33333333333212" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRequirementRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-15.0" />
+      <point x="30148.190476190477" y="70.0" />
+      <point x="16787.67047157389" y="70.0" />
+      <point x="68.33333333333212" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.GameContextImp" target="it.polimi.ingsw.server.model.gamecontext.GameContext">
+      <point x="0.0" y="-148.5" />
+      <point x="21777.30711334121" y="1244.0" />
+      <point x="22365.565476190477" y="1244.0" />
+      <point x="-174.66666666666606" y="115.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.SetupChoiceAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="3401.5" y="3826.0" />
+      <point x="4065.25" y="3826.0" />
+      <point x="-10.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.ObservableGameContextBuilder" target="it.polimi.ingsw.server.model.gamecontext.GameContextBuilder">
+      <point x="0.0" y="-137.5" />
+      <point x="0.0" y="423.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.ActivateLeaderCardClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="11463.214827935222" y="2648.0" />
+      <point x="12476.536256506652" y="2648.0" />
+      <point x="-68.92857142857065" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.DevelopmentAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="4289.5" y="3836.0" />
+      <point x="4079.25" y="3836.0" />
+      <point x="3.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.SinglePlayerTokenActionState" target="it.polimi.ingsw.server.model.gamemanager.gamestate.GameState">
+      <point x="0.0" y="-60.5" />
+      <point x="4554.211538461539" y="3088.0" />
+      <point x="5454.211538461539" y="3088.0" />
+      <point x="-161.0" y="214.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeckImp" target="it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck">
+      <point x="-169.0" y="-71.5" />
+      <point x="15202.837138240557" y="2061.0" />
+      <point x="15001.337138240557" y="2061.0" />
+      <point x="83.25" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.singleplayer.FaithPathMoveBlackCrossAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="7346.5" y="3756.0" />
+      <point x="4135.25" y="3756.0" />
+      <point x="59.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContextImp" target="it.polimi.ingsw.server.model.gamecontext.SinglePlayerGameContext">
+      <point x="213.75" y="-60.5" />
+      <point x="22226.18211334121" y="2061.0" />
+      <point x="22317.43211334121" y="2061.0" />
+      <point x="-99.25" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeck" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="-42.0" y="-71.0" />
+      <point x="15583.253804907225" y="356.0" />
+      <point x="9331.760215163635" y="356.0" />
+      <point x="39.92307692307804" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.market.Market" target="it.polimi.ingsw.server.model.Representable">
+      <point x="0.0" y="-82.0" />
+      <point x="24002.23042109406" y="256.0" />
+      <point x="16827.337138240557" y="256.0" />
+      <point x="108.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientmessage.RegisterPlayerNameClientMessage" target="it.polimi.ingsw.server.controller.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="14846.5" y="3780.0" />
+      <point x="14194.9" y="3780.0" />
+      <point x="76.39999999999964" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.Player" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="0.0" y="-93.5" />
+      <point x="8192.312380801017" y="366.0" />
+      <point x="9278.529445932865" y="366.0" />
+      <point x="-13.307692307691468" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContextImp" target="it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext">
+      <point x="0.0" y="-357.5" />
+      <point x="23634.68211334121" y="1244.0" />
+      <point x="24500.85542109406" y="1244.0" />
+      <point x="-150.75" y="324.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerLeaderCardsThePlayerOwnsUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="27944.498975804898" y="2589.0" />
+      <point x="28972.432309138232" y="2589.0" />
+      <point x="-23.066666666665697" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerPopeCardsUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeckImp" target="it.polimi.ingsw.server.model.Representable">
+      <point x="105.33333333333212" y="-82.5" />
+      <point x="15725.170471573889" y="1244.0" />
+      <point x="15719.753804907225" y="1244.0" />
+      <point x="15719.753804907225" y="476.0" />
+      <point x="16703.908566811988" y="476.0" />
+      <point x="-15.428571428570649" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.GameInitialRepresentationServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="2637.211538461539" y="2549.0" />
+      <point x="4857.677884615385" y="2549.0" />
+      <point x="-60.9375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.network.ServerRawMessage" target="it.polimi.ingsw.server.network.RawMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="15250.5" y="3785.0" />
+      <point x="15369.75" y="3785.0" />
+      <point x="-68.25" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.DevelopmentCardsTableObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxy">
+      <point x="-269.5" y="-104.5" />
+      <point x="26104.30711334121" y="1264.0" />
+      <point x="25566.27380952381" y="1264.0" />
+      <point x="18.375" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.singleplayertokens.BlackCrossMoveAndTokensShuffleToken" target="it.polimi.ingsw.server.model.gameitems.singleplayertokens.SinglePlayerToken">
+      <point x="0.0" y="-38.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathSinglePlayerRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="-50.41666666666788" y="-38.0" />
+      <point x="18077.29547157389" y="1214.0" />
+      <point x="17824.712138240557" y="1214.0" />
+      <point x="17824.712138240557" y="326.0" />
+      <point x="9371.68329208671" y="326.0" />
+      <point x="79.84615384615245" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.leadercard.ResourceNumberRequirement" target="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement">
+      <point x="0.0" y="-60.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable" target="it.polimi.ingsw.server.model.Representable">
+      <point x="0.0" y="-60.0" />
+      <point x="27301.02380952381" y="236.0" />
+      <point x="16858.1942810977" y="236.0" />
+      <point x="138.85714285714312" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeckImp" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="242.0" y="-71.5" />
+      <point x="18320.212138240557" y="2061.0" />
+      <point x="18999.80711334121" y="2061.0" />
+      <point x="18999.80711334121" y="90.0" />
+      <point x="16760.337138240557" y="90.0" />
+      <point x="41.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerMarbleColourRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="323.5" y="1234.0" />
+      <point x="3875.698249351666" y="1234.0" />
+      <point x="-180.8888888888905" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.ActivateLeaderCardClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.LeaderCardActionClientRequestValidatorTest">
+      <point x="1.8189894035458565E-12" y="-60.0" />
+      <point x="9474.548161268556" y="3334.0" />
+      <point x="9289.298161268554" y="3334.0" />
+      <point x="97.75" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.InitialChoicesClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="16136.25649460189" y="2837.0" />
+      <point x="13685.339827935224" y="2837.0" />
+      <point x="187.83333333333394" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.EndGameState" target="it.polimi.ingsw.server.model.gamemanager.gamestate.GameState">
+      <point x="0.0" y="-60.5" />
+      <point x="6787.865384615385" y="3078.0" />
+      <point x="5937.211538461539" y="3078.0" />
+      <point x="322.0" y="214.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.ActivateLeaderCardsAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="5004.0" y="3816.0" />
+      <point x="4093.25" y="3816.0" />
+      <point x="17.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerWhiteMarbleSubstitutionRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="6604.0" y="1254.0" />
+      <point x="4192.253804907225" y="1254.0" />
+      <point x="135.66666666666788" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayerImp" target="it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayer">
+      <point x="146.25" y="-71.5" />
+      <point x="29757.950396194712" y="2061.0" />
+      <point x="29845.700396194712" y="2061.0" />
+      <point x="-68.5" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnPostActionState" target="it.polimi.ingsw.server.model.gamemanager.gamestate.LeaderCardActionState">
+      <point x="0.0" y="-60.5" />
+      <point x="171.0" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionFetchColumnClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="13880.75649460189" y="2867.0" />
+      <point x="13524.339827935224" y="2867.0" />
+      <point x="26.83333333333394" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.MarketActionFetchColumnClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="17842.498975804898" y="2628.0" />
+      <point x="12669.536256506652" y="2628.0" />
+      <point x="124.07142857142935" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.EndTurnClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="8571.211538461539" y="2618.0" />
+      <point x="12393.821970792365" y="2618.0" />
+      <point x="-151.64285714285688" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution" target="it.polimi.ingsw.server.model.Representable">
+      <point x="151.0" y="-60.5" />
+      <point x="13914.587138240557" y="436.0" />
+      <point x="16642.1942810977" y="436.0" />
+      <point x="-77.14285714285688" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="252.08333333333212" y="-38.0" />
+      <point x="18379.79547157389" y="1244.0" />
+      <point x="18988.80711334121" y="1244.0" />
+      <point x="18988.80711334121" y="100.0" />
+      <point x="16746.67047157389" y="100.0" />
+      <point x="27.33333333333212" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.Representable" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-38.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.ValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="78.75" y="-93.0" />
+      <point x="10374.50649460189" y="2827.0" />
+      <point x="13256.00649460189" y="2827.0" />
+      <point x="-241.5" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.FaithPathSinglePlayerObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxy">
+      <point x="146.25" y="-170.5" />
+      <point x="30391.450396194712" y="2061.0" />
+      <point x="32009.087138240557" y="2061.0" />
+      <point x="32009.087138240557" y="1234.0" />
+      <point x="25676.52380952381" y="1234.0" />
+      <point x="128.625" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp" target="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem">
+      <point x="311.25" y="-148.5" />
+      <point x="10170.337138240557" y="1224.0" />
+      <point x="11716.813754427392" y="1224.0" />
+      <point x="-201.25" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionFetchColumnClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionClientRequestValidatorTest">
+      <point x="0.0" y="-49.0" />
+      <point x="16925.00649460189" y="3334.0" />
+      <point x="17105.50649460189" y="3334.0" />
+      <point x="-86.25" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeckImp" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="-121.0" y="-71.5" />
+      <point x="17957.212138240557" y="2051.0" />
+      <point x="17727.337138240557" y="2051.0" />
+      <point x="17727.337138240557" y="346.0" />
+      <point x="9345.067907471326" y="346.0" />
+      <point x="53.23076923076951" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.LeaderCardActionState" target="it.polimi.ingsw.server.model.gamemanager.gamestate.GameState">
+      <point x="0.0" y="-49.5" />
+      <point x="3952.711538461539" y="3078.0" />
+      <point x="5293.211538461539" y="3078.0" />
+      <point x="-322.0" y="214.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.ResourceStorageImp" target="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem">
+      <point x="139.25" y="-115.5" />
+      <point x="10919.337138240557" y="1234.0" />
+      <point x="11774.313754427392" y="1234.0" />
+      <point x="-143.75" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.Production" target="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem">
+      <point x="185.5" y="-104.5" />
+      <point x="11635.087138240557" y="1244.0" />
+      <point x="11831.813754427392" y="1244.0" />
+      <point x="-86.25" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayer" target="it.polimi.ingsw.server.model.gamecontext.faith.FaithPath">
+      <point x="0.0" y="-38.0" />
+      <point x="29914.200396194712" y="1274.0" />
+      <point x="29245.77380952381" y="1274.0" />
+      <point x="157.66666666666652" y="104.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerFaithPathRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="31943.607142857145" y="60.0" />
+      <point x="16801.337138240557" y="60.0" />
+      <point x="82.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeckImp" target="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeckImp">
+      <point x="169.0" y="-71.5" />
+      <point x="-79.0" y="82.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.EndTurnServerMessage" target="it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="2028.5000000000005" y="3088.0" />
+      <point x="1975.961538461539" y="3088.0" />
+      <point x="99.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.GameContextObservableProxy" target="it.polimi.ingsw.server.model.gamecontext.GameContext">
+      <point x="-133.75" y="-159.5" />
+      <point x="24274.93211334121" y="1224.0" />
+      <point x="22714.89880952381" y="1224.0" />
+      <point x="174.66666666666606" y="115.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.network.ClientRawMessage" target="it.polimi.ingsw.server.network.RawMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="15625.5" y="3785.0" />
+      <point x="15506.25" y="3785.0" />
+      <point x="68.25" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.network.MessageReader.ReaderState" target="it.polimi.ingsw.server.network.MessageReader">
+      <point x="0.0" y="-38.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerTempStarResourcesUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="31588.998975804898" y="2569.0" />
+      <point x="29041.632309138233" y="2569.0" />
+      <point x="46.13333333333503" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="0.0" y="-71.5" />
+      <point x="11918.063754427392" y="366.0" />
+      <point x="9318.45252285594" y="366.0" />
+      <point x="26.615384615382936" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientmessage.GetInitialGameRepresentationClientMessage" target="it.polimi.ingsw.server.controller.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="13722.5" y="3790.0" />
+      <point x="14080.3" y="3790.0" />
+      <point x="-38.20000000000073" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardImp" target="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard">
+      <point x="-311.25" y="-148.5" />
+      <point x="9547.837138240557" y="1204.0" />
+      <point x="9194.938754427392" y="1204.0" />
+      <point x="128.0" y="115.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerMarketUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="27492.998975804898" y="2579.0" />
+      <point x="28960.8989758049" y="2579.0" />
+      <point x="-34.599999999998545" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard" target="it.polimi.ingsw.server.model.Representable">
+      <point x="128.0" y="-115.0" />
+      <point x="9194.938754427392" y="386.0" />
+      <point x="16565.051423954843" y="386.0" />
+      <point x="-154.28571428571377" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionStateTest" target="it.polimi.ingsw.server.model.gamemanager.gamestate.GameStateTest">
+      <point x="0.0" y="-104.0" />
+      <point x="20848.498975804898" y="2700.0" />
+      <point x="20979.498975804898" y="2700.0" />
+      <point x="-206.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeckImp" target="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck">
+      <point x="0.0" y="-71.5" />
+      <point x="18078.212138240557" y="2061.0" />
+      <point x="18127.712138240557" y="2061.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.GameController" target="it.polimi.ingsw.server.controller.ClientHandler">
+      <point x="0.0" y="-71.5" />
+      <point x="20405.498975804898" y="2723.0" />
+      <point x="20257.998975804898" y="2723.0" />
+      <point x="92.0" y="104.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-15.0" />
+      <point x="2904.5871382405567" y="60.0" />
+      <point x="16637.337138240557" y="60.0" />
+      <point x="-82.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.DiscardLeaderCardClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="12277.714827935222" y="2668.0" />
+      <point x="12531.679113649509" y="2668.0" />
+      <point x="-13.785714285713766" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCardDeckRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="815.0" y="1244.0" />
+      <point x="3920.920471573889" y="1244.0" />
+      <point x="-135.66666666666788" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.MarketActionFetchRowClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="11871.214827935222" y="2658.0" />
+      <point x="12504.10768507808" y="2658.0" />
+      <point x="-41.35714285714312" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionFetchRowClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionClientRequestValidatorTest">
+      <point x="0.0" y="-49.0" />
+      <point x="17458.50649460189" y="3334.0" />
+      <point x="17278.00649460189" y="3334.0" />
+      <point x="86.25" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerSpecificResourceTypeRuleRepresentation" target="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="2640.5871382405567" y="476.0" />
+      <point x="2860.4621382405567" y="476.0" />
+      <point x="-44.125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.leadercard.LeaderCardTest" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItemTest">
+      <point x="0.0" y="-93.0" />
+      <point x="8740.587138240557" y="1204.0" />
+      <point x="7925.187380801017" y="1204.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientmessage.PlayerRequestClientMessage" target="it.polimi.ingsw.server.controller.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionFetchRowClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="10850.75649460189" y="2837.0" />
+      <point x="13309.673161268556" y="2837.0" />
+      <point x="-187.83333333333394" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupState" target="it.polimi.ingsw.server.model.gamemanager.gamestate.GameState">
+      <point x="0.0" y="-104.5" />
+      <point x="6367.865384615385" y="3088.0" />
+      <point x="5776.211538461539" y="3088.0" />
+      <point x="161.0" y="214.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCardDeckRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.singleplayertokens.BlackCrossMoveToken" target="it.polimi.ingsw.server.model.gameitems.singleplayertokens.SinglePlayerToken">
+      <point x="0.0" y="-38.5" />
+      <point x="10177.5" y="3785.0" />
+      <point x="10506.166666666666" y="3785.0" />
+      <point x="-154.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.ResourceStorageObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxyForIdentifiableItem">
+      <point x="-139.25" y="-137.5" />
+      <point x="8486.087138240557" y="2061.0" />
+      <point x="8024.587138240557" y="2061.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.LeaderCardActionClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="-130.33333333333212" y="-60.0" />
+      <point x="9061.214827935222" y="3103.0" />
+      <point x="8367.711538461539" y="3103.0" />
+      <point x="8367.711538461539" y="2608.0" />
+      <point x="12366.250542220936" y="2608.0" />
+      <point x="-179.21428571428623" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount" target="it.polimi.ingsw.server.model.Representable">
+      <point x="161.5" y="-71.5" />
+      <point x="14570.087138240557" y="446.0" />
+      <point x="16657.62285252627" y="446.0" />
+      <point x="-61.714285714286234" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerPlayerOwnedDevelopmentCardDeckUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="26092.998975804898" y="2539.0" />
+      <point x="28914.765642471564" y="2539.0" />
+      <point x="-80.73333333333358" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.ResourceStorageObservableProxy" target="it.polimi.ingsw.server.model.storage.ResourceStorage">
+      <point x="139.25" y="-137.5" />
+      <point x="8764.587138240557" y="2061.0" />
+      <point x="9226.087138240557" y="2061.0" />
+      <point x="9226.087138240557" y="1214.0" />
+      <point x="10356.188754427392" y="1214.0" />
+      <point x="-133.75" y="82.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientmessage.ReadyToStartGameClientMessage" target="it.polimi.ingsw.server.controller.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="13359.5" y="3780.0" />
+      <point x="14042.1" y="3780.0" />
+      <point x="-76.39999999999964" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerGameHistoryUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="32903.9989758049" y="2539.0" />
+      <point x="29076.23230913823" y="2539.0" />
+      <point x="80.73333333333358" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.ObtainedMarblesMarketAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="3862.0" y="3836.0" />
+      <point x="4072.25" y="3836.0" />
+      <point x="-3.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerBlackCrossFaithUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="26603.998975804898" y="2549.0" />
+      <point x="28926.298975804897" y="2549.0" />
+      <point x="-69.20000000000073" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.DevelopmentCardCostDiscount" target="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem">
+      <point x="-161.5" y="-71.5" />
+      <point x="14247.087138240557" y="1174.0" />
+      <point x="12061.813754427392" y="1174.0" />
+      <point x="143.75" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.DevelopmentActionServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="4703.211538461539" y="2609.0" />
+      <point x="4913.927884615385" y="2609.0" />
+      <point x="-4.6875" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.SinglePlayerGameContextObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.GameContextObservableProxy">
+      <point x="147.25" y="-71.5" />
+      <point x="23761.23042109406" y="2061.0" />
+      <point x="24408.68211334121" y="2061.0" />
+      <point x="0.0" y="159.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.ObservableResourcesStorageBuilder" target="it.polimi.ingsw.server.model.storage.ResourceStorageBuilder">
+      <point x="0.0" y="-38.5" />
+      <point x="0.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerCoveredCardsDeckRepresentation" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="131.33333333333212" y="-27.0" />
+      <point x="7193.333333333332" y="1274.0" />
+      <point x="7290.7307692307695" y="1274.0" />
+      <point x="7290.7307692307695" y="326.0" />
+      <point x="9225.298676702096" y="326.0" />
+      <point x="-66.53846153846098" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.ServerGameRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="2356.0871382405567" y="50.0" />
+      <point x="16623.67047157389" y="50.0" />
+      <point x="-95.66666666666788" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerProductionRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="5106.0" y="1274.0" />
+      <point x="4101.809360462779" y="1274.0" />
+      <point x="45.222222222222626" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeckImp" target="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeck">
+      <point x="0.0" y="-82.5" />
+      <point x="15619.837138240557" y="1244.0" />
+      <point x="15625.253804907225" y="1244.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerLeaderCardStateUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="31161.498975804898" y="2579.0" />
+      <point x="29030.098975804896" y="2579.0" />
+      <point x="34.599999999998545" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerDifferentResourceTypesInDifferentStoragesRuleRepresentation" target="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="3168.5871382405567" y="476.0" />
+      <point x="2948.7121382405567" y="476.0" />
+      <point x="44.125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamehistory.GameHistoryImp" target="it.polimi.ingsw.server.model.gamehistory.GameHistory">
+      <point x="0.0" y="-38.0" />
+      <point x="32930.357142857145" y="1274.0" />
+      <point x="32802.857142857145" y="1274.0" />
+      <point x="69.75" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck" target="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeck">
+      <point x="83.25" y="-38.0" />
+      <point x="15001.337138240557" y="1244.0" />
+      <point x="15569.253804907225" y="1244.0" />
+      <point x="-56.0" y="71.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.WhiteMarbleSubstitution" target="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem">
+      <point x="-151.0" y="-60.5" />
+      <point x="13612.587138240557" y="1184.0" />
+      <point x="12004.313754427392" y="1184.0" />
+      <point x="86.25" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTableImp" target="it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardsTable">
+      <point x="0.0" y="-93.5" />
+      <point x="27471.80711334121" y="1274.0" />
+      <point x="27570.52380952381" y="1274.0" />
+      <point x="269.5" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.FaithPathSinglePlayerObservableProxy" target="it.polimi.ingsw.server.model.gamecontext.faith.FaithPathSinglePlayer">
+      <point x="-146.25" y="-170.5" />
+      <point x="30098.950396194712" y="2061.0" />
+      <point x="29982.700396194712" y="2061.0" />
+      <point x="68.5" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.FaithPathLastPositionReachedAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="4644.5" y="3826.0" />
+      <point x="4086.25" y="3826.0" />
+      <point x="10.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.Production" target="it.polimi.ingsw.server.model.Representable">
+      <point x="-185.5" y="-104.5" />
+      <point x="11264.087138240557" y="1214.0" />
+      <point x="11007.438754427392" y="1214.0" />
+      <point x="11007.438754427392" y="406.0" />
+      <point x="16595.908566811988" y="406.0" />
+      <point x="-123.42857142857065" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.MarketObservableProxy" target="it.polimi.ingsw.server.model.gamecontext.market.Market">
+      <point x="-123.25" y="-126.5" />
+      <point x="24819.43211334121" y="1214.0" />
+      <point x="24075.73042109406" y="1214.0" />
+      <point x="73.5" y="82.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.ObservableProxyForIdentifiableItem" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItem">
+      <point x="-128.66666666666788" y="-38.5" />
+      <point x="7895.920471573889" y="1234.0" />
+      <point x="7495.437380801017" y="1234.0" />
+      <point x="7495.437380801017" y="336.0" />
+      <point x="9238.606369009787" y="336.0" />
+      <point x="-53.23076923076951" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.PlayerOwnedDevelopmentCardDeckObservableProxy" target="it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck">
+      <point x="179.0" y="-137.5" />
+      <point x="-83.25" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.faithrepresentation.ServerVaticanReportSectionRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="12327.337138240557" y="100.0" />
+      <point x="16692.003804907225" y="100.0" />
+      <point x="-27.33333333333212" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.MarbleColour" target="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem">
+      <point x="160.75" y="-104.5" />
+      <point x="12322.837138240557" y="1204.0" />
+      <point x="11889.313754427392" y="1204.0" />
+      <point x="-28.75" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.PlayerOwnedDevelopmentCardDeck" target="it.polimi.ingsw.server.model.Representable">
+      <point x="-83.25" y="-38.0" />
+      <point x="14834.837138240557" y="456.0" />
+      <point x="16673.051423954843" y="456.0" />
+      <point x="-46.285714285713766" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.LeaderActionServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="6533.711538461539" y="2579.0" />
+      <point x="4951.427884615385" y="2579.0" />
+      <point x="32.8125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.FaithPathObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxy">
+      <point x="-127.0" y="-148.5" />
+      <point x="28157.80711334121" y="1254.0" />
+      <point x="25603.02380952381" y="1254.0" />
+      <point x="55.125" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.InitialChoicesClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="15599.173161268556" y="2648.0" />
+      <point x="12614.393399363793" y="2648.0" />
+      <point x="68.92857142857065" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientmessage.CreateNewLobbyClientMessage" target="it.polimi.ingsw.server.controller.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="14486.0" y="3790.0" />
+      <point x="14156.7" y="3790.0" />
+      <point x="38.20000000000073" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.GameSetupStateTest" target="it.polimi.ingsw.server.model.gamemanager.gamestate.GameStateTest">
+      <point x="0.0" y="-82.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.MarketActionServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="3320.711538461539" y="2559.0" />
+      <point x="4867.052884615385" y="2559.0" />
+      <point x="-51.5625" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck" target="it.polimi.ingsw.server.model.Representable">
+      <point x="50.41666666666788" y="-38.0" />
+      <point x="18178.128804907225" y="1224.0" />
+      <point x="18430.712138240557" y="1224.0" />
+      <point x="18430.712138240557" y="306.0" />
+      <point x="16750.1942810977" y="306.0" />
+      <point x="30.857142857143117" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.DifferentResourceTypesInDifferentStoragesRule" target="it.polimi.ingsw.server.model.storage.ResourceStorageRule">
+      <point x="0.0" y="-71.5" />
+      <point x="19302.30711334121" y="1234.0" />
+      <point x="19940.230421094057" y="1234.0" />
+      <point x="-176.625" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.ProductionAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="5609.0" y="3796.0" />
+      <point x="4107.25" y="3796.0" />
+      <point x="31.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourRequirement" target="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement">
+      <point x="0.0" y="-60.5" />
+      <point x="16098.337138240557" y="1244.0" />
+      <point x="16614.003804907225" y="1244.0" />
+      <point x="-105.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gamecontextrepresentation.ServerGameContextRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="17714.962138240557" y="110.0" />
+      <point x="16733.003804907225" y="110.0" />
+      <point x="13.66666666666788" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.EndTurnClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="15438.25649460189" y="2847.0" />
+      <point x="13631.673161268556" y="2847.0" />
+      <point x="134.16666666666606" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.LeaderCardObservableProxy" target="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCard">
+      <point x="-130.75" y="-181.5" />
+      <point x="7647.087138240557" y="1244.0" />
+      <point x="8938.938754427392" y="1244.0" />
+      <point x="-128.0" y="115.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.ProductionActionServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="4404.211538461539" y="2599.0" />
+      <point x="4904.552884615385" y="2599.0" />
+      <point x="-14.0625" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerDevelopmentCardColourAndLevelRequirementRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRequirementRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="29750.607142857145" y="476.0" />
+      <point x="30025.523809523813" y="476.0" />
+      <point x="-122.66666666666424" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.network.MessageWriter.WriterState" target="it.polimi.ingsw.server.network.MessageWriter">
+      <point x="3.637978807091713E-12" y="-38.0" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.GameUpdateServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="1876.211538461539" y="2539.0" />
+      <point x="4848.302884615385" y="2539.0" />
+      <point x="-70.3125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.ManageResourcesFromMarketClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="9238.711538461539" y="2628.0" />
+      <point x="12421.393399363793" y="2628.0" />
+      <point x="-124.07142857142935" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.ActivateLeaderCardClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="12368.25649460189" y="2857.0" />
+      <point x="13417.00649460189" y="2857.0" />
+      <point x="-80.5" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.GameContextObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxy">
+      <point x="133.75" y="-159.5" />
+      <point x="24542.43211334121" y="1264.0" />
+      <point x="25456.02380952381" y="1264.0" />
+      <point x="-91.875" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamemanager.gamestate.GameTurnMainActionState" target="it.polimi.ingsw.server.model.gamemanager.gamestate.LeaderCardActionState">
+      <point x="0.0" y="-115.5" />
+      <point x="3460.211538461539" y="3342.0" />
+      <point x="3781.711538461539" y="3342.0" />
+      <point x="-171.0" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.MarketActionClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="115.0" y="-49.0" />
+      <point x="17306.75649460189" y="3103.0" />
+      <point x="17638.998975804898" y="3103.0" />
+      <point x="17638.998975804898" y="2638.0" />
+      <point x="12641.964827935222" y="2638.0" />
+      <point x="96.5" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.ProductionActionClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.ValidatorTest">
+      <point x="0.0" y="-93.0" />
+      <point x="9640.548161268554" y="3103.0" />
+      <point x="10232.75649460189" y="3103.0" />
+      <point x="-63.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCardTest" target="it.polimi.ingsw.server.model.gameitems.IdentifiableItemTest">
+      <point x="0.0" y="-38.0" />
+      <point x="8402.587138240557" y="1214.0" />
+      <point x="7851.187380801017" y="1214.0" />
+      <point x="-74.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerSameResourceTypeRuleRepresentation" target="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRuleRepresentation">
+      <point x="0.0" y="-15.0" />
+      <point x="3653.0871382405567" y="466.0" />
+      <point x="3036.9621382405567" y="466.0" />
+      <point x="132.375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.PlayerContextObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxy">
+      <point x="150.75" y="-368.5" />
+      <point x="25664.05711334121" y="1274.0" />
+      <point x="25529.52380952381" y="1274.0" />
+      <point x="-18.375" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerActivePlayerUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="26887.998975804898" y="2559.0" />
+      <point x="28937.83230913823" y="2559.0" />
+      <point x="-57.66666666666788" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceNumberRequirementRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRequirementRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="30423.107142857145" y="476.0" />
+      <point x="30148.190476190477" y="476.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.singleplayer.DiscardCardsSinglePlayerTokenAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="6449.0" y="3776.0" />
+      <point x="4121.25" y="3776.0" />
+      <point x="45.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeck" target="it.polimi.ingsw.server.model.gameitems.cardstack.CardDeck">
+      <point x="-252.08333333333212" y="-38.0" />
+      <point x="17875.628804907225" y="1234.0" />
+      <point x="15681.253804907225" y="1234.0" />
+      <point x="56.0" y="71.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.ResourceStorage" target="it.polimi.ingsw.server.model.Representable">
+      <point x="133.75" y="-82.0" />
+      <point x="10623.688754427392" y="396.0" />
+      <point x="16580.479995383415" y="396.0" />
+      <point x="-138.85714285714312" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.ResourceStorageImp" target="it.polimi.ingsw.server.model.storage.ResourceStorage">
+      <point x="-139.25" y="-115.5" />
+      <point x="10640.837138240557" y="1214.0" />
+      <point x="10623.688754427392" y="1214.0" />
+      <point x="133.75" y="82.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.cardstack.ShuffledCoveredCardDeckImp" target="it.polimi.ingsw.server.model.Representable">
+      <point x="121.0" y="-71.5" />
+      <point x="18199.212138240557" y="2051.0" />
+      <point x="18528.087138240557" y="2051.0" />
+      <point x="18528.087138240557" y="286.0" />
+      <point x="16781.051423954843" y="286.0" />
+      <point x="61.714285714286234" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ServerDevelopmentCardsTableRepresentation" target="it.polimi.ingsw.server.modelrepresentation.ServerRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="13174.837138240557" y="110.0" />
+      <point x="16705.67047157389" y="110.0" />
+      <point x="-13.66666666666788" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.MarbleColour" target="it.polimi.ingsw.server.model.Representable">
+      <point x="-160.75" y="-104.5" />
+      <point x="12001.337138240557" y="1214.0" />
+      <point x="11436.438754427392" y="1214.0" />
+      <point x="11436.438754427392" y="416.0" />
+      <point x="16611.337138240557" y="416.0" />
+      <point x="-108.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement" target="it.polimi.ingsw.server.model.Representable">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.faith.VaticanReportSection" target="it.polimi.ingsw.server.model.Representable">
+      <point x="0.0" y="-82.5" />
+      <point x="18127.712138240557" y="316.0" />
+      <point x="16734.76570966913" y="316.0" />
+      <point x="15.428571428570649" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.GameInitializationStartedServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="8150.211538461539" y="2539.0" />
+      <point x="4988.927884615385" y="2539.0" />
+      <point x="70.3125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.leadercard.DevelopmentCardColourAndLevelRequirement" target="it.polimi.ingsw.server.model.gameitems.leadercard.LeaderCardRequirement">
+      <point x="0.0" y="-60.5" />
+      <point x="17378.337138240557" y="1244.0" />
+      <point x="16824.670471573892" y="1244.0" />
+      <point x="105.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.NewGameLobbyController" target="it.polimi.ingsw.server.controller.NewClientsAccepterClientHandler">
+      <point x="0.0" y="-104.5" />
+      <point x="20379.998975804898" y="2916.0" />
+      <point x="20091.498975804898" y="2916.0" />
+      <point x="165.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.FaithPathObservableProxy" target="it.polimi.ingsw.server.model.gamecontext.faith.FaithPath">
+      <point x="127.0" y="-148.5" />
+      <point x="28411.80711334121" y="1264.0" />
+      <point x="28930.44047619048" y="1264.0" />
+      <point x="-157.66666666666652" y="104.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameitems.developmentcard.DevelopmentCard" target="it.polimi.ingsw.server.model.gameitems.RegisteredIdentifiableItem">
+      <point x="-234.5" y="-104.5" />
+      <point x="12738.087138240557" y="1194.0" />
+      <point x="11946.813754427392" y="1194.0" />
+      <point x="28.75" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.EndGameServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="4144.211538461539" y="2589.0" />
+      <point x="4895.177884615385" y="2589.0" />
+      <point x="-23.4375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.storagerepresentation.ServerResourceStorageRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="5921.0" y="1264.0" />
+      <point x="4147.031582685002" y="1264.0" />
+      <point x="90.44444444444525" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ServerLeaderCardRepresentation" target="it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.ServerRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="3679.0" y="1274.0" />
+      <point x="4056.5871382405567" y="1274.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.PostTurnFinalAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="1348.5" y="3766.0" />
+      <point x="4023.25" y="3766.0" />
+      <point x="-52.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.GameHistoryObservableProxy" target="it.polimi.ingsw.server.model.gamehistory.GameHistory">
+      <point x="106.5" y="-60.5" />
+      <point x="31892.087138240557" y="1274.0" />
+      <point x="32663.35714285714" y="1274.0" />
+      <point x="-69.75" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.ManageResourcesFromMarketClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator">
+      <point x="0.0" y="-27.0" />
+      <point x="14687.75649460189" y="2857.0" />
+      <point x="13578.00649460189" y="2857.0" />
+      <point x="80.5" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.storage.MaxResourceNumberRule" target="it.polimi.ingsw.server.model.storage.ResourceStorageRule">
+      <point x="0.0" y="-60.5" />
+      <point x="20510.30711334121" y="1244.0" />
+      <point x="20175.730421094057" y="1244.0" />
+      <point x="58.875" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.gameactionshistory.MainTurnInitialAction" target="it.polimi.ingsw.server.gameactionshistory.GameAction">
+      <point x="0.0" y="-27.0" />
+      <point x="5314.0" y="3806.0" />
+      <point x="4100.25" y="3806.0" />
+      <point x="24.5" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gameupdate.ServerResourceStorageUpdate" target="it.polimi.ingsw.server.model.gameupdate.ServerGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="30625.498975804898" y="2589.0" />
+      <point x="29018.565642471563" y="2589.0" />
+      <point x="23.066666666665697" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.PlayerNameAlreadyExistsServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="6214.711538461539" y="2589.0" />
+      <point x="4942.052884615385" y="2589.0" />
+      <point x="23.4375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.observableproxy.MarketObservableProxy" target="it.polimi.ingsw.server.model.observableproxy.ObservableProxy">
+      <point x="123.25" y="-126.5" />
+      <point x="25065.93211334121" y="1274.0" />
+      <point x="25492.77380952381" y="1274.0" />
+      <point x="-55.125" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.InitialChoicesClientRequestValidatorTest" target="it.polimi.ingsw.server.controller.clientrequest.validator.ValidatorTest">
+      <point x="0.0" y="-82.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.CustomClientRequest" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-49.5" />
+      <point x="18248.498975804898" y="2618.0" />
+      <point x="12697.10768507808" y="2618.0" />
+      <point x="151.64285714285688" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.servermessage.PlayerCanCreateNewLobbyServerMessage" target="it.polimi.ingsw.server.controller.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="7757.211538461539" y="2549.0" />
+      <point x="4979.552884615385" y="2549.0" />
+      <point x="60.9375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator" target="it.polimi.ingsw.server.controller.clientrequest.ClientRequest">
+      <point x="0.0" y="-38.0" />
+      <point x="13497.50649460189" y="2668.0" />
+      <point x="12559.250542220936" y="2668.0" />
+      <point x="13.785714285713766" y="49.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.controller.PlayerRegistrationAndDispatchController" target="it.polimi.ingsw.server.controller.NewClientsAccepterClientHandler">
+      <point x="0.0" y="-71.5" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.server.model.gamecontext.playercontext.PlayerContext" target="it.polimi.ingsw.server.model.Representable">
+      <point x="0.0" y="-324.0" />
+      <point x="24651.60542109406" y="246.0" />
+      <point x="16842.76570966913" y="246.0" />
+      <point x="123.42857142857065" y="38.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.027525965059734647" x="16647.0" y="1965.5" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.server.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ServerPlayerOwnedDevelopmentCardDeckRepresentation</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
