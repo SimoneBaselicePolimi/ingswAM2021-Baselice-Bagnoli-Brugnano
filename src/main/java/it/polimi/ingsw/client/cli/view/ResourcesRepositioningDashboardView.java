@@ -16,6 +16,9 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
+/**
+ * View representing the repositioning in storages of resources obtained by the player
+ */
 public class ResourcesRepositioningDashboardView extends AbstractPlayerDashboardView{
 
     protected final boolean playerCanLeaveResourcesInTempStorage;

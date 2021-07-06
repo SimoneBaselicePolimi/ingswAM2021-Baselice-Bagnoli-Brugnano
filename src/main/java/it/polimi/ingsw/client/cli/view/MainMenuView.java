@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+/**
+ * View representing the main menu that allows the player to choose which component to switch to
+ */
 public class MainMenuView extends CliView{
 
     protected GameView gameView;

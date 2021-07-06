@@ -20,7 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+/**
+ * View representing the leader card
+ */
 public class LeaderCardView extends AbstractLeaderCardView {
 
     public static final Colour defaultProductionColour = Colour.WHITE;

@@ -10,6 +10,9 @@ import it.polimi.ingsw.utils.Colour;
 
 import java.util.ArrayList;
 
+/**
+ * View representing the deck of development cards a player has on his personal board
+ */
 public class DevCardDashboardDeckView extends CliView {
 
     public static final int DEV_CARD_DECK_ROW_SIZE = DevCardView.DEV_CARD_ROW_SIZE+1;

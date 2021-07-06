@@ -22,6 +22,9 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+/**
+ * View representing the setup state: the player must choose the initial leader cards
+ */
 public class LeaderCardSetupView extends CliView {
 
     protected GameView gameView;
