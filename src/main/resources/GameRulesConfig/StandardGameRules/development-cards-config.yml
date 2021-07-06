@@ -33,60 +33,60 @@ developmentCards:
     victoryPoints: 1
     purchaseCost:
       SHIELDS: 2
-  - developmentCardID: DEV_G2
-    level: 1
-    colour: GREEN
-    production:
-      costs:
-        resources:
-          STONES: 1
-        starResources: 0
-      rewards:
-        resources:
-          SERVANTS: 1
-        starResources: 0
-        faithPoints: 0
-    victoryPoints: 2
-    purchaseCost:
-      SHIELDS: 1
-      SERVANTS: 1
-      STONES: 1
-  - developmentCardID: DEV_G3
-    level: 1
-    colour: GREEN
-    production:
-      costs:
-        resources:
-          SERVANTS: 2
-        starResources: 0
-      rewards:
-        resources:
-          COINS: 1
-          SHIELDS: 1
-          STONES: 1
-        starResources: 0
-        faithPoints: 0
-    victoryPoints: 3
-    purchaseCost:
-      SHIELDS: 3
-  - developmentCardID: DEV_G4
-    level: 1
-    colour: GREEN
-    production:
-      costs:
-        resources:
-          STONES: 1
-          SERVANTS: 1
-        starResources: 0
-      rewards:
-        resources:
-          COINS: 2
-        starResources: 0
-        faithPoints: 1
-    victoryPoints: 4
-    purchaseCost:
-      SHIELDS: 2
-      COINS: 2
+#  - developmentCardID: DEV_G2
+#    level: 1
+#    colour: GREEN
+#    production:
+#      costs:
+#        resources:
+#          STONES: 1
+#        starResources: 0
+#      rewards:
+#        resources:
+#          SERVANTS: 1
+#        starResources: 0
+#        faithPoints: 0
+#    victoryPoints: 2
+#    purchaseCost:
+#      SHIELDS: 1
+#      SERVANTS: 1
+#      STONES: 1
+#  - developmentCardID: DEV_G3
+#    level: 1
+#    colour: GREEN
+#    production:
+#      costs:
+#        resources:
+#          SERVANTS: 2
+#        starResources: 0
+#      rewards:
+#        resources:
+#          COINS: 1
+#          SHIELDS: 1
+#          STONES: 1
+#        starResources: 0
+#        faithPoints: 0
+#    victoryPoints: 3
+#    purchaseCost:
+#      SHIELDS: 3
+#  - developmentCardID: DEV_G4
+#    level: 1
+#    colour: GREEN
+#    production:
+#      costs:
+#        resources:
+#          STONES: 1
+#          SERVANTS: 1
+#        starResources: 0
+#      rewards:
+#        resources:
+#          COINS: 2
+#        starResources: 0
+#        faithPoints: 1
+#    victoryPoints: 4
+#    purchaseCost:
+#      SHIELDS: 2
+#      COINS: 2
   - developmentCardID: DEV_G5
     level: 2
     colour: GREEN
@@ -222,57 +222,57 @@ developmentCards:
     purchaseCost:
       SHIELDS: 4
       COINS: 4
-  - developmentCardID: DEV_Y1
-    level: 1
-    colour: YELLOW
-    production:
-      costs:
-        resources:
-          SERVANTS: 1
-        starResources: 0
-      rewards:
-        resources: {}
-        starResources: 0
-        faithPoints: 1
-    victoryPoints: 1
-    purchaseCost:
-      STONES: 2
-  - developmentCardID: DEV_Y2
-    level: 1
-    colour: YELLOW
-    production:
-      costs:
-        resources:
-          SHIELDS: 1
-        starResources: 0
-      rewards:
-        resources:
-          COINS: 1
-        starResources: 0
-        faithPoints: 0
-    victoryPoints: 2
-    purchaseCost:
-      SHIELDS: 1
-      STONES: 1
-      COINS: 1
-  - developmentCardID: DEV_Y3
-    level: 1
-    colour: YELLOW
-    production:
-      costs:
-        resources:
-          SHIELDS: 2
-        starResources: 0
-      rewards:
-        resources:
-          COINS: 1
-          SERVANTS: 1
-          STONES: 1
-        starResources: 0
-        faithPoints: 0
-    victoryPoints: 3
-    purchaseCost:
-      STONES: 3
+#  - developmentCardID: DEV_Y1
+#    level: 1
+#    colour: YELLOW
+#    production:
+#      costs:
+#        resources:
+#          SERVANTS: 1
+#        starResources: 0
+#      rewards:
+#        resources: {}
+#        starResources: 0
+#        faithPoints: 1
+#    victoryPoints: 1
+#    purchaseCost:
+#      STONES: 2
+#  - developmentCardID: DEV_Y2
+#    level: 1
+#    colour: YELLOW
+#    production:
+#      costs:
+#        resources:
+#          SHIELDS: 1
+#        starResources: 0
+#      rewards:
+#        resources:
+#          COINS: 1
+#        starResources: 0
+#        faithPoints: 0
+#    victoryPoints: 2
+#    purchaseCost:
+#      SHIELDS: 1
+#      STONES: 1
+#      COINS: 1
+#  - developmentCardID: DEV_Y3
+#    level: 1
+#    colour: YELLOW
+#    production:
+#      costs:
+#        resources:
+#          SHIELDS: 2
+#        starResources: 0
+#      rewards:
+#        resources:
+#          COINS: 1
+#          SERVANTS: 1
+#          STONES: 1
+#        starResources: 0
+#        faithPoints: 0
+#    victoryPoints: 3
+#    purchaseCost:
+#      STONES: 3
   - developmentCardID: DEV_Y4
     level: 1
     colour: YELLOW
@@ -426,57 +426,57 @@ developmentCards:
     purchaseCost:
       STONES: 4
       SERVANTS: 4
-  - developmentCardID: DEV_B1
-    level: 1
-    colour: BLUE
-    production:
-      costs:
-        resources:
-          SHIELDS: 1
-        starResources: 0
-      rewards:
-        resources: { }
-        starResources: 0
-        faithPoints: 1
-    victoryPoints: 1
-    purchaseCost:
-      COINS: 2
-  - developmentCardID: DEV_B2
-    level: 1
-    colour: BLUE
-    production:
-      costs:
-        resources:
-          SERVANTS: 1
-        starResources: 0
-      rewards:
-        resources:
-          STONES: 1
-        starResources: 0
-        faithPoints: 0
-    victoryPoints: 2
-    purchaseCost:
-      COINS: 1
-      SERVANTS: 1
-      STONES: 1
-  - developmentCardID: DEV_B3
-    level: 1
-    colour: BLUE
-    production:
-      costs:
-        resources:
-          STONES: 2
-        starResources: 0
-      rewards:
-        resources:
-          COINS: 1
-          SERVANTS: 1
-          SHIELDS: 1
-        starResources: 0
-        faithPoints: 0
-    victoryPoints: 3
-    purchaseCost:
-      COINS: 3
+#  - developmentCardID: DEV_B1
+#    level: 1
+#    colour: BLUE
+#    production:
+#      costs:
+#        resources:
+#          SHIELDS: 1
+#        starResources: 0
+#      rewards:
+#        resources: { }
+#        starResources: 0
+#        faithPoints: 1
+#    victoryPoints: 1
+#    purchaseCost:
+#      COINS: 2
+#  - developmentCardID: DEV_B2
+#    level: 1
+#    colour: BLUE
+#    production:
+#      costs:
+#        resources:
+#          SERVANTS: 1
+#        starResources: 0
+#      rewards:
+#        resources:
+#          STONES: 1
+#        starResources: 0
+#        faithPoints: 0
+#    victoryPoints: 2
+#    purchaseCost:
+#      COINS: 1
+#      SERVANTS: 1
+#      STONES: 1
+#  - developmentCardID: DEV_B3
+#    level: 1
+#    colour: BLUE
+#    production:
+#      costs:
+#        resources:
+#          STONES: 2
+#        starResources: 0
+#      rewards:
+#        resources:
+#          COINS: 1
+#          SERVANTS: 1
+#          SHIELDS: 1
+#        starResources: 0
+#        faithPoints: 0
+#    victoryPoints: 3
+#    purchaseCost:
+#      COINS: 3
   - developmentCardID: DEV_B4
     level: 1
     colour: BLUE
@@ -645,42 +645,42 @@ developmentCards:
     victoryPoints: 1
     purchaseCost:
       SERVANTS: 2
-  - developmentCardID: DEV_P2
-    level: 1
-    colour: PURPLE
-    production:
-      costs:
-        resources:
-          COINS: 1
-        starResources: 0
-      rewards:
-        resources:
-          SHIELDS: 1
-        starResources: 0
-        faithPoints: 0
-    victoryPoints: 2
-    purchaseCost:
-      SHIELDS: 1
-      SERVANTS: 1
-      COINS: 1
-  - developmentCardID: DEV_P3
-    level: 1
-    colour: PURPLE
-    production:
-      costs:
-        resources:
-          COINS: 2
-        starResources: 0
-      rewards:
-        resources:
-          SERVANTS: 1
-          SHIELDS: 1
-          STONES: 1
-        starResources: 0
-        faithPoints: 0
-    victoryPoints: 3
-    purchaseCost:
-      SERVANTS: 3
+#  - developmentCardID: DEV_P2
+#    level: 1
+#    colour: PURPLE
+#    production:
+#      costs:
+#        resources:
+#          COINS: 1
+#        starResources: 0
+#      rewards:
+#        resources:
+#          SHIELDS: 1
+#        starResources: 0
+#        faithPoints: 0
+#    victoryPoints: 2
+#    purchaseCost:
+#      SHIELDS: 1
+#      SERVANTS: 1
+#      COINS: 1
+#  - developmentCardID: DEV_P3
+#    level: 1
+#    colour: PURPLE
+#    production:
+#      costs:
+#        resources:
+#          COINS: 2
+#        starResources: 0
+#      rewards:
+#        resources:
+#          SERVANTS: 1
+#          SHIELDS: 1
+#          STONES: 1
+#        starResources: 0
+#        faithPoints: 0
+#    victoryPoints: 3
+#    purchaseCost:
+#      SERVANTS: 3
   - developmentCardID: DEV_P4
     level: 1
     colour: PURPLE

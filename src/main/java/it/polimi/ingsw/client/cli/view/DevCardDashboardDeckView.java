@@ -85,13 +85,11 @@ public class DevCardDashboardDeckView extends CliView {
 
         if (cardDeck.getCardDeck().size() > 0) {
             card = cardDeck.peek();
-            cardView = new DevCardView(card, clientManager);
-            addChildView(cardView, 0, 0);
         } else {
             card = null;
-            //TODO
         }
-
+        cardView = new DevCardView(card, clientManager);
+        addChildView(cardView, 0, 0);
     }
 
     public void setCardBorderColour(Colour colour) {

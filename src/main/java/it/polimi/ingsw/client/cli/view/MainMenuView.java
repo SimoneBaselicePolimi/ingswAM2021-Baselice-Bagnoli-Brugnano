@@ -84,7 +84,10 @@ public class MainMenuView extends CliView{
         ).addUserChoiceLocalized(
             () -> gameView.setMainContentView(new PlayerDashboardView(clientManager.getMyPlayer(), clientManager, gameView)),
             "client.cli.mainMenuActions.openPersonalDashboard"
-        ).addUserChoiceLocalized(
+        );
+
+        if(!clientManager.getGameContextRepresentation().isSinglePlayerGame())
+            userChoices.addUserChoiceLocalized(
             this::askThePlayerToOpenTheDashboardOf,
             "client.cli.mainMenuActions.openDifferentPlayerDashboard"
         );
