@@ -21,6 +21,11 @@ public class PingWorker extends Thread {
 
     @Override
     public void run() {
+        try {
+            sleep(NetworkProto.PING_PROTO.STARTUP_DELAY_MILLIS);
+        } catch (InterruptedException e) {
+            ProjectLogger.getLogger().log(e);
+        }
         lastPingReceivedTime.set(System.currentTimeMillis());
         sendRequestPing();
         while (true) {
