@@ -6,26 +6,43 @@ client:
     resources: "Resources: "
     faithPositions: "Position on the faith track: "
 
-  startupWizard: "\n*** MASTERS OF RENAISSANCE ***\n\n
+  startupWizard:
+    title: "\n*** MASTERS OF RENAISSANCE ***\n\n
   1) Start the game with text interface (CLI)\n
   2) Start the game with graphical interface (GUI)\n
   3) Start the local solo game (CLI)\n
   4) Start the local solo game (GUI)\n
   5) Select your language\n"
+    error: "Invalid input"
 
   errors:
     unexpectedServerMessage: "Unexpected error! [The server sent an unexpected message]."
     userInputNotExpected: "Wait, operation in progress..."
     invalidInput: "Invalid input"
     turnCanNotEndBeforeMainAction: "You cannot end your turn until you have taken your main action."
+    onConnectionWithServerDropped: "Connection with server lost. Game over"
+    onAnotherPlayerDisconnected: "Player %s disconnected. Game over"
 
   gui:
+    dashboard:
+      baseProductions: "BASE PRODUCTIONS"
+      chooseStarCosts: "Choose resources to pay with"
+      chooseStarRewards: "Choose resources to obtain"
+      notEnoughResourcesErrorMessage: "You haven't enough resources!"
+      resourcesLeft: "Left resources: "
+      starResourcesChosen: "Chosen resources: "
+      activateProductionsButton: "Activate productions"
+      cancelButton: "Cancel"
+      activateSelectedProductionsButton: "Confirm productions"
+      activateLeaderCard: "Activate leader card"
+      discardLeaderCard: "Discard leader card"
+      cancelActivationLeaderCard: "Cancel"
+      endTurn: "End my turn"
     playerRegistration:
       titleLabel: "MASTERS OF THE RENAISSANCE"
       descLabel: "Player name"
       errorLabel: "Name already in use"
       confirmButton: "Confirm"
-    testLoc: "test localizeeeed"
     numberOfPlayers:
       descLabel: "Number of players"
       errorLabel: "Invalid number of players"
@@ -48,9 +65,11 @@ client:
     faithPath:
       playersLabel: "Player %s : "
     repositioningInStorages:
+      temporaryStorage: "TO REPOSITION"
       rules:
         info:
           maxNumber: "MAX %d"
+      confirmButton: "Confirm"
     devCardTableDeck:
       deckSize: "Number of cards in the deck: %d"
     table:
@@ -77,6 +96,7 @@ client:
           singular: "1 faith point\n"
           plural: "%d faith points\n"
         specialMarble: "SpecialMarble\n"
+    devCardPlacementInDashboard: "Choose the place where to put your development card"
 
   cli:
     setup:
@@ -126,14 +146,14 @@ client:
       notifyPlayerColumnNumberIsInvalid: "The selected column is not a valid market column"
     resourcesRepositioning:
       temporaryResourcesInfo: "You still have to place the following resources: %s"
-        absentTemporaryResourcesInfo: "You have no resources to place"
-        putResourcesInStorage: "Put resources in a storage"
-        removeResourcesFromStorage: "Get resources from a storage"
-        repositioningDone: "Confirm placement"
-        specifyInWhichStorage: "Put resources in %s"
-        specifyForWhichStorage: "Get resources from %s"
-        notEnoughResourcesInTempStorage: "You don't have enough resources to place"
-        notEnoughResourcesInStorage: "You don't have enough resources in the repository"
+      absentTemporaryResourcesInfo: "You have no resources to place"
+      putResourcesInStorage: "Put resources in a storage"
+      removeResourcesFromStorage: "Get resources from a storage"
+      repositioningDone: "Confirm placement"
+      specifyInWhichStorage: "Put resources in %s"
+      specifyForWhichStorage: "Get resources from %s"
+      notEnoughResourcesInTempStorage: "You don't have enough resources to place"
+      notEnoughResourcesInStorage: "You don't have enough resources in the repository"
       checkRuleErrorMessage:
         maxNumberRule: "In the selected storage the maximum number of resources is: %d"
         sameResourceType: "In the selected storage all resources must be of a single type"
@@ -176,8 +196,11 @@ client:
       notifyPlayerHeDoesNotHaveNeededResources: "You don't have the necessary resources to activate the selected production"
       returnToProductionActivation: "Back to the production activation menu"
       activateNewLeaderCard: "Activate a leader card"
+      discardLeaderCard: "Discard leader card"
       canNotActivateNewLeaderCard: "None of your leader cards can be activated"
+      canNotDiscardLeaderCard: "Any of your leader cards can be discarded"
       selectLeaderCardToActivate: "Activate card %s"
+      selectLeaderCardToDiscard: "Discard card %s"
       lookAtLeaderCardsOfMyPlayer: "You have the following leader cards:"
       lookAtLeaderCardsOfAnotherPlayer: "Player %s has %d hidden cards"
     resourcesChoice:
@@ -259,7 +282,8 @@ dashboard:
   baseProductions: "BASE PRODUCTION"
   shelf: "STORAGE"
   infiniteChest: "INFINITE CHEST"
-  leaderStorages: "SPECIAL DEPOSIT LEADER"
+  leaderStorages: "SPECIAL LEADER DEPOT"
+  specialStorage: "SPECIAL DEPOT"
 
 gameHistory:
 
@@ -279,6 +303,21 @@ gameHistory:
         discarded: "discarded"
         hidden: "hidden"
     lastPositionReached: "The player %s has reached the last position of the faith track"
+    singlePlayer:
+      lorenzoIlMagnifico: "Lorenzo Il Magnifico"
+      moveBlackCross:
+        oneStep: "Lorenzo Il Magnifico moved the Black Cross token forward by 1 space on the faith path"
+        multipleSteps: "Lorenzo Il Magnifico moved the Black Cross token forward by %s spaces on the faith path"
+      tokenMessage: "SOLO ACTION TOKEN: "
+      moveBlackCrossAndShuffleTokens:
+        oneStep: "Lorenzo Il Magnifico moved the Black Cross token forward by 1 space on the faith path and shuffled your solo action tokens"
+        multipleSteps: "Lorenzo Il Magnifico moved the Black Cross token forward by %s spaces on the faith path and shuffled your solo action tokens"
+      discardCards:
+        action: "Lorenzo Il Magnifico discarded %s from the development card table"
+        cards:
+          singular: "card"
+          plural: "cards"
+        level: "of level"
 
   leaderCard:
     activateCard: "Player %s has activated a leader card"
