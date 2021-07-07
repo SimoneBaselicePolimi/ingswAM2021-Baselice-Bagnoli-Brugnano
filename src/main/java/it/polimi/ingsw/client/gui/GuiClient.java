@@ -20,7 +20,7 @@ public class GuiClient extends Application {
     protected static final ProjectLogger logger = ProjectLogger.getLogger();
 
     private static final int TCP_SERVER_PORT = 11056;
-    private static final String TCP_SERVER_ADDRESS = "localhost";
+    private static final String TCP_SERVER_ADDRESS_DEFAULT = "localhost";
 
     protected static GuiClientManager clientManager;
 
@@ -42,11 +42,15 @@ public class GuiClient extends Application {
     }
 
     public static void startClient() throws IOException, ClientNotConnectedException {
+        startClient(TCP_SERVER_ADDRESS_DEFAULT);
+    }
+
+    public static void startClient(String address) throws IOException, ClientNotConnectedException {
 
         //ProjectLogger.getLogger().setLogInConsole(false);
 
         ClientNetworkLayer networkLayer = new ClientNetworkLayer(
-            TCP_SERVER_ADDRESS,
+            address,
             TCP_SERVER_PORT
         );
 
@@ -102,6 +106,8 @@ public class GuiClient extends Application {
         networkLayer.start();
 
         pingWorker.start();
+
+        Application.launch();
 
     }
 
