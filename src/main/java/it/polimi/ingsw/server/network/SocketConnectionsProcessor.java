@@ -17,8 +17,8 @@ public class SocketConnectionsProcessor implements Runnable {
     final private Map<Client, SocketConnection> clientConnections;
     final private Map<SelectableChannel, SocketConnection> channelToConnectionFallbackMap = new HashMap<>();
 
-    private Selector readSelector;
-    private Selector writeSelector;
+    protected Selector readSelector;
+    protected Selector writeSelector;
 
     public SocketConnectionsProcessor(
         NetworkLayer networkLayer,
@@ -105,7 +105,7 @@ public class SocketConnectionsProcessor implements Runnable {
                         m -> inboundMessagesProcessor.processNewMessage(m, networkLayer)
                     );
                 } catch (IOException e) {
-                    ProjectLogger.getLogger().log(e);
+                    //ProjectLogger.getLogger().log(e);
                 }
 
                 keyIterator.remove();
@@ -140,7 +140,7 @@ public class SocketConnectionsProcessor implements Runnable {
                 try {
                     connection.flushOutboundMessages();
                 } catch (IOException e) {
-                    ProjectLogger.getLogger().log(e);
+                    //dwdProjectLogger.getLogger().log(e);
                 }
 
                 keyIterator.remove();
