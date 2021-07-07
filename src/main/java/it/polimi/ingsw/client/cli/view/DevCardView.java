@@ -13,6 +13,8 @@ import it.polimi.ingsw.utils.Colour;
 /**
  * View representing the development card
  */
+import java.util.ArrayList;
+
 public class DevCardView extends CliView {
 
     public static final int DEV_CARD_ROW_SIZE = 15;
@@ -33,9 +35,13 @@ public class DevCardView extends CliView {
         cardGrid = new GridView(clientManager, 1, 1, 1, DEV_CARD_ROW_SIZE, DEV_CARD_COL_SIZE);
         cardGrid.setBorderStyle(new LineBorderStyle());
         addChildView(cardGrid, 0, 0);
-        cardText = new LabelView(
-            FormattedChar.convertStringToFormattedCharList(getDevelopmentCardDescription()), clientManager
-        );
+        if(card!=null) {
+            cardText = new LabelView(
+                FormattedChar.convertStringToFormattedCharList(getDevelopmentCardDescription()), clientManager
+            );
+        } else {
+            cardText = new LabelView(new ArrayList<>(), clientManager);
+        }
         cardGrid.setView(0, 0, cardText);
     }
 

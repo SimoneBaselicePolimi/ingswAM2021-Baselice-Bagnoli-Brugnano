@@ -2,7 +2,6 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.clientmessage.ClientMessage;
 import it.polimi.ingsw.client.gameupdate.ClientGameUpdate;
-import it.polimi.ingsw.client.gui.GuiClientManager;
 import it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation;
 import it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation;
 import it.polimi.ingsw.client.servermessage.GameUpdateServerMessage;
@@ -11,7 +10,6 @@ import it.polimi.ingsw.client.servermessage.ServerMessage;
 import it.polimi.ingsw.localization.Localization;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.gameitems.GameItemsManager;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -54,7 +52,7 @@ public class ClientManager {
     public ClientManager(MessageSender serverSender) {
         this.serverSender = serverSender;
         gameState = GameState.PLAYER_REGISTRATION_AND_MATCHMAKING;
-        Localization.getLocalizationInstance().setLocalizationLanguage("it");
+        Localization.getLocalizationInstance().setLocalizationLanguage("en");
         gameHistoryRepresentation = new ClientGameHistoryRepresentation(new ArrayList<>());
     }
 

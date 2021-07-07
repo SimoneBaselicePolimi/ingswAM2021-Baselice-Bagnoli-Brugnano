@@ -52,7 +52,6 @@ public class Server {
                     );
                 else
                     messageDescription = String.valueOf(deserializedClientMessage);
-
                 logger.log(
                     LogLevel.BORING_INFO,
                     "A message received from client %s has been deserialized. Message type: %s",
@@ -92,10 +91,13 @@ public class Server {
                             rawMessage.value
                         ));
                     },
-                    () -> client.getHandler().onConnectionDropped(client)
+                    () -> {
+                        networkLayer.removeConnection(client);
+                        client.getHandler().onConnectionDropped(client);
+                    }
                 );
                 pingWorkerForClientMap.put(client, pingWorker);
-                //pingWorker.start();
+                pingWorker.start();
             }
         );
 

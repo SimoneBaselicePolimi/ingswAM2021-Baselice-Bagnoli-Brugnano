@@ -4,7 +4,6 @@ import it.polimi.ingsw.configfile.GameRules;
 import it.polimi.ingsw.logger.LogLevel;
 import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.server.controller.GameController;
-import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.controller.clientrequest.ClientRequest;
 import it.polimi.ingsw.server.controller.clientrequest.validator.ClientRequestValidator;
 import it.polimi.ingsw.server.controller.servermessage.InvalidRequestServerMessage;
@@ -40,7 +39,7 @@ public class GameManager {
 
 	private GameContext gameContext;
 
-	private Optional<SinglePlayerGameContext> singlePlayerGameContext = Optional.empty();
+	private Optional<SinglePlayerGameContext> singlePlayerGameContext;
 
 	private GameItemsManager gameItemsManager;
 
@@ -56,7 +55,7 @@ public class GameManager {
 	 * GameManager constructor
      * @param gameID
 	 * @param players players of the game
-	 * @param controller, see {@link ServerController}
+	 * @param controller, see {@link GameController}
 	 * @param gameRulesPath
 	 * @throws InvalidGameRules
 	 * @throws GameContextCreationError
@@ -82,8 +81,11 @@ public class GameManager {
 		GameContextBuilder contextBuilder = new ObservableGameContextBuilder(this, players, gameRules, gameItemsManager, gameHistory);
 		if (players.size() == 1) {
 			this.singlePlayerGameContext = Optional.of(contextBuilder.buildSinglePlayerGameContext());
+			this.gameContext = this.singlePlayerGameContext.get();
+		} else {
+			this.singlePlayerGameContext = Optional.empty();
+			this.gameContext = contextBuilder.buildGameContext();
 		}
-		this.gameContext = contextBuilder.buildGameContext();
 
 	}
 

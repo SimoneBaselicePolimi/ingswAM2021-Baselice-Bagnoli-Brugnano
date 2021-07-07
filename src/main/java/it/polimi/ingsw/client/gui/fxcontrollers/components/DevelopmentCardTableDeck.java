@@ -78,10 +78,12 @@ public class DevelopmentCardTableDeck extends AnchorPane implements View {
                 if (developmentCardComp != null)
                     deckContainer.getChildren().remove(developmentCardComp);
                 cardOnTop = deck.getCardOnTop();
-                developmentCardComp = new DevelopmentCard(cardOnTop);
-                GridPane.setRowIndex(developmentCardComp, 0);
-                GridPane.setColumnIndex(developmentCardComp, 0);
-                deckContainer.getChildren().add(developmentCardComp);
+                if(cardOnTop != null) {
+                    developmentCardComp = new DevelopmentCard(cardOnTop);
+                    GridPane.setRowIndex(developmentCardComp, 0);
+                    GridPane.setColumnIndex(developmentCardComp, 0);
+                    deckContainer.getChildren().add(developmentCardComp);
+                }
             }
             contentLabel.setText(Localization.getLocalizationInstance().getString(
                 "client.gui.devCardTableDeck.deckSize",

@@ -34,14 +34,21 @@ public class DevelopmentCardsTableObservableProxy extends ObservableProxy<Develo
     @Override
     public DevelopmentCard popCard(DevelopmentCardLevel level, DevelopmentCardColour colour) {
         DevelopmentCard card = imp.popCard(level, colour);
-        newUpdates.put(
-            imp.getDeckByLevelAndColour(level, colour),
-            new ServerShuffledDevelopmentCardDeckOnTableUpdate(
+        ServerShuffledDevelopmentCardDeckOnTableUpdate update;
+        if(imp.getDeckByLevelAndColour(level, colour).isEmpty()) {
+            update = new ServerShuffledDevelopmentCardDeckOnTableUpdate(
+                imp.getDeckByLevelAndColour(level, colour),
+                null,
+                0
+            );
+        } else {
+            update = new ServerShuffledDevelopmentCardDeckOnTableUpdate(
                 imp.getDeckByLevelAndColour(level, colour),
                 imp.getDeckByLevelAndColour(level, colour).peek(),
                 imp.getDeckByLevelAndColour(level, colour).peekAll().size()
-            )
-        );
+            );
+        }
+        newUpdates.put(imp.getDeckByLevelAndColour(level, colour), update);
         return card;
     }
 

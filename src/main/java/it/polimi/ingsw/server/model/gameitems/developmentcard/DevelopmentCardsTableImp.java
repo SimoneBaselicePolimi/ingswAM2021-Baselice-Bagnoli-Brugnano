@@ -62,7 +62,8 @@ public class DevelopmentCardsTableImp implements DevelopmentCardsTable {
 		List<DevelopmentCard> availableCards = new ArrayList<>();
 		for (Map<DevelopmentCardColour, ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard>> value : cards.values()) {
 			for (ShuffledCoveredCardDeck<ServerDevelopmentCardRepresentation, DevelopmentCard> deck : value.values())
-				availableCards.add(deck.peek());
+				if(!deck.isEmpty())
+					availableCards.add(deck.peek());
 		}
 		return availableCards;
 	}

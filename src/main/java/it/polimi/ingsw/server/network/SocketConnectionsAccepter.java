@@ -51,7 +51,7 @@ public class SocketConnectionsAccepter implements Runnable{
                 this.socketQueue.add(socketChannel);
 
             } catch(IOException e){
-                logger.log(e);
+                //logger.log(e);
             }
         }
 

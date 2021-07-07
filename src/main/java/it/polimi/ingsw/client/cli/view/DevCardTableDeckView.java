@@ -32,15 +32,13 @@ public class DevCardTableDeckView extends CliView {
     ClientDevelopmentCardRepresentation card;
 
     public DevCardTableDeckView(
-        DevelopmentCardColour cardColour,
-        DevelopmentCardLevel cardLevel,
+        ClientCoveredCardsDeckRepresentation<ClientDevelopmentCardRepresentation> cardDeck,
         CliClientManager clientManager
     ) {
         super(clientManager, DEV_CARD_DECK_ROW_SIZE, DEV_CARD_DECK_COL_SIZE);
-        this.cardColour = cardColour;
-        this.cardLevel = cardLevel;
-        this.cardDeck = clientManager.getGameContextRepresentation()
-            .getDevelopmentCardsTable().getDeck(cardLevel, cardColour);
+        this.cardDeck = cardDeck;
+        this.cardColour = cardDeck.getCardOnTop() != null ? cardDeck.getCardOnTop().getColour() : null;
+        this.cardLevel = cardDeck.getCardOnTop() != null ? cardDeck.getCardOnTop().getLevel(): null;
 
         subscribeToRepresentation(cardDeck);
 
@@ -60,7 +58,7 @@ public class DevCardTableDeckView extends CliView {
         ));
 
         //check if the card on top of the deck has changed
-        if(!cardDeck.cardOnTop.equals(card))
+        if(cardDeck.getNumberOfCardsInDeck()>0 && !cardDeck.cardOnTop.equals(card))
             createNewDevCardAndDeckLabel(); //Draw new card
 
         return super.getContentAsFormattedCharsBuffer();
@@ -81,12 +79,11 @@ public class DevCardTableDeckView extends CliView {
 
         if (cardDeck.getNumberOfCardsInDeck() > 0) {
             card = cardDeck.getCardOnTop();
-            cardView = new DevCardView(card, clientManager);
-            addChildView(cardView, 0, 0);
         } else {
             card = null;
-            //TODO
         }
+        cardView = new DevCardView(card, clientManager);
+        addChildView(cardView, 0, 0);
 
     }
 

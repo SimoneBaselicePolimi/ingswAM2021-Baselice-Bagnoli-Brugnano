@@ -81,29 +81,32 @@ public class DevelopmentCard extends AnchorPane implements View {
     @FXML
     private void initialize() {
 
-        titleLabel.setText(Localization.getLocalizationInstance().getString("developmentCards.name"));
-        victoryPointsLabel.setText("+ " + card.getVictoryPoints());
-        victoryPointsLabel.setFont(new Font(15));
-        purchaseCostLabel.setText(Localization.getLocalizationInstance().getString("developmentCards.cost"));
+        if(card!=null) {
 
-        cardProdComp = new Production(card.getProduction());
-        GridPane.setColumnIndex(cardProdComp, 0);
-        GridPane.setRowIndex(cardProdComp, 2);
-        container.getChildren().add(cardProdComp);
+            titleLabel.setText(Localization.getLocalizationInstance().getString("developmentCards.name"));
+            victoryPointsLabel.setText("+ " + card.getVictoryPoints());
+            victoryPointsLabel.setFont(new Font(15));
+            purchaseCostLabel.setText(Localization.getLocalizationInstance().getString("developmentCards.cost"));
 
-        card.getPurchaseCost().forEach( (resType, numOfRes) -> purchaseCostContainer.getChildren().add(
-            GuiCompUtils.createResourceLabelAndIcon(numOfRes, resType.getIconPathForResourceType(), 15, 4)
-        ));
+            cardProdComp = new Production(card.getProduction());
+            GridPane.setColumnIndex(cardProdComp, 0);
+            GridPane.setRowIndex(cardProdComp, 2);
+            container.getChildren().add(cardProdComp);
 
-        levelColourLabel.setText(String.valueOf(card.getLevel().toValue()));
-        levelColourLabel.setStyle(String.format(
-            "-fx-background-color: \"#%02X%02X%02X\"",
-            card.getColour().getUIColour().r,
-            card.getColour().getUIColour().g,
-            card.getColour().getUIColour().b
-        ));
+            card.getPurchaseCost().forEach((resType, numOfRes) -> purchaseCostContainer.getChildren().add(
+                GuiCompUtils.createResourceLabelAndIcon(numOfRes, resType.getIconPathForResourceType(), 15, 4)
+            ));
 
-        card.subscribe(this);
+            levelColourLabel.setText(String.valueOf(card.getLevel().toValue()));
+            levelColourLabel.setStyle(String.format(
+                "-fx-background-color: \"#%02X%02X%02X\"",
+                card.getColour().getUIColour().r,
+                card.getColour().getUIColour().g,
+                card.getColour().getUIColour().b
+            ));
+
+            card.subscribe(this);
+        }
     }
 
     @FXML
