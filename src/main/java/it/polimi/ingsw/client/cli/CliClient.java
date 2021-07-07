@@ -25,7 +25,7 @@ public class CliClient {
     protected static final ProjectLogger logger = ProjectLogger.getLogger();
 
     private static final int TCP_SERVER_PORT = 11056;
-    private static final String TCP_SERVER_ADDRESS = "localhost";
+    private static final String TCP_SERVER_ADDRESS_DEFAULT = "localhost";
 
     protected BufferedReader userInputReader;
     protected ConsoleWriter consoleWriter;
@@ -62,11 +62,15 @@ public class CliClient {
     }
 
     public void startClient() throws IOException, ClientNotConnectedException {
+        startClient(TCP_SERVER_ADDRESS_DEFAULT);
+    }
+
+    public void startClient(String address) throws IOException, ClientNotConnectedException {
 
         ProjectLogger.getLogger().setLogInConsole(true);
 
         ClientNetworkLayer networkLayer = new ClientNetworkLayer(
-            TCP_SERVER_ADDRESS,
+            address,
             TCP_SERVER_PORT
         );
 
