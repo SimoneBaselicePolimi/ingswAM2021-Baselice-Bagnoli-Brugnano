@@ -1,0 +1,1491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.client</OriginalElement>
+  <nodes>
+    <node x="8429.45" y="1103.0">it.polimi.ingsw.client.cli.view.GameHistoryView</node>
+    <node x="13390.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientMarketUpdate</node>
+    <node x="8255.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.LeaderCardCanBeActivatedUpdateHandler</node>
+    <node x="18161.0" y="3961.0">it.polimi.ingsw.client.network.ClientMessageWriter</node>
+    <node x="4150.0" y="3376.5">it.polimi.ingsw.client.servermessage.GameUpdateServerMessage</node>
+    <node x="1127.0" y="242.0">it.polimi.ingsw.client.gui.fxcontrollers.Lobby</node>
+    <node x="22277.25" y="3135.0">it.polimi.ingsw.client.gui.fxcontrollers.GameSceneSelector.Selection</node>
+    <node x="20422.14657051282" y="2057.0">it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation</node>
+    <node x="18297.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientActivePlayerUpdate</node>
+    <node x="24710.14657051282" y="2584.0">it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation</node>
+    <node x="758.0" y="4095.0">it.polimi.ingsw.client.clientrequest.MarketActionFetchRowClientRequest</node>
+    <node x="23532.0" y="2964.0">it.polimi.ingsw.client.cli.view.grid.BorderStyle</node>
+    <node x="7160.45" y="1406.0">it.polimi.ingsw.client.cli.view.ProductionSelectionDashboardView</node>
+    <node x="12247.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.PurchasableDevelopmentCardsUpdateHandler</node>
+    <node x="12853.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.ShuffledDevelopmentCardDeckOnTableUpdateHandler</node>
+    <node x="14550.64657051282" y="2112.5">it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRuleRepresentation</node>
+    <node x="15744.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.ColourRequirement</node>
+    <node x="2107.166666666666" y="2606.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientDevelopmentCardColourRequirementRepresentation</node>
+    <node x="633.2748456790105" y="1081.0">it.polimi.ingsw.client.cli.view.UserConsole</node>
+    <node x="5098.0" y="3388.5">it.polimi.ingsw.client.servermessage.LeaderActionServerMessage</node>
+    <node x="14939.14657051282" y="2617.0">it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientSpecificResourceTypeRuleRepresentation</node>
+    <node x="0.0" y="3961.0">it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils</node>
+    <node x="7474.75" y="3421.0">it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer.FormattedCharBlockInBlockList</node>
+    <node x="18492.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.OtherPlayerDashboard</node>
+    <node x="10418.0" y="4041.0">it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage</node>
+    <node x="1674.0" y="4095.0">it.polimi.ingsw.client.clientrequest.InitialChoicesClientRequest</node>
+    <node x="9109.0" y="3961.0">it.polimi.ingsw.client.network.ClientNetworkLayer</node>
+    <node x="6792.146570512819" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientObtainedResourcesMarketActionRepresentation</node>
+    <node x="8329.14657051282" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientProductionActionRepresentation</node>
+    <node x="17574.64657051282" y="2865.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation</node>
+    <node x="4239.146570512819" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDiscardedResourcesMarketActionRepresentation</node>
+    <node x="3927.75" y="220.0">it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardTableDeck</node>
+    <node x="23247.75" y="3079.0">it.polimi.ingsw.client.cli.view.grid.SingleCharBorderStyle</node>
+    <node x="6051.0" y="3376.5">it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage</node>
+    <node x="7435.146570512819" y="2650.5">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathVaticanReportActionRepresentation</node>
+    <node x="5709.25" y="198.0">it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCard</node>
+    <node x="4565.0" y="3376.5">it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage</node>
+    <node x="3892.0" y="3492.0">it.polimi.ingsw.client.servermessage.EndTurnServerMessage</node>
+    <node x="19714.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.GuiCompUtils</node>
+    <node x="12177.14657051282" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientDiscardCardsSinglePlayerTokenActionRepresentation</node>
+    <node x="1133.0" y="4095.0">it.polimi.ingsw.client.clientrequest.ActivateLeaderCardClientRequest</node>
+    <node x="9686.14657051282" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientMoveBlackCrossSinglePlayerTokenActionRepresentation</node>
+    <node x="8430.2" y="1373.0">it.polimi.ingsw.client.cli.view.ResourcesRepositioningDashboardView</node>
+    <node x="11312.45" y="1439.0">it.polimi.ingsw.client.cli.view.PlayerLeaderCardsInDashboardView</node>
+    <node x="18928.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientPlayerOwnedDevelopmentCardDeckUpdate</node>
+    <node x="16233.08407051282" y="2617.0">it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientMaxResourceNumberRuleRepresentation</node>
+    <node x="5975.45" y="1059.0">it.polimi.ingsw.client.cli.view.FaithPathView</node>
+    <node x="12766.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientLeaderCardsThePlayerOwnsUpdate</node>
+    <node x="15327.64657051282" y="1881.0">it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation</node>
+    <node x="4453.25" y="3146.5">it.polimi.ingsw.client.servermessage.ServerMessage</node>
+    <node x="6087.25" y="610.0">it.polimi.ingsw.client.gui.fxcontrollers.GameHistory</node>
+    <node x="13118.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.ColourAndLevelRequirement</node>
+    <node x="0.0" y="3553.0">it.polimi.ingsw.client.cli.CliClientManager</node>
+    <node x="9211.45" y="1059.0">it.polimi.ingsw.client.cli.view.ResourcesChoiceView</node>
+    <node x="2365.75" y="599.0">it.polimi.ingsw.client.gui.fxcontrollers.Table</node>
+    <node x="5083.0" y="566.0">it.polimi.ingsw.client.gui.fxcontrollers.Market</node>
+    <node x="16905.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.SpecialMarbleSubstitution</node>
+    <node x="5703.0" y="3376.5">it.polimi.ingsw.client.servermessage.InvalidClientMessageServerMessage</node>
+    <node x="13010.14657051282" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientPostTurnFinalActionRepresentation</node>
+    <node x="17124.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientGameHistoryUpdate</node>
+    <node x="11231.14657051282" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientMainTurnInitialActionRepresentation</node>
+    <node x="8773.0" y="3961.0">it.polimi.ingsw.client.Client</node>
+    <node x="6472.0" y="3388.5">it.polimi.ingsw.client.servermessage.MarketActionServerMessage</node>
+    <node x="11067.0" y="4053.0">it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage</node>
+    <node x="50.0" y="2013.0">it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathRepresentation</node>
+    <node x="22508.14657051282" y="2540.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation</node>
+    <node x="3370.45" y="1395.0">it.polimi.ingsw.client.cli.view.LeaderCardView</node>
+    <node x="218.0" y="4087.0">it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils.HorizontalAlignment</node>
+    <node x="18579.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientTempStarResourcesUpdate</node>
+    <node x="11115.434391025641" y="2079.0">it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathEventRepresentation</node>
+    <node x="15630.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.PlayerOwnedDevelopmentCardDeckUpdateHandler</node>
+    <node x="18910.14657051282" y="2562.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation</node>
+    <node x="16495.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientLeaderCardStateUpdate</node>
+    <node x="575.7748456790105" y="632.5">it.polimi.ingsw.client.cli.UserIOLogger</node>
+    <node x="14584.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.BlackCrossFaithUpdateHandler</node>
+    <node x="8254.14657051282" y="1693.0">it.polimi.ingsw.client.modelrepresentation.ClientRepresentation</node>
+    <node x="21714.14657051282" y="2606.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation</node>
+    <node x="20563.0" y="3961.0">it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtilsTest</node>
+    <node x="7566.25" y="2964.0">it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer</node>
+    <node x="20883.0" y="3961.0">it.polimi.ingsw.client.ClientStartupWizard</node>
+    <node x="4688.45" y="1026.0">it.polimi.ingsw.client.cli.view.MarketView</node>
+    <node x="21482.75" y="2964.0">it.polimi.ingsw.client.cli.graphicutils.FormattedChar</node>
+    <node x="4107.563237179485" y="2090.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation</node>
+    <node x="14095.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.ActivePlayerUpdateHandler</node>
+    <node x="20976.75" y="2964.0">it.polimi.ingsw.client.cli.UserChoicesUtils</node>
+    <node x="5651.95" y="1472.0">it.polimi.ingsw.client.cli.view.PlayerDashboardView</node>
+    <node x="3610.0" y="3376.5">it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage</node>
+    <node x="5529.45" y="982.0">it.polimi.ingsw.client.cli.view.grid.GridView</node>
+    <node x="10199.14657051282" y="2617.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathMoveActionRepresentation</node>
+    <node x="6467.45" y="993.0">it.polimi.ingsw.client.cli.view.LeaderCardListView</node>
+    <node x="8838.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.FaithUpdateHandler</node>
+    <node x="3203.0" y="4095.0">it.polimi.ingsw.client.clientrequest.ManageResourcesFromMarketClientRequest</node>
+    <node x="6607.75" y="3068.0">it.polimi.ingsw.client.ServerMessageUtils.ServerMessageTypeDependentComputation</node>
+    <node x="17824.0" y="3961.0">it.polimi.ingsw.client.network.ClientMessageReader</node>
+    <node x="5362.0" y="3376.5">it.polimi.ingsw.client.servermessage.PlayerDisconnectedServerMessage</node>
+    <node x="23783.75" y="3068.0">it.polimi.ingsw.client.cli.view.grid.LineBorderStyle</node>
+    <node x="3608.1465705128194" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientActivateLeaderCardsActionRepresentation</node>
+    <node x="12113.0" y="3961.0">it.polimi.ingsw.client.network.ClientNotConnectedException</node>
+    <node x="11700.0" y="4041.0">it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage</node>
+    <node x="11619.14657051282" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientSetupChoiceActionRepresentation</node>
+    <node x="6222.25" y="187.0">it.polimi.ingsw.client.gui.fxcontrollers.components.LeaderCard</node>
+    <node x="19803.14657051282" y="2617.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientDevelopmentCardCostDiscountRepresentation</node>
+    <node x="4262.0" y="4095.0">it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest</node>
+    <node x="12518.0" y="3961.0">it.polimi.ingsw.client.cli.UnexpectedServerMessage</node>
+    <node x="16334.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.DevCardCostDiscount</node>
+    <node x="10946.45" y="1092.0">it.polimi.ingsw.client.cli.view.AbstractPlayerLeaderCardsInDashboardView</node>
+    <node x="3543.25" y="500.0">it.polimi.ingsw.client.gui.fxcontrollers.PlayerDashboard</node>
+    <node x="911.0" y="3376.5">it.polimi.ingsw.client.servermessage.PlayerNameAlreadyExistsServerMessage</node>
+    <node x="667.2748456790105" y="1483.5">it.polimi.ingsw.client.cli.view.UserConsole.IOMessage</node>
+    <node x="19450.0" y="3961.0">it.polimi.ingsw.client.GameState</node>
+    <node x="11238.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.LeaderCardStateUpdateHandler</node>
+    <node x="3950.45" y="1450.0">it.polimi.ingsw.client.cli.view.CoveredLeaderCardView</node>
+    <node x="14053.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientBlackCrossFaithUpdate</node>
+    <node x="6957.95" y="264.5">it.polimi.ingsw.client.view.AbstractView</node>
+    <node x="4168.45" y="1059.0">it.polimi.ingsw.client.cli.view.DevCardDashboardDeckView</node>
+    <node x="16390.25" y="2964.0">it.polimi.ingsw.client.gameupdate.ClientGameUpdate</node>
+    <node x="8930.14657051282" y="2628.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientObtainedMarblesMarketActionRepresentation</node>
+    <node x="6334.0" y="4095.0">it.polimi.ingsw.client.clientrequest.MarketActionFetchColumnClientRequest</node>
+    <node x="2939.45" y="1048.0">it.polimi.ingsw.client.cli.view.MainMenuView</node>
+    <node x="1630.0" y="253.0">it.polimi.ingsw.client.gui.fxcontrollers.NumberOfPlayers</node>
+    <node x="15131.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.NumOfResourcesRequirement</node>
+    <node x="7045.0" y="3961.0">it.polimi.ingsw.client.cli.Cli</node>
+    <node x="5474.0" y="0.0">it.polimi.ingsw.client.view.View</node>
+    <node x="12097.45" y="1070.0">it.polimi.ingsw.client.cli.view.PreGameView</node>
+    <node x="11129.5" y="3961.0">it.polimi.ingsw.client.clientmessage.ClientMessage</node>
+    <node x="14500.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesChoice</node>
+    <node x="22239.75" y="2964.0">it.polimi.ingsw.client.gui.fxcontrollers.GameSceneSelector</node>
+    <node x="9786.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.ResourceStorageUpdateHandler</node>
+    <node x="2216.0" y="3376.5">it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage</node>
+    <node x="8182.646570512819" y="2112.5">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation</node>
+    <node x="4646.563237179485" y="2046.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation</node>
+    <node x="19877.14657051282" y="2112.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation</node>
+    <node x="10304.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.PopeCardsUpdateHandler</node>
+    <node x="2029.4035576923052" y="2112.5">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation</node>
+    <node x="1279.166666666666" y="2595.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientDevelopmentCardColourAndLevelRequirementRepresentation</node>
+    <node x="20204.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientResourceStorageUpdate</node>
+    <node x="6170.146570512819" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDevelopmentActionRepresentation</node>
+    <node x="5797.0" y="4095.0">it.polimi.ingsw.client.clientrequest.DiscardLeaderCardClientRequest</node>
+    <node x="6754.0" y="3961.0">it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferTest</node>
+    <node x="17233.14657051282" y="2606.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation</node>
+    <node x="6629.25" y="2964.0">it.polimi.ingsw.client.ServerMessageUtils</node>
+    <node x="10770.0" y="4041.0">it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage</node>
+    <node x="18282.14657051282" y="2628.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientWhiteMarbleSubstitutionRepresentation</node>
+    <node x="2947.0" y="4095.0">it.polimi.ingsw.client.clientrequest.CustomClientRequest</node>
+    <node x="10299.45" y="1081.0">it.polimi.ingsw.client.cli.view.DevCardTableDeckView</node>
+    <node x="14335.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientShuffledDevelopmentCardDeckOnTableUpdate</node>
+    <node x="0.0" y="253.0">it.polimi.ingsw.client.gui.fxcontrollers.ResourcesChoiceSetup</node>
+    <node x="19922.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientFaithUpdate</node>
+    <node x="10784.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.MarketUpdateHandler</node>
+    <node x="20496.14657051282" y="2595.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation</node>
+    <node x="1285.0" y="3388.5">it.polimi.ingsw.client.servermessage.PostGameSetupServerMessage</node>
+    <node x="7365.95" y="176.0">it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardDashboardDeck</node>
+    <node x="5579.146570512819" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientMoveBlackCrossAndShuffleSinglePlayerTokenActionRepresentation</node>
+    <node x="5142.25" y="187.0">it.polimi.ingsw.client.gui.fxcontrollers.components.Storage</node>
+    <node x="11755.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.GameHistoryUpdateHandler</node>
+    <node x="2454.75" y="231.0">it.polimi.ingsw.client.gui.fxcontrollers.GameScene</node>
+    <node x="21063.25" y="3239.0">it.polimi.ingsw.client.cli.UserChoicesUtils.PossibleUserChoices.UserChoice</node>
+    <node x="488.0" y="3608.0">it.polimi.ingsw.client.gui.GuiClientManager</node>
+    <node x="3684.45" y="1081.0">it.polimi.ingsw.client.cli.view.AbstractLeaderCardView</node>
+    <node x="17773.14657051282" y="2606.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCardDeckRepresentation</node>
+    <node x="10576.45" y="1439.0">it.polimi.ingsw.client.cli.view.ProductionSelectionLeaderCardsInDashboardView</node>
+    <node x="10604.14657051282" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDiscardLeaderCardsActionRepresentation</node>
+    <node x="173.0" y="2964.0">it.polimi.ingsw.client.ClientManager</node>
+    <node x="11831.75" y="3139.5">it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler</node>
+    <node x="17460.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.Marble</node>
+    <node x="7213.45" y="1070.0">it.polimi.ingsw.client.cli.view.AbstractPlayerDashboardView</node>
+    <node x="3307.0" y="3388.5">it.polimi.ingsw.client.servermessage.DevelopmentActionServerMessage</node>
+    <node x="9658.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.Production</node>
+    <node x="3039.75" y="242.0">it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesRepositioning</node>
+    <node x="3385.45" y="1114.0">it.polimi.ingsw.client.cli.view.GameView</node>
+    <node x="12906.0" y="3961.0">it.polimi.ingsw.client.gui.GuiClient</node>
+    <node x="5089.146570512819" y="2628.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathLastPositionReachedActionRepresentation</node>
+    <node x="6736.0" y="3365.0">it.polimi.ingsw.client.ServerMessageUtils.ServerMessageTypeDependentComputation.TypeBasedComputation</node>
+    <node x="13385.14657051282" y="2617.0">it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientDifferentResourceTypesInDifferentStoragesRuleRepresentation</node>
+    <node x="7753.45" y="1059.0">it.polimi.ingsw.client.cli.view.DevCardTableView</node>
+    <node x="10048.45" y="1070.0">it.polimi.ingsw.client.cli.view.CliView.ChildCliView</node>
+    <node x="24279.75" y="2964.0">it.polimi.ingsw.client.cli.DialogUtils</node>
+    <node x="1896.0" y="264.5">it.polimi.ingsw.client.gui.fxcontrollers.LeaderCardsSetup</node>
+    <node x="10147.0" y="3961.0">it.polimi.ingsw.client.cli.view.grid.GridViewTest</node>
+    <node x="1791.5" y="11.0">it.polimi.ingsw.client.gui.fxcontrollers.AbstractController</node>
+    <node x="14162.14657051282" y="2639.5">it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientSameResourceTypeRuleRepresentation</node>
+    <node x="11576.45" y="1092.0">it.polimi.ingsw.client.cli.view.DevCardView</node>
+    <node x="17614.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientPurchasableDevelopmentCardsUpdate</node>
+    <node x="20197.0" y="3961.0">it.polimi.ingsw.client.MessageSender</node>
+    <node x="12171.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientLeaderCardCanBeActivatedUpdate</node>
+    <node x="1812.4499999999998" y="1037.0">it.polimi.ingsw.client.cli.view.LeaderCardSetupView</node>
+    <node x="22679.75" y="2964.0">it.polimi.ingsw.client.ProductionsSelectionInfo</node>
+    <node x="7878.146570512819" y="2639.0">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientFaithPathMoveBlackCrossActionRepresentation</node>
+    <node x="19131.0" y="3961.0">it.polimi.ingsw.client.cli.ConsoleWriter</node>
+    <node x="20925.75" y="3068.0">it.polimi.ingsw.client.cli.UserChoicesUtils.PossibleUserChoices</node>
+    <node x="3299.25" y="3961.0">it.polimi.ingsw.client.clientrequest.ClientRequest</node>
+    <node x="2162.0" y="253.0">it.polimi.ingsw.client.gui.fxcontrollers.PlayerRegistration</node>
+    <node x="13822.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.DevCardPlacementInDashboard</node>
+    <node x="9280.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.TotalResourcesUpdateHandler</node>
+    <node x="2687.0" y="4095.0">it.polimi.ingsw.client.clientrequest.EndTurnClientRequest</node>
+    <node x="1571.2052243589715" y="2090.0">it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientVaticanReportSectionRepresentation</node>
+    <node x="4724.146570512819" y="2650.5">it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientSetupStartedActionRepresentation</node>
+    <node x="8173.0" y="3961.0">it.polimi.ingsw.client.gui.fxcontrollers.components.Dashboard</node>
+    <node x="5914.563237179485" y="2024.0">it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation</node>
+    <node x="8774.45" y="1070.0">it.polimi.ingsw.client.cli.view.LabelView</node>
+    <node x="18802.0" y="3961.0">it.polimi.ingsw.client.cli.view.grid.SingleCharBorderStyleTest</node>
+    <node x="16008.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientPopeCardsUpdate</node>
+    <node x="11362.0" y="4041.0">it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage</node>
+    <node x="4873.0" y="3388.5">it.polimi.ingsw.client.servermessage.EndGameServerMessage</node>
+    <node x="1851.0" y="3388.5">it.polimi.ingsw.client.servermessage.GameInitializationStartedServerMessage</node>
+    <node x="7903.75" y="3421.0">it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer.FormattedCharBlock</node>
+    <node x="1556.0" y="3388.5">it.polimi.ingsw.client.servermessage.ProductionActionServerMessage</node>
+    <node x="13509.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.LeaderCardsThePlayerOwnsUpdateHandler</node>
+    <node x="2204.75" y="632.0">it.polimi.ingsw.client.gui.fxcontrollers.FaithPath</node>
+    <node x="2727.166666666666" y="2606.0">it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientResourceNumberRequirementRepresentation</node>
+    <node x="5195.0" y="4095.0">it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest</node>
+    <node x="0.0" y="2617.0">it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathSinglePlayerRepresentation</node>
+    <node x="15524.75" y="3128.0">it.polimi.ingsw.client.gameupdate.ClientTotalResourcesUpdate</node>
+    <node x="15095.75" y="3305.0">it.polimi.ingsw.client.gameupdatehandler.TempStarResourcesUpdateHandler</node>
+    <node x="4276.0" y="3492.0">it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage</node>
+    <node x="6938.95" y="489.0">it.polimi.ingsw.client.cli.view.CliView</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientMainTurnInitialActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="11415.14657051282" y="2470.0" />
+      <point x="8462.979903846152" y="2470.0" />
+      <point x="106.33333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientActivePlayerUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="18428.75" y="3078.0" />
+      <point x="16578.5625" y="3078.0" />
+      <point x="57.3125" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientPlayerOwnedDevelopmentCardDeckUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="19415.75" y="3058.0" />
+      <point x="16611.3125" y="3058.0" />
+      <point x="90.0625" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.DevCardDashboardDeckView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-93.5" />
+      <point x="4418.45" y="922.0" />
+      <point x="7056.099999999999" y="922.0" />
+      <point x="-95.85000000000036" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCardDeckRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientPopeCardsUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="16242.25" y="3108.0" />
+      <point x="16513.0625" y="3108.0" />
+      <point x="-8.1875" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.UserChoicesUtils.PossibleUserChoices.UserChoice" target="it.polimi.ingsw.client.cli.UserChoicesUtils.PossibleUserChoices">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientMoveBlackCrossAndShuffleSinglePlayerTokenActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="5864.646570512819" y="2480.0" />
+      <point x="8269.64657051282" y="2480.0" />
+      <point x="-87.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-93.5" />
+      <point x="20791.14657051282" y="1811.0" />
+      <point x="8451.261955128204" y="1811.0" />
+      <point x="94.61538461538476" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.PlayerRegistration" target="it.polimi.ingsw.client.gui.fxcontrollers.AbstractController">
+      <point x="0.0" y="-49.5" />
+      <point x="2285.0" y="146.0" />
+      <point x="1933.25" y="146.0" />
+      <point x="47.25" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-126.5" />
+      <point x="6603.063237179485" y="1861.0" />
+      <point x="8340.877339743589" y="1861.0" />
+      <point x="-15.76923076923049" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientMoveBlackCrossSinglePlayerTokenActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="9932.64657051282" y="2500.0" />
+      <point x="8404.979903846152" y="2500.0" />
+      <point x="48.33333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientVaticanReportSectionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-60.5" />
+      <point x="1765.7052243589715" y="1821.0" />
+      <point x="8277.800416666665" y="1821.0" />
+      <point x="-78.84615384615427" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.FaithUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="9049.75" y="3235.0" />
+      <point x="11863.75" y="3235.0" />
+      <point x="-128.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.Table" target="it.polimi.ingsw.client.gui.fxcontrollers.GameScene">
+      <point x="52.75" y="-71.5" />
+      <point x="2524.0" y="469.0" />
+      <point x="2624.25" y="469.0" />
+      <point x="-113.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.LeaderCardStateUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="11487.25" y="3285.0" />
+      <point x="11970.416666666666" y="3285.0" />
+      <point x="-21.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.DevCardTableDeckView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-71.5" />
+      <point x="10612.95" y="902.0" />
+      <point x="7290.4" y="902.0" />
+      <point x="138.44999999999982" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.NumberOfPlayers" target="it.polimi.ingsw.client.gui.fxcontrollers.AbstractController">
+      <point x="0.0" y="-49.5" />
+      <point x="1753.0" y="156.0" />
+      <point x="1870.25" y="156.0" />
+      <point x="-15.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-38.0" />
+      <point x="2213.403557692305" y="1831.0" />
+      <point x="8293.569647435896" y="1831.0" />
+      <point x="-63.07692307692378" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientTempStarResourcesUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="18744.25" y="3068.0" />
+      <point x="16594.9375" y="3068.0" />
+      <point x="73.6875" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.MarketView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-126.5" />
+      <point x="5098.95" y="932.0" />
+      <point x="7077.4" y="932.0" />
+      <point x="-74.55000000000018" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.PlayerNameAlreadyExistsServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="1088.0" y="3275.0" />
+      <point x="4457.9375" y="3275.0" />
+      <point x="-70.3125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.grid.SingleCharBorderStyle" target="it.polimi.ingsw.client.cli.view.grid.BorderStyle">
+      <point x="0.0" y="-49.5" />
+      <point x="23505.75" y="3043.0" />
+      <point x="23644.75" y="3043.0" />
+      <point x="-112.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.GameScene" target="it.polimi.ingsw.client.view.View">
+      <point x="141.25" y="-71.5" />
+      <point x="2878.5" y="116.0" />
+      <point x="5494.75" y="116.0" />
+      <point x="-62.25" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.view.AbstractView" target="it.polimi.ingsw.client.view.View">
+      <point x="0.0" y="-38.0" />
+      <point x="7151.95" y="116.0" />
+      <point x="5619.25" y="116.0" />
+      <point x="62.25" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.Table" target="it.polimi.ingsw.client.view.View">
+      <point x="-52.75" y="-71.5" />
+      <point x="2418.5" y="106.0" />
+      <point x="5480.916666666667" y="106.0" />
+      <point x="-76.08333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.DiscardLeaderCardClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="6055.5" y="4045.0" />
+      <point x="3459.8999999999996" y="4045.0" />
+      <point x="66.14999999999964" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.CliView.ChildCliView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-82.5" />
+      <point x="10163.95" y="912.0" />
+      <point x="7269.099999999999" y="912.0" />
+      <point x="117.14999999999964" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardDashboardDeck" target="it.polimi.ingsw.client.view.View">
+      <point x="0.0" y="-126.5" />
+      <point x="7844.45" y="106.0" />
+      <point x="5633.083333333333" y="106.0" />
+      <point x="76.08333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientSetupStartedActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="4896.646570512819" y="2460.0" />
+      <point x="8230.979903846152" y="2460.0" />
+      <point x="-125.66666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.MainMenuView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-104.5" />
+      <point x="3152.45" y="892.0" />
+      <point x="6992.2" y="892.0" />
+      <point x="-159.75" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathVaticanReportActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-27.0" />
+      <point x="7646.646570512819" y="2510.0" />
+      <point x="8327.64657051282" y="2510.0" />
+      <point x="-29.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientGameHistoryUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="17359.75" y="3098.0" />
+      <point x="16545.8125" y="3098.0" />
+      <point x="24.5625" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.LeaderCardsThePlayerOwnsUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="13792.75" y="3265.0" />
+      <point x="12055.75" y="3265.0" />
+      <point x="64.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage" target="it.polimi.ingsw.client.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="11521.0" y="4021.0" />
+      <point x="11234.5" y="4021.0" />
+      <point x="30.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDiscardLeaderCardsActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="10907.64657051282" y="2480.0" />
+      <point x="8443.64657051282" y="2480.0" />
+      <point x="87.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientPostTurnFinalActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="13187.64657051282" y="2440.0" />
+      <point x="8520.979903846152" y="2440.0" />
+      <point x="164.33333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.PlayerDashboard" target="it.polimi.ingsw.client.view.View">
+      <point x="166.25" y="-170.5" />
+      <point x="4042.0" y="469.0" />
+      <point x="5014.25" y="469.0" />
+      <point x="5014.25" y="146.0" />
+      <point x="5536.25" y="146.0" />
+      <point x="-20.75" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.GuiClientManager" target="it.polimi.ingsw.client.ClientManager">
+      <point x="0.0" y="-126.5" />
+      <point x="677.0" y="3528.0" />
+      <point x="596.75" y="3528.0" />
+      <point x="141.25" y="269.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.EndTurnServerMessage" target="it.polimi.ingsw.client.servermessage.GameUpdateServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="4074.0" y="3467.0" />
+      <point x="4248.75" y="3467.0" />
+      <point x="-98.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientFaithPathMoveBlackCrossActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="8093.646570512819" y="2520.0" />
+      <point x="8346.979903846152" y="2520.0" />
+      <point x="-9.66666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.GameHistory" target="it.polimi.ingsw.client.gui.fxcontrollers.GameScene">
+      <point x="-41.5" y="-60.5" />
+      <point x="6128.75" y="449.0" />
+      <point x="2963.25" y="449.0" />
+      <point x="226.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientActivateLeaderCardsActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="3913.6465705128194" y="2440.0" />
+      <point x="8192.313237179485" y="2440.0" />
+      <point x="-164.33333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.MarketActionFetchColumnClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="6521.5" y="4035.0" />
+      <point x="3478.8" y="4035.0" />
+      <point x="85.05000000000018" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="5486.0" y="4055.0" />
+      <point x="3441.0" y="4055.0" />
+      <point x="47.25" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.LeaderCardCanBeActivatedUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="8537.25" y="3225.0" />
+      <point x="11842.416666666666" y="3225.0" />
+      <point x="-149.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-71.5" />
+      <point x="22101.14657051282" y="2510.0" />
+      <point x="20256.313237179485" y="2510.0" />
+      <point x="116.66666666666788" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.LeaderCardListView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-159.5" />
+      <point x="6830.45" y="962.0" />
+      <point x="7141.3" y="962.0" />
+      <point x="-10.649999999999636" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.UserConsole" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="73.5" y="-71.5" />
+      <point x="853.7748456790105" y="872.0" />
+      <point x="6949.599999999999" y="872.0" />
+      <point x="-202.35000000000036" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="20139.64657051282" y="1821.0" />
+      <point x="8435.492724358974" y="1821.0" />
+      <point x="78.84615384615427" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.FaithPathView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-93.5" />
+      <point x="6211.45" y="952.0" />
+      <point x="7120.0" y="952.0" />
+      <point x="-31.949999999999818" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.AbstractPlayerLeaderCardsInDashboardView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-60.5" />
+      <point x="11251.45" y="892.0" />
+      <point x="7311.7" y="892.0" />
+      <point x="159.75" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientDevelopmentCardCostDiscountRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-60.5" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="130.0" y="-71.5" />
+      <point x="17623.14657051282" y="2490.0" />
+      <point x="19906.313237179485" y="2490.0" />
+      <point x="-233.33333333333212" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.GameHistoryUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.ResourcesChoiceView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-93.5" />
+      <point x="9619.95" y="922.0" />
+      <point x="7247.8" y="922.0" />
+      <point x="95.85000000000036" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage" target="it.polimi.ingsw.client.clientmessage.ClientMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientSameResourceTypeRuleRepresentation" target="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRuleRepresentation">
+      <point x="0.0" y="-38.0" />
+      <point x="14540.64657051282" y="2520.0" />
+      <point x="14834.52157051282" y="2520.0" />
+      <point x="-94.625" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientDevelopmentCardColourAndLevelRequirementRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation">
+      <point x="0.0" y="-82.5" />
+      <point x="1683.166666666666" y="2520.0" />
+      <point x="2090.736891025639" y="2520.0" />
+      <point x="-122.66666666666606" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesRepositioning" target="it.polimi.ingsw.client.view.View">
+      <point x="0.0" y="-60.5" />
+      <point x="3473.75" y="126.0" />
+      <point x="5508.583333333333" y="126.0" />
+      <point x="-48.41666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientLeaderCardCanBeActivatedUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="12459.25" y="3048.0" />
+      <point x="16414.8125" y="3048.0" />
+      <point x="-106.4375" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.UserConsole.IOMessage" target="it.polimi.ingsw.client.cli.view.UserConsole">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.Market" target="it.polimi.ingsw.client.view.View">
+      <point x="205.25" y="-104.5" />
+      <point x="5698.75" y="156.0" />
+      <point x="5563.916666666667" y="156.0" />
+      <point x="6.91666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils.HorizontalAlignment" target="it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils">
+      <point x="0.0" y="-38.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer.FormattedCharBlock" target="it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer">
+      <point x="0.0" y="-27.0" />
+      <point x="8057.25" y="3396.0" />
+      <point x="8019.25" y="3396.0" />
+      <point x="151.0" y="203.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.PlayerDisconnectedServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="5522.5" y="3315.0" />
+      <point x="4561.0625" y="3315.0" />
+      <point x="32.8125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.DevCardTableView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-93.5" />
+      <point x="8081.45" y="952.0" />
+      <point x="7183.9" y="952.0" />
+      <point x="31.949999999999818" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.EndGameServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="4975.5" y="3335.0" />
+      <point x="4542.3125" y="3335.0" />
+      <point x="14.0625" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.MarketUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="11001.75" y="3275.0" />
+      <point x="11949.083333333334" y="3275.0" />
+      <point x="-42.66666666666606" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRuleRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-38.0" />
+      <point x="14929.14657051282" y="1851.0" />
+      <point x="8388.18503205128" y="1851.0" />
+      <point x="31.53846153846098" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.TotalResourcesUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="9523.75" y="3245.0" />
+      <point x="11885.083333333334" y="3245.0" />
+      <point x="-106.66666666666606" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage" target="it.polimi.ingsw.client.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="11884.0" y="4011.0" />
+      <point x="11264.5" y="4011.0" />
+      <point x="60.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.DevelopmentActionServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="3448.5" y="3325.0" />
+      <point x="4504.8125" y="3325.0" />
+      <point x="-23.4375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathMoveActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-60.5" />
+      <point x="10391.64657051282" y="2490.0" />
+      <point x="8424.313237179485" y="2490.0" />
+      <point x="67.66666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.GameView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-38.5" />
+      <point x="3524.95" y="902.0" />
+      <point x="7013.5" y="902.0" />
+      <point x="-138.44999999999982" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="3870.0" y="3335.0" />
+      <point x="4514.1875" y="3335.0" />
+      <point x="-14.0625" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.ActivateLeaderCardClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="1393.5" y="4045.0" />
+      <point x="3327.6000000000004" y="4045.0" />
+      <point x="-66.14999999999964" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-137.5" />
+      <point x="625.5" y="1811.0" />
+      <point x="8262.031185897435" y="1811.0" />
+      <point x="-94.61538461538476" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.MarketActionFetchRowClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="935.5" y="4035.0" />
+      <point x="3308.7" y="4035.0" />
+      <point x="-85.05000000000018" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientObtainedResourcesMarketActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="7103.646570512819" y="2500.0" />
+      <point x="8308.313237179485" y="2500.0" />
+      <point x="-48.33333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="2751.5" y="3315.0" />
+      <point x="4495.4375" y="3315.0" />
+      <point x="-32.8125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.ShuffledDevelopmentCardDeckOnTableUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="13171.75" y="3275.0" />
+      <point x="12034.416666666666" y="3275.0" />
+      <point x="42.66666666666606" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.CustomClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="3065.0" y="4075.0" />
+      <point x="3384.3" y="4075.0" />
+      <point x="-9.449999999999818" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.LeaderActionServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="5220.0" y="3325.0" />
+      <point x="4551.6875" y="3325.0" />
+      <point x="23.4375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathSinglePlayerRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathRepresentation">
+      <point x="0.0" y="-60.5" />
+      <point x="0.0" y="137.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-27.0" />
+      <point x="11991.75" y="3038.0" />
+      <point x="16398.4375" y="3038.0" />
+      <point x="-122.8125" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientSpecificResourceTypeRuleRepresentation" target="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRuleRepresentation">
+      <point x="0.0" y="-60.5" />
+      <point x="15317.64657051282" y="2520.0" />
+      <point x="15023.77157051282" y="2520.0" />
+      <point x="94.625" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.ServerMessageUtils.ServerMessageTypeDependentComputation.TypeBasedComputation" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="-94.25" y="-38.5" />
+      <point x="6830.25" y="3275.0" />
+      <point x="4598.5625" y="3275.0" />
+      <point x="70.3125" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.InitialChoicesClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="2170.5" y="4055.0" />
+      <point x="3346.5" y="4055.0" />
+      <point x="-47.25" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.UserConsole" target="it.polimi.ingsw.client.cli.UserIOLogger">
+      <point x="-73.5" y="-71.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-93.5" />
+      <point x="25193.14657051282" y="2490.0" />
+      <point x="20372.97990384615" y="2490.0" />
+      <point x="233.33333333333212" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.ProductionSelectionLeaderCardsInDashboardView" target="it.polimi.ingsw.client.cli.view.AbstractPlayerLeaderCardsInDashboardView">
+      <point x="0.0" y="-71.5" />
+      <point x="10934.45" y="1348.0" />
+      <point x="11098.95" y="1348.0" />
+      <point x="-152.5" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientDifferentResourceTypesInDifferentStoragesRuleRepresentation" target="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRuleRepresentation">
+      <point x="0.0" y="-60.5" />
+      <point x="13763.64657051282" y="2510.0" />
+      <point x="14645.27157051282" y="2510.0" />
+      <point x="-283.875" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-115.5" />
+      <point x="19346.64657051282" y="2520.0" />
+      <point x="20081.313237179485" y="2520.0" />
+      <point x="-58.33333333333212" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.CliView" target="it.polimi.ingsw.client.view.AbstractView">
+      <point x="0.0" y="-181.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientObtainedMarblesMarketActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-49.5" />
+      <point x="9298.14657051282" y="2510.0" />
+      <point x="8385.64657051282" y="2510.0" />
+      <point x="29.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-60.5" />
+      <point x="4367.063237179485" y="1841.0" />
+      <point x="8309.338878205128" y="1841.0" />
+      <point x="-47.30769230769147" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientDiscardCardsSinglePlayerTokenActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="12583.64657051282" y="2450.0" />
+      <point x="8501.64657051282" y="2450.0" />
+      <point x="145.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.Lobby" target="it.polimi.ingsw.client.gui.fxcontrollers.AbstractController">
+      <point x="0.0" y="-60.5" />
+      <point x="1368.5" y="146.0" />
+      <point x="1838.75" y="146.0" />
+      <point x="-47.25" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer.FormattedCharBlockInBlockList" target="it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer">
+      <point x="0.0" y="-27.0" />
+      <point x="7679.25" y="3396.0" />
+      <point x="7717.25" y="3396.0" />
+      <point x="-151.0" y="203.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.AbstractPlayerDashboardView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-82.5" />
+      <point x="7473.45" y="962.0" />
+      <point x="7162.599999999999" y="962.0" />
+      <point x="10.649999999999636" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.components.Storage" target="it.polimi.ingsw.client.view.View">
+      <point x="0.0" y="-115.5" />
+      <point x="5415.25" y="156.0" />
+      <point x="5550.083333333333" y="156.0" />
+      <point x="-6.91666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.CoveredLeaderCardView" target="it.polimi.ingsw.client.cli.view.AbstractLeaderCardView">
+      <point x="0.0" y="-60.5" />
+      <point x="4182.45" y="1348.0" />
+      <point x="4032.45" y="1348.0" />
+      <point x="116.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientTotalResourcesUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="15756.75" y="3098.0" />
+      <point x="16496.6875" y="3098.0" />
+      <point x="-24.5625" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.FaithPath" target="it.polimi.ingsw.client.gui.fxcontrollers.GameScene">
+      <point x="0.0" y="-38.5" />
+      <point x="2275.25" y="469.0" />
+      <point x="2511.25" y="469.0" />
+      <point x="-226.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.BlackCrossFaithUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="14830.25" y="3245.0" />
+      <point x="12098.416666666666" y="3245.0" />
+      <point x="106.66666666666606" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="-130.0" y="-71.5" />
+      <point x="17363.14657051282" y="1831.0" />
+      <point x="8419.723493589743" y="1831.0" />
+      <point x="63.07692307692378" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-104.5" />
+      <point x="5270.563237179485" y="1851.0" />
+      <point x="8325.108108974358" y="1851.0" />
+      <point x="-31.53846153846098" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.grid.GridView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-170.5" />
+      <point x="5742.45" y="942.0" />
+      <point x="7098.7" y="942.0" />
+      <point x="-53.25" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.PlayerLeaderCardsInDashboardView" target="it.polimi.ingsw.client.cli.view.AbstractPlayerLeaderCardsInDashboardView">
+      <point x="0.0" y="-71.5" />
+      <point x="11568.45" y="1348.0" />
+      <point x="11403.95" y="1348.0" />
+      <point x="152.5" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientLeaderCardsThePlayerOwnsUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="13068.75" y="3058.0" />
+      <point x="16431.1875" y="3058.0" />
+      <point x="-90.0625" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.ServerMessageUtils.ServerMessageTypeDependentComputation" target="it.polimi.ingsw.client.ServerMessageUtils">
+      <point x="0.0" y="-93.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.DevCardView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-60.5" />
+      <point x="11826.95" y="882.0" />
+      <point x="7333.0" y="882.0" />
+      <point x="181.05000000000018" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientPurchasableDevelopmentCardsUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="17946.25" y="3088.0" />
+      <point x="16562.1875" y="3088.0" />
+      <point x="40.9375" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="4709.0" y="3345.0" />
+      <point x="4532.9375" y="3345.0" />
+      <point x="4.6875" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCard" target="it.polimi.ingsw.client.view.View">
+      <point x="0.0" y="-104.5" />
+      <point x="5955.25" y="146.0" />
+      <point x="5577.75" y="146.0" />
+      <point x="20.75" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.LabelView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-82.5" />
+      <point x="8982.95" y="932.0" />
+      <point x="7226.5" y="932.0" />
+      <point x="74.55000000000018" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.PlayerDashboardView" target="it.polimi.ingsw.client.cli.view.AbstractPlayerDashboardView">
+      <point x="0.0" y="-38.5" />
+      <point x="5862.45" y="1348.0" />
+      <point x="7300.116666666667" y="1348.0" />
+      <point x="-173.33333333333303" y="82.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathLastPositionReachedActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-49.5" />
+      <point x="5324.146570512819" y="2470.0" />
+      <point x="8250.313237179485" y="2470.0" />
+      <point x="-106.33333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage" target="it.polimi.ingsw.client.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="10584.0" y="4011.0" />
+      <point x="11144.5" y="4011.0" />
+      <point x="-60.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.UserChoicesUtils.PossibleUserChoices" target="it.polimi.ingsw.client.cli.UserChoicesUtils">
+      <point x="0.0" y="-60.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.InvalidClientMessageServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="5867.0" y="3305.0" />
+      <point x="4570.4375" y="3305.0" />
+      <point x="42.1875" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="6251.5" y="3295.0" />
+      <point x="4579.8125" y="3295.0" />
+      <point x="51.5625" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-38.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientWhiteMarbleSubstitutionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-49.5" />
+      <point x="18586.14657051282" y="2510.0" />
+      <point x="20022.97990384615" y="2510.0" />
+      <point x="-116.66666666666788" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientMarketUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="13712.25" y="3068.0" />
+      <point x="16447.5625" y="3068.0" />
+      <point x="-73.6875" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.EndTurnClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="2807.0" y="4065.0" />
+      <point x="3365.3999999999996" y="4065.0" />
+      <point x="-28.350000000000364" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.Market" target="it.polimi.ingsw.client.gui.fxcontrollers.GameScene">
+      <point x="-205.25" y="-104.5" />
+      <point x="5288.25" y="459.0" />
+      <point x="2850.25" y="459.0" />
+      <point x="113.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientResourceStorageUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="20542.75" y="3038.0" />
+      <point x="16644.0625" y="3038.0" />
+      <point x="122.8125" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.ProductionActionServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="1693.5" y="3295.0" />
+      <point x="4476.6875" y="3295.0" />
+      <point x="-51.5625" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.PlayerOwnedDevelopmentCardDeckUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="15939.25" y="3225.0" />
+      <point x="12141.083333333334" y="3225.0" />
+      <point x="149.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.GameSceneSelector.Selection" target="it.polimi.ingsw.client.gui.fxcontrollers.GameSceneSelector">
+      <point x="0.0" y="-49.0" />
+      <point x="0.0" y="60.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.ResourcesRepositioningDashboardView" target="it.polimi.ingsw.client.cli.view.AbstractPlayerDashboardView">
+      <point x="0.0" y="-137.5" />
+      <point x="9099.2" y="1348.0" />
+      <point x="7646.783333333333" y="1348.0" />
+      <point x="173.33333333333303" y="82.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.GameHistoryView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-49.5" />
+      <point x="8591.95" y="942.0" />
+      <point x="7205.2" y="942.0" />
+      <point x="53.25" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.ActivePlayerUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="14330.25" y="3255.0" />
+      <point x="12077.083333333334" y="3255.0" />
+      <point x="85.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-269.5" />
+      <point x="16340.14657051282" y="1841.0" />
+      <point x="8403.95426282051" y="1841.0" />
+      <point x="47.30769230769147" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.GameScene" target="it.polimi.ingsw.client.gui.fxcontrollers.AbstractController">
+      <point x="-141.25" y="-71.5" />
+      <point x="2596.0" y="96.0" />
+      <point x="1964.75" y="96.0" />
+      <point x="78.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.CliClientManager" target="it.polimi.ingsw.client.ClientManager">
+      <point x="0.0" y="-181.5" />
+      <point x="234.0" y="3528.0" />
+      <point x="314.25" y="3528.0" />
+      <point x="-141.25" y="269.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientFaithUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="20053.75" y="3048.0" />
+      <point x="16627.6875" y="3048.0" />
+      <point x="106.4375" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathEventRepresentation" target="it.polimi.ingsw.client.modelrepresentation.ClientRepresentation">
+      <point x="0.0" y="-71.5" />
+      <point x="11311.434391025641" y="1861.0" />
+      <point x="8372.41580128205" y="1861.0" />
+      <point x="15.76923076923049" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.ResourceStorageUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="10035.75" y="3255.0" />
+      <point x="11906.416666666666" y="3255.0" />
+      <point x="-85.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.ProductionSelectionDashboardView" target="it.polimi.ingsw.client.cli.view.AbstractPlayerDashboardView">
+      <point x="0.0" y="-104.5" />
+      <point x="0.0" y="82.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.PreGameView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-82.5" />
+      <point x="12638.95" y="872.0" />
+      <point x="7354.3" y="872.0" />
+      <point x="202.35000000000036" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardTableDeck" target="it.polimi.ingsw.client.view.View">
+      <point x="0.0" y="-82.5" />
+      <point x="4465.75" y="136.0" />
+      <point x="5522.416666666667" y="136.0" />
+      <point x="-34.58333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientLeaderCardStateUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="16800.25" y="3108.0" />
+      <point x="16529.4375" y="3108.0" />
+      <point x="8.1875" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.grid.LineBorderStyle" target="it.polimi.ingsw.client.cli.view.grid.BorderStyle">
+      <point x="0.0" y="-60.5" />
+      <point x="24009.25" y="3043.0" />
+      <point x="23870.25" y="3043.0" />
+      <point x="112.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.ResourcesChoiceSetup" target="it.polimi.ingsw.client.gui.fxcontrollers.AbstractController">
+      <point x="0.0" y="-49.5" />
+      <point x="553.5" y="136.0" />
+      <point x="1807.25" y="136.0" />
+      <point x="-78.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.PurchasableDevelopmentCardsUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="12540.75" y="3285.0" />
+      <point x="12013.083333333334" y="3285.0" />
+      <point x="21.33333333333394" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.PlayerDashboard" target="it.polimi.ingsw.client.gui.fxcontrollers.GameScene">
+      <point x="-166.25" y="-170.5" />
+      <point x="3709.5" y="469.0" />
+      <point x="2737.25" y="469.0" />
+      <point x="0.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage" target="it.polimi.ingsw.client.clientmessage.ClientMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="10908.5" y="4021.0" />
+      <point x="11174.5" y="4021.0" />
+      <point x="-30.0" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.ServerMessageUtils.ServerMessageTypeDependentComputation.TypeBasedComputation" target="it.polimi.ingsw.client.ServerMessageUtils.ServerMessageTypeDependentComputation">
+      <point x="94.25" y="-38.5" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDevelopmentActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="6471.146570512819" y="2490.0" />
+      <point x="8288.979903846152" y="2490.0" />
+      <point x="-67.66666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage" target="it.polimi.ingsw.client.servermessage.GameUpdateServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="4621.0" y="3467.0" />
+      <point x="4446.25" y="3467.0" />
+      <point x="98.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.components.LeaderCard" target="it.polimi.ingsw.client.view.View">
+      <point x="0.0" y="-115.5" />
+      <point x="6448.75" y="126.0" />
+      <point x="5605.416666666667" y="126.0" />
+      <point x="48.41666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="4718.5" y="4065.0" />
+      <point x="3422.1000000000004" y="4065.0" />
+      <point x="28.350000000000364" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-137.5" />
+      <point x="23599.14657051282" y="2500.0" />
+      <point x="20314.64657051282" y="2500.0" />
+      <point x="175.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.LeaderCardSetupView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-115.5" />
+      <point x="2365.95" y="882.0" />
+      <point x="6970.9" y="882.0" />
+      <point x="-181.05000000000018" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.LeaderCardView" target="it.polimi.ingsw.client.cli.view.AbstractLeaderCardView">
+      <point x="0.0" y="-115.5" />
+      <point x="3650.45" y="1348.0" />
+      <point x="3800.45" y="1348.0" />
+      <point x="-116.0" y="71.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.GameUpdateServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-27.0" />
+      <point x="4347.5" y="3345.0" />
+      <point x="4523.5625" y="3345.0" />
+      <point x="-4.6875" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.MarketActionServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="6594.0" y="3285.0" />
+      <point x="4589.1875" y="3285.0" />
+      <point x="60.9375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-82.5" />
+      <point x="21095.14657051282" y="2520.0" />
+      <point x="20197.97990384615" y="2520.0" />
+      <point x="58.33333333333212" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.LeaderCardsSetup" target="it.polimi.ingsw.client.gui.fxcontrollers.AbstractController">
+      <point x="0.0" y="-38.0" />
+      <point x="2019.0" y="156.0" />
+      <point x="1901.75" y="156.0" />
+      <point x="15.75" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientSetupChoiceActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="11888.14657051282" y="2460.0" />
+      <point x="8482.313237179485" y="2460.0" />
+      <point x="125.66666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.cli.view.AbstractLeaderCardView" target="it.polimi.ingsw.client.cli.view.CliView">
+      <point x="0.0" y="-71.5" />
+      <point x="3916.45" y="912.0" />
+      <point x="7034.8" y="912.0" />
+      <point x="-117.14999999999964" y="181.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientShuffledDevelopmentCardDeckOnTableUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="14920.25" y="3088.0" />
+      <point x="16480.3125" y="3088.0" />
+      <point x="-40.9375" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.GameInitializationStartedServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="2023.5" y="3305.0" />
+      <point x="4486.0625" y="3305.0" />
+      <point x="-42.1875" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.servermessage.PostGameSetupServerMessage" target="it.polimi.ingsw.client.servermessage.ServerMessage">
+      <point x="0.0" y="-15.0" />
+      <point x="1410.5" y="3285.0" />
+      <point x="4467.3125" y="3285.0" />
+      <point x="-60.9375" y="15.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdate.ClientBlackCrossFaithUpdate" target="it.polimi.ingsw.client.gameupdate.ClientGameUpdate">
+      <point x="0.0" y="-38.5" />
+      <point x="14184.75" y="3078.0" />
+      <point x="16463.9375" y="3078.0" />
+      <point x="-57.3125" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientResourceNumberRequirementRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation">
+      <point x="0.0" y="-71.5" />
+      <point x="2971.666666666666" y="2510.0" />
+      <point x="2336.0702243589712" y="2510.0" />
+      <point x="122.66666666666606" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gui.fxcontrollers.GameHistory" target="it.polimi.ingsw.client.view.View">
+      <point x="41.5" y="-60.5" />
+      <point x="6211.75" y="136.0" />
+      <point x="5591.583333333333" y="136.0" />
+      <point x="34.58333333333303" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.PopeCardsUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="10534.75" y="3265.0" />
+      <point x="11927.75" y="3265.0" />
+      <point x="-64.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientDevelopmentCardColourRequirementRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation">
+      <point x="0.0" y="-71.5" />
+      <point x="2407.166666666666" y="2520.0" />
+      <point x="2213.403557692305" y="2520.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCardDeckRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation">
+      <point x="0.0" y="-71.5" />
+      <point x="18017.64657051282" y="2500.0" />
+      <point x="19964.64657051282" y="2500.0" />
+      <point x="-175.0" y="38.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientMaxResourceNumberRuleRepresentation" target="it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRuleRepresentation">
+      <point x="0.0" y="-60.5" />
+      <point x="16611.58407051282" y="2510.0" />
+      <point x="15213.02157051282" y="2510.0" />
+      <point x="283.875" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.gameupdatehandler.TempStarResourcesUpdateHandler" target="it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler">
+      <point x="0.0" y="-27.0" />
+      <point x="15353.25" y="3235.0" />
+      <point x="12119.75" y="3235.0" />
+      <point x="128.0" y="27.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientProductionActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="8619.64657051282" y="2520.0" />
+      <point x="8366.313237179485" y="2520.0" />
+      <point x="9.66666666666697" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDiscardedResourcesMarketActionRepresentation" target="it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation">
+      <point x="0.0" y="-38.5" />
+      <point x="4471.646570512819" y="2450.0" />
+      <point x="8211.64657051282" y="2450.0" />
+      <point x="-145.0" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.client.clientrequest.ManageResourcesFromMarketClientRequest" target="it.polimi.ingsw.client.clientrequest.ClientRequest">
+      <point x="0.0" y="-27.0" />
+      <point x="3722.5" y="4075.0" />
+      <point x="3403.2" y="4075.0" />
+      <point x="9.449999999999818" y="27.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6285660059455881" x="11376.952178054175" y="2265.412293216385" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.client.cli.view.GameHistoryView</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientMarketUpdate</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.LeaderCardCanBeActivatedUpdateHandler</node>
+    <node>it.polimi.ingsw.client.network.ClientMessageWriter</node>
+    <node>it.polimi.ingsw.client.servermessage.GameUpdateServerMessage</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.Lobby</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.GameSceneSelector.Selection</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.marketrepresentation.ClientMarketRepresentation</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientActivePlayerUpdate</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRepresentation</node>
+    <node>it.polimi.ingsw.client.clientrequest.MarketActionFetchRowClientRequest</node>
+    <node>it.polimi.ingsw.client.cli.view.grid.BorderStyle</node>
+    <node>it.polimi.ingsw.client.cli.view.ProductionSelectionDashboardView</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.PurchasableDevelopmentCardsUpdateHandler</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.ShuffledDevelopmentCardDeckOnTableUpdateHandler</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientResourceStorageRuleRepresentation</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.ColourRequirement</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientDevelopmentCardColourRequirementRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.UserConsole</node>
+    <node>it.polimi.ingsw.client.servermessage.LeaderActionServerMessage</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientSpecificResourceTypeRuleRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils</node>
+    <node>it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer.FormattedCharBlockInBlockList</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.OtherPlayerDashboard</node>
+    <node>it.polimi.ingsw.client.clientmessage.PlayerRequestClientMessage</node>
+    <node>it.polimi.ingsw.client.clientrequest.InitialChoicesClientRequest</node>
+    <node>it.polimi.ingsw.client.network.ClientNetworkLayer</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientObtainedResourcesMarketActionRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientProductionActionRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientPlayerOwnedDevelopmentCardDeckRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDiscardedResourcesMarketActionRepresentation</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardTableDeck</node>
+    <node>it.polimi.ingsw.client.cli.view.grid.SingleCharBorderStyle</node>
+    <node>it.polimi.ingsw.client.servermessage.PlayerCanCreateNewLobbyServerMessage</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathVaticanReportActionRepresentation</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCard</node>
+    <node>it.polimi.ingsw.client.servermessage.InvalidRequestServerMessage</node>
+    <node>it.polimi.ingsw.client.servermessage.EndTurnServerMessage</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.GuiCompUtils</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientDiscardCardsSinglePlayerTokenActionRepresentation</node>
+    <node>it.polimi.ingsw.client.clientrequest.ActivateLeaderCardClientRequest</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientMoveBlackCrossSinglePlayerTokenActionRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.ResourcesRepositioningDashboardView</node>
+    <node>it.polimi.ingsw.client.cli.view.PlayerLeaderCardsInDashboardView</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientPlayerOwnedDevelopmentCardDeckUpdate</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientMaxResourceNumberRuleRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.FaithPathView</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientLeaderCardsThePlayerOwnsUpdate</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.playercontextrepresentation.ClientPlayerContextRepresentation</node>
+    <node>it.polimi.ingsw.client.servermessage.ServerMessage</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.GameHistory</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.ColourAndLevelRequirement</node>
+    <node>it.polimi.ingsw.client.cli.CliClientManager</node>
+    <node>it.polimi.ingsw.client.cli.view.ResourcesChoiceView</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.Table</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.Market</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.SpecialMarbleSubstitution</node>
+    <node>it.polimi.ingsw.client.servermessage.InvalidClientMessageServerMessage</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientPostTurnFinalActionRepresentation</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientGameHistoryUpdate</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientMainTurnInitialActionRepresentation</node>
+    <node>it.polimi.ingsw.client.Client</node>
+    <node>it.polimi.ingsw.client.servermessage.MarketActionServerMessage</node>
+    <node>it.polimi.ingsw.client.clientmessage.ReadyToStartGameClientMessage</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.LeaderCardView</node>
+    <node>it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtils.HorizontalAlignment</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientTempStarResourcesUpdate</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathEventRepresentation</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.PlayerOwnedDevelopmentCardDeckUpdateHandler</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientProductionRepresentation</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientLeaderCardStateUpdate</node>
+    <node>it.polimi.ingsw.client.cli.UserIOLogger</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.BlackCrossFaithUpdateHandler</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.ClientRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientMarbleColourRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferUtilsTest</node>
+    <node>it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer</node>
+    <node>it.polimi.ingsw.client.ClientStartupWizard</node>
+    <node>it.polimi.ingsw.client.cli.view.MarketView</node>
+    <node>it.polimi.ingsw.client.cli.graphicutils.FormattedChar</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameHistoryRepresentation</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.ActivePlayerUpdateHandler</node>
+    <node>it.polimi.ingsw.client.cli.UserChoicesUtils</node>
+    <node>it.polimi.ingsw.client.cli.view.PlayerDashboardView</node>
+    <node>it.polimi.ingsw.client.servermessage.NewPlayerEnteredNewGameLobbyServerMessage</node>
+    <node>it.polimi.ingsw.client.cli.view.grid.GridView</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathMoveActionRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.LeaderCardListView</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.FaithUpdateHandler</node>
+    <node>it.polimi.ingsw.client.clientrequest.ManageResourcesFromMarketClientRequest</node>
+    <node>it.polimi.ingsw.client.ServerMessageUtils.ServerMessageTypeDependentComputation</node>
+    <node>it.polimi.ingsw.client.network.ClientMessageReader</node>
+    <node>it.polimi.ingsw.client.servermessage.PlayerDisconnectedServerMessage</node>
+    <node>it.polimi.ingsw.client.cli.view.grid.LineBorderStyle</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientActivateLeaderCardsActionRepresentation</node>
+    <node>it.polimi.ingsw.client.network.ClientNotConnectedException</node>
+    <node>it.polimi.ingsw.client.clientmessage.GetInitialGameRepresentationClientMessage</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientSetupChoiceActionRepresentation</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.LeaderCard</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientDevelopmentCardCostDiscountRepresentation</node>
+    <node>it.polimi.ingsw.client.clientrequest.ProductionActionClientRequest</node>
+    <node>it.polimi.ingsw.client.cli.UnexpectedServerMessage</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.DevCardCostDiscount</node>
+    <node>it.polimi.ingsw.client.cli.view.AbstractPlayerLeaderCardsInDashboardView</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.PlayerDashboard</node>
+    <node>it.polimi.ingsw.client.servermessage.PlayerNameAlreadyExistsServerMessage</node>
+    <node>it.polimi.ingsw.client.cli.view.UserConsole.IOMessage</node>
+    <node>it.polimi.ingsw.client.GameState</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.LeaderCardStateUpdateHandler</node>
+    <node>it.polimi.ingsw.client.cli.view.CoveredLeaderCardView</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientBlackCrossFaithUpdate</node>
+    <node>it.polimi.ingsw.client.view.AbstractView</node>
+    <node>it.polimi.ingsw.client.cli.view.DevCardDashboardDeckView</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientGameUpdate</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientObtainedMarblesMarketActionRepresentation</node>
+    <node>it.polimi.ingsw.client.clientrequest.MarketActionFetchColumnClientRequest</node>
+    <node>it.polimi.ingsw.client.cli.view.MainMenuView</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.NumberOfPlayers</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.NumOfResourcesRequirement</node>
+    <node>it.polimi.ingsw.client.cli.Cli</node>
+    <node>it.polimi.ingsw.client.view.View</node>
+    <node>it.polimi.ingsw.client.cli.view.PreGameView</node>
+    <node>it.polimi.ingsw.client.clientmessage.ClientMessage</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesChoice</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.GameSceneSelector</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.ResourceStorageUpdateHandler</node>
+    <node>it.polimi.ingsw.client.servermessage.GameInitialRepresentationServerMessage</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientGameActionRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardsTableRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientRegisteredIdentifiableItemRepresentation</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.PopeCardsUpdateHandler</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientLeaderCardRequirementRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientDevelopmentCardColourAndLevelRequirementRepresentation</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientResourceStorageUpdate</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDevelopmentActionRepresentation</node>
+    <node>it.polimi.ingsw.client.clientrequest.DiscardLeaderCardClientRequest</node>
+    <node>it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBufferTest</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCoveredCardsDeckRepresentation</node>
+    <node>it.polimi.ingsw.client.ServerMessageUtils</node>
+    <node>it.polimi.ingsw.client.clientmessage.CreateNewLobbyClientMessage</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.ClientWhiteMarbleSubstitutionRepresentation</node>
+    <node>it.polimi.ingsw.client.clientrequest.CustomClientRequest</node>
+    <node>it.polimi.ingsw.client.cli.view.DevCardTableDeckView</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientShuffledDevelopmentCardDeckOnTableUpdate</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.ResourcesChoiceSetup</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientFaithUpdate</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.MarketUpdateHandler</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.developmentcardrepresentation.ClientDevelopmentCardRepresentation</node>
+    <node>it.polimi.ingsw.client.servermessage.PostGameSetupServerMessage</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.DevelopmentCardDashboardDeck</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientMoveBlackCrossAndShuffleSinglePlayerTokenActionRepresentation</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.Storage</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.GameHistoryUpdateHandler</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.GameScene</node>
+    <node>it.polimi.ingsw.client.cli.UserChoicesUtils.PossibleUserChoices.UserChoice</node>
+    <node>it.polimi.ingsw.client.gui.GuiClientManager</node>
+    <node>it.polimi.ingsw.client.cli.view.AbstractLeaderCardView</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.cardstackrepresentation.ClientCardDeckRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.ProductionSelectionLeaderCardsInDashboardView</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientDiscardLeaderCardsActionRepresentation</node>
+    <node>it.polimi.ingsw.client.ClientManager</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.GameUpdateHandler</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.Marble</node>
+    <node>it.polimi.ingsw.client.cli.view.AbstractPlayerDashboardView</node>
+    <node>it.polimi.ingsw.client.servermessage.DevelopmentActionServerMessage</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.Production</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.ResourcesRepositioning</node>
+    <node>it.polimi.ingsw.client.cli.view.GameView</node>
+    <node>it.polimi.ingsw.client.gui.GuiClient</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientFaithPathLastPositionReachedActionRepresentation</node>
+    <node>it.polimi.ingsw.client.ServerMessageUtils.ServerMessageTypeDependentComputation.TypeBasedComputation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientDifferentResourceTypesInDifferentStoragesRuleRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.DevCardTableView</node>
+    <node>it.polimi.ingsw.client.cli.view.CliView.ChildCliView</node>
+    <node>it.polimi.ingsw.client.cli.DialogUtils</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.LeaderCardsSetup</node>
+    <node>it.polimi.ingsw.client.cli.view.grid.GridViewTest</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.AbstractController</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.storagerepresentation.ClientSameResourceTypeRuleRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.DevCardView</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientPurchasableDevelopmentCardsUpdate</node>
+    <node>it.polimi.ingsw.client.MessageSender</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientLeaderCardCanBeActivatedUpdate</node>
+    <node>it.polimi.ingsw.client.cli.view.LeaderCardSetupView</node>
+    <node>it.polimi.ingsw.client.ProductionsSelectionInfo</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.singleplayer.ClientFaithPathMoveBlackCrossActionRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.ConsoleWriter</node>
+    <node>it.polimi.ingsw.client.cli.UserChoicesUtils.PossibleUserChoices</node>
+    <node>it.polimi.ingsw.client.clientrequest.ClientRequest</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.PlayerRegistration</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.DevCardPlacementInDashboard</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.TotalResourcesUpdateHandler</node>
+    <node>it.polimi.ingsw.client.clientrequest.EndTurnClientRequest</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientVaticanReportSectionRepresentation</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamehistoryrepresentation.ClientSetupStartedActionRepresentation</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.components.Dashboard</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.ClientGameContextRepresentation</node>
+    <node>it.polimi.ingsw.client.cli.view.LabelView</node>
+    <node>it.polimi.ingsw.client.cli.view.grid.SingleCharBorderStyleTest</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientPopeCardsUpdate</node>
+    <node>it.polimi.ingsw.client.clientmessage.RegisterPlayerNameClientMessage</node>
+    <node>it.polimi.ingsw.client.servermessage.EndGameServerMessage</node>
+    <node>it.polimi.ingsw.client.servermessage.GameInitializationStartedServerMessage</node>
+    <node>it.polimi.ingsw.client.cli.graphicutils.FormattedCharsBuffer.FormattedCharBlock</node>
+    <node>it.polimi.ingsw.client.servermessage.ProductionActionServerMessage</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.LeaderCardsThePlayerOwnsUpdateHandler</node>
+    <node>it.polimi.ingsw.client.gui.fxcontrollers.FaithPath</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gameitemsrepresentation.leadercardrepresentation.ClientResourceNumberRequirementRepresentation</node>
+    <node>it.polimi.ingsw.client.clientrequest.DevelopmentActionClientRequest</node>
+    <node>it.polimi.ingsw.client.modelrepresentation.gamecontextrepresentation.faithrepresentation.ClientFaithPathSinglePlayerRepresentation</node>
+    <node>it.polimi.ingsw.client.gameupdate.ClientTotalResourcesUpdate</node>
+    <node>it.polimi.ingsw.client.gameupdatehandler.TempStarResourcesUpdateHandler</node>
+    <node>it.polimi.ingsw.client.servermessage.InitialChoicesServerMessage</node>
+    <node>it.polimi.ingsw.client.cli.view.CliView</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
