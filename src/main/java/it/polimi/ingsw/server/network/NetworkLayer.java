@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.network;
 
+import it.polimi.ingsw.logger.ProjectLogger;
 import it.polimi.ingsw.server.controller.Client;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class NetworkLayer implements ServerRawMessageSender {
 
     private Map<Client, SocketConnection> clientConnections;
 
+    SocketConnectionsAccepter newConnectionsAccepter;
+    SocketConnectionsProcessor netMessagesProcessor;
 
     public NetworkLayer(int tcpPort, ClientRawMessageProcessor inboundMessagesProcessor) {
         this.tcpPort = tcpPort;
@@ -31,8 +34,8 @@ public class NetworkLayer implements ServerRawMessageSender {
 
         Queue<SocketChannel> newConnectionsQueue = new ArrayBlockingQueue<>(NEW_CONNECTIONS_QUEUE_SIZE);
 
-        SocketConnectionsAccepter newConnectionsAccepter = new SocketConnectionsAccepter(tcpPort, newConnectionsQueue);
-        SocketConnectionsProcessor netMessagesProcessor = new SocketConnectionsProcessor(
+        newConnectionsAccepter = new SocketConnectionsAccepter(tcpPort, newConnectionsQueue);
+        netMessagesProcessor = new SocketConnectionsProcessor(
             this,
             newConnectionsQueue,
             inboundMessagesProcessor,
@@ -51,6 +54,16 @@ public class NetworkLayer implements ServerRawMessageSender {
         } catch (ClosedChannelException e) {
             //TODO
             e.printStackTrace();
+        }
+    }
+
+    public void removeConnection(Client client) {
+        try {
+            clientConnections.get(client).getSocketChannel().keyFor(netMessagesProcessor.readSelector).interestOps(0);
+            clientConnections.get(client).getSocketChannel().keyFor(netMessagesProcessor.writeSelector).interestOps(0);
+            clientConnections.get(client).getSocketChannel().close();
+        } catch (IOException e) {
+            ProjectLogger.getLogger().log(e);
         }
     }
 

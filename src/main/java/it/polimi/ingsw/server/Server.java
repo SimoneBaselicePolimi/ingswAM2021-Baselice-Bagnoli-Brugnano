@@ -91,7 +91,10 @@ public class Server {
                             rawMessage.value
                         ));
                     },
-                    () -> client.getHandler().onConnectionDropped(client)
+                    () -> {
+                        networkLayer.removeConnection(client);
+                        client.getHandler().onConnectionDropped(client);
+                    }
                 );
                 pingWorkerForClientMap.put(client, pingWorker);
                 pingWorker.start();

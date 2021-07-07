@@ -1,5 +1,8 @@
 package it.polimi.ingsw.logger;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 public class ProjectLogger {
 
     boolean logInConsole = true;
@@ -18,8 +21,18 @@ public class ProjectLogger {
     }
 
     public void log(Exception exception) {
-        if(logInConsole)
-            log(LogLevel.ERROR, "An exception has been thrown: \n%s\n%s", exception.getMessage(), exception.getCause());
+        if(logInConsole) {
+            StringWriter sw = new StringWriter();
+            exception.printStackTrace(new PrintWriter(sw));
+            String stackTrace = sw.toString();
+            log(
+                LogLevel.ERROR,
+                "An exception has been thrown: \n%s\n%s\n%s",
+                exception.getMessage(),
+                exception.getCause(),
+                stackTrace
+            );
+        }
     }
 
     public void setLogInConsole(boolean logInConsole) {
