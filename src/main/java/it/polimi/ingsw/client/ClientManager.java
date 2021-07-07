@@ -52,7 +52,7 @@ public class ClientManager {
     public ClientManager(MessageSender serverSender) {
         this.serverSender = serverSender;
         gameState = GameState.PLAYER_REGISTRATION_AND_MATCHMAKING;
-        Localization.getLocalizationInstance().setLocalizationLanguage("en");
+        Localization.getLocalizationInstance().setLocalizationLanguage("it");
         gameHistoryRepresentation = new ClientGameHistoryRepresentation(new ArrayList<>());
     }
 
