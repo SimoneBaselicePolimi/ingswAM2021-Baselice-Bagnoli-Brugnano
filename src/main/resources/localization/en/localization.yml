@@ -221,9 +221,9 @@ leaderCards:
     colour: "%d %s %s"
     resourceNumber: "%d %s"
   specialPowers:
-    specialPowers: "Special powers:: "
+    specialPowers: "Special powers: "
     developmentCardCostDiscount: "Development card discount: %d %s"
-    storage: "Extra storage: %s"
+    storage: "Extra storage"
     marbleSubstitution: "White marble substitution: 1 %s"
     production: "Production: %s --> %s"
   victoryPoints: "+ %d victory points"
